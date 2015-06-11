@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
+<struts-config>
+	<form-beans>
+		<form-bean name="regionForm" type="fandy.form.RegionForm"></form-bean>
+		<form-bean name="employeeForm" type="fandy.form.EmployeeForm"></form-bean>
+	</form-beans>
+	<action-mappings>
+		<action path="/region" name="regionForm" type="fandy.action.RegionAction" scope="request">
+			<forward name="success" path="/regions/RegionHome.jsp"></forward>
+			<forward name="add" path="/regions/RegionAdd.jsp"></forward>
+			<forward name="edit" path="/regions/RegionEdit.jsp"></forward>
+			<forward name="home" path="/region.do" redirect="true"></forward>
+		</action>
+	</action-mappings>
+
+	<message-resources parameter="application" />
+	<plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+		<set-property property="pathnames"
+			value="/WEB-INF/validator-rules.xml, /WEB-INF/validation.xml" />
+	</plug-in>
+
+
+</struts-config>
