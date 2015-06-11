@@ -1,5 +1,7 @@
 package prime.form;
 
-public class TesForm {
+import org.apache.struts.action.ActionForm;
+
+public class TesForm extends ActionForm {
 
 }
