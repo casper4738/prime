@@ -7,7 +7,7 @@
 	</form-beans>
 	<action-mappings>
 		<action path="/DashboardAdmin" name="DashboardAdminForm" type="prime.admin.dashboard.DashboardAction" scope="request">
-			<forward name="success" path="/admin/Dashboard.jsp"></forward>
+			<forward name="success" path="/admin/dashboard/Dashboard.jsp"></forward>
 		</action>
 		<action path="/UserAdmin" name="UserAdminForm" type="prime.admin.user.UserAction" scope="request">
 			<forward name="success" path="/admin/user/UserHome.jsp"></forward>

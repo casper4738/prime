@@ -89,7 +89,7 @@
 						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
 				</div>
-				<jsp:include page="/content/menu.jsp"></jsp:include>
+				<jsp:include page="/admin/content/menu.jsp"></jsp:include>
 			</section>
 		</aside>
 

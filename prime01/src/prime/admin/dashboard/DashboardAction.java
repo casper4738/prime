@@ -13,7 +13,6 @@ public class DashboardAction extends Action{
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		System.out.println("cekkkk");
 		return mapping.findForward("success");
 	}
 
