@@ -1,4 +1,4 @@
-package prime.action;
+package prime.admin.dashboard;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,9 +14,6 @@ public class TesAction extends Action{
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 		return mapping.findForward("success");
-		
-		
-		
 	}
 
 }
