@@ -2,10 +2,10 @@
 <!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
 <struts-config>
 	<form-beans>
-		<form-bean name="tesForm" type="prime.form.TesForm"></form-bean>
+		<form-bean name="tesForm" type="prime.admin.dashboard.TesForm"></form-bean>
 	</form-beans>
 	<action-mappings>
-		<action path="/tes" name="tesForm" type="prime.action.TesAction" scope="request">
+		<action path="/tes" name="tesForm" type="prime.admin.dashboard.TesAction" scope="request">
 			<forward name="success" path="/admin/dashboard.jsp"></forward>
 		</action>
 	</action-mappings>

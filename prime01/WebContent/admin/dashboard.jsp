@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head> 
-<meta charset="UTF-8">
-<title>Prime</title>
-<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
-<link href="resources/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
-<link href="resources/plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
-<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
-<link href="resources/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-<link href="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
+	<meta charset="UTF-8">
+	<title>Prime</title>
+	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -198,6 +198,66 @@
 					</section>
 					
 					<section class="col-lg-5 connectedSortable">
+					<div class="box box-solid bg-green-gradient">
+						<div class="box-header"><i class="fa fa-calendar"></i>
+						<h3 class="box-title">Calendar</h3>
+						<div class="pull-right box-tools">
+		                    <div class="btn-group">
+		                    	<button class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i></button>
+		                      	<ul class="dropdown-menu pull-right" role="menu">
+			                        <li><a href="#">Add new event</a></li>
+			                        <li><a href="#">Clear events</a></li>
+			                        <li class="divider"></li>
+			                        <li><a href="#">View calendar</a></li>
+		                      	</ul>
+		                    </div>
+		                    <button class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
+		                    <button class="btn btn-success btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
+		                  	</div><!-- /. tools -->
+		                </div><!-- /.box-header -->
+		                <div class="box-body no-padding">
+		                	<div id="calendar" style="width: 100%"></div>
+		                </div><!-- /.box-body -->
+		                <div class="box-footer text-black">
+		                  <div class="row">
+		                    <div class="col-sm-6">
+		                      <!-- Progress bars -->
+		                      <div class="clearfix">
+		                        <span class="pull-left">Task #1</span>
+		                        <small class="pull-right">90%</small>
+		                      </div>
+		                      <div class="progress xs">
+		                        <div class="progress-bar progress-bar-green" style="width: 90%;"></div>
+		                      </div>
+		
+		                      <div class="clearfix">
+		                        <span class="pull-left">Task #2</span>
+		                        <small class="pull-right">70%</small>
+		                      </div>
+		                      <div class="progress xs">
+		                        <div class="progress-bar progress-bar-green" style="width: 70%;"></div>
+		                      </div>
+		                    </div><!-- /.col -->
+		                    <div class="col-sm-6">
+		                      <div class="clearfix">
+		                        <span class="pull-left">Task #3</span>
+		                        <small class="pull-right">60%</small>
+		                      </div>
+		                      <div class="progress xs">
+		                        <div class="progress-bar progress-bar-green" style="width: 60%;"></div>
+		                      </div>
+		
+		                      <div class="clearfix">
+		                        <span class="pull-left">Task #4</span>
+		                        <small class="pull-right">40%</small>
+		                      </div>
+		                      <div class="progress xs">
+		                        <div class="progress-bar progress-bar-green" style="width: 40%;"></div>
+		                      </div>
+		                    </div><!-- /.col -->
+		                  </div><!-- /.row -->
+		                </div>
+		              </div><!-- /.box -->
 					</section>
 				</div>
 			</section>
@@ -205,11 +265,9 @@
 		<!-- /.content-wrapper -->
 		<footer class="main-footer">
 			<div class="pull-right hidden-xs">
-				<b>Version</b> 2.0
+				<b>Prime Version</b> 1.0
 			</div>
-			<strong>Copyright &copy; 2014-2015 <a
-				href="http://almsaeedstudio.com">Almsaeed Studio</a>.
-			</strong> All rights reserved.
+			<strong>Copyright@2015 Prime | Theme By <a href="#">Almsaeed Studio</a>.</strong>
 		</footer>
 	</div>
 
