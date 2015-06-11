@@ -1,7 +1,15 @@
+<%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
+<%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
+<%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
+
 <ul class="sidebar-menu">
 	<li class="header">MAIN MENU</li>
-	<li><a href="#"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
-	<li><a href="#"><i class="fa fa-table"></i><span>Manage User</span></a></li>
+	<li><html:link action="DashboardAdmin" ><i class="fa fa-dashboard"></i>
+		<span>Dashboard</span>
+	</html:link></li>
+	<li><html:link action="UserAdmin" ><i class="fa fa-table">
+		</i><span>Manage User</span>
+	</html:link></li>
 	<li><a href="#"><i class="fa fa-table"></i><span>Manage Employee</span></a></li>
 	<li><a href="#"><i class="fa fa-table"></i><span>Manage Division</span></a></li>
 	<li><a href="#"><i class="fa fa-table"></i><span>Manage Position</span></a></li>
