@@ -84,8 +84,12 @@
 							<logic:iterate id="iter" name="listDivision">
 			                	<tr><td><bean:write name="iter" property="divisionName"/> </td>
 			                        <td align="center">
-			                        	<html:checkbox property="1" />
-			                        	<html:checkbox property="0" />
+			                        <logic:equal name="iter" property="divisionStatus" value="1">
+			                        	<html:image src="resources/image/check-true.png" /> 
+			                        </logic:equal>
+			                        <logic:equal name="iter" property="divisionStatus" value="0">
+			                        	<html:image src="resources/image/check-false.png" /> 
+			                        </logic:equal>
 			                        </td>
 			                        <td align="center">
 			                        	<html:image src="resources/image/edit.png" /> 
