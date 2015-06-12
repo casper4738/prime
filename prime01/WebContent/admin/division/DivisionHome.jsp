@@ -13,12 +13,6 @@
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
 	
 	<script>
@@ -65,12 +59,13 @@
 						</html:select>
 					</div>
 					<div class="search-table">
-						<html:form action="/UserAdmin" >
+						<html:form action="/DivisionAdmin" >
 							<html:hidden name="DivisionAdminForm" property="task" value="search"/>
 							<html:hidden name="DivisionAdminForm" property="goToPage"/>
 							
 							<html:select name="DivisionAdminForm" property="columnSearch" styleClass="columnSearch">
 								<html:option value="SHOW_ALL">SHOW ALL</html:option>
+								<html:option value="NAME">DIVISION NAME</html:option>
 							</html:select>
 							<html:text name="DivisionAdminForm" property="search" styleClass="textSearch"/>
 							<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
@@ -145,27 +140,9 @@
 	</script>
  	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	
-	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	<!-- 
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-	 -->
-	<script src="resources/plugins/morris/morris.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
-	<script src="resources/plugins/knob/jquery.knob.js" type="text/javascript"></script>
-	<!-- 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" type="text/javascript"></script>
-	 -->
-	<script src="resources/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
-	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-	<script src="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
-	<script src="resources/dist/js/pages/dashboard.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 </body>
 </html>

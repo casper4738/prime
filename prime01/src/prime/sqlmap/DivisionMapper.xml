@@ -22,7 +22,7 @@
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		      	<isEqual property="columnSearch" compareValue="NAME">
-			          UPPER(NAME) LIKE UPPER('%'||#value#||'%')
+			          UPPER(DIVISION_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
