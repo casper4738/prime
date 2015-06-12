@@ -83,7 +83,10 @@
 		                <logic:notEmpty name="listDivision">
 							<logic:iterate id="iter" name="listDivision">
 			                	<tr><td><bean:write name="iter" property="divisionName"/> </td>
-			                        <td align="center"><html:image src="resources/image/unlocked.png" /></td>
+			                        <td align="center">
+			                        	<html:checkbox property="1" />
+			                        	<html:checkbox property="0" />
+			                        </td>
 			                        <td align="center">
 			                        	<html:image src="resources/image/edit.png" /> 
 			                        	<html:image src="resources/image/remove.png" />

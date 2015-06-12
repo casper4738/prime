@@ -4,7 +4,8 @@
 	<select id="getListByCol" resultClass="prime.admin.division.DivisionBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT DIVISION_ID AS divisionId, 
-		DIVISION_NAME AS divisionName
+		DIVISION_NAME AS divisionName,
+		DIVISION_STATUS AS divisionStatus,
 		FROM DIVISION
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">

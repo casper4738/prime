@@ -4,6 +4,7 @@ public class DivisionBean {
 
 	private Integer divisionId;
 	private String divisionName;
+	private Integer divisionStatus;
 
 	public Integer getDivisionId() {
 		return divisionId;
@@ -19,6 +20,14 @@ public class DivisionBean {
 
 	public void setDivisionName(String divisionName) {
 		this.divisionName = divisionName;
+	}
+
+	public Integer getDivisionStatus() {
+		return divisionStatus;
+	}
+
+	public void setDivisionStatus(Integer divisionStatus) {
+		this.divisionStatus = divisionStatus;
 	}
 
 }
