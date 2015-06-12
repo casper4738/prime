@@ -4,16 +4,16 @@
 	<select id="getListByCol" resultClass="prime.admin.division.DivisionBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT DIVISION_ID AS divisionId, 
-		NAME AS divisionName
+		DIVISION_NAME AS divisionName
 		FROM DIVISION
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="NAME">
-			          UPPER(NAME) LIKE UPPER('%'||#value#||'%')
+			          UPPER(DIVISION_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
-	    ORDER BY NAME ASC) page 
+	    ORDER BY DIVISION_NAME ASC) page 
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
@@ -27,5 +27,4 @@
 	        </isNotNull>
 	    </dynamic>
 	</select>
-	
 </sqlMap>

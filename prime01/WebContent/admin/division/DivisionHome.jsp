@@ -76,20 +76,31 @@
 							<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
 						</html:form>
 					</div>
-					<div class="box-body"><table class="table table-bordered table-striped table-hover">
+					<div class="box-body"><table 
+					
+					class="table table-bordered table-striped table-hover">
 						<thead><tr>
 							<th>Division Name</th>
 		                    <th width="60px">Status</th>
 		                    <th width="90px">Actions</th>
 		                </tr></thead>
 		                <tbody>
-		                	<tr><td>alexander</td>
-		                        <td align="center"><html:image src="resources/image/unlocked.png" /></td>
-		                        <td align="center">
-		                        	<html:image src="resources/image/edit.png" /> 
-		                        	<html:image src="resources/image/remove.png" />
-		                        </td>
-		                    </tr>
+		                <logic:notEmpty name="listDivision">
+							<logic:iterate id="iter" name="listDivision">
+			                	<tr><td><bean:write name="iter" property="divisionName"/> </td>
+			                        <td align="center"><html:image src="resources/image/unlocked.png" /></td>
+			                        <td align="center">
+			                        	<html:image src="resources/image/edit.png" /> 
+			                        	<html:image src="resources/image/remove.png" />
+			                        </td>
+			                    </tr>
+		                    </logic:iterate>
+							</logic:notEmpty>
+							<logic:empty name="listDivision">
+								<tr>
+									<td align="center" colspan="3">DATA KOSONG</td>
+								</tr>
+							</logic:empty>
 	                   </tbody>
 		            </table></div>
 					<ul class="pagination">
@@ -132,7 +143,11 @@
 	<script>
 		$.widget.bridge('uibutton', $.ui.button);
 	</script>
+ 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<!-- 
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
 	 -->

@@ -21,6 +21,8 @@
 }
 
 .pagination {
+	font-family: 'Tahoma';
+	font-size : 90%;
 	display: inline-block;
 	padding-left: 0;
 	margin: 2px 0px 20px 10px;
@@ -57,15 +59,19 @@
 }
 
 .paginate-3 {
-	margin-left: 180px;	
-	padding-left: 180px;
 }
 
 .go-to-page{
 	height: 33px;
 	text-align: center;	
+	margin-left: 5px;
 }
 
 .btn-go-page{
 	height: 35px;
+}
+
+.table {
+	font-family: 'Tahoma';
+	font-size : 90%;
 }

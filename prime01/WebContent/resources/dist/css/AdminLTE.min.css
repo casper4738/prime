@@ -6,7 +6,7 @@
  *           Please visit http://opensource.org/licenses/MIT for more information
 !*/
 html, body {
-	min-height: 100%
+	min-height: 100%;
 }
 
 .layout-boxed html, .layout-boxed body {
@@ -20,7 +20,7 @@ body {
 		sans-serif;
 	font-weight: 400;
 	overflow-x: hidden;
-	overflow-y: auto
+	overflow-y: auto;
 }
 
 .wrapper {
