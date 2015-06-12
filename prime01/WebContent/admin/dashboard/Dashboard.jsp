@@ -23,21 +23,8 @@
 <body class="skin-blue sidebar-mini">
 	<div class="wrapper">
 
-		<jsp:include page="/admin/content/Header.jsp"></jsp:include>
-		<aside class="main-sidebar">
-			<section class="sidebar">
-				<div class="user-panel">
-					<div class="pull-left image">
-						<img src="resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
-					</div>
-					<div class="pull-left info">
-						<p>Alexander</p>
-						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-					</div>
-				</div>
-				<jsp:include page="/admin/content/Menu.jsp"></jsp:include>
-			</section>
-		</aside>
+		<jsp:include page="/content/Header.jsp"></jsp:include>
+	
 
 		<div class="content-wrapper">
 			<section class="content-header">
@@ -48,7 +35,6 @@
 					<li class="active">Dashboard</li>
 				</ol>
 			</section>
-
 			<section class="content">
 				<div class="row">
 					<section class="col-lg-7 connectedSortable">
@@ -197,13 +183,8 @@
 				</div>
 			</section>
 		</div>
-		<!-- /.content-wrapper -->
-		<footer class="main-footer">
-			<div class="pull-right hidden-xs">
-				<b>Prime Version</b> 1.0
-			</div>
-			<strong>Copyright@2015 Prime | Theme By <a href="#">Almsaeed Studio</a>.</strong>
-		</footer>
+		
+		<jsp:include page="/content/Footer.jsp"></jsp:include>
 	</div>
 
 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
@@ -214,9 +195,9 @@
 		$.widget.bridge('uibutton', $.ui.button);
 	</script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	
+	<!-- 
 	<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-	
+	 -->
 	<script src="resources/plugins/morris/morris.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
