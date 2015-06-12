@@ -4,6 +4,7 @@
 	<form-beans>
 		<form-bean name="DashboardAdminForm" type="prime.admin.dashboard.DashboardForm"></form-bean>
 		<form-bean name="UserAdminForm" type="prime.admin.user.UserForm"></form-bean>
+		<form-bean name="DivisionAdminForm" type="prime.admin.division.DivisionForm"></form-bean>
 	</form-beans>
 	<action-mappings>
 		<action path="/DashboardAdmin" name="DashboardAdminForm" type="prime.admin.dashboard.DashboardAction" scope="request">
@@ -11,6 +12,9 @@
 		</action>
 		<action path="/UserAdmin" name="UserAdminForm" type="prime.admin.user.UserAction" scope="request">
 			<forward name="success" path="/admin/user/UserHome.jsp"></forward>
+		</action>
+		<action path="/DivisionAdmin" name="DivisionAdminForm" type="prime.admin.division.DivisionAction" scope="request">
+			<forward name="success" path="/admin/division/DivisionHome.jsp"></forward>
 		</action>
 	</action-mappings>
 	<message-resources parameter="application" />

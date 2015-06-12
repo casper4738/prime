@@ -8,6 +8,7 @@
 	margin-bottom: 10px;	
 }
 
+
 .show-in-page {
 	float:left;
 	margin-left: 10px;
@@ -24,6 +25,7 @@
 	padding-left: 0;
 	margin: 2px 0px 20px 10px;
 	border-radius: 4px;
+	width:650px;
 }
 
 .pagination>li {
@@ -52,4 +54,18 @@
 	cursor: default;
 	background-color: #337ab7;
 	border-color: #337ab7
+}
+
+.paginate-3 {
+	margin-left: 180px;	
+	padding-left: 180px;
+}
+
+.go-to-page{
+	height: 33px;
+	text-align: center;	
+}
+
+.btn-go-page{
+	height: 35px;
 }

@@ -1,4 +1,4 @@
-package prime.admin.user;
+package prime.admin.division;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -12,16 +12,23 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import prime.utility.PaginationUtility;
+import prime.utility.PrimeUtil;
 
-public class UserAction extends Action {
+public class DivisionAction extends Action {
 
 	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		DivisionForm divisionForm = (DivisionForm) form;
+		DivisionManager manager = new DivisionManagerImpl();
 		
-		UserForm userForm = (UserForm) form;
+		int countRows  = manager.getCountByColumn(divisionForm.getColumnSearch(), divisionForm.getSearch());
+		List<DivisionBean> list = manager.getListByColumn(divisionForm.getColumnSearch(), divisionForm.getSearch(),
+				PrimeUtil.getStartRow(divisionForm.getGoToPage(), divisionForm.getShowInPage()),  
+				PrimeUtil.getEndRow(divisionForm.getGoToPage(), divisionForm.getShowInPage(), countRows));
 		
-		setPaging(request, 100, userForm.getGoToPage(), 10);
+		request.setAttribute("listDivision", list);
+
+		setPaging(request, countRows, divisionForm.getGoToPage(), divisionForm.getShowInPage());
 		return mapping.findForward("success");
 	}
 	

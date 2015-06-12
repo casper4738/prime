@@ -57,7 +57,7 @@
 					
 					<div class="show-in-page">
 						Show per page
-						<html:select property="showInPage" name="UserAdminForm" styleId="view_data">
+						<html:select property="showInPage" name="DivisionAdminForm" styleId="view_data">
 							<html:option value="5">5</html:option>
 							<html:option value="10">10</html:option>
 							<html:option value="25">25</html:option>
@@ -66,40 +66,27 @@
 					</div>
 					<div class="search-table">
 						<html:form action="/UserAdmin" >
-							<html:hidden name="UserAdminForm" property="task" value="search"/>
-							<html:hidden name="UserAdminForm" property="goToPage"/>
+							<html:hidden name="DivisionAdminForm" property="task" value="search"/>
+							<html:hidden name="DivisionAdminForm" property="goToPage"/>
 							
-							<html:select name="UserAdminForm" property="columnSearch" styleClass="columnSearch">
+							<html:select name="DivisionAdminForm" property="columnSearch" styleClass="columnSearch">
 								<html:option value="SHOW_ALL">SHOW ALL</html:option>
 							</html:select>
-							<html:text name="UserAdminForm" property="search" styleClass="textSearch"/>
+							<html:text name="DivisionAdminForm" property="search" styleClass="textSearch"/>
 							<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
 						</html:form>
 					</div>
 					<div class="box-body"><table class="table table-bordered table-striped table-hover">
 						<thead><tr>
-							<th>Username</th>
-							<th>Sys Level</th>
-							<th>Employee Name</th>
-		                    <th>Status</th>
-		                    <th>Actions</th>
+							<th>Division Name</th>
+		                    <th width="60px">Status</th>
+		                    <th width="90px">Actions</th>
 		                </tr></thead>
 		                <tbody>
 		                	<tr><td>alexander</td>
-		                        <td>Admin</td>
-		                        <td>Alexander</td>
 		                        <td align="center"><html:image src="resources/image/unlocked.png" /></td>
 		                        <td align="center">
-		                        	<html:image src="resources/image/edit.png" />
-		                        	<html:image src="resources/image/remove.png" />
-		                        </td>
-		                    </tr>
-		                    <tr><td>alexander</td>
-		                        <td>Operator</td>
-		                        <td>Alexander</td>
-		                        <td align="center"><html:image src="resources/image/locked.png" /></td>
-		                        <td align="center">
-		                        	<html:image src="resources/image/edit.png" />
+		                        	<html:image src="resources/image/edit.png" /> 
 		                        	<html:image src="resources/image/remove.png" />
 		                        </td>
 		                    </tr>
@@ -121,7 +108,7 @@
 						<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 						
 						<div class="paginate-3">
-							<html:text name="UserAdminForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+							<html:text name="DivisionAdminForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 							<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
 						</div>
 					</ul>

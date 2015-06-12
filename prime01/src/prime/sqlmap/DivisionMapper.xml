@@ -1,0 +1,31 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="division">
+	<select id="getListByCol" resultClass="prime.admin.division.DivisionBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT DIVISION_ID AS divisionId, 
+		NAME AS divisionName
+		FROM DIVISION
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		       	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	    ORDER BY NAME ASC) page 
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
+	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1) 
+		FROM DIVISION 
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		      	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	</select>
+	
+</sqlMap>

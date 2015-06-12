@@ -1,14 +1,14 @@
-package prime.admin.user;
+package prime.admin.division;
 
 import org.apache.struts.action.ActionForm;
 
-public class UserForm extends ActionForm {
+public class DivisionForm extends ActionForm {
 
 	private String task;
 	private String search;
 	private String columnSearch;
 	private Integer goToPage = 1;
-	private Integer showInPage;
+	private Integer showInPage = 10;
 
 	public String getTask() {
 		return task;
