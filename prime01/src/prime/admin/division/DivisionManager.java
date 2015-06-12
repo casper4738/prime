@@ -19,4 +19,5 @@ public interface DivisionManager {
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 	
 	public Integer getNewId() throws SQLException;
+	
 }

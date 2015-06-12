@@ -21,6 +21,10 @@ public class DivisionAction extends Action {
 		DivisionForm divisionForm = (DivisionForm) form;
 		DivisionManager manager = new DivisionManagerImpl();
 		
+		if("add".equals(divisionForm.getTask())) {			
+			return mapping.findForward("add");
+		}
+		
 		int countRows  = manager.getCountByColumn(divisionForm.getColumnSearch(), divisionForm.getSearch());
 		List<DivisionBean> list = manager.getListByColumn(divisionForm.getColumnSearch(), divisionForm.getSearch(),
 				PrimeUtil.getStartRow(divisionForm.getGoToPage(), divisionForm.getShowInPage()),  
