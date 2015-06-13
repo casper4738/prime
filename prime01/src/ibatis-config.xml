@@ -37,5 +37,6 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 	<sqlMap resource="prime/sqlmap/division-mapper.xml" />
 	<sqlMap resource="prime/sqlmap/position-mapper.xml" />
 	<sqlMap resource="prime/sqlmap/role-mapper.xml" />
+	<sqlMap resource="prime/sqlmap/holiday-mapper.xml" />
 	
 </sqlMapConfig>

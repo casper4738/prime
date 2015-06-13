@@ -7,6 +7,7 @@ public class PaginationUtility {
 
 	private int countRows;
 	private int view;
+	private int page;
 	private int pageNext;
 	private int pagePrev;
 	private int sumOfPage;
@@ -25,8 +26,10 @@ public class PaginationUtility {
 		else
 			pagePrev = page - 1;
 
-		if (page >= sumOfPage)
+		if (page >= sumOfPage) {
+			page = sumOfPage;
 			pageNext = page;
+		}
 		else
 			pageNext = page + 1;
 
@@ -48,6 +51,9 @@ public class PaginationUtility {
 			end = page + 2;
 		}
 
+		System.out.println("page:"+page);
+		this.page = page;
+		
 		List<Integer> listPage = new ArrayList<Integer>();
 		for (int i = begin; i <= end; i++) {
 			listPage.add(i);
@@ -75,4 +81,9 @@ public class PaginationUtility {
 		return sumOfPage;
 	}
 
+	public int getPage() {
+		return page;
+	}
+	
 }
+

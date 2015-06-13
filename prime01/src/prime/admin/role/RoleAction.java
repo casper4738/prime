@@ -40,16 +40,16 @@ public class RoleAction extends Action {
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		List<RoleBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
-				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage()),  
+				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 		
-		request.setAttribute("listDivision", list);
+		request.setAttribute("listRole", list);
 
-		setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+		setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		return mapping.findForward("success");
 	}
 	
-	private void setPaging(HttpServletRequest request, int countRows, int page, int view)
+	private void setPaging(HttpServletRequest request, RoleForm pForm, int countRows, int page, int view)
 			throws SQLException {
 		PaginationUtility pageUtil = new PaginationUtility();
 		pageUtil.setCountRows(countRows);
@@ -62,6 +62,8 @@ public class RoleAction extends Action {
 		request.setAttribute("pageLast", pageUtil.getSumOfPage());
 		request.setAttribute("pagePrev", pageUtil.getPagePrev());
 		request.setAttribute("pageNext", pageUtil.getPageNext());
+		
+		pForm.setGoToPage(pageUtil.getPage());
 	}
 
 }

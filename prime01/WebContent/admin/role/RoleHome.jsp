@@ -71,8 +71,8 @@
 		                    <th width="90px">Actions</th>
 		                </tr></thead>
 		                <tbody>
-		                <logic:notEmpty name="listDivision">
-							<logic:iterate id="iter" name="listDivision">
+		                <logic:notEmpty name="listRole">
+							<logic:iterate id="iter" name="listRole">
 			                	<tr><td><bean:write name="iter" property="roleName"/></td>
 			                        <td align="center">
 			                        <logic:equal name="iter" property="roleStatus" value="1">
@@ -88,7 +88,7 @@
 			                    </tr>
 		                    </logic:iterate>
 							</logic:notEmpty>
-							<logic:empty name="listDivision">
+							<logic:empty name="listRole">
 								<tr>
 									<td align="center" colspan="3">DATA KOSONG</td>
 								</tr>
