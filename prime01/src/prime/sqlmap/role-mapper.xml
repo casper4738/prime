@@ -1,0 +1,62 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="role">
+	<insert id="insert" parameterClass="prime.admin.role.RoleBean">
+		INSERT INTO ROLE
+		(ROLE_ID , ROLE_NAME, ROLE_STATUS) VALUES 
+		(#roleId#, #roleName#, #roleStatus#)
+	</insert>
+	
+	<update id="update" parameterClass="prime.admin.role.RoleBean">
+		UPDATE ROLE SET
+		ROLE_NAME=#roleName#, 
+		ROLE_STATUS=#roleStatus#
+		WHERE DIVISION_ID=#roleId#
+	</update>
+	
+	<delete id="delete" parameterClass="java.lang.Integer">
+		UPDATE ROLE SET
+		ROLE_STATUS=0
+		WHERE ROLE_ID=#id#
+	</delete>
+	
+	<select id="getNewId" resultClass="java.lang.Integer">
+		SELECT NVL(MAX(ROLE_ID)+1, 1) FROM ROLE
+	</select>
+	
+	<select id="get" resultClass="prime.admin.role.RoleBean" parameterClass="java.lang.Integer">
+		SELECT ROLE_ID AS roleId, 
+		ROLE_NAME AS roleName,
+		ROLE_STATUS AS roleStatus
+		FROM ROLE
+		WHERE ROLE_ID=#id#
+	</select>
+	
+	<select id="getListByCol" resultClass="prime.admin.role.RoleBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT ROLE_ID AS roleId, 
+		ROLE_NAME AS roleName,
+		ROLE_STATUS AS roleStatus
+		FROM ROLE
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		       	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(ROLE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	    ORDER BY ROLE_NAME ASC) page 
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
+	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1) 
+		FROM ROLE 
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		      	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(ROLE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	</select>
+</sqlMap>

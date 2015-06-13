@@ -1,24 +1,24 @@
-package prime.admin.division;
+package prime.admin.role;
 
 import org.apache.struts.action.ActionForm;
 
-public class DivisionForm extends ActionForm {
+public class RoleForm extends ActionForm {
 
-	private DivisionBean divisionBean = new DivisionBean();
+	private RoleBean positionBean = new RoleBean();
 	private String task;
 	private String search;
 	private String columnSearch;
 	private String message;
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
-	private Integer divisionId;
+	private Integer positionId;
 
-	public DivisionBean getDivisionBean() {
-		return divisionBean;
+	public RoleBean getPositionBean() {
+		return positionBean;
 	}
 
-	public void setDivisionBean(DivisionBean divisionBean) {
-		this.divisionBean = divisionBean;
+	public void setPositionBean(RoleBean positionBean) {
+		this.positionBean = positionBean;
 	}
 
 	public String getTask() {
@@ -69,12 +69,12 @@ public class DivisionForm extends ActionForm {
 		this.showInPage = showInPage;
 	}
 
-	public Integer getDivisionId() {
-		return divisionId;
+	public Integer getPositionId() {
+		return positionId;
 	}
 
-	public void setDivisionId(Integer divisionId) {
-		this.divisionId = divisionId;
+	public void setPositionId(Integer positionId) {
+		this.positionId = positionId;
 	}
 
 }

@@ -75,3 +75,18 @@
 	font-family: 'Tahoma';
 	font-size : 90%;
 }
+
+.form-input {
+	width:70%;
+}
+
+.form-input tr{
+	height: 50px;
+}
+
+.message {
+	float : right;
+	font-size: 20px;
+	margin-right: 10px;
+	color: red;
+}

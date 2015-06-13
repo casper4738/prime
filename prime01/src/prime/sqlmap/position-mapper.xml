@@ -1,0 +1,62 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="position">
+	<insert id="insert" parameterClass="prime.admin.position.PositionBean">
+		INSERT INTO POSITION
+		(POSITION_ID , POSITION_NAME, POSITION_STATUS) VALUES 
+		(#positionId#, #positionName#, #positionStatus#)
+	</insert>
+	
+	<update id="update" parameterClass="prime.admin.position.PositionBean">
+		UPDATE POSITION SET
+		POSITION_NAME=#positionName#, 
+		POSITION_STATUS=#positionStatus#
+		WHERE DIVISION_ID=#positionId#
+	</update>
+	
+	<delete id="delete" parameterClass="java.lang.Integer">
+		UPDATE POSITION SET
+		POSITION_STATUS=0
+		WHERE POSITION_ID=#id#
+	</delete>
+	
+	<select id="getNewId" resultClass="java.lang.Integer">
+		SELECT NVL(MAX(POSITION_ID)+1, 1) FROM POSITION
+	</select>
+	
+	<select id="get" resultClass="prime.admin.position.PositionBean" parameterClass="java.lang.Integer">
+		SELECT POSITION_ID AS positionId, 
+		POSITION_NAME AS positionName,
+		POSITION_STATUS AS positionStatus
+		FROM POSITION
+		WHERE POSITION_ID=#id#
+	</select>
+	
+	<select id="getListByCol" resultClass="prime.admin.position.PositionBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT POSITION_ID AS positionId, 
+		POSITION_NAME AS positionName,
+		POSITION_STATUS AS positionStatus
+		FROM POSITION
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		       	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(POSITION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	    ORDER BY POSITION_NAME ASC) page 
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
+	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1) 
+		FROM POSITION 
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		      	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(POSITION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	</select>
+</sqlMap>

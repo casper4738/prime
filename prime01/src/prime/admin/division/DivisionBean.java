@@ -4,7 +4,7 @@ public class DivisionBean {
 
 	private Integer divisionId;
 	private String divisionName;
-	private Integer divisionStatus;
+	private Integer divisionStatus = 0;
 
 	public Integer getDivisionId() {
 		return divisionId;

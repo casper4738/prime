@@ -1,6 +1,37 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="division">
+	<insert id="insert" parameterClass="prime.admin.division.DivisionBean">
+		INSERT INTO DIVISION
+		(DIVISION_ID , DIVISION_NAME, DIVISION_STATUS) VALUES 
+		(#divisionId#, #divisionName#, #divisionStatus#)
+	</insert>
+	
+	<update id="update" parameterClass="prime.admin.division.DivisionBean">
+		UPDATE DIVISION SET
+		DIVISION_NAME=#divisionName#, 
+		DIVISION_STATUS=#divisionStatus#
+		WHERE DIVISION_ID=#divisionId#
+	</update>
+	
+	<delete id="delete" parameterClass="java.lang.Integer">
+		UPDATE DIVISION SET
+		DIVISION_STATUS=0
+		WHERE DIVISION_ID=#id#
+	</delete>
+	
+	<select id="getNewId" resultClass="java.lang.Integer">
+		SELECT NVL(MAX(DIVISION_ID)+1, 1) FROM DIVISION
+	</select>
+	
+	<select id="get" resultClass="prime.admin.division.DivisionBean" parameterClass="java.lang.Integer">
+		SELECT DIVISION_ID AS divisionId, 
+		DIVISION_NAME AS divisionName,
+		DIVISION_STATUS AS divisionStatus
+		FROM DIVISION
+		WHERE DIVISION_ID=#id#
+	</select>
+	
 	<select id="getListByCol" resultClass="prime.admin.division.DivisionBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT DIVISION_ID AS divisionId, 

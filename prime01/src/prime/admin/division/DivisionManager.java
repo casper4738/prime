@@ -11,7 +11,7 @@ public interface DivisionManager {
 	
 	public void delete(Integer id) throws SQLException;
 	
-	public DivisionBean getEmployeeById(Integer id) throws SQLException;
+	public DivisionBean getDivisionById(Integer id) throws SQLException;
 	
 	public List<DivisionBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow)
 			throws SQLException;

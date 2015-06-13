@@ -1,4 +1,4 @@
-package prime.admin.division;
+package prime.admin.position;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -14,33 +14,33 @@ import org.apache.struts.action.ActionMapping;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
-public class DivisionAction extends Action {
+public class PositionAction extends Action {
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		DivisionForm pForm = (DivisionForm) form;
-		DivisionManager manager = new DivisionManagerImpl();
+		PositionForm pForm = (PositionForm) form;
+		PositionManager manager = new PositionManagerImpl();
 		
 		if("add".equals(pForm.getTask())) {
-			pForm.getDivisionBean().setDivisionId(manager.getNewId());
-			pForm.getDivisionBean().setDivisionStatus(1);
+			pForm.getPositionBean().setPositionId(manager.getNewId());
+			pForm.getPositionBean().setPositionStatus(1);
 			return mapping.findForward("add");
 		} else if("edit".equals(pForm.getTask())) {
-			pForm.setDivisionBean(manager.getDivisionById(pForm.getDivisionId()));
+			pForm.setPositionBean(manager.getPositionById(pForm.getPositionId()));
 			return mapping.findForward("edit");
 		} else if("insert".equals(pForm.getTask())) {
-			manager.insert(pForm.getDivisionBean());
+			manager.insert(pForm.getPositionBean());
 			return mapping.findForward("forward");
 		} else if("update".equals(pForm.getTask())) {
-			manager.update(pForm.getDivisionBean());
+			manager.update(pForm.getPositionBean());
 			return mapping.findForward("forward");
 		} else if("delete".equals(pForm.getTask())) {
-			manager.delete(pForm.getDivisionId());
+			manager.delete(pForm.getPositionId());
 			return mapping.findForward("forward");
 		}
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-		List<DivisionBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+		List<PositionBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage()),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 		

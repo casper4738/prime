@@ -1,4 +1,4 @@
-package prime.admin.division;
+package prime.admin.position;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -9,28 +9,28 @@ import prime.utility.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
 
-public class DivisionManagerImpl implements DivisionManager {
+public class PositionManagerImpl implements PositionManager {
 
 	private SqlMapClient mapper;
 	
-	public DivisionManagerImpl() {
+	public PositionManagerImpl() {
 		mapper = IbatisHelper.getSqlMapInstance();
 	}
 
-	public void insert(DivisionBean e) throws SQLException {
+	public void insert(PositionBean e) throws SQLException {
 		try {
 			mapper.startTransaction();
-			mapper.delete("division.insert", e);
+			mapper.delete("position.insert", e);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
 		}
 	}
 
-	public void update(DivisionBean e) throws SQLException {
+	public void update(PositionBean e) throws SQLException {
 		try {
 			mapper.startTransaction();
-			mapper.update("division.update", e);
+			mapper.update("position.update", e);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
@@ -40,36 +40,36 @@ public class DivisionManagerImpl implements DivisionManager {
 	public void delete(Integer id) throws SQLException {
 		try {
 			mapper.startTransaction();
-			mapper.update("division.delete", id);
+			mapper.update("position.delete", id);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
 		}
 	}
 
-	public DivisionBean getDivisionById(Integer id) throws SQLException {
-		return (DivisionBean) mapper.queryForObject("division.get", id);
+	public PositionBean getPositionById(Integer id) throws SQLException {
+		return (PositionBean) mapper.queryForObject("position.get", id);
 	}
 
-	public List<DivisionBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow) 
+	public List<PositionBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow) 
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);			
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
-		return mapper.queryForList("division.getListByCol", map);
+		return mapper.queryForList("position.getListByCol", map);
 	}
 
 	public Integer getNewId() throws SQLException {
-		return (Integer) mapper.queryForObject("division.getNewId", null);
+		return (Integer) mapper.queryForObject("position.getNewId", null);
 	}
 
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
-		return (Integer) mapper.queryForObject("division.getCountListByCol", map);
+		return (Integer) mapper.queryForObject("position.getCountListByCol", map);
 	}
 
 }

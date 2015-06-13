@@ -22,26 +22,26 @@
 		
 		<div class="content-wrapper">
 			<section class="content-header">
-				<h1>Manage Division<small>management system</small>
+				<h1>Manage Position<small>management system</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Manage Division</li>
+					<li class="active">Manage Position</li>
 				</ol>
 			</section>
 
 			<section class="content">
 			<div class="row">
 				<div class="col-xs-12"><div class="box">
-					<div class="box-header"><h3 class="box-title">Data Manage Division</h3></div>
+					<div class="box-header"><h3 class="box-title">Data Manage Position</h3></div>
 					
 					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('add')">
 	                    <i class="fa fa-edit"></i>Add
                     </span>
-                    <span class="message"><bean:write name="DivisionAdminForm" property="message" /></span></p>
+                    <span class="message"><bean:write name="PositionAdminForm" property="message" /></span></p>
 					<div class="show-in-page">
 						Show per page
-						<html:select name="DivisionAdminForm" property="showInPage" onchange="change(this.value)" >
+						<html:select name="PositionAdminForm" property="showInPage" onchange="change(this.value)" >
 							<html:option value="5">5</html:option>
 							<html:option value="10">10</html:option>
 							<html:option value="25">25</html:option>
@@ -49,16 +49,16 @@
 						</html:select>
 					</div>
 					<div class="search-table">
-						<html:form action="/DivisionAdmin" >
-							<html:hidden name="DivisionAdminForm" property="task" value="search"/>
-							<html:hidden name="DivisionAdminForm" property="divisionId"/>
-							<html:hidden name="DivisionAdminForm" property="goToPage"/>
-							<html:hidden name="DivisionAdminForm" property="showInPage"/>
-							<html:select name="DivisionAdminForm" property="columnSearch" styleClass="columnSearch">
+						<html:form action="/PositionAdmin" >
+							<html:hidden name="PositionAdminForm" property="task" value="search"/>
+							<html:hidden name="PositionAdminForm" property="positionId"/>
+							<html:hidden name="PositionAdminForm" property="goToPage"/>
+							<html:hidden name="PositionAdminForm" property="showInPage"/>
+							<html:select name="PositionAdminForm" property="columnSearch" styleClass="columnSearch">
 								<html:option value="SHOW_ALL">SHOW ALL</html:option>
 								<html:option value="NAME">DIVISION NAME</html:option>
 							</html:select>
-							<html:text name="DivisionAdminForm" property="search" styleClass="textSearch"/>
+							<html:text name="PositionAdminForm" property="search" styleClass="textSearch"/>
 							<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
 						</html:form>
 					</div>
@@ -111,7 +111,7 @@
 						<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 						
 						<div class="paginate-3">
-							<html:text name="DivisionAdminForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+							<html:text name="PositionAdminForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 							<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
 						</div>
 					</ul>

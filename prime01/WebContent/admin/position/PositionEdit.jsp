@@ -21,28 +21,34 @@
 		<jsp:include page="/content/Header.jsp"></jsp:include>
 		<div class="content-wrapper">
 			<section class="content-header">
-				<h1>Manage Division<small>management system</small>
+				<h1>Manage Position<small>management system</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Manage Division</li>
+					<li class="active">Manage Position</li>
 				</ol>
 			</section>
 
 			<section class="content">
 			<div class="row">
 				<div class="col-xs-12"><div class="box">
-					<div class="box-header"><h3 class="box-title">Data Division</h3></div>
+					<div class="box-header"><h3 class="box-title">Data Position</h3></div>
 					<div class="box-body">
-                  	<html:form action="/DivisionAdmin">
-                  		<html:hidden name="DivisionAdminForm" property="task" value="insert"/>
-                  		<html:hidden name="DivisionAdminForm" property="divisionBean.divisionId" />
-                  		<html:hidden name="DivisionAdminForm" property="divisionBean.divisionStatus" />
+                  	<html:form action="/PositionAdmin">
+                  		<html:hidden name="PositionAdminForm" property="task" value="update"/>
+                  		<html:hidden name="PositionAdminForm" property="positionBean.positionId" />
                   		<table class="form-input" align="center">
                   			<tr>
-                  				<td>Division Name</td>
+                  				<td>Position Name</td>
                   				<td>:</td>
-                  				<td><html:text name="DivisionAdminForm" property="divisionBean.divisionName" styleClass="form-control"/></td>
+                  				<td><html:text name="PositionAdminForm" property="positionBean.positionName" styleClass="form-control"/></td>
+                  			</tr>
+                  			<tr>
+                  				<td>Status</td>
+                  				<td>:</td>
+                  				<td>
+                  				<html:checkbox name="PositionAdminForm" property="positionBean.positionStatus" value="1"  />
+								</td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">

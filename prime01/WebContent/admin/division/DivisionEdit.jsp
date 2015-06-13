@@ -35,14 +35,20 @@
 					<div class="box-header"><h3 class="box-title">Data Division</h3></div>
 					<div class="box-body">
                   	<html:form action="/DivisionAdmin">
-                  		<html:hidden name="DivisionAdminForm" property="task" value="insert"/>
+                  		<html:hidden name="DivisionAdminForm" property="task" value="update"/>
                   		<html:hidden name="DivisionAdminForm" property="divisionBean.divisionId" />
-                  		<html:hidden name="DivisionAdminForm" property="divisionBean.divisionStatus" />
                   		<table class="form-input" align="center">
                   			<tr>
                   				<td>Division Name</td>
                   				<td>:</td>
                   				<td><html:text name="DivisionAdminForm" property="divisionBean.divisionName" styleClass="form-control"/></td>
+                  			</tr>
+                  			<tr>
+                  				<td>Status</td>
+                  				<td>:</td>
+                  				<td>
+                  				<html:checkbox name="DivisionAdminForm" property="divisionBean.divisionStatus" value="1"  />
+								</td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">
