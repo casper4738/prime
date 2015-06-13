@@ -22,20 +22,19 @@ public class RoleAction extends Action {
 		RoleManager manager = new RoleManagerImpl();
 		
 		if("add".equals(pForm.getTask())) {
-			pForm.getPositionBean().setRoleId(manager.getNewId());
-			pForm.getPositionBean().setRoleStatus(1);
+			pForm.getRoleBean().setRoleId(manager.getNewId());
 			return mapping.findForward("add");
 		} else if("edit".equals(pForm.getTask())) {
-			pForm.setPositionBean(manager.getRoleById(pForm.getPositionId()));
+			pForm.setRoleBean(manager.getRoleById(pForm.getTmpId()));
 			return mapping.findForward("edit");
 		} else if("insert".equals(pForm.getTask())) {
-			manager.insert(pForm.getPositionBean());
+			manager.insert(pForm.getRoleBean());
 			return mapping.findForward("forward");
 		} else if("update".equals(pForm.getTask())) {
-			manager.update(pForm.getPositionBean());
+			manager.update(pForm.getRoleBean());
 			return mapping.findForward("forward");
 		} else if("delete".equals(pForm.getTask())) {
-			manager.delete(pForm.getPositionId());
+			manager.delete(pForm.getTmpId());
 			return mapping.findForward("forward");
 		}
 		

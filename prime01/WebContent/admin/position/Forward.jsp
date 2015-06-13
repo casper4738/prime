@@ -11,20 +11,20 @@
 </head>
 <body>
 
-<html:form action="/DivisionAdmin">
-	<html:hidden name="DivisionAdminForm" property="task"/>
-	<html:hidden name="DivisionAdminForm" property="message"/>
+<html:form action="/PositionAdmin">
+	<html:hidden name="PositionAdminForm" property="task"/>
+	<html:hidden name="PositionAdminForm" property="message"/>
 </html:form>
 
-<logic:equal name="DivisionAdminForm" property="task" value="insert">
+<logic:equal name="PositionAdminForm" property="task" value="insert">
 	<script>flyToForward('success', '<bean:message key="label.message.insert"/>')</script>
 </logic:equal>
 
-<logic:equal name="DivisionAdminForm" property="task" value="update">
+<logic:equal name="PositionAdminForm" property="task" value="update">
 	<script>flyToForward('success', '<bean:message key="label.message.update"/>')</script>
 </logic:equal>
 
-<logic:equal name="DivisionAdminForm" property="task" value="delete">
+<logic:equal name="PositionAdminForm" property="task" value="delete">
 	<script>flyToForward('success', '<bean:message key="label.message.delete"/>')</script>
 </logic:equal>
 

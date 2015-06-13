@@ -44,7 +44,7 @@
                   				<td><html:text name="DivisionAdminForm" property="divisionBean.divisionName" styleClass="form-control"/></td>
                   			</tr>
                   			<tr>
-                  				<td>Status</td>
+                  				<td>Active</td>
                   				<td>:</td>
                   				<td>
                   				<html:checkbox name="DivisionAdminForm" property="divisionBean.divisionStatus" value="1"  />

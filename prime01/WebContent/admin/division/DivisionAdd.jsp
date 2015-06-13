@@ -37,12 +37,18 @@
                   	<html:form action="/DivisionAdmin">
                   		<html:hidden name="DivisionAdminForm" property="task" value="insert"/>
                   		<html:hidden name="DivisionAdminForm" property="divisionBean.divisionId" />
-                  		<html:hidden name="DivisionAdminForm" property="divisionBean.divisionStatus" />
                   		<table class="form-input" align="center">
                   			<tr>
                   				<td>Division Name</td>
                   				<td>:</td>
                   				<td><html:text name="DivisionAdminForm" property="divisionBean.divisionName" styleClass="form-control"/></td>
+                  			</tr>
+                  			<tr>
+                  				<td>Active</td>
+                  				<td>:</td>
+                  				<td>
+                  				<html:checkbox name="DivisionAdminForm" property="divisionBean.divisionStatus" value="1"  />
+								</td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">

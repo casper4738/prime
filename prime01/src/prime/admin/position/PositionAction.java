@@ -23,10 +23,9 @@ public class PositionAction extends Action {
 		
 		if("add".equals(pForm.getTask())) {
 			pForm.getPositionBean().setPositionId(manager.getNewId());
-			pForm.getPositionBean().setPositionStatus(1);
 			return mapping.findForward("add");
 		} else if("edit".equals(pForm.getTask())) {
-			pForm.setPositionBean(manager.getPositionById(pForm.getPositionId()));
+			pForm.setPositionBean(manager.getPositionById(pForm.getTmpId()));
 			return mapping.findForward("edit");
 		} else if("insert".equals(pForm.getTask())) {
 			manager.insert(pForm.getPositionBean());
@@ -35,7 +34,7 @@ public class PositionAction extends Action {
 			manager.update(pForm.getPositionBean());
 			return mapping.findForward("forward");
 		} else if("delete".equals(pForm.getTask())) {
-			manager.delete(pForm.getPositionId());
+			manager.delete(pForm.getTmpId());
 			return mapping.findForward("forward");
 		}
 		

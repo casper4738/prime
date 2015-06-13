@@ -44,7 +44,7 @@
                   				<td><html:text name="PositionAdminForm" property="positionBean.positionName" styleClass="form-control"/></td>
                   			</tr>
                   			<tr>
-                  				<td>Status</td>
+                  				<td>Active</td>
                   				<td>:</td>
                   				<td>
                   				<html:checkbox name="PositionAdminForm" property="positionBean.positionStatus" value="1"  />

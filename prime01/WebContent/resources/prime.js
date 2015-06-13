@@ -5,7 +5,7 @@ function flyToPage(task) {
 
 function flyToEditDelete(task, value) {
 	document.forms[0].task.value = task;
-	document.forms[0].divisionId.value = value;
+	document.forms[0].tmpId.value = value;
 	document.forms[0].submit();
 }
 

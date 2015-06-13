@@ -51,7 +51,7 @@
 					<div class="search-table">
 						<html:form action="/DivisionAdmin" >
 							<html:hidden name="DivisionAdminForm" property="task" value="search"/>
-							<html:hidden name="DivisionAdminForm" property="divisionId"/>
+							<html:hidden name="DivisionAdminForm" property="tmpId"/>
 							<html:hidden name="DivisionAdminForm" property="goToPage"/>
 							<html:hidden name="DivisionAdminForm" property="showInPage"/>
 							<html:select name="DivisionAdminForm" property="columnSearch" styleClass="columnSearch">

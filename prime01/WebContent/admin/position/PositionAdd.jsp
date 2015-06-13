@@ -37,12 +37,18 @@
                   	<html:form action="/PositionAdmin">
                   		<html:hidden name="PositionAdminForm" property="task" value="insert"/>
                   		<html:hidden name="PositionAdminForm" property="positionBean.positionId" />
-                  		<html:hidden name="PositionAdminForm" property="positionBean.positionStatus" />
                   		<table class="form-input" align="center">
                   			<tr>
                   				<td>Position Name</td>
                   				<td>:</td>
                   				<td><html:text name="PositionAdminForm" property="positionBean.positionName" styleClass="form-control"/></td>
+                  			</tr>
+                  			<tr>
+                  				<td>Active</td>
+                  				<td>:</td>
+                  				<td>
+                  				<html:checkbox name="PositionAdminForm" property="positionBean.positionStatus" value="1"  />
+								</td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">

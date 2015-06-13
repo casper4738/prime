@@ -9,7 +9,7 @@
 	<li><html:link href="#" ><i class="fa fa-table"></i><span>Manage Employee</span></html:link></li>
 	<li><html:link action="DivisionAdmin" ><i class="fa fa-table"></i><span>Manage Division</span></html:link></li>
 	<li><html:link action="PositionAdmin" ><i class="fa fa-table"></i><span>Manage Position</span></html:link></li>
-	<li><html:link href="#" ><i class="fa fa-table"></i><span>Manage Role</span></html:link></li>
+	<li><html:link action="RoleAdmin" ><i class="fa fa-table"></i><span>Manage Role</span></html:link></li>
 	<li><html:link href="#" ><i class="fa fa-table"></i><span>Manage Holidays</span></html:link></li>
 	<li><html:link href="#" ><i class="fa fa-table"></i><span>View Log</span></html:link></li>
 	<li><html:link href="#" ><i class="fa fa-table"></i><span>General Setting</span></html:link></li>

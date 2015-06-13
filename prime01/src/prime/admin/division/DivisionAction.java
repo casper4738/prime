@@ -23,10 +23,9 @@ public class DivisionAction extends Action {
 		
 		if("add".equals(pForm.getTask())) {
 			pForm.getDivisionBean().setDivisionId(manager.getNewId());
-			pForm.getDivisionBean().setDivisionStatus(1);
 			return mapping.findForward("add");
 		} else if("edit".equals(pForm.getTask())) {
-			pForm.setDivisionBean(manager.getDivisionById(pForm.getDivisionId()));
+			pForm.setDivisionBean(manager.getDivisionById(pForm.getTmpId()));
 			return mapping.findForward("edit");
 		} else if("insert".equals(pForm.getTask())) {
 			manager.insert(pForm.getDivisionBean());
@@ -35,7 +34,7 @@ public class DivisionAction extends Action {
 			manager.update(pForm.getDivisionBean());
 			return mapping.findForward("forward");
 		} else if("delete".equals(pForm.getTask())) {
-			manager.delete(pForm.getDivisionId());
+			manager.delete(pForm.getTmpId());
 			return mapping.findForward("forward");
 		}
 		

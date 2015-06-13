@@ -51,12 +51,12 @@
 					<div class="search-table">
 						<html:form action="/PositionAdmin" >
 							<html:hidden name="PositionAdminForm" property="task" value="search"/>
-							<html:hidden name="PositionAdminForm" property="positionId"/>
+							<html:hidden name="PositionAdminForm" property="tmpId"/>
 							<html:hidden name="PositionAdminForm" property="goToPage"/>
 							<html:hidden name="PositionAdminForm" property="showInPage"/>
 							<html:select name="PositionAdminForm" property="columnSearch" styleClass="columnSearch">
 								<html:option value="SHOW_ALL">SHOW ALL</html:option>
-								<html:option value="NAME">DIVISION NAME</html:option>
+								<html:option value="NAME">POSITION NAME</html:option>
 							</html:select>
 							<html:text name="PositionAdminForm" property="search" styleClass="textSearch"/>
 							<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
@@ -73,17 +73,17 @@
 		                <tbody>
 		                <logic:notEmpty name="listDivision">
 							<logic:iterate id="iter" name="listDivision">
-			                	<tr><td><bean:write name="iter" property="divisionName"/></td>
+			                	<tr><td><bean:write name="iter" property="positionName"/></td>
 			                        <td align="center">
-			                        <logic:equal name="iter" property="divisionStatus" value="1">
+			                        <logic:equal name="iter" property="positionStatus" value="1">
 			                        	<html:image src="resources/image/check-true.png" /> 
 			                        </logic:equal>
-			                        <logic:equal name="iter" property="divisionStatus" value="0">
+			                        <logic:equal name="iter" property="positionStatus" value="0">
 			                        	<html:image src="resources/image/check-false.png" /> 
 			                        </logic:equal>
 			                        </td>
 			                        <td align="center">
-			                        	<input type="image" onclick="flyToEditDelete('edit', '<bean:write name="iter" property="divisionId"/>')" src="resources/image/edit.png" />
+			                        	<input type="image" onclick="flyToEditDelete('edit', '<bean:write name="iter" property="positionId"/>')" src="resources/image/edit.png" />
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>

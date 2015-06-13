@@ -2,33 +2,33 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="role">
 	<insert id="insert" parameterClass="prime.admin.role.RoleBean">
-		INSERT INTO ROLE
+		INSERT INTO ROLES
 		(ROLE_ID , ROLE_NAME, ROLE_STATUS) VALUES 
 		(#roleId#, #roleName#, #roleStatus#)
 	</insert>
 	
 	<update id="update" parameterClass="prime.admin.role.RoleBean">
-		UPDATE ROLE SET
+		UPDATE ROLES SET
 		ROLE_NAME=#roleName#, 
 		ROLE_STATUS=#roleStatus#
 		WHERE DIVISION_ID=#roleId#
 	</update>
 	
 	<delete id="delete" parameterClass="java.lang.Integer">
-		UPDATE ROLE SET
+		UPDATE ROLES SET
 		ROLE_STATUS=0
 		WHERE ROLE_ID=#id#
 	</delete>
 	
 	<select id="getNewId" resultClass="java.lang.Integer">
-		SELECT NVL(MAX(ROLE_ID)+1, 1) FROM ROLE
+		SELECT NVL(MAX(ROLE_ID)+1, 1) FROM ROLES
 	</select>
 	
 	<select id="get" resultClass="prime.admin.role.RoleBean" parameterClass="java.lang.Integer">
 		SELECT ROLE_ID AS roleId, 
 		ROLE_NAME AS roleName,
 		ROLE_STATUS AS roleStatus
-		FROM ROLE
+		FROM ROLES
 		WHERE ROLE_ID=#id#
 	</select>
 	
@@ -37,7 +37,7 @@
 		(SELECT ROLE_ID AS roleId, 
 		ROLE_NAME AS roleName,
 		ROLE_STATUS AS roleStatus
-		FROM ROLE
+		FROM ROLES
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="NAME">
@@ -50,7 +50,7 @@
 	</select>
 	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
-		FROM ROLE 
+		FROM ROLES 
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		      	<isEqual property="columnSearch" compareValue="NAME">

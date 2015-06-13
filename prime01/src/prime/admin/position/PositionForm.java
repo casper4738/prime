@@ -11,7 +11,7 @@ public class PositionForm extends ActionForm {
 	private String message;
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
-	private Integer positionId;
+	private Integer tmpId;
 
 	public PositionBean getPositionBean() {
 		return positionBean;
@@ -69,12 +69,12 @@ public class PositionForm extends ActionForm {
 		this.showInPage = showInPage;
 	}
 
-	public Integer getPositionId() {
-		return positionId;
+	public Integer getTmpId() {
+		return tmpId;
 	}
 
-	public void setPositionId(Integer positionId) {
-		this.positionId = positionId;
+	public void setTmpId(Integer tmpId) {
+		this.tmpId = tmpId;
 	}
 
 }

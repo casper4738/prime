@@ -21,33 +21,33 @@
 		<jsp:include page="/content/Header.jsp"></jsp:include>
 		<div class="content-wrapper">
 			<section class="content-header">
-				<h1>Manage Position<small>management system</small>
+				<h1>Manage Role<small>management system</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Manage Position</li>
+					<li class="active">Manage Role</li>
 				</ol>
 			</section>
 
 			<section class="content">
 			<div class="row">
 				<div class="col-xs-12"><div class="box">
-					<div class="box-header"><h3 class="box-title">Data Position</h3></div>
+					<div class="box-header"><h3 class="box-title">Data Role</h3></div>
 					<div class="box-body">
-                  	<html:form action="/PositionAdmin">
-                  		<html:hidden name="PositionAdminForm" property="task" value="update"/>
-                  		<html:hidden name="PositionAdminForm" property="positionBean.positionId" />
+                  	<html:form action="/RoleAdmin">
+                  		<html:hidden name="RoleAdminForm" property="task" value="update"/>
+                  		<html:hidden name="RoleAdminForm" property="roleBean.roleId" />
                   		<table class="form-input" align="center">
                   			<tr>
                   				<td>Position Name</td>
                   				<td>:</td>
-                  				<td><html:text name="PositionAdminForm" property="positionBean.positionName" styleClass="form-control"/></td>
+                  				<td><html:text name="RoleAdminForm" property="roleBean.roleName" styleClass="form-control"/></td>
                   			</tr>
                   			<tr>
-                  				<td>Status</td>
+                  				<td>Active</td>
                   				<td>:</td>
                   				<td>
-                  				<html:checkbox name="PositionAdminForm" property="positionBean.positionStatus" value="1"  />
+                  				<html:checkbox name="RoleAdminForm" property="roleBean.roleStatus" value="1"  />
 								</td>
                   			</tr>
                   			<tr>

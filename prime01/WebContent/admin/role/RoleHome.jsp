@@ -22,26 +22,26 @@
 		
 		<div class="content-wrapper">
 			<section class="content-header">
-				<h1>Manage Position<small>management system</small>
+				<h1>Manage Role<small>management system</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Manage Position</li>
+					<li class="active">Manage Role</li>
 				</ol>
 			</section>
 
 			<section class="content">
 			<div class="row">
 				<div class="col-xs-12"><div class="box">
-					<div class="box-header"><h3 class="box-title">Data Manage Position</h3></div>
+					<div class="box-header"><h3 class="box-title">Data Manage Role</h3></div>
 					
 					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('add')">
 	                    <i class="fa fa-edit"></i>Add
                     </span>
-                    <span class="message"><bean:write name="PositionAdminForm" property="message" /></span></p>
+                    <span class="message"><bean:write name="RoleAdminForm" property="message" /></span></p>
 					<div class="show-in-page">
 						Show per page
-						<html:select name="PositionAdminForm" property="showInPage" onchange="change(this.value)" >
+						<html:select name="RoleAdminForm" property="showInPage" onchange="change(this.value)" >
 							<html:option value="5">5</html:option>
 							<html:option value="10">10</html:option>
 							<html:option value="25">25</html:option>
@@ -49,16 +49,16 @@
 						</html:select>
 					</div>
 					<div class="search-table">
-						<html:form action="/PositionAdmin" >
-							<html:hidden name="PositionAdminForm" property="task" value="search"/>
-							<html:hidden name="PositionAdminForm" property="positionId"/>
-							<html:hidden name="PositionAdminForm" property="goToPage"/>
-							<html:hidden name="PositionAdminForm" property="showInPage"/>
-							<html:select name="PositionAdminForm" property="columnSearch" styleClass="columnSearch">
+						<html:form action="/RoleAdmin" >
+							<html:hidden name="RoleAdminForm" property="task" value="search"/>
+							<html:hidden name="RoleAdminForm" property="tmpId"/>
+							<html:hidden name="RoleAdminForm" property="goToPage"/>
+							<html:hidden name="RoleAdminForm" property="showInPage"/>
+							<html:select name="RoleAdminForm" property="columnSearch" styleClass="columnSearch">
 								<html:option value="SHOW_ALL">SHOW ALL</html:option>
-								<html:option value="NAME">DIVISION NAME</html:option>
+								<html:option value="NAME">ROLE NAME</html:option>
 							</html:select>
-							<html:text name="PositionAdminForm" property="search" styleClass="textSearch"/>
+							<html:text name="RoleAdminForm" property="search" styleClass="textSearch"/>
 							<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
 						</html:form>
 					</div>
@@ -73,17 +73,17 @@
 		                <tbody>
 		                <logic:notEmpty name="listDivision">
 							<logic:iterate id="iter" name="listDivision">
-			                	<tr><td><bean:write name="iter" property="divisionName"/></td>
+			                	<tr><td><bean:write name="iter" property="roleName"/></td>
 			                        <td align="center">
-			                        <logic:equal name="iter" property="divisionStatus" value="1">
+			                        <logic:equal name="iter" property="roleStatus" value="1">
 			                        	<html:image src="resources/image/check-true.png" /> 
 			                        </logic:equal>
-			                        <logic:equal name="iter" property="divisionStatus" value="0">
+			                        <logic:equal name="iter" property="roleStatus" value="0">
 			                        	<html:image src="resources/image/check-false.png" /> 
 			                        </logic:equal>
 			                        </td>
 			                        <td align="center">
-			                        	<input type="image" onclick="flyToEditDelete('edit', '<bean:write name="iter" property="divisionId"/>')" src="resources/image/edit.png" />
+			                        	<input type="image" onclick="flyToEditDelete('edit', '<bean:write name="iter" property="roleId"/>')" src="resources/image/edit.png" />
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>
@@ -111,7 +111,7 @@
 						<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 						
 						<div class="paginate-3">
-							<html:text name="PositionAdminForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+							<html:text name="RoleAdminForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 							<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
 						</div>
 					</ul>

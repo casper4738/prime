@@ -11,7 +11,7 @@ public class DivisionForm extends ActionForm {
 	private String message;
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
-	private Integer divisionId;
+	private Integer tmpId;
 
 	public DivisionBean getDivisionBean() {
 		return divisionBean;
@@ -69,12 +69,12 @@ public class DivisionForm extends ActionForm {
 		this.showInPage = showInPage;
 	}
 
-	public Integer getDivisionId() {
-		return divisionId;
+	public Integer getTmpId() {
+		return tmpId;
 	}
 
-	public void setDivisionId(Integer divisionId) {
-		this.divisionId = divisionId;
+	public void setTmpId(Integer tmpId) {
+		this.tmpId = tmpId;
 	}
 
 }
