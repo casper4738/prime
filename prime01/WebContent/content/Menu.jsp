@@ -12,5 +12,5 @@
 	<li><html:link action="RoleAdmin" ><i class="fa fa-table"></i><span>Manage Role</span></html:link></li>
 	<li><html:link action="HolidayAdmin" ><i class="fa fa-table"></i><span>Manage Holidays</span></html:link></li>
 	<li><html:link href="#" ><i class="fa fa-table"></i><span>View Log</span></html:link></li>
-	<li><html:link href="#" ><i class="fa fa-table"></i><span>General Setting</span></html:link></li>
+	<li><html:link action="SettingAdmin" ><i class="fa fa-table"></i><span>General Setting</span></html:link></li>
 </ul>

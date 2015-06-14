@@ -11,6 +11,7 @@
 	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
@@ -21,11 +22,11 @@
 		<jsp:include page="/content/Header.jsp"></jsp:include>
 		<div class="content-wrapper">
 			<section class="content-header">
-				<h1>Manage Role<small>management system</small>
+				<h1>Manage Holiday<small>management system</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Manage Role</li>
+					<li class="active">Manage Holiday</li>
 				</ol>
 			</section>
 
@@ -34,21 +35,22 @@
 				<div class="col-xs-12"><div class="box">
 					<div class="box-header"><h3 class="box-title">Data Role</h3></div>
 					<div class="box-body">
-                  	<html:form action="/RoleAdmin">
-                  		<html:hidden name="RoleAdminForm" property="task" value="insert"/>
-                  		<html:hidden name="RoleAdminForm" property="roleBean.roleId" />
+                  	<html:form action="/HolidayAdmin">
+                  		<html:hidden name="HolidayAdminForm" property="task" value="update"/>
+                  		<html:hidden name="HolidayAdminForm" property="holidayBean.holidayDate"/>
                   		<table class="form-input" align="center">
                   			<tr>
-                  				<td>Role Name</td>
-                  				<td>:</td>
-                  				<td><html:text name="RoleAdminForm" property="roleBean.roleName" styleClass="form-control"/></td>
+                  				<td width="150px">Date</td>
+                  				<td>: </td>
+                  				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                  				  	<html:text name="HolidayAdminForm" property="holidayBean.holidayDate" styleClass="form-control pull-right" styleId="datepicker" disabled="true"/>
+                  				  	</div>
+                  				</td>
                   			</tr>
                   			<tr>
-                  				<td>Active</td>
-                  				<td>:</td>
-                  				<td>
-                  				<html:checkbox name="RoleAdminForm" property="roleBean.roleStatus" value="1"  />
-								</td>
+                  				<td>Holiday Description</td>
+                  				<td>: </td>
+                  				<td><html:text name="HolidayAdminForm" property="holidayBean.holidayDescription" styleClass="form-control"/></td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">
@@ -69,11 +71,18 @@
 
 	<script src="resources/prime.js"></script>
 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
- 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+            $('#datepicker').datepicker({
+                format: "yyyy-mm-dd"
+            });  
+        });
+    </script>
 </body>
 </html>

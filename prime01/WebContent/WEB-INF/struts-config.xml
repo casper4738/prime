@@ -8,6 +8,7 @@
 		<form-bean name="PositionAdminForm" type="prime.admin.position.PositionForm"></form-bean>
 		<form-bean name="RoleAdminForm" type="prime.admin.role.RoleForm"></form-bean>
 		<form-bean name="HolidayAdminForm" type="prime.admin.holiday.HolidayForm"></form-bean>
+		<form-bean name="SettingAdminForm" type="prime.admin.setting.SettingForm"></form-bean>
 	</form-beans>
 	<action-mappings>
 		<action path="/DashboardAdmin" name="DashboardAdminForm" type="prime.admin.dashboard.DashboardAction" scope="request">
@@ -39,6 +40,11 @@
 			<forward name="edit" path="/admin/holiday/HolidayEdit.jsp"></forward>
 			<forward name="success" path="/admin/holiday/HolidayHome.jsp"></forward>
 			<forward name="forward" path="/admin/holiday/Forward.jsp"></forward>
+		</action>
+		<action path="/SettingAdmin" name="SettingAdminForm" type="prime.admin.setting.SettingAction" scope="request">
+			<forward name="edit" path="/admin/setting/SettingEdit.jsp"></forward>
+			<forward name="success" path="/admin/setting/SettingHome.jsp"></forward>
+			<forward name="forward" path="/admin/setting/Forward.jsp"></forward>
 		</action>
 	</action-mappings>
 	<message-resources parameter="application" />

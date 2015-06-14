@@ -1,5 +1,7 @@
 package prime.utility;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class PrimeUtil {
 
 	public static Integer getStartRow(int page, int view, int countRows) {
@@ -18,4 +20,13 @@ public class PrimeUtil {
 			return countRows;
 		return ((page - 1) * view) + view;
 	}
+	
+	public static String getURLWithContextPath(HttpServletRequest request) {
+	   return request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
+	}
+	
+	public static String getPath(HttpServletRequest request) {
+		return request.getRealPath("/");
+	}
+	
 }

@@ -1,0 +1,53 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="holiday">
+	<insert id="insert" parameterClass="prime.admin.holiday.HolidayBean">
+		INSERT INTO NATIONAL_HOLIDAY
+		(HOLIDAY_DATE , NATIONAL_DESCRIPTION) VALUES 
+		(#holidayDate#, #holidayDescription#)
+	</insert>
+	
+	<update id="update" parameterClass="prime.admin.holiday.HolidayBean">
+		UPDATE NATIONAL_HOLIDAY SET
+		NATIONAL_DESCRIPTION=#holidayDescription#
+		WHERE HOLIDAY_DATE=#holidayDate#
+	</update>
+	
+	<delete id="delete" parameterClass="java.sql.Date">
+		DELETE FROM NATIONAL_HOLIDAY WHERE HOLIDAY_DATE=#date#
+	</delete>
+	
+	<select id="get" resultClass="prime.admin.holiday.HolidayBean" parameterClass="java.sql.Date">
+		SELECT HOLIDAY_DATE AS holidayDate, 
+		NATIONAL_DESCRIPTION AS holidayDescription
+		FROM NATIONAL_HOLIDAY
+		WHERE HOLIDAY_DATE=#date#
+	</select>
+	
+	<select id="getListByCol" resultClass="prime.admin.holiday.HolidayBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT HOLIDAY_DATE AS holidayDate, 
+		NATIONAL_DESCRIPTION AS holidayDescription
+		FROM NATIONAL_HOLIDAY
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		       	<isEqual property="columnSearch" compareValue="DESCRIPTION">
+			          UPPER(NATIONAL_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	    ORDER BY HOLIDAY_DATE ASC) page 
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
+	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1) 
+		FROM NATIONAL_HOLIDAY 
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		      	<isEqual property="columnSearch" compareValue="DESCRIPTION">
+			          UPPER(NATIONAL_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	</select>
+</sqlMap>

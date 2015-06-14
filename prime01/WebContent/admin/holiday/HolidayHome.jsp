@@ -1,3 +1,8 @@
+<%@page import="java.io.FileWriter"%>
+<%@page import="java.io.Writer"%>
+<%@page import="java.io.BufferedWriter"%>
+<%@page import="java.io.File"%>
+<%@page import="java.io.FileOutputStream"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
@@ -17,31 +22,30 @@
 </head>
 <body class="skin-blue sidebar-mini">
 	<div class="wrapper">
-	
 		<jsp:include page="/content/Header.jsp"></jsp:include>
 		
 		<div class="content-wrapper">
 			<section class="content-header">
-				<h1>Manage Position<small>management system</small>
+				<h1>Manage Holiday<small>management system</small>
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Manage Position</li>
+					<li class="active">Manage Holiday</li>
 				</ol>
 			</section>
 
 			<section class="content">
 			<div class="row">
 				<div class="col-xs-12"><div class="box">
-					<div class="box-header"><h3 class="box-title">Data Manage Position</h3></div>
+					<div class="box-header"><h3 class="box-title">Data Manage Holiday</h3></div>
 					
 					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('add')">
 	                    <i class="fa fa-edit"></i>Add
                     </span>
-                    <span class="message"><bean:write name="PositionAdminForm" property="message" /></span></p>
+                    <span class="message"><bean:write name="HolidayAdminForm" property="message" /></span></p>
 					<div class="show-in-page">
 						Show per page
-						<html:select name="PositionAdminForm" property="showInPage" onchange="change(this.value)" >
+						<html:select name="HolidayAdminForm" property="showInPage" onchange="change(this.value)" >
 							<html:option value="5">5</html:option>
 							<html:option value="10">10</html:option>
 							<html:option value="25">25</html:option>
@@ -49,16 +53,16 @@
 						</html:select>
 					</div>
 					<div class="search-table">
-						<html:form action="/PositionAdmin" >
-							<html:hidden name="PositionAdminForm" property="task" value="search"/>
-							<html:hidden name="PositionAdminForm" property="tmpId"/>
-							<html:hidden name="PositionAdminForm" property="goToPage"/>
-							<html:hidden name="PositionAdminForm" property="showInPage"/>
-							<html:select name="PositionAdminForm" property="columnSearch" styleClass="columnSearch">
+						<html:form action="/HolidayAdmin" >
+							<html:hidden name="HolidayAdminForm" property="task" value="search"/>
+							<html:hidden name="HolidayAdminForm" property="tmpId"/>
+							<html:hidden name="HolidayAdminForm" property="goToPage"/>
+							<html:hidden name="HolidayAdminForm" property="showInPage"/>
+							<html:select name="HolidayAdminForm" property="columnSearch" styleClass="columnSearch">
 								<html:option value="SHOW_ALL">SHOW ALL</html:option>
-								<html:option value="NAME">POSITION NAME</html:option>
+								<html:option value="DESCRIPTION">DESCRIPTION HOLIDAY</html:option>
 							</html:select>
-							<html:text name="PositionAdminForm" property="search" styleClass="textSearch"/>
+							<html:text name="HolidayAdminForm" property="search" styleClass="textSearch"/>
 							<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
 						</html:form>
 					</div>
@@ -66,29 +70,23 @@
 					
 					class="table table-bordered table-striped table-hover">
 						<thead><tr>
-							<th>Position Name</th>
-		                    <th width="60px">Status</th>
+							<th width="150px">Date</th>
+							<th>Holiday Description</th>
 		                    <th width="90px">Actions</th>
 		                </tr></thead>
 		                <tbody>
-		                <logic:notEmpty name="listPosition">
-							<logic:iterate id="iter" name="listPosition">
-			                	<tr><td><bean:write name="iter" property="positionName"/></td>
+		                <logic:notEmpty name="listHoliday">
+							<logic:iterate id="iter" name="listHoliday">
+			                	<tr><td align="center"><bean:write name="iter" property="holidayDate" format="dd MMMM yyyy"/></td>
+			                	    <td><bean:write name="iter" property="holidayDescription"/></td>
 			                        <td align="center">
-			                        <logic:equal name="iter" property="positionStatus" value="1">
-			                        	<html:image src="resources/image/check-true.png" /> 
-			                        </logic:equal>
-			                        <logic:equal name="iter" property="positionStatus" value="0">
-			                        	<html:image src="resources/image/check-false.png" /> 
-			                        </logic:equal>
-			                        </td>
-			                        <td align="center">
-			                        	<input type="image" onclick="flyToEditDelete('edit', '<bean:write name="iter" property="positionId"/>')" src="resources/image/edit.png" />
+			                        	<input type="image" onclick="flyToEditDelete('edit', '<bean:write name="iter" property="holidayDate"/>')" src="resources/image/edit.png"/>
+			                        	<input type="image" onclick="flyToEditDelete('delete', '<bean:write name="iter" property="holidayDate"/>')" src="resources/image/remove.png" />
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>
 							</logic:notEmpty>
-							<logic:empty name="listPosition">
+							<logic:empty name="listHoliday">
 								<tr>
 									<td align="center" colspan="3">DATA KOSONG</td>
 								</tr>
@@ -111,7 +109,7 @@
 						<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 						
 						<div class="paginate-3">
-							<html:text name="PositionAdminForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+							<html:text name="HolidayAdminForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 							<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
 						</div>
 					</ul>
