@@ -51,7 +51,6 @@ public class PaginationUtility {
 			end = page + 2;
 		}
 
-		System.out.println("page:"+page);
 		this.page = page;
 		
 		List<Integer> listPage = new ArrayList<Integer>();

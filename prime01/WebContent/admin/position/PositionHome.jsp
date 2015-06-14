@@ -66,7 +66,7 @@
 					
 					class="table table-bordered table-striped table-hover">
 						<thead><tr>
-							<th>Division Name</th>
+							<th>Position Name</th>
 		                    <th width="60px">Status</th>
 		                    <th width="90px">Actions</th>
 		                </tr></thead>

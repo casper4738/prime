@@ -39,7 +39,7 @@
                   		<html:hidden name="RoleAdminForm" property="roleBean.roleId" />
                   		<table class="form-input" align="center">
                   			<tr>
-                  				<td>Position Name</td>
+                  				<td>Role Name</td>
                   				<td>:</td>
                   				<td><html:text name="RoleAdminForm" property="roleBean.roleName" styleClass="form-control"/></td>
                   			</tr>

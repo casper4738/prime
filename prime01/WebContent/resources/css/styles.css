@@ -80,8 +80,8 @@
 	width:70%;
 }
 
-.form-input tr{
-	height: 50px;
+.form-input td{
+	padding:5px;
 }
 
 .message {
