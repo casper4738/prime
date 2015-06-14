@@ -19,7 +19,6 @@ public class SettingAction extends Action {
 			pForm.setSettingBean(manager.getSetting());
 			return mapping.findForward("edit");
 		} else if("update".equals(pForm.getTask())) {
-			System.out.println(pForm.getSettingBean().getLevel()+":sss");
 			manager.save(pForm.getSettingBean());
 			return mapping.findForward("forward");
 		}

@@ -16,16 +16,8 @@
 	<html:hidden name="SettingAdminForm" property="message"/>
 </html:form>
 
-<logic:equal name="SettingAdminForm" property="task" value="insert">
-	<script>flyToForward('success', '<bean:message key="label.message.insert"/>')</script>
-</logic:equal>
-
 <logic:equal name="SettingAdminForm" property="task" value="update">
 	<script>flyToForward('success', '<bean:message key="label.message.update"/>')</script>
-</logic:equal>
-
-<logic:equal name="SettingAdminForm" property="task" value="delete">
-	<script>flyToForward('success', '<bean:message key="label.message.delete"/>')</script>
 </logic:equal>
 
 </body>
