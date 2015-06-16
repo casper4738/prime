@@ -77,7 +77,7 @@
 			                        	<input type="image" onclick="flyToEditDelete('edit', '<bean:write name="iter" property="divisionId"/>')" src="resources/image/edit.png" />
 			                        	<input type="image" onclick="flyToEditDelete('delete', '<bean:write name="iter" property="divisionId"/>')" src="resources/image/remove.png" />
 			                        </td>	
-			                    </tr>
+			                    </tr> 
 		                    </logic:iterate>
 							</logic:notEmpty>
 							<logic:empty name="listDivision">
