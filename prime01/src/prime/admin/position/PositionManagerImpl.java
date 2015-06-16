@@ -40,7 +40,7 @@ public class PositionManagerImpl implements PositionManager {
 	public void delete(Integer id) throws SQLException {
 		try {
 			mapper.startTransaction();
-			mapper.update("position.delete", id);
+			mapper.delete("position.delete", id);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();

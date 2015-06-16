@@ -40,7 +40,7 @@ public class HolidayManagerImpl implements HolidayManager {
 	public void delete(java.sql.Date date) throws SQLException {
 		try {
 			mapper.startTransaction();
-			mapper.update("holiday.delete", date);
+			mapper.delete("holiday.delete", date);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();

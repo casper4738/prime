@@ -3,20 +3,18 @@
 <sqlMap namespace="position">
 	<insert id="insert" parameterClass="prime.admin.position.PositionBean">
 		INSERT INTO POSITION
-		(POSITION_ID , POSITION_NAME, POSITION_STATUS) VALUES 
-		(#positionId#, #positionName#, #positionStatus#)
+		(POSITION_ID , POSITION_NAME) VALUES 
+		(#positionId#, #positionName#)
 	</insert>
 	
 	<update id="update" parameterClass="prime.admin.position.PositionBean">
 		UPDATE POSITION SET
-		POSITION_NAME=#positionName#, 
-		POSITION_STATUS=#positionStatus#
-		WHERE DIVISION_ID=#positionId#
+		POSITION_NAME=#positionName# 
+		WHERE POSITION_ID=#positionId#
 	</update>
 	
 	<delete id="delete" parameterClass="java.lang.Integer">
-		UPDATE POSITION SET
-		POSITION_STATUS=0
+		DELETE FROM POSITION
 		WHERE POSITION_ID=#id#
 	</delete>
 	
@@ -26,8 +24,7 @@
 	
 	<select id="get" resultClass="prime.admin.position.PositionBean" parameterClass="java.lang.Integer">
 		SELECT POSITION_ID AS positionId, 
-		POSITION_NAME AS positionName,
-		POSITION_STATUS AS positionStatus
+		POSITION_NAME AS positionName
 		FROM POSITION
 		WHERE POSITION_ID=#id#
 	</select>
@@ -35,8 +32,7 @@
 	<select id="getListByCol" resultClass="prime.admin.position.PositionBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT POSITION_ID AS positionId, 
-		POSITION_NAME AS positionName,
-		POSITION_STATUS AS positionStatus
+		POSITION_NAME AS positionName
 		FROM POSITION
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">

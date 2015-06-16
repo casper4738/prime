@@ -3,20 +3,18 @@
 <sqlMap namespace="role">
 	<insert id="insert" parameterClass="prime.admin.role.RoleBean">
 		INSERT INTO ROLES
-		(ROLE_ID , ROLE_NAME, ROLE_STATUS) VALUES 
-		(#roleId#, #roleName#, #roleStatus#)
+		(ROLE_ID , ROLE_NAME) VALUES 
+		(#roleId#, #roleName#)
 	</insert>
 	
 	<update id="update" parameterClass="prime.admin.role.RoleBean">
 		UPDATE ROLES SET
-		ROLE_NAME=#roleName#, 
-		ROLE_STATUS=#roleStatus#
+		ROLE_NAME=#roleName#
 		WHERE DIVISION_ID=#roleId#
 	</update>
 	
 	<delete id="delete" parameterClass="java.lang.Integer">
-		UPDATE ROLES SET
-		ROLE_STATUS=0
+		DELETE FROM ROLES
 		WHERE ROLE_ID=#id#
 	</delete>
 	
@@ -26,8 +24,7 @@
 	
 	<select id="get" resultClass="prime.admin.role.RoleBean" parameterClass="java.lang.Integer">
 		SELECT ROLE_ID AS roleId, 
-		ROLE_NAME AS roleName,
-		ROLE_STATUS AS roleStatus
+		ROLE_NAME AS roleName
 		FROM ROLES
 		WHERE ROLE_ID=#id#
 	</select>
@@ -35,8 +32,7 @@
 	<select id="getListByCol" resultClass="prime.admin.role.RoleBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT ROLE_ID AS roleId, 
-		ROLE_NAME AS roleName,
-		ROLE_STATUS AS roleStatus
+		ROLE_NAME AS roleName
 		FROM ROLES
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">

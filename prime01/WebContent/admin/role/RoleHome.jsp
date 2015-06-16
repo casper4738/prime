@@ -68,22 +68,15 @@
 						<thead><tr>
 							<th>Role Name</th>
 		                    <th width="60px">Status</th>
-		                    <th width="90px">Actions</th>
 		                </tr></thead>
 		                <tbody>
 		                <logic:notEmpty name="listRole">
 							<logic:iterate id="iter" name="listRole">
-			                	<tr><td><bean:write name="iter" property="roleName"/></td>
-			                        <td align="center">
-			                        <logic:equal name="iter" property="roleStatus" value="1">
-			                        	<html:image src="resources/image/check-true.png" /> 
-			                        </logic:equal>
-			                        <logic:equal name="iter" property="roleStatus" value="0">
-			                        	<html:image src="resources/image/check-false.png" /> 
-			                        </logic:equal>
-			                        </td>
+			                	<tr>
+			                		<td><bean:write name="iter" property="roleName"/></td>
 			                        <td align="center">
 			                        	<input type="image" onclick="flyToEditDelete('edit', '<bean:write name="iter" property="roleId"/>')" src="resources/image/edit.png" />
+			                        	<input type="image" onclick="flyToEditDelete('delete', '<bean:write name="iter" property="roleId"/>')" src="resources/image/remove.png" />
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>

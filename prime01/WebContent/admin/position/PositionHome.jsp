@@ -67,23 +67,16 @@
 					class="table table-bordered table-striped table-hover">
 						<thead><tr>
 							<th>Position Name</th>
-		                    <th width="60px">Status</th>
 		                    <th width="90px">Actions</th>
 		                </tr></thead>
 		                <tbody>
 		                <logic:notEmpty name="listPosition">
 							<logic:iterate id="iter" name="listPosition">
-			                	<tr><td><bean:write name="iter" property="positionName"/></td>
-			                        <td align="center">
-			                        <logic:equal name="iter" property="positionStatus" value="1">
-			                        	<html:image src="resources/image/check-true.png" /> 
-			                        </logic:equal>
-			                        <logic:equal name="iter" property="positionStatus" value="0">
-			                        	<html:image src="resources/image/check-false.png" /> 
-			                        </logic:equal>
-			                        </td>
+			                	<tr>
+			                		<td><bean:write name="iter" property="positionName"/></td>
 			                        <td align="center">
 			                        	<input type="image" onclick="flyToEditDelete('edit', '<bean:write name="iter" property="positionId"/>')" src="resources/image/edit.png" />
+			                        	<input type="image" onclick="flyToEditDelete('delete', '<bean:write name="iter" property="positionId"/>')" src="resources/image/remove.png" />
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>

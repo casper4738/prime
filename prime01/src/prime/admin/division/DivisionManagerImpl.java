@@ -40,7 +40,7 @@ public class DivisionManagerImpl implements DivisionManager {
 	public void delete(Integer id) throws SQLException {
 		try {
 			mapper.startTransaction();
-			mapper.update("division.delete", id);
+			mapper.delete("division.delete", id);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();

@@ -40,7 +40,7 @@ public class RoleManagerImpl implements RoleManager {
 	public void delete(Integer id) throws SQLException {
 		try {
 			mapper.startTransaction();
-			mapper.update("role.delete", id);
+			mapper.delete("role.delete", id);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();

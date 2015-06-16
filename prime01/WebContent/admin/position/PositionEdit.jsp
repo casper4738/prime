@@ -44,13 +44,6 @@
                   				<td><html:text name="PositionAdminForm" property="positionBean.positionName" styleClass="form-control"/></td>
                   			</tr>
                   			<tr>
-                  				<td>Active</td>
-                  				<td>:</td>
-                  				<td>
-                  				<html:checkbox name="PositionAdminForm" property="positionBean.positionStatus" value="1"  />
-								</td>
-                  			</tr>
-                  			<tr>
                   				<td colspan="3" align="center">
                   					<html:submit value="Save" styleClass="btn btn-primary"/>
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
