@@ -15,8 +15,7 @@
 	</update>
 	
 	<delete id="delete" parameterClass="java.lang.Integer">
-		UPDATE DIVISION SET
-		DIVISION_STATUS=0
+		DELETE FROM DIVISION
 		WHERE DIVISION_ID=#id#
 	</delete>
 	

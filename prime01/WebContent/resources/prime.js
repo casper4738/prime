@@ -6,7 +6,13 @@ function flyToPage(task) {
 function flyToEditDelete(task, value) {
 	document.forms[0].task.value = task;
 	document.forms[0].tmpId.value = value;
-	document.forms[0].submit();
+	if(task == "delete"){
+		if(confirm("Do you really want to delete this data?"))
+			document.forms[0].submit();
+	}
+	else{
+		document.forms[0].submit();
+	}
 }
 
 function flyToForward(task, value) {

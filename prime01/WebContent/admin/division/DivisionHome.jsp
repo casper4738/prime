@@ -62,29 +62,21 @@
 							<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
 						</html:form>
 					</div>
-					<div class="box-body"><table 
-					
-					class="table table-bordered table-striped table-hover">
+					<div class="box-body">
+						<table class="table table-bordered table-striped table-hover">
 						<thead><tr>
 							<th>Division Name</th>
-		                    <th width="60px">Status</th>
 		                    <th width="90px">Actions</th>
 		                </tr></thead>
 		                <tbody>
 		                <logic:notEmpty name="listDivision">
 							<logic:iterate id="iter" name="listDivision">
-			                	<tr><td><bean:write name="iter" property="divisionName"/></td>
-			                        <td align="center">
-			                        <logic:equal name="iter" property="divisionStatus" value="1">
-			                        	<html:image src="resources/image/check-true.png" /> 
-			                        </logic:equal>
-			                        <logic:equal name="iter" property="divisionStatus" value="0">
-			                        	<html:image src="resources/image/check-false.png" /> 
-			                        </logic:equal>
-			                        </td>
+			                	<tr>
+			                		<td><bean:write name="iter" property="divisionName"/></td>
 			                        <td align="center">
 			                        	<input type="image" onclick="flyToEditDelete('edit', '<bean:write name="iter" property="divisionId"/>')" src="resources/image/edit.png" />
-			                        </td>
+			                        	<input type="image" onclick="flyToEditDelete('delete', '<bean:write name="iter" property="divisionId"/>')" src="resources/image/remove.png" />
+			                        </td>	
 			                    </tr>
 		                    </logic:iterate>
 							</logic:notEmpty>
