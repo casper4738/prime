@@ -1,0 +1,65 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="task">
+	<insert id="insert" parameterClass="prime.user.task.TaskBean">
+		INSERT INTO TASKS (TASK_ID,
+		TASK_NAME, TASK_RECEIVER, TASK_ASSIGNER,
+		TASK_START_DATE,
+		TASK_ESTIMATE_DATE, TASK_DESCRIPTION, PROJECT_MEMBER_ID)
+		VALUES
+		(#taskId#,#taskName#,#taskReceiver#,#taskAssigner#,#taskStartDate#,#taskEstimateDate#,#taskDescription#,#projectMemberId#)
+	</insert>
+
+	<select id="getNewId" resultClass="java.lang.Integer">
+		SELECT NVL(MAX(TASK_ID)+1, 1)
+		FROM TASKS
+	</select>
+
+	<select id="get" resultClass="prime.user.task.TaskBean"
+		parameterClass="java.lang.Integer">
+		SELECT TASK_ID AS taskId,
+		TASK_NAME AS taskName
+		FROM
+		TASKS
+		WHERE TASK_ID=#id#
+	</select>
+
+	<select id="getListByCol" resultClass="prime.user.task.TaskBean"
+		parameterClass="java.util.Map">
+		SELECT * FROM (SELECT page.*, ROWNUM rnum FROM
+		(SELECT TASK_ID AS
+		taskId,
+		TASK_NAME AS taskName,
+		TASK_RECEIVER as taskReceiver,
+		TASK_ASSIGNER as taskAssigner,
+		TASK_START_DATE as taskStartDate,
+		TASK_ESTIMATE_DATE as taskEstimateDate,
+		TASK_DESCRIPTION as taskDescription
+		FROM TASKS
+		<dynamic prepend="WHERE">
+			<isNotNull property="columnSearch">
+				<isEqual property="columnSearch" compareValue="NAME">
+					UPPER(TASK_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+			</isNotNull>
+		</dynamic>
+		ORDER BY TASK_NAME ASC) page
+		WHERE ROWNUM <![CDATA[ <= ]]>
+		#endRow#) WHERE rnum <![CDATA[ >= ]]>
+		#startRow#
+	</select>
+
+	<select id="getCountListByCol" resultClass="java.lang.Integer"
+		parameterClass="java.util.Map">
+		SELECT COUNT(1)
+		FROM TASKS
+		<dynamic prepend="WHERE">
+			<isNotNull property="columnSearch">
+				<isEqual property="columnSearch" compareValue="NAME">
+					UPPER(TASK_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+			</isNotNull>
+		</dynamic>
+	</select>
+
+</sqlMap>
