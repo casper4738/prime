@@ -2,6 +2,7 @@
 <!DOCTYPE struts-config PUBLIC "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN" "http://struts.apache.org/dtds/struts-config_1_2.dtd">
 <struts-config>
 	<form-beans>
+		<!-- Admin -->
 		<form-bean name="DashboardAdminForm" type="prime.admin.dashboard.DashboardForm"></form-bean>
 		<form-bean name="UserAdminForm" type="prime.admin.user.UserForm"></form-bean>
 		<form-bean name="DivisionAdminForm" type="prime.admin.division.DivisionForm"></form-bean>
@@ -9,8 +10,18 @@
 		<form-bean name="RoleAdminForm" type="prime.admin.role.RoleForm"></form-bean>
 		<form-bean name="HolidayAdminForm" type="prime.admin.holiday.HolidayForm"></form-bean>
 		<form-bean name="SettingAdminForm" type="prime.admin.setting.SettingForm"></form-bean>
+		
+		<!-- Operator & Monitor [User] -->
+		<form-bean name="TaskUserForm" type="prime.user.task.TaskForm"></form-bean>		
+		<form-bean name="DashboardUserForm" type="prime.user.dashboard.DashboardForm"></form-bean>
+		<form-bean name="ActivityUserForm" type="prime.user.activity.ActivityForm"></form-bean>
+		
+		<!-- Login -->
+		<form-bean name="LoginForm" type="prime.login.LoginForm"></form-bean>
 	</form-beans>
+	
 	<action-mappings>
+		<!-- Admin -->
 		<action path="/DashboardAdmin" name="DashboardAdminForm" type="prime.admin.dashboard.DashboardAction" scope="request">
 			<forward name="success" path="/admin/dashboard/Dashboard.jsp"></forward>
 		</action>
@@ -45,6 +56,30 @@
 			<forward name="edit" path="/admin/setting/SettingEdit.jsp"></forward>
 			<forward name="success" path="/admin/setting/SettingHome.jsp"></forward>
 			<forward name="forward" path="/admin/setting/Forward.jsp"></forward>
+		</action>
+		<action path="/EmployeeAdmin" name="EmployeeAdminForm" type="prime.admin.employee.EmployeeAction" scope="request">
+			<forward name="add" path="/admin/employee/EmployeeAdd.jsp"></forward>
+			<forward name="success" path="/admin/employee/EmployeeHome.jsp"></forward>
+		</action>
+		
+		<!-- Operator & Monitor [User] -->
+		<action path="/DashboardUser" name="DashboardUserForm" type="prime.user.dashboard.DashboardAction" scope="request">
+			<forward name="success" path="/user/dashboard/Dashboard.jsp"></forward>
+			<forward name="add" path="/user/dashboard/DashboardSelectEmployee.jsp"></forward>
+		</action>
+		<action path="/ActivityUser" name="ActivityUserForm" type="prime.user.activity.ActivityAction" scope="request">
+			<forward name="success" path="/user/activity/ActivityHome.jsp"></forward>
+		</action>
+		<action path="/TaskUser" name="TaskUserForm" type="prime.user.task.TaskAction" scope="request">
+			<forward name="success" path="/user/task/TaskHome.jsp"></forward>
+			<forward name="add" path="/user/task/TaskAdd.jsp"></forward>
+			<forward name="selfAssign" path="/user/task/TaskAddSelfAssign.jsp"></forward>
+			<forward name="subordinate" path="/user/task/TaskAddSubordinate.jsp"></forward>
+		</action>		
+		
+		<!-- Login -->
+		<action path="/Login" name="LoginForm" type="prime.login.LoginAction" scope="request">
+			<forward name="success" path="/login/Login.jsp"></forward>
 		</action>
 	</action-mappings>
 	<message-resources parameter="application" />

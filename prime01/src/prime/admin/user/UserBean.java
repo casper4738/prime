@@ -1,6 +1,43 @@
 package prime.admin.user;
 
-public class UserBean {
+import prime.admin.employee.EmployeeBean;
+
+public class UserBean extends EmployeeBean {
+	private String userName;
+	private String password;
+	private Integer sysLevel;
+	private Boolean isActiveDirectory;
+
+	public String getUserName() {
+		return userName;
+	}
 	
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	
+	public String getPassword() {
+		return password;
+	}
+	
+	public void setPassword(String password) {
+		this.password = password;
+	}
+	
+	public Integer getSysLevel() {
+		return sysLevel;
+	}
+	
+	public void setSysLevel(Integer sysLevel) {
+		this.sysLevel = sysLevel;
+	}
+
+	public Boolean getIsActiveDirectory() {
+		return isActiveDirectory;
+	}
+
+	public void setIsActiveDirectory(Boolean isActiveDirectory) {
+		this.isActiveDirectory = isActiveDirectory;
+	}
 
 }
