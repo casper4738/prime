@@ -32,11 +32,12 @@
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="row">
-            <div class="col-xs-8">                       
-            </div><!-- /.col -->
             <div class="col-xs-4">
               <input type="button" class="btn btn-primary btn-block btn-flat" id="btn-submit" value="Sign In"/>
             </div><!-- /.col -->
+            <div class="overlay" id="ajax-validating">
+               <i class="fa fa-refresh fa-spin"></i> Processing...
+            </div>
           </div>
         </html:form>
       </div><!-- /.login-box-body -->
@@ -47,17 +48,19 @@
     <script src="resources/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
     <script src="resources/prime.js"></script>
     <script>
-    
       $(function () {
 	      $('input').iCheck({
 	         checkboxClass: 'icheckbox_square-blue',
 	         radioClass: 'iradio_square-blue',
 	         increaseArea: '20%' // optional
 	      });
-        
+
+	      //$('#ajax-validating').hide();
 	  	  $('#textbox-username').attr("placeholder","Username");
 	  	  $('#textbox-password').attr("placeholder","Password");
-      });
+      });      
+      
+      
     </script>
   </body>
 </html>
