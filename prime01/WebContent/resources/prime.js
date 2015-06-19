@@ -39,6 +39,11 @@ function validate() {
 	return validateForm(document.forms[0]);
 }
 
+
+function onSelectManager(value) {
+	document.forms[0].submit();
+}
+
 function isNumeric(n) {
 	try {
 		return !isNaN(n);
