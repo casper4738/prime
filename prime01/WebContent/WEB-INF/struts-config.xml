@@ -82,6 +82,7 @@
 			<forward name="selfAssign" path="/user/task/TaskAddSelfAssign.jsp"></forward>
 			<forward name="subordinate" path="/user/task/TaskAddSubordinate.jsp"></forward>
 			<forward name="taskDetails" path="/user/activity/ActivityHome.jsp"></forward>
+			<forward name="submit" path="/user/task/TaskSubmission.jsp"></forward>
 		</action>		
 		
 		<!-- Login -->

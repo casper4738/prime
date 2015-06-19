@@ -21,7 +21,7 @@
       <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
         <html:form action="/Login" method="post" styleId="form-login">
-          <html:hidden name="LoginForm" property="task"/>
+          <html:hidden name="LoginForm" property="task" />
           
           <div class="form-group has-feedback">
             <html:text name="LoginForm" property="username" styleClass="form-control" styleId="textbox-username"/>
@@ -31,9 +31,12 @@
             <html:password name="LoginForm" property="password" styleClass="form-control" styleId="textbox-password"/>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
+          <div class="form-group has-feedback">
+          	<font color=RED face="Calibri" size="2" id="login-fail"/><i>Fail to do Login...</i></font>
+          </div>    
           <div class="row">
             <div class="col-xs-5">
-              <input type="submit" class="btn btn-primary btn-block btn-flat" id="btn-submit" value="Sign In"/>
+              <input type="button" class="btn btn-primary btn-block btn-flat" id="btn-submit" value="Sign In"/>
               <div class="overlay" id="ajax-validating">
                		<i class="fa fa-refresh fa-spin"></i> Processing...
               </div>
@@ -55,20 +58,31 @@
 		         increaseArea: '20%' // optional
 		      });
 
+	      	  $('#login-fail').hide();
 		      $('#ajax-validating').hide();
 		  	  $('#textbox-username').attr("placeholder","Username");
 		  	  $('#textbox-password').attr("placeholder","Password");
-			  $('#form-login').submit(function(){ 
-				  $('#form-login').task.value = "doLogin";
+			  $('#btn-submit').click(function(){ 
 	    		  $('#btn-submit').hide();
 	    		  $('#ajax-validating').show();  
 	    		  
 	    		  //Do Login Data checking
-	    		  var str = $(this).serialize();
+				  document.forms[0].task.value = "doLogin";
+	    		  var str = $('#form-login').serialize();
 	    		  $.ajax({ 
-	    	          type	 : "POST",
-	    	          url	 : "Login.do",  // Send the login info to this page
-	    	          data	 : str    
+	    	          type	  : "POST",
+	    	          url	  : "Login.do",  // Send the login info to this page
+	    	          data	  : str,
+	    	          success : function(msg){
+	    	        	  var param = msg.split(';');
+	    	        	  if(param[0] == "loginFail"){
+	    	        		  //Change Div
+	    	        		  $('#login-fail').html(param[1]);
+	    	        		  $('#login-fail').show();
+	    	        		  $('#btn-submit').show();
+	    		    		  $('#ajax-validating').hide(); 
+	    	        	  }
+	    	          }
 	    	       });
 		      }); 
       });

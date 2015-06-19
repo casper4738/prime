@@ -19,6 +19,7 @@
 	<li><html:link action="ProjectUser" ><i class="fa fa-table"></i><span>Project</span></html:link></li>
 	<li><html:link action="TaskUser" ><i class="fa fa-table"></i><span>Tasks & Activities</span></html:link></li>
 	<li><html:link action="ActivityUser" ><i class="fa fa-table"></i><span>Temp Activities</span></html:link></li>
+	<li><html:link action="TaskSubmissionUser" ><i class="fa fa-table"></i><span>Task Submission</span></html:link></li>
 	<li><html:link action="ReportUser" ><i class="fa fa-table"></i><span>Report</span></html:link></li>
 
 </ul>

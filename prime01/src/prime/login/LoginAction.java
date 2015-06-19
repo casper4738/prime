@@ -1,5 +1,7 @@
 package prime.login;
 
+import java.io.PrintWriter;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -50,16 +52,26 @@ public class LoginAction extends Action {
 				} 
 			}
 			
-			//   c.Check Final Flag Whether Login Failed or Not
+			//  c.Check Final Flag Whether Login Failed or Not
 			if(isLoginSuccess){
+				//---.Set User Session ID
+				
+				//---.Check Current User Privilege and Go To Selected Page
+				
 			} else {
-				request.setAttribute("showFailLoginText", 
-									 "Username and Password doesn't exists or not matched, please check again !");
+				//---.Returning Fail Login Value
+				response.setContentType("text/text;charset=utf-8");
+				response.setHeader("cache-control", "no-cache");
+				PrintWriter tmpOut = response.getWriter();
+				tmpOut.print("loginFail;Username and Password doesn't match !");
+				tmpOut.flush();
+				return null;
 			}
 		} else {
-			
+			//---.For First Time Loading
+			return mapping.findForward("success");
 		}	
 		
-		return mapping.findForward("success");
+		return null;
 	}
 }

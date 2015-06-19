@@ -152,7 +152,7 @@
                   		</table>
                 	</div>
 	               	<!-- <div class="box-body chat" id="chat-box"> -->
-	               		<div class="table-progress">
+	               	<div class="table-progress">
               			<table border="1" style="background-color: #00c0ef; width: 2500px; height: 20px" id="tableProgress">	
                				<tr>
                					<td style="width:100px">&nbsp;</td>
