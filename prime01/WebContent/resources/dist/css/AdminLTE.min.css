@@ -4658,3 +4658,9 @@ table.text-center, table.text-center td, table.text-center th {
 		white-space: normal !important
 	}
 }
+
+.table-progress{
+	overflow: auto;
+	padding-left: 10px;
+	padding-right: 10px;
+}

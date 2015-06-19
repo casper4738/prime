@@ -15,6 +15,50 @@
 		WHERE ACTIVITY_ID=#id#
 	</select>
 	
+	<select id="getListByEmployeeId" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT AC.ACTIVITY_ID AS activityId, 
+		AC.TASK_ID AS taskId,
+		AD.ACTIVITY_STATUS AS status,
+		TSK.TASK_ASSIGNER AS taskAssigner,
+		AC.ACTIVITY_NAME AS activityName,
+		AC.DESCRIPTION AS activityDescription,
+		LAST_UPDATE AS changeDate,
+		TSK.TASK_NAME AS taskName
+		FROM ACTIVITIES AC 
+		INNER JOIN TASKS TSK ON AC.TASK_ID = TSK.TASK_ID
+		LEFT JOIN 
+		(
+			SELECT MAX(ACTIVITY_CHANGE_DATE) AS LAST_UPDATE, ACTIVITY_STATUS,ACTIVITY_ID
+			FROM ACTIVITY_DETAILS
+            GROUP BY ACTIVITY_STATUS,ACTIVITY_ID
+		) AD
+		ON AC.ACTIVITY_ID = AD.ACTIVITY_ID 
+		WHERE TASK_RECEIVER=#id# AND AC.ACTIVITY_ID NOT IN (SELECT ACTIVITY_ID FROM EMPLOYEE_TO_DO_LISTS)
+        AND ACTIVITY_STATUS != '4' <!-- 4 adalah status Finish -->
+	    <dynamic prepend="AND">
+	        <isNotNull property="columnSearch">
+		       	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(ACTIVITY_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	    ORDER BY ACTIVITY_NAME ASC) page 
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
+	
+	<select id="getToDoListById" resultClass="prime.user.activity.ActivityBean" parameterClass="java.lang.Integer">
+		SELECT TLD.ACTIVITY_ID AS activityId, 
+		ACTIVITY_NAME AS activityName,
+		TASK_NAME AS taskName,
+		EMPLOYEE_ID as taskReceiver
+		FROM EMPLOYEE_TO_DO_LISTS TLD
+			INNER JOIN ACTIVITIES ACT ON ACT.ACTIVITY_ID = TLD.ACTIVITY_ID
+			INNER JOIN TASKS TSK ON TSK.TASK_ID = ACT.TASK_ID
+		WHERE EMPLOYEE_ID=#id#
+		ORDER BY TLD.ACTIVITY_ID 
+	</select>
+	
 	<select id="getListByCol" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT AC.ACTIVITY_ID AS activityId, 
@@ -23,7 +67,8 @@
 		TSK.TASK_ASSIGNER AS taskAssigner,
 		AC.ACTIVITY_NAME AS activityName,
 		AC.DESCRIPTION AS activityDescription,
-		AD.ACTIVITY_CHANGE_DATE AS changeDate
+		AD.ACTIVITY_CHANGE_DATE AS changeDate,
+		TSK.TASK_NAME AS taskName
 		FROM ACTIVITIES AC 
 		LEFT JOIN ACTIVITY_DETAILS AD
 		ON AC.ACTIVITY_ID = AD.ACTIVITY_ID 
@@ -39,6 +84,7 @@
 	    ORDER BY ACTIVITY_NAME ASC) page 
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
+	
 	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
 		FROM ACTIVITIES 
@@ -50,4 +96,43 @@
 	        </isNotNull>
 	    </dynamic>
 	</select>
+	
+	<select id="getCountToDoListById" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1) 
+		FROM ACTIVITIES AC 
+		INNER JOIN TASKS TSK ON AC.TASK_ID = TSK.TASK_ID
+		LEFT JOIN 
+		(
+			SELECT MAX(ACTIVITY_CHANGE_DATE) AS LAST_UPDATE, ACTIVITY_STATUS,ACTIVITY_ID
+			FROM ACTIVITY_DETAILS
+            GROUP BY ACTIVITY_STATUS,ACTIVITY_ID
+		) AD
+		ON AC.ACTIVITY_ID = AD.ACTIVITY_ID 
+		WHERE TASK_RECEIVER=#receiverId# AND AC.ACTIVITY_ID NOT IN (SELECT ACTIVITY_ID FROM EMPLOYEE_TO_DO_LISTS)
+        AND ACTIVITY_STATUS != '4' 
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		      	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(ACTIVITY_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	</select>
+	
+	<insert id="insertToDoList" parameterClass="java.util.Map">
+		INSERT INTO EMPLOYEE_TO_DO_LISTS
+		(EMPLOYEE_ID , ACTIVITY_ID) VALUES 
+		(#receiverId#, #activityId#)
+	</insert>
+	
+	<delete id="deleteToDoList" parameterClass="java.util.Map">
+		DELETE FROM EMPLOYEE_TO_DO_LISTS
+		WHERE EMPLOYEE_ID = #receiverId# and ACTIVITY_ID = #activityId#
+	</delete>
+	
+	<insert id="insertActivityDetail" parameterClass="java.util.Map">
+		INSERT INTO ACTIVITY_DETAILS
+			(ACTIVITY_ID , ACTIVITY_CHANGE_DATE, ACTIVITY_STATUS, ACTIVITY_NOTE)  
+		VALUES (#activityId#, CURRENT_TIMESTAMP, #status#, #activityDetailNote#)
+	</insert>
 </sqlMap>

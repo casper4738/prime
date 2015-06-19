@@ -19,7 +19,7 @@ public class ActivityManagerImpl implements ActivityManager {
 	}
 
 	public List<ActivityBean> getToDoListById(Integer id) throws SQLException {
-		return mapper.queryForList("activity.", id);
+		return mapper.queryForList("activity.getToDoListById", id);
 	}
 
 	public List<ActivityBean> getListByColumn(String columnSearch,
@@ -41,20 +41,79 @@ public class ActivityManagerImpl implements ActivityManager {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
-		return (Integer) mapper.queryForObject("activity.getCountListByCol",
-				map);
+		return (Integer) mapper.queryForObject("activity.getCountListByCol",map);
 	}
 
 	@Override
-	public List<ActivityBean> getListActivityById(Integer id, Integer startRow, Integer endRow)
+	public List<ActivityBean> getListActivityById(Integer id, String columnSearch,
+			String value, Integer startRow, Integer endRow)
 			throws SQLException {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("id", id);
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		return mapper.queryForList("activity.getListByEmployeeId", map);
 	}
 
+	@Override
+	public void insertToDoList(Integer receiverId, Integer activityId) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("receiverId", receiverId);
+			map.put("activityId", activityId);
+			mapper.startTransaction();
+			mapper.insert("activity.insertToDoList", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+
+	@Override
+	public Integer getCountToDoListById(Integer receiverId, String columnSearch, String value)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("receiverId", receiverId);
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);
+		return (Integer) mapper.queryForObject("activity.getCountToDoListById",map);
+	}
+
+	public void deleteToDoList(Integer receiverId, Integer activityId) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("receiverId", receiverId);
+			map.put("activityId", activityId);
+			mapper.startTransaction();
+			mapper.insert("activity.deleteToDoList", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+
+	@Override
+	public void insertActivityDetail(Integer receiverId, Integer activityId, Integer status, String activityDetailNote)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("receiverId", receiverId);
+			map.put("activityId", activityId);
+			map.put("status", status);
+			map.put("activityDetailNote", activityDetailNote);
+			mapper.startTransaction();
+			mapper.insert("activity.insertActivityDetail", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
 
 }

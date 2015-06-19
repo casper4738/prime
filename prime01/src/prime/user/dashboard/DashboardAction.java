@@ -25,23 +25,32 @@ public class DashboardAction extends Action{
 			HttpServletResponse response) throws Exception {
 		
 		DashboardForm pForm = (DashboardForm) form;
-		System.out.println(pForm.getTask()+" Masuk sini");
+		ActivityManager tmpManager = new ActivityManagerImpl();
+		
 		if("chooseActivity".equals(pForm.getTask())) {
-			ActivityManager manager = new ActivityManagerImpl();
-			int countRows = manager.getCountByColumn(pForm.getColumnSearch(),
-					pForm.getSearch());
-			List<ActivityBean> list = manager.getListByColumn(pForm
+			//parameter pertama adalah session login employee id
+			int countRows = tmpManager.getCountToDoListById(101,pForm.getColumnSearch(),pForm.getSearch());
+			List<ActivityBean> list = tmpManager.getListActivityById(101,pForm
 					.getColumnSearch(), pForm.getSearch(), PrimeUtil.getStartRow(
 							pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
 							countRows));
+			
 			request.setAttribute("listActivity", list);
 			setPaging(request, pForm, countRows, pForm.getGoToPage(),
 					pForm.getShowInPage());
 			
 			return mapping.findForward("add");
+		}else if("addToDoList".equals(pForm.getTask())){
+			tmpManager.insertToDoList(101,pForm.getTmpId());
+		}else if("delete".equals(pForm.getTask())){
+			tmpManager.deleteToDoList(101,pForm.getTmpId());
+		}else if("addActivity".equals(pForm.getTask())){
+			tmpManager.insertActivityDetail(101,pForm.getTmpId(), pForm.getTmpValue(), null);
 		}
 		
+		List<ActivityBean> list = tmpManager.getToDoListById(101);
+		request.setAttribute("listActivity", list);
 		
 		return mapping.findForward("success");
 	}

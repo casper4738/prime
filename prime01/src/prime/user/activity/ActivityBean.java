@@ -3,8 +3,10 @@ package prime.user.activity;
 public class ActivityBean {
 	private Integer activityId;
 	private Integer taskId;
+	private String 	taskName;
 	private String 	activityName;
 	private String 	activityDescription;
+	private String 	activityDetailNote;
 	private Integer status;
 	private Integer taskAssigner;
 	private java.sql.Date changeDate;
@@ -51,5 +53,17 @@ public class ActivityBean {
 	}
 	public void setActivityDescription(String activityDescription) {
 		this.activityDescription = activityDescription;
+	}
+	public String getTaskName() {
+		return taskName;
+	}
+	public void setTaskName(String taskName) {
+		this.taskName = taskName;
+	}
+	public String getActivityDetailNote() {
+		return activityDetailNote;
+	}
+	public void setActivityDetailNote(String activityDetailNote) {
+		this.activityDetailNote = activityDetailNote;
 	}
 }

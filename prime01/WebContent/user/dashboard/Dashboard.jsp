@@ -39,6 +39,8 @@
 					<section class="col-lg-7 connectedSortable">
 						<html:form action="/DashboardUser"> 
 							<html:hidden name="DashboardUserForm" property="task"/>
+							<html:hidden name="DashboardUserForm" property="tmpId"/>
+							<html:hidden name="DashboardUserForm" property="tmpValue"/>
 						</html:form>	
 						<div class="box box-primary">
 							<div class="box-header">
@@ -57,10 +59,6 @@
 							<!-- /.box-header -->
 							<div class="box-body">
 								<ul class="todo-list">
-									<li>
-										<span class="handle"> 
-											<i class="fa fa-ellipsis-v"></i> <i class="fa fa-ellipsis-v"></i>
-										</span> 
 										<!-- todo text -->
 										<!-- <span class="text">Design a nice theme</span>  -->
 										<!-- Emphasis label -->
@@ -70,24 +68,32 @@
 										<!-- todolist -->
 										<logic:notEmpty name="listActivity">
 											<logic:iterate id="iter" name="listActivity">
-						                		<span class="text"><bean:write name="iter" property="activityName"/> | <bean:write name="iter" property="taskName"/> </span>
+												<li>
+													<span class="handle"> 
+														<i class="fa fa-ellipsis-v"></i> <i class="fa fa-ellipsis-v"></i>
+													</span>	
+						                			<span class="text"><bean:write name="iter" property="activityName"/> | <bean:write name="iter" property="taskName"/> </span>
 						                   
-							                    <!-- General tools such as play or pause or finish or delete-->
-							                    <div class="tools">
-													<!-- <div id="start" style="display: inline"> -->
-														<i class="fa fa-play" onclick="insertActivity()"></i>
-													<!-- </div> 
-													<div id="pause" style="display: none"> -->
-														<i class="fa fa-pause" onclick="pauseActivity()"></i> 
-													<!-- </div>	 -->
-													<i class="fa fa-check"></i><i class="fa fa-trash-o"></i>
-												</div>
+								                    <!-- General tools such as play or pause or finish or delete-->
+								                    <div class="tools">
+														<!-- <div id="start" style="display: inline"> -->
+															<i class="fa fa-play" onclick="insertActivityDetail('addActivity','<bean:write name="iter" property="activityId"/>','1')"></i>
+														<!-- </div> 
+														<div id="pause" style="display: none"> -->
+															<i class="fa fa-pause" onclick="pauseActivity('<bean:write name="iter" property="activityId"/>')"></i> 
+														<!-- </div>	 -->
+														<i class="fa fa-check"></i><i class="fa fa-trash-o" onclick="flyToEditDelete('delete','<bean:write name="iter" property="activityId"/>')"></i>
+													</div>
+												</li>
 											 </logic:iterate>
 										</logic:notEmpty>
 										<logic:empty name="listActivity">
+											<span class="handle"> 
+												<i class="fa fa-ellipsis-v"></i> <i class="fa fa-ellipsis-v"></i>
+											</span>	
 											<span class="text">No List Activity</span>
 										</logic:empty>
-									</li>
+									
 								</ul>
 							</div>
 							<!-- /.box-body -->
@@ -146,7 +152,7 @@
                   		</table>
                 	</div>
 	               	<!-- <div class="box-body chat" id="chat-box"> -->
-	               	<div class="table-progress">
+	               		<div class="table-progress">
               			<table border="1" style="background-color: #00c0ef; width: 2500px; height: 20px" id="tableProgress">	
                				<tr>
                					<td style="width:100px">&nbsp;</td>
@@ -176,7 +182,6 @@
                					<td align="center" style="width:100px">23.00</td>
                					<td align="center" style="width:100px">24.00</td>
                				</tr>
-               				
                				<tr>
                					<td>Activity 1</td>
                					<td colspan=25>
@@ -189,7 +194,7 @@
                					</td>
                				</tr>
                			</table>
-                    </div><!-- /.table-progress -->
+                   </div><!-- /.table-progress -->
                </div><!-- /.box (progress box) -->
             </section>
 		</div>
@@ -260,6 +265,13 @@
     	    cell[0].innerHTML = "Activity 1";
     	    /* document.getElementById("pause").style.display="inline"
     	    document.getElementById("start").style.display="none" */
+    	}
+    	
+    	function insertActivityDetail(task,activityId,status){
+    		document.forms[0].task.value = task;
+    		document.forms[0].tmpId.value = activityId;
+    		document.forms[0].tmpValue.value = status;
+    		document.forms[0].submit();
     	}
     	
     	function pauseActivity() {

@@ -3,9 +3,10 @@ package prime.user.dashboard;
 import org.apache.struts.action.ActionForm;
 
 import prime.admin.division.DivisionBean;
+import prime.user.activity.ActivityBean;
 
 public class DashboardForm extends ActionForm {
-//	private ActivityBean divisionBean = new DivisionBean();
+	//private ActivityBean activityBean = new ActivityBean();
 	private String task;
 	private String search;
 	private String columnSearch;
@@ -13,6 +14,7 @@ public class DashboardForm extends ActionForm {
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
 	private Integer tmpId;
+	private Integer tmpValue;
 	
 	public String getTask() {
 		return task;
@@ -56,4 +58,11 @@ public class DashboardForm extends ActionForm {
 	public void setTmpId(Integer tmpId) {
 		this.tmpId = tmpId;
 	}
+	public Integer getTmpValue() {
+		return tmpValue;
+	}
+	public void setTmpValue(Integer tmpValue) {
+		this.tmpValue = tmpValue;
+	}
+
 }

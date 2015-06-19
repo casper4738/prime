@@ -33,7 +33,7 @@
 			<section class="content">
 			<div class="row">
 				<div class="col-xs-12"><div class="box">
-					<div class="box-header"><h3 class="box-title">Data Manage Activity</h3></div>
+					<div class="box-header"><h3 class="box-title">Select Activity</h3></div>
 					<p>
 						<span class="button-add btn btn-app bg-olive" onclick="flyToPage('back')">
 		                    <i class="fa fa-edit"></i>Back
@@ -59,35 +59,39 @@
 								<html:option value="NAME">ACTIVITY NAME</html:option>
 							</html:select>
 							<html:text name="DashboardUserForm" property="search" styleClass="textSearch"/>
-							<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
+							<input type="submit" onclick="javascript:flyToPage('chooseActivity')" class="buttonSearch myButton" value='Search'>
 						</html:form>
 					</div>
 					<div class="box-body">
 						<table class="table table-bordered table-striped table-hover">
 						<thead><tr>
-							<th>Activity Id</th>
-							<th>Task Id</th>
 							<th>Activity Name</th>
-							<th>Description</th>
-		                    <th width="90px">Actions</th>
+							<th>Activity Description</th>
+							<th>Task Name</th>
+							<th>Assigner</th>
+							<th>Status</th>
+							<th>Last Update</th>
+		                    <th width="90px" align="center">Actions</th>
 		                </tr></thead>
 		                <tbody>
 		                <logic:notEmpty name="listActivity">
 							<logic:iterate id="iter" name="listActivity">
 			                	<tr>
-			                		<td><bean:write name="iter" property="activityId"/></td>
-			                		<td><bean:write name="iter" property="taskId"/></td>
 			                		<td><bean:write name="iter" property="activityName"/></td>
 			                		<td><bean:write name="iter" property="activityDescription"/></td>
+			                		<td><bean:write name="iter" property="taskName"/></td>
+			                		<td><bean:write name="iter" property="taskAssigner"/></td>
+			                		<td><bean:write name="iter" property="status"/></td>
+			                		<td><bean:write name="iter" property="changeDate"/></td>
 			                        <td align="center">
-			                        	
+			                        	<input type="button" value="select" onclick="flyToEditDelete('addToDoList','<bean:write name="iter" property="activityId"/>')">
 			                        </td>	
 			                    </tr> 
 		                    </logic:iterate>
 							</logic:notEmpty>
 							<logic:empty name="listActivity">
 								<tr>
-									<td align="center" colspan="3">DATA KOSONG</td>
+									<td align="center" colspan="7">DATA NOT FOUND</td>
 								</tr>
 							</logic:empty>
 	                   </tbody>
