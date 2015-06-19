@@ -2,19 +2,11 @@ package prime.admin.user;
 
 import prime.admin.employee.EmployeeBean;
 
-public class UserBean extends EmployeeBean {
-	private String userName;
+public class UserBean extends EmployeeBean{
 	private String password;
+	private String userName;
 	private Integer sysLevel;
 	private Boolean isActiveDirectory;
-
-	public String getUserName() {
-		return userName;
-	}
-	
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
 	
 	public String getPassword() {
 		return password;
@@ -22,6 +14,14 @@ public class UserBean extends EmployeeBean {
 	
 	public void setPassword(String password) {
 		this.password = password;
+	}
+	
+	public String getUserName() {
+		return userName;
+	}
+	
+	public void setUserName(String userName) {
+		this.userName = userName;
 	}
 	
 	public Integer getSysLevel() {

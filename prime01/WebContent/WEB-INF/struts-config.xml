@@ -5,6 +5,7 @@
 		<!-- Admin -->
 		<form-bean name="DashboardAdminForm" type="prime.admin.dashboard.DashboardForm"></form-bean>
 		<form-bean name="UserAdminForm" type="prime.admin.user.UserForm"></form-bean>
+		<form-bean name="EmployeeAdminForm" type="prime.admin.employee.EmployeeForm"></form-bean>
 		<form-bean name="DivisionAdminForm" type="prime.admin.division.DivisionForm"></form-bean>
 		<form-bean name="PositionAdminForm" type="prime.admin.position.PositionForm"></form-bean>
 		<form-bean name="RoleAdminForm" type="prime.admin.role.RoleForm"></form-bean>
@@ -26,6 +27,7 @@
 			<forward name="success" path="/admin/dashboard/Dashboard.jsp"></forward>
 		</action>
 		<action path="/UserAdmin" name="UserAdminForm" type="prime.admin.user.UserAction" scope="request">
+			<forward name="add" path="/admin/user/UserAdd.jsp"></forward>
 			<forward name="success" path="/admin/user/UserHome.jsp"></forward>
 		</action>
 		<action path="/DivisionAdmin" name="DivisionAdminForm" type="prime.admin.division.DivisionAction" scope="request">
@@ -59,6 +61,7 @@
 		</action>
 		<action path="/EmployeeAdmin" name="EmployeeAdminForm" type="prime.admin.employee.EmployeeAction" scope="request">
 			<forward name="add" path="/admin/employee/EmployeeAdd.jsp"></forward>
+			<forward name="choose_manager" path="/admin/employee/ChooseManager.jsp"></forward>
 			<forward name="success" path="/admin/employee/EmployeeHome.jsp"></forward>
 		</action>
 		

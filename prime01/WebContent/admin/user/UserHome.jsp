@@ -1,3 +1,4 @@
+<%@page import="prime.constants.Constants"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
@@ -51,7 +52,7 @@
 				<div class="col-xs-12"><div class="box">
 					<div class="box-header"><h3 class="box-title">Data Manage User</h3></div>
 					
-					<p><span class="button-add btn btn-app bg-olive" onclick="javascript:alert('Add New Data')">
+					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
 	                    <i class="fa fa-edit"></i>Add
                     </span></p>
 					
@@ -138,6 +139,7 @@
 		<jsp:include page="/content/Footer.jsp"></jsp:include>
 	</div>
 
+	<script src="resources/prime.js"></script>
 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	<!-- 
 	<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>

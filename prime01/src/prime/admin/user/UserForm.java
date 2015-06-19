@@ -4,12 +4,21 @@ import org.apache.struts.action.ActionForm;
 
 public class UserForm extends ActionForm {
 
+	private UserBean userBean = new UserBean();
 	private String task;
 	private String search;
 	private String columnSearch;
 	private Integer goToPage = 1;
 	private Integer showInPage;
 
+	public UserBean getUserBean() {
+		return userBean;
+	}
+	
+	public void setUserBean(UserBean userBean) {
+		this.userBean = userBean;
+	}
+	
 	public String getTask() {
 		return task;
 	}
@@ -49,5 +58,6 @@ public class UserForm extends ActionForm {
 	public void setShowInPage(Integer showInPage) {
 		this.showInPage = showInPage;
 	}
+
 
 }

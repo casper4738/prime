@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.constants.Constants;
 import prime.utility.PaginationUtility;
 
 public class UserAction extends Action {
@@ -20,6 +21,10 @@ public class UserAction extends Action {
 			HttpServletResponse response) throws Exception {
 		
 		UserForm userForm = (UserForm) form;
+		
+		if(Constants.Task.GOTOADD.equals(userForm.getTask())){
+			return mapping.findForward("add");
+		}
 		
 		setPaging(request, 100, userForm.getGoToPage(), 10);
 		return mapping.findForward("success");
