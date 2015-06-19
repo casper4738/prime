@@ -58,6 +58,7 @@
 							<html:hidden name="TaskUserForm" property="tmpId"/>
 							<html:hidden name="TaskUserForm" property="goToPage"/>
 							<html:hidden name="TaskUserForm" property="showInPage"/>
+							<html:hidden name="TaskUserForm" property="taskId"/>
 							<html:select name="TaskUserForm" property="columnSearch" styleClass="columnSearch">
 								<html:option value="SHOW_ALL">SHOW ALL</html:option>
 								<html:option value="DESCRIPTION">DESCRIPTION</html:option>
@@ -81,13 +82,15 @@
 		                <logic:notEmpty name="listTask">
 							<logic:iterate id="iter" name="listTask">
 			                	<tr>
+			                		
 			                	    <td><bean:write name="iter" property="taskName"/></td>
 			                	    <td><bean:write name="iter" property="taskDescription"/></td>
 			                	    <td><bean:write name="iter" property="taskAssigner"/></td>
 			                	    <td><bean:write name="iter" property="taskStartDate"/></td>
 			                	    <td><bean:write name="iter" property="taskEstimateDate"/></td>
 			                        <td align="center">
-			                        	<input type="submit"  class="buttonSearch myButton" value='Details'>
+			                   
+			                        	<input type="submit"  class="buttonSearch myButton" value='Details' onclick="javascript:flyToTaskDetails('goToTaskDetails', '<bean:write name="iter" property="taskId"/>')">
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>
@@ -139,5 +142,12 @@
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	function flyToTaskDetails(task, value) {
+		document.forms[0].task.value = task;
+		document.forms[0].taskId.value = value;
+		document.forms[0].submit();
+	}
+	</script>
 </body>
 </html>

@@ -22,31 +22,36 @@
 		
 		<div class="content-wrapper">
 			<section class="content-header">
-				<h1>Activity User
+				<h1>Task Subordinate
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Manage Activity</li>
+					<li class="active">Manage Task</li>
 				</ol>
 			</section>
 
 			<section class="content">
 			<div class="row">
 				<div class="col-xs-12"><div class="box">
-					<div class="box-header"><h3 class="box-title">Data Manage Activity</h3></div>
+					<div class="box-header"><h3 class="box-title">Data Manage Task</h3></div>
 					<table class="table table-bordered table-striped table-hover">
-					<tr><td>Task Name :</td><td>Task Assigner :</td></tr>
-					<tr><td>Start Date :</td><td>Task Receiver :</td></tr>
-					<tr><td>Estimated Date :</td><td>Description :</td></tr>
+					<tr><td>Task Name : <bean:write name="TaskUserForm" property="taskBean.taskName"/> </td><td>Task Assigner : <bean:write name="TaskUserForm" property="taskBean.taskAssigner" /> </td></tr>
+					<tr><td>Start Date : <bean:write name="TaskUserForm" property="taskBean.taskStartDate" /> </td><td>Task Receiver :<bean:write name="TaskUserForm" property="taskBean.taskReceiver"/> </td></tr>
+					<tr><td>Estimated Date : <bean:write name="TaskUserForm" property="taskBean.taskEstimateDate" /> </td><td>Description : <bean:write name="TaskUserForm" property="taskBean.taskDescription" /> </td></tr>
 					<tr><td>Status :</td></tr>
 					</table>
-					<p align = "center"><span class="button-add btn btn-app bg-olive" onclick="flyToPage('add')">
-	                    <i class="fa fa-edit"></i>Add
+					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('add')">
+	                    <i class="fa fa-edit"></i>Add</span>
+	                    <table align="center" class="btn-submit">
+	                    <tr><td> 
+	                    <input type="button" value="Submit" class="btn btn-block btn-info" onclick="javascript:flyToPage('submitTask')"/>
+	                    </td></tr>
+	                    </table>
+                    <span class="message"><bean:write name="TaskUserForm" property="message" /></span></p>
                     
-                    <span class="message"><bean:write name="ActivityUserForm" property="message" /></span></p>
 					<div class="show-in-page">
 						Show per page
-						<html:select name="ActivityUserForm" property="showInPage" onchange="change(this.value)" >
+						<html:select name="TaskUserForm" property="showInPage" onchange="change(this.value)" >
 							<html:option value="5">5</html:option>
 							<html:option value="10">10</html:option>
 							<html:option value="25">25</html:option>
@@ -54,16 +59,17 @@
 						</html:select>
 					</div>
 					<div class="search-table">
-						<html:form action="/ActivityUser" >
-							<html:hidden name="ActivityUserForm" property="task" value="search"/>
-							<html:hidden name="ActivityUserForm" property="tmpId"/>
-							<html:hidden name="ActivityUserForm" property="goToPage"/>
-							<html:hidden name="ActivityUserForm" property="showInPage"/>
-							<html:select name="ActivityUserForm" property="columnSearch" styleClass="columnSearch">
+						<html:form action="/TaskUser" >
+							<html:hidden name="TaskUserForm" property="task" value="search"/>
+							<html:hidden name="TaskUserForm" property="tmpId"/>
+							<html:hidden name="TaskUserForm" property="goToPage"/>
+							<html:hidden name="TaskUserForm" property="showInPage"/>
+							<html:hidden name="TaskUserForm" property="taskId"/>
+							<html:select name="TaskUserForm" property="columnSearch" styleClass="columnSearch">
 								<html:option value="SHOW_ALL">SHOW ALL</html:option>
 								<html:option value="NAME">ACTIVITY NAME</html:option>
 							</html:select>
-							<html:text name="ActivityUserForm" property="search" styleClass="textSearch"/>
+							<html:text name="TaskUserForm" property="search" styleClass="textSearch"/>
 							<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
 						</html:form>
 					</div>
@@ -119,7 +125,7 @@
 						<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 						
 						<div class="paginate-3">
-							<html:text name="ActivityUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+							<html:text name="TaskUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 							<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
 						</div>
 					</ul>
@@ -143,5 +149,6 @@
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+	</script>
 </body>
 </html>

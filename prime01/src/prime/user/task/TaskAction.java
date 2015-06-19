@@ -12,6 +12,11 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 
+
+
+import prime.user.activity.ActivityBean;
+import prime.user.activity.ActivityManager;
+import prime.user.activity.ActivityManagerImpl;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -26,6 +31,7 @@ public class TaskAction extends Action {
 
 		if ("add".equals(pForm.getTask())) {
 			pForm.getTaskBean().setTaskId(manager.getNewId());
+		
 			return mapping.findForward("add");
 		} else if ("insert".equals(pForm.getTask())) {
 			manager.insert(pForm.getTaskBean());
@@ -33,8 +39,27 @@ public class TaskAction extends Action {
 		}else if ("choose".equals(pForm.getTask())) {
 			return mapping.findForward("selfAssign");
 		}else if ("choose2".equals(pForm.getTask())) {
-			return mapping.findForward("selfAssign");
-		}
+			return mapping.findForward("subordinate");
+		} else if ("goToTaskDetails".equals(pForm.getTask())) {
+			pForm.setTaskBean(manager.getTaskById(pForm.getTaskId()));
+			int countRows = manager.getCountByColumn(pForm.getColumnSearch(),
+					pForm.getSearch());
+			
+			ActivityManager tmpActivityManager = new ActivityManagerImpl();
+			List<ActivityBean> list = tmpActivityManager.getListByColumn(pForm
+					.getColumnSearch(), pForm.getSearch(), PrimeUtil.getStartRow(
+					pForm.getGoToPage(), pForm.getShowInPage(), countRows),
+					PrimeUtil.getEndRow(pForm.getGoToPage(),
+							pForm.getShowInPage(), countRows));
+			request.setAttribute("listActivity", list);
+			setPaging(request, pForm, countRows, pForm.getGoToPage(),
+					pForm.getShowInPage());
+			return mapping.findForward("taskDetails");
+		}  else if ("submitTask".equals(pForm.getTask())) {
+			pForm.getTaskBean().setTaskDescription(null);
+			pForm.setTaskBean(manager.getTaskById(pForm.getTaskId()));
+			return mapping.findForward("submit");
+		} 
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		List<TaskBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),

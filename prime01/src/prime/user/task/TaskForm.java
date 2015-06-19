@@ -12,6 +12,7 @@ public class TaskForm extends ActionForm {
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
 	private Integer tmpId;
+	private Integer taskId;
 
 	public TaskBean getTaskBean() {
 		return taskBean;
@@ -53,6 +54,14 @@ public class TaskForm extends ActionForm {
 		this.message = message;
 	}
 
+	public Integer getRadioChoose() {
+		return radioChoose;
+	}
+
+	public void setRadioChoose(Integer radioChoose) {
+		this.radioChoose = radioChoose;
+	}
+
 	public Integer getGoToPage() {
 		return goToPage;
 	}
@@ -77,12 +86,12 @@ public class TaskForm extends ActionForm {
 		this.tmpId = tmpId;
 	}
 
-	public Integer getRadioChoose() {
-		return radioChoose;
+	public Integer getTaskId() {
+		return taskId;
 	}
 
-	public void setRadioChoose(Integer radioChoose) {
-		this.radioChoose = radioChoose;
+	public void setTaskId(Integer taskId) {
+		this.taskId = taskId;
 	}
 
 }
