@@ -47,7 +47,7 @@
                   				<td>:</td>
                   				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control"/></td>
                   			</tr>
-                  			<tr>
+                  			<%-- <tr>
                   				<td>Address</td>
                   				<td>:</td>
                   				<td>
@@ -125,7 +125,7 @@
                   				  		<html:text name="EmployeeAdminForm" property="employeeBean.hireDate" styleClass="form-control pull-right" styleId="datepicker_hiredate"/>
                   				  	</div>
 								</td>
-                  			</tr>
+                  			</tr> --%>
                   			<tr>
                   				<td>Profile Picture</td>
                   				<td>:</td>

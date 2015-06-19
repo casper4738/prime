@@ -58,8 +58,10 @@
 					<div class="search-table">
 						<html:form action="/EmployeeAdmin" >
 							<html:hidden name="EmployeeAdminForm" property="task" value="search"/>
+							<html:hidden name="EmployeeAdminForm" property="tmpId"/>
 							<html:hidden name="EmployeeAdminForm" property="goToPage"/>
-							
+							<html:hidden name="EmployeeAdminForm" property="showInPage"/>
+														
 							<html:select name="EmployeeAdminForm" property="columnSearch" styleClass="columnSearch">
 								<html:option value="SHOW_ALL">SHOW ALL</html:option>
 								<html:option value="ID">EMPLOYEE ID</html:option>
@@ -91,12 +93,18 @@
 			                	<tr>
 			                		<td><bean:write name="iter" property="employeeId"/> </td>
 			                		<td><bean:write name="iter" property="employeeName"/> </td>
-			                		<td><bean:write name="iter" property="gender"/> </td>
+			                		<td align="center"><logic:equal name="iter" property="gender" value="0">
+				                			Male
+				                		</logic:equal>
+				                		<logic:equal name="iter" property="gender" value="1">
+				                			Female
+				                		</logic:equal>
+			                		</td>
 			                		<td><bean:write name="iter" property="address"/> </td>
 			                		<td><bean:write name="iter" property="email"/> </td>
-			                		<td><bean:write name="iter" property="divisionName"/> </td>
+			                		<td align="center"><bean:write name="iter" property="divisionName"/> </td>
 			                		<td><bean:write name="iter" property="positionName"/> </td>
-			                		<td><bean:write name="iter" property="employeeLevel"/> </td>
+			                		<td align="center"><bean:write name="iter" property="employeeLevel"/> </td>
 			                		<td><bean:write name="iter" property="managerName"/> </td>
 			                        <td align="center">
 			                        <logic:empty name="iter" property="resignDate">
@@ -107,9 +115,9 @@
 			                        </logic:notEmpty>
 			                        </td>
 			                        <td align="center">
-			                        	<html:image src="resources/image/edit.png" /> 
+			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
 			                        	<html:image src="resources/image/remove.png" />
-			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="divisionId"/>')" src="resources/image/viewmore.png" />
+			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOVIEW%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/viewmore.png" />
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>

@@ -12,6 +12,7 @@ public class EmployeeForm extends ActionForm {
 	private Integer managerId = 1;
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
+	private Integer tmpId;
 
 	public EmployeeBean getEmployeeBean() {
 		return employeeBean;
@@ -75,6 +76,14 @@ public class EmployeeForm extends ActionForm {
 
 	public void setShowInPage(Integer showInPage) {
 		this.showInPage = showInPage;
+	}
+
+	public Integer getTmpId() {
+		return tmpId;
+	}
+
+	public void setTmpId(Integer tmpId) {
+		this.tmpId = tmpId;
 	}
 
 }

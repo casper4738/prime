@@ -45,92 +45,97 @@
 	               			<tr>
                   				<td width="150px">Name</td>
                   				<td>:</td>
-                  				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control"/></td>
+                  				<td><bean:write name="EmployeeAdminForm" property="employeeBean.employeeName"/></td>
                   			</tr>
                   			<tr>
                   				<td>Address</td>
                   				<td>:</td>
                   				<td>
-                  				<html:text name="EmployeeAdminForm" property="employeeBean.address" styleClass="form-control"/>
+                  				<bean:write name="EmployeeAdminForm" property="employeeBean.address"/>
 								</td>
                   			</tr>
                   			<tr>
                   				<td>Birth Date</td>
                   				<td>:</td>
                   				<td>
-                  					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                  				  		<html:text name="EmployeeAdminForm" property="employeeBean.birthdate" styleClass="form-control pull-right" styleId="datepicker_birthdate"/>
-                  				  	</div>
+                  				<bean:write name="EmployeeAdminForm" property="employeeBean.birthdate"/>
 								</td>
                   			</tr>
                   			<tr>
                   				<td>Contact Number</td>
                   				<td>:</td>
                   				<td>
-                  				<html:text name="EmployeeAdminForm" property="employeeBean.contactNumber" styleClass="form-control"/>
+                  				<bean:write name="EmployeeAdminForm" property="employeeBean.contactNumber"/>
 								</td>
                   			</tr>
                   			<tr>
                   				<td>Email</td>
                   				<td>:</td>
                   				<td>
-                  				<html:text name="EmployeeAdminForm" property="employeeBean.email" styleClass="form-control"/>
+                  				<bean:write name="EmployeeAdminForm" property="employeeBean.email"/>
 								</td>
                   			</tr>
                   			<tr>
                   				<td>Gender</td>
                   				<td>:</td>
-                  				<td>              			
-                  					<html:radio name="EmployeeAdminForm" property="employeeBean.gender" value="0" styleClass="minimal">Male</html:radio>
-                  					<html:radio name="EmployeeAdminForm" property="employeeBean.gender" value="1" styleClass="minimal">Female</html:radio>
+                  				<td>      
+                  				<bean:write name="EmployeeAdminForm" property="employeeBean.gender"/>
 								</td>
                   			</tr>
                   			<tr>
                   				<td>Division</td>
                   				<td>:</td>
                   				<td>
-                  				<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
+                  				<bean:write name="EmployeeAdminForm" property="employeeBean.divisionName"/>
 								</td>
                   			</tr>
                   			<tr>
                   				<td>Position</td>
                   				<td>:</td>
                   				<td>
-                  				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control">
-                  					<html:options collection="listPosition" property="positionId" labelProperty="positionName" />
-                  				</html:select>
+                  				<bean:write name="EmployeeAdminForm" property="employeeBean.positionName"/>
 								</td>
                   			</tr>
                   			<tr>
                   				<td>Level</td>
                   				<td>:</td>
                   				<td>
-                  				<html:select name="EmployeeAdminForm" property="employeeBean.employeeLevel" styleClass="form-control">
-                  					<html:optionsCollection name="listEmployeeLevel" label="value" value="key" />
-                  				</html:select>
+                  				<bean:write name="EmployeeAdminForm" property="employeeBean.employeeLevel"/>
 								</td>
                   			</tr>
                   			<tr>
                   				<td>Head</td>
                   				<td>:</td>
                   				<td>
-                  				<html:text name="EmployeeAdminForm" property="employeeBean.managerName" styleClass="form-control" disabled="true"/>
+                  				<bean:write name="EmployeeAdminForm" property="employeeBean.managerName"/>
 								</td>
                   			</tr>
                   			<tr>
                   				<td>Hire Date</td>
                   				<td>:</td>
                   				<td>
-                  					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                  				  		<html:text name="EmployeeAdminForm" property="employeeBean.hireDate" styleClass="form-control pull-right" styleId="datepicker_hiredate"/>
-                  				  	</div>
+                  				<bean:write name="EmployeeAdminForm" property="employeeBean.hireDate"/>
 								</td>
                   			</tr>
                   			<tr>
-                  				<td>Profile Picture</td>
+                  				<td>Resign Date</td>
                   				<td>:</td>
                   				<td>
-                  				  <input type="file" id="exampleInputFile">
+                  				<bean:write name="EmployeeAdminForm" property="employeeBean.resignDate"/>
+								</td>
+                  			</tr>
+                  			<tr>
+                  				<td>Resign Note</td>
+                  				<td>:</td>
+                  				<td>
+                  				<bean:write name="EmployeeAdminForm" property="employeeBean.resignNote"/>
+								</td>
+                  			</tr>
+                  			<tr>
+                  				<td>Photo</td>
+                  				<td>:</td>
+                  				<td>
+                  				<%-- <html:image src="resources/image/photodummy.png" /> --%>
 								</td>
                   			</tr>
                   			<tr>

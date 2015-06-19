@@ -39,15 +39,18 @@
         BIRTHDATE AS birthdate,
         CONTACT_NUMBER AS contactNumber,
         EMAIL AS email,
-        DIVISION_NAME AS divisionName,
-        POSITION_NAME AS positionName,
+        DIV.DIVISION_ID AS divisionId,
+        DIV.DIVISION_NAME AS divisionName,
+        POS.POSITION_ID AS positionId,
+        POS.POSITION_NAME AS positionName,
         EMPLOYEE_LEVEL AS employeeLevel,
+        MANAGER.EMPLOYEE_ID AS managerId,
         MANAGER.EMPLOYEE_NAME AS managerName
         FROM EMPLOYEES EMP 
         INNER JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
         INNER JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
         LEFT JOIN (SELECT EMPLOYEE_ID, EMPLOYEE_NAME FROM EMPLOYEES) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-        WHERE EMP.EMPLOYEE_ID=#id#
+        WHERE EMP.EMPLOYEE_ID=1
 	</select>
 	
 	<select id="getListByCol" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">

@@ -1,7 +1,10 @@
 package prime.admin.employee;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -48,21 +51,30 @@ public class EmployeeAction extends Action {
 		} else if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Get Data
 			DivisionBean tmpDivision = tmpDivisionManager.getDivisionById(pForm.getEmployeeBean().getDivisionId());
-			EmployeeBean tmpManager = manager.getEmployeeById(pForm.getManagerId());
+			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getManagerId());
 
 			pForm.getEmployeeBean().setEmployeeId(manager.getNewId());
 			pForm.getEmployeeBean().setDivisionId(tmpDivision.getDivisionId());
 			pForm.getEmployeeBean().setDivisionName(tmpDivision.getDivisionName());
 
-			pForm.getEmployeeBean().setManagerId(tmpManager.getEmployeeId());
-			pForm.getEmployeeBean().setManagerName(tmpManager.getEmployeeName());
-			
+			pForm.getEmployeeBean().setManagerId(tmpEmployee.getEmployeeId());
+			pForm.getEmployeeBean().setManagerName(tmpEmployee.getEmployeeName());
+
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
+			request.setAttribute("listEmployeeLevel", getEmployeeLevel(tmpEmployee.getEmployeeLevel()));
 			
 			//##. Add Data
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
-			return mapping.findForward("add");
+			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
+//			EmployeeBean tmpManager = manager.getEmployeeById(tmpEmployee.getManagerId());
+			pForm.setEmployeeBean(tmpEmployee);
+//			request.setAttribute("listEmployeeLevel", getEmployeeLevel(tmpManager.getEmployeeLevel()));
+//			request.setAttribute("listPosition", tmpPositionManager.getListAll());
+			return mapping.findForward("edit");
+		} else if(Constants.Task.GOTOVIEW.equals(pForm.getTask())) {
+			pForm.setEmployeeBean(manager.getEmployeeById(pForm.getTmpId()));
+			return mapping.findForward("view");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			manager.insert(pForm.getEmployeeBean());
 			return mapping.findForward("forward");
@@ -96,6 +108,14 @@ public class EmployeeAction extends Action {
 		request.setAttribute("pagePrev", pageUtil.getPagePrev());
 		request.setAttribute("pageNext", pageUtil.getPageNext());
 		request.setAttribute("listMaxDataPerPage", Constants.PAGINGROWPAGE);
+	}
+	
+	private Map<Integer,Integer> getEmployeeLevel(int min) {
+		Map<Integer,Integer> map = new HashMap<Integer, Integer>();
+		for (int i = min+1; i <= 8; i++) {
+			map.put(i, i);
+		}
+		return map;
 	}
 
 }
