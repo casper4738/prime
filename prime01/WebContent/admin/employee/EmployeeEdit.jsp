@@ -37,7 +37,7 @@
 					<div class="box-header"><h3 class="box-title">Data Manage Employee</h3></div>
 					<div class="box-body">
                   	<html:form action="/EmployeeAdmin">
-                  		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
+                  		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOEDIT%>"/>
                   		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
                   		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
                   		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
@@ -47,7 +47,7 @@
                   				<td>:</td>
                   				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control"/></td>
                   			</tr>
-                  			<%-- <tr>
+                  			<tr>
                   				<td>Address</td>
                   				<td>:</td>
                   				<td>
@@ -86,13 +86,6 @@
 								</td>
                   			</tr>
                   			<tr>
-                  				<td>Division</td>
-                  				<td>:</td>
-                  				<td>
-                  				<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
-								</td>
-                  			</tr>
-                  			<tr>
                   				<td>Position</td>
                   				<td>:</td>
                   				<td>
@@ -102,12 +95,10 @@
 								</td>
                   			</tr>
                   			<tr>
-                  				<td>Level</td>
+                  				<td>Division</td>
                   				<td>:</td>
                   				<td>
-                  				<html:select name="EmployeeAdminForm" property="employeeBean.employeeLevel" styleClass="form-control">
-                  					<html:optionsCollection name="listEmployeeLevel" label="value" value="key" />
-                  				</html:select>
+                  				<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
 								</td>
                   			</tr>
                   			<tr>
@@ -125,7 +116,7 @@
                   				  		<html:text name="EmployeeAdminForm" property="employeeBean.hireDate" styleClass="form-control pull-right" styleId="datepicker_hiredate"/>
                   				  	</div>
 								</td>
-                  			</tr> --%>
+                  			</tr>
                   			<tr>
                   				<td>Profile Picture</td>
                   				<td>:</td>

@@ -7,8 +7,8 @@ public class EmployeeBean {
 	private Integer gender = 0;
 	private Integer divisionId = 0;
 	private Integer positionId = 0;
-	private Integer employeeLevel;
-	private Integer managerId;
+	private Integer employeeLevel = 0;
+	private Integer managerId = 0;
 	private Integer contactNumber;
 	private String employeeName;
 	private String address;

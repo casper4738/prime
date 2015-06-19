@@ -80,6 +80,10 @@ public interface Constants {
 		static Integer SATURDAY  = 5;
 		static Integer SUNDAY	 = 6;
 	}
+	
+	static interface Confirmation{
+		static String DELETE	= "Are you sure you want to delete this data ?";
+	}
 		
 
 }

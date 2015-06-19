@@ -58,7 +58,7 @@
                   				<td>Birth Date</td>
                   				<td>:</td>
                   				<td>
-                  				<bean:write name="EmployeeAdminForm" property="employeeBean.birthdate"/>
+                  				<bean:write name="EmployeeAdminForm" property="employeeBean.birthdate" format="dd MMMM yyyy"/>
 								</td>
                   			</tr>
                   			<tr>
@@ -78,8 +78,13 @@
                   			<tr>
                   				<td>Gender</td>
                   				<td>:</td>
-                  				<td>      
-                  				<bean:write name="EmployeeAdminForm" property="employeeBean.gender"/>
+                  				<td> 
+		                  			<logic:equal name="EmployeeAdminForm" property="employeeBean.gender" value="0">
+						                		Male
+						            </logic:equal>
+						            <logic:equal name="EmployeeAdminForm" property="employeeBean.gender" value="1">
+						                		Female
+						            </logic:equal>	
 								</td>
                   			</tr>
                   			<tr>
@@ -97,13 +102,6 @@
 								</td>
                   			</tr>
                   			<tr>
-                  				<td>Level</td>
-                  				<td>:</td>
-                  				<td>
-                  				<bean:write name="EmployeeAdminForm" property="employeeBean.employeeLevel"/>
-								</td>
-                  			</tr>
-                  			<tr>
                   				<td>Head</td>
                   				<td>:</td>
                   				<td>
@@ -114,7 +112,7 @@
                   				<td>Hire Date</td>
                   				<td>:</td>
                   				<td>
-                  				<bean:write name="EmployeeAdminForm" property="employeeBean.hireDate"/>
+                  				<bean:write name="EmployeeAdminForm" property="employeeBean.hireDate" format="dd MMMM yyyy"/>
 								</td>
                   			</tr>
                   			<tr>

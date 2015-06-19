@@ -74,7 +74,7 @@
 			                		<td><bean:write name="iter" property="divisionName"/></td>
 			                        <td align="center">
 			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="divisionId"/>')" src="resources/image/edit.png" />
-			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.DODELETE%>', '<bean:write name="iter" property="divisionId"/>')" src="resources/image/remove.png" />
+			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.DODELETE%>', '<bean:write name="iter" property="divisionId"/>', '<%=Constants.Confirmation.DELETE %>')" src="resources/image/remove.png" />
 			                        </td>	
 			                    </tr> 
 		                    </logic:iterate>

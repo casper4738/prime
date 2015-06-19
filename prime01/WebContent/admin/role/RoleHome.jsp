@@ -73,7 +73,7 @@
 			                		<td><bean:write name="iter" property="roleName"/></td>
 			                        <td align="center">
 			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="roleId"/>')" src="resources/image/edit.png" />
-			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.DODELETE%>', '<bean:write name="iter" property="roleId"/>')" src="resources/image/remove.png" />
+			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.DODELETE%>', '<bean:write name="iter" property="roleId"/>', '<%=Constants.Confirmation.DELETE %>')" src="resources/image/remove.png" />
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>

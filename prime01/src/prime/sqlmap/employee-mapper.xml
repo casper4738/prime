@@ -10,7 +10,7 @@
 		 #gender#, #hireDate#, #employeeLevel#, #divisionId#, #positionId#, #managerId#)
 	</insert>
 	
-	<update id="update"  parameterClass="prime.admin.employee.EmployeeBean">
+	<update id="update" parameterClass="prime.admin.employee.EmployeeBean">
 		UPDATE EMPLOYEES SET
 		EMPLOYEE_NAME=#employeeName#,
 		ADDRESS=#address#,
@@ -22,7 +22,12 @@
 		EMPLOYEE_LEVEL=#employeeLevel#,
 		DIVISION_ID=#divisionId#,
 		POSITION_ID=#positionId#,
-		HEAD_ID=#managerId#
+		<isNotEqual property="managerId"  compareValue="0">
+			HEAD_ID=#managerId#
+		</isNotEqual>
+		<isEqual property="managerId"  compareValue="0">
+			HEAD_ID=null
+		</isEqual>
 		WHERE EMPLOYEE_ID=#employeeId#
 	</update>
 	
@@ -37,6 +42,7 @@
         GENDER AS gender,
         ADDRESS AS address,
         BIRTHDATE AS birthdate,
+        HIRE_DATE AS hireDate,
         CONTACT_NUMBER AS contactNumber,
         EMAIL AS email,
         DIV.DIVISION_ID AS divisionId,
@@ -50,7 +56,7 @@
         INNER JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
         INNER JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
         LEFT JOIN (SELECT EMPLOYEE_ID, EMPLOYEE_NAME FROM EMPLOYEES) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-        WHERE EMP.EMPLOYEE_ID=1
+        WHERE EMP.EMPLOYEE_ID=#id#
 	</select>
 	
 	<select id="getListByCol" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
@@ -61,6 +67,7 @@
         GENDER AS gender,
         ADDRESS AS address,
         BIRTHDATE AS birthdate,
+        HIRE_DATE AS hireDate,
         CONTACT_NUMBER AS contactNumber,
         EMAIL AS email,
         DIVISION_NAME AS divisionName,

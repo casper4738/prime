@@ -86,13 +86,6 @@
 								</td>
                   			</tr>
                   			<tr>
-                  				<td>Division</td>
-                  				<td>:</td>
-                  				<td>
-                  				<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
-								</td>
-                  			</tr>
-                  			<tr>
                   				<td>Position</td>
                   				<td>:</td>
                   				<td>
@@ -102,12 +95,10 @@
 								</td>
                   			</tr>
                   			<tr>
-                  				<td>Level</td>
+                  				<td>Division</td>
                   				<td>:</td>
                   				<td>
-                  				<html:select name="EmployeeAdminForm" property="employeeBean.employeeLevel" styleClass="form-control">
-                  					<html:optionsCollection name="listEmployeeLevel" label="value" value="key" />
-                  				</html:select>
+                  				<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
 								</td>
                   			</tr>
                   			<tr>

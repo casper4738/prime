@@ -49,34 +49,43 @@ public class EmployeeAction extends Action {
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("choose_manager");
 		} else if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
+			System.out.println("cekkk Manager :"+pForm.getManagerId());
 			//##. Get Data
-			DivisionBean tmpDivision = tmpDivisionManager.getDivisionById(pForm.getEmployeeBean().getDivisionId());
-			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getManagerId());
-
-			pForm.getEmployeeBean().setEmployeeId(manager.getNewId());
-			pForm.getEmployeeBean().setDivisionId(tmpDivision.getDivisionId());
-			pForm.getEmployeeBean().setDivisionName(tmpDivision.getDivisionName());
-
-			pForm.getEmployeeBean().setManagerId(tmpEmployee.getEmployeeId());
-			pForm.getEmployeeBean().setManagerName(tmpEmployee.getEmployeeName());
-
+			if(pForm.getManagerId() != 0) {
+				DivisionBean tmpDivision = tmpDivisionManager.getDivisionById(pForm.getEmployeeBean().getDivisionId());
+				EmployeeBean tmpManager = manager.getEmployeeById(pForm.getManagerId());
+	
+				pForm.getEmployeeBean().setEmployeeId(manager.getNewId());
+				pForm.getEmployeeBean().setDivisionId(tmpDivision.getDivisionId());
+				pForm.getEmployeeBean().setDivisionName(tmpDivision.getDivisionName());
+	
+				pForm.getEmployeeBean().setManagerId(tmpManager.getEmployeeId());
+				pForm.getEmployeeBean().setManagerName(tmpManager.getEmployeeName());
+				pForm.getEmployeeBean().setEmployeeLevel(tmpManager.getEmployeeLevel()+1);
+			} else {
+				pForm.getEmployeeBean().setEmployeeLevel(0);				
+			}
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
-			request.setAttribute("listEmployeeLevel", getEmployeeLevel(tmpEmployee.getEmployeeLevel()));
-			
+	
 			//##. Add Data
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
-//			EmployeeBean tmpManager = manager.getEmployeeById(tmpEmployee.getManagerId());
+			if(tmpEmployee.getManagerId() != null) {
+				EmployeeBean tmpManager = manager.getEmployeeById(tmpEmployee.getManagerId());
+			}
 			pForm.setEmployeeBean(tmpEmployee);
-//			request.setAttribute("listEmployeeLevel", getEmployeeLevel(tmpManager.getEmployeeLevel()));
-//			request.setAttribute("listPosition", tmpPositionManager.getListAll());
+			request.setAttribute("listPosition", tmpPositionManager.getListAll());
 			return mapping.findForward("edit");
 		} else if(Constants.Task.GOTOVIEW.equals(pForm.getTask())) {
 			pForm.setEmployeeBean(manager.getEmployeeById(pForm.getTmpId()));
 			return mapping.findForward("view");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			manager.insert(pForm.getEmployeeBean());
+			return mapping.findForward("forward");
+		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
+			EmployeeBean tmpEmployee = pForm.getEmployeeBean();
+			manager.update(tmpEmployee);
 			return mapping.findForward("forward");
 		}
 		
@@ -112,7 +121,7 @@ public class EmployeeAction extends Action {
 	
 	private Map<Integer,Integer> getEmployeeLevel(int min) {
 		Map<Integer,Integer> map = new HashMap<Integer, Integer>();
-		for (int i = min+1; i <= 8; i++) {
+		for (int i = min; i <= 8; i++) {
 			map.put(i, i);
 		}
 		return map;

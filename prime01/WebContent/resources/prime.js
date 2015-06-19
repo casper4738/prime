@@ -3,16 +3,14 @@ function flyToPage(task) {
 	document.forms[0].submit();
 }
 
-function flyToEditDelete(task, value) {
+function flyToEditDelete(task, value, confirmMessage) {
+	if(confirmMessage != null){
+		if(!confirm(confirmMessage))	
+			return;
+	}
 	document.forms[0].task.value = task;
 	document.forms[0].tmpId.value = value;
-	if(task == "delete"){
-		if(confirm("Do you really want to delete this data?"))
-			document.forms[0].submit();
-	}
-	else{
-		document.forms[0].submit();
-	}
+	document.forms[0].submit();
 }
 
 function flyToForward(task, value) {
@@ -37,11 +35,6 @@ function change(value) {
 
 function validate() {
 	return validateForm(document.forms[0]);
-}
-
-
-function onSelectManager(value) {
-	document.forms[0].submit();
 }
 
 function isNumeric(n) {

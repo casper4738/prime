@@ -13,12 +13,32 @@
 	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+  	<link href="resources/plugins/iCheck/all.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
 	<script>
 		function chooseManager(managerId) {
 			document.forms[0].managerId.value = managerId;
 			document.forms[0].task.value= "<%=Constants.Task.GOTOADD%>";
+			document.forms[0].submit();
+		}
+		
+		function oncheckmanager() {
+			var checked = document.getElementById("checkmanagerid").checked;
+			if(checked) {
+				document.getElementById("divisionid").disabled = true;
+				document.getElementById("table_data").style.display= "none";				
+				document.getElementById("myBtn").style.display= "block";				
+			} else {
+				document.getElementById("divisionid").disabled = false;
+				document.getElementById("table_data").style.display= "block";				
+				document.getElementById("myBtn").style.display= "none";				
+			}
+		}
+		
+
+		function onSelectManager(value) {
+			document.forms[0].task.value= "<%=Constants.Task.GOTOMANAGER%>";
 			document.forms[0].submit();
 		}
 	</script>
@@ -40,18 +60,22 @@
 			<section class="content">
 			<div class="row">
 				<div class="col-xs-12"><div class="box">
-					<div class="box-header"><h3 class="box-title">Data Manage Employee</h3></div>
+					<div class="box-header"><h3 class="box-title">Data Choose Manager</h3></div>
 					<div class="box-body">
                   	<html:form action="/EmployeeAdmin">
-                  		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.GOTOMANAGER%>"/>
+                  		<html:hidden name="EmployeeAdminForm" property="task" />
                   		<html:hidden name="EmployeeAdminForm" property="showInPage" />
                   		<html:hidden name="EmployeeAdminForm" property="managerId" />
 						<html:hidden name="EmployeeAdminForm" property="goToPage"/>
-                  		
                   			<table class="form-input" align="center">
+                  			<tr><td colspan="2" height="45px"> 
+                  			<html:checkbox name="EmployeeAdminForm" property="employeeBean.managerId" styleClass="flat-red" 
+                  			 styleId="checkmanagerid" onclick="oncheckmanager()"/>No Manager</td>
+                  			 <td><input type="button" value="select" style="display:none" class="btn bg-olive" id="myBtn" onclick="chooseManager(null) "/></td>
+	             			</tr>
                   			<tr><td width="150px">Division</td>
                   				<td>: </td> 	
-                  				<td><html:select name="EmployeeAdminForm" property="employeeBean.divisionId" styleClass="form-control" onchange="onSelectManager(this.value)">
+                  				<td><html:select name="EmployeeAdminForm" property="employeeBean.divisionId" styleClass="form-control" styleId="divisionid" onchange="onSelectManager()">
 		             				<html:options collection="listDivision" property="divisionId" labelProperty="divisionName"/>
 		             				</html:select>
 	             				</td>
@@ -59,6 +83,7 @@
 	             			</table>
 	             			
 	             			<br/><br/><br/>
+	               		 	<div id="table_data">
 	               		 	<div class="show-in-page">
 							Show per page
 							<html:select property="showInPage" name="EmployeeAdminForm" styleId="view_data">
@@ -74,7 +99,7 @@
 								<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
 							</div>
 							<div class="box-body">
-							<table class="table table-bordered table-striped table-hover">
+							<table class="table table-bordered table-striped table-hover" >
 								<thead>
 									<tr>
 										<th>Employee ID</th>
@@ -140,6 +165,7 @@
 							<div class="paginate-2">
 								Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
 							</div>
+							</div>
                     </html:form>
                     </div>
 		        	</div></div>
@@ -155,7 +181,14 @@
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
+	<script src="resources/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+	<script>
+    /* //iCheck
+    $('input[type="checkbox"].flat-red').iCheck({
+      checkboxClass: 'icheckbox_flat-blue',
+    }); */
+	</script>
 </body>
 </html>

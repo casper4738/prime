@@ -116,7 +116,7 @@
 			                        </td>
 			                        <td align="center">
 			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
-			                        	<html:image src="resources/image/remove.png" />
+			                        	<html:image src="resources/image/resign.png" />
 			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOVIEW%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/viewmore.png" />
 			                        </td>
 			                    </tr>
