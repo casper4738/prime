@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.constants.Constants;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -19,31 +20,39 @@ public class RoleAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		RoleForm pForm = (RoleForm) form;
-		RoleManager manager = new RoleManagerImpl();
+		RoleManager tmpManager = new RoleManagerImpl();
 		
-		if("add".equals(pForm.getTask())) {
-			pForm.getRoleBean().setRoleId(manager.getNewId());
+		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
+			//##. Add Data
+			pForm.getRoleBean().setRoleId(tmpManager.getNewId());
 			return mapping.findForward("add");
-		} else if("edit".equals(pForm.getTask())) {
-			pForm.setRoleBean(manager.getRoleById(pForm.getTmpId()));
+		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
+			//##. Edit Data
+			pForm.setRoleBean(tmpManager.getRoleById(pForm.getTmpId()));
 			return mapping.findForward("edit");
-		} else if("insert".equals(pForm.getTask())) {
-			manager.insert(pForm.getRoleBean());
+		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
+			//##.Insert Data and Go to Forward
+			tmpManager.insert(pForm.getRoleBean());
 			return mapping.findForward("forward");
-		} else if("update".equals(pForm.getTask())) {
-			manager.update(pForm.getRoleBean());
+		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
+			//##.Update Data and Go to Forward
+			tmpManager.update(pForm.getRoleBean());
 			return mapping.findForward("forward");
-		} else if("delete".equals(pForm.getTask())) {
-			manager.delete(pForm.getTmpId());
+		} else if(Constants.Task.DODELETE.equals(pForm.getTask())) {
+			//##.Delete Data and Back Main
+			tmpManager.delete(pForm.getTmpId());
 			return mapping.findForward("forward");
 		}
 		
-		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-		List<RoleBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+		List<RoleBean> list = tmpManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 		
+		//##1.Attribute for Table Show
 		request.setAttribute("listRole", list);
+		request.setAttribute("listSearchColumn", Constants.Search.ROLE_SEARCHCOLUMNS);
+		
 
 		setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		return mapping.findForward("success");
@@ -51,6 +60,7 @@ public class RoleAction extends Action {
 	
 	private void setPaging(HttpServletRequest request, RoleForm pForm, int countRows, int page, int view)
 			throws SQLException {
+		//##2.Paging Handling
 		PaginationUtility pageUtil = new PaginationUtility();
 		pageUtil.setCountRows(countRows);
 		pageUtil.setView(view);
@@ -62,6 +72,7 @@ public class RoleAction extends Action {
 		request.setAttribute("pageLast", pageUtil.getSumOfPage());
 		request.setAttribute("pagePrev", pageUtil.getPagePrev());
 		request.setAttribute("pageNext", pageUtil.getPageNext());
+		request.setAttribute("listMaxDataPerPage", Constants.PAGINGROWPAGE);
 		
 		pForm.setGoToPage(pageUtil.getPage());
 	}

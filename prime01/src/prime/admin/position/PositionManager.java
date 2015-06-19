@@ -16,6 +16,8 @@ public interface PositionManager {
 	public List<PositionBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow)
 			throws SQLException;
 	
+	public List<PositionBean> getListAll() throws SQLException;
+	
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 	
 	public Integer getNewId() throws SQLException;

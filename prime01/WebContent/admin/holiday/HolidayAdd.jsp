@@ -1,3 +1,4 @@
+<%@page import="prime.constants.Constants"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
@@ -36,7 +37,7 @@
 					<div class="box-header"><h3 class="box-title">Data Holiday</h3></div>
 					<div class="box-body">
                   	<html:form action="/HolidayAdmin">
-                  		<html:hidden name="HolidayAdminForm" property="task" value="insert"/>
+                  		<html:hidden name="HolidayAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
                   		<table class="form-input" align="center">
                   			<tr>
                   				<td width="150px">Date</td>

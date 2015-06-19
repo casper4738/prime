@@ -20,7 +20,7 @@ public class RoleManagerImpl implements RoleManager {
 	public void insert(RoleBean e) throws SQLException {
 		try {
 			mapper.startTransaction();
-			mapper.delete("role.insert", e);
+			mapper.insert("role.insert", e);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();

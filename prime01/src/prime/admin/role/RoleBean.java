@@ -4,7 +4,6 @@ public class RoleBean {
 
 	private Integer roleId;
 	private String roleName;
-	private Integer roleStatus = 0;
 
 	public Integer getRoleId() {
 		return roleId;
@@ -20,14 +19,6 @@ public class RoleBean {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
-	}
-
-	public Integer getRoleStatus() {
-		return roleStatus;
-	}
-
-	public void setRoleStatus(Integer roleStatus) {
-		this.roleStatus = roleStatus;
 	}
 
 }

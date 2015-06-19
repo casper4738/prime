@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.constants.Constants;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -19,30 +20,38 @@ public class HolidayAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HolidayForm pForm = (HolidayForm) form;
-		HolidayManager manager = new HolidayManagerImpl();
+		HolidayManager tmpManager = new HolidayManagerImpl();
 		
-		if("add".equals(pForm.getTask())) {
+		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
+			//##. Add Data
 			pForm.getHolidayBean().setHolidayDate(new java.sql.Date(new java.util.Date().getTime()));
 			return mapping.findForward("add");
-		} else if("edit".equals(pForm.getTask())) {
-			pForm.setHolidayBean(manager.getHolidayById(pForm.getTmpId()));
+		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
+			//##. Edit Data
+			pForm.setHolidayBean(tmpManager.getHolidayById(pForm.getTmpId()));
 			return mapping.findForward("edit");
-		} else if("insert".equals(pForm.getTask())) {
-			manager.insert(pForm.getHolidayBean());
+		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
+			//##.Insert Data and Go to Forward
+			tmpManager.insert(pForm.getHolidayBean());
 			return mapping.findForward("forward");
-		} else if("update".equals(pForm.getTask())) {
-			manager.update(pForm.getHolidayBean());
+		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
+			//##.Update Data and Go to Forward
+			tmpManager.update(pForm.getHolidayBean());
 			return mapping.findForward("forward");
-		} else if("delete".equals(pForm.getTask())) {
-			manager.delete(pForm.getTmpId());
+		} else if(Constants.Task.DODELETE.equals(pForm.getTask())) {
+			//##.Delete Data and Back Main
+			tmpManager.delete(pForm.getTmpId());
 			return mapping.findForward("forward");
 		}
 		
-		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-		List<HolidayBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+		List<HolidayBean> list = tmpManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
+		
+		//##1.Attribute for Table Show
 		request.setAttribute("listHoliday", list);
+		request.setAttribute("listSearchColumn", Constants.Search.HOLIDAY_SEARCHCOLUMNS);
 		
 		setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		return mapping.findForward("success");
@@ -50,6 +59,7 @@ public class HolidayAction extends Action {
 	
 	private void setPaging(HttpServletRequest request, HolidayForm pForm, int countRows, int page, int view)
 			throws SQLException {
+		//##2.Paging Handling
 		PaginationUtility pageUtil = new PaginationUtility();
 		pageUtil.setCountRows(countRows);
 		pageUtil.setView(view);
@@ -61,6 +71,7 @@ public class HolidayAction extends Action {
 		request.setAttribute("pageLast", pageUtil.getSumOfPage());
 		request.setAttribute("pagePrev", pageUtil.getPagePrev());
 		request.setAttribute("pageNext", pageUtil.getPageNext());
+		request.setAttribute("listMaxDataPerPage", Constants.PAGINGROWPAGE);
 
 		pForm.setGoToPage(pageUtil.getPage());
 	}

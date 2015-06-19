@@ -1,3 +1,4 @@
+<%@page import="prime.constants.Constants"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
@@ -35,17 +36,14 @@
 				<div class="col-xs-12"><div class="box">
 					<div class="box-header"><h3 class="box-title">Data Manage Position</h3></div>
 					
-					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('add')">
+					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
 	                    <i class="fa fa-edit"></i>Add
                     </span>
                     <span class="message"><bean:write name="PositionAdminForm" property="message" /></span></p>
 					<div class="show-in-page">
 						Show per page
 						<html:select name="PositionAdminForm" property="showInPage" onchange="change(this.value)" >
-							<html:option value="5">5</html:option>
-							<html:option value="10">10</html:option>
-							<html:option value="25">25</html:option>
-							<html:option value="50">50</html:option>
+							<html:optionsCollection name="listMaxDataPerPage" label="value" value="key"/>
 						</html:select>
 					</div>
 					<div class="search-table">
@@ -55,8 +53,7 @@
 							<html:hidden name="PositionAdminForm" property="goToPage"/>
 							<html:hidden name="PositionAdminForm" property="showInPage"/>
 							<html:select name="PositionAdminForm" property="columnSearch" styleClass="columnSearch">
-								<html:option value="SHOW_ALL">SHOW ALL</html:option>
-								<html:option value="NAME">POSITION NAME</html:option>
+								<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 							</html:select>
 							<html:text name="PositionAdminForm" property="search" styleClass="textSearch"/>
 							<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
@@ -75,15 +72,15 @@
 			                	<tr>
 			                		<td><bean:write name="iter" property="positionName"/></td>
 			                        <td align="center">
-			                        	<input type="image" onclick="flyToEditDelete('edit', '<bean:write name="iter" property="positionId"/>')" src="resources/image/edit.png" />
-			                        	<input type="image" onclick="flyToEditDelete('delete', '<bean:write name="iter" property="positionId"/>')" src="resources/image/remove.png" />
+			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="positionId"/>')" src="resources/image/edit.png" />
+			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.DODELETE%>', '<bean:write name="iter" property="positionId"/>')" src="resources/image/remove.png" />
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>
 							</logic:notEmpty>
 							<logic:empty name="listPosition">
 								<tr>
-									<td align="center" colspan="3">DATA KOSONG</td>
+									<td align="center" colspan="3"><bean:message key="label.table.notfound" /></td>
 								</tr>
 							</logic:empty>
 	                   </tbody>

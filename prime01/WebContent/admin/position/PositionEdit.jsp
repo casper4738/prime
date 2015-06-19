@@ -1,3 +1,4 @@
+<%@page import="prime.constants.Constants"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
@@ -35,7 +36,7 @@
 					<div class="box-header"><h3 class="box-title">Data Position</h3></div>
 					<div class="box-body">
                   	<html:form action="/PositionAdmin">
-                  		<html:hidden name="PositionAdminForm" property="task" value="update"/>
+                  		<html:hidden name="PositionAdminForm" property="task" value="<%=Constants.Task.DOEDIT%>"/>
                   		<html:hidden name="PositionAdminForm" property="positionBean.positionId" />
                   		<table class="form-input" align="center">
                   			<tr>

@@ -2,19 +2,19 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="holiday">
 	<insert id="insert" parameterClass="prime.admin.holiday.HolidayBean">
-		INSERT INTO NATIONAL_HOLIDAY
+		INSERT INTO NATIONAL_HOLIDAYS
 		(HOLIDAY_DATE , NATIONAL_DESCRIPTION) VALUES 
 		(#holidayDate#, #holidayDescription#)
 	</insert>
 	
 	<update id="update" parameterClass="prime.admin.holiday.HolidayBean">
-		UPDATE NATIONAL_HOLIDAY SET
+		UPDATE NATIONAL_HOLIDAYS SET
 		NATIONAL_DESCRIPTION=#holidayDescription#
 		WHERE HOLIDAY_DATE=#holidayDate#
 	</update>
 	
 	<delete id="delete" parameterClass="java.sql.Date">
-		DELETE FROM NATIONAL_HOLIDAY WHERE HOLIDAY_DATE=#date#
+		DELETE FROM NATIONAL_HOLIDAYS WHERE HOLIDAY_DATE=#date#
 	</delete>
 	
 	<select id="get" resultClass="prime.admin.holiday.HolidayBean" parameterClass="java.sql.Date">
@@ -28,7 +28,7 @@
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT HOLIDAY_DATE AS holidayDate, 
 		NATIONAL_DESCRIPTION AS holidayDescription
-		FROM NATIONAL_HOLIDAY
+		FROM NATIONAL_HOLIDAYS
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="DESCRIPTION">
@@ -41,7 +41,7 @@
 	</select>
 	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
-		FROM NATIONAL_HOLIDAY 
+		FROM NATIONAL_HOLIDAYS 
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		      	<isEqual property="columnSearch" compareValue="DESCRIPTION">

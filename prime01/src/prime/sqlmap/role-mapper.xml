@@ -3,14 +3,14 @@
 <sqlMap namespace="role">
 	<insert id="insert" parameterClass="prime.admin.role.RoleBean">
 		INSERT INTO ROLES
-		(ROLE_ID , ROLE_NAME) VALUES 
+		(ROLE_ID, ROLE_NAME) VALUES 
 		(#roleId#, #roleName#)
 	</insert>
 	
 	<update id="update" parameterClass="prime.admin.role.RoleBean">
 		UPDATE ROLES SET
 		ROLE_NAME=#roleName#
-		WHERE DIVISION_ID=#roleId#
+		WHERE ROLE_ID=#roleId#
 	</update>
 	
 	<delete id="delete" parameterClass="java.lang.Integer">

@@ -20,7 +20,7 @@ public class DivisionManagerImpl implements DivisionManager {
 	public void insert(DivisionBean e) throws SQLException {
 		try {
 			mapper.startTransaction();
-			mapper.delete("division.insert", e);
+			mapper.insert("division.insert", e);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
@@ -59,6 +59,11 @@ public class DivisionManagerImpl implements DivisionManager {
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		return mapper.queryForList("division.getListByCol", map);
+	}
+	
+
+	public List<DivisionBean> getListAll() throws SQLException {
+		return mapper.queryForList("division.selectAll", null);
 	}
 
 	public Integer getNewId() throws SQLException {

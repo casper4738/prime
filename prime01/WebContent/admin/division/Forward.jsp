@@ -1,3 +1,4 @@
+<%@page import="prime.constants.Constants"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
@@ -16,15 +17,15 @@
 	<html:hidden name="DivisionAdminForm" property="message"/>
 </html:form>
 
-<logic:equal name="DivisionAdminForm" property="task" value="insert">
+<logic:equal name="DivisionAdminForm" property="task" value="<%=Constants.Task.DOADD%>">
 	<script>flyToForward('success', '<bean:message key="label.message.insert"/>')</script>
 </logic:equal>
 
-<logic:equal name="DivisionAdminForm" property="task" value="update">
+<logic:equal name="DivisionAdminForm" property="task" value="<%=Constants.Task.DOEDIT%>">
 	<script>flyToForward('success', '<bean:message key="label.message.update"/>')</script>
 </logic:equal>
 
-<logic:equal name="DivisionAdminForm" property="task" value="delete">
+<logic:equal name="DivisionAdminForm" property="task" value="<%=Constants.Task.DODELETE%>">
 	<script>flyToForward('success', '<bean:message key="label.message.delete"/>')</script>
 </logic:equal>
 

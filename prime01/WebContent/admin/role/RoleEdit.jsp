@@ -1,3 +1,4 @@
+<%@page import="prime.constants.Constants"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
@@ -35,20 +36,13 @@
 					<div class="box-header"><h3 class="box-title">Data Role</h3></div>
 					<div class="box-body">
                   	<html:form action="/RoleAdmin">
-                  		<html:hidden name="RoleAdminForm" property="task" value="update"/>
+                  		<html:hidden name="RoleAdminForm" property="task" value="<%=Constants.Task.DOEDIT%>"/>
                   		<html:hidden name="RoleAdminForm" property="roleBean.roleId" />
                   		<table class="form-input" align="center">
                   			<tr>
                   				<td>Role Name</td>
                   				<td>:</td>
                   				<td><html:text name="RoleAdminForm" property="roleBean.roleName" styleClass="form-control"/></td>
-                  			</tr>
-                  			<tr>
-                  				<td>Active</td>
-                  				<td>:</td>
-                  				<td>
-                  				<html:checkbox name="RoleAdminForm" property="roleBean.roleStatus" value="1"  />
-								</td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">

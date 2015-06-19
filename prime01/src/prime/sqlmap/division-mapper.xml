@@ -2,30 +2,30 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="division">
 	<insert id="insert" parameterClass="prime.admin.division.DivisionBean">
-		INSERT INTO DIVISION
+		INSERT INTO DIVISIONS
 		(DIVISION_ID , DIVISION_NAME) VALUES 
 		(#divisionId#, #divisionName#)
 	</insert>
 	
 	<update id="update" parameterClass="prime.admin.division.DivisionBean">
-		UPDATE DIVISION SET
-		DIVISION_NAME=#divisionName#, 
+		UPDATE DIVISIONS SET
+		DIVISION_NAME=#divisionName#
 		WHERE DIVISION_ID=#divisionId#
 	</update>
 	
 	<delete id="delete" parameterClass="java.lang.Integer">
-		DELETE FROM DIVISION
+		DELETE FROM DIVISIONS
 		WHERE DIVISION_ID=#id#
 	</delete>
 	
 	<select id="getNewId" resultClass="java.lang.Integer">
-		SELECT NVL(MAX(DIVISION_ID)+1, 1) FROM DIVISION
+		SELECT NVL(MAX(DIVISION_ID)+1, 1) FROM DIVISIONS
 	</select>
 	
 	<select id="get" resultClass="prime.admin.division.DivisionBean" parameterClass="java.lang.Integer">
 		SELECT DIVISION_ID AS divisionId, 
 		DIVISION_NAME AS divisionName
-		FROM DIVISION
+		FROM DIVISIONS
 		WHERE DIVISION_ID=#id#
 	</select>
 	
@@ -33,7 +33,7 @@
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT DIVISION_ID AS divisionId, 
 		DIVISION_NAME AS divisionName
-		FROM DIVISION
+		FROM DIVISIONS
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="NAME">
@@ -46,7 +46,7 @@
 	</select>
 	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
-		FROM DIVISION 
+		FROM DIVISIONS 
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		      	<isEqual property="columnSearch" compareValue="NAME">
@@ -54,5 +54,12 @@
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
+	</select>
+	
+	<select id="selectAll" resultClass="prime.admin.division.DivisionBean">
+		SELECT DIVISION_ID AS divisionId, 
+		DIVISION_NAME AS divisionName
+		FROM DIVISIONS
+	    ORDER BY DIVISION_NAME ASC
 	</select>
 </sqlMap>

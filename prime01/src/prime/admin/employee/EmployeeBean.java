@@ -4,9 +4,9 @@ import java.sql.Date;
 
 public class EmployeeBean {
 	private Integer employeeId;
-	private Integer gender;
-	private Integer divisionId;
-	private Integer positionId;
+	private Integer gender = 0;
+	private Integer divisionId = 0;
+	private Integer positionId = 0;
 	private Integer employeeLevel;
 	private Integer managerId;
 	private Integer contactNumber;

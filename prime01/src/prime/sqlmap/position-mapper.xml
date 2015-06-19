@@ -2,30 +2,30 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="position">
 	<insert id="insert" parameterClass="prime.admin.position.PositionBean">
-		INSERT INTO POSITION
+		INSERT INTO POSITIONS
 		(POSITION_ID , POSITION_NAME) VALUES 
 		(#positionId#, #positionName#)
 	</insert>
 	
 	<update id="update" parameterClass="prime.admin.position.PositionBean">
-		UPDATE POSITION SET
+		UPDATE POSITIONS SET
 		POSITION_NAME=#positionName# 
 		WHERE POSITION_ID=#positionId#
 	</update>
 	
 	<delete id="delete" parameterClass="java.lang.Integer">
-		DELETE FROM POSITION
+		DELETE FROM POSITIONS
 		WHERE POSITION_ID=#id#
 	</delete>
 	
 	<select id="getNewId" resultClass="java.lang.Integer">
-		SELECT NVL(MAX(POSITION_ID)+1, 1) FROM POSITION
+		SELECT NVL(MAX(POSITION_ID)+1, 1) FROM POSITIONS
 	</select>
 	
 	<select id="get" resultClass="prime.admin.position.PositionBean" parameterClass="java.lang.Integer">
 		SELECT POSITION_ID AS positionId, 
 		POSITION_NAME AS positionName
-		FROM POSITION
+		FROM POSITIONS
 		WHERE POSITION_ID=#id#
 	</select>
 	
@@ -33,20 +33,24 @@
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT POSITION_ID AS positionId, 
 		POSITION_NAME AS positionName
-		FROM POSITION
+		FROM POSITIONS
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="NAME">
 			          UPPER(POSITION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(POSITION_ID) LIKE UPPER('%'||#value#||'%')
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
 	    ORDER BY POSITION_NAME ASC) page 
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
+	
 	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
-		FROM POSITION 
+		FROM POSITIONS 
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		      	<isEqual property="columnSearch" compareValue="NAME">
@@ -54,5 +58,12 @@
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
+	</select>
+	
+	<select id="selectAll" resultClass="prime.admin.position.PositionBean">
+		SELECT POSITION_ID AS positionId, 
+		POSITION_NAME AS positionName
+		FROM POSITIONS
+	    ORDER BY POSITION_NAME ASC
 	</select>
 </sqlMap>

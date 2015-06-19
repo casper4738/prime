@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import prime.admin.division.DivisionBean;
 import prime.utility.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -20,7 +21,7 @@ public class PositionManagerImpl implements PositionManager {
 	public void insert(PositionBean e) throws SQLException {
 		try {
 			mapper.startTransaction();
-			mapper.delete("position.insert", e);
+			mapper.insert("position.insert", e);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
@@ -61,6 +62,10 @@ public class PositionManagerImpl implements PositionManager {
 		return mapper.queryForList("position.getListByCol", map);
 	}
 
+	public List<PositionBean> getListAll() throws SQLException {
+		return mapper.queryForList("position.selectAll", null);
+	}
+	
 	public Integer getNewId() throws SQLException {
 		return (Integer) mapper.queryForObject("position.getNewId", null);
 	}

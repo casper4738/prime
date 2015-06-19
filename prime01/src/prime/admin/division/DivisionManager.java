@@ -16,6 +16,8 @@ public interface DivisionManager {
 	public List<DivisionBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow)
 			throws SQLException;
 	
+	public List<DivisionBean> getListAll() throws SQLException;
+	
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 	
 	public Integer getNewId() throws SQLException;

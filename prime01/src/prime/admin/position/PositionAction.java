@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.constants.Constants;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -19,31 +20,38 @@ public class PositionAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		PositionForm pForm = (PositionForm) form;
-		PositionManager manager = new PositionManagerImpl();
+		PositionManager tmpManager = new PositionManagerImpl();
 		
-		if("add".equals(pForm.getTask())) {
-			pForm.getPositionBean().setPositionId(manager.getNewId());
+		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
+			//##. Add Data
+			pForm.getPositionBean().setPositionId(tmpManager.getNewId());
 			return mapping.findForward("add");
-		} else if("edit".equals(pForm.getTask())) {
-			pForm.setPositionBean(manager.getPositionById(pForm.getTmpId()));
+		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
+			//##. Edit Data
+			pForm.setPositionBean(tmpManager.getPositionById(pForm.getTmpId()));
 			return mapping.findForward("edit");
-		} else if("insert".equals(pForm.getTask())) {
-			manager.insert(pForm.getPositionBean());
+		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
+			//##.Insert Data and Go to Forward
+			tmpManager.insert(pForm.getPositionBean());
 			return mapping.findForward("forward");
-		} else if("update".equals(pForm.getTask())) {
-			manager.update(pForm.getPositionBean());
+		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
+			//##.Update Data and Go to Forward
+			tmpManager.update(pForm.getPositionBean());
 			return mapping.findForward("forward");
-		} else if("delete".equals(pForm.getTask())) {
-			manager.delete(pForm.getTmpId());
+		} else if(Constants.Task.DODELETE.equals(pForm.getTask())) {
+			//##.Delete Data and Back Main
+			tmpManager.delete(pForm.getTmpId());
 			return mapping.findForward("forward");
 		}
 		
-		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-		List<PositionBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+		List<PositionBean> list = tmpManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 		
+		//##1.Attribute for Table Show
 		request.setAttribute("listPosition", list);
+		request.setAttribute("listSearchColumn", Constants.Search.POSITION_SEARCHCOLUMNS);
 
 		setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		return mapping.findForward("success");
@@ -51,6 +59,7 @@ public class PositionAction extends Action {
 	
 	private void setPaging(HttpServletRequest request, PositionForm pForm, int countRows, int page, int view)
 			throws SQLException {
+		//##2.Paging Handling
 		PaginationUtility pageUtil = new PaginationUtility();
 		pageUtil.setCountRows(countRows);
 		pageUtil.setView(view);
@@ -62,6 +71,7 @@ public class PositionAction extends Action {
 		request.setAttribute("pageLast", pageUtil.getSumOfPage());
 		request.setAttribute("pagePrev", pageUtil.getPagePrev());
 		request.setAttribute("pageNext", pageUtil.getPageNext());
+		request.setAttribute("listMaxDataPerPage", Constants.PAGINGROWPAGE);
 
 		pForm.setGoToPage(pageUtil.getPage());
 	}

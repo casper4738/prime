@@ -20,7 +20,7 @@ public class HolidayManagerImpl implements HolidayManager {
 	public void insert(HolidayBean e) throws SQLException {
 		try {
 			mapper.startTransaction();
-			mapper.delete("holiday.insert", e);
+			mapper.insert("holiday.insert", e);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
