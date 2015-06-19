@@ -35,7 +35,7 @@
             <div class="col-xs-8">                       
             </div><!-- /.col -->
             <div class="col-xs-4">
-              <input type="button" class="btn btn-primary btn-block btn-flat" id="btn-submit" onclick="doLogin()" value="Sign In"/>
+              <input type="button" class="btn btn-primary btn-block btn-flat" id="btn-submit" value="Sign In"/>
             </div><!-- /.col -->
           </div>
         </html:form>
@@ -47,11 +47,6 @@
     <script src="resources/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
     <script src="resources/prime.js"></script>
     <script>
-      $(function doLogin(){
-    	  
-    	  //Change Page
-    	  //flyToPage('doLogin'); 
-      });
     
       $(function () {
 	      $('input').iCheck({

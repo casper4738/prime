@@ -1,0 +1,29 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="user">
+	<select id="getListByColumn" resultClass="prime.admin.user.UserBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT USERNAME AS userName, 
+		SYSTEM_LEVEL AS sysLevel,
+		USERNAME.EMPLOYEE_ID AS employeeId,
+		EMPLOYEE.EMPLOYEE_NAME AS employeeName
+		FROM USERNAME
+		INNER JOIN EMPLOYEE ON USERNAME.EMPLOYEE_ID = EMPLOYEE.EMPLOYEE_ID
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		       	UPPER(columnSearch) LIKE UPPER('%'||#value#||'%')
+			</isNotNull>
+	    </dynamic>
+	    ORDER BY USERNAME ASC) page 
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
+	<select id="getCountByColumn" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1) 
+		FROM USERNAME 
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		        UPPER(columnSearch) LIKE UPPER('%'||#value#||'%')
+	        </isNotNull>
+	    </dynamic>
+	</select>
+</sqlMap>

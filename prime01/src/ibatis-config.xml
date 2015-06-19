@@ -41,5 +41,6 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 	<sqlMap resource="prime/sqlmap/role-mapper.xml" />
 	<sqlMap resource="prime/sqlmap/holiday-mapper.xml" />
 	<sqlMap resource="prime/sqlmap/activity-mapper.xml" />
+	<sqlMap resource="prime/sqlmap/task-mapper.xml" />
 	<sqlMap resource="prime/sqlmap/login-mapper.xml" />
 </sqlMapConfig>
