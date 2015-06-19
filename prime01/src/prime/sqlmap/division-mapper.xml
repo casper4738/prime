@@ -10,7 +10,7 @@
 	<update id="update" parameterClass="prime.admin.division.DivisionBean">
 		UPDATE DIVISIONS SET
 		DIVISION_NAME=#divisionName#
-		WHERE DIVISION_ID=#divisionId#
+		WHERE DIVISION_ID=#divisionId# 
 	</update>
 	
 	<delete id="delete" parameterClass="java.lang.Integer">

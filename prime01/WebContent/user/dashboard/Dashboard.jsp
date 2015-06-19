@@ -41,6 +41,7 @@
 							<html:hidden name="DashboardUserForm" property="task"/>
 							<html:hidden name="DashboardUserForm" property="tmpId"/>
 							<html:hidden name="DashboardUserForm" property="tmpValue"/>
+							<html:hidden name="DashboardUserForm" property="currentDate"/>
 						</html:form>	
 						<div class="box box-primary">
 							<div class="box-header">
@@ -78,11 +79,14 @@
 								                    <div class="tools">
 														<!-- <div id="start" style="display: inline"> -->
 															<i class="fa fa-play" onclick="insertActivityDetail('addActivity','<bean:write name="iter" property="activityId"/>','1')"></i>
-														<!-- </div> 
-														<div id="pause" style="display: none"> -->
+														<!-- </div> --> 
+														<!-- <div id="pause" style="display: none"> -->
 															<i class="fa fa-pause" onclick="pauseActivity('<bean:write name="iter" property="activityId"/>')"></i> 
-														<!-- </div>	 -->
-														<i class="fa fa-check"></i><i class="fa fa-trash-o" onclick="flyToEditDelete('delete','<bean:write name="iter" property="activityId"/>')"></i>
+														<!-- </div> -->
+															<i class="fa fa-check"></i>
+														<!-- <div id="trash" style="display: inline"> -->	
+															<i class="fa fa-trash-o" onclick="flyToEditDelete('delete','<bean:write name="iter" property="activityId"/>')"></i>
+														<!-- </div> -->
 													</div>
 												</li>
 											 </logic:iterate>
@@ -152,7 +156,7 @@
                   		</table>
                 	</div>
 	               	<!-- <div class="box-body chat" id="chat-box"> -->
-	               	<div class="table-progress">
+	               		<div class="table-progress">
               			<table border="1" style="background-color: #00c0ef; width: 2500px; height: 20px" id="tableProgress">	
                				<tr>
                					<td style="width:100px">&nbsp;</td>
@@ -182,8 +186,9 @@
                					<td align="center" style="width:100px">23.00</td>
                					<td align="center" style="width:100px">24.00</td>
                				</tr>
+               				<%-- <logic:iterate id="iter" name="currentListActivity"> --%>
                				<tr>
-               					<td>Activity 1</td>
+               					<td><bean:write name="iter" property="activityName"/></td>
                					<td colspan=25>
                						<div class="progress progress-m active">
 					                  <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="margin-left:32%;width:6.3%"/>
@@ -193,6 +198,7 @@
                						</div>
                					</td>
                				</tr>
+               				<%-- </logic:iterate> --%>
                			</table>
                    </div><!-- /.table-progress -->
                </div><!-- /.box (progress box) -->
@@ -251,8 +257,10 @@
     	var m = month[date.getMonth()],
             y = date.getFullYear();
     	
+    	var month_digit=date.getMonth()+1;
     	function fLoad(){
     		document.getElementById("day").innerHTML=d+"-"+m+"-"+y
+    		document.forms[0].currentDate.value = d+"/"+month_digit+"/"+y;
     	}
     	
     	function insertActivity() {
@@ -271,12 +279,16 @@
     		document.forms[0].task.value = task;
     		document.forms[0].tmpId.value = activityId;
     		document.forms[0].tmpValue.value = status;
+    		/* document.getElementById("pause").style.display="inline"
+        	document.getElementById("start").style.display="none"
+            document.getElementById("trash").style.display="none" */
     		document.forms[0].submit();
     	}
     	
     	function pauseActivity() {
-    	    document.getElementById("pause").style.display="none"
+    	   /*  document.getElementById("pause").style.display="none"
     	    document.getElementById("start").style.display="inline"
+    	    document.getElementById("trash").style.display="inline" */
     	}
 	</script>
 </body>

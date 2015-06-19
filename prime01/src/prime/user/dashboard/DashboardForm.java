@@ -15,6 +15,7 @@ public class DashboardForm extends ActionForm {
 	private Integer showInPage = 10;
 	private Integer tmpId;
 	private Integer tmpValue;
+	private String currentDate;
 	
 	public String getTask() {
 		return task;
@@ -63,6 +64,12 @@ public class DashboardForm extends ActionForm {
 	}
 	public void setTmpValue(Integer tmpValue) {
 		this.tmpValue = tmpValue;
+	}
+	public String getCurrentDate() {
+		return currentDate;
+	}
+	public void setCurrentDate(String currentDate) {
+		this.currentDate = currentDate;
 	}
 
 }

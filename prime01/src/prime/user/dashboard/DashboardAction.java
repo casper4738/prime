@@ -46,7 +46,7 @@ public class DashboardAction extends Action{
 		}else if("delete".equals(pForm.getTask())){
 			tmpManager.deleteToDoList(101,pForm.getTmpId());
 		}else if("addActivity".equals(pForm.getTask())){
-			tmpManager.insertActivityDetail(101,pForm.getTmpId(), pForm.getTmpValue(), null);
+			tmpManager.insertActivityDetail(101,pForm.getTmpId(), pForm.getTmpValue(), "START");
 		}
 		
 		List<ActivityBean> list = tmpManager.getToDoListById(101);
