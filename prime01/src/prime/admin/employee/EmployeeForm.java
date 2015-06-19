@@ -8,18 +8,10 @@ public class EmployeeForm extends ActionForm {
 	private String task;
 	private String search;
 	private String columnSearch;
+	private String message;
 	private Integer managerId = 1;
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
-
-
-	public Integer getManagerId() {
-		return managerId;
-	}
-
-	public void setManagerId(Integer managerId) {
-		this.managerId = managerId;
-	}
 
 	public EmployeeBean getEmployeeBean() {
 		return employeeBean;
@@ -51,6 +43,22 @@ public class EmployeeForm extends ActionForm {
 
 	public void setColumnSearch(String columnSearch) {
 		this.columnSearch = columnSearch;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public Integer getManagerId() {
+		return managerId;
+	}
+
+	public void setManagerId(Integer managerId) {
+		this.managerId = managerId;
 	}
 
 	public Integer getGoToPage() {

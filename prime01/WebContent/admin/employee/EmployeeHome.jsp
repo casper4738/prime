@@ -47,8 +47,8 @@
 					
 					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOMANAGER%>')">
 	                    <i class="fa fa-edit"></i>Add
-                    </span></p>
-					
+                    </span>
+                    <span class="message"><bean:write name="EmployeeAdminForm" property="message" /></span></p>
 					<div class="show-in-page">
 						Show per page
 						<html:select property="showInPage" name="EmployeeAdminForm" styleId="view_data">
@@ -101,7 +101,7 @@
 			                        <td align="center">
 			                        <logic:empty name="iter" property="resignDate">
 			                        	<html:image src="resources/image/check-true.png" /> 
-			                       </logic:empty>
+			                        </logic:empty>
 			                        <logic:notEmpty name="iter" property="resignDate">
 			                        	<html:image src="resources/image/check-false.png" /> 
 			                        </logic:notEmpty>
@@ -109,7 +109,7 @@
 			                        <td align="center">
 			                        	<html:image src="resources/image/edit.png" /> 
 			                        	<html:image src="resources/image/remove.png" />
-			                        	<html:image src="resources/image/viewmore.png" />
+			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="divisionId"/>')" src="resources/image/viewmore.png" />
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>

@@ -2,10 +2,29 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="employee">
 	<insert id="insert" parameterClass="prime.admin.employee.EmployeeBean">
-		INSERT INTO DIVISIONS
-		(DIVISION_ID , DIVISION_NAME) VALUES 
-		(#divisionId#, #divisionName#)
+		INSERT INTO EMPLOYEES
+		(EMPLOYEE_ID , EMPLOYEE_NAME, ADDRESS, CONTACT_NUMBER, EMAIL,
+		 BIRTHDATE, GENDER, HIRE_DATE, EMPLOYEE_LEVEL, DIVISION_ID, POSITION_ID,
+		 HEAD_ID) VALUES 
+		(#employeeId#, #employeeName#, #address#, #contactNumber#, #email#, #birthdate#, 
+		 #gender#, #hireDate#, #employeeLevel#, #divisionId#, #positionId#, #managerId#)
 	</insert>
+	
+	<update id="update"  parameterClass="prime.admin.employee.EmployeeBean">
+		UPDATE EMPLOYEES SET
+		EMPLOYEE_NAME=#employeeName#,
+		ADDRESS=#address#,
+		CONTACT_NUMBER=#contactNumber#,
+		EMAIL=#email#,
+		BIRTHDATE=#birthdate#,
+		GENDER=#gender#,
+		HIRE_DATE=#hireDate#,
+		EMPLOYEE_LEVEL=#employeeLevel#,
+		DIVISION_ID=#divisionId#,
+		POSITION_ID=#positionId#,
+		HEAD_ID=#managerId#
+		WHERE EMPLOYEE_ID=#employeeId#
+	</update>
 	
 	<select id="getNewId" resultClass="java.lang.Integer">
 		SELECT NVL(MAX(EMPLOYEE_ID)+1, 1) FROM EMPLOYEES
