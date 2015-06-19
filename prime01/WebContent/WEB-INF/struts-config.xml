@@ -64,6 +64,8 @@
 			<forward name="choose_manager" path="/admin/employee/ChooseManager.jsp"></forward>
 			<forward name="success" path="/admin/employee/EmployeeHome.jsp"></forward>
 			<forward name="forward" path="/admin/employee/Forward.jsp"></forward>
+			<forward name="edit" 	path="/admin/employee/EmployeeEdit.jsp"></forward>
+   			<forward name="view" 	path="/admin/employee/EmployeeView.jsp"></forward>
 		</action>
 		
 		<!-- Operator & Monitor [User] -->

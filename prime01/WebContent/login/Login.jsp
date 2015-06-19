@@ -20,7 +20,7 @@
       </div><!-- /.login-logo -->
       <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
-        <html:form action="/Login" method="post">
+        <html:form action="/Login" method="post" styleId="form-login">
           <html:hidden name="LoginForm" property="task"/>
           
           <div class="form-group has-feedback">
@@ -32,12 +32,12 @@
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="row">
-            <div class="col-xs-4">
-              <input type="button" class="btn btn-primary btn-block btn-flat" id="btn-submit" value="Sign In"/>
+            <div class="col-xs-5">
+              <input type="submit" class="btn btn-primary btn-block btn-flat" id="btn-submit" value="Sign In"/>
+              <div class="overlay" id="ajax-validating">
+               		<i class="fa fa-refresh fa-spin"></i> Processing...
+              </div>
             </div><!-- /.col -->
-            <div class="overlay" id="ajax-validating">
-               <i class="fa fa-refresh fa-spin"></i> Processing...
-            </div>
           </div>
         </html:form>
       </div><!-- /.login-box-body -->
@@ -48,19 +48,30 @@
     <script src="resources/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
     <script src="resources/prime.js"></script>
     <script>
-      $(function () {
-	      $('input').iCheck({
-	         checkboxClass: 'icheckbox_square-blue',
-	         radioClass: 'iradio_square-blue',
-	         increaseArea: '20%' // optional
-	      });
+      $(document).ready(function(){
+	      	  $('input').iCheck({
+		         checkboxClass: 'icheckbox_square-blue',
+		         radioClass: 'iradio_square-blue',
+		         increaseArea: '20%' // optional
+		      });
 
-	      //$('#ajax-validating').hide();
-	  	  $('#textbox-username').attr("placeholder","Username");
-	  	  $('#textbox-password').attr("placeholder","Password");
-      });      
-      
-      
+		      $('#ajax-validating').hide();
+		  	  $('#textbox-username').attr("placeholder","Username");
+		  	  $('#textbox-password').attr("placeholder","Password");
+			  $('#form-login').submit(function(){ 
+				  $('#form-login').task.value = "doLogin";
+	    		  $('#btn-submit').hide();
+	    		  $('#ajax-validating').show();  
+	    		  
+	    		  //Do Login Data checking
+	    		  var str = $(this).serialize();
+	    		  $.ajax({ 
+	    	          type	 : "POST",
+	    	          url	 : "Login.do",  // Send the login info to this page
+	    	          data	 : str    
+	    	       });
+		      }); 
+      });
     </script>
   </body>
 </html>
