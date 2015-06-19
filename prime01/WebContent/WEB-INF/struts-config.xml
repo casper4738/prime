@@ -53,7 +53,7 @@
 			<forward name="edit" path="/admin/holiday/HolidayEdit.jsp"></forward>
 			<forward name="success" path="/admin/holiday/HolidayHome.jsp"></forward>  
 			<forward name="forward" path="/admin/holiday/Forward.jsp"></forward>
-		</action>
+		</action>  
 		<action path="/SettingAdmin" name="SettingAdminForm" type="prime.admin.setting.SettingAction" scope="request">
 			<forward name="edit" path="/admin/setting/SettingEdit.jsp"></forward>
 			<forward name="success" path="/admin/setting/SettingHome.jsp"></forward>
