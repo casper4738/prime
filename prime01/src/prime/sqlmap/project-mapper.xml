@@ -1,0 +1,40 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="project">
+	<select id="getCountListByCol" resultClass="java.lang.Integer"
+		parameterClass="java.util.Map">
+		SELECT COUNT(1)
+		FROM PROJECTS
+		<dynamic prepend="WHERE">
+			<isNotNull property="columnSearch">
+				<isEqual property="columnSearch" compareValue="NAME">
+					UPPER(PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+			</isNotNull>
+		</dynamic>
+	</select>
+	<select id="getListByCol" resultClass="prime.user.project.ProjectBean"
+		parameterClass="java.util.Map">
+		SELECT * FROM (SELECT page.*, ROWNUM rnum FROM
+		(SELECT project_ID AS
+		projectId,
+		PROJECT_NAME AS projectName,
+		PROJECT_RECEIVER as projectReceiver,
+		PROJECT_ASSIGNER as projectAssigner,
+		PROJECT_START_DATE as projectStartDate,
+		PROJECT_ESTIMATE_DATE as projectEstimateDate,
+		PROJECT_DESCRIPTION as projectDescription
+		FROM PROJECTS
+		<dynamic prepend="WHERE">
+			<isNotNull property="columnSearch">
+				<isEqual property="columnSearch" compareValue="NAME">
+					UPPER(project_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+			</isNotNull>
+		</dynamic>
+		ORDER BY PROJECT_NAME ASC) page
+		WHERE ROWNUM <![CDATA[ <= ]]>
+		#endRow#) WHERE rnum <![CDATA[ >= ]]>
+		#startRow#
+	</select>
+</sqlMap>
