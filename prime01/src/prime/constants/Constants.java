@@ -16,6 +16,7 @@ public interface Constants {
 		static final String CHANGELANG 	= "t7";
 		static final String NONE		= "t8";
 		static final String GOTOMANAGER = "t9";
+		static final String GOTOVIEW 	= "t10";
 	}
 
 	//##B.Search Handling

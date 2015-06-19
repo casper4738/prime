@@ -1,6 +1,23 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="user">
+	<insert id="insert" parameterClass="prime.admin.user.UserBean">
+		INSERT INTO USERS
+		(USERNAME , PASSWORD, SYSTEM_LEVEL, STATUS_USER, IS_ACTIVE_DIR) 
+		VALUES 
+		(#userName#, #password#, #sysLevel#, #statusUser#, #isActiveDirectory#)
+	</insert>
+	
+	<update id="update"  parameterClass="prime.admin.user.UserBean">
+		UPDATE USERS SET
+		USERNAME=#userName#,
+		PASSWORD=#password#,
+		SYSTEM_LEVEL=#sysLevel#,
+		STATUS_USER=#statusUser#,
+		IS_ACTIVE_DIR=#isActiveDirectory#
+		WHERE USERNAME=#userName#
+	</update>
+	
 	<select id="getListByColumn" resultClass="prime.admin.user.UserBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT USERNAME AS userName, 
@@ -17,6 +34,7 @@
 	    ORDER BY USERNAME ASC) page 
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
+	
 	<select id="getCountByColumn" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
 		FROM USERNAME 

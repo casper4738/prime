@@ -63,6 +63,9 @@ public class EmployeeAction extends Action {
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
 			return mapping.findForward("add");
+		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
+			manager.insert(pForm.getEmployeeBean());
+			return mapping.findForward("forward");
 		}
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
