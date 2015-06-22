@@ -56,7 +56,7 @@ public class TaskManagerImpl implements TaskManager {
 		map.put("value", value);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
-		return mapper.queryForList("task.getListByCol", map);
+		return mapper.queryForList("task.getListByColumn", map);
 	}
 
 	@Override

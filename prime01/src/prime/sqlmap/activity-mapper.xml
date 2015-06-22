@@ -75,7 +75,7 @@
 		ORDER BY TLD.ACTIVITY_ID 
 	</select>
 	
-	<select id="getListByCol" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
+	<select id="getListByColumn" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT AC.ACTIVITY_ID AS activityId, 
 		AC.TASK_ID AS taskId,

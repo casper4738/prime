@@ -78,7 +78,7 @@ public class ActivityManagerImpl implements ActivityManager {
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		map.put("taskId", taskId);
-		return mapper.queryForList("activity.getListByCol", map);
+		return mapper.queryForList("activity.getListByColumn", map);
 	}
 
 	public Integer getNewId() throws SQLException {

@@ -5,8 +5,22 @@
 
 <!DOCTYPE html>
 <html>
-<head> 
-	<script>
+<head>
+	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+		$('#table-1').dataTable( {
+			paging    : false,
+			searching : false,
+			info	  : false,
+		    language  : { 
+		    	"emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>" 
+		    }
+	    });
+		
 	function flyToTaskDetail(task, value) {
 		document.forms[0].task.value = task;
 		document.forms[0].taskId.value = value;
@@ -44,7 +58,7 @@
 			</div>
 			<div class="search-table">
 				<html:form action="/TaskUser" >
-					<html:hidden name="TaskUserForm" property="task" value="search"/>
+					<html:hidden name="TaskUserForm" property="task"/>
 					<html:hidden name="TaskUserForm" property="taskId"/>
 					<html:hidden name="TaskUserForm" property="goToPage"/>
 					<html:hidden name="TaskUserForm" property="showInPage"/>
@@ -60,16 +74,16 @@
 			
 			<!-- Table List -->
 			<div class="box-body">
-			<table class="table table-bordered table-striped table-hover">
+			<table id="table-1" class="table table-bordered table-striped table-hover">
 				<thead><tr>
 					<th>Task Name</th>
 					<th>Task Description</th>
-					<th>Task Assigner</th>
-					<th>Task Receiver</th>
-					<th>Start Date</th>
-					<th>Estimate Date</th>
-					<th>Status</th>
-                    <th>Actions</th>
+					<th width="100px">Task Assigner</th>
+					<th width="100px">Task Receiver</th>
+					<th width="80px">Start Date</th>
+					<th width="85px">Estimate Date</th>
+					<th width="50px">Status</th>
+                    <th width="40px">Actions</th>
                 </tr></thead>
                 <tbody>
                 <logic:notEmpty name="listTask">
@@ -81,23 +95,23 @@
 	                	    <td><bean:write name="iter" property="taskReceiverName"/></td>
 	                	    <td align="center"><bean:write name="iter" property="taskStartDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center"><bean:write name="iter" property="taskEstimateDate" format="dd MMMM yyyy"/></td>
-	                	    <td align="center" width="80px">
-		                		<logic:equal name="iter" property="taskStatus" value='<%=Constants.Status.CREATE+""%>'>
+	                	    <td align="center">
+		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.CREATE+""%>'>
 		                			<span class="label label-warning">Create</span>
 		                		</logic:equal>
-		                		<logic:equal name="iter" property="taskStatus" value='<%=Constants.Status.SUBMIT+""%>'>
+		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.SUBMIT+""%>'>
 		                			<span class="label label-primary">Submit</span>
 		                		</logic:equal>
-		                		<logic:equal name="iter" property="taskStatus" value='<%=Constants.Status.PAUSE+""%>'>
+		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.PAUSE+""%>'>
 		                			<span class="label label-warning">Pause</span>
 		                		</logic:equal>
-		                		<logic:equal name="iter" property="taskStatus" value='<%=Constants.Status.FINISH+""%>'>
+		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.FINISH+""%>'>
 		                			<span class="label label-primary">Finish</span>
 		                		</logic:equal>
-		                		<logic:equal name="iter" property="taskStatus" value='<%=Constants.Status.ABORT+""%>'>
+		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.ABORT+""%>'>
 		                			<span class="label label-danger">Abort</span>
 		                		</logic:equal>
-		                		<logic:equal name="iter" property="taskStatus" value='<%=Constants.Status.PROGRESS+""%>'>
+		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.PROGRESS+""%>'>
 		                			<span class="label label-success">Progress</span>
 		                		</logic:equal>
 	                		</td>
@@ -107,11 +121,6 @@
 	                    </tr>
                     </logic:iterate>
 					</logic:notEmpty>
-					<logic:empty name="listTask">
-						<tr>
-							<td align="center" colspan="3">DATA KOSONG</td>
-						</tr>
-					</logic:empty>
                   </tbody>
             </table></div>
             <!-- End Of Table List -->

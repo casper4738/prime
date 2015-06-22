@@ -30,40 +30,81 @@
 		WHERE TASK_ID=#id#
 	</select>
 
-	<select id="getListByCol" resultClass="prime.user.task.TaskBean"
-		parameterClass="java.util.Map">
+	<select id="getListByColumn" resultClass="prime.user.task.TaskBean" parameterClass="java.util.Map">
 		SELECT * FROM (SELECT page.*, ROWNUM rnum FROM
-		(SELECT TASK_ID AS
-		taskId,
-		TASK_NAME AS taskName,
-		TASK_RECEIVER as taskReceiver,
-		TASK_ASSIGNER as taskAssigner,
-		TASK_START_DATE as taskStartDate,
-		TASK_ESTIMATE_DATE as taskEstimateDate,
-		TASK_DESCRIPTION as taskDescription,
-		PROJECT_MEMBER_ID as projectMemberId
-		FROM TASKS
+		(SELECT TASK.TASK_ID AS taskId,
+			TASK_NAME AS taskName,
+			TASK_RECEIVER as taskReceiver,
+			TASK_ASSIGNER as taskAssigner,
+			TASK_START_DATE as taskStartDate,
+			TASK_ESTIMATE_DATE as taskEstimateDate,
+			TASK_DESCRIPTION as taskDescription,
+			PROJECT_MEMBER_ID as projectMemberId,
+			EMP_ASSIGN.EMPLOYEE_NAME as taskAssignerName,
+			EMP_RECEIVE.EMPLOYEE_NAME as taskReceiverName,
+			TASK.TASK_LAST_STATUS AS taskLastStatus
+		FROM TASKS TASK
+		JOIN EMPLOYEES EMP_ASSIGN ON TASK.TASK_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
+		JOIN EMPLOYEES EMP_RECEIVE ON TASK.TASK_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
+		JOIN (
+		    SELECT TD.TASK_ID, MAX(TD.TASK_CHANGE_DATE) AS TASK_CHANGE_DATE FROM TASK_DETAILS TD
+		    GROUP BY TD.TASK_ID
+		) TASK_DET ON TASK_DET.TASK_ID=TASK.TASK_ID
 		<dynamic prepend="WHERE">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
 					UPPER(TASK_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
+				<isEqual property="columnSearch" compareValue="DESCRIPTION">
+					UPPER(TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="ASSIGNER">
+					UPPER(TASK_ASSIGNER) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="RECEIVER">
+					UPPER(TASK_RECEIVER) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="START">
+					UPPER(START_DATE) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="ESTIMATE">
+					UPPER(ESTIMATE_DATE) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
 			</isNotNull>
 		</dynamic>
-		ORDER BY TASK_NAME ASC) page
-		WHERE ROWNUM <![CDATA[ <= ]]>
-		#endRow#) WHERE rnum <![CDATA[ >= ]]>
-		#startRow#
+		ORDER BY TASK_NAME ASC) page 
+		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) 
+		WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 
-	<select id="getCountListByCol" resultClass="java.lang.Integer"
-		parameterClass="java.util.Map">
+	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1)
-		FROM TASKS
+		FROM TASKS TASK
+		JOIN EMPLOYEES EMP_ASSIGN ON TASK.TASK_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
+		JOIN EMPLOYEES EMP_RECEIVE ON TASK.TASK_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
+		JOIN (
+		    SELECT TD.TASK_ID, MAX(TD.TASK_CHANGE_DATE) AS TASK_CHANGE_DATE FROM TASK_DETAILS TD
+		    GROUP BY TD.TASK_ID
+		) TASK_DET ON TASK_DET.TASK_ID=TASK.TASK_ID
 		<dynamic prepend="WHERE">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
 					UPPER(TASK_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="DESCRIPTION">
+					UPPER(TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="ASSIGNER">
+					UPPER(TASK_ASSIGNER) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="RECEIVER">
+					UPPER(TASK_RECEIVER) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="START">
+					UPPER(START_DATE) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="ESTIMATE">
+					UPPER(ESTIMATE_DATE) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 			</isNotNull>
 		</dynamic>

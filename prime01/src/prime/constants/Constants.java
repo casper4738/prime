@@ -84,7 +84,7 @@ public interface Constants {
 				put("NAME", "Task Name");
 				put("DESCRIPTION", "Task Description");
 				put("ASSIGNER", "Task Assigner");
-				put("RECEIVER", "TASK Receiver");
+				put("RECEIVER", "Task Receiver");
 				put("START", "Start Date");
 				put("ESTIMATE", "Estimate Date");
 			}
