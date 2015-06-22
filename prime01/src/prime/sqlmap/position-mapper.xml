@@ -52,7 +52,7 @@
 	    ORDER BY POSITION_NAME ASC) page 
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
-	
+	  
 	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
 		FROM POSITIONS 
