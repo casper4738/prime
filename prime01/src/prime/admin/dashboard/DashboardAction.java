@@ -24,17 +24,10 @@ public class DashboardAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		String imageString;
-//		File folder = new File("C:\\Users\\Public\\Pictures\\Resource");
-//		File fileImage = new File(folder + "\\Lighthouse.jpg");
-		
+
 		imageString = encodeToString();
 		decode(imageString);
-		// File fileImage = new
-		// File("C:\\Users\\adrian.dp\\git\\prime\\prime01\\WebContent\\image\\Lighthouse.jpg");
-		// BufferedImage originalImage = ImageIO.read();
-		//
-		// BufferedImage resizeImage = ImageUtil.resizeImage(originalImage, 300,
-		// 300);
+
 		return mapping.findForward("success");
 	}
 
@@ -54,7 +47,7 @@ public class DashboardAction extends Action {
 		return encoded;
 	}
 
-	// convert byte array to image
+	// convert byte array to image and image resizing
 	private static void decode(String image) {
 		File folder = new File(
 				"C:\\Users\\adrian.dp\\git\\prime\\prime01\\WebContent");
