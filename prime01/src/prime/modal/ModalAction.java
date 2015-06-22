@@ -31,54 +31,79 @@ public class ModalAction extends Action {
 		//---.Normally Used Temp Variable
 		int tmpI, tmpJ;
 		
+		
 		//---.Depend on the object
-		List<EmployeeBean> list;
-		EmployeeManager manager = new EmployeeManagerImpl();
 		ModalForm pForm = (ModalForm) form;
+		
+		System.out.println(pForm.getTask() + " _ " + pForm.getParam1()+ " _ " + pForm.getParam2());
 		
 		System.out.println("Taskzz = " + pForm.getTask());
 		
-		//##1.Fetch Data From DB
-		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-		
-		//---.Depend On The Object
-		list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
-									   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
-									   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows));
 
-		//##2.Prepare Data for Modal-Table Show
-		//---a.Modal Title
-		request.setAttribute("modalListName", "Employees List");
-		
-		//---b.Column Head
-		//[P.S] : Just Hardcode Here, because it only 1 form
-		ArrayList<String> tmpColHead = new ArrayList<String>();
-		tmpColHead.add("Employee ID");
-		tmpColHead.add("Name");
-		tmpColHead.add("Gender");
-		//tmpColHead.add("Email");
-		//tmpColHead.add("Division");
-		//tmpColHead.add("Position");
-		//tmpColHead.add("Manager");
-		request.setAttribute("listColumnHead", tmpColHead);
-		
 		ArrayList<ArrayList<String>> tmpData = new ArrayList<ArrayList<String>>();
-		for(tmpI = 0 ; tmpI < list.size() ; tmpI++){
-			tmpData.add(new ArrayList<String>());
-			tmpData.get(tmpI).add(list.get(tmpI).getEmployeeId().toString());
-			tmpData.get(tmpI).add(list.get(tmpI).getEmployeeName());
-			tmpData.get(tmpI).add((list.get(tmpI).getGender() == 0) ? "Man" : "Woman");
-			//tmpData.get(tmpI).add(list.get(tmpI).getEmail());
-			//tmpData.get(tmpI).add(list.get(tmpI).getDivisionName());
-			//tmpData.get(tmpI).add(list.get(tmpI).getPositionName());
-			//tmpData.get(tmpI).add(list.get(tmpI).getManagerName());
-		}
-		request.setAttribute("listTableData", tmpData);
+		int countRows = 0;
+		String task = pForm.getTask();
 		
-		//##3.Set Paging
-		request.setAttribute("listSearchColumn", Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
-		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
-		setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+        switch (task) {
+            case "modalTable":  
+            	String table=pForm.getParam1();
+            	switch(table){
+            		case "employeeHead":  
+            			List<EmployeeBean> list;
+                		EmployeeManager manager = new EmployeeManagerImpl();
+                		
+                    	//##1.Fetch Data From DB
+                		countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+                		
+                		//---.Depend On The Object
+                		list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+                									   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
+                									   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows));
+
+                		//##2.Prepare Data for Modal-Table Show
+                		//---a.Modal Title
+                		request.setAttribute("modalListName", "Employees List");
+                		
+                		//---b.Column Head
+                		//[P.S] : Just Hardcode Here, because it only 1 form
+                		ArrayList<String> tmpColHead = new ArrayList<String>();
+                		tmpColHead.add("Employee ID");
+                		tmpColHead.add("Name");
+                		tmpColHead.add("Gender");
+                		tmpColHead.add("Email");
+                		tmpColHead.add("Division");
+                		tmpColHead.add("Position");
+                		tmpColHead.add("Manager");
+                		request.setAttribute("listColumnHead", tmpColHead);
+                		
+                		for(tmpI = 0 ; tmpI < list.size() ; tmpI++){
+                			tmpData.add(new ArrayList<String>());
+                			tmpData.get(tmpI).add(list.get(tmpI).getEmployeeId().toString());
+                			tmpData.get(tmpI).add(list.get(tmpI).getEmployeeName());
+                			tmpData.get(tmpI).add((list.get(tmpI).getGender() == 0) ? "Man" : "Woman");
+                			tmpData.get(tmpI).add(list.get(tmpI).getEmail());
+                			tmpData.get(tmpI).add(list.get(tmpI).getDivisionName());
+                			tmpData.get(tmpI).add(list.get(tmpI).getPositionName());
+                			tmpData.get(tmpI).add(list.get(tmpI).getManagerName());
+                		}
+                		break;
+                	default:
+                		break;
+            	}
+            	
+        		request.setAttribute("listTableData", tmpData);
+        		
+        		//##3.Set Paging
+        		request.setAttribute("listSearchColumn", Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
+        		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+        		setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+        		break;
+         
+            default:
+                break;
+        }
+		
+		
 		
 		return mapping.findForward("success");
 	}
