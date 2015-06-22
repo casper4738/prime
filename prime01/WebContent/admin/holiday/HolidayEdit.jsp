@@ -51,7 +51,7 @@
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">
-                  					<html:submit value="Save" styleClass="btn btn-primary"/>
+                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
                   			</tr>
@@ -62,8 +62,6 @@
 		        </div>
 			</section>
 		</div>
-		<!-- /.content-wrapper -->
-		<jsp:include page="/content/Footer.jsp"></jsp:include>
 	</div>
 
 	<script src="resources/prime.js"></script>
