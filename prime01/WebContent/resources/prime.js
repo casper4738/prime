@@ -4,13 +4,17 @@ function flyToPage(task) {
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));
 }
 
+function dosubmit() {
+	var tmpForm = document.forms[0];
+	menuLoadHandler(tmpForm.action, serialize(tmpForm));
+}
+
 function searchAll(task) {
 	var tmpForm = document.forms[0];
 	tmpForm.columnSearch.value = "ALL";
 	tmpForm.task.value = task;
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));
 }
-
 
 function flyToEditDelete(task, value, confirmMessage) {
 	var tmpForm = document.forms[0]; 

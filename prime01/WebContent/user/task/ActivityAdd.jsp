@@ -24,7 +24,7 @@
 			<div class="box-header"><h3 class="box-title-center">Add New Activity</h3></div>
 			<div class="box-body">
                 	<html:form action="/TaskUser">
-                		<html:hidden name="TaskUserForm" property="task"/>
+                		<html:hidden name="TaskUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOADD%>"/>
                 		<html:hidden name="TaskUserForm" property="activityBean.activityId" />
                 		<html:hidden name="TaskUserForm" property="activityBean.taskId" />
                 		<html:hidden name="TaskUserForm" property="activityBean.activityStatus" />
@@ -45,7 +45,7 @@
                 			</tr>
                 			<tr>
                 				<td colspan="6" align="center">
-                					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="flyToPage('"+"<%=Constants.Task.ACTIVITY.DOADD%>"+"')"/>
+                					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                 				</td>
                 			</tr>

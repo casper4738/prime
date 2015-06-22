@@ -17,7 +17,38 @@
 	<html:hidden name="TaskUserForm" property="taskId"/>
 </html:form>
 
-aswdawdawd
+<logic:equal name="TaskUserForm" property="task" value="<%=Constants.Task.DOADD%>">
+	<script>flyToForward('success', '<bean:message key="label.message.insert"/>')</script>
+</logic:equal>
+
+<logic:equal name="TaskUserForm" property="task" value="<%=Constants.Task.DOEDIT%>">
+	<script>flyToForward('success', '<bean:message key="label.message.update"/>')</script>
+</logic:equal>
+
+<logic:equal name="TaskUserForm" property="task" value="<%=Constants.Task.DODELETE%>">
+	<script>flyToForward('success', '<bean:message key="label.message.delete"/>')</script>
+</logic:equal>
+
+<logic:equal name="TaskUserForm" property="task" value="<%=Constants.Task.TASK.DOSUBMIT%>">
+	<script>flyToForward('success', '<bean:message key="label.message.update"/>')</script>
+</logic:equal>
+
+<logic:equal name="TaskUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOADD%>">
+	<script>flyToForward('<%=Constants.Task.GOTOVIEW%>', '<bean:message key="label.message.insert"/>')</script>
+</logic:equal>
+
+<logic:equal name="TaskUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOEDIT%>">
+	<script>flyToForward('<%=Constants.Task.GOTOVIEW%>', '<bean:message key="label.message.update"/>')</script>
+</logic:equal>
+
+<logic:equal name="TaskUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DODELETE%>">
+	<script>flyToForward('<%=Constants.Task.GOTOVIEW%>', '<bean:message key="label.message.delete"/>')</script>
+</logic:equal>
+
+<logic:equal name="TaskUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOCHANGESTATUS%>">
+	<script>flyToForward('<%=Constants.Task.GOTOVIEW%>', '<bean:message key="label.message.update"/>')</script>
+</logic:equal>
+
 
 </body>
 </html>
