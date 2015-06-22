@@ -40,10 +40,14 @@
 			document.forms[0].submit();
 		}
 		
-	    /* //iCheck
-	    $('input[type="checkbox"].flat-red').iCheck({
-	      checkboxClass: 'icheckbox_flat-blue',
-	    }); */
+		$('#table-1').dataTable( {
+			paging    : false,
+			searching : false,
+			info	  : false,
+		    language  : { 
+		    	"emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>" 
+		    }
+	    });
 	</script>
 </head>
 <body class="skin-blue sidebar-mini">
@@ -61,39 +65,42 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Task Type</h3></div>
 			<div class="box-body">
-                	<html:form action="/TaskUser">
-                		<html:hidden name="TaskUserForm" property="task" />
-                		<html:hidden name="TaskUserForm" property="showInPage" />
-                		<html:hidden name="TaskUserForm" property="taskReceiver" />
-				<html:hidden name="TaskUserForm" property="goToPage"/>
-                			<table align="center">
-                			<tr>
-                			<td height="45px"><html:radio name="TaskUserForm" property="radioChoose" styleId="head" value="0" onclick="onclickradio()" /></td>
-                			<td width="150px"><label for="head">Self Assign</label></td>
-                			<td><input type="button" value="Next" style="display:none" class="btn bg-olive" id="myBtn" onclick="chooseReceiver(100)"/></td>
-            			</tr>
-                			<tr><td width="25px"><html:radio name="TaskUserForm" property="radioChoose" styleId="subordinate" value="1" onclick="onclickradio()" /></td>
-                				<td><label for="subordinate">Subordinate</label></td> 	
-                				<td></td>
-            			</tr>
-            			</table>
-            			
-            			<br/><br/><br/>
-              		 	<div id="table_data">
-              		 	<div class="show-in-page">
+           		<table align="center">
+           			<tr>
+           				<td height="45px"><html:radio name="TaskUserForm" property="radioChoose" styleId="head" value="0" onclick="onclickradio()" /></td>
+           				<td width="150px"><label for="head">Self Assign</label></td>
+           				<td><input type="button" value="Next" style="display:none" class="btn bg-olive" id="myBtn" onclick="chooseReceiver(100)"/></td>
+       				</tr>
+           			<tr><td width="25px"><html:radio name="TaskUserForm" property="radioChoose" styleId="subordinate" value="1" onclick="onclickradio()" /></td>
+           				<td><label for="subordinate">Subordinate</label></td> 	
+           				<td></td>
+       				</tr>
+       			</table>
+            	
+            	<br/><br/><br/>
+              	<div id="table_data">
+              	
+              	<!-- Search Handler Tag -->
+              	<div class="show-in-page">
 					Show per page
 					<html:select property="showInPage" name="TaskUserForm" styleId="view_data">
-						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
+						<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 					</html:select>
-					</div>
-					<div class="search-table">
+				</div>
+				<div class="search-table">
+					<html:form action="/TaskUser">
+	               		<html:hidden name="TaskUserForm" property="task" />
+	               		<html:hidden name="TaskUserForm" property="showInPage" />
+	               		<html:hidden name="TaskUserForm" property="taskReceiver" />
+						<html:hidden name="TaskUserForm" property="goToPage"/>
 						<html:select name="TaskUserForm" property="columnSearch" styleClass="columnSearch">
-							<html:option value="SHOW_ALL">SHOW ALL</html:option>
-							<html:option value="ID">EMPLOYEE ID</html:option>
+							<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 						</html:select>
 						<html:text name="TaskUserForm" property="search" styleClass="textSearch"/>
-						<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
-					</div>
+						<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.TASK.GOTOTASKTYPE%>')" value='Search'/>
+						<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('search')" value='Show All'/>
+					</html:form>
+				</div>
 					<div class="box-body">
 					<table class="table table-bordered table-striped table-hover" >
 						<thead>
@@ -160,7 +167,6 @@
 						Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
 					</div>
 					</div>
-                  </html:form>
                   </div>
         	</div></div>
         </div>
