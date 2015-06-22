@@ -6,22 +6,27 @@
 <!DOCTYPE html>
 <html>
 <head> 
-	<meta charset="UTF-8">
-	<title>Prime</title>
-	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
-</head>
-<body class="skin-blue sidebar-mini">
-	<div class="wrapper">
+	<!-- CSS -->
+	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	<!-- End of CSS -->
 	
-		<jsp:include page="/content/Header.jsp"></jsp:include>
-		
-		<div class="content-wrapper">
+	<!-- JS -->
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	$('#table-1').dataTable( {
+		   paging    : false,
+		   searching : false,
+		   info   : false,
+		   language  : {
+		          "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
+		      }
+		     } );
+	</script>
+	<!-- End of JS -->
+</head>
+<body class="skin-blue sidebar-mini">	
 			<section class="content-header">
 				<h1>Manage Role<small>management system</small>
 				</h1>
@@ -35,20 +40,21 @@
 			<div class="row">
 				<div class="col-xs-12"><div class="box">
 					<div class="box-header"><h3 class="box-title">Data Manage Role</h3></div>
-					
 					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
 	                    <i class="fa fa-edit"></i>Add
                     </span>
                     <span class="message"><bean:write name="RoleAdminForm" property="message" /></span></p>
+                    <!-- Search Handler Tag -->
 					<div class="show-in-page">
 						Show per page
 						<html:select name="RoleAdminForm" property="showInPage" onchange="change(this.value)" >
 							<html:optionsCollection name="listMaxDataPerPage" label="value" value="key"/>
 						</html:select>
+						<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')"  value='Refresh'/>
 					</div>
 					<div class="search-table">
 						<html:form action="/RoleAdmin" >
-							<html:hidden name="RoleAdminForm" property="task" value="search"/>
+							<html:hidden name="RoleAdminForm" property="task"/>
 							<html:hidden name="RoleAdminForm" property="tmpId"/>
 							<html:hidden name="RoleAdminForm" property="goToPage"/>
 							<html:hidden name="RoleAdminForm" property="showInPage"/>
@@ -56,12 +62,12 @@
 								<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 							</html:select>
 							<html:text name="RoleAdminForm" property="search" styleClass="textSearch"/>
-							<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
 						</html:form>
 					</div>
-					<div class="box-body"><table 
-					
-					class="table table-bordered table-striped table-hover">
+					<!-- End Of Search Handler Tag -->
+					<div class="box-body"><table class="table table-bordered table-striped table-hover" id="table-1">
 						<thead><tr>
 							<th>Role Name</th>
 		                    <th width="60px">Status</th>
@@ -78,11 +84,6 @@
 			                    </tr>
 		                    </logic:iterate>
 							</logic:notEmpty>
-							<logic:empty name="listRole">
-								<tr>
-									<td align="center" colspan="3"><bean:message key="label.table.notfound" /></td>
-								</tr>
-							</logic:empty>
 	                   </tbody>
 		            </table></div>
 					<ul class="pagination">

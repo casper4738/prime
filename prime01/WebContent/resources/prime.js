@@ -13,7 +13,7 @@ function searchAll(task) {
 	var tmpForm = document.forms[0];
 	tmpForm.columnSearch.value = "ALL";
 	tmpForm.task.value = task;
-	menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
+	menuLoadHandler(tmpForm.action, serialize(tmpForm));
 }
 
 function flyToEditDelete(task, value, confirmMessage) {
@@ -30,7 +30,6 @@ function flyToEditDelete(task, value, confirmMessage) {
 
 function flyToForward(task, value) {
 	var tmpForm = document.forms[0];
-	
 	tmpForm.task.value = task;
 	tmpForm.message.value = value;
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));

@@ -20,7 +20,7 @@
 	<select id="get" resultClass="prime.admin.holiday.HolidayBean" parameterClass="java.sql.Date">
 		SELECT HOLIDAY_DATE AS holidayDate, 
 		NATIONAL_DESCRIPTION AS holidayDescription
-		FROM NATIONAL_HOLIDAY
+		FROM NATIONAL_HOLIDAYS
 		WHERE HOLIDAY_DATE=#date#
 	</select>
 	

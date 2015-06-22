@@ -10,6 +10,7 @@ public class TaskBean {
 	private Integer projectMemberId = 0;
 	private Integer taskStatus;
 	private Integer taskLastStatus;
+	private Double percentage;
 	private Date taskStartDate;
 	private Date taskEstimateDate;
 	private Date taskChangeDate;
@@ -18,6 +19,14 @@ public class TaskBean {
 	private String taskAssignerName;
 	private String taskReceiverName;
 	private String taskChangeNote;
+	
+	public Double getPercentage() {
+		return percentage;
+	}
+
+	public void setPercentage(Double percentage) {
+		this.percentage = percentage;
+	}
 
 	public Integer getTaskId() {
 		return taskId;

@@ -81,12 +81,12 @@
 		</action>
 		<action path="/TaskUser" name="TaskUserForm" type="prime.user.task.TaskAction" scope="request">
 			<!-- Task -->
-			<forward name="success" path="/user/task/TaskHome.jsp"></forward>
-			<forward name="add" path="/user/task/TaskAdd.jsp"></forward>
-			<forward name="submit" path="/user/task/TaskSubmission.jsp"></forward>
-			<forward name="taskDetail" path="/user/task/TaskDetail.jsp"></forward>
-			<forward name="chooseType" path="/user/task/TaskChooseType.jsp"></forward>
-			<forward name="forward" path="/user/task/Forward.jsp"></forward>
+			<forward name="success"		path="/user/task/TaskHome.jsp"></forward>
+			<forward name="add" 		path="/user/task/TaskAdd.jsp"></forward>
+			<forward name="submit" 		path="/user/task/TaskSubmission.jsp"></forward>
+			<forward name="taskDetail" 	path="/user/task/TaskDetail.jsp"></forward>
+			<forward name="chooseType" 	path="/user/task/TaskChooseType.jsp"></forward>
+			<forward name="forward" 	path="/user/task/Forward.jsp"></forward>
 
 			<!-- Activity -->
 			<forward name="addActivity" path="/user/task/ActivityAdd.jsp"></forward>
