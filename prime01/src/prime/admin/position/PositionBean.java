@@ -4,6 +4,7 @@ public class PositionBean {
 
 	private Integer positionId;
 	private String positionName;
+	private Integer positionLevel = 0;
 
 	public Integer getPositionId() {
 		return positionId;
@@ -19,6 +20,14 @@ public class PositionBean {
 
 	public void setPositionName(String positionName) {
 		this.positionName = positionName;
+	}
+
+	public Integer getPositionLevel() {
+		return positionLevel;
+	}
+
+	public void setPositionLevel(Integer positionLevel) {
+		this.positionLevel = positionLevel;
 	}
 
 }

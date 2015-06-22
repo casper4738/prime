@@ -162,13 +162,6 @@
 										</td>
 			               			</tr>
 			               			<tr>
-			               				<td>Division</td>
-			               				<td>:</td>
-			               				<td>
-			               					<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
-										</td>
-			               			</tr>
-			               			<tr>
 			               				<td>Head</td>
 			               				<td>:</td>
 			               				<td class="input-group">
@@ -176,6 +169,13 @@
 			               					<span class="input-group-btn">
                       							<input type="button" class="btn btn-info" type="button" onclick="modalLoadHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
 								            </span>
+										</td>
+			               			</tr>
+			               			<tr>
+			               				<td>Division</td>
+			               				<td>:</td>
+			               				<td>
+			               					<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
 										</td>
 			               			</tr>
 			               			<tr>

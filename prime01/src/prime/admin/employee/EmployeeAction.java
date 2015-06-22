@@ -1,8 +1,6 @@
 package prime.admin.employee;
 
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,7 +56,7 @@ public class EmployeeAction extends Action {
 			//	pForm.getEmployeeBean().setManagerName(tmpManager.getEmployeeName());
 			//	pForm.getEmployeeBean().setEmployeeLevel(tmpManager.getEmployeeLevel()+1);
 			//} else {
-				pForm.getEmployeeBean().setEmployeeLevel(0);				
+				/*pForm.getEmployeeBean().setEmployeeLevel(0);*/				
 			//}
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
 			return mapping.findForward("add");

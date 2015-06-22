@@ -6,22 +6,25 @@
 <!DOCTYPE html>
 <html>
 <head> 
-	<meta charset="UTF-8">
-	<title>Prime</title>
-	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+	<!-- CSS -->
 	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
+	<!-- END of CSS -->
+	<!-- JS -->
+	<script src="resources/prime.js"></script>
+	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
+	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
+	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+	<!-- End of JS -->
 </head>
 <body class="skin-blue sidebar-mini">
-	<div class="wrapper">
-	
-		<jsp:include page="/content/Header.jsp"></jsp:include>
-		
-		<div class="content-wrapper">
 			<section class="content-header">
 				<h1>Manage Position<small>management system</small>
 				</h1>
@@ -64,6 +67,7 @@
 					class="table table-bordered table-striped table-hover">
 						<thead><tr>
 							<th>Position Name</th>
+							<th>Position Level</th>
 		                    <th width="90px">Actions</th>
 		                </tr></thead>
 		                <tbody>
@@ -71,6 +75,7 @@
 							<logic:iterate id="iter" name="listPosition">
 			                	<tr>
 			                		<td><bean:write name="iter" property="positionName"/></td>
+			                		<td><bean:write name="iter" property="positionLevel"/></td>
 			                        <td align="center">
 			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="positionId"/>')" src="resources/image/edit.png" />
 			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.DODELETE%>', '<bean:write name="iter" property="positionId"/>', '<%=Constants.Confirmation.DELETE %>')" src="resources/image/remove.png" />
@@ -113,17 +118,5 @@
 		        
 		        </div>
 			</section>
-		</div>
-		<!-- /.content-wrapper -->
-		<jsp:include page="/content/Footer.jsp"></jsp:include>
-	</div>
-
-	<script src="resources/prime.js"></script>
-	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
-	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
-	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 </body>
 </html>

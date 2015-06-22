@@ -63,7 +63,8 @@ public interface Constants {
 		static final Map<String, String> POSITION_SEARCHCOLUMNS = Collections.unmodifiableMap(
 			new LinkedHashMap<String, String>() {{
 				put("SHOW_ALL", "SHOW ALL");
-				put("NAME", "DIVISION NAME");
+				put("NAME", "POSITION NAME");
+				put("LEVEL", "POSITION LEVEL");
 			}
 		});
 		static final Map<String, String> ROLE_SEARCHCOLUMNS = Collections.unmodifiableMap(
