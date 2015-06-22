@@ -26,5 +26,4 @@ public interface EmployeeManager {
 			throws SQLException;
 	
 	public Integer getNewId() throws SQLException;
-}
-      
+}  
