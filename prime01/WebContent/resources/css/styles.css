@@ -8,7 +8,6 @@
 	margin-bottom: 10px;	
 }
 
-
 .show-in-page {
 	float:left;
 	margin-left: 10px;
@@ -93,4 +92,13 @@
 
 .btn-submit {
 	margin-top:-50px;
+}
+
+.textbox-search {
+	width  : 200px;
+	height : 30px;
+}
+
+.selectbox-search {
+	height 		: 30px;
 }

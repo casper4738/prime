@@ -1,13 +1,31 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="login">
-	<select id="getUser" resultClass="prime.admin.user.UserBean" parameterClass="java.lang.String">
+	<select id="isUserExists" resultClass="java.lang.Integer" parameterClass="java.lang.String">
 		SELECT 
-			USERNAME 		as userName,
-			PASSWORD		as password,
-			SYSTEM_LEVEL	as sysLevel,
-			IS_ACTIVE_DIR 	as isActiveDirectory
+			COUNT(0)
 		FROM USERS  
-		WHERE UPPER(USERNAME)=UPPER(#name#)
+		WHERE LOWER(USERNAME)=LOWER(#name#)
+	</select>
+	
+	<select id="isUserValidated" resultClass="java.lang.Integer" parameterClass="java.util.HashMap">
+		SELECT 
+			COUNT(0)
+		FROM USERS  
+		WHERE LOWER(USERNAME)=LOWER(#username#) AND
+			  PASSWORD=dbms_crypto.hash(to_clob(#password#), 2)
+	</select>
+	
+	
+	<select id="getUserDetails" resultClass="prime.login.LoginBean" parameterClass="java.lang.String">
+		SELECT 
+				USERNAME 		as username,
+				IS_ACTIVE_DIR 	as isActiveDirectory,
+				STATUS_USER		as statusUser,
+				LOGIN_SESSION	as loginSession,
+				EMPLOYEE_ID		as employeeId,
+				SYSTEM_LEVEL	as systemLevel
+		FROM USERS  
+		WHERE LOWER(USERNAME)=LOWER(#name#)
 	</select>
 </sqlMap>

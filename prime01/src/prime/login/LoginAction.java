@@ -1,7 +1,12 @@
 package prime.login;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -11,7 +16,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import prime.admin.user.UserBean;
+import prime.constants.Constants;
 import prime.utility.ActiveDirectoryManager;
 
 public class LoginAction extends Action {
@@ -22,56 +27,77 @@ public class LoginAction extends Action {
 		LoginForm tmpForm = (LoginForm) form;
 		LoginManager tmpManager = new LoginManagerImpl();
 		HttpSession tmpSession = request.getSession(true);
+		ActionForward tmpAction = null;
 		
 		//##1.Check Task
-		if("doLogin".equals(tmpForm.getTask())){
+		if(Constants.Task.DOLOGIN.equals(tmpForm.getTask())){
 			//---.Do Checking Process
-			boolean isLoginSuccess = true;
+			int tmpLoginResultCode = 0;
+			String tmpLoginResponse = "";
+			String tmpUsername = tmpForm.getUsername();
+			String tmpPassword = tmpForm.getPassword();
 			
-			//  a.Register Flag
-			UserBean tmpUser = tmpManager.getUser(tmpForm.getUsername());
-			
-			//  b.Check From DB
-			if(tmpUser == null){
-				isLoginSuccess = false;
-				System.out.println("False Doank Sigh");
-			} else {
-				//---1.Check Is Active Directory Type or Not
-				//---2.If Yes, Crosscheck by using ActiveDirectory Class
-				//---3.If No , Crosscheck by using DB-Username and Password
-				System.out.println("Check Until here");
-				if(tmpUser.getIsActiveDirectory()){
+			//---.User Validation Process
+			if(tmpManager.isUserExists(tmpUsername)){
+				//---Fetch User Details [Differ between AD and Normal DB]
+				LoginBean tmpUserDetails = tmpManager.getUserDetails(tmpUsername);
+				
+				if(tmpUserDetails.isActiveDirectory()){
 					ActiveDirectoryManager tmpADManager = new ActiveDirectoryManager();
-					if(!tmpADManager.checkValidUser(tmpUser.getUserName(), "dedy.suwandi", "Ace2015")){
-						isLoginSuccess = false;
+					if(!tmpADManager.checkValidUser(tmpUsername, 
+													Constants.ActiveDirectory.ADMIN_USERNAME, 
+													Constants.ActiveDirectory.ADMIN_PASSWORD)){
+						tmpLoginResultCode = 1; //Fail Login, fail identification
+					} else {
+						if(tmpUserDetails.getStatusUser() == Constants.UserStatus.LOCKED){
+							tmpLoginResultCode = 3; //Fail Login, because locked
+						} else {
+							tmpLoginResultCode = 2; //Success Login
+						}
 					}
 				} else {
-					if(!tmpForm.getPassword().equals(tmpUser.getPassword())){
-						isLoginSuccess = false;
+					if(!tmpManager.isUserValidated(tmpUsername, tmpPassword)){
+						tmpLoginResultCode = 1; //Fail Login, fail identification
+					} else {
+						if(tmpUserDetails.getStatusUser() == Constants.UserStatus.LOCKED){
+							tmpLoginResultCode = 3; //Fail Login, because locked
+						} else {
+							tmpLoginResultCode = 2; //Success Login
+						}
 					}
-				} 
+				}
 			}
 			
-			//  c.Check Final Flag Whether Login Failed or Not
-			if(isLoginSuccess){
-				//---.Set User Session ID
-				
-				//---.Check Current User Privilege and Go To Selected Page
-				
-			} else {
-				//---.Returning Fail Login Value
-				response.setContentType("text/text;charset=utf-8");
-				response.setHeader("cache-control", "no-cache");
-				PrintWriter tmpOut = response.getWriter();
-				tmpOut.print("loginFail;Username and Password doesn't match !");
-				tmpOut.flush();
-				return null;
+			switch(tmpLoginResultCode){
+				case 0 :
+					tmpLoginResponse = "0;" + Constants.Response.FAILLOGIN_USERNOTEXISTS;
+					break;
+				case 1 :
+					tmpLoginResponse = "0;" + Constants.Response.FAILLOGIN_VALIDATIONFAILED;
+					break;
+				case 2 :
+					tmpLoginResponse = "1;";
+					break;
+				case 3 :
+					tmpLoginResponse = "0;" + Constants.Response.FAILLOGIN_USERLOCKED;
+					break;
+				default :
+					tmpLoginResponse = "0;" + Constants.Response.FAILLOGIN_SOMEFAILURE;
+					break;
 			}
+			
+			//---.Set Returning Value
+			response.setContentType("text/text;charset=utf-8");
+			response.setHeader("cache-control", "no-cache");
+			PrintWriter tmpOut = response.getWriter();
+			tmpOut.print(tmpLoginResponse);
+			tmpOut.flush();
+			tmpAction = null;
 		} else {
 			//---.For First Time Loading
-			return mapping.findForward("success");
+			tmpAction = mapping.findForward("success");
 		}	
 		
-		return null;
+		return tmpAction;
 	}
 }

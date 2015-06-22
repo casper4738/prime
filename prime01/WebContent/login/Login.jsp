@@ -1,3 +1,4 @@
+<%@page import="prime.constants.Constants"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
@@ -15,10 +16,10 @@
   </head>
   <body class="login-page" style="background-color:teal;">
     <div class="login-box">
-      <div class="login-logo">
-        <b>Prime</b> v.0.1
-      </div><!-- /.login-logo -->
       <div class="login-box-body">
+	    <div class="login-logo">
+	       <b>Prime</b> v.0.1
+	    </div><!-- /.login-logo -->
         <p class="login-box-msg">Sign in to start your session</p>
         <html:form action="/Login" method="post" styleId="form-login">
           <html:hidden name="LoginForm" property="task" />
@@ -67,21 +68,32 @@
 	    		  $('#ajax-validating').show();  
 	    		  
 	    		  //Do Login Data checking
-				  document.forms[0].task.value = "doLogin";
+				  document.forms[0].task.value = "<%=Constants.Task.DOLOGIN%>";
 	    		  var str = $('#form-login').serialize();
 	    		  $.ajax({ 
 	    	          type	  : "POST",
-	    	          url	  : "Login.do",  // Send the login info to this page
+	    	          url	  : "<%=Constants.PAGES_LIST[Constants.Page.LOGIN]%>",  // Send the login info to this page
 	    	          data	  : str,
 	    	          success : function(msg){
 	    	        	  var param = msg.split(';');
-	    	        	  if(param[0] == "loginFail"){
-	    	        		  //Change Div
+	    	        	  if(param[0] == "0"){ //0 == False
+	    	        		  //Set Fail Login Warning
 	    	        		  $('#login-fail').html(param[1]);
 	    	        		  $('#login-fail').show();
 	    	        		  $('#btn-submit').show();
 	    		    		  $('#ajax-validating').hide(); 
+	    	        	  } else {
+	    	        		  window.location = "<%=Constants.PAGES_LIST[Constants.Page.MENU]%>";
 	    	        	  }
+	    	          },
+	    	          
+	    	          error: function(){
+    	        		  //Set Fail Login Warning
+    	        		  $('#login-fail').html("<%=Constants.Response.FAILLOGIN_ERROR%>");
+    	        		  $('#login-fail').show();
+    	        		  $('#btn-submit').show();
+    		    		  $('#ajax-validating').hide(); 
+							//TO DO :: Do Some Error Handling at Here
 	    	          }
 	    	       });
 		      }); 

@@ -1,8 +1,8 @@
 package prime.login;
 
-import java.sql.SQLException;
-import prime.admin.user.UserBean;
 
 public interface LoginManager {
-	public UserBean getUser(String username) throws SQLException;
+	public boolean isUserExists(String username);
+	public boolean isUserValidated(String username, String password);
+	public LoginBean getUserDetails(String username);
 }

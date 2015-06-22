@@ -6,9 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-	<meta charset="UTF-8">
-	<title>Prime</title>
-	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+	<!-- CSS -->
 	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
@@ -16,131 +14,9 @@
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
-</head>
-<body class="skin-blue sidebar-mini">
-	<div class="wrapper">
+	<!-- End CSS -->
 	
-		<jsp:include page="/content/Header.jsp"></jsp:include>
-		<div class="content-wrapper">
-			<section class="content-header">
-				<h1>Manage Employee<small>management system</small>
-				</h1>
-				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Manage Employee</li>
-				</ol>
-			</section>
-
-			<section class="content">
-			<div class="row">
-				<div class="col-xs-12"><div class="box">
-					<div class="box-header"><h3 class="box-title">Data Manage Employee</h3></div>
-					<div class="box-body">
-                  	<html:form action="/EmployeeAdmin">
-                  		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
-                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
-                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
-                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
-                  		<table class="form-input" align="center" style="width: 500px;">
-	               			<tr>
-                  				<td width="150px">Name</td>
-                  				<td>:</td>
-                  				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control"/></td>
-                  			</tr>
-                  			<tr>
-                  				<td>Address</td>
-                  				<td>:</td>
-                  				<td>
-                  				<html:text name="EmployeeAdminForm" property="employeeBean.address" styleClass="form-control"/>
-								</td>
-                  			</tr>
-                  			<tr>
-                  				<td>Birth Date</td>
-                  				<td>:</td>
-                  				<td>
-                  					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                  				  		<html:text name="EmployeeAdminForm" property="employeeBean.birthdate" styleClass="form-control pull-right" styleId="datepicker_birthdate"/>
-                  				  	</div>
-								</td>
-                  			</tr>
-                  			<tr>
-                  				<td>Contact Number</td>
-                  				<td>:</td>
-                  				<td>
-                  				<html:text name="EmployeeAdminForm" property="employeeBean.contactNumber" styleClass="form-control"/>
-								</td>
-                  			</tr>
-                  			<tr>
-                  				<td>Email</td>
-                  				<td>:</td>
-                  				<td>
-                  				<html:text name="EmployeeAdminForm" property="employeeBean.email" styleClass="form-control"/>
-								</td>
-                  			</tr>
-                  			<tr>
-                  				<td>Gender</td>
-                  				<td>:</td>
-                  				<td>              			
-                  					<html:radio name="EmployeeAdminForm" property="employeeBean.gender" value="0" styleClass="minimal">Male</html:radio>
-                  					<html:radio name="EmployeeAdminForm" property="employeeBean.gender" value="1" styleClass="minimal">Female</html:radio>
-								</td>
-                  			</tr>
-                  			<tr>
-                  				<td>Position</td>
-                  				<td>:</td>
-                  				<td>
-                  				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control">
-                  					<html:options collection="listPosition" property="positionId" labelProperty="positionName" />
-                  				</html:select>
-								</td>
-                  			</tr>
-                  			<tr>
-                  				<td>Division</td>
-                  				<td>:</td>
-                  				<td>
-                  				<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
-								</td>
-                  			</tr>
-                  			<tr>
-                  				<td>Head</td>
-                  				<td>:</td>
-                  				<td>
-                  				<html:text name="EmployeeAdminForm" property="employeeBean.managerName" styleClass="form-control" disabled="true"/>
-								</td>
-                  			</tr>
-                  			<tr>
-                  				<td>Hire Date</td>
-                  				<td>:</td>
-                  				<td>
-                  					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                  				  		<html:text name="EmployeeAdminForm" property="employeeBean.hireDate" styleClass="form-control pull-right" styleId="datepicker_hiredate"/>
-                  				  	</div>
-								</td>
-                  			</tr>
-                  			<tr>
-                  				<td>Profile Picture</td>
-                  				<td>:</td>
-                  				<td>
-                  				  <input type="file" id="exampleInputFile">
-								</td>
-                  			</tr>
-                  			<tr>
-                  				<td colspan="3" align="center">
-                  					<html:submit value="Save" styleClass="btn btn-primary"/>
-                  					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
-                  				</td>
-                  			</tr>
-						</table>
-                    </html:form>
-                    </div>
-		        	</div></div>
-		        </div>
-			</section>
-		</div>
-		<!-- /.content-wrapper -->
-		<jsp:include page="/content/Footer.jsp"></jsp:include>
-	</div>
-
+	<!-- JS -->
 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
@@ -156,7 +32,187 @@
             $('#datepicker_hiredate').datepicker({
                 format: "yyyy-mm-dd"
             });
+    		$("#input-image").change(function (e) {
+    		    if(this.disabled) 
+    		    	return alert('File upload not supported!');
+    		    var F = this.files;
+    		    if(F && F[0]) {
+    		    	for(var i=0; i<F.length; i++){
+    		    		readImage( F[i] );
+    		    	}
+    		    }
+    		});
         });
+		
+		function readImage(file) {
+		    var reader = new FileReader();
+		    var image  = new Image();
+		  
+		    reader.readAsDataURL(file);  
+		    reader.onload = function(_file) {
+		        image.src    = _file.target.result;              // url.createObjectURL(file);
+		        image.onload = function() {
+		            var w = this.width;
+		            var h = this.height;
+		            var t = file.type;                           // ext only: // file.type.split('/')[1],
+		            var n = file.name;
+		            var s = file.size/1024;
+		            	
+	            	if(s <= <%=Constants.MAX_IMAGE_FILESIZE%>){
+		            	$('#upload-preview').html('<img src="'+ this.src +'" style="width:64px;height:64px"> <br/><b>' + w +'x' +h+ ' <br/>'+s +'KB <br/>'+t+' <br>'+n+'<br/></b>');
+	            	} else {
+			            alert("File size too big !!");
+			            
+			            //Reset and Readd Event [Will think for better solution than double hardcode]
+	            		$("#input-image").replaceWith($("#input-image").clone());
+	            		$("#input-image").change(function (e) {
+	            		    if(this.disabled) 
+	            		    	return alert('File upload not supported!');
+	            		    var F = this.files;
+	            		    if(F && F[0]) {
+	            		    	for(var i=0; i<F.length; i++){
+	            		    		readImage( F[i] );
+	            		    	}
+	            		    }
+	            		});
+	            	}
+		        };
+		        image.onerror= function() {
+            		$("#input-image").replaceWith($("#input-image").clone());
+		            alert("Invalid file type ! Only input images files type");
+		        };      
+		    };
+		    
+		}
     </script>
+	<!-- End JS -->
+
+</head>
+<body class="skin-blue sidebar-mini">
+
+	<section class="content-header">
+		<h1>Manage Employee</h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li class="active">Manage Employee</li>
+			<li class="active">Add Employee</li>
+		</ol>
+	</section>
+	
+	<section class="content">
+	<div class="row">
+		<div class="col-xs-12"><div class="box" align="center">
+				<div class="box-header"><h1 class="box-title"><br/><br/><b>Add New Employee</b></h2><br/><br/></div>
+					<div class="box-body">
+			               	<html:form action="/EmployeeAdmin">
+			               		<html:hidden name="EmployeeAdminForm" property="task"/>
+			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
+			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
+			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
+			               		
+			               		<table class="form-input" style="width: 500px;">
+			             			<tr>
+			               				<td width="200px">Name</td>
+			               				<td>:</td>
+			               				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control"/></td>
+			               			</tr>
+			               			<tr>
+			               				<td>Address</td>
+			               				<td>:</td>
+			               				<td><html:text name="EmployeeAdminForm" property="employeeBean.address" styleClass="form-control"/></td>
+			               			</tr>
+			               			<tr>
+			               				<td>Birth Date</td>
+			               				<td>:</td>
+			               				<td>
+			               					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+			               				  		<html:text name="EmployeeAdminForm" property="employeeBean.birthdate" styleClass="form-control pull-right" styleId="datepicker_birthdate"/>
+			               				  	</div>
+										</td>
+			               			</tr>
+			               			<tr>
+			               				<td>Contact Number</td>
+			               				<td>:</td>
+			               				<td>
+			               					<html:text name="EmployeeAdminForm" property="employeeBean.contactNumber" styleClass="form-control"/>
+										</td>
+			               			</tr>
+			               			<tr>
+			               				<td>Email</td>
+			               				<td>:</td>
+			               				<td>
+			               					<html:text name="EmployeeAdminForm" property="employeeBean.email" styleClass="form-control"/>
+										</td>
+			               			</tr>
+			               			<tr>
+			               				<td>Gender</td>
+			               				<td>:</td>
+			               				<td>              			
+			               					<html:radio name="EmployeeAdminForm" property="employeeBean.gender" value="0" styleClass="minimal">Male</html:radio>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			               					<html:radio name="EmployeeAdminForm" property="employeeBean.gender" value="1" styleClass="minimal">Female</html:radio>
+										</td>
+			               			</tr>
+			               			<tr>
+			               				<td>Position</td>
+			               				<td>:</td>
+			               				<td>
+				               				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control">
+				               					<html:options collection="listPosition" property="positionId" labelProperty="positionName" />
+				               				</html:select>
+										</td>
+			               			</tr>
+			               			<tr>
+			               				<td>Division</td>
+			               				<td>:</td>
+			               				<td>
+			               					<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
+										</td>
+			               			</tr>
+			               			<tr>
+			               				<td>Head</td>
+			               				<td>:</td>
+			               				<td class="input-group">
+			               					<html:text name="EmployeeAdminForm" property="employeeBean.managerName" styleClass="form-control" disabled="true"/>
+			               					<span class="input-group-btn">
+                      							<input type="button" class="btn btn-info" type="button" onclick="modalLoadHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
+								            </span>
+										</td>
+			               			</tr>
+			               			<tr>
+			               				<td>Hire Date</td>
+			               				<td>:</td>
+			               				<td>
+			               					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+			               				  		<html:text name="EmployeeAdminForm" property="employeeBean.hireDate" styleClass="form-control pull-right" styleId="datepicker_hiredate"/>
+			               				  	</div>
+										</td>
+			               			</tr>
+			               			<tr>
+			               				<td>Profile Picture [Max. <%=Constants.MAX_IMAGE_FILESIZE %> KB]</td>
+			               				<td>:</td>
+			               				<td>
+			               				  <input type="file" id="input-image" accept="image/*">
+										</td>
+			               			</tr>
+			               			<tr>
+			               				<td></td>
+			               				<td></td>
+			               				<td>
+										  <div id="upload-preview"></div>
+			               				</td>
+			               			</tr>
+			               			<tr>
+			               				<td colspan="3" align="center">
+			               					<input type="button" value="Save" class="btn btn-primary"/> 
+			               					<input type="button" value="Cancel" class="btn btn-default" onclick="flyToPage('<%=Constants.Task.BACKTOMAIN%>')"/>					
+			               				</td>
+			               			</tr>
+							 </table>
+			                 </html:form>
+			        </div>
+		       	</div>
+	       	</div>
+	       </div>
+	</section>
 </body>
 </html>

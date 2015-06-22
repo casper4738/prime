@@ -1,7 +1,5 @@
 package prime.admin.employee;
 
-import java.sql.Date;
-
 public class EmployeeBean {
 	private Integer employeeId;
 	private Integer gender = 0;
@@ -18,9 +16,9 @@ public class EmployeeBean {
 	private String managerName;
 	private String employeeStatus;
 	private String resignNote;
-	private Date birthdate;
-	private Date resignDate;
-	private Date hireDate;
+	private String birthdate;
+	private String resignDate;
+	private String hireDate;
 	
 	public Integer getEmployeeId() {
 		return employeeId;
@@ -112,22 +110,22 @@ public class EmployeeBean {
 	public void setResignNote(String resignNote) {
 		this.resignNote = resignNote;
 	}
-	public Date getBirthdate() {
+	public String getBirthdate() {
 		return birthdate;
 	}
-	public void setBirthdate(Date birthdate) {
+	public void setBirthdate(String birthdate) {
 		this.birthdate = birthdate;
 	}
-	public Date getResignDate() {
+	public String getResignDate() {
 		return resignDate;
 	}
-	public void setResignDate(Date resignDate) {
+	public void setResignDate(String resignDate) {
 		this.resignDate = resignDate;
 	}
-	public Date getHireDate() {
+	public String getHireDate() {
 		return hireDate;
 	}
-	public void setHireDate(Date hireDate) {
+	public void setHireDate(String hireDate) {
 		this.hireDate = hireDate;
 	}
 

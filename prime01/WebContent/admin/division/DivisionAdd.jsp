@@ -17,10 +17,6 @@
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="skin-blue sidebar-mini">
-	<div class="wrapper">
-	
-		<jsp:include page="/content/Header.jsp"></jsp:include>
-		<div class="content-wrapper">
 			<section class="content-header">
 				<h1>Manage Division<small>management system</small>
 				</h1>
@@ -56,10 +52,6 @@
 		        	</div></div>
 		        </div>
 			</section>
-		</div>
-		<!-- /.content-wrapper -->
-		<jsp:include page="/content/Footer.jsp"></jsp:include>
-	</div>
 
 	<script src="resources/prime.js"></script>
 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>

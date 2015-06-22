@@ -1,5 +1,6 @@
 package prime.admin.employee;
 
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -28,46 +29,38 @@ public class EmployeeAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
-		
 		EmployeeForm pForm = (EmployeeForm) form;
 		EmployeeManager manager = new EmployeeManagerImpl();
 		DivisionManager tmpDivisionManager = new DivisionManagerImpl();
 		PositionManager tmpPositionManager = new PositionManagerImpl();
 		
+		System.out.println("Task = " + pForm.getTask());
+		
 		if(Constants.Task.GOTOMANAGER.equals(pForm.getTask())) {
-			//##. Choose Manager or Head
 			request.setAttribute("listDivision", tmpDivisionManager.getListAll());
 			int countRows  = manager.getCountByColumnAndDivision(pForm.getColumnSearch(), pForm.getSearch(), pForm.getEmployeeBean().getDivisionId());
 			
 			List<EmployeeBean> list = manager.getListByColumnAndDivision(pForm.getColumnSearch(), pForm.getSearch(), pForm.getEmployeeBean().getDivisionId(), 
-					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
-					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
-			
-			//##Attribute table 
+																		 PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
+																		 PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 			request.setAttribute("listEmployee", list);
 			request.setAttribute("listSearchColumn", Constants.Search.POSITION_SEARCHCOLUMNS);
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("choose_manager");
 		} else if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
-			System.out.println("cekkk Manager :"+pForm.getManagerId());
-			//##. Get Data
-			if(pForm.getManagerId() != 0) {
-				DivisionBean tmpDivision = tmpDivisionManager.getDivisionById(pForm.getEmployeeBean().getDivisionId());
-				EmployeeBean tmpManager = manager.getEmployeeById(pForm.getManagerId());
-	
-				pForm.getEmployeeBean().setEmployeeId(manager.getNewId());
-				pForm.getEmployeeBean().setDivisionId(tmpDivision.getDivisionId());
-				pForm.getEmployeeBean().setDivisionName(tmpDivision.getDivisionName());
-	
-				pForm.getEmployeeBean().setManagerId(tmpManager.getEmployeeId());
-				pForm.getEmployeeBean().setManagerName(tmpManager.getEmployeeName());
-				pForm.getEmployeeBean().setEmployeeLevel(tmpManager.getEmployeeLevel()+1);
-			} else {
+			//if(pForm.getManagerId() != 0) {
+			//	DivisionBean tmpDivision = tmpDivisionManager.getDivisionById(pForm.getEmployeeBean().getDivisionId());
+			//	EmployeeBean tmpManager = manager.getEmployeeById(pForm.getManagerId());
+			//	pForm.getEmployeeBean().setEmployeeId(manager.getNewId());
+			//	pForm.getEmployeeBean().setDivisionId(tmpDivision.getDivisionId());
+			//	pForm.getEmployeeBean().setDivisionName(tmpDivision.getDivisionName());
+			//	pForm.getEmployeeBean().setManagerId(tmpManager.getEmployeeId());
+			//	pForm.getEmployeeBean().setManagerName(tmpManager.getEmployeeName());
+			//	pForm.getEmployeeBean().setEmployeeLevel(tmpManager.getEmployeeLevel()+1);
+			//} else {
 				pForm.getEmployeeBean().setEmployeeLevel(0);				
-			}
+			//}
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
-	
-			//##. Add Data
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
@@ -87,24 +80,25 @@ public class EmployeeAction extends Action {
 			EmployeeBean tmpEmployee = pForm.getEmployeeBean();
 			manager.update(tmpEmployee);
 			return mapping.findForward("forward");
-		}
+		} 
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		List<EmployeeBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
-				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
-				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
+														  PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
+														  PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 
-		//##1.Attribute for Table Show
+		//##1.Attribute For Table Paging
 		request.setAttribute("listEmployee", list);
-		request.setAttribute("listSearchColumn", Constants.Search.POSITION_SEARCHCOLUMNS);
-
+		request.setAttribute("listSearchColumn", Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
+		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 		setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+		
 		return mapping.findForward("success");
 	}
 	
 	private void setPaging(HttpServletRequest request, int countRows, int page, int view)
 			throws SQLException {
-		//##2.Paging Handling
+		//##0.Paging Number Handling
 		PaginationUtility pageUtil = new PaginationUtility();
 		pageUtil.setCountRows(countRows);
 		pageUtil.setView(view);

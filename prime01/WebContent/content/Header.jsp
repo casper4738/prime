@@ -3,9 +3,9 @@
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 
 <header class="main-header">
-	<a href="index2.html" class="logo"> <span class="logo-lg"><b>PRIME</b>PROGRAM</span>
-	</a>
-
+	<a href="#" class="logo"> <span class="logo-lg"><b>PRIME</b>PROGRAM</span></a>
+	
+	
 	<nav class="navbar navbar-static-top" role="navigation">
 		<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"> 
 			<span class="sr-only">Toggle navigation</span>
@@ -71,17 +71,3 @@
 		</div>
 	</nav>
 </header>
-
-<aside class="main-sidebar">
-	<section class="sidebar">
-		<div class="user-panel">
-			<div class="pull-left image">
-				<img src="resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
-			</div>
-			<div class="pull-left info">
-				<p>Alexander</p><a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-			</div>
-		</div>
-		<jsp:include page="/content/Menu.jsp"></jsp:include>
-	</section>
-</aside>
