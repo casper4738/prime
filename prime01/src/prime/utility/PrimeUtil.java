@@ -1,6 +1,13 @@
 package prime.utility;
 
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
+import javax.xml.bind.DatatypeConverter;
 
 public class PrimeUtil {
 
@@ -28,5 +35,5 @@ public class PrimeUtil {
 	public static String getPath(HttpServletRequest request) {
 		return request.getRealPath("/");
 	}
-	
+		
 }
