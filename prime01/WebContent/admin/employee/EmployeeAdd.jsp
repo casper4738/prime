@@ -42,7 +42,7 @@
     		    	}
     		    }
     		});
-        });
+    	});
 		
 		function readImage(file) {
 		    var reader = new FileReader();
@@ -92,7 +92,7 @@
 			var tmpTable ="employeeHead";
 			
 			//##1.Accessing Prime Method For Modal Showing
-			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition, $('#headName'));
+			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition, $('#result'));
 		}
     </script>
 	<!-- End JS -->
@@ -115,11 +115,12 @@
 				<div class="box-header"><h1 class="box-title"><br/><br/><b>Add New Employee</b></h2><br/><br/></div>
 					<div class="box-body">
 			               	<html:form action="/EmployeeAdmin">
-			               		<html:hidden name="EmployeeAdminForm" property="task"/>
+			               		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
-			               		
+			               		<html:hidden name="EmployeeAdminForm" property="managerId" styleId="managerId"/>
+			               		<html:text name="EmployeeAdminForm" property="result" styleId="result"/>
 			               		<table class="form-input" style="width: 500px;">
 			             			<tr>
 			               				<td width="200px">Name</td>
@@ -213,7 +214,7 @@
 			               			</tr>
 			               			<tr>
 			               				<td colspan="3" align="center">
-			               					<input type="button" value="Save" class="btn btn-primary"/> 
+			               					<input type="button" value="Save" class="btn btn-primary"  onclick="dosubmit()"/> 
 			               					<input type="button" value="Cancel" class="btn btn-default" onclick="flyToPage('<%=Constants.Task.BACKTOMAIN%>')"/>					
 			               				</td>
 			               			</tr>

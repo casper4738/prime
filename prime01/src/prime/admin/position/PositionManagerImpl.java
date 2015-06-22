@@ -61,7 +61,7 @@ public class PositionManagerImpl implements PositionManager {
 		map.put("endRow", endRow);
 		return mapper.queryForList("position.getListByCol", map);
 	}
-
+	
 	public List<PositionBean> getListAll() throws SQLException {
 		return mapper.queryForList("position.selectAll", null);
 	}
@@ -76,5 +76,4 @@ public class PositionManagerImpl implements PositionManager {
 		map.put("value", value);
 		return (Integer) mapper.queryForObject("position.getCountListByCol", map);
 	}
-
 }

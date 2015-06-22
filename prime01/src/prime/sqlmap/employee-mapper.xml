@@ -147,4 +147,36 @@
 	        </isNotNull>
 	    </dynamic>
 	</select>
+	
+	<select id="getListEmployeeHead" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT 
+		    EMP.EMPLOYEE_ID AS employeeId, 
+		    EMP.EMPLOYEE_NAME AS employeeName,
+		    GENDER AS gender,
+		    ADDRESS AS address,
+		    BIRTHDATE AS birthdate,
+		    HIRE_DATE AS hireDate,
+		    CONTACT_NUMBER AS contactNumber,
+		    EMAIL AS email,
+		    DIVISION_NAME AS divisionName,
+		    POSITION_NAME AS positionName,
+		    MANAGER.EMPLOYEE_NAME AS managerName
+		FROM EMPLOYEES EMP 
+		JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
+		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
+		LEFT JOIN (
+		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME FROM EMPLOYEES E
+		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
+		WHERE POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel#
+	    <dynamic prepend="AND">
+	        <isNotNull property="columnSearch">
+		       	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	    ORDER BY EMP.EMPLOYEE_ID ASC) page 
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
 </sqlMap>

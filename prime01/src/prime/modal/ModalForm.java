@@ -6,7 +6,7 @@ public class ModalForm extends ActionForm {
 	private String  task;
 	
 	private String param1;
-	private String param2;
+	private Integer param2;
 	private String param3;
 	
 	private String search = "";
@@ -62,11 +62,11 @@ public class ModalForm extends ActionForm {
 		this.param3 = param3;
 	}
 
-	public String getParam2() {
+	public Integer getParam2() {
 		return param2;
 	}
 
-	public void setParam2(String param2) {
+	public void setParam2(Integer param2) {
 		this.param2 = param2;
 	}
 

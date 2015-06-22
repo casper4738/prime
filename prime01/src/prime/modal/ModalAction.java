@@ -18,6 +18,9 @@ import org.apache.struts.action.ActionMapping;
 import prime.admin.employee.EmployeeBean;
 import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
+import prime.admin.position.PositionBean;
+import prime.admin.position.PositionManager;
+import prime.admin.position.PositionManagerImpl;
 import prime.constants.Constants;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
@@ -50,19 +53,30 @@ public class ModalAction extends Action {
             	switch(table){
             		case "employeeHead":  
             			List<EmployeeBean> list;
+            			PositionBean listPosition;
+                		PositionManager pManager = new PositionManagerImpl();
+                		listPosition = pManager.getPositionById(pForm.getParam2());
+                		
+                		System.out.println(listPosition.getPositionLevel() + "TEST");
                 		EmployeeManager manager = new EmployeeManagerImpl();
                 		
                     	//##1.Fetch Data From DB
                 		countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
                 		
                 		//---.Depend On The Object
-                		list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+                		/*list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
                 									   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
-                									   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows));
+                									   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows))
+                									   );*/
+                		
+                		list = manager.getListEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(),
+								   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
+								   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows));
 
                 		//##2.Prepare Data for Modal-Table Show
                 		//---a.Modal Title
                 		request.setAttribute("modalListName", "Employees List");
+                		request.setAttribute("modalForm", "employeeHead");
                 		
                 		//---b.Column Head
                 		//[P.S] : Just Hardcode Here, because it only 1 form

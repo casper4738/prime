@@ -4,8 +4,12 @@ function flyToPage(task) {
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));
 }
 
+function dosubmit() {
+	var tmpForm = document.forms[0];
+	menuLoadHandler(tmpForm.action, serialize(tmpForm));
+}
+
 function searchAll(task) {
-	alert(task);
 	var tmpForm = document.forms[0];
 	tmpForm.columnSearch.value = "ALL";
 	tmpForm.task.value = task;
@@ -144,17 +148,24 @@ function modalLoadHandler(targettedData, targettedObject){
 	
 	//##1.Register Targetted Object For Value Receiver
 	modalTargettedObject = targettedObject;
-	alert("Object = " + modalTargettedObject);
-	
+		
 	//##1.Show The Modal
 	$('#content-modal').modal({ show:true, backdrop: false });
 }
 
-function modalSubmitReturnValue(retValue){
-	alert("SINI JUGA = " + retValue);
+function modalSubmitReturnValue(retValue,retForm){
 	//##0.Set Return Value to Targetted Object
 	if(modalTargettedObject != null){
 		modalTargettedObject.val(retValue);
+		if(retForm=='employeeHead'){
+			var res = retValue.split(',');
+			//alert(res[1]+"--"+res[0].replace('[',''))
+			document.getElementById('headName').value=res[1];
+			document.getElementById('managerId').value=100;
+			document.forms[0].managerId.value=100;
+			//document.forms[0].submit;
+			alert(document.forms[0].action + " _ " + document.forms[0].managerId.value)
+		}
 	}
 	
 	//##1.Hide Modal

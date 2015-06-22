@@ -13,6 +13,7 @@ public class EmployeeForm extends ActionForm {
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
 	private Integer tmpId;
+	private String result;
 
 	public EmployeeBean getEmployeeBean() {
 		return employeeBean;
@@ -59,6 +60,7 @@ public class EmployeeForm extends ActionForm {
 	}
 
 	public void setManagerId(Integer managerId) {
+		System.out.println(managerId+ " SET");
 		this.managerId = managerId;
 	}
 
@@ -84,6 +86,14 @@ public class EmployeeForm extends ActionForm {
 
 	public void setTmpId(Integer tmpId) {
 		this.tmpId = tmpId;
+	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
 	}
 
 }

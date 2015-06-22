@@ -31,7 +31,7 @@
 			searching : false,
 			info	  : false,
 			language  : {
-		        "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
+		       "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
 		    }
 	    } );
 		
@@ -52,8 +52,8 @@
 			modalLoadHandler(serialize(tmpForm));
 		}
 		
-		function modalSelectHandler(retValue){
-			modalSubmitReturnValue(retValue);
+		function modalSelectHandler(retValue,retForm){
+			modalSubmitReturnValue(retValue,retForm);
 		}
 	</script>
 	<!-- End JS -->
@@ -110,7 +110,7 @@
 					                			<td>${obj}</td>
 					                		</logic:iterate>
 						                        <td align="center">
-													<input type="button" class="btn bg-olive" style="height:32px" onclick="modalSelectHandler('${rowData}')" value='Select'/>
+													<input type="button" class="btn bg-olive" style="height:32px" onclick="modalSelectHandler('${rowData}','${modalForm}')" value='Select'/>
 						                        </td>
 							             </tr>
 						             </logic:iterate>

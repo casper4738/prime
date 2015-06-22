@@ -62,6 +62,16 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		return mapper.queryForList("employee.getListByColumn", map);
 	}
 	
+	public List<EmployeeBean> getListEmployeeHead(String columnSearch, String value, Integer positionLevel, Integer startRow, Integer endRow) 
+			throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);			
+		map.put("positionLevel", positionLevel);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		return mapper.queryForList("employee.getListEmployeeHead", map);
+	}
 
 	public List<EmployeeBean> getListByColumnAndDivision(String columnSearch, String value, Integer divisionId, Integer startRow, Integer endRow) 
 			throws SQLException {
@@ -82,7 +92,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
-		System.out.println("Masuk Sini" + columnSearch + "--" + value);
 		return (Integer) mapper.queryForObject("employee.getCountByColumn", map);
 	}
 	
