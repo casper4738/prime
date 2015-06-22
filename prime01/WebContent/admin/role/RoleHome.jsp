@@ -115,8 +115,6 @@
 		        </div>
 			</section>
 		</div>
-		<!-- /.content-wrapper -->
-		<jsp:include page="/content/Footer.jsp"></jsp:include>
 	</div>
 
 	<script src="resources/prime.js"></script>

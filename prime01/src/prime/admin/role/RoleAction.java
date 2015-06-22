@@ -22,7 +22,6 @@ public class RoleAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		RoleForm pForm = (RoleForm) form;
 		RoleManager tmpManager = new RoleManagerImpl();
-		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
 			pForm.getRoleBean().setRoleId(tmpManager.getNewId());
