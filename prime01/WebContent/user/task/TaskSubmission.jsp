@@ -22,21 +22,23 @@
 		<jsp:include page="/content/Header.jsp"></jsp:include>
 		<div class="content-wrapper">
 			<section class="content-header">
-			<div align = "center"><h1>Task Submission Form</h1></div>
+				<h1>Manage Task
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Task Submission Form</li>
+					<li class="active">Task & Activities</li>
 				</ol>
 			</section>
 
 			<section class="content">
 			<div class="row">
 				<div class="col-xs-12"><div class="box">
+					<div class="box-header"><h3 class="box-title-center">Task Submission Form</h3></div>
 					<div class="box-body">
                   	<html:form action="/TaskUser">
-                  		<html:hidden name="TaskUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
+                  		<html:hidden name="TaskUserForm" property="task" value='<%=Constants.Task.TASK.DOSUBMIT+""%>'/>
                   		<html:hidden name="TaskUserForm" property="taskBean.taskId" />
+                  		<html:hidden name="TaskUserForm" property="taskBean.taskStatus" value='<%=Constants.Status.SUBMIT+""%>'/>
                   		<table class="form-input" align="center">
                   			<tr>
                   				<td>Task Name</td>
@@ -46,7 +48,7 @@
                   			<tr>
                   				<td>Note</td>
                   				<td>:</td>
-                  				<td><html:textarea style="width: 400px; height: 120px;" name="TaskUserForm" property="taskBean.taskDescription" styleClass="form-control"/></td>
+                  				<td><html:textarea style="width: 400px; height: 120px;" name="TaskUserForm" property="taskBean.taskChangeNote" styleClass="form-control"/></td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">

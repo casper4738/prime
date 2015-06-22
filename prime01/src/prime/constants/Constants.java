@@ -26,6 +26,23 @@ public interface Constants {
 		static final String GOTOMANAGER = "t9";
 		static final String GOTOVIEW 	= "t10";
 		static final String DOSEARCH	= "t11";
+		
+		interface TASK {
+			final String GOTOTASKTYPE	= "t11";
+			final String GOTOSUBMIT		= "t12";
+			final String DOSUBMIT		= "t13";
+		}
+		
+		interface ACTIVITY {
+			final String GOTOTDETAIL		= "t14";
+			final String DOADD 	 			= "t15";
+			final String DOEDIT 	 		= "t16";
+			final String DOCHANGESTATUS		= "t17";
+			final String DODELETE 			= "t18";
+			final String GOTOADD 			= "t19";
+			final String GOTOEDIT 			= "t20";
+			final String GOTOCHANGESTATUS 	= "t21";
+		}
 	}
 
 	//##B.Search Handling
@@ -77,12 +94,21 @@ public interface Constants {
 	//##D.Standard Value
 	//---1.Standard Status Value
 	static interface Status {
-		static int RECEIVE  = 0;
-		static int PROGRESS = 1;
-		static int PAUSE    = 2;
-		static int SUBMIT   = 3;
-		static int FINISH   = 4;
-		static int ABORT    = 5;
+		final int RECEIVE  = 0;
+		final int PROGRESS = 1;
+		final int PAUSE    = 2;
+		final int SUBMIT   = 3;
+		final int FINISH   = 4;
+		final int ABORT    = 5;
+		final int CREATE   = 6;
+		
+		final Map<Integer, String> LIST_STATUSACTIVITY = Collections.unmodifiableMap(
+			new LinkedHashMap<Integer, String>() {{
+				put(PROGRESS, "START");
+				put(PAUSE, "PAUSE");
+				put(FINISH, "FINISH");
+			}
+		});
 	}
 	
 	//---2.Standard Day Conversion

@@ -17,19 +17,67 @@ public class ActivityManagerImpl implements ActivityManager {
 	public ActivityManagerImpl() {
 		mapper = IbatisHelper.getSqlMapInstance();
 	}
+	
+	@Override
+	public void insert(ActivityBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.insert("activity.insert", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+
+	@Override
+	public void insertDetail(ActivityBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.insert("activity.insertDetail", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+	@Override
+	public void update(ActivityBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.update("activity.update", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
 
 	public List<ActivityBean> getToDoListById(Integer id) throws SQLException {
 		System.out.println(id + " id");
 		return mapper.queryForList("activity.getToDoListById", id);
 	}
 
-	public List<ActivityBean> getListByColumn(String columnSearch,
-			String value, Integer startRow, Integer endRow) throws SQLException {
+
+	@Override
+	public ActivityBean getActivityById(Integer id) throws SQLException {
+		return (ActivityBean) mapper.queryForObject("activity.get", id);
+	}
+	
+	@Override
+	public ActivityBean getActivityDetailById(Integer activityId, String activityChangeDate) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("activityId", activityId);
+		map.put("activityChangeDate", activityChangeDate);
+		return (ActivityBean) mapper.queryForObject("activity.getDetail", map);
+	}
+	public List<ActivityBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow, Integer taskId) 
+			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
+		map.put("taskId", taskId);
 		return mapper.queryForList("activity.getListByCol", map);
 	}
 

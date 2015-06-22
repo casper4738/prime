@@ -28,6 +28,18 @@ public class TaskManagerImpl implements TaskManager {
 			mapper.endTransaction();
 		}
 	}
+	
+	@Override
+	public void insertDetail(TaskBean e) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			mapper.startTransaction();
+			mapper.insert("task.insertDetail", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
 
 	@Override
 	public TaskBean getTaskById(Integer id) throws SQLException {

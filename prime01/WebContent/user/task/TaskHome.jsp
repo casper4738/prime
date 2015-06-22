@@ -1,3 +1,4 @@
+<%@page import="prime.constants.Constants"%>
 <%@page import="java.io.FileWriter"%>
 <%@page import="java.io.Writer"%>
 <%@page import="java.io.BufferedWriter"%>
@@ -19,6 +20,13 @@
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
+	<script>
+	function flyToTaskDetail(task, value) {
+		document.forms[0].task.value = task;
+		document.forms[0].taskId.value = value;
+		document.forms[0].submit();
+	}
+	</script>
 </head>
 <body class="skin-blue sidebar-mini">
 	<div class="wrapper">
@@ -39,7 +47,7 @@
 				<div class="col-xs-12"><div class="box">
 					<div class="box-header"><h3 class="box-title">Tasks</h3></div>
 					
-					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('add')">
+					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.TASK.GOTOTASKTYPE%>')">
 	                    <i class="fa fa-edit"></i>Add
                     </span>
                     <span class="message"><bean:write name="TaskUserForm" property="message" /></span></p>
@@ -55,10 +63,9 @@
 					<div class="search-table">
 						<html:form action="/TaskUser" >
 							<html:hidden name="TaskUserForm" property="task" value="search"/>
-							<html:hidden name="TaskUserForm" property="tmpId"/>
+							<html:hidden name="TaskUserForm" property="taskId"/>
 							<html:hidden name="TaskUserForm" property="goToPage"/>
 							<html:hidden name="TaskUserForm" property="showInPage"/>
-							<html:hidden name="TaskUserForm" property="taskId"/>
 							<html:select name="TaskUserForm" property="columnSearch" styleClass="columnSearch">
 								<html:option value="SHOW_ALL">SHOW ALL</html:option>
 								<html:option value="DESCRIPTION">DESCRIPTION</html:option>
@@ -74,23 +81,44 @@
 							<th>Task Name</th>
 							<th>Task Description</th>
 							<th>Task Assigner</th>
+							<th>Task Receiver</th>
 							<th>Start Date</th>
-							<th>Estimate Date</th>					
+							<th>Estimate Date</th>
+							<th>Status</th>
 		                    <th>Actions</th>
 		                </tr></thead>
 		                <tbody>
 		                <logic:notEmpty name="listTask">
 							<logic:iterate id="iter" name="listTask">
 			                	<tr>
-			                		
 			                	    <td><bean:write name="iter" property="taskName"/></td>
 			                	    <td><bean:write name="iter" property="taskDescription"/></td>
-			                	    <td><bean:write name="iter" property="taskAssigner"/></td>
-			                	    <td><bean:write name="iter" property="taskStartDate"/></td>
-			                	    <td><bean:write name="iter" property="taskEstimateDate"/></td>
+			                	    <td><bean:write name="iter" property="taskAssignerName"/></td>
+			                	    <td><bean:write name="iter" property="taskReceiverName"/></td>
+			                	    <td align="center"><bean:write name="iter" property="taskStartDate" format="dd MMMM yyyy"/></td>
+			                	    <td align="center"><bean:write name="iter" property="taskEstimateDate" format="dd MMMM yyyy"/></td>
+			                	    <td align="center" width="80px">
+				                		<logic:equal name="iter" property="taskStatus" value='<%=Constants.Status.CREATE+""%>'>
+				                			<span class="label label-warning">Create</span>
+				                		</logic:equal>
+				                		<logic:equal name="iter" property="taskStatus" value='<%=Constants.Status.SUBMIT+""%>'>
+				                			<span class="label label-primary">Submit</span>
+				                		</logic:equal>
+				                		<logic:equal name="iter" property="taskStatus" value='<%=Constants.Status.PAUSE+""%>'>
+				                			<span class="label label-warning">Pause</span>
+				                		</logic:equal>
+				                		<logic:equal name="iter" property="taskStatus" value='<%=Constants.Status.FINISH+""%>'>
+				                			<span class="label label-primary">Finish</span>
+				                		</logic:equal>
+				                		<logic:equal name="iter" property="taskStatus" value='<%=Constants.Status.ABORT+""%>'>
+				                			<span class="label label-danger">Abort</span>
+				                		</logic:equal>
+				                		<logic:equal name="iter" property="taskStatus" value='<%=Constants.Status.PROGRESS+""%>'>
+				                			<span class="label label-success">Progress</span>
+				                		</logic:equal>
+			                		</td>
 			                        <td align="center">
-			                   
-			                        	<input type="submit"  class="buttonSearch myButton" value='Details' onclick="javascript:flyToTaskDetails('goToTaskDetails', '<bean:write name="iter" property="taskId"/>')">
+			                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.GOTOVIEW %>', '<bean:write name="iter" property="taskId"/>')">
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>
@@ -142,12 +170,5 @@
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
-	<script type="text/javascript">
-	function flyToTaskDetails(task, value) {
-		document.forms[0].task.value = task;
-		document.forms[0].taskId.value = value;
-		document.forms[0].submit();
-	}
-	</script>
 </body>
 </html>

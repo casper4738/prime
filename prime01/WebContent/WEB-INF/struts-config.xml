@@ -33,6 +33,14 @@
 		<action path="/DashboardAdmin" name="DashboardAdminForm" type="prime.admin.dashboard.DashboardAction" scope="request">
 			<forward name="success" 		path="/admin/dashboard/Dashboard.jsp">						</forward>
 		</action>
+		<action path="/EmployeeAdmin" name="EmployeeAdminForm" type="prime.admin.employee.EmployeeAction" scope="request">
+			<forward name="add" 			path="/admin/employee/EmployeeAdd.jsp">						</forward>
+			<forward name="choose_manager" 	path="/admin/employee/ChooseManager.jsp">					</forward>
+			<forward name="success" 		path="/admin/employee/EmployeeHome.jsp">					</forward>
+			<forward name="forward" 		path="/admin/employee/Forward.jsp">							</forward>
+			<forward name="edit" 			path="/admin/employee/EmployeeEdit.jsp">					</forward>
+   			<forward name="view" 			path="/admin/employee/EmployeeView.jsp">					</forward>
+		</action>
 		<action path="/UserAdmin" name="UserAdminForm" type="prime.admin.user.UserAction" scope="request">
 			<forward name="add" 			path="/admin/user/UserAdd.jsp">								</forward>
 			<forward name="success" 		path="/admin/user/UserHome.jsp">							</forward>
@@ -66,14 +74,6 @@
 			<forward name="success" 		path="/admin/setting/SettingHome.jsp">						</forward>
 			<forward name="forward" 		path="/admin/setting/Forward.jsp">							</forward>
 		</action>
-		<action path="/EmployeeAdmin" name="EmployeeAdminForm" type="prime.admin.employee.EmployeeAction" scope="request">
-			<forward name="add" 			path="/admin/employee/EmployeeAdd.jsp">						</forward>
-			<forward name="choose_manager" 	path="/admin/employee/ChooseManager.jsp">					</forward>
-			<forward name="success" 		path="/admin/employee/EmployeeHome.jsp">					</forward>
-			<forward name="forward" 		path="/admin/employee/Forward.jsp">							</forward>
-			<forward name="edit" 			path="/admin/employee/EmployeeEdit.jsp">					</forward>
-   			<forward name="view" 			path="/admin/employee/EmployeeView.jsp">					</forward>
-		</action>
 		
 		<!-- Operator & Monitor [User] -->
 		<action path="/DashboardUser" name="DashboardUserForm" type="prime.user.dashboard.DashboardAction" scope="request">
@@ -84,13 +84,19 @@
 			<forward name="success" 		path="/user/activity/ActivityHome.jsp">						</forward>
 		</action>
 		<action path="/TaskUser" name="TaskUserForm" type="prime.user.task.TaskAction" scope="request">
-			<forward name="success" 		path="/user/task/TaskHome.jsp">								</forward>
-			<forward name="add" 			path="/user/task/TaskAdd.jsp">								</forward>
-			<forward name="selfAssign" 		path="/user/task/TaskAddSelfAssign.jsp">					</forward>
-			<forward name="subordinate" 	path="/user/task/TaskAddSubordinate.jsp">					</forward>
-			<forward name="taskDetails" 	path="/user/activity/ActivityHome.jsp">						</forward>
-			<forward name="submit" 			path="/user/task/TaskSubmission.jsp">						</forward>
-		</action>		
+			<!-- Task -->
+			<forward name="success" path="/user/task/TaskHome.jsp"></forward>
+			<forward name="add" path="/user/task/TaskAdd.jsp"></forward>
+			<forward name="submit" path="/user/task/TaskSubmission.jsp"></forward>
+			<forward name="taskDetail" path="/user/task/TaskDetail.jsp"></forward>
+			<forward name="chooseType" path="/user/task/TaskChooseType.jsp"></forward>
+			<forward name="forward" path="/user/task/Forward.jsp"></forward>
+
+			<!-- Activity -->
+			<forward name="addActivity" path="/user/task/ActivityAdd.jsp"></forward>
+			<forward name="editActivity" path="/user/task/ActivityEdit.jsp"></forward>
+			<forward name="changeStatusActivity" path="/user/task/ActivityChangeStatus.jsp"></forward>
+		</action>	
 		
 		<!-- Login -->
 		<action path="/Login" name="LoginForm" type="prime.login.LoginAction" scope="request">
