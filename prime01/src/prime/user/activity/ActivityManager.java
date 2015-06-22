@@ -8,6 +8,10 @@ import prime.admin.division.DivisionBean;
 public interface ActivityManager {
 	public List<ActivityBean> getToDoListById(Integer id) throws SQLException;
 	
+	public List<ActivityBean> getCurrentListActivity(Integer id,String currentDate) throws SQLException;
+	
+	public List<ActivityBean> getActivityRangeTime(Integer id) throws SQLException;
+	
 	public void insertToDoList(Integer receiverId, Integer activityId) throws SQLException;
 	
 	public void deleteToDoList(Integer receiverId, Integer activityId) throws SQLException;

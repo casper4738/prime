@@ -19,6 +19,7 @@ public class ActivityManagerImpl implements ActivityManager {
 	}
 
 	public List<ActivityBean> getToDoListById(Integer id) throws SQLException {
+		System.out.println(id + " id");
 		return mapper.queryForList("activity.getToDoListById", id);
 	}
 
@@ -58,6 +59,17 @@ public class ActivityManagerImpl implements ActivityManager {
 		return mapper.queryForList("activity.getListByEmployeeId", map);
 	}
 
+	@Override
+	public List<ActivityBean> getCurrentListActivity(Integer id,String currentDate)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("currentDate", currentDate);
+		System.out.println("currentDate" + currentDate);
+		return mapper.queryForList("activity.getCurrentListActivity", map);
+	}
+	
 	@Override
 	public void insertToDoList(Integer receiverId, Integer activityId) throws SQLException {
 		// TODO Auto-generated method stub
@@ -115,5 +127,11 @@ public class ActivityManagerImpl implements ActivityManager {
 			mapper.endTransaction();
 		}
 	}
-
+	
+	@Override
+	public List<ActivityBean> getActivityRangeTime(Integer activityId)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return mapper.queryForList("activity.getRangeTimeByActivityId", activityId);
+	}
 }

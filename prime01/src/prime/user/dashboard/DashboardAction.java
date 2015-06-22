@@ -1,6 +1,9 @@
 package prime.user.dashboard;
 
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,7 +15,6 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import prime.user.activity.ActivityBean;
-import prime.user.activity.ActivityForm;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
 import prime.utility.PaginationUtility;
@@ -47,9 +49,41 @@ public class DashboardAction extends Action{
 			tmpManager.deleteToDoList(101,pForm.getTmpId());
 		}else if("addActivity".equals(pForm.getTask())){
 			tmpManager.insertActivityDetail(101,pForm.getTmpId(), pForm.getTmpValue(), "START");
+		}else if("pauseActivity".equals(pForm.getTask())){
+			tmpManager.insertActivityDetail(101,pForm.getTmpId(), pForm.getTmpValue(), "PAUSE");
+		}else if("finishActivity".equals(pForm.getTask())){
+			tmpManager.insertActivityDetail(101,pForm.getTmpId(), pForm.getTmpValue(), "FINISH");
 		}
 		
+		
+		//int detik = calendar.get(Calendar.SECOND);
+		
+		
 		List<ActivityBean> list = tmpManager.getToDoListById(101);
+		List<ActivityBean> currentListActivity = tmpManager.getCurrentListActivity(101,"20-06-2015");
+		//List<ActivityBean> activityRangeTime = tmpManager.getActivityRangeTime(101,"20-06-2015");
+		request.setAttribute("currentListActivity", currentListActivity);
+
+
+		List<Timestamp> time = new ArrayList<Timestamp>();
+		//long durasi = time2.getTime()- time1.getTime();
+		
+
+		Calendar calendar = Calendar.getInstance();
+		//calendar.setTimeInMillis(durasi);
+		
+		//int menit = calendar.get(Calendar.MINUTE);
+		List<List<ActivityBean>> listAll = new ArrayList<List<ActivityBean>>();
+		for(int i = 0;i<currentListActivity.size();i++){
+			System.out.println(currentListActivity.get(i).getActivityId()+"activityId");
+			List<ActivityBean> activityRangeTime = tmpManager.getActivityRangeTime(currentListActivity.get(i).getActivityId());
+			
+			request.setAttribute("activityRangeTime"+currentListActivity.get(i).getActivityId(), activityRangeTime);
+			System.out.println(activityRangeTime.size()+" size");
+			
+			//listAll.add(activityRangeTime);
+		}
+		//request.setAttribute("lists", listAll);
 		request.setAttribute("listActivity", list);
 		
 		return mapping.findForward("success");

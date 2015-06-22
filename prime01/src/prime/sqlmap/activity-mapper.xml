@@ -15,6 +15,7 @@
 		WHERE ACTIVITY_ID=#id#
 	</select>
 	
+	<!-- show in select activity form (dashboard) -->
 	<select id="getListByEmployeeId" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT AC.ACTIVITY_ID AS activityId, 
@@ -23,15 +24,18 @@
 		TSK.TASK_ASSIGNER AS taskAssigner,
 		AC.ACTIVITY_NAME AS activityName,
 		AC.DESCRIPTION AS activityDescription,
-		LAST_UPDATE AS changeDate,
+		AD.ACTIVITY_CHANGE_DATE AS changeDate,
 		TSK.TASK_NAME AS taskName
 		FROM ACTIVITIES AC 
 		INNER JOIN TASKS TSK ON AC.TASK_ID = TSK.TASK_ID
 		LEFT JOIN 
 		(
-			SELECT MAX(ACTIVITY_CHANGE_DATE) AS LAST_UPDATE, ACTIVITY_STATUS,ACTIVITY_ID
-			FROM ACTIVITY_DETAILS
-            GROUP BY ACTIVITY_STATUS,ACTIVITY_ID
+			 SELECT AD.* FROM ACTIVITY_DETAILS AD
+             INNER JOIN 
+                    (SELECT ACTIVITY_ID, MAX(ACTIVITY_CHANGE_DATE) as LAST_UPDATE from ACTIVITY_DETAILS GROUP BY ACTIVITY_ID) 
+              GROUPEDAD      
+              ON AD.ACTIVITY_ID = GROUPEDAD.ACTIVITY_ID
+              AND ACTIVITY_CHANGE_DATE = LAST_UPDATE
 		) AD
 		ON AC.ACTIVITY_ID = AD.ACTIVITY_ID 
 		WHERE TASK_RECEIVER=#id# AND AC.ACTIVITY_ID NOT IN (SELECT ACTIVITY_ID FROM EMPLOYEE_TO_DO_LISTS)
@@ -47,14 +51,26 @@
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 	
+	<!-- show for to-do-list -->
 	<select id="getToDoListById" resultClass="prime.user.activity.ActivityBean" parameterClass="java.lang.Integer">
 		SELECT TLD.ACTIVITY_ID AS activityId, 
 		ACTIVITY_NAME AS activityName,
 		TASK_NAME AS taskName,
-		EMPLOYEE_ID as taskReceiver
+		EMPLOYEE_ID as taskReceiver,
+		ACTIVITY_STATUS as status
 		FROM EMPLOYEE_TO_DO_LISTS TLD
-			INNER JOIN ACTIVITIES ACT ON ACT.ACTIVITY_ID = TLD.ACTIVITY_ID
-			INNER JOIN TASKS TSK ON TSK.TASK_ID = ACT.TASK_ID
+		INNER JOIN ACTIVITIES ACT ON ACT.ACTIVITY_ID = TLD.ACTIVITY_ID
+		INNER JOIN TASKS TSK ON TSK.TASK_ID = ACT.TASK_ID
+		LEFT JOIN 
+		(
+		 SELECT AD.* FROM ACTIVITY_DETAILS AD
+            INNER JOIN 
+                   (SELECT ACTIVITY_ID, MAX(ACTIVITY_CHANGE_DATE) as LAST_UPDATE from ACTIVITY_DETAILS GROUP BY ACTIVITY_ID) 
+             GROUPEDAD      
+             ON AD.ACTIVITY_ID = GROUPEDAD.ACTIVITY_ID
+             AND ACTIVITY_CHANGE_DATE = LAST_UPDATE
+		) AD
+		ON ACT.ACTIVITY_ID = AD.ACTIVITY_ID 
 		WHERE EMPLOYEE_ID=#id#
 		ORDER BY TLD.ACTIVITY_ID 
 	</select>
@@ -97,15 +113,19 @@
 	    </dynamic>
 	</select>
 	
+	<!-- Total Record in page for Select Activity form -->
 	<select id="getCountToDoListById" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
 		FROM ACTIVITIES AC 
 		INNER JOIN TASKS TSK ON AC.TASK_ID = TSK.TASK_ID
 		LEFT JOIN 
 		(
-			SELECT MAX(ACTIVITY_CHANGE_DATE) AS LAST_UPDATE, ACTIVITY_STATUS,ACTIVITY_ID
-			FROM ACTIVITY_DETAILS
-            GROUP BY ACTIVITY_STATUS,ACTIVITY_ID
+			 SELECT AD.* FROM ACTIVITY_DETAILS AD
+             INNER JOIN 
+                    (SELECT ACTIVITY_ID, MAX(ACTIVITY_CHANGE_DATE) as LAST_UPDATE from ACTIVITY_DETAILS GROUP BY ACTIVITY_ID) 
+              GROUPEDAD      
+              ON AD.ACTIVITY_ID = GROUPEDAD.ACTIVITY_ID
+              AND ACTIVITY_CHANGE_DATE = LAST_UPDATE
 		) AD
 		ON AC.ACTIVITY_ID = AD.ACTIVITY_ID 
 		WHERE TASK_RECEIVER=#receiverId# AND AC.ACTIVITY_ID NOT IN (SELECT ACTIVITY_ID FROM EMPLOYEE_TO_DO_LISTS)
@@ -119,20 +139,65 @@
 	    </dynamic>
 	</select>
 	
+	<!-- Insert when Add Item To Do List -->
 	<insert id="insertToDoList" parameterClass="java.util.Map">
 		INSERT INTO EMPLOYEE_TO_DO_LISTS
 		(EMPLOYEE_ID , ACTIVITY_ID) VALUES 
 		(#receiverId#, #activityId#)
 	</insert>
 	
+	<!-- Delete from To Do List page-->
 	<delete id="deleteToDoList" parameterClass="java.util.Map">
 		DELETE FROM EMPLOYEE_TO_DO_LISTS
 		WHERE EMPLOYEE_ID = #receiverId# and ACTIVITY_ID = #activityId#
 	</delete>
 	
+	
+	<!-- Insert Activity Detail when Start, Pause, Finish -->
 	<insert id="insertActivityDetail" parameterClass="java.util.Map">
 		INSERT INTO ACTIVITY_DETAILS
-			(ACTIVITY_ID , ACTIVITY_CHANGE_DATE, ACTIVITY_STATUS, ACTIVITY_NOTE)  
+			(ACTIVITY_ID , ACTIVITY_CHANGE_DATE, ACTIVITY_STATUS, ACTIVITY_CHANGE_NOTE)  
 		VALUES (#activityId#, CURRENT_TIMESTAMP, #status#, #activityDetailNote#)
 	</insert>
+	
+	<!-- Show for Progress Bar -->
+	<!-- <select id="getProgressBar" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
+		SELECT ACTIVITY_STATUS as status,
+		ACTIVITY_CHANGE_DATE as changeDate,
+		ACTIVITY_CHANGE_NOTE as activityDetailNote,
+		ACTIVITY_NAME as activityName
+		FROM ACTIVITY_DETAILS AD 
+		INNER JOIN ACTIVITIES AC on AD.ACTIVITY_ID = AC.ACTIVITY_ID
+		INNER JOIN TASKS TSK on TSK.TASK_ID = AC.TASK_ID
+	    WHERE 
+	    ACTIVITY_CHANGE_DATE between 
+	   	TO_TIMESTAMP('$currentDate$ 00:00:00','dd-mm-yyyy hh24:mi:ss') 
+        AND TO_TIMESTAMP('$currentDate$ 23:59:59','dd-mm-yyyy hh24:mi:ss')
+	    AND 
+	    TASK_RECEIVER=#id#
+	    ORDER BY ACTIVITY_NAME
+	</select> -->
+	<!-- Show for Progress Bar Activity-->
+	<select id="getCurrentListActivity" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
+		SELECT ACT.ACTIVITY_NAME as activityName,
+		ACT.ACTIVITY_ID as activityId
+		FROM ACTIVITIES ACT
+		INNER JOIN (        
+		    SELECT DISTINCT ACTIVITY_ID
+		    FROM ACTIVITY_DETAILS WHERE  ACTIVITY_CHANGE_DATE between 
+		               TO_TIMESTAMP('$currentDate$ 00:00:00','dd-mm-yyyy hh24:mi:ss') 
+		        AND TO_TIMESTAMP('$currentDate$ 23:59:59','dd-mm-yyyy hh24:mi:ss')       
+		) AD ON AD.ACTIVITY_ID = ACT.ACTIVITY_ID
+		INNER JOIN TASKS TSK ON TSK.TASK_ID = ACT.TASK_ID
+		WHERE TASK_RECEIVER=#id#
+	    ORDER BY ACTIVITY_NAME
+	</select>
+	
+	<select id="getRangeTimeByActivityId" resultClass="prime.user.activity.ActivityBean" parameterClass="java.lang.Integer">
+		SELECT ACTIVITY_CHANGE_DATE as changeDate
+		FROM ACTIVITY_DETAILS 
+		WHERE ACTIVITY_ID = #activityId#
+	    ORDER BY ACTIVITY_CHANGE_DATE
+	</select>
+	
 </sqlMap>

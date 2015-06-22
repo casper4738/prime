@@ -1,5 +1,7 @@
 package prime.user.activity;
 
+import java.sql.Timestamp;
+
 public class ActivityBean {
 	private Integer activityId;
 	private Integer taskId;
@@ -9,7 +11,7 @@ public class ActivityBean {
 	private String 	activityDetailNote;
 	private Integer status;
 	private Integer taskAssigner;
-	private java.sql.Date changeDate;
+	private java.sql.Timestamp changeDate;
 	
 	public Integer getTaskAssigner() {
 		return taskAssigner;
@@ -17,10 +19,10 @@ public class ActivityBean {
 	public void setTaskAssigner(Integer taskAssigner) {
 		this.taskAssigner = taskAssigner;
 	}
-	public java.sql.Date getChangeDate() {
+	public Timestamp getChangeDate() {
 		return changeDate;
 	}
-	public void setChangeDate(java.sql.Date changeDate) {
+	public void setChangeDate(Timestamp changeDate) {
 		this.changeDate = changeDate;
 	}
 	

@@ -77,16 +77,18 @@
 						                   
 								                    <!-- General tools such as play or pause or finish or delete-->
 								                    <div class="tools">
-														<!-- <div id="start" style="display: inline"> -->
-															<i class="fa fa-play" onclick="insertActivityDetail('addActivity','<bean:write name="iter" property="activityId"/>','1')"></i>
-														<!-- </div> --> 
-														<!-- <div id="pause" style="display: none"> -->
-															<i class="fa fa-pause" onclick="pauseActivity('<bean:write name="iter" property="activityId"/>')"></i> 
-														<!-- </div> -->
-															<i class="fa fa-check"></i>
-														<!-- <div id="trash" style="display: inline"> -->	
+														<logic:notEqual name="iter" property="status" value="1">
+															<i class="fa fa-play" onclick="activityDetail('addActivity','<bean:write name="iter" property="activityId"/>','1')"></i>
+														</logic:notEqual>
+														<logic:equal name="iter" property="status" value="1">
+															<i class="fa fa-pause" onclick="activityDetail('pauseActivity','<bean:write name="iter" property="activityId"/>','2')"></i> 
+														</logic:equal>
+														<logic:equal name="iter" property="status" value="1">
+															<i class="fa fa-check" onclick="activityDetail('finishActivity','<bean:write name="iter" property="activityId"/>','4')"></i>
+														</logic:equal>
+														<logic:notEqual name="iter" property="status" value="1">	
 															<i class="fa fa-trash-o" onclick="flyToEditDelete('delete','<bean:write name="iter" property="activityId"/>')"></i>
-														<!-- </div> -->
+														</logic:notEqual>
 													</div>
 												</li>
 											 </logic:iterate>
@@ -146,62 +148,88 @@
                						<html:button property="" value=">"></html:button>
                						<html:button property="" value="today"></html:button>
                					</td>
-               					<td colspan="10">
-               						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               						&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-               					</td>
-               					<td colspan="8" align="center"><h1><div id="day"></div></h1></td>
+               					<td align="center" width="90%"><h1><div id="day"></div></h1></td>
                				</tr>
                   		</table>
                 	</div>
 	               	<!-- <div class="box-body chat" id="chat-box"> -->
-	               		<div class="table-progress">
-              			<table border="1" style="background-color: #00c0ef; width: 2500px; height: 20px" id="tableProgress">	
-               				<tr>
-               					<td style="width:100px">&nbsp;</td>
-               					<td align="center" style="width:100px">00.00</td>
-               					<td align="center" style="width:100px">01.00</td>
-               					<td align="center" style="width:100px">02.00</td>
-               					<td align="center" style="width:100px">03.00</td>
-               					<td align="center" style="width:100px">04.00</td>
-               					<td align="center" style="width:100px">05.00</td>
-               					<td align="center" style="width:100px">06.00</td>
-               					<td align="center" style="width:100px">07.00</td>
-               					<td align="center" style="width:100px">08.00</td>
-               					<td align="center" style="width:100px">09.00</td>
-               					<td align="center" style="width:100px">10.00</td>
-               					<td align="center" style="width:100px">11.00</td>
-               					<td align="center" style="width:100px">12.00</td>
-               					<td align="center" style="width:100px">13.00</td>
-               					<td align="center" style="width:100px">14.00</td>
-               					<td align="center" style="width:100px">15.00</td>
-               					<td align="center" style="width:100px">16.00</td>
-               					<td align="center" style="width:100px">17.00</td>
-               					<td align="center" style="width:100px">18.00</td>
-               					<td align="center" style="width:100px">19.00</td>
-               					<td align="center" style="width:100px">20.00</td>
-               					<td align="center" style="width:100px">21.00</td>
-               					<td align="center" style="width:100px">22.00</td>
-               					<td align="center" style="width:100px">23.00</td>
-               					<td align="center" style="width:100px">24.00</td>
-               				</tr>
-               				<%-- <logic:iterate id="iter" name="currentListActivity"> --%>
-               				<tr>
-               					<td><bean:write name="iter" property="activityName"/></td>
-               					<td colspan=25>
-               						<div class="progress progress-m active">
-					                  <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="margin-left:32%;width:6.3%"/>
-					                </div>
-					                <div class="progress progress-m active">
-					                  <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="margin-left:6.9%;width:9.8%"/>
-               						</div>
-               					</td>
-               				</tr>
-               				<%-- </logic:iterate> --%>
-               			</table>
-                   </div><!-- /.table-progress -->
-               </div><!-- /.box (progress box) -->
+	               		<div align="center" class="box-body chat" id="chat-box">
+	               		<table border="1" style="background-color: #EBEBE6; width: 100%;" >
+	               			 <tr>
+	               				<td style="width:100px">
+	               					<table border="1" style="height: 100%; width: 100%;">
+				               			<tr height="22px">
+				               				<td style="width:100px">&nbsp;</td>
+				               			</tr>
+				               			<logic:iterate id="iterCurr" name="currentListActivity">
+				               			<tr height="39px">
+				               				<td><bean:write name="iterCurr" property="activityName"/></td>
+				               			</tr>
+				               			</logic:iterate>
+				               		</table>
+				               	</td>
+				               	<td>
+				               		<!-- <div class="table-progress">  -->
+				               		<table border="1" style="width: 100%; height: 100%">	
+			               				<tr style="background-color: #CCFFFF;">
+			               					<!-- <td style="width:100px">&nbsp;</td> -->
+			               					<td align="center" style="width:100px;">
+			               						<span class="text">00.00</span>
+			               					</td>
+			               					<td align="center" style="width:100px">01.00</td>
+			               					<td align="center" style="width:100px">02.00</td>
+			               					<td align="center" style="width:100px">03.00</td>
+			               					<td align="center" style="width:100px">04.00</td>
+			               					<td align="center" style="width:100px">05.00</td>
+			               					<td align="center" style="width:100px">06.00</td>
+			               					<td align="center" style="width:100px">07.00</td>
+			               					<td align="center" style="width:100px">08.00</td>
+			               					<td align="center" style="width:100px">09.00</td>
+			               					<td align="center" style="width:100px">10.00</td>
+			               					<td align="center" style="width:100px">11.00</td>
+			               					<td align="center" style="width:100px">12.00</td>
+			               					<td align="center" style="width:100px">13.00</td>
+			               					<td align="center" style="width:100px">14.00</td>
+			               					<td align="center" style="width:100px">15.00</td>
+			               					<td align="center" style="width:100px">16.00</td>
+			               					<td align="center" style="width:100px">17.00</td>
+			               					<td align="center" style="width:100px">18.00</td>
+			               					<td align="center" style="width:100px">19.00</td>
+			               					<td align="center" style="width:100px">20.00</td>
+			               					<td align="center" style="width:100px">21.00</td>
+			               					<td align="center" style="width:100px">22.00</td>
+			               					<td align="center" style="width:100px">23.00</td>
+			               					<td align="center" style="width:100px">24.00</td>
+			               				</tr>
+			               				<%-- <logic:iterate id="iter" name="currentListActivity"> --%>
+			               				<!-- cth pkl 08:00 - 09.35 dan 10.35 - 12.00 -->
+			               				<!-- <tr>
+			               					<td colspan=25>
+			               						<div class="progress progress-m active">
+								                  <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="margin-left:32%;width:6.3%"/>
+								                </div>
+								                <div class="progress progress-m active">
+								                  <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="margin-left:6.9%;width:9.8%"/>
+			               						</div>
+			               					</td>
+			               				</tr> -->
+			               				<logic:iterate id="iterListAct" name="currentListActivity" indexId="idx">
+			               				<tr style="background-color: #FFFFFF">
+			               					<bean:write name="iterListAct" property="activityId"/> 
+			               					<td colspan=25>
+			               						<logic:iterate id="iterTime" name="activityRangeTime2">
+			               							<bean:write name="iterTime" property="changeDate"/> 
+			               						</logic:iterate>
+			               					</td>
+			               				</tr>
+			               				</logic:iterate>
+			               			</table>
+				                    <!-- </div> --><!-- /.table-progress -->
+				               	</td>
+	               			</tr>
+	               		</table>
+	               	</div>	
+	           	</div><!-- /.box (progress box) -->
             </section>
 		</div>
 		<jsp:include page="/content/Footer.jsp"></jsp:include>
@@ -259,8 +287,10 @@
     	
     	var month_digit=date.getMonth()+1;
     	function fLoad(){
-    		document.getElementById("day").innerHTML=d+"-"+m+"-"+y
+    		document.getElementById("day").innerHTML=d+"-"+m+"-"+y;
     		document.forms[0].currentDate.value = d+"/"+month_digit+"/"+y;
+    		document.forms[0].task.value = "TEST"
+    		//alert(d+"/"+month_digit+"/"+y)1
     	}
     	
     	function insertActivity() {
@@ -275,7 +305,7 @@
     	    document.getElementById("start").style.display="none" */
     	}
     	
-    	function insertActivityDetail(task,activityId,status){
+    	function activityDetail(task,activityId,status){
     		document.forms[0].task.value = task;
     		document.forms[0].tmpId.value = activityId;
     		document.forms[0].tmpValue.value = status;
@@ -284,12 +314,6 @@
             document.getElementById("trash").style.display="none" */
     		document.forms[0].submit();
     	}
-    	
-    	function pauseActivity() {
-    	   /*  document.getElementById("pause").style.display="none"
-    	    document.getElementById("start").style.display="inline"
-    	    document.getElementById("trash").style.display="inline" */
-    	}
-	</script>
+    </script>
 </body>
 </html>
