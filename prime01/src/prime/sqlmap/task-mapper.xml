@@ -11,7 +11,8 @@
 	</insert>
 
 	<select id="getNewId" resultClass="java.lang.Integer">
-		SELECT NVL(MAX(TASK_ID)+1, 1)
+		SELECT 
+			NVL(MAX(TASK_ID)+1, 1)
 		FROM TASKS
 	</select>
 
@@ -73,8 +74,7 @@
 			</isNotNull>
 		</dynamic>
 		ORDER BY TASK_NAME ASC) page 
-		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) 
-		WHERE rnum <![CDATA[ >= ]]> #startRow#
+		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 
 	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">

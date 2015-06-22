@@ -104,7 +104,6 @@
 										<th>Email</th>
 										<th>Division</th>
 										<th>Position</th>
-										<th>Level</th>
 										<th>Manager</th>
 					                    <th width="90px">Actions</th>
 					                </tr>
@@ -120,7 +119,6 @@
 					                		<td><bean:write name="iter" property="email"/> </td>
 					                		<td><bean:write name="iter" property="divisionName"/> </td>
 					                		<td><bean:write name="iter" property="positionName"/> </td>
-					                		<td><bean:write name="iter" property="employeeLevel"/> </td>
 					                		<td><bean:write name="iter" property="managerName"/> </td>
 					                        <td align="center">
 					                        	<input type="button" value="select" class="btn bg-olive" onclick="chooseReceiver('<bean:write name="iter" property="employeeId"/>') "/>

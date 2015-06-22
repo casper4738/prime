@@ -59,29 +59,30 @@
         WHERE EMP.EMPLOYEE_ID=#id#
 	</select>
 	
-	<select id="getListByCol" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
+	<select id="getListByColumn" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT 
-        EMP.EMPLOYEE_ID AS employeeId, 
-        EMP.EMPLOYEE_NAME AS employeeName,
-        GENDER AS gender,
-        ADDRESS AS address,
-        BIRTHDATE AS birthdate,
-        HIRE_DATE AS hireDate,
-        CONTACT_NUMBER AS contactNumber,
-        EMAIL AS email,
-        DIVISION_NAME AS divisionName,
-        POSITION_NAME AS positionName,
-        <!-- EMPLOYEE_LEVEL AS employeeLevel, -->
-        MANAGER.EMPLOYEE_NAME AS managerName
-        FROM EMPLOYEES EMP 
-        INNER JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
-        INNER JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-        LEFT JOIN (SELECT EMPLOYEE_ID, EMPLOYEE_NAME FROM EMPLOYEES) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
+		    EMP.EMPLOYEE_ID AS employeeId, 
+		    EMP.EMPLOYEE_NAME AS employeeName,
+		    GENDER AS gender,
+		    ADDRESS AS address,
+		    BIRTHDATE AS birthdate,
+		    HIRE_DATE AS hireDate,
+		    CONTACT_NUMBER AS contactNumber,
+		    EMAIL AS email,
+		    DIVISION_NAME AS divisionName,
+		    POSITION_NAME AS positionName,
+		    MANAGER.EMPLOYEE_NAME AS managerName
+		FROM EMPLOYEES EMP 
+		JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
+		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
+		LEFT JOIN (
+		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME FROM EMPLOYEES E
+		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="NAME">
-			          UPPER(EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
@@ -89,7 +90,7 @@
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 	
-	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+	<select id="getCountByColumn" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
 		FROM EMPLOYEES 
 	    <dynamic prepend="WHERE">

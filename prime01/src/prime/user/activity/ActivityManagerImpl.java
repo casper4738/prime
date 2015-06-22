@@ -90,7 +90,7 @@ public class ActivityManagerImpl implements ActivityManager {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
-		return (Integer) mapper.queryForObject("activity.getCountListByCol",map);
+		return (Integer) mapper.queryForObject("activity.getCountByColumn",map);
 	}
 
 	@Override
