@@ -40,9 +40,10 @@ public class TaskAction extends Action {
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 			
-			//##1.Attribute for Table Show
+			//##Attribute for Table Show
 			request.setAttribute("listEmployee",list);
-			request.setAttribute("listSearchColumn", Constants.Search.POSITION_SEARCHCOLUMNS);
+			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+			request.setAttribute("listSearchColumn", Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("chooseType");
 		} else if (Constants.Task.GOTOADD.equals(pForm.getTask())) {

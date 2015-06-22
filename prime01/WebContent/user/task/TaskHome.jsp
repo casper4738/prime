@@ -21,13 +21,16 @@
 		    }
 	    });
 		
-	function flyToTaskDetail(task, value) {
-		document.forms[0].task.value = task;
-		document.forms[0].taskId.value = value;
-		document.forms[0].submit();
-	}
+		function flyToTaskDetail(task, value) {
+			document.forms[0].task.value = task;
+			document.forms[0].taskId.value = value;
+			document.forms[0].submit();
+		}
 	</script>
 </head>
+
+
+
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
 		<h1>Manage Tasks<small>Task Management</small>
@@ -67,7 +70,7 @@
 					</html:select>
 					<html:text name="TaskUserForm" property="search" styleClass="textSearch"/>
 					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('search')" value='Search'/>
-					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('search')" value='Show All'/>
+					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchAll('search')" value='Show All'/>
 				</html:form>
 			</div>
 			<!-- End Of Search Handler -->

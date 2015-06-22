@@ -82,7 +82,8 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
-		return (Integer) mapper.queryForObject("employee.getCountListByCol", map);
+		System.out.println("Masuk Sini" + columnSearch + "--" + value);
+		return (Integer) mapper.queryForObject("employee.getCountByColumn", map);
 	}
 	
 	public Integer getCountByColumnAndDivision(String columnSearch, String value, Integer divisionId) throws SQLException {
