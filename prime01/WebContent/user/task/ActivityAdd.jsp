@@ -45,7 +45,7 @@
                 			</tr>
                 			<tr>
                 				<td colspan="6" align="center">
-                					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="flyToPage('"+<%=Constants.Task.ACTIVITY.DOADD%>+"')"/>
+                					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="flyToPage('"+"<%=Constants.Task.ACTIVITY.DOADD%>"+"')"/>
                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                 				</td>
                 			</tr>
