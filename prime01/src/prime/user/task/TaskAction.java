@@ -126,6 +126,8 @@ public class TaskAction extends Action {
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 		
 		request.setAttribute("listTask", list);
+		request.setAttribute("listSearchColumn", Constants.Search.TASK_SEARCHCOLUMNS);
+		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 		setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		return mapping.findForward("success");
 	}
