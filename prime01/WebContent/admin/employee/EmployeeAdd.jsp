@@ -119,7 +119,7 @@
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
-			               		<html:hidden name="EmployeeAdminForm" property="managerId" styleId="managerId"/>
+			               		<html:hidden name="EmployeeAdminForm" property="managerId"/>
 			               		<html:text name="EmployeeAdminForm" property="result" styleId="result"/>
 			               		<table class="form-input" style="width: 500px;">
 			             			<tr>

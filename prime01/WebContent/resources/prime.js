@@ -159,10 +159,8 @@ function modalSubmitReturnValue(retValue,retForm){
 		modalTargettedObject.val(retValue);
 		if(retForm=='employeeHead'){
 			var res = retValue.split(',');
-			//alert(res[1]+"--"+res[0].replace('[',''))
 			document.getElementById('headName').value=res[1];
-			document.getElementById('managerId').value=100;
-			document.forms[0].managerId.value=100;
+			document.forms[0].managerId.value=res[0].replace('[','');
 			//document.forms[0].submit;
 			alert(document.forms[0].action + " _ " + document.forms[0].managerId.value)
 		}
