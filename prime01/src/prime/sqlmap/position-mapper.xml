@@ -34,7 +34,8 @@
 	<select id="getListByCol" resultClass="prime.admin.position.PositionBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT POSITION_ID AS positionId, 
-		POSITION_NAME AS positionName
+		POSITION_NAME AS positionName,
+		POSITION_LEVEL AS positionLevel
 		FROM POSITIONS
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
@@ -44,9 +45,6 @@
 				<isEqual property="columnSearch" compareValue="LEVEL">
 			          UPPER(POSITION_LEVEL) LIKE UPPER('%'||#value#||'%')
 				</isEqual>  
-				<isEqual property="columnSearch" compareValue="ID">
-			          UPPER(POSITION_ID) LIKE UPPER('%'||#value#||'%')
-				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
 	    ORDER BY POSITION_NAME ASC) page 
@@ -70,7 +68,7 @@
 	
 	<select id="selectAll" resultClass="prime.admin.position.PositionBean">
 		SELECT POSITION_ID AS positionId, 
-		POSITION_NAME AS positionName
+		POSITION_NAME AS positionName,
 		POSITION_LEVEL AS positionLevel
 		FROM POSITIONS
 	    ORDER BY POSITION_NAME ASC

@@ -21,7 +21,6 @@ public class DivisionAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		DivisionForm pForm = (DivisionForm) form;
 		DivisionManager tmpManager = new DivisionManagerImpl();
-		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
 			pForm.getDivisionBean().setDivisionId(tmpManager.getNewId());
@@ -42,8 +41,7 @@ public class DivisionAction extends Action {
 			//##.Delete Data and Back Main
 			tmpManager.delete(pForm.getTmpId());
 			return mapping.findForward("forward");
-		}
-		
+		} 
 		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		List<DivisionBean> list = tmpManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
@@ -52,7 +50,7 @@ public class DivisionAction extends Action {
 		//##1.Attribute for Table Show
 		request.setAttribute("listDivision", list);
 		request.setAttribute("listSearchColumn", Constants.Search.DIVISION_SEARCHCOLUMNS);
-		
+		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 		setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		return mapping.findForward("success");
 	}

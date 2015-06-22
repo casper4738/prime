@@ -84,6 +84,16 @@
 		    };
 		    
 		}
+		
+		function openModalHandler(){
+			//##0.Preparing Parameter For Modal Showing
+			var tmpDataPosition=$('#positionId').val();
+			var tmpTask ="modalTable";
+			var tmpTable ="employeeHead";
+			
+			//##1.Accessing Prime Method For Modal Showing
+			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition, $('#headName'));
+		}
     </script>
 	<!-- End JS -->
 
@@ -156,7 +166,7 @@
 			               				<td>Position</td>
 			               				<td>:</td>
 			               				<td>
-				               				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control">
+				               				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control" styleId="positionId">
 				               					<html:options collection="listPosition" property="positionId" labelProperty="positionName" />
 				               				</html:select>
 										</td>
@@ -165,9 +175,9 @@
 			               				<td>Head</td>
 			               				<td>:</td>
 			               				<td class="input-group">
-			               					<html:text name="EmployeeAdminForm" property="employeeBean.managerName" styleClass="form-control" disabled="true"/>
+			               					<html:text name="EmployeeAdminForm" property="employeeBean.managerName" styleClass="form-control" styleId="headName" disabled="true"/>
 			               					<span class="input-group-btn">
-                      							<input type="button" class="btn btn-info" type="button" onclick="modalLoadHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
+                      							<input type="button" class="btn btn-info" type="button" onclick="openModalHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
 								            </span>
 										</td>
 			               			</tr>

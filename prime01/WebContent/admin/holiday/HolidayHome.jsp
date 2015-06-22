@@ -11,15 +11,25 @@
 <!DOCTYPE html>
 <html>
 <head> 
-	<meta charset="UTF-8">
-	<title>Prime</title>
-	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
+	<!-- CSS -->
+	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	<!-- End of CSS -->
+	
+	<!-- JS -->
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	$('#table-1').dataTable( {
+		   paging    : false,
+		   searching : false,
+		   info   : false,
+		   language  : {
+		          "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
+		      }
+		     } );
+	</script>
+	<!-- End of JS -->
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
@@ -40,15 +50,17 @@
                    <i class="fa fa-edit"></i>Add
                   </span>
                   <span class="message"><bean:write name="HolidayAdminForm" property="message" /></span></p>
+            <!-- Search Handler Tag -->
 			<div class="show-in-page">
 				Show per page
 				<html:select name="HolidayAdminForm" property="showInPage" onchange="change(this.value)" >
 					<html:optionsCollection name="listMaxDataPerPage" label="value" value="key"/>
 				</html:select>
+				<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')"  value='Refresh'/>
 			</div>
 			<div class="search-table">
 				<html:form action="/HolidayAdmin" >
-					<html:hidden name="HolidayAdminForm" property="task" value="search"/>
+					<html:hidden name="HolidayAdminForm" property="task"/>
 					<html:hidden name="HolidayAdminForm" property="tmpId"/>
 					<html:hidden name="HolidayAdminForm" property="goToPage"/>
 					<html:hidden name="HolidayAdminForm" property="showInPage"/>
@@ -56,12 +68,13 @@
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
 					<html:text name="HolidayAdminForm" property="search" styleClass="textSearch"/>
-					<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
+						<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
+						<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
 				</html:form>
 			</div>
 			<div class="box-body"><table 
 			
-			class="table table-bordered table-striped table-hover">
+			class="table table-bordered table-striped table-hover" id = "table-1">
 				<thead><tr>
 					<th width="150px">Date</th>
 					<th>Holiday Description</th>
@@ -79,11 +92,6 @@
 	                    </tr>
                     </logic:iterate>
 					</logic:notEmpty>
-					<logic:empty name="listHoliday">
-						<tr>
-							<td align="center" colspan="3"><bean:message key="label.table.notfound" /></td>
-						</tr>
-					</logic:empty>
                   </tbody>
             </table></div>
 			<ul class="pagination">

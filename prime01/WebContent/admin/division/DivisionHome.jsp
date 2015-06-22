@@ -6,6 +6,25 @@
 <!DOCTYPE html>
 <html>
 <head> 
+	<!-- CSS -->
+	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	<!-- End of CSS -->
+	
+	<!-- JS -->
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+	$('#table-1').dataTable( {
+		   paging    : false,
+		   searching : false,
+		   info   : false,
+		   language  : {
+		          "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
+		      }
+		     } );
+	</script>
+	<!-- End of JS -->
 </head>
 <body class="skin-blue sidebar-mini">
 			<section class="content-header">
@@ -25,30 +44,32 @@
 					<p><span class="button-add btn btn-app bg-olive" onclick="menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_DIVISION]%>', 'task=<%=Constants.Task.GOTOADD%>')">
 	                    <i class="fa fa-edit"></i>Add
                     </span>
-                    <span class="message"><bean:write name="DivisionAdminForm" property="message" /></span></p>
+                   <span class="message"><bean:write name="DivisionAdminForm" property="message" /></span></p>
+					<!-- Search Handler Tag -->
 					<div class="show-in-page">
 						Show per page
 						<html:select name="DivisionAdminForm" property="showInPage" styleClass="columnSearch"  onchange="change(this.value)">
-							<html:optionsCollection name="listMaxDataPerPage" label="value" value="key"/>
+							<html:optionsCollection name="listMaxDataPerPage" label="value" value="key"/>							
 						</html:select>
+						<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')"  value='Refresh'/>
 					</div>
 					<div class="search-table">
 						<html:form action="/DivisionAdmin" >
-							<html:hidden name="DivisionAdminForm" property="task" value="search"/>
+							<html:hidden name="DivisionAdminForm" property="task" />
 							<html:hidden name="DivisionAdminForm" property="tmpId"/>
 							<html:hidden name="DivisionAdminForm" property="goToPage"/>
 							<html:hidden name="DivisionAdminForm" property="showInPage"/>
-							
 							<html:select name="DivisionAdminForm" property="columnSearch" styleClass="columnSearch">
 								<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 							</html:select>
-							
 							<html:text name="DivisionAdminForm" property="search" styleClass="textSearch"/>
-							<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
 						</html:form>
 					</div>
+					<!-- End Of Search Handler Tag -->
 					<div class="box-body">
-						<table class="table table-bordered table-striped table-hover">
+						<table class="table table-bordered table-striped table-hover" id="table-1">
 						<thead><tr>
 							<th>Division Name</th>
 		                    <th width="90px">Actions</th>
@@ -64,12 +85,7 @@
 			                        </td>	
 			                    </tr> 
 		                    </logic:iterate>
-							</logic:notEmpty>
-							<logic:empty name="listDivision">
-								<tr>
-									<td align="center" colspan="3"><bean:message key="label.table.notfound" /></td>
-								</tr>
-							</logic:empty>
+						</logic:notEmpty>
 	                   </tbody>
 		            </table></div>
 					<ul class="pagination">
