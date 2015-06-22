@@ -15,7 +15,6 @@
 		<!-- Operator & Monitor [User] -->
 		<form-bean name="TaskUserForm" 			type="prime.user.task.TaskForm"></form-bean>		
 		<form-bean name="DashboardUserForm" 	type="prime.user.dashboard.DashboardForm"></form-bean>
-		<form-bean name="ActivityUserForm" 		type="prime.user.activity.ActivityForm"></form-bean>
 		
 		<!-- Login -->
 		<form-bean name="LoginForm" 			type="prime.login.LoginForm"></form-bean>
@@ -79,9 +78,6 @@
 		<action path="/DashboardUser" name="DashboardUserForm" type="prime.user.dashboard.DashboardAction" scope="request">
 			<forward name="success" 		path="/user/dashboard/Dashboard.jsp">						</forward>
 			<forward name="add" 			path="/user/dashboard/DashboardSelectEmployee.jsp">			</forward>
-		</action>
-		<action path="/ActivityUser" name="ActivityUserForm" type="prime.user.activity.ActivityAction" scope="request">
-			<forward name="success" 		path="/user/activity/ActivityHome.jsp">						</forward>
 		</action>
 		<action path="/TaskUser" name="TaskUserForm" type="prime.user.task.TaskAction" scope="request">
 			<!-- Task -->
