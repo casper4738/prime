@@ -28,54 +28,64 @@ public interface Constants {
 		static final String DOSEARCH	= "t11";
 		
 		interface TASK {
-			final String GOTOTASKTYPE	= "t11";
-			final String GOTOSUBMIT		= "t12";
-			final String DOSUBMIT		= "t13";
+			final String GOTOTASKTYPE	= "t12";
+			final String GOTOSUBMIT		= "t13";
+			final String DOSUBMIT		= "t14";
 		}
 		
 		interface ACTIVITY {
-			final String GOTOTDETAIL		= "t14";
-			final String DOADD 	 			= "t15";
-			final String DOEDIT 	 		= "t16";
-			final String DOCHANGESTATUS		= "t17";
-			final String DODELETE 			= "t18";
-			final String GOTOADD 			= "t19";
-			final String GOTOEDIT 			= "t20";
-			final String GOTOCHANGESTATUS 	= "t21";
+			final String GOTOTDETAIL		= "t15";
+			final String DOADD 	 			= "t16";
+			final String DOEDIT 	 		= "t17";
+			final String DOCHANGESTATUS		= "t18";
+			final String DODELETE 			= "t19";
+			final String GOTOADD 			= "t20";
+			final String GOTOEDIT 			= "t21";
+			final String GOTOCHANGESTATUS 	= "t22";
 		}
 	}
 
 	//##B.Search Handling
 	static interface Search {
-		static final Map<String, String> EMPLOYEE_SEARCHCOLUMNS = Collections.unmodifiableMap(
+		final Map<String, String> EMPLOYEE_SEARCHCOLUMNS = Collections.unmodifiableMap(
 	        new LinkedHashMap<String, String>() {{
 	        	put("NAME", "EMPLOYEE NAME");
 	        	put("ID", "EMPLOYEE ID");
 	        }
 	    });
 		
-		static final Map<String, String> DIVISION_SEARCHCOLUMNS = Collections.unmodifiableMap(
+		final Map<String, String> DIVISION_SEARCHCOLUMNS = Collections.unmodifiableMap(
 	        new LinkedHashMap<String, String>() {{
-	        	put("SHOW_ALL", "SHOW ALL");
 	        	put("NAME", "DIVISION NAME");
 	        }
 	    });
-		static final Map<String, String> POSITION_SEARCHCOLUMNS = Collections.unmodifiableMap(
+		
+		final Map<String, String> POSITION_SEARCHCOLUMNS = Collections.unmodifiableMap(
 			new LinkedHashMap<String, String>() {{
-				put("SHOW_ALL", "SHOW ALL");
 				put("NAME", "DIVISION NAME");
 			}
 		});
-		static final Map<String, String> ROLE_SEARCHCOLUMNS = Collections.unmodifiableMap(
+		
+		final Map<String, String> ROLE_SEARCHCOLUMNS = Collections.unmodifiableMap(
 			new LinkedHashMap<String, String>() {{
-				put("SHOW_ALL", "SHOW ALL");
 				put("NAME", "ROLE NAME");
 			}
 		});
-		static final Map<String, String> HOLIDAY_SEARCHCOLUMNS = Collections.unmodifiableMap(
+		
+		final Map<String, String> HOLIDAY_SEARCHCOLUMNS = Collections.unmodifiableMap(
 			new LinkedHashMap<String, String>() {{
-				put("SHOW_ALL", "SHOW ALL");
 				put("DESCRIPTION", "DECRIPTION HOLIDAY");
+			}
+		});
+		
+		final Map<String, String> TASK_SEARCHCOLUMNS = Collections.unmodifiableMap(
+			new LinkedHashMap<String, String>() {{
+				put("NAME", "Task Name");
+				put("DESCRIPTION", "Task Description");
+				put("ASSIGNER", "Task Assigner");
+				put("RECEIVER", "TASK Receiver");
+				put("START", "Start Date");
+				put("ESTIMATE", "Estimate Date");
 			}
 		});
 	}
@@ -113,35 +123,35 @@ public interface Constants {
 	
 	//---2.Standard Day Conversion
 	static interface Day {
-		static int MONDAY    = 0;
-		static int TUESDAY   = 1;
-		static int WEDNESDAY = 2;
-		static int THURSDAY  = 3;
-		static int FRIDAY 	 = 4;
-		static int SATURDAY  = 5;
-		static int SUNDAY	 = 6;
+		int MONDAY    = 0;
+		int TUESDAY   = 1;
+		int WEDNESDAY = 2;
+		int THURSDAY  = 3;
+		int FRIDAY 	 = 4;
+		int SATURDAY  = 5;
+		int SUNDAY	 = 6;
 	}
 	
 	//---3.Standard Status User
 	static interface UserStatus {
-		static int LOCKED = 0;
-		static int OK     = 1;
+		int LOCKED = 0;
+		int OK     = 1;
 	}
 	
 	//##E.Response
 	static interface Confirmation {
-		static String DELETE 		= "Are you sure you want to delete this ?";
+		String DELETE 		= "Are you sure you want to delete this ?";
 	}
 	
 	static interface Response {
-		static String FAILLOGIN_USERNOTEXISTS 		= "Username doesn't exists !";
-		static String FAILLOGIN_VALIDATIONFAILED  	= "User validation failed !";
-		static String FAILLOGIN_USERLOCKED			= "User is locked, contact your administrator for further info !";
-		static String FAILLOGIN_SOMEFAILURE			= "Some failure is happening, please contact your administrator for further info !";
-		static String FAILLOGIN_EMPTYDATA			= "Please insert your username and password before proceed !";
-		static String FAILLOGIN_ERROR				= "Something wrong with the system, please contact your administrator for further info !";
-		static String FAILLOAD_CONTENT				= "Fail to load content, something must be wrong at here...";
-		static String TABLE_EMPTY					= "No Data to be Shown";
+		String FAILLOGIN_USERNOTEXISTS 		= "Username doesn't exists !";
+		String FAILLOGIN_VALIDATIONFAILED  	= "User validation failed !";
+		String FAILLOGIN_USERLOCKED			= "User is locked, contact your administrator for further info !";
+		String FAILLOGIN_SOMEFAILURE		= "Some failure is happening, please contact your administrator for further info !";
+		String FAILLOGIN_EMPTYDATA			= "Please insert your username and password before proceed !";
+		String FAILLOGIN_ERROR				= "Something wrong with the system, please contact your administrator for further info !";
+		String FAILLOAD_CONTENT				= "Fail to load content, something must be wrong at here...";
+		String TABLE_EMPTY					= "No Data to be Shown";
 	}
 	
 	//##F.Session Attribute
