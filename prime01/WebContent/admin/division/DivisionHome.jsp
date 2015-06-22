@@ -44,19 +44,18 @@
 					<p><span class="button-add btn btn-app bg-olive" onclick="menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_DIVISION]%>', 'task=<%=Constants.Task.GOTOADD%>')">
 	                    <i class="fa fa-edit"></i>Add
                     </span>
-                    <span class="message"><bean:write name="DivisionAdminForm" property="message" /></span></p>
+                   <span class="message"><bean:write name="DivisionAdminForm" property="message" /></span></p>
 					<!-- Search Handler Tag -->
 					<div class="show-in-page">
 						Show per page
 						<html:select name="DivisionAdminForm" property="showInPage" styleClass="columnSearch"  onchange="change(this.value)">
 							<html:optionsCollection name="listMaxDataPerPage" label="value" value="key"/>							
 						</html:select>
-						<input type="button" class="btn bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Refresh'/>
+						<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')"  value='Refresh'/>
 					</div>
 					<div class="search-table">
 						<html:form action="/DivisionAdmin" >
 							<html:hidden name="DivisionAdminForm" property="task" />
-							<html:hidden name="DivisionAdminForm" property="task" value="search"/>
 							<html:hidden name="DivisionAdminForm" property="tmpId"/>
 							<html:hidden name="DivisionAdminForm" property="goToPage"/>
 							<html:hidden name="DivisionAdminForm" property="showInPage"/>
@@ -64,8 +63,8 @@
 								<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 							</html:select>
 							<html:text name="DivisionAdminForm" property="search" styleClass="textSearch"/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
-						<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('showall')" value='Show All'/>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
 						</html:form>
 					</div>
 					<!-- End Of Search Handler Tag -->
@@ -86,7 +85,7 @@
 			                        </td>	
 			                    </tr> 
 		                    </logic:iterate>
-							</logic:notEmpty>
+						</logic:notEmpty>
 	                   </tbody>
 		            </table></div>
 					<ul class="pagination">

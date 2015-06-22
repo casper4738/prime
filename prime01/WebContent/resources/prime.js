@@ -5,7 +5,6 @@ function flyToPage(task) {
 }
 
 function searchAll(task) {
-	alert(task);
 	var tmpForm = document.forms[0];
 	tmpForm.columnSearch.value = "ALL";
 	tmpForm.task.value = task;

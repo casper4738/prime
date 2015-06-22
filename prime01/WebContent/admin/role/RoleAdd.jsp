@@ -17,10 +17,6 @@
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="skin-blue sidebar-mini">
-	<div class="wrapper">
-	
-		<jsp:include page="/content/Header.jsp"></jsp:include>
-		<div class="content-wrapper">
 			<section class="content-header">
 				<h1>Manage Role<small>management system</small>
 				</h1>
