@@ -10,7 +10,7 @@ public class ActivityBean extends TaskBean {
 	private String activityDescription;
 	private String activityChangeNote;
 	private java.sql.Timestamp activityChangeDate;
-
+	
 	public Integer getActivityId() {
 		return activityId;
 	}
@@ -58,5 +58,4 @@ public class ActivityBean extends TaskBean {
 	public void setActivityChangeDate(java.sql.Timestamp activityChangeDate) {
 		this.activityChangeDate = activityChangeDate;
 	}
-
 }

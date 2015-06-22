@@ -4,11 +4,12 @@ import java.sql.Date;
 
 public class TaskBean {
 
-	private Integer taskId;
+	private Integer taskId = 0;
 	private Integer taskAssigner = 0;
 	private Integer taskReceiver = 0;
 	private Integer projectMemberId = 0;
 	private Integer taskStatus;
+	private Integer taskLastStatus;
 	private Date taskStartDate;
 	private Date taskEstimateDate;
 	private Date taskChangeDate;
@@ -56,6 +57,14 @@ public class TaskBean {
 
 	public void setTaskStatus(Integer taskStatus) {
 		this.taskStatus = taskStatus;
+	}
+
+	public Integer getTaskLastStatus() {
+		return taskLastStatus;
+	}
+
+	public void setTaskLastStatus(Integer taskLastStatus) {
+		this.taskLastStatus = taskLastStatus;
 	}
 
 	public Date getTaskStartDate() {

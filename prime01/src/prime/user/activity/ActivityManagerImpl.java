@@ -78,7 +78,7 @@ public class ActivityManagerImpl implements ActivityManager {
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		map.put("taskId", taskId);
-		return mapper.queryForList("activity.getListByCol", map);
+		return mapper.queryForList("activity.getListByColumn", map);
 	}
 
 	public Integer getNewId() throws SQLException {
@@ -90,7 +90,7 @@ public class ActivityManagerImpl implements ActivityManager {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
-		return (Integer) mapper.queryForObject("activity.getCountListByCol",map);
+		return (Integer) mapper.queryForObject("activity.getCountByColumn",map);
 	}
 
 	@Override

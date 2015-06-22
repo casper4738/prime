@@ -59,7 +59,7 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		map.put("value", value);			
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
-		return mapper.queryForList("employee.getListByCol", map);
+		return mapper.queryForList("employee.getListByColumn", map);
 	}
 	
 

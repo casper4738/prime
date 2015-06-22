@@ -75,21 +75,21 @@
 		ORDER BY TLD.ACTIVITY_ID 
 	</select>
 	
-	<select id="getListByCol" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
+	<select id="getListByColumn" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT AC.ACTIVITY_ID AS activityId, 
-		AC.TASK_ID AS taskId,
-		AD.ACTIVITY_STATUS AS status,
-		TSK.TASK_ASSIGNER AS taskAssigner,
-		AC.ACTIVITY_NAME AS activityName,
-		AC.DESCRIPTION AS activityDescription,
-		AD.ACTIVITY_CHANGE_DATE AS changeDate,
-		TSK.TASK_NAME AS taskName
-		FROM ACTIVITIES AC 
-		LEFT JOIN ACTIVITY_DETAILS AD
-		ON AC.ACTIVITY_ID = AD.ACTIVITY_ID 
-		LEFT JOIN TASKS TSK ON 
-		AC.TASK_ID = TSK.TASK_ID
+			AC.TASK_ID AS taskId,
+			AD.ACTIVITY_STATUS AS status,
+			TSK.TASK_ASSIGNER AS taskAssigner,
+			AC.ACTIVITY_NAME AS activityName,
+			AC.DESCRIPTION AS activityDescription,
+			AD.ACTIVITY_CHANGE_DATE AS changeDate,
+			TSK.TASK_NAME AS taskName
+			FROM ACTIVITIES AC 
+			LEFT JOIN ACTIVITY_DETAILS AD
+			ON AC.ACTIVITY_ID = AD.ACTIVITY_ID 
+			LEFT JOIN TASKS TSK ON 
+			AC.TASK_ID = TSK.TASK_ID
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="NAME">

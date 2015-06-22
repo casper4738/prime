@@ -4,6 +4,14 @@ function flyToPage(task) {
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));
 }
 
+function searchAll(task) {
+	alert(task);
+	var tmpForm = document.forms[0];
+	tmpForm.columnSearch.value = "ALL";
+	tmpForm.task.value = task;
+	menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
+}
+
 function flyToEditDelete(task, value, confirmMessage) {
 	var tmpForm = document.forms[0]; 
 	

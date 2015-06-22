@@ -77,16 +77,16 @@
 						                   
 								                    <!-- General tools such as play or pause or finish or delete-->
 								                    <div class="tools">
-														<logic:notEqual name="iter" property="status" value="1">
+														<logic:notEqual name="iter" property="activityStatus" value="1">
 															<i class="fa fa-play" onclick="activityDetail('addActivity','<bean:write name="iter" property="activityId"/>','1')"></i>
 														</logic:notEqual>
-														<logic:equal name="iter" property="status" value="1">
+														<logic:equal name="iter" property="activityStatus" value="1">
 															<i class="fa fa-pause" onclick="activityDetail('pauseActivity','<bean:write name="iter" property="activityId"/>','2')"></i> 
 														</logic:equal>
-														<logic:equal name="iter" property="status" value="1">
+														<logic:equal name="iter" property="activityStatus" value="1">
 															<i class="fa fa-check" onclick="activityDetail('finishActivity','<bean:write name="iter" property="activityId"/>','4')"></i>
 														</logic:equal>
-														<logic:notEqual name="iter" property="status" value="1">	
+														<logic:notEqual name="iter" property="activityStatus" value="1">	
 															<i class="fa fa-trash-o" onclick="flyToEditDelete('delete','<bean:write name="iter" property="activityId"/>')"></i>
 														</logic:notEqual>
 													</div>
@@ -218,7 +218,7 @@
 			               					<bean:write name="iterListAct" property="activityId"/> 
 			               					<td colspan=25>
 			               						<logic:iterate id="iterTime" name="activityRangeTime2">
-			               							<bean:write name="iterTime" property="changeDate"/> 
+			               							<bean:write name="iterTime" property="activityChangeDate"/> 
 			               						</logic:iterate>
 			               					</td>
 			               				</tr>
