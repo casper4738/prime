@@ -16,18 +16,20 @@
 		FROM TASKS
 	</select>
 
-	<select id="get" resultClass="prime.user.task.TaskBean"
-		parameterClass="java.lang.Integer">
+	<select id="get" resultClass="prime.user.task.TaskBean" parameterClass="java.lang.Integer">
 		SELECT TASK_ID AS taskId,
-		TASK_NAME AS taskName,
-		TASK_RECEIVER as taskReceiver,
-		TASK_ASSIGNER as taskAssigner,
-		TASK_START_DATE as taskStartDate,
-		TASK_ESTIMATE_DATE as taskEstimateDate,
-		TASK_DESCRIPTION as taskDescription,
-		PROJECT_MEMBER_ID as projectMemberId
-		FROM
-		TASKS
+			TASK_NAME AS taskName,
+			TASK_RECEIVER as taskReceiver,
+			TASK_ASSIGNER as taskAssigner,
+			TASK_START_DATE as taskStartDate,
+			TASK_ESTIMATE_DATE as taskEstimateDate,
+			TASK_DESCRIPTION as taskDescription,
+			PROJECT_MEMBER_ID as projectMemberId,
+			EMP_ASSIGN.EMPLOYEE_NAME as taskAssignerName,
+			EMP_RECEIVE.EMPLOYEE_NAME as taskReceiverName
+		FROM TASKS TASK
+		JOIN EMPLOYEES EMP_ASSIGN ON TASK.TASK_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
+		JOIN EMPLOYEES EMP_RECEIVE ON TASK.TASK_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
 		WHERE TASK_ID=#id#
 	</select>
 
@@ -43,7 +45,10 @@
 			PROJECT_MEMBER_ID as projectMemberId,
 			EMP_ASSIGN.EMPLOYEE_NAME as taskAssignerName,
 			EMP_RECEIVE.EMPLOYEE_NAME as taskReceiverName,
-			TASK.TASK_LAST_STATUS AS taskLastStatus
+			TASK.TASK_LAST_STATUS AS taskLastStatus,
+			NVL(((SELECT COUNT(ACTIVITY_ID) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS=4) /
+			  (SELECT NULLIF(COUNT(ACTIVITY_ID),0) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID)
+			) * 100, 0) AS percentage
 		FROM TASKS TASK
 		JOIN EMPLOYEES EMP_ASSIGN ON TASK.TASK_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
 		JOIN EMPLOYEES EMP_RECEIVE ON TASK.TASK_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID

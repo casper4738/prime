@@ -89,6 +89,13 @@ public interface Constants {
 				put("ESTIMATE", "Estimate Date");
 			}
 		});
+		
+		final Map<String, String> ACTIVITY_SEARCHCOLUMNS = Collections.unmodifiableMap(
+			new LinkedHashMap<String, String>() {{
+				put("NAME", "Activity Name");
+				put("DESCRIPTION", "Task Description");
+			}
+		});
 	}
 
 	//##C.Page Handling
@@ -111,7 +118,6 @@ public interface Constants {
 		final int SUBMIT   = 3;
 		final int FINISH   = 4;
 		final int ABORT    = 5;
-		final int CREATE   = 6;
 		
 		final Map<Integer, String> LIST_STATUSACTIVITY = Collections.unmodifiableMap(
 			new LinkedHashMap<Integer, String>() {{

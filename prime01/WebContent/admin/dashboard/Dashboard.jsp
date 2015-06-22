@@ -17,6 +17,8 @@
 	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
+	
+	<script src="resources/plugins/morris/morris.min.js" type="text/javascript"></script>
 </head>
 <body class="skin-blue sidebar-mini">
 			<section class="content">

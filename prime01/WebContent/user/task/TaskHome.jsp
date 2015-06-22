@@ -7,7 +7,6 @@
 <html>
 <head>
 	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
-	
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	
@@ -20,12 +19,14 @@
 		    	"emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>" 
 		    }
 	    });
-		
+
 		function flyToTaskDetail(task, value) {
-			document.forms[0].task.value = task;
-			document.forms[0].taskId.value = value;
-			document.forms[0].submit();
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = task;
+			tmpForm.taskId.value = value;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
+
 	</script>
 </head>
 
@@ -80,6 +81,7 @@
 			<table id="table-1" class="table table-bordered table-striped table-hover">
 				<thead><tr>
 					<th>Task Name</th>
+					<th width="15px"></th>
 					<th>Task Description</th>
 					<th width="100px">Task Assigner</th>
 					<th width="100px">Task Receiver</th>
@@ -93,14 +95,22 @@
 					<logic:iterate id="iter" name="listTask">
 	                	<tr>
 	                	    <td><bean:write name="iter" property="taskName"/></td>
+	                	    <td align="center">
+	                	    	<logic:greaterThan name="iter" property="percentage" value="50">
+	                	    		<span class="badge bg-green"><bean:write name="iter" property="percentage"/>%</span>
+		                		</logic:greaterThan>
+		                		<logic:lessEqual name="iter" property="percentage" value="50">
+	                	    		<span class="badge bg-red"><bean:write name="iter" property="percentage"/>%</span>
+		                		</logic:lessEqual>
+	                	    </td>
 	                	    <td><bean:write name="iter" property="taskDescription"/></td>
 	                	    <td><bean:write name="iter" property="taskAssignerName"/></td>
 	                	    <td><bean:write name="iter" property="taskReceiverName"/></td>
 	                	    <td align="center"><bean:write name="iter" property="taskStartDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center"><bean:write name="iter" property="taskEstimateDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center">
-		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.CREATE+""%>'>
-		                			<span class="label label-warning">Create</span>
+		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.RECEIVE+""%>'>
+		                			<span class="label label-warning">Receive</span>
 		                		</logic:equal>
 		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.SUBMIT+""%>'>
 		                			<span class="label label-primary">Submit</span>

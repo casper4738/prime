@@ -42,7 +42,7 @@
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">
-                  					<html:submit value="Save" styleClass="btn btn-primary"/>
+                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="flyToPage('success')" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
                   			</tr>
