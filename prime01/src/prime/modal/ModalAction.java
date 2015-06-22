@@ -46,7 +46,6 @@ public class ModalAction extends Action {
 		
         switch (task) {
             case "modalTable":  
-            	
             	String table=pForm.getParam1();
             	switch(table){
             		case "employeeHead":  
