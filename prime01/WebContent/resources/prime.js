@@ -93,7 +93,9 @@ function menuLoadHandler(targettedMenu, targettedData){
 	return false;
 }
 
-function modalLoadHandler(targettedData){
+//****Modal Variable
+var modalTargettedObject;
+function modalLoadHandler(targettedData, targettedObject){
 	//##0. Show Loading [Hard Code the HTML Tag until Found Better Solution]
     $('#content-modal-body').removeData('bs.modal')
 	$('#content-modal-body').html("<div class=\"info-modal\">" +
@@ -131,6 +133,22 @@ function modalLoadHandler(targettedData){
 							    			              	  "</div>");
 								}
 	});
+	
+	//##1.Register Targetted Object For Value Receiver
+	modalTargettedObject = targettedObject;
+	alert("Object = " + modalTargettedObject);
+	
 	//##1.Show The Modal
 	$('#content-modal').modal({ show:true, backdrop: false });
+}
+
+function modalSubmitReturnValue(retValue){
+	alert("SINI JUGA = " + retValue);
+	//##0.Set Return Value to Targetted Object
+	if(modalTargettedObject != null){
+		modalTargettedObject.val(retValue);
+	}
+	
+	//##1.Hide Modal
+    $("[data-dismiss=modal]").trigger({ type: "click" });
 }

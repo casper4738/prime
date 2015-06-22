@@ -51,6 +51,10 @@
 			}
 			modalLoadHandler(serialize(tmpForm));
 		}
+		
+		function modalSelectHandler(retValue){
+			modalSubmitReturnValue(retValue);
+		}
 	</script>
 	<!-- End JS -->
 </head>
@@ -106,7 +110,7 @@
 					                			<td>${obj}</td>
 					                		</logic:iterate>
 						                        <td align="center">
-													<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('search')" value='Select'/>
+													<input type="button" class="btn bg-olive" style="height:32px" onclick="modalSelectHandler('${rowData}')" value='Select'/>
 						                        </td>
 							             </tr>
 						             </logic:iterate>
