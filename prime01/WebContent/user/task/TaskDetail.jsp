@@ -23,7 +23,6 @@
 		function flyToTaskDetail(task, value) {
 			document.forms[0].task.value = task;
 			document.forms[0].taskId.value = value;
-			document.forms[0].submit();
 			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
 		}
 		
@@ -31,13 +30,13 @@
 			document.forms[0].task.value = task;
 			document.forms[0].activityId.value = activityId;
 			document.forms[0].activityChangeDate.value = activityChangeDate;
-			document.forms[0].submit();
+			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
 		}
 		
 		function flyToEditDeleteAct(task, activityId) {
 			document.forms[0].task.value = task;
 			document.forms[0].activityId.value = activityId;
-			document.forms[0].submit();
+			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
 		}
 	</script>
 </head>

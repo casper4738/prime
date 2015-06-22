@@ -5,6 +5,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.xml.bind.DatatypeConverter;
@@ -34,6 +36,14 @@ public class PrimeUtil {
 	
 	public static String getPath(HttpServletRequest request) {
 		return request.getRealPath("/");
+	}
+	
+	public static Map<Integer,Integer> getListPositionLevel(int max) {
+		Map<Integer,Integer> map = new HashMap<Integer, Integer>();
+		for (int i = 0; i <= max; i++) {
+			map.put(i, i);
+		}
+		return map;
 	}
 		
 }

@@ -37,13 +37,27 @@
 		WHERE ACTIVITY_ID=#id#
 	</select>
 	
+	<select id="getDetail" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
+		SELECT ACTIVITY_NAME AS activityName,
+			ACT.ACTIVITY_ID AS activityId, 
+		    ACTIVITY_NAME AS activityName, 
+		    ACT.ACTIVITY_DESCRIPTION AS activityDescription,
+		    ACT_DET.ACTIVITY_CHANGE_DATE AS activityChangeDate,
+		    ACT.ACTIVITY_LAST_STATUS AS activityLastStatus,
+			TASK.TASK_NAME AS taskName
+        FROM ACTIVITIES ACT
+        JOIN ACTIVITY_DETAILS ACT_DET ON ACT_DET.ACTIVITY_ID=ACT.ACTIVITY_ID
+        JOIN TASKS TASK ON TASK.TASK_ID = ACT.TASK_ID
+		WHERE ACT_DET.ACTIVITY_ID=#activityId# 
+			AND TO_CHAR(ACTIVITY_CHANGE_DATE, 'yyyy-mm-dd hh:mi:ss') = #activityChangeDate#
+	</select>
 	
 	<select id="getListByColumn" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT DISTINCT
 		    ACT.ACTIVITY_ID AS activityId, 
 		    ACTIVITY_NAME AS activityName, 
-		    ACT.DESCRIPTION AS activityDescription,
+		    ACT.ACTIVITY_DESCRIPTION AS activityDescription,
 		    ACT_DET.ACTIVITY_CHANGE_DATE AS activityChangeDate,
 		    ACT.ACTIVITY_LAST_STATUS AS activityLastStatus
 		FROM ACTIVITIES ACT
@@ -64,12 +78,7 @@
 	</select>
 	
 	<select id="getCountByColumn" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		(SELECT DISTINCT
-		    ACT.ACTIVITY_ID AS activityId, 
-		    ACTIVITY_NAME AS activityName, 
-		    ACT.DESCRIPTION AS activityDescription,
-		    ACT_DET.ACTIVITY_CHANGE_DATE AS activityChangeDate,
-		    ACT.ACTIVITY_LAST_STATUS AS activityLastStatus
+		SELECT COUNT(1)
 		FROM ACTIVITIES ACT
 		JOIN (
 		    SELECT AD.ACTIVITY_ID, MAX(AD.ACTIVITY_CHANGE_DATE) AS ACTIVITY_CHANGE_DATE FROM ACTIVITY_DETAILS AD
