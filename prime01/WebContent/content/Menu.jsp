@@ -107,7 +107,7 @@
 			});
     		
     		//##1.Reload First Menu Page
-    		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.ADMIN_DASHBOARD]%>");
+    		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_TASK]%>");
     	});
 	</script>
 <!-- End Of Written JS -->
