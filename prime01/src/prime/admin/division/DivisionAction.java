@@ -11,8 +11,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import com.sun.java.swing.plaf.windows.resources.windows;
-
 import prime.constants.Constants;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
@@ -44,6 +42,19 @@ public class DivisionAction extends Action {
 			//##.Delete Data and Back Main
 			tmpManager.delete(pForm.getTmpId());
 			return mapping.findForward("forward");
+		} else if("showall".equals(pForm.getTask())) {
+			System.out.println("masuk");
+			int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+			List<DivisionBean> list = tmpManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
+					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
+			
+			//##1.Attribute for Table Show
+			request.setAttribute("listDivision", list);
+			request.setAttribute("listSearchColumn", Constants.Search.DIVISION_SEARCHCOLUMNS);
+			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+			setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+			return mapping.findForward("success");
 		}
 		
 		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
@@ -54,7 +65,7 @@ public class DivisionAction extends Action {
 		//##1.Attribute for Table Show
 		request.setAttribute("listDivision", list);
 		request.setAttribute("listSearchColumn", Constants.Search.DIVISION_SEARCHCOLUMNS);
-		
+		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 		setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		return mapping.findForward("success");
 	}
