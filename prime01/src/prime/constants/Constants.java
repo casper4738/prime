@@ -224,8 +224,7 @@ public interface Constants {
 		static int USER_PROJECT			= 12;
 		static int USER_TASK_HEAD		= 13;
 		static int USER_TASK_SUBORDINATE= 14;
-		static int USER_ACTIVITY		= 15;
-		static int USER_REPORT			= 16;
+		static int USER_REPORT			= 15;
 	}
 
 }

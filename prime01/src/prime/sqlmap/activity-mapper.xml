@@ -65,27 +65,27 @@
 	
 	<select id="getListByColumn" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
-		(SELECT DISTINCT
-		    ACT.ACTIVITY_ID AS activityId, 
-		    ACTIVITY_NAME AS activityName, 
-		    ACT.ACTIVITY_DESCRIPTION AS activityDescription,
-		    ACT_DET.ACTIVITY_CHANGE_DATE AS activityChangeDate,
-		    ACT.ACTIVITY_LAST_STATUS AS activityLastStatus
-		FROM ACTIVITIES ACT
-		JOIN (
-		    SELECT AD.ACTIVITY_ID, MAX(AD.ACTIVITY_CHANGE_DATE) AS ACTIVITY_CHANGE_DATE FROM ACTIVITY_DETAILS AD
-		    GROUP BY AD.ACTIVITY_ID
-		) ACT_DET ON ACT_DET.ACTIVITY_ID=ACT.ACTIVITY_ID
-		WHERE ACT.TASK_ID = #taskId#
-		<dynamic prepend="AND">
-	        <isNotNull property="columnSearch">
-		       	<isEqual property="columnSearch" compareValue="NAME">
-			          UPPER(ACTIVITY_NAME) LIKE UPPER('%'||#value#||'%')
-				</isEqual> 
-	        </isNotNull>
-	    </dynamic>
-	    ORDER BY ACTIVITY_NAME ASC) page 
-	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+        (SELECT DISTINCT
+            ACT.ACTIVITY_ID AS activityId, 
+            ACTIVITY_NAME AS activityName, 
+            ACT.ACTIVITY_DESCRIPTION AS activityDescription,
+            ACT.ACTIVITY_LAST_STATUS AS activityLastStatus,
+            ACT_DET.ACTIVITY_CHANGE_DATE AS activityChangeDate
+        FROM ACTIVITIES ACT
+        JOIN (
+            SELECT AD.ACTIVITY_ID, MAX(AD.ACTIVITY_CHANGE_DATE) AS ACTIVITY_CHANGE_DATE FROM ACTIVITY_DETAILS AD
+            GROUP BY AD.ACTIVITY_ID
+        ) ACT_DET ON ACT_DET.ACTIVITY_ID=ACT.ACTIVITY_ID
+        WHERE ACT.TASK_ID = #taskId#
+        <dynamic prepend="AND">
+            <isNotNull property="columnSearch">
+                   <isEqual property="columnSearch" compareValue="NAME">
+                      UPPER(ACTIVITY_NAME) LIKE UPPER('%'||#value#||'%')
+                </isEqual> 
+            </isNotNull>
+        </dynamic>
+        ORDER BY ACTIVITY_NAME ASC) page 
+        WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 	
 	<select id="getCountByColumn" resultClass="java.lang.Integer" parameterClass="java.util.Map">
