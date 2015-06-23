@@ -21,10 +21,6 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 		<dataSource type="SIMPLE">
 			<property name="JDBC.Driver" value="oracle.jdbc.driver.OracleDriver" />
 			<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@192.168.10.9:1521:orcl" ></property>
-<<<<<<< HEAD
-<!-- 			<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@localhost:1521:orcl2" ></property> -->
-=======
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 			<property name="JDBC.Username" value="DB_PRIME" />
 			<property name="JDBC.Password" value="prime" />
 		</dataSource>
