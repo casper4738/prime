@@ -160,8 +160,17 @@ function modalSubmitReturnValue(retValue,retForm){
 			var res = retValue.split(',');
 			document.getElementById('headName').value=res[1];
 			document.forms[0].managerId.value=res[0].replace('[','');
-			//document.forms[0].submit;
-			alert(document.forms[0].action + " _ " + document.forms[0].managerId.value)
+			alert(res[4])
+			document.getElementById('divisionName').value=res[4];
+			alert('aaa')
+			if(document.getElementById('divisionName').value!=="" || document.getElementById('divisionName').value!=="NULL"){
+				document.getElementById('isDivision').style.display="inline"
+				document.getElementById('chooseDivision').style.display="none"
+				document.getElementById('divisionId').value=res[4];
+			}else{
+				document.getElementById('isDivision').style.display="none"
+				document.getElementById('chooseDivision').style.display="inline"
+			}
 		}
 	}
 	

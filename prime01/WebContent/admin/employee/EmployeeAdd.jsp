@@ -117,10 +117,9 @@
 			               	<html:form action="/EmployeeAdmin">
 			               		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
-			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
 			               		<html:hidden name="EmployeeAdminForm" property="managerId"/>
-			               		<html:text name="EmployeeAdminForm" property="result" styleId="result"/>
+			               		<html:hidden name="EmployeeAdminForm" property="result" styleId="result"/>
 			               		<table class="form-input" style="width: 500px;">
 			             			<tr>
 			               				<td width="200px">Name</td>
@@ -185,8 +184,16 @@
 			               			<tr>
 			               				<td>Division</td>
 			               				<td>:</td>
-			               				<td>
-			               					<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
+				               			<td>
+				               				<div id="isDivision" style="display: inline">
+							               		<html:hidden name="EmployeeAdminForm" property="divisionId" />
+				               					<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true" styleId="divisionName"/>
+											</div>
+											<div id="chooseDivision" style="display:none">
+				               					<html:select name="EmployeeAdminForm" property="employeeBean.divisionId" styleClass="form-control" styleId="divisionId">
+					               					<html:options collection="listDivision" property="divisionId" labelProperty="divisionName" />
+					               				</html:select>
+											</div>
 										</td>
 			               			</tr>
 			               			<tr>

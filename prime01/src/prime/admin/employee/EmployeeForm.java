@@ -14,7 +14,8 @@ public class EmployeeForm extends ActionForm {
 	private Integer showInPage = 10;
 	private Integer tmpId;
 	private String result;
-
+	private Integer divisionId;
+	
 	public EmployeeBean getEmployeeBean() {
 		return employeeBean;
 	}
@@ -96,4 +97,11 @@ public class EmployeeForm extends ActionForm {
 		this.result = result;
 	}
 
+	public Integer getDivisionId() {
+		return divisionId;
+	}
+
+	public void setDivisionId(Integer divisionId) {
+		this.divisionId = divisionId;
+	}
 }
