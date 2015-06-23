@@ -24,6 +24,9 @@ public interface ActivityManager {
 	
 	public List<ActivityBean> getActivityRangeTime(Integer id) throws SQLException;
 	
+	public List<ActivityBean> getListActivityDetail(String columnSearch, String value, Integer startRow, Integer endRow,
+			Integer activityId) throws SQLException;
+	
 	public void insertToDoList(Integer receiverId, Integer activityId) throws SQLException;
 	
 	public void deleteToDoList(Integer receiverId, Integer activityId) throws SQLException;
@@ -38,7 +41,9 @@ public interface ActivityManager {
 	
 	public Integer getCountToDoListById(Integer receiverId, String columnSearch, String value) throws SQLException;
 	
-	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
+	public Integer getCountActivityDetail(String columnSearch, String value, Integer activityId) throws SQLException;
+
+	public Integer getCountByColumn(String columnSearch, String value, Integer taskId) throws SQLException;
 	
 	public Integer getNewId() throws SQLException;
 	

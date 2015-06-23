@@ -23,25 +23,25 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Add New Activity</h3></div>
 			<div class="box-body">
-                	<html:form action="/TaskUser">
-                		<html:hidden name="TaskUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOADD%>"/>
-                		<html:hidden name="TaskUserForm" property="activityBean.activityId" />
-                		<html:hidden name="TaskUserForm" property="activityBean.taskId" />
-                		<html:hidden name="TaskUserForm" property="activityBean.activityStatus" />
-                		<html:hidden name="TaskUserForm" property="activityBean.activityChangeNote" />
+                	<html:form action="/TaskHeadUser">
+                		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOADD%>"/>
+                		<html:hidden name="TaskHeadUserForm" property="activityBean.activityId" />
+                		<html:hidden name="TaskHeadUserForm" property="activityBean.taskId" />
+                		<html:hidden name="TaskHeadUserForm" property="activityBean.activityStatus" />
+                		<html:hidden name="TaskHeadUserForm" property="activityBean.activityChangeNote" />
                 		<table class="form-input" align="center" style="width:60%">
                 			<tr>
                 				<td width="150px">Activity Name</td>
                 				<td>: </td>
                 				<td>
-                				<td><html:text name="TaskUserForm" property="activityBean.activityName" styleClass="form-control"/></td>
+                				<td><html:text name="TaskHeadUserForm" property="activityBean.activityName" styleClass="form-control"/></td>
                 			</tr>
                 			
                 			<tr>
                 				<td>Description</td>
                 				<td>:</td>
                 				<td>
-                				<td><html:textarea name="TaskUserForm" property="activityBean.activityDescription" styleClass="form-control" rows="5"/></td>
+                				<td><html:textarea name="TaskHeadUserForm" property="activityBean.activityDescription" styleClass="form-control" rows="5"/></td>
                 			</tr>
                 			<tr>
                 				<td colspan="6" align="center">

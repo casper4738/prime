@@ -7,7 +7,7 @@ import org.apache.struts.action.ActionForm;
 
 import prime.user.activity.ActivityBean;
 
-public class TaskForm extends ActionForm {
+public class TaskHeadForm extends ActionForm {
 
 	private TaskBean taskBean = new TaskBean();
 	private ActivityBean activityBean = new ActivityBean();
@@ -16,7 +16,7 @@ public class TaskForm extends ActionForm {
 	private String columnSearch;
 	private String message;
 	private String activityChangeDate;
-	private String activityStatus;
+	private Integer activityStatus;
 	private Integer radioChoose = 1;
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
@@ -80,11 +80,11 @@ public class TaskForm extends ActionForm {
 		this.activityChangeDate = activityChangeDate;
 	}
 
-	public String getActivityStatus() {
+	public Integer getActivityStatus() {
 		return activityStatus;
 	}
 
-	public void setActivityStatus(String activityStatus) {
+	public void setActivityStatus(Integer activityStatus) {
 		this.activityStatus = activityStatus;
 	}
 
