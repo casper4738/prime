@@ -20,6 +20,7 @@
 	
 	<script src="resources/plugins/morris/morris.min.js" type="text/javascript"></script>
 </head>
+
 <body class="skin-blue sidebar-mini">
 	<section class="content">
 		<div class="row">
