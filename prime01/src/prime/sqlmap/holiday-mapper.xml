@@ -2,33 +2,45 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="holiday">
 	<insert id="insert" parameterClass="prime.admin.holiday.HolidayBean">
-		INSERT INTO NATIONAL_HOLIDAYS
-		(HOLIDAY_DATE , NATIONAL_DESCRIPTION) VALUES 
-		(#holidayDate#, #holidayDescription#)
+		INSERT INTO  NATIONAL_HOLIDAYS
+			(HOLIDAY_DATE , NATIONAL_DESCRIPTION) 
+		VALUES 
+			(#holidayDate#, #holidayDescription#)
 	</insert>
 	
 	<update id="update" parameterClass="prime.admin.holiday.HolidayBean">
-		UPDATE NATIONAL_HOLIDAYS SET
-		NATIONAL_DESCRIPTION=#holidayDescription#
-		WHERE HOLIDAY_DATE=#holidayDate#
+		UPDATE 
+			NATIONAL_HOLIDAYS 
+		SET
+			NATIONAL_DESCRIPTION=#holidayDescription#
+		WHERE 
+			HOLIDAY_DATE=#holidayDate#
 	</update>
 	
 	<delete id="delete" parameterClass="java.sql.Date">
-		DELETE FROM NATIONAL_HOLIDAYS WHERE HOLIDAY_DATE=#date#
+		DELETE FROM 
+			NATIONAL_HOLIDAYS 
+		WHERE 
+			HOLIDAY_DATE=#date#
 	</delete>
 	
 	<select id="get" resultClass="prime.admin.holiday.HolidayBean" parameterClass="java.sql.Date">
-		SELECT HOLIDAY_DATE AS holidayDate, 
-		NATIONAL_DESCRIPTION AS holidayDescription
-		FROM NATIONAL_HOLIDAYS
-		WHERE HOLIDAY_DATE=#date#
+		SELECT 
+			HOLIDAY_DATE 			AS holidayDate, 
+			NATIONAL_DESCRIPTION 	AS holidayDescription
+		FROM 
+			NATIONAL_HOLIDAYS
+		WHERE 
+			HOLIDAY_DATE=#date#
 	</select>
 	
 	<select id="getListByCol" resultClass="prime.admin.holiday.HolidayBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
-		(SELECT HOLIDAY_DATE AS holidayDate, 
-		NATIONAL_DESCRIPTION AS holidayDescription
-		FROM NATIONAL_HOLIDAYS
+		(SELECT 
+			HOLIDAY_DATE 			AS holidayDate, 
+			NATIONAL_DESCRIPTION 	AS holidayDescription
+		FROM 
+			NATIONAL_HOLIDAYS
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="DESCRIPTION">
@@ -40,8 +52,10 @@
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT COUNT(1) 
-		FROM NATIONAL_HOLIDAYS 
+		SELECT 
+			COUNT(1) 
+		FROM 
+			NATIONAL_HOLIDAYS 
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		      	<isEqual property="columnSearch" compareValue="DESCRIPTION">
@@ -49,5 +63,13 @@
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
+	</select>
+	
+	<select id="getListByYear" resultClass="prime.admin.holiday.HolidayBean" parameterClass="java.util.Map">
+		SELECT 
+			HOLIDAY_DATE 			AS holidayDate, 
+        	NATIONAL_DESCRIPTION 	AS holidayDescription
+        FROM NATIONAL_HOLIDAYS
+        WHERE  TO_CHAR(HOLIDAY_DATE, 'yyyy') = '2015'
 	</select>
 </sqlMap>

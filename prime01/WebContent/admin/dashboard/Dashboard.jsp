@@ -54,7 +54,20 @@
           </div><!-- /.row -->
       </section>
       
-          
+		<div id="fullCalModal" class="modal fade">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+		                <h4 id="modalTitle" class="modal-title"></h4>
+		            </div>
+		            <div id="modalBody" class="modal-body"></div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
     
       <!-- Add the sidebar's background. This div must be placed
            immediately after the control sidebar -->
@@ -111,13 +124,16 @@
           header: {
             left: 'prev,next today',
             center: 'title',
-            right: 'month,agendaWeek,agendaDay'
           },
           buttonText: {
             today: 'today',
             month: 'month',
-            week: 'week',
-            day: 'day'
+          },
+          eventClick:  function(event, jsEvent, view) {
+              $('#modalTitle').html(event.title);
+              $('#modalBody').html(event.description);
+              $('#eventUrl').attr('href',event.url);
+              $('#fullCalModal').modal();
           },
           //Random default events
           events: [
@@ -129,6 +145,7 @@ for(int a = 0; a<arr.size();a++)
 	out.println(arr.get(a)); 
 	
 }
+
 %>
           ],
           editable: true,
