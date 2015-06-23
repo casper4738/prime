@@ -112,7 +112,7 @@ public interface Constants {
 	//##D.Standard Value
 	//---1.Standard Status Value
 	static interface Status {
-		final int RECEIVE  = 0;
+		final int CREATE   = 0;
 		final int PROGRESS = 1;
 		final int PAUSE    = 2;
 		final int SUBMIT   = 3;

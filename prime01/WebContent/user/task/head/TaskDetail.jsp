@@ -49,11 +49,12 @@
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage Tasks<small>Task Management</small></h1>
+		<h1>Manage Tasks</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Task & Activities</li>
-		  	<li class="active">Task Detail</li>
+			<li>Tasks & Activities</li>
+			<li>As Head</li>
+			<li class="active">Task Detail</li>
 		</ol>
 	</section>
 	
@@ -74,12 +75,14 @@
 			</table>
 			
 			
-			<p><span class="message"><bean:write name="TaskHeadUserForm" property="message" />awdaw</span></p>
-			<br/>
+			<p><span class="message"><bean:write name="TaskHeadUserForm" property="message" /></span></p>
+			<br/><br/>
 			<div class="form-action"><table align="center">
                <tr>	<td style="padding:5px;">
                			<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')"/></td>
-               		<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/></td>
+               		<td><logic:equal name="isSubmit" value='true'>
+		               		<input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/>
+	               	</logic:equal></td>
                </tr>
             </table></div>
 			
@@ -123,7 +126,7 @@
 	                		<td><bean:write name="iter" property="activityDescription"/></td>
 	                		<td align="center" width="150px"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy hh:mm:ss"/></td>
 	                		<td align="center" width="80px">
-		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.RECEIVE+""%>'>
+		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.CREATE+""%>'>
 		                			<span class="label label-warning">Receive</span>
 		                		</logic:equal>
 		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.SUBMIT+""%>'>

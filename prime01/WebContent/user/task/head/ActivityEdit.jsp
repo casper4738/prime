@@ -17,68 +17,56 @@
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="skin-blue sidebar-mini">
-	<div class="wrapper">
-	
-		<jsp:include page="/content/Header.jsp"></jsp:include>
-		<div class="content-wrapper">
-			<section class="content-header">
-				<h1>Add Activity
-				</h1>
-				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Tasks & Activities</li>
-				</ol>
-			</section>
 
-			<section class="content">
-			<div class="row">
-				<div class="col-xs-12"><div class="box">
-					<div class="box-header"><h3 class="box-title-center">Edit Activity</h3></div>
-					<div class="box-body">
-                  	<html:form action="/TaskUser">
-                  		<html:hidden name="TaskUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOEDIT%>"/>
-                  		<html:hidden name="TaskUserForm" property="activityBean.activityId" />
-                  		<html:hidden name="TaskUserForm" property="activityBean.taskId" />
-                  		<html:hidden name="TaskUserForm" property="activityBean.activityStatus" />
-                  		<html:hidden name="TaskUserForm" property="activityBean.activityChangeNote" />
-                  		<table class="form-input" align="center" style="width:60%">
-                  			<tr>
-                  				<td width="150px">Activity Name</td>
-                  				<td>: </td>
-                  				<td>
-                  				<td><html:text name="TaskUserForm" property="activityBean.activityName" styleClass="form-control"/></td>
-                  			</tr>
-                  			
-                  			<tr>
-                  				<td>Description</td>
-                  				<td>:</td>
-                  				<td>
-                  				<td><html:textarea name="TaskUserForm" property="activityBean.activityDescription" styleClass="form-control" rows="5"/></td>
-                  			</tr>
-                  			<tr>
-                  				<td colspan="6" align="center">
-                  					<html:submit value="Save" styleClass="btn btn-primary"/>
-                  					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
-                  				</td>
-                  			</tr>
-                  		</table>
-                  	</html:form>
-                    </div>
-		        	</div></div>
-		        </div>
-			</section>
-		</div>
-		<!-- /.content-wrapper -->
-		<jsp:include page="/content/Footer.jsp"></jsp:include>
-	</div>
+	<section class="content-header">
+		<h1>Manage Tasks</h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li>Task & Activities</li>
+			<li>As Head</li>
+		  	<li>Task Detail</li>
+		  	<li class="active">Edit Activity</li>
+		</ol>
+	</section>
 
-	<script src="resources/prime.js"></script>
-	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
-	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
-	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+	<section class="content">
+	<div class="row">
+		<div class="col-xs-12"><div class="box">
+			<div class="box-header"><h3 class="box-title-center">Edit Activity</h3></div>
+			<div class="box-body">
+                	<html:form action="/TaskHeadUser">
+                		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOEDIT%>"/>
+                		<html:hidden name="TaskHeadUserForm" property="activityBean.activityId" />
+                		<html:hidden name="TaskHeadUserForm" property="activityBean.taskId" />
+                		<html:hidden name="TaskHeadUserForm" property="activityBean.activityStatus" />
+                		<html:hidden name="TaskHeadUserForm" property="activityBean.activityChangeNote" />
+                		<table class="form-input" align="center" style="width:60%">
+                			<tr>
+                				<td width="150px">Activity Name</td>
+                				<td>: </td>
+                				<td>
+                				<td><html:text name="TaskHeadUserForm" property="activityBean.activityName" styleClass="form-control" disabled="true"/></td>
+                			</tr>
+                			
+                			<tr>
+                				<td>Description</td>
+                				<td>:</td>
+                				<td>
+                				<td><html:textarea name="TaskHeadUserForm" property="activityBean.activityDescription" styleClass="form-control" rows="5"/></td>
+                			</tr>
+                			<tr>
+                				<td colspan="6" align="center">
+                					<html:submit value="Save" styleClass="btn btn-primary"/>
+                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+                				</td>
+                			</tr>
+                		</table>
+                	</html:form>
+                  </div>
+        	</div></div>
+        </div>
+	</section>
+		
 	
 </body>
 </html>

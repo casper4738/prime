@@ -21,11 +21,12 @@
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Add Task<small>subordinate</small>
-		</h1>
+		<h1>Manage Tasks</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Tasks & Activities</li>
+			<li>Tasks & Activities</li>
+			<li>As Head</li>
+			<li class="active">Add Task</li>
 		</ol>
 	</section>
 

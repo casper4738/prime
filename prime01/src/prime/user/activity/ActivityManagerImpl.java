@@ -112,6 +112,11 @@ public class ActivityManagerImpl implements ActivityManager {
 		map.put("taskId", taskId);
 		return (Integer) mapper.queryForObject("activity.getCountByColumn",map);
 	}
+	
+	
+	public Boolean isAllFinished(Integer taskId) throws SQLException {
+		return (Boolean) mapper.queryForObject("activity.isAllFinished",taskId);
+	}
 
 	@Override
 	public List<ActivityBean> getListActivityById(Integer id, String columnSearch,

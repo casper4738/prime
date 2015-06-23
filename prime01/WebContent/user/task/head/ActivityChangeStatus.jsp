@@ -32,12 +32,13 @@
 </head> 
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage Tasks<small>Task Management</small></h1>
+		<h1>Manage Tasks</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li>Task & Activities</li>
+			<li>As Head</li>
 		  	<li>Task Detail</li>
-		  	<li>Activity Status</li>
+		  	<li class="active">Activity Status</li>
 		</ol>
 	</section>
 
@@ -50,7 +51,7 @@
 					<td>Activity Name : <bean:write name="TaskHeadUserForm" property="activityBean.activityName" /> </td>
 				</tr>
 				<tr><td>Last Status : 
-					<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.RECEIVE+""%>'>
+					<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.CREATE+""%>'>
 	            		<span class="label label-warning">Receive</span>
 	          		</logic:equal>
 	          		<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.SUBMIT+""%>'>
@@ -121,7 +122,7 @@
 		                	<tr>
 		                		<td align="center"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy hh:mm:ss"/></td>
 		                		<td align="center">
-			                		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.RECEIVE+""%>'>
+			                		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.CREATE+""%>'>
 					            		<span class="label label-warning">Receive</span>
 					          		</logic:equal>
 					          		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.SUBMIT+""%>'>

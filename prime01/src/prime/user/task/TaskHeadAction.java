@@ -78,7 +78,7 @@ public class TaskHeadAction extends Action {
 			//##.Add Data
 			pForm.getActivityBean().setActivityId(tmpActivityManager.getNewId());
 			pForm.getActivityBean().setTaskId(pForm.getTaskBean().getTaskId());
-			pForm.getActivityBean().setActivityStatus(Constants.Status.RECEIVE);
+			pForm.getActivityBean().setActivityStatus(Constants.Status.CREATE);
 			return mapping.findForward("addActivity");
 		} else if (Constants.Task.ACTIVITY.GOTOEDIT.equals(pForm.getTask())) {
 			//##.Add Data
@@ -103,7 +103,7 @@ public class TaskHeadAction extends Action {
 		} else if (Constants.Task.DOADD.equals(pForm.getTask())) {
 			//##. Insert Data
 			pForm.getTaskBean().setTaskId(manager.getNewId());
-			pForm.getTaskBean().setTaskStatus(Constants.Status.RECEIVE);
+			pForm.getTaskBean().setTaskStatus(Constants.Status.CREATE);
 			pForm.getTaskBean().setTaskChangeNote("");
 			pForm.getTaskBean().setProjectMemberId(0);
 			manager.insert(pForm.getTaskBean());

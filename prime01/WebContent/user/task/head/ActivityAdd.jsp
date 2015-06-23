@@ -9,12 +9,13 @@
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage Tasks<small>Task Management</small></h1>
+		<h1>Manage Tasks</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li>Task & Activities</li>
+			<li>As Head</li>
 		  	<li>Task Detail</li>
-		  	<li>Add Activity</li>
+		  	<li class="active">Add Activity</li>
 		</ol>
 	</section>
 

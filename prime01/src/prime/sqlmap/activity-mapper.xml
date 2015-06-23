@@ -63,12 +63,6 @@
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 	
-	<select id="getCountActivityDetail" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT COUNT(1)
-        FROM ACTIVITY_DETAILS ACT_DET
-		WHERE ACTIVITY_ID=#activityId# 
-	</select>
-	
 	<select id="getListByColumn" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT DISTINCT
@@ -111,8 +105,24 @@
 	    </dynamic>
 	</select>
 	
+	<select id="isAllFinished" resultClass="java.lang.Boolean" parameterClass="java.lang.Integer">
+		SELECT 
+		    CASE WHEN COUNT(1) > 0 THEN 0
+		         ELSE 1
+		    END    
+		FROM ACTIVITIES WHERE TASK_ID= #taskId# AND NVL(ACTIVITY_LAST_STATUS, 0) != 4
+	</select>
+	
+	
 	
 	<!-- show in select activity form (dashboard) -->
+	
+	<select id="getCountActivityDetail" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1)
+        FROM ACTIVITY_DETAILS ACT_DET
+		WHERE ACTIVITY_ID=#activityId# 
+	</select>
+	
 	<select id="getListByEmployeeId" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT AC.ACTIVITY_ID AS activityId, 

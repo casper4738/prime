@@ -34,8 +34,7 @@
 
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage Tasks<small>Task Management</small>
-		</h1>
+		<<h1>Manage Tasks</h1></h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li class="active">Task & Activities</li>
@@ -109,7 +108,7 @@
 	                	    <td align="center"><bean:write name="iter" property="taskStartDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center"><bean:write name="iter" property="taskEstimateDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center">
-		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.RECEIVE+""%>'>
+		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.CREATE+""%>'>
 		                			<span class="label label-warning">Receive</span>
 		                		</logic:equal>
 		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.SUBMIT+""%>'>
