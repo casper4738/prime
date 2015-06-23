@@ -10,6 +10,11 @@
 		(#taskId#,#taskName#,#taskReceiver#,#taskAssigner#,#taskStartDate#,#taskEstimateDate#,#taskDescription#,#projectMemberId#)
 	</insert>
 
+	<insert id="insertDetail" parameterClass="prime.user.task.TaskBean">
+		INSERT INTO TASK_DETAILS (TASK_ID, TASK_CHANGE_DATE, TASK_STATUS, TASK_CHANGE_NOTE)
+		VALUES (#taskId#,CURRENT_TIMESTAMP,#taskStatus#,#taskChangeNote#)
+	</insert>
+	
 	<select id="getNewId" resultClass="java.lang.Integer">
 		SELECT 
 			NVL(MAX(TASK_ID)+1, 1)

@@ -111,3 +111,7 @@
 	line-height: 1;
 	text-align:center;
 }
+
+.btn-status-activity td{
+	padding:5px;
+}

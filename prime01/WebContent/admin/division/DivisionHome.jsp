@@ -45,6 +45,7 @@
 	                    <i class="fa fa-edit"></i>Add
                     </span>
                    <span class="message"><bean:write name="DivisionAdminForm" property="message" /></span></p>
+					
 					<!-- Search Handler Tag -->
 					<div class="show-in-page">
 						Show per page
@@ -59,15 +60,18 @@
 							<html:hidden name="DivisionAdminForm" property="tmpId"/>
 							<html:hidden name="DivisionAdminForm" property="goToPage"/>
 							<html:hidden name="DivisionAdminForm" property="showInPage"/>
+							
 							<html:select name="DivisionAdminForm" property="columnSearch" styleClass="columnSearch">
 								<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 							</html:select>
 							<html:text name="DivisionAdminForm" property="search" styleClass="textSearch"/>
-								<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
-								<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
+							<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
+							<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
 						</html:form>
 					</div>
-					<!-- End Of Search Handler Tag -->
+					<!-- End Of Search Handler -->
+		
+					<!-- Table List -->
 					<div class="box-body">
 						<table class="table table-bordered table-striped table-hover" id="table-1">
 						<thead><tr>
@@ -88,6 +92,9 @@
 						</logic:notEmpty>
 	                   </tbody>
 		            </table></div>
+		            <!-- End Of Table List -->
+			            
+		            <!-- Paging -->
 					<ul class="pagination">
 						<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
 						<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
@@ -112,6 +119,7 @@
 					<div class="paginate-2">
 						Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
 					</div>
+					<!-- End of Paging -->
 		        </div></div>
 		        
 		        </div>

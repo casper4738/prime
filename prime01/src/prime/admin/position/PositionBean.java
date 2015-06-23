@@ -3,8 +3,8 @@ package prime.admin.position;
 public class PositionBean {
 
 	private Integer positionId;
-	private String positionName;
 	private Integer positionLevel = 0;
+	private String positionName;
 
 	public Integer getPositionId() {
 		return positionId;
