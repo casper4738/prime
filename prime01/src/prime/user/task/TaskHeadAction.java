@@ -1,5 +1,6 @@
 package prime.user.task;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -56,6 +57,7 @@ public class TaskHeadAction extends Action {
 			pForm.getTaskBean().setTaskReceiver(tmpTaskReceive.getEmployeeId());
 			pForm.getTaskBean().setTaskAssignerName(tmpTaskAssign.getEmployeeName());
 			pForm.getTaskBean().setTaskReceiverName(tmpTaskReceive.getEmployeeName());
+			
 			return mapping.findForward("add");
 		} else if (Constants.Task.TASK.GOTOSUBMIT.equals(pForm.getTask())) {
 			//##.Add Data

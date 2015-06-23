@@ -13,6 +13,7 @@
 		<form-bean name="SettingAdminForm" 			type="prime.admin.setting.SettingForm"></form-bean>
 		
 		<!-- Operator & Monitor [User] -->
+		<form-bean name="ProjectUserForm" 		type="prime.user.project.ProjectForm"></form-bean>
 		<form-bean name="TaskHeadUserForm" 			type="prime.user.task.TaskHeadForm"></form-bean>		
 		<form-bean name="TaskSubordinateUserForm" 	type="prime.user.task.TaskSubordinateForm"></form-bean>		
 		<form-bean name="DashboardUserForm" 		type="prime.user.dashboard.DashboardForm"></form-bean>
@@ -40,6 +41,9 @@
 			<forward name="forward" 		path="/admin/employee/Forward.jsp">							</forward>
 			<forward name="edit" 			path="/admin/employee/EmployeeEdit.jsp">					</forward>
    			<forward name="view" 			path="/admin/employee/EmployeeView.jsp">					</forward>
+   			<forward name="resign" 			path="/admin/employee/EmployeeResign.jsp">					</forward>
+   			<forward name="dayoff" 			path="/admin/employee/EmployeeDayoff.jsp">					</forward>
+   			<forward name="weekend" 			path="/admin/employee/EmployeeWeekend.jsp">					</forward>
 		</action>
 		<action path="/UserAdmin" 			name="UserAdminForm" type="prime.admin.user.UserAction" scope="request">
 			<forward name="add" 			path="/admin/user/UserAdd.jsp">								</forward>
@@ -107,6 +111,15 @@
 			<forward name="addActivity" 	path="/user/task/subordinate/ActivityAdd.jsp"></forward>
 			<forward name="editActivity" 	path="/user/task/subordinate/ActivityEdit.jsp"></forward>
 			<forward name="changeStatusActivity" path="/user/task/subordinate/ActivityChangeStatus.jsp"></forward>
+		</action>
+		
+		<action path="/ProjectUser" name="ProjectUserForm" type="prime.user.project.ProjectAction" scope="request">
+			<!-- Project -->
+			<forward name="success" 		path="/user/project/ProjectHome.jsp"></forward>
+			<forward name="add" 			path="/user/project/ProjectAdd.jsp"></forward>
+			<forward name="details"		 	path="/user/project/ProjectDetails.jsp"></forward>
+			<forward name="editMemberRole" 	path="/user/project/ProjectEditMemberRoles.jsp"></forward>
+			<forward name="detailMember" 	path="/user/project/ProjectMemberDetails.jsp"></forward>
 		</action>
 		
 		<!-- Login -->

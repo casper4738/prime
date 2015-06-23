@@ -16,7 +16,6 @@ public class DashboardAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-//		ImageUtil.decode(ImageUtil.encodeToString(request.getContextPath() + "/image/Lighthouse.jpg"));
 		String str2 = "#f56954";
 		String str3 = "#f56954";
 		

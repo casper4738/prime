@@ -17,6 +17,18 @@
                 format: "yyyy-mm-dd"
             });
         });
+		
+		function doback() {
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = "<%=Constants.Task.TASK.GOTOTASKTYPE%>";
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+		
+		function docancel() {
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = "success";
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
     </script>
 </head>
 <body class="skin-blue sidebar-mini">
@@ -63,7 +75,7 @@
                 				<td>:</td>
                 				<td>
                 				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                				  	<html:text name="TaskHeadUserForm" property="taskBean.taskStartDate" styleClass="form-control pull-right" styleId="start-date"/>
+                				  	<html:text name="TaskHeadUserForm" property="taskBean.taskStartDate" styleClass="form-control pull-right" styleId="start-date" />
                 				  	</div>
                 				</td>
                 			</tr>
@@ -87,7 +99,8 @@
                 			<tr>
                 				<td colspan="6" align="center">
                 					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()"/>
-                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+                					<html:button property="" value="Batal" styleClass="btn btn-default" onclick="doback()"/>
+                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="docancel()"/>
                 				</td>
                 			</tr>
                 		</table>

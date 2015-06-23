@@ -185,12 +185,12 @@
 			               				<td>Division</td>
 			               				<td>:</td>
 				               			<td>
-				               				<div id="isDivision" style="display: inline">
+				               				<div id="isDivision" style="display: none">
 							               		<html:hidden name="EmployeeAdminForm" property="divisionId" />
 				               					<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true" styleId="divisionName"/>
 											</div>
-											<div id="chooseDivision" style="display:none">
-				               					<html:select name="EmployeeAdminForm" property="employeeBean.divisionId" styleClass="form-control" styleId="divisionId">
+											<div id="chooseDivision" style="display:inline">
+				               					<html:select name="EmployeeAdminForm" property="divisionId" styleClass="form-control" styleId="divisionId">
 					               					<html:options collection="listDivision" property="divisionId" labelProperty="divisionName" />
 					               				</html:select>
 											</div>

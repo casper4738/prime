@@ -25,10 +25,7 @@
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
-            $('#datepicker_birthdate').datepicker({
-                format: "yyyy-mm-dd"
-            }); 
-            $('#datepicker_hiredate').datepicker({
+            $('#datepicker_resigndate').datepicker({
                 format: "yyyy-mm-dd"
             });
         });
@@ -62,86 +59,25 @@
                  				<html:text name="EmployeeAdminForm" property="employeeBean.employeeId" styleClass="form-control" disabled="true"/>
 							</td>
                  			</tr>
-               			<tr>
+               				<tr>
                  				<td width="150px">Name</td>
                  				<td>:</td>
-                 				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control"/></td>
+                 				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control" disabled="true"/></td>
                  			</tr>
                  			<tr>
-                 				<td>Address</td>
-                 				<td>:</td>
-                 				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.address" styleClass="form-control"/>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Birth Date</td>
+                 				<td>Resign Date</td>
                  				<td>:</td>
                  				<td>
                  					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                 				  		<html:text name="EmployeeAdminForm" property="employeeBean.birthdate" styleClass="form-control pull-right" styleId="datepicker_birthdate"/>
+                 				  		<html:text name="EmployeeAdminForm" property="employeeBean.resignDate" styleClass="form-control pull-right" styleId="datepicker_resigndate"/>
                  				  	</div>
 							</td>
                  			</tr>
                  			<tr>
-                 				<td>Contact Number</td>
+                 				<td>Resign Note</td>
                  				<td>:</td>
                  				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.contactNumber" styleClass="form-control"/>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Email</td>
-                 				<td>:</td>
-                 				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.email" styleClass="form-control"/>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Gender</td>
-                 				<td>:</td>
-                 				<td>              			
-                 					<html:radio name="EmployeeAdminForm" property="employeeBean.gender" value="0" styleClass="minimal">Male</html:radio>
-                 					<html:radio name="EmployeeAdminForm" property="employeeBean.gender" value="1" styleClass="minimal">Female</html:radio>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Position</td>
-                 				<td>:</td>
-                 				<td>
-                 				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control">
-                 					<html:options collection="listPosition" property="positionId" labelProperty="positionName" />
-                 				</html:select>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Division</td>
-                 				<td>:</td>
-                 				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Head</td>
-                 				<td>:</td>
-                 				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.managerName" styleClass="form-control" disabled="true"/>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Hire Date</td>
-                 				<td>:</td>
-                 				<td>
-                 					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                 				  		<html:text name="EmployeeAdminForm" property="employeeBean.hireDate" styleClass="form-control pull-right" styleId="datepicker_hiredate"/>
-                 				  	</div>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Profile Picture</td>
-                 				<td>:</td>
-                 				<td>
-                 				  <input type="file" id="exampleInputFile">
+                 				<html:textarea name="EmployeeAdminForm" property="employeeBean.resignNote" styleClass="form-control"/>
 							</td>
                  			</tr>
                  			<tr>
