@@ -6,8 +6,8 @@
 		(EMPLOYEE_ID , EMPLOYEE_NAME, ADDRESS, CONTACT_NUMBER, EMAIL,
 		 BIRTHDATE, GENDER, HIRE_DATE, DIVISION_ID, POSITION_ID,
 		 HEAD_ID) VALUES 
-		(#employeeId#, #employeeName#, #address#, #contactNumber#, #email#, #birthdate#, 
-		 #gender#, #hireDate#, #divisionId#, #positionId#, #managerId#)
+		(#employeeId#, #employeeName#, #address#, #contactNumber#, #email#, TO_DATE(#birthdate#,'dd/mm/yyyy'), 
+		 #gender#, TO_DATE(#hireDate#,'dd/mm/yyyy'), #divisionId#, #positionId#, #managerId#)
 	</insert>
 	
 	<update id="update" parameterClass="prime.admin.employee.EmployeeBean">
@@ -49,7 +49,6 @@
         DIV.DIVISION_NAME AS divisionName,
         POS.POSITION_ID AS positionId,
         POS.POSITION_NAME AS positionName,
-        <!-- EMPLOYEE_LEVEL AS employeeLevel, -->
         MANAGER.EMPLOYEE_ID AS managerId,
         MANAGER.EMPLOYEE_NAME AS managerName
         FROM EMPLOYEES EMP 
@@ -161,12 +160,14 @@
 		    EMAIL AS email,
 		    DIVISION_NAME AS divisionName,
 		    POSITION_NAME AS positionName,
-		    MANAGER.EMPLOYEE_NAME AS managerName
+		    MANAGER.EMPLOYEE_NAME AS managerName,
+		    MANAGER.DIVISION_ID AS divisionId
 		FROM EMPLOYEES EMP 
 		JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
 		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
 		LEFT JOIN (
-		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME FROM EMPLOYEES E
+		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME, MGRDIV.DIVISION_ID AS DIVISION_ID FROM EMPLOYEES E
+		    JOIN DIVISIONS MGRDIV ON MGRDIV.DIVISION_ID = E.DIVISION_ID
 		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
 		WHERE POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel#
 	    <dynamic prepend="AND">

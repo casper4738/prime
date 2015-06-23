@@ -26,6 +26,9 @@ public interface Constants {
 		static final String GOTOMANAGER = "t9";
 		static final String GOTOVIEW 	= "t10";
 		static final String DOSEARCH	= "t11";
+		static final String GOTORESIGN	= "t23";
+		static final String GOTODAYOFF	= "t24";
+		static final String GOTOWEEKEND	= "t25";
 		
 		interface TASK {
 			final String GOTOTASKTYPE	= "t12";

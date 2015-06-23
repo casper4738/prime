@@ -60,6 +60,7 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	}
 	
 	public EmployeeBean getEmployeeById(Integer id) throws SQLException {
+		System.out.println(id + " ID DAPAT");
 		return (EmployeeBean) mapper.queryForObject("employee.get", id);
 	}
 

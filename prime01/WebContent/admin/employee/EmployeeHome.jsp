@@ -35,6 +35,10 @@
 	<!-- End JS -->
 </head>
 <body class="skin-blue sidebar-mini">
+	<html:form action="/EmployeeAdmin">
+	<html:hidden name="EmployeeAdminForm" property="task"/>
+	<html:hidden name="EmployeeAdminForm" property="tmpId"/>
+	</html:form>
 	<section class="content-header">
 		<h1>Manage Employee</h1>
 		<ol class="breadcrumb">
@@ -45,16 +49,10 @@
 
 	<section class="content">
 		<div class="row">
-		    <!-- Temporary Form -->
-		    <html:form action="/EmployeeAdmin">
-		      <html:hidden name="EmployeeAdminForm" property="task"/>
-		    </html:form>
-		    <!-- End Of Temporary Form -->
-		    
 			<div class="col-xs-12"><div class="box">
 				<div class="box-header"><h3 class="box-title">Data Manage Employee</h3></div>
 				<p>
-					<span class="button-add btn btn-app bg-olive" onclick="javascript:flyToPage('<%=Constants.Task.GOTOADD%>')">
+					<span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
 		          		<i class="fa fa-edit"></i>Add
 		         	</span>
 		         </p>
@@ -92,7 +90,7 @@
 			                    <th width="90px">Actions</th>
 			                </tr>
 			            </thead>
-			               <tbody>
+			              <tbody>
 			               <logic:notEmpty name="listEmployee">
 							<logic:iterate id="iter" name="listEmployee">
 			                	<tr>
@@ -119,7 +117,7 @@
 					                        </td>
 					                        <td align="center">
 					                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
-					                        	<html:image src="resources/image/resign.png" />
+					                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTORESIGN%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/resign.png" /> 
 					                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOVIEW%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/viewmore.png" />
 					                        </td>
 					                    </tr>
@@ -139,7 +137,6 @@
 						<ul class="pagination">
 							<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
 							<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
-							
 							<logic:iterate id="p" name="listPage">
 								<logic:equal name="p" value="${pageNow}">
 									<li><html:link styleClass="active" href="#">${p}</html:link> </li>
@@ -162,5 +159,6 @@
 	        	</div>
 	      </div>
 	</section>
+	
 </body>
 </html>

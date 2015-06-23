@@ -7,7 +7,7 @@ public class EmployeeBean {
 	private Integer positionId = 0;
 	/*private Integer employeeLevel = 0;*/
 	private Integer managerId = 0;
-	private Integer contactNumber;
+	private String contactNumber;
 	private String employeeName;
 	private String address;
 	private String email;
@@ -61,11 +61,11 @@ public class EmployeeBean {
 	public void setManagerId(Integer managerId) {
 		this.managerId = managerId;
 	}
-	public Integer getContactNumber() {
+	public String getContactNumber() {
 		System.out.println(contactNumber+" contactNumber");
 		return contactNumber;
 	}
-	public void setContactNumber(Integer contactNumber) {
+	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
 	}
 	public String getEmployeeName() {
