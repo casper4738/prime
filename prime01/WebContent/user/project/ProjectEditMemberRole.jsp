@@ -63,7 +63,7 @@
 	<section class="content">
 	<div class="row">
 		<div class="col-xs-12"><div class="box">
-			<div class="box-header"><h3 class="box-title">Data Project</h3></div>
+			<div class="box-header"><h3 class="box-title">Edit Member Role</h3></div>
 			<div class="box-body">
                 	<html:form action="/ProjectUser">
                 		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
@@ -71,48 +71,39 @@
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver" />
                 		<table class="form-input" align="center">
-                			<tr>
-                				<td>Project Name</td>
-                				<td>:</td>
-                				<td><html:text name="ProjectUserForm" property="projectBean.projectName" styleClass="form-control"/></td>
-                			</tr>
-                			<tr>
-                				<td>Start Date</td>
-                				<td>:</td>
-                				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                					<html:text name="ProjectUserForm" property="projectBean.projectStartDate" styleClass="form-control" styleId="start-date"/></td>
-                					</div>
-                			</tr>
-                			<tr>
-                				<td>Estimate Date</td>
-                				<td>:</td>
-                				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                					<html:text name="ProjectUserForm" property="projectBean.projectEstimateDate" styleClass="form-control" styleId="estimate-date"/>
-							</div>
-						</td>
-                			</tr>
-                			<tr>
-                				<td>Project Assigner</td>
-                				<td>:</td>
-                				<td>
-                					<html:text name="ProjectUserForm" property="projectBean.projectAssigner" styleClass="form-control"  />	
-							<input type="button" class="buttonSearch myButton" value="search" id="btn-searchassigner" data-toggle="modal" data-target="#search-modal"/>
-						</td>
-                			</tr>
-                			
-                			<tr>
-                				<td>Project Description</td>
-                				<td>:</td>
-                				<td><html:textarea name="ProjectUserForm" property="projectBean.projectDescription" styleClass="form-control"></html:textarea></td>
+                			<tr >
+                				<td><html:checkbox property="projectBean.projectReceiver" value="Quality Assurance"></html:checkbox></td>
+                				<td>System Analyst</td>
                 				
                 			</tr>
-                			
+                			<tr >
+                				<td ><html:checkbox property="projectBean.projectReceiver" value="Quality Assurance"></html:checkbox></td>
+                				<td>Programmer</td>
+                				
+                			</tr>
+                			<tr >
+                				<td ><html:checkbox property="projectBean.projectReceiver" value="Quality Assurance"></html:checkbox></td>
+                				<td>Quality Assurance</td>
+                				
+                			</tr>
+                			<tr >
+                				<td ><html:checkbox property="projectBean.projectReceiver" value="Quality Assurance"></html:checkbox></td>
+                				<td>Quality Control</td>
+                				
+                			</tr>
+                			<tr >
+                				<td><html:checkbox property="projectBean.projectReceiver" value="Quality Assurance"></html:checkbox></td>
+                				<td>Database Adminiastrator</td>
+                				
+                			</tr>
                 			<tr>
-                				<td colspan="3" align="center">
+                				<td colspan="3" >
                 					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="dosubmit()"/>
                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                 				</td>
                 			</tr>
+                			
+                			
                 		</table>
                 	</html:form>
                   </div>

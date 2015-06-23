@@ -16,22 +16,24 @@
 	<select id="getListByCol" resultClass="prime.user.project.ProjectBean"
 		parameterClass="java.util.Map">
 		SELECT * FROM (SELECT page.*, ROWNUM rnum FROM
-		(SELECT PROJECT_ID AS  projectId,
-		PROJECT_NAME AS projectName,
-		PROJECT_RECEIVER as projectReceiver,
-		PROJECT_ASSIGNER as projectAssigner,
-		PROJECT_START_DATE as projectStartDate,
-		PROJECT_ESTIMATE_DATE as projectEstimateDate,
-		PROJECT_DESCRIPTION as projectDescription
-		FROM PROJECTS
+		(SELECT P.PROJECT_ID AS  projectId,
+		P.PROJECT_NAME AS projectName,
+		P.PROJECT_RECEIVER as projectReceiver,
+		P.PROJECT_ASSIGNER as projectAssigner,
+		P.PROJECT_START_DATE as projectStartDate,
+		P.PROJECT_ESTIMATE_DATE as projectEstimateDate,
+		P.PROJECT_DESCRIPTION as projectDescription,
+		PD.PROJECT_STATUS as projectStatus
+		FROM PROJECTS P, PROJECT_DETAILS PD
+		WHERE P.PROJECT_ID=PD.PROJECT_ID
 		<dynamic prepend="WHERE">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
-					UPPER(project_NAME) LIKE UPPER('%'||#value#||'%')
+					UPPER(P.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 			</isNotNull>
 		</dynamic>
-		ORDER BY PROJECT_ID ASC) page
+		ORDER BY P.PROJECT_ID ASC) page
 		WHERE ROWNUM <![CDATA[ <= ]]>
 		#endRow#) WHERE rnum <![CDATA[ >= ]]>
 		#startRow#
@@ -59,7 +61,7 @@
 	      E.EMAIL AS email,
 	      E.CONTACT_NUMBER AS contactNumber,
 	      PD.PROJECT_STATUS AS projectStatus,
-	      PM.PROJECT_MEMBER_ID AS projectMemberID
+	      PM.PROJECT_MEMBER_ID AS projectMemberId
 		  FROM   EMPLOYEES E,
 	      ROLES R,
 	      DIVISIONS D,
@@ -69,7 +71,7 @@
 	      <dynamic prepend="WHERE">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
-					UPPER(project_NAME) LIKE UPPER('%'||#value#||'%')
+					UPPER(P.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 			</isNotNull>
 		</dynamic>
@@ -100,4 +102,77 @@
 		VALUES
 		(#projectId#,#projectAssigner#,#projectReceiver#,CURRENT_TIMESTAMP,#projectStatus#,#projectChangeNote#)
 	</insert>
-</sqlMap>
+	
+	<select id="getProjectMemberDetailsTask" resultClass="prime.user.project.ProjectBean"
+		parameterClass="java.lang.Integer">
+		SELECT   E.EMPLOYEE_NAME as employeeName , 
+		T.TASK_START_DATE as taskStartDate, 
+		T.TASK_NAME as taskName
+		FROM   EMPLOYEES E,
+        PROJECT_MEMBERS PM,
+        TASKS T,
+        PROJECTS P
+		WHERE   E.EMPLOYEE_ID = PM.EMPLOYEE_ID
+        AND PM.PROJECT_MEMBER_ID = T.PROJECT_MEMBER_ID
+        AND P.PROJECT_ID = PM.PROJECT_ID
+        AND PM.PROJECT_MEMBER_ID = #projectMemberId#
+	</select>
+	
+	
+	<select id="getDataEmployee" resultClass="prime.user.project.ProjectBean"
+		parameterClass="java.lang.Integer">
+		SELECT  E.EMPLOYEE_NAME AS employeeName, 
+        PO.POSITION_NAME as positionName, 
+        E.CONTACT_NUMBER AS contactNumber, 
+        E.EMAIL AS email, 
+        D.DIVISION_NAME AS divisionName
+        FROM   EMPLOYEES E,
+        PROJECT_MEMBERS PM,
+           
+        POSITIONS PO,
+        DIVISIONS D
+        
+        WHERE E.EMPLOYEE_ID = PM.EMPLOYEE_ID
+        AND PO.POSITION_ID=E.POSITION_ID
+        AND D.DIVISION_ID=E.DIVISION_ID
+        AND PM.PROJECT_MEMBER_ID=#id#
+	</select>
+	
+	
+	<select id="getProjectMemberDetails" resultClass="prime.user.project.ProjectBean"
+		parameterClass="java.util.Map">
+		SELECT   E.EMPLOYEE_NAME AS employeeName, 
+		PO.POSITION_NAME as positionName, 
+		E.CONTACT_NUMBER AS contactNumber, 
+		E.EMAIL AS email, 
+		D.DIVISION_NAME AS divisionName,
+		T.TASK_START_DATE AS taskStartDate, 
+		T.TASK_ESTIMATE_DATE AS taskEstimateDate, 
+		T.TASK_NAME AS taskName, 
+		R.ROLE_NAME AS roleName, 
+		T.TASK_ASSIGNER AS taskAssigner, 
+		TD.TASK_STATUS AS taskStatus          
+ 	    FROM   EMPLOYEES E,
+        PROJECT_MEMBERS PM,
+        TASKS T,
+        PROJECTS P,
+        POSITIONS PO,
+        DIVISIONS D,
+        ROLES R,
+        TASK_DETAILS TD
+		<dynamic prepend="WHERE">
+			<isNotNull property="columnSearch">
+				<isEqual property="columnSearch" compareValue="NAME">
+					UPPER(P.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+			</isNotNull>
+		</dynamic>
+ 		WHERE E.EMPLOYEE_ID = PM.EMPLOYEE_ID
+        AND PM.PROJECT_MEMBER_ID = T.PROJECT_MEMBER_ID
+        AND P.PROJECT_ID = PM.PROJECT_ID
+        AND PO.POSITION_ID=E.POSITION_ID
+        AND E.DIVISION_ID=D.DIVISION_ID
+        AND T.TASK_ID=TD.TASK_ID
+        AND PM.PROJECT_MEMBER_ID = #projectMemberId#
+	</select>
+</sqlMap> 

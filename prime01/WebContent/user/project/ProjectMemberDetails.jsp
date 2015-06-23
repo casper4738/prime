@@ -78,15 +78,13 @@
 				<div class="col-xs-12"><div class="box">
 					<div class="box-header"><h3 class="box-title-center">Data Project Member</h3></div>
 					<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-					<tr><td>Project Name : <bean:write name="ProjectUserForm" property="projectBean.projectName"/> </td>
-						<td>Project Assigner : <bean:write name="ProjectUserForm" property="projectBean.projectAssigner" /> </td>
+					<tr><td>Member Name : <bean:write name="ProjectUserForm" property="projectBean.employeeName"/> </td>
+						<td>Position : <bean:write name="ProjectUserForm" property="projectBean.positionName" /> </td>
 					</tr>
-					<tr><td>Start Date : <bean:write name="ProjectUserForm" property="projectBean.projectStartDate" format="dd MMMM yyyy"/> </td>
-						<td>Project Receiver : <bean:write name="ProjectUserForm" property="projectBean.projectReceiver"/> </td>
-					</tr><tr><td>Estimated Date : <bean:write name="ProjectUserForm" property="projectBean.projectEstimateDate" format="dd MMMM yyyy" />
-						</td><td>Status : <bean:write name="ProjectUserForm" property="projectBean.projectStatus"/> </td>
-					</tr>
-					<tr><td colspan="2">Description : <bean:write name="ProjectUserForm" property="projectBean.projectDescription" /> </td>
+					<tr><td>Phone Number : <bean:write name="ProjectUserForm" property="projectBean.contactNumber"/> </td>
+						<td>Email : <bean:write name="ProjectUserForm" property="projectBean.email"/> </td>
+					
+					<tr><td>Division : <bean:write name="ProjectUserForm" property="projectBean.divisionName" /> </td>
 					</tr>
 					</table>
 					
@@ -117,7 +115,7 @@
 							<html:hidden name="ProjectUserForm" property="task"/>
 							<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
 							<html:hidden name="ProjectUserForm" property="projectId"/>
-							<html:hidden name="ProjectUserForm" property="projectMemberId"/>
+							
 							
 							<html:hidden name="ProjectUserForm" property="goToPage"/>
 							<html:hidden name="ProjectUserForm" property="showInPage"/>
@@ -132,33 +130,37 @@
 					<div class="box-body">
 						<table class="table table-bordered table-striped table-hover">
 						<thead><tr>
-							<th>Employee Name</th>
+							<th>Task Name</th>
 							<th>Role</th>
-							<th>Division</th>
-							<th>Email</th>
-							<th>Phone Number</th>
+							<th>Task Assigner</th>
+							<th>Start Date </th>
+							<th>Estimate Date</th>
+							<th>Status</th>
+							<th>Progress</th>
 		                    <th width="90px">Actions</th>
 		                </tr></thead>
 		                <tbody>
-		                <logic:notEmpty name="listProjectMember">
-							<logic:iterate id="iter" name="listProjectMember">
+		                <logic:notEmpty name="listProjectMemberDetails">
+							<logic:iterate id="iter" name="listProjectMemberDetails">
 			                	<tr>
-			                		<td width="250px"><bean:write name="iter" property="employeeName"/></td>
+			                		<td width="250px"><bean:write name="iter" property="taskName"/></td>
 			                		<td><bean:write name="iter" property="roleName"/></td>
-			                		<td align="center" width="150px"><bean:write name="iter" property="divisionName" /></td>
+			                		<td><bean:write name="iter" property="taskAssigner"/></td>
+			                		<td align="center" width="150px"><bean:write name="iter" property="taskStartDate" /></td>
 			                		
-			                		<td><bean:write name="iter" property="email"/></td>
-			                		<td><bean:write name="iter" property="contactNumber"/></td>
+			                		<td><bean:write name="iter" property="taskEstimateDate"/></td>
+			                		<td><bean:write name="iter" property="taskStatus"/></td>
+			                		<td>80%</td>
 			                		<td align="center">
 			                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.GOTOEDIT%>', '<bean:write name="iter" property="projectMemberId"/>')" src="resources/image/edit.png" />
 			                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.DODELETE%>', '<bean:write name="iter" property="projectMemberId"/>')" src="resources/image/remove.png" />
                        	        		<input type="image" onclick="flyToChangeStatusAct()" src="resources/image/viewmore.png" />
-                       	        		<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('memberDetails', '<bean:write name="iter" property="projectMemberId"/>')">
+                       	        		<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.GOTOVIEW %>', '<bean:write name="iter" property="projectMemberId"/>')">
 			                        </td>	
 			                    </tr> 
 		                    </logic:iterate>
 							</logic:notEmpty>
-							<logic:empty name="listProjectMember">
+							<logic:empty name="listProjectMemberDetails">
 								<tr>
 									<td align="center" colspan="6">DATA KOSONG</td>
 								</tr>

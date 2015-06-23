@@ -112,7 +112,7 @@
 			                	    <td><bean:write name="iter" property="projectAssigner"/></td>
 			                	    <td><bean:write name="iter" property="projectStartDate"/></td>
 			                	    <td><bean:write name="iter" property="projectEstimateDate"/></td>
-			                	    <td>Status</td>
+			                	    <td><bean:write name="iter" property="projectStatus"/></td>
 			                        <td align="center">
 			                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.GOTOVIEW %>', '<bean:write name="iter" property="projectId"/>')">
 			                        </td>

@@ -26,4 +26,9 @@ public interface ProjectManager {
 	public void insert (ProjectBean e) throws SQLException;
 	
 	public void insertDetail(ProjectBean e) throws SQLException;
+	
+	public ProjectBean getProjectMemberDetailById(Integer id) throws SQLException;
+	
+	public List<ProjectBean> getListProjectMemberDetails(String columnSearch, String value, Integer startRow, Integer endRow, Integer taskId)
+			throws SQLException;
 }

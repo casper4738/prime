@@ -14,6 +14,7 @@ public class ProjectForm extends ActionForm {
 	private Integer tmpId;
 	private Integer projectId;
 	private Integer projectReceiver;
+	private Integer projectMemberId;
 
 	public String getTask() {
 		return task;
@@ -101,6 +102,14 @@ public class ProjectForm extends ActionForm {
 
 	public void setProjectReceiver(Integer projectReceiver) {
 		this.projectReceiver = projectReceiver;
+	}
+
+	public Integer getProjectMemberId() {
+		return projectMemberId;
+	}
+
+	public void setProjectMemberId(Integer projectMemberId) {
+		this.projectMemberId = projectMemberId;
 	}
 	
 }

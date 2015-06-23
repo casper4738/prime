@@ -82,6 +82,21 @@ public class ProjectAction extends Action {
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("details");
 		}
+		else if("memberDetails".equals(pForm.getTask())){
+			System.out.println("masuk member" + pForm.getProjectMemberId());
+			pForm.setProjectBean(manager.getProjectMemberDetailById(pForm.getProjectMemberId()));
+			
+			int countRows = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+			
+			List<ProjectBean> list =manager.getListProjectMemberDetails(pForm.getColumnSearch(), pForm.getSearch(), 
+					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
+					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
+					pForm.getProjectMemberId());
+			request.setAttribute("listProjectMemberDetails", list);
+			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+			return mapping.findForward("detailMember");
+			
+		}
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		List<ProjectBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),

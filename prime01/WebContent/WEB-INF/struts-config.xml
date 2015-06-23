@@ -101,6 +101,7 @@
 			<forward name="add" path="/user/project/ProjectAdd.jsp"></forward>
 			<forward name="details" path="/user/project/ProjectDetails.jsp"></forward>
 			<forward name="editMemberRole" path="/user/project/ProjectEditMemberRoles.jsp"></forward>
+			<forward name="detailMember" path="/user/project/ProjectMemberDetails.jsp"></forward>
 		</action>
 		
 		<!-- Login -->
