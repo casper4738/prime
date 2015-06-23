@@ -96,7 +96,7 @@
 			<forward name="changeStatusActivity" path="/user/task/head/ActivityChangeStatus.jsp"></forward>
 		</action>
 		
-		<action path="/TaskSubordinateUser" name="TaskSubordinateUserForm" type="prime.user.task.TaskHeadAction" scope="request">
+		<action path="/TaskSubordinateUser" name="TaskSubordinateUserForm" type="prime.user.task.TaskSubordinateAction" scope="request">
 			<!-- Task -->
 			<forward name="success"			path="/user/task/subordinate/TaskHome.jsp"></forward>
 			<forward name="submit" 			path="/user/task/subordinate/TaskSubmission.jsp"></forward>
