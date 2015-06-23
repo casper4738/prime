@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
@@ -5,161 +7,191 @@
 <!DOCTYPE html>
 <html>
 <head> 
-	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+ <meta charset="UTF-8">
+    <title>AdminLTE 2 | Calendar</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<!-- CSS -->
+
 	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
+    <link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+    <link href="resources/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
+    <link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link href="resources/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
-	
-	<script src="resources/plugins/morris/morris.min.js" type="text/javascript"></script>
+   
 </head>
 
 <body class="skin-blue sidebar-mini">
-	<section class="content">
+		<section class="content">
 		<div class="row">
-			<section class="col-lg-7 connectedSortable">
-				<div class="login-photo">
-					<h3 class="photo">Welcome, Alexander</h3>
-					<img class="photo" src="image/resize-Lighthouse.jpg" />
-				</div>
-
-
-			</section>
-
-			<section class="col-lg-5 connectedSortable">
-				<div class="box box-solid bg-green-gradient">
-					<div class="box-header">
-						<i class="fa fa-calendar"></i>
-						<h3 class="box-title">Calendar</h3>
-						<div class="pull-right box-tools">
-							<div class="btn-group">
-								<button class="btn btn-success btn-sm dropdown-toggle"
-									data-toggle="dropdown">
-									<i class="fa fa-bars"></i>
-								</button>
-								<ul class="dropdown-menu pull-right" role="menu">
-									<li><a href="#">Add new event</a></li>
-									<li><a href="#">Clear events</a></li>
-									<li class="divider"></li>
-									<li><a href="#">View calendar</a></li>
-								</ul>
-							</div>
-							<button class="btn btn-success btn-sm" data-widget="collapse">
-								<i class="fa fa-minus"></i>
-							</button>
-							<button class="btn btn-success btn-sm" data-widget="remove">
-								<i class="fa fa-times"></i>
-							</button>
-						</div>
-						<!-- /. tools -->
-					</div>
-					<!-- /.box-header -->
+			<section class="col-lg-5">
+			<div class="box box-primary">
+				<div class="box-header">
+                  <h3 class="box-title">Welcome, Alexander</h3>
+                  </div>
+                  <div class="box-tools">
 					<div class="box-body no-padding">
-						<div id="calendar" style="width: 100%"></div>
-					</div>
-					<!-- /.box-body -->
-					<div class="box-footer text-black">
-						<div class="row">
-							<div class="col-sm-6">
-								<!-- Progress bars -->
-								<div class="clearfix">
-									<span class="pull-left">Task #1</span> <small
-										class="pull-right">90%</small>
-								</div>
-								<div class="progress xs">
-									<div class="progress-bar progress-bar-green"
-										style="width: 90%;"></div>
-								</div>
-
-								<div class="clearfix">
-									<span class="pull-left">Task #2</span> <small
-										class="pull-right">70%</small>
-								</div>
-								<div class="progress xs">
-									<div class="progress-bar progress-bar-green"
-										style="width: 70%;"></div>
-								</div>
-							</div>
-							<!-- /.col -->
-							<div class="col-sm-6">
-								<div class="clearfix">
-									<span class="pull-left">Task #3</span> <small
-										class="pull-right">60%</small>
-								</div>
-								<div class="progress xs">
-									<div class="progress-bar progress-bar-green"
-										style="width: 60%;"></div>
-								</div>
-
-								<div class="clearfix">
-									<span class="pull-left">Task #4</span> <small
-										class="pull-right">40%</small>
-								</div>
-								<div class="progress xs">
-									<div class="progress-bar progress-bar-green"
-										style="width: 40%;"></div>
-								</div>
-							</div>
-							<!-- /.col -->
-						</div>
-						<!-- /.row -->
+						<center><img class="photo" src="image/resize-Lighthouse.jpg" /></center>
 					</div>
 				</div>
-				<!-- /.box -->
 			</section>
-		</div>
-	</section>
 
+            <div class="col-lg-7">
+              <div class="box box-primary">
+                <div class="box-body no-padding">
+                  <!-- THE CALENDAR -->
+                  <div id="calendar"></div>
+                </div><!-- /.box-body -->
+              </div><!-- /. box -->
+            </div><!-- /.col -->
+          </div><!-- /.row -->
+      </section>
+      
+          
+    
+      <!-- Add the sidebar's background. This div must be placed
+           immediately after the control sidebar -->
+      <div class='control-sidebar-bg'></div>
+      
+       
+    <script src="resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src='resources/plugins/fastclick/fastclick.min.js'></script>
+    <script src="resources/dist/js/app.min.js" type="text/javascript"></script>
+    <script src="resources/dist/js/demo.js" type="text/javascript"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+    
+    <!-- Page specific script -->
+    <script type="text/javascript">
+      $(function () {
 
-	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+        /* initialize the external events
+         -----------------------------------------------------------------*/
+        function ini_events(ele) {
+          ele.each(function () {
 
-	<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js"
-		type="text/javascript"></script>
+            // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+            // it doesn't need to have a start or end
+            var eventObject = {
+              title: $.trim($(this).text()) // use the element's text as the event title
+            };
 
-	<script>
-		$.widget.bridge('uibutton', $.ui.button);
-	</script>
-	<script src="resources/bootstrap/js/bootstrap.min.js"
-		type="text/javascript"></script>
-	<script
-		src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-	<script src="resources/plugins/morris/morris.min.js"
-		type="text/javascript"></script>
-	<script src="resources/plugins/sparkline/jquery.sparkline.min.js"
-		type="text/javascript"></script>
-	<script
-		src="resources/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"
-		type="text/javascript"></script>
-	<script
-		src="resources/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"
-		type="text/javascript"></script>
-	<script src="resources/plugins/knob/jquery.knob.js"
-		type="text/javascript"></script>
+            // store the Event Object in the DOM element so we can get to it later
+            $(this).data('eventObject', eventObject);
 
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js"
-		type="text/javascript"></script>
+            // make the event draggable using jQuery UI
+            $(this).draggable({
+              zIndex: 1070,
+              revert: true, // will cause the event to go back to its
+              revertDuration: 0  //  original position after the drag
+            });
 
-	<script src="resources/plugins/daterangepicker/daterangepicker.js"
-		type="text/javascript"></script>
-	<script src="resources/plugins/datepicker/bootstrap-datepicker.js"
-		type="text/javascript"></script>
-	<script
-		src="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"
-		type="text/javascript"></script>
-	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js"
-		type="text/javascript"></script>
-	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
-	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
-	<script src="resources/dist/js/pages/dashboard.js"
-		type="text/javascript"></script>
-	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+          });
+        }
+        ini_events($('#external-events div.external-event'));
+
+        /* initialize the calendar
+         -----------------------------------------------------------------*/
+        //Date for the calendar events (dummy data)
+        var date = new Date();
+        var d = date.getDate(),
+                m = date.getMonth(),
+                y = date.getFullYear();
+        $('#calendar').fullCalendar({
+          header: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'month,agendaWeek,agendaDay'
+          },
+          buttonText: {
+            today: 'today',
+            month: 'month',
+            week: 'week',
+            day: 'day'
+          },
+          //Random default events
+          events: [
+
+                   
+<% List<String> arr = (ArrayList) request.getAttribute("teslist");
+for(int a = 0; a<arr.size();a++)
+{
+	out.println(arr.get(a)); 
+	
+}
+%>
+          ],
+          editable: true,
+          droppable: true, // this allows things to be dropped onto the calendar !!!
+          drop: function (date, allDay) { // this function is called when something is dropped
+
+            // retrieve the dropped element's stored Event Object
+            var originalEventObject = $(this).data('eventObject');
+
+            // we need to copy it, so that multiple events don't have a reference to the same object
+            var copiedEventObject = $.extend({}, originalEventObject);
+
+            // assign it the date that was reported
+            copiedEventObject.start = date;
+            copiedEventObject.allDay = allDay;
+            copiedEventObject.backgroundColor = $(this).css("background-color");
+            copiedEventObject.borderColor = $(this).css("border-color");
+
+            // render the event on the calendar
+            // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+            $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+
+            // is the "remove after drop" checkbox checked?
+            if ($('#drop-remove').is(':checked')) {
+              // if so, remove the element from the "Draggable Events" list
+              $(this).remove();
+            }
+
+          }
+        });
+
+        /* ADDING EVENTS */
+        var currColor = "#3c8dbc"; //Red by default
+        //Color chooser button
+        var colorChooser = $("#color-chooser-btn");
+        $("#color-chooser > li > a").click(function (e) {
+          e.preventDefault();
+          //Save color
+          currColor = $(this).css("color");
+          //Add color effect to button
+          $('#add-new-event').css({"background-color": currColor, "border-color": currColor});
+        });
+        $("#add-new-event").click(function (e) {
+          e.preventDefault();
+          //Get value and make sure it is not null
+          var val = $("#new-event").val();
+          if (val.length == 0) {
+            return;
+          }
+
+          //Create events
+          var event = $("<div />");
+          event.css({"background-color": currColor, "border-color": currColor, "color": "#fff"}).addClass("external-event");
+          event.html(val);
+          $('#external-events').prepend(event);
+
+          //Add draggable funtionality
+          ini_events(event);
+
+          //Remove event from text input
+          $("#new-event").val("");
+        });
+      });
+    </script>
 </body>
 </html>
