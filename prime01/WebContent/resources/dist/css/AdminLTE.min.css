@@ -4664,3 +4664,19 @@ table.text-center, table.text-center td, table.text-center th {
 	padding-left: 10px;
 	padding-right: 10px;
 }
+
+.login-photo {
+	position: relative;
+	border-radius: 3px;
+	background: #ffffff;
+	border-top: 3px solid #E8101F;
+	margin-bottom: 20px;
+	width: 100%;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1)
+}
+
+.photo{
+	margin-left: 10px;
+	margin-bottom: 10px;	
+	
+}

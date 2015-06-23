@@ -9,6 +9,13 @@ function dosubmit() {
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));
 }
 
+function searchAll(task) {
+	var tmpForm = document.forms[0];
+	tmpForm.columnSearch.value = "ALL";
+	tmpForm.task.value = task;
+	menuLoadHandler(tmpForm.action, serialize(tmpForm));
+}
+
 function flyToEditDelete(task, value, confirmMessage) {
 	var tmpForm = document.forms[0]; 
 	if(confirmMessage != null){
@@ -22,7 +29,6 @@ function flyToEditDelete(task, value, confirmMessage) {
 
 function flyToForward(task, value) {
 	var tmpForm = document.forms[0];
-	
 	tmpForm.task.value = task;
 	tmpForm.message.value = value;
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));
@@ -97,7 +103,9 @@ function menuLoadHandler(targettedMenu, targettedData){
 	return false;
 }
 
-function modalLoadHandler(targettedData){
+//****Modal Variable
+var modalTargettedObject;
+function modalLoadHandler(targettedData, targettedObject){
 	//##0. Show Loading [Hard Code the HTML Tag until Found Better Solution]
     $('#content-modal-body').removeData('bs.modal')
 	$('#content-modal-body').html("<div class=\"info-modal\">" +
@@ -135,6 +143,36 @@ function modalLoadHandler(targettedData){
 							    			              	  "</div>");
 								}
 	});
+	
+	//##1.Register Targetted Object For Value Receiver
+	modalTargettedObject = targettedObject;
+		
 	//##1.Show The Modal
 	$('#content-modal').modal({ show:true, backdrop: false });
+}
+
+function modalSubmitReturnValue(retValue,retForm){
+	//##0.Set Return Value to Targetted Object
+	if(modalTargettedObject != null){
+		modalTargettedObject.val(retValue);
+		if(retForm=='employeeHead'){
+			var res = retValue.split(',');
+			document.getElementById('headName').value=res[1];
+			document.forms[0].managerId.value=res[0].replace('[','');
+			alert(res[4])
+			document.getElementById('divisionName').value=res[4];
+			alert('aaa')
+			if(document.getElementById('divisionName').value!=="" || document.getElementById('divisionName').value!=="NULL"){
+				document.getElementById('isDivision').style.display="inline"
+				document.getElementById('chooseDivision').style.display="none"
+				document.getElementById('divisionId').value=res[4];
+			}else{
+				document.getElementById('isDivision').style.display="none"
+				document.getElementById('chooseDivision').style.display="inline"
+			}
+		}
+	}
+	
+	//##1.Hide Modal
+    $("[data-dismiss=modal]").trigger({ type: "click" });
 }

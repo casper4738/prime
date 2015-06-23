@@ -42,7 +42,7 @@
     		    	}
     		    }
     		});
-        });
+    	});
 		
 		function readImage(file) {
 		    var reader = new FileReader();
@@ -84,6 +84,16 @@
 		    };
 		    
 		}
+		
+		function openModalHandler(){
+			//##0.Preparing Parameter For Modal Showing
+			var tmpDataPosition=$('#positionId').val();
+			var tmpTask ="modalTable";
+			var tmpTable ="employeeHead";
+			
+			//##1.Accessing Prime Method For Modal Showing
+			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition, $('#result'));
+		}
     </script>
 	<!-- End JS -->
 
@@ -105,11 +115,11 @@
 				<div class="box-header"><h1 class="box-title"><br/><br/><b>Add New Employee</b></h2><br/><br/></div>
 					<div class="box-body">
 			               	<html:form action="/EmployeeAdmin">
-			               		<html:hidden name="EmployeeAdminForm" property="task"/>
+			               		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
-			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
-			               		
+			               		<html:hidden name="EmployeeAdminForm" property="managerId"/>
+			               		<html:hidden name="EmployeeAdminForm" property="result" styleId="result"/>
 			               		<table class="form-input" style="width: 500px;">
 			             			<tr>
 			               				<td width="200px">Name</td>
@@ -156,26 +166,34 @@
 			               				<td>Position</td>
 			               				<td>:</td>
 			               				<td>
-				               				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control">
+				               				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control" styleId="positionId">
 				               					<html:options collection="listPosition" property="positionId" labelProperty="positionName" />
 				               				</html:select>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Division</td>
-			               				<td>:</td>
-			               				<td>
-			               					<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
 										</td>
 			               			</tr>
 			               			<tr>
 			               				<td>Head</td>
 			               				<td>:</td>
 			               				<td class="input-group">
-			               					<html:text name="EmployeeAdminForm" property="employeeBean.managerName" styleClass="form-control" disabled="true"/>
+			               					<html:text name="EmployeeAdminForm" property="employeeBean.managerName" styleClass="form-control" styleId="headName" disabled="true"/>
 			               					<span class="input-group-btn">
-                      							<input type="button" class="btn btn-info" type="button" onclick="modalLoadHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
+                      							<input type="button" class="btn btn-info" type="button" onclick="openModalHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
 								            </span>
+										</td>
+			               			</tr>
+			               			<tr>
+			               				<td>Division</td>
+			               				<td>:</td>
+				               			<td>
+				               				<div id="isDivision" style="display: none">
+							               		<html:hidden name="EmployeeAdminForm" property="divisionId" />
+				               					<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true" styleId="divisionName"/>
+											</div>
+											<div id="chooseDivision" style="display:inline">
+				               					<html:select name="EmployeeAdminForm" property="divisionId" styleClass="form-control" styleId="divisionId">
+					               					<html:options collection="listDivision" property="divisionId" labelProperty="divisionName" />
+					               				</html:select>
+											</div>
 										</td>
 			               			</tr>
 			               			<tr>
@@ -203,7 +221,7 @@
 			               			</tr>
 			               			<tr>
 			               				<td colspan="3" align="center">
-			               					<input type="button" value="Save" class="btn btn-primary"/> 
+			               					<input type="button" value="Save" class="btn btn-primary"  onclick="dosubmit()"/> 
 			               					<input type="button" value="Cancel" class="btn btn-default" onclick="flyToPage('<%=Constants.Task.BACKTOMAIN%>')"/>					
 			               				</td>
 			               			</tr>

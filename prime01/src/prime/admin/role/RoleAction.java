@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.division.DivisionBean;
 import prime.constants.Constants;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
@@ -21,7 +22,6 @@ public class RoleAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		RoleForm pForm = (RoleForm) form;
 		RoleManager tmpManager = new RoleManagerImpl();
-		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
 			pForm.getRoleBean().setRoleId(tmpManager.getNewId());
@@ -52,8 +52,7 @@ public class RoleAction extends Action {
 		//##1.Attribute for Table Show
 		request.setAttribute("listRole", list);
 		request.setAttribute("listSearchColumn", Constants.Search.ROLE_SEARCHCOLUMNS);
-		
-
+		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 		setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		return mapping.findForward("success");
 	}

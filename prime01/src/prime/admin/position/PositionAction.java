@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.setting.GeneralSetting;
 import prime.constants.Constants;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
@@ -21,14 +22,17 @@ public class PositionAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		PositionForm pForm = (PositionForm) form;
 		PositionManager tmpManager = new PositionManagerImpl();
+		GeneralSetting tmpSettingManager = new GeneralSetting(request);
 		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
 			pForm.getPositionBean().setPositionId(tmpManager.getNewId());
+			request.setAttribute("listPositionLevel", PrimeUtil.getListPositionLevel(tmpSettingManager.getSetting().getLevel()));
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
 			//##. Edit Data
 			pForm.setPositionBean(tmpManager.getPositionById(pForm.getTmpId()));
+			request.setAttribute("listPositionLevel", PrimeUtil.getListPositionLevel(tmpSettingManager.getSetting().getLevel()));
 			return mapping.findForward("edit");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			//##.Insert Data and Go to Forward
@@ -52,7 +56,7 @@ public class PositionAction extends Action {
 		//##1.Attribute for Table Show
 		request.setAttribute("listPosition", list);
 		request.setAttribute("listSearchColumn", Constants.Search.POSITION_SEARCHCOLUMNS);
-
+		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 		setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		return mapping.findForward("success");
 	}

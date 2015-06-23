@@ -1,21 +1,128 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="activity">
+
+	<insert id="insert" parameterClass="prime.user.activity.ActivityBean">
+		INSERT INTO ACTIVITIES 
+			(ACTIVITY_ID, TASK_ID, ACTIVITY_NAME, ACTIVITY_DESCRIPTION)	
+		VALUES 
+			(#activityId#,#taskId#,#activityName#,#activityDescription#)
+	</insert>
+	
+	<insert id="insertDetail" parameterClass="prime.user.activity.ActivityBean">
+		INSERT INTO ACTIVITY_DETAILS 
+			(ACTIVITY_ID, ACTIVITY_CHANGE_DATE, ACTIVITY_STATUS, ACTIVITY_CHANGE_NOTE)  
+		VALUES 
+			(#activityId#, CURRENT_TIMESTAMP, #activityStatus#, #activityChangeNote#)
+	</insert>
+	
+	<update id="update" parameterClass="prime.user.activity.ActivityBean">
+		UPDATE ACTIVITIES SET 
+			ACTIVITY_NAME=#activityName#, 
+			ACTIVITY_DESCRIPTION=#activityDescription#
+		WHERE ACTIVITY_ID=#activityId#
+	</update>
 	
 	<select id="getNewId" resultClass="java.lang.Integer">
-		SELECT NVL(MAX(ACTIVITY_ID)+1, 1) FROM ACTIVITIES
+		SELECT NVL(MAX(ACTIVITY_ID)+1, 1) 
+		FROM ACTIVITIES
 	</select>
 	
 	<select id="get" resultClass="prime.user.activity.ActivityBean" parameterClass="java.lang.Integer">
 		SELECT ACTIVITY_ID AS activityId, 
-		TASK_ID AS taskId,
-		ACTIVITY_NAME AS activityName,
-		DESCRIPTION AS  activityDescription
+			TASK_ID AS taskId,
+			ACTIVITY_NAME AS activityName,
+			ACTIVITY_DESCRIPTION AS  activityDescription
 		FROM ACTIVITIES
 		WHERE ACTIVITY_ID=#id#
 	</select>
 	
+	<select id="getDetail" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
+		SELECT ACTIVITY_NAME AS activityName,
+			ACT.ACTIVITY_ID AS activityId, 
+		    ACTIVITY_NAME AS activityName, 
+		    ACT.ACTIVITY_DESCRIPTION AS activityDescription,
+		    ACT_DET.ACTIVITY_CHANGE_DATE AS activityChangeDate,
+		    ACT.ACTIVITY_LAST_STATUS AS activityLastStatus,
+			TASK.TASK_NAME AS taskName
+        FROM ACTIVITIES ACT
+        JOIN ACTIVITY_DETAILS ACT_DET ON ACT_DET.ACTIVITY_ID=ACT.ACTIVITY_ID
+        JOIN TASKS TASK ON TASK.TASK_ID = ACT.TASK_ID
+		WHERE ACT_DET.ACTIVITY_ID=#activityId# 
+			AND TO_CHAR(ACTIVITY_CHANGE_DATE, 'yyyy-mm-dd hh:mi:ss') = #activityChangeDate#
+	</select>
+	
+	<select id="getListActivityDetail" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT ACTIVITY_CHANGE_DATE AS activityChangeDate,
+			ACTIVITY_STATUS AS activityStatus,
+			ACTIVITY_CHANGE_NOTE AS activityChangeNote
+        FROM ACTIVITY_DETAILS ACT_DET
+		WHERE ACTIVITY_ID=#activityId#
+	    ORDER BY ACTIVITY_CHANGE_DATE DESC) page
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
+	
+	<select id="getListByColumn" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+        (SELECT DISTINCT
+            ACT.ACTIVITY_ID AS activityId, 
+            ACTIVITY_NAME AS activityName, 
+            ACT.ACTIVITY_DESCRIPTION AS activityDescription,
+            ACT.ACTIVITY_LAST_STATUS AS activityLastStatus,
+            ACT_DET.ACTIVITY_CHANGE_DATE AS activityChangeDate
+        FROM ACTIVITIES ACT
+        JOIN (
+            SELECT AD.ACTIVITY_ID, MAX(AD.ACTIVITY_CHANGE_DATE) AS ACTIVITY_CHANGE_DATE FROM ACTIVITY_DETAILS AD
+            GROUP BY AD.ACTIVITY_ID
+        ) ACT_DET ON ACT_DET.ACTIVITY_ID=ACT.ACTIVITY_ID
+        WHERE ACT.TASK_ID = #taskId#
+        <dynamic prepend="AND">
+            <isNotNull property="columnSearch">
+                   <isEqual property="columnSearch" compareValue="NAME">
+                      UPPER(ACTIVITY_NAME) LIKE UPPER('%'||#value#||'%')
+                </isEqual> 
+            </isNotNull>
+        </dynamic>
+        ORDER BY ACTIVITY_NAME ASC) page 
+        WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
+	
+	<select id="getCountByColumn" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1)
+		FROM ACTIVITIES ACT
+		JOIN (
+		    SELECT AD.ACTIVITY_ID, MAX(AD.ACTIVITY_CHANGE_DATE) AS ACTIVITY_CHANGE_DATE FROM ACTIVITY_DETAILS AD
+		    GROUP BY AD.ACTIVITY_ID
+		) ACT_DET ON ACT_DET.ACTIVITY_ID=ACT.ACTIVITY_ID
+		WHERE ACT.TASK_ID = #taskId#
+	    <dynamic prepend="AND">
+	        <isNotNull property="columnSearch">
+		      	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(ACTIVITY_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	</select>
+	
+	<select id="isAllFinished" resultClass="java.lang.Boolean" parameterClass="java.lang.Integer">
+		SELECT 
+		    CASE WHEN COUNT(1) > 0 THEN 0
+		         ELSE 1
+		    END    
+		FROM ACTIVITIES WHERE TASK_ID= #taskId# AND NVL(ACTIVITY_LAST_STATUS, 0) != 4
+	</select>
+	
+	
+	
 	<!-- show in select activity form (dashboard) -->
+	
+	<select id="getCountActivityDetail" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1)
+        FROM ACTIVITY_DETAILS ACT_DET
+		WHERE ACTIVITY_ID=#activityId# 
+	</select>
+	
 	<select id="getListByEmployeeId" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT AC.ACTIVITY_ID AS activityId, 
@@ -23,7 +130,7 @@
 		AD.ACTIVITY_STATUS AS status,
 		TSK.TASK_ASSIGNER AS taskAssigner,
 		AC.ACTIVITY_NAME AS activityName,
-		AC.DESCRIPTION AS activityDescription,
+		AC.ACTIVITY_DESCRIPTION AS activityDescription,
 		AD.ACTIVITY_CHANGE_DATE AS changeDate,
 		TSK.TASK_NAME AS taskName
 		FROM ACTIVITIES AC 
@@ -75,43 +182,6 @@
 		ORDER BY TLD.ACTIVITY_ID 
 	</select>
 	
-	<select id="getListByCol" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
-		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
-		(SELECT AC.ACTIVITY_ID AS activityId, 
-		AC.TASK_ID AS taskId,
-		AD.ACTIVITY_STATUS AS status,
-		TSK.TASK_ASSIGNER AS taskAssigner,
-		AC.ACTIVITY_NAME AS activityName,
-		AC.DESCRIPTION AS activityDescription,
-		AD.ACTIVITY_CHANGE_DATE AS changeDate,
-		TSK.TASK_NAME AS taskName
-		FROM ACTIVITIES AC 
-		LEFT JOIN ACTIVITY_DETAILS AD
-		ON AC.ACTIVITY_ID = AD.ACTIVITY_ID 
-		LEFT JOIN TASKS TSK ON 
-		AC.TASK_ID = TSK.TASK_ID
-	    <dynamic prepend="WHERE">
-	        <isNotNull property="columnSearch">
-		       	<isEqual property="columnSearch" compareValue="NAME">
-			          UPPER(ACTIVITY_NAME) LIKE UPPER('%'||#value#||'%')
-				</isEqual> 
-	        </isNotNull>
-	    </dynamic>
-	    ORDER BY ACTIVITY_NAME ASC) page 
-	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
-	</select>
-	
-	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT COUNT(1) 
-		FROM ACTIVITIES 
-	    <dynamic prepend="WHERE">
-	        <isNotNull property="columnSearch">
-		      	<isEqual property="columnSearch" compareValue="NAME">
-			          UPPER(ACTIVITY_NAME) LIKE UPPER('%'||#value#||'%')
-				</isEqual> 
-	        </isNotNull>
-	    </dynamic>
-	</select>
 	
 	<!-- Total Record in page for Select Activity form -->
 	<select id="getCountToDoListById" resultClass="java.lang.Integer" parameterClass="java.util.Map">
@@ -157,7 +227,7 @@
 	<insert id="insertActivityDetail" parameterClass="java.util.Map">
 		INSERT INTO ACTIVITY_DETAILS
 			(ACTIVITY_ID , ACTIVITY_CHANGE_DATE, ACTIVITY_STATUS, ACTIVITY_CHANGE_NOTE)  
-		VALUES (#activityId#, CURRENT_TIMESTAMP, #status#, #activityDetailNote#)
+		VALUES (#activityId#, SYSDATE, #status#, #activityDetailNote#)
 	</insert>
 	
 	<!-- Show for Progress Bar -->

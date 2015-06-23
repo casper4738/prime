@@ -19,6 +19,17 @@ public class EmployeeManagerImpl implements EmployeeManager {
 
 	public void insert(EmployeeBean e) throws SQLException {
 		try {
+			System.out.println(e.getEmployeeId()+"--");
+			System.out.println(e.getEmployeeName()+"--");
+			System.out.println(e.getAddress()+"--");
+			System.out.println(e.getContactNumber()+"--");
+			System.out.println(e.getEmail()+"--");
+			System.out.println(e.getBirthdate()+"--");
+			System.out.println(e.getGender()+"--");
+			System.out.println(e.getHireDate()+"--");
+			System.out.println(e.getDivisionId()+"--");
+			System.out.println(e.getPositionId()+"--");
+			System.out.println(e.getManagerId()+"--");
 			mapper.startTransaction();
 			mapper.insert("employee.insert", e);
 			mapper.commitTransaction();
@@ -49,6 +60,7 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	}
 	
 	public EmployeeBean getEmployeeById(Integer id) throws SQLException {
+		System.out.println(id + " ID DAPAT");
 		return (EmployeeBean) mapper.queryForObject("employee.get", id);
 	}
 

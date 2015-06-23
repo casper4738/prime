@@ -58,7 +58,8 @@
 			<section class="sidebar">
 				<div class="user-panel">
 					<div class="pull-left image">
-						<img src="resources/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image" />
+				
+						<img src="image/resize-Lighthouse.jpg" class="img-circle" alt="User Image" />
 					</div>
 					<div class="pull-left info">
 						<p>Alexander</p><a href="#"><i class="fa fa-circle text-success"></i> Online</a>
@@ -107,7 +108,7 @@
 			});
     		
     		//##1.Reload First Menu Page
-    		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.ADMIN_DASHBOARD]%>");
+    		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>");
     	});
 	</script>
 <!-- End Of Written JS -->

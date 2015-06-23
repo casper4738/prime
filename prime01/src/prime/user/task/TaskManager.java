@@ -11,11 +11,19 @@ public interface TaskManager {
 
 	public TaskBean getTaskById(Integer id) throws SQLException;
 
-	public List<TaskBean> getListByColumn(String columnSearch, String value,
-			Integer startRow, Integer endRow) throws SQLException;
-
-	public Integer getCountByColumn(String columnSearch, String value)
-			throws SQLException;
-
 	public Integer getNewId() throws SQLException;
+
+	/*Task Head*/
+	public List<TaskBean> getListByColumnHead(String columnSearch, String value, Integer startRow, Integer endRow,
+			Integer taskAssigner) throws SQLException;
+
+	public Integer getCountByColumnHead(String columnSearch, String value, Integer taskAssigner) throws SQLException;
+	/*End Task Head*/
+	
+	/*Task Subordinate*/
+	public List<TaskBean> getListByColumnSubordinate(String columnSearch, String value, Integer startRow, Integer endRow,
+			Integer taskReceiver) throws SQLException;
+
+	public Integer getCountByColumnSubordinate(String columnSearch, String value, Integer taskReceiver) throws SQLException;
+	/*End Task Subordinate*/
 }

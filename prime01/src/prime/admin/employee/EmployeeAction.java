@@ -33,7 +33,6 @@ public class EmployeeAction extends Action {
 		PositionManager tmpPositionManager = new PositionManagerImpl();
 		
 		System.out.println("Task = " + pForm.getTask());
-		
 		if(Constants.Task.GOTOMANAGER.equals(pForm.getTask())) {
 			request.setAttribute("listDivision", tmpDivisionManager.getListAll());
 			int countRows  = manager.getCountByColumnAndDivision(pForm.getColumnSearch(), pForm.getSearch(), pForm.getEmployeeBean().getDivisionId());
@@ -46,32 +45,57 @@ public class EmployeeAction extends Action {
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("choose_manager");
 		} else if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
-			//if(pForm.getManagerId() != 0) {
-			//	DivisionBean tmpDivision = tmpDivisionManager.getDivisionById(pForm.getEmployeeBean().getDivisionId());
-			//	EmployeeBean tmpManager = manager.getEmployeeById(pForm.getManagerId());
-			//	pForm.getEmployeeBean().setEmployeeId(manager.getNewId());
-			//	pForm.getEmployeeBean().setDivisionId(tmpDivision.getDivisionId());
-			//	pForm.getEmployeeBean().setDivisionName(tmpDivision.getDivisionName());
-			//	pForm.getEmployeeBean().setManagerId(tmpManager.getEmployeeId());
-			//	pForm.getEmployeeBean().setManagerName(tmpManager.getEmployeeName());
-			//	pForm.getEmployeeBean().setEmployeeLevel(tmpManager.getEmployeeLevel()+1);
-			//} else {
-				/*pForm.getEmployeeBean().setEmployeeLevel(0);*/				
-			//}
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
+			request.setAttribute("listDivision", tmpDivisionManager.getListAll());
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
+			System.out.println("Masuk Edit1");
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
+			System.out.println(pForm.getTmpId()+" Employee ID");
+			if(tmpEmployee.getManagerId() != null) {
+				System.out.println(tmpEmployee.getManagerId()+" Manager ID");
+				EmployeeBean tmpManager = manager.getEmployeeById(tmpEmployee.getManagerId());
+			}
+			pForm.setEmployeeBean(tmpEmployee);
+			System.out.println("Masuk Edit");
+			request.setAttribute("listPosition", tmpPositionManager.getListAll());
+			return mapping.findForward("edit");
+		} else if(Constants.Task.GOTORESIGN.equals(pForm.getTask())) {
+			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
+			System.out.println(pForm.getTmpId()+" Employee ID MASUK RESIGN");
 			if(tmpEmployee.getManagerId() != null) {
 				EmployeeBean tmpManager = manager.getEmployeeById(tmpEmployee.getManagerId());
 			}
 			pForm.setEmployeeBean(tmpEmployee);
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
-			return mapping.findForward("edit");
+			return mapping.findForward("resign");
 		} else if(Constants.Task.GOTOVIEW.equals(pForm.getTask())) {
 			pForm.setEmployeeBean(manager.getEmployeeById(pForm.getTmpId()));
 			return mapping.findForward("view");
+		} else if(Constants.Task.GOTODAYOFF.equals(pForm.getTask())) {
+			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
+			System.out.println(pForm.getTmpId()+" Employee ID MASUK DAYOFF");
+			if(tmpEmployee.getManagerId() != null) {
+				EmployeeBean tmpManager = manager.getEmployeeById(tmpEmployee.getManagerId());
+			}
+			pForm.setEmployeeBean(tmpEmployee);
+			request.setAttribute("listPosition", tmpPositionManager.getListAll());
+			return mapping.findForward("dayoff");
+		} else if(Constants.Task.GOTOWEEKEND.equals(pForm.getTask())) {
+			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
+			System.out.println(pForm.getTmpId()+" Employee ID MASUK WEEKEND");
+			if(tmpEmployee.getManagerId() != null) {
+				EmployeeBean tmpManager = manager.getEmployeeById(tmpEmployee.getManagerId());
+			}
+			pForm.setEmployeeBean(tmpEmployee);
+			request.setAttribute("listPosition", tmpPositionManager.getListAll());
+			return mapping.findForward("weekend");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
+			pForm.getEmployeeBean().setEmployeeId(manager.getNewId());
+			System.out.println(pForm.getDivisionId()+" DivisionId");
+			pForm.getEmployeeBean().setDivisionId(pForm.getDivisionId());
+			System.out.println(pForm.getManagerId()+" ManagerId");
+			pForm.getEmployeeBean().setManagerId(pForm.getManagerId());
 			manager.insert(pForm.getEmployeeBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {

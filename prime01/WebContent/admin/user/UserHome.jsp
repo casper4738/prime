@@ -1,4 +1,3 @@
-<%@page import="prime.constants.Constants"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
@@ -52,7 +51,7 @@
 				<div class="col-xs-12"><div class="box">
 					<div class="box-header"><h3 class="box-title">Data Manage User</h3></div>
 					
-					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
+					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('add')">
 	                    <i class="fa fa-edit"></i>Add
                     </span></p>
 					
@@ -81,29 +80,39 @@
 						<thead><tr>
 							<th>Username</th>
 							<th>Sys Level</th>
+							<th>Employee Id</th>
 							<th>Employee Name</th>
 		                    <th>Status</th>
 		                    <th>Actions</th>
 		                </tr></thead>
 		                <tbody>
-		                	<tr><td>alexander</td>
-		                        <td>Admin</td>
-		                        <td>Alexander</td>
-		                        <td align="center"><html:image src="resources/image/unlocked.png" /></td>
-		                        <td align="center">
-		                        	<html:image src="resources/image/edit.png" />
-		                        	<html:image src="resources/image/remove.png" />
-		                        </td>
-		                    </tr>
-		                    <tr><td>alexander</td>
-		                        <td>Operator</td>
-		                        <td>Alexander</td>
-		                        <td align="center"><html:image src="resources/image/locked.png" /></td>
-		                        <td align="center">
-		                        	<html:image src="resources/image/edit.png" />
-		                        	<html:image src="resources/image/remove.png" />
-		                        </td>
-		                    </tr>
+		                	<logic:notEmpty name="listUser">
+							<logic:iterate id="iter" name="listUser">
+			                	<tr>
+			                		<td><bean:write name="iter" property="userName"/> </td>
+			                		<td><bean:write name="iter" property="sysLevel"/> </td>
+			                		<td><bean:write name="iter" property="employeeId"/> </td>
+			                		<td><bean:write name="iter" property="employeeName"/> </td>
+			                        <td align="center">
+			                        <logic:equal name="iter" property="userStatus" value="1">
+			                        	<html:image src="resources/image/check-true.png" /> 
+			                        </logic:equal>
+			                        <logic:equal name="iter" property="userStatus" value="0">
+			                        	<html:image src="resources/image/check-false.png" /> 
+			                        </logic:equal>
+			                        </td>
+			                        <td align="center">
+			                        	<html:image src="resources/image/edit.png" /> 
+			                        	<html:image src="resources/image/remove.png" />
+			                        </td>
+			                    </tr>
+		                    </logic:iterate>
+							</logic:notEmpty>
+							<logic:empty name="listUser">
+								<tr>
+									<td align="center" colspan="6">DATA KOSONG</td>
+								</tr>
+							</logic:empty>
 	                   </tbody>
 		            </table></div>
 					<ul class="pagination">
@@ -138,34 +147,12 @@
 		<!-- /.content-wrapper -->
 		<jsp:include page="/content/Footer.jsp"></jsp:include>
 	</div>
-
 	<script src="resources/prime.js"></script>
 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-	<!-- 
-	<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
-	 -->
-	<script>
-		$.widget.bridge('uibutton', $.ui.button);
-	</script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	<!-- 
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-	 -->
-	<script src="resources/plugins/morris/morris.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
-	<script src="resources/plugins/knob/jquery.knob.js" type="text/javascript"></script>
-	<!-- 
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" type="text/javascript"></script>
-	 -->
-	<script src="resources/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
-	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-	<script src="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
-	<script src="resources/dist/js/pages/dashboard.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 </body>
 </html>

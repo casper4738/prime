@@ -4,11 +4,13 @@ import java.sql.Date;
 
 public class TaskBean {
 
-	private Integer taskId;
+	private Integer taskId = 0;
 	private Integer taskAssigner = 0;
 	private Integer taskReceiver = 0;
 	private Integer projectMemberId = 0;
 	private Integer taskStatus;
+	private Integer taskLastStatus;
+	private Double percentage;
 	private Date taskStartDate;
 	private Date taskEstimateDate;
 	private Date taskChangeDate;
@@ -17,6 +19,19 @@ public class TaskBean {
 	private String taskAssignerName;
 	private String taskReceiverName;
 	private String taskChangeNote;
+	
+	public TaskBean() {
+		setTaskStartDate(new java.sql.Date(new java.util.Date().getTime()));
+		setTaskEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
+	}
+	
+	public Double getPercentage() {
+		return percentage;
+	}
+
+	public void setPercentage(Double percentage) {
+		this.percentage = percentage;
+	}
 
 	public Integer getTaskId() {
 		return taskId;
@@ -56,6 +71,14 @@ public class TaskBean {
 
 	public void setTaskStatus(Integer taskStatus) {
 		this.taskStatus = taskStatus;
+	}
+
+	public Integer getTaskLastStatus() {
+		return taskLastStatus;
+	}
+
+	public void setTaskLastStatus(Integer taskLastStatus) {
+		this.taskLastStatus = taskLastStatus;
 	}
 
 	public Date getTaskStartDate() {

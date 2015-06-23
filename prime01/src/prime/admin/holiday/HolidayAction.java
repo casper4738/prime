@@ -52,7 +52,7 @@ public class HolidayAction extends Action {
 		//##1.Attribute for Table Show
 		request.setAttribute("listHoliday", list);
 		request.setAttribute("listSearchColumn", Constants.Search.HOLIDAY_SEARCHCOLUMNS);
-		
+		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 		setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		return mapping.findForward("success");
 	}

@@ -28,11 +28,10 @@ public class MenuAction extends Action {
 		tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_LOG]				, "View Log");
 		tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_SETTING]			, "General Settings");
 		tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]			, "Dashboard");
-		tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK]				, "Manage Task");
-		tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_ACTIVITY]			, "Manage Activity");
+		tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]			, "Manage Task As Head");
+		tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK_SUBORDINATE]	, "Manage Task As Subordinate");
 		tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_PROJECT]				, "Manage Project");
 		tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_REPORT]				, "View Report");
-		tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASKSUBMISSION]		, "Manage Task Submission [Frans]");
 		request.setAttribute("listPages", tmpObject);
 		
 		return mapping.findForward("success");

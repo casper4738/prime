@@ -17,10 +17,6 @@
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="skin-blue sidebar-mini">
-	<div class="wrapper">
-	
-		<jsp:include page="/content/Header.jsp"></jsp:include>
-		<div class="content-wrapper">
 			<section class="content-header">
 				<h1>Manage Role<small>management system</small>
 				</h1>
@@ -46,7 +42,7 @@
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">
-                  					<html:submit value="Save" styleClass="btn btn-primary"/>
+                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
                   			</tr>
@@ -57,8 +53,6 @@
 		        </div>
 			</section>
 		</div>
-		<!-- /.content-wrapper -->
-		<jsp:include page="/content/Footer.jsp"></jsp:include>
 	</div>
 
 	<script src="resources/prime.js"></script>
