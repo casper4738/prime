@@ -18,9 +18,10 @@
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
 	<script>
 		function chooseReceiver(managerId) {
-			document.forms[0].taskReceiver.value = managerId;
-			document.forms[0].task.value= "<%=Constants.Task.GOTOADD%>";
-			document.forms[0].submit();
+			var tmpForm = document.forms[0];
+			tmpForm.taskReceiver.value = managerId;
+			tmpForm.task.value= "<%=Constants.Task.GOTOADD%>";
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
 		function onclickradio() {
@@ -36,8 +37,9 @@
 		
 
 		function onSelectManager(value) {
-			document.forms[0].task.value= "<%=Constants.Task.GOTOMANAGER%>";
-			document.forms[0].submit();
+			var tmpForm = document.forms[0];
+			tmpForm.task.value= "<%=Constants.Task.GOTOMANAGER%>";
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
 		$('#table-1').dataTable( {
@@ -67,11 +69,11 @@
 			<div class="box-body">
            		<table align="center">
            			<tr>
-           				<td height="45px"><html:radio name="TaskUserForm" property="radioChoose" styleId="head" value="0" onclick="onclickradio()" /></td>
+           				<td height="45px"><html:radio name="TaskHeadUserForm" property="radioChoose" styleId="head" value="0" onclick="onclickradio()" /></td>
            				<td width="150px"><label for="head">Self Assign</label></td>
            				<td><input type="button" value="Next" style="display:none" class="btn bg-olive" id="myBtn" onclick="chooseReceiver(100)"/></td>
        				</tr>
-           			<tr><td width="25px"><html:radio name="TaskUserForm" property="radioChoose" styleId="subordinate" value="1" onclick="onclickradio()" /></td>
+           			<tr><td width="25px"><html:radio name="TaskHeadUserForm" property="radioChoose" styleId="subordinate" value="1" onclick="onclickradio()" /></td>
            				<td><label for="subordinate">Subordinate</label></td> 	
            				<td></td>
        				</tr>
@@ -83,20 +85,20 @@
               	<!-- Search Handler Tag -->
               	<div class="show-in-page">
 					Show per page
-					<html:select property="showInPage" name="TaskUserForm" styleId="view_data">
+					<html:select property="showInPage" name="TaskHeadUserForm" styleId="view_data">
 						<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 					</html:select>
 				</div>
 				<div class="search-table">
-					<html:form action="/TaskUser">
-	               		<html:hidden name="TaskUserForm" property="task" />
-	               		<html:hidden name="TaskUserForm" property="showInPage" />
-	               		<html:hidden name="TaskUserForm" property="taskReceiver" />
-						<html:hidden name="TaskUserForm" property="goToPage"/>
-						<html:select name="TaskUserForm" property="columnSearch" styleClass="columnSearch">
+					<html:form action="/TaskHeadUser">
+	               		<html:hidden name="TaskHeadUserForm" property="task" />
+	               		<html:hidden name="TaskHeadUserForm" property="showInPage" />
+	               		<html:hidden name="TaskHeadUserForm" property="taskReceiver" />
+						<html:hidden name="TaskHeadUserForm" property="goToPage"/>
+						<html:select name="TaskHeadUserForm" property="columnSearch" styleClass="columnSearch">
 							<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 						</html:select>
-						<html:text name="TaskUserForm" property="search" styleClass="textSearch"/>
+						<html:text name="TaskHeadUserForm" property="search" styleClass="textSearch"/>
 						<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.TASK.GOTOTASKTYPE%>')" value='Search'/>
 						<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('search')" value='Show All'/>
 					</html:form>
@@ -158,7 +160,7 @@
 						<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 						
 						<div class="paginate-3">
-							<html:text name="TaskUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+							<html:text name="TaskHeadUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 							<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
 						</div>
 					</ul>

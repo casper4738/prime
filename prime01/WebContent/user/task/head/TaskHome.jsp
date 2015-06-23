@@ -50,26 +50,26 @@
 			<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.TASK.GOTOTASKTYPE%>')">
                    <i class="fa fa-edit"></i>Add
                   </span>
-                  <span class="message"><bean:write name="TaskUserForm" property="message" /></span>
+                  <span class="message"><bean:write name="TaskHeadUserForm" property="message" /></span>
             </p>
             <!-- Search Handler Tag -->
 			<div class="show-in-page">
 				Show per page
-				<html:select name="TaskUserForm" property="showInPage" onchange="change(this.value)" >
+				<html:select name="TaskHeadUserForm" property="showInPage" onchange="change(this.value)" >
 					<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 				</html:select>
 				<input type="button" class="btn bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Refresh'/>
 			</div>
 			<div class="search-table">
-				<html:form action="/TaskUser" >
-					<html:hidden name="TaskUserForm" property="task"/>
-					<html:hidden name="TaskUserForm" property="taskId"/>
-					<html:hidden name="TaskUserForm" property="goToPage"/>
-					<html:hidden name="TaskUserForm" property="showInPage"/>
-					<html:select name="TaskUserForm" property="columnSearch" styleClass="columnSearch">
+				<html:form action="/TaskHeadUser" >
+					<html:hidden name="TaskHeadUserForm" property="task"/>
+					<html:hidden name="TaskHeadUserForm" property="taskId"/>
+					<html:hidden name="TaskHeadUserForm" property="goToPage"/>
+					<html:hidden name="TaskHeadUserForm" property="showInPage"/>
+					<html:select name="TaskHeadUserForm" property="columnSearch" styleClass="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
-					<html:text name="TaskUserForm" property="search" styleClass="textSearch"/>
+					<html:text name="TaskHeadUserForm" property="search" styleClass="textSearch"/>
 					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('search')" value='Search'/>
 					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchAll('search')" value='Show All'/>
 				</html:form>
@@ -155,7 +155,7 @@
 				<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 				
 				<div class="paginate-3">
-					<html:text name="TaskUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+					<html:text name="TaskHeadUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 					<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
 				</div>
 			</ul>

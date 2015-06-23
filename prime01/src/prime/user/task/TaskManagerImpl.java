@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import prime.admin.division.DivisionBean;
 import prime.utility.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -19,7 +18,6 @@ public class TaskManagerImpl implements TaskManager {
 
 	@Override
 	public void insert(TaskBean e) throws SQLException {
-		// TODO Auto-generated method stub
 		try {
 			mapper.startTransaction();
 			mapper.insert("task.insert", e);
@@ -31,7 +29,6 @@ public class TaskManagerImpl implements TaskManager {
 	
 	@Override
 	public void insertDetail(TaskBean e) throws SQLException {
-		// TODO Auto-generated method stub
 		try {
 			mapper.startTransaction();
 			mapper.insert("task.insertDetail", e);
@@ -43,36 +40,59 @@ public class TaskManagerImpl implements TaskManager {
 
 	@Override
 	public TaskBean getTaskById(Integer id) throws SQLException {
-		// TODO Auto-generated method stub
 		return (TaskBean) mapper.queryForObject("task.get", id);
 	}
-
+	
 	@Override
-	public List<TaskBean> getListByColumn(String columnSearch, String value,
-			Integer startRow, Integer endRow) throws SQLException {
-		// TODO Auto-generated method stub
+	public Integer getNewId() throws SQLException {
+		return (Integer) mapper.queryForObject("task.getNewId", null);
+	}
+
+	/*Task Head*/
+	@Override
+	public List<TaskBean> getListByColumnHead(String columnSearch, String value, Integer startRow, Integer endRow, 
+			Integer taskAssigner) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
-		return mapper.queryForList("task.getListByColumn", map);
+		map.put("taskAssigner", taskAssigner);
+		return mapper.queryForList("task.getListByColumnHead", map);
 	}
 
 	@Override
-	public Integer getCountByColumn(String columnSearch, String value)
-			throws SQLException {
-		// TODO Auto-generated method stub
+	public Integer getCountByColumnHead(String columnSearch, String value, Integer taskAssigner) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
-		return (Integer) mapper.queryForObject("task.getCountListByCol", map);
+		map.put("taskAssigner", taskAssigner);
+		return (Integer) mapper.queryForObject("task.getCountByColumnHead", map);
+	}
+	/*End Task Head*/
+	
+	/*Task Subordinate*/
+	@Override
+	public List<TaskBean> getListByColumnSubordinate(String columnSearch, String value, Integer startRow, Integer endRow, 
+			Integer taskReceiver) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("taskReceiver", taskReceiver);
+		return mapper.queryForList("task.getListByColumnSubordinate", map);
 	}
 
 	@Override
-	public Integer getNewId() throws SQLException {
-		// TODO Auto-generated method stub
-		return (Integer) mapper.queryForObject("task.getNewId", null);
+	public Integer getCountByColumnSubordinate(String columnSearch, String value, Integer taskReceiver) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);
+		map.put("taskReceiver", taskReceiver);
+		return (Integer) mapper.queryForObject("task.getCountByColumnSubordinate", map);
 	}
+	/*End Task Subordinate*/
+
 
 }

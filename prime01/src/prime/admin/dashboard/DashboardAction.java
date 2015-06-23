@@ -13,8 +13,7 @@ public class DashboardAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-	//	ImageUtil.decode(ImageUtil.encodeToString("E:\\prime\\prime01\\WebContent\\image\\Lighthouse.jpg"));
+//		ImageUtil.decode(ImageUtil.encodeToString(request.getContextPath() + "/image/Lighthouse.jpg"));
 		return mapping.findForward("success");
 	}
-	
 }
