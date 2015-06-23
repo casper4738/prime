@@ -6,10 +6,14 @@
 <!DOCTYPE html>
 <html>
 <head> 
-<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
-	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<!-- CSS -->
+	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	<!-- End of CSS -->
 	
+	<!-- JS -->
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$('#table-1').dataTable( {
 			paging    : false,
@@ -21,32 +25,36 @@
 	    });
 		
 		function flyToTaskDetail(task, value) {
-			document.forms[0].task.value = task;
-			document.forms[0].taskId.value = value;
-			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = task;
+			tmpForm.taskId.value = value;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
 		function flyToChangeStatusAct(task, activityId, activityChangeDate) {
-			document.forms[0].task.value = task;
-			document.forms[0].activityId.value = activityId;
-			document.forms[0].activityChangeDate.value = activityChangeDate;
-			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = task;
+			tmpForm.activityId.value = activityId;
+			tmpForm.activityChangeDate.value = activityChangeDate;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
 		function flyToEditDeleteAct(task, activityId) {
-			document.forms[0].task.value = task;
-			document.forms[0].activityId.value = activityId;
-			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = task;
+			tmpForm.activityId.value = activityId;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 	</script>
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage Tasks<small>Task Management</small></h1>
+		<h1>Manage Tasks</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Task & Activities</li>
-		  	<li class="active">Task Detail</li>
+			<li>Tasks & Activities</li>
+			<li>As Head</li>
+			<li class="active">Task Detail</li>
 		</ol>
 	</section>
 	
@@ -55,50 +63,54 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Data Task</h3></div>
 			<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-			<tr><td>Task Name : <bean:write name="TaskUserForm" property="taskBean.taskName"/> </td>
-				<td>Task Assigner : <bean:write name="TaskUserForm" property="taskBean.taskAssignerName" /> </td>
+			<tr><td>Task Name : <bean:write name="TaskHeadUserForm" property="taskBean.taskName"/> </td>
+				<td>Task Assigner : <bean:write name="TaskHeadUserForm" property="taskBean.taskAssignerName" /> </td>
 			</tr>
-			<tr><td>Start Date : <bean:write name="TaskUserForm" property="taskBean.taskStartDate" format="dd MMMM yyyy"/> </td>
-				<td>Task Receiver : <bean:write name="TaskUserForm" property="taskBean.taskReceiverName"/> </td>
-			</tr><tr><td>Estimated Date : <bean:write name="TaskUserForm" property="taskBean.taskEstimateDate" format="dd MMMM yyyy" />
+			<tr><td>Start Date : <bean:write name="TaskHeadUserForm" property="taskBean.taskStartDate" format="dd MMMM yyyy"/> </td>
+				<td>Task Receiver : <bean:write name="TaskHeadUserForm" property="taskBean.taskReceiverName"/> </td>
+			</tr><tr><td>Estimated Date : <bean:write name="TaskHeadUserForm" property="taskBean.taskEstimateDate" format="dd MMMM yyyy" />
 				</td><td>Status : </td>
 			</tr>
-			<tr><td colspan="2">Description : <bean:write name="TaskUserForm" property="taskBean.taskDescription" /> </td></tr>
+			<tr><td colspan="2">Description : <bean:write name="TaskHeadUserForm" property="taskBean.taskDescription" /> </td></tr>
 			</table>
 			
-			<p><span class="message"><bean:write name="TaskUserForm" property="message" /></span></p>
+			
+			<p><span class="message"><bean:write name="TaskHeadUserForm" property="message" /></span></p>
+			<br/><br/>
 			<div class="form-action"><table align="center">
                <tr>	<td style="padding:5px;">
                			<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')"/></td>
-               		<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/></td>
+               		<td><logic:equal name="isSubmit" value='true'>
+		               		<input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/>
+	               	</logic:equal></td>
                </tr>
             </table></div>
 			
 			<div class="show-in-page">
 				Show per page
-				<html:select name="TaskUserForm" property="showInPage" onchange="change(this.value)" >
+				<html:select name="TaskHeadUserForm" property="showInPage" onchange="change(this.value)" >
 					<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 				</html:select>
 			</div>
 			
 			<div class="search-table">
-				<html:form action="/TaskUser" >
-					<html:hidden name="TaskUserForm" property="task"/>
-					<html:hidden name="TaskUserForm" property="taskBean.taskId"/>
-					<html:hidden name="TaskUserForm" property="taskId"/>
-					<html:hidden name="TaskUserForm" property="activityId"/>
-					<html:hidden name="TaskUserForm" property="activityChangeDate"/>
-					<html:hidden name="TaskUserForm" property="goToPage"/>
-					<html:hidden name="TaskUserForm" property="showInPage"/>
-					<html:select name="TaskUserForm" property="columnSearch" styleClass="columnSearch">
+				<html:form action="/TaskHeadUser" >
+					<html:hidden name="TaskHeadUserForm" property="task"/>
+					<html:hidden name="TaskHeadUserForm" property="taskBean.taskId"/>
+					<html:hidden name="TaskHeadUserForm" property="taskId"/>
+					<html:hidden name="TaskHeadUserForm" property="activityId"/>
+					<html:hidden name="TaskHeadUserForm" property="activityChangeDate"/>
+					<html:hidden name="TaskHeadUserForm" property="goToPage"/>
+					<html:hidden name="TaskHeadUserForm" property="showInPage"/>
+					<html:select name="TaskHeadUserForm" property="columnSearch" styleClass="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
-					<html:text name="TaskUserForm" property="search" styleClass="textSearch"/>
+					<html:text name="TaskHeadUserForm" property="search" styleClass="textSearch"/>
 					<input type="submit" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOEDIT%>')" class="buttonSearch myButton" value='Search'>
 				</html:form>
 			</div>
 			<div class="box-body">
-				<table class="table table-bordered table-striped table-hover">
+				<table id="table-1" class="table table-bordered table-striped table-hover">
 				<thead><tr>
 					<th>Activity Name</th>
 					<th>Description</th>
@@ -114,7 +126,7 @@
 	                		<td><bean:write name="iter" property="activityDescription"/></td>
 	                		<td align="center" width="150px"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy hh:mm:ss"/></td>
 	                		<td align="center" width="80px">
-		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.RECEIVE+""%>'>
+		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.CREATE+""%>'>
 		                			<span class="label label-warning">Receive</span>
 		                		</logic:equal>
 		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.SUBMIT+""%>'>
@@ -135,7 +147,6 @@
 	                		</td>
 	                		<td align="center">
 	                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.GOTOEDIT%>', '<bean:write name="iter" property="activityId"/>')" src="resources/image/edit.png" />
-	                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.DODELETE%>', '<bean:write name="iter" property="activityId"/>')" src="resources/image/remove.png" />
 	                        	<input type="image" onclick="flyToChangeStatusAct('<%=Constants.Task.ACTIVITY.GOTOCHANGESTATUS%>', 
 	                        	'<bean:write name="iter" property="activityId"/>',
 	                        	'<bean:write name="iter" property="activityChangeDate" format="yyyy-MM-dd hh:mm:ss"/>'
@@ -144,11 +155,6 @@
 	                    </tr> 
                     </logic:iterate>
 					</logic:notEmpty>
-					<logic:empty name="listActivity">
-						<tr>
-							<td align="center" colspan="5">DATA KOSONG</td>
-						</tr>
-					</logic:empty>
                   </tbody>
             </table></div>
 			<ul class="pagination">
@@ -167,7 +173,7 @@
 				<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 				
 				<div class="paginate-3">
-					<html:text name="TaskUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+					<html:text name="TaskHeadUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 					<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
 				</div>
 			</ul>

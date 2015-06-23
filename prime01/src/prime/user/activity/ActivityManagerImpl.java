@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import prime.admin.division.DivisionBean;
 import prime.utility.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -53,7 +52,6 @@ public class ActivityManagerImpl implements ActivityManager {
 	}
 
 	public List<ActivityBean> getToDoListById(Integer id) throws SQLException {
-		System.out.println(id + " id");
 		return mapper.queryForList("activity.getToDoListById", id);
 	}
 
@@ -70,6 +68,27 @@ public class ActivityManagerImpl implements ActivityManager {
 		map.put("activityChangeDate", activityChangeDate);
 		return (ActivityBean) mapper.queryForObject("activity.getDetail", map);
 	}
+	
+	public List<ActivityBean> getListActivityDetail(String columnSearch, String value, Integer startRow, Integer endRow, Integer activityId) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("activityId", activityId);
+		return mapper.queryForList("activity.getListActivityDetail", map);
+	}
+	
+
+	public Integer getCountActivityDetail(String columnSearch, String value,Integer activityId)
+			throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);
+		map.put("activityId", activityId);
+		return (Integer) mapper.queryForObject("activity.getCountActivityDetail",map);
+	}
+
 	public List<ActivityBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow, Integer taskId) 
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -85,12 +104,18 @@ public class ActivityManagerImpl implements ActivityManager {
 		return (Integer) mapper.queryForObject("activity.getNewId", null);
 	}
 
-	public Integer getCountByColumn(String columnSearch, String value)
+	public Integer getCountByColumn(String columnSearch, String value, Integer taskId)
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
+		map.put("taskId", taskId);
 		return (Integer) mapper.queryForObject("activity.getCountByColumn",map);
+	}
+	
+	
+	public Boolean isAllFinished(Integer taskId) throws SQLException {
+		return (Boolean) mapper.queryForObject("activity.isAllFinished",taskId);
 	}
 
 	@Override

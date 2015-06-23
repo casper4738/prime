@@ -115,7 +115,7 @@ public interface Constants {
 	//##D.Standard Value
 	//---1.Standard Status Value
 	static interface Status {
-		final int RECEIVE  = 0;
+		final int CREATE   = 0;
 		final int PROGRESS = 1;
 		final int PAUSE    = 2;
 		final int SUBMIT   = 3;
@@ -189,22 +189,23 @@ public interface Constants {
 	
 	//##J.Menu Handling
 	public static final  String[] PAGES_LIST = new String[]{
-															"Login.do",				//0
-															"Menu.do",				//1
-															"DashboardAdmin.do",	//2
-															"UserAdmin.do",			//3
-															"EmployeeAdmin.do",		//4
-															"DivisionAdmin.do",		//5
-															"PositionAdmin.do",		//6
-															"RoleAdmin.do",			//7
-															"HolidayAdmin.do",		//8
-															"#",					//9
-															"SettingAdmin.do",		//10
-															"DashboardUser.do",		//11
-															"ProjectUser.do",		//12
-															"TaskUser.do",			//13
-															"ActivityUser.do",		//14
-															"TaskSubmissionUser.do",//15
+															"Login.do",				 //0
+															"Menu.do",				 //1
+															"DashboardAdmin.do",	 //2
+															"UserAdmin.do",			 //3
+															"EmployeeAdmin.do",		 //4
+															"DivisionAdmin.do",		 //5
+															"PositionAdmin.do",		 //6
+															"RoleAdmin.do",			 //7
+															"HolidayAdmin.do",		 //8
+															"#",					 //9
+															"SettingAdmin.do",		 //10
+															"DashboardUser.do",		 //11
+															"ProjectUser.do",		 //12
+															"TaskHeadUser.do",		 //13
+															"TaskSubordinateUser.do",//14
+															"ActivityUser.do",		 //15
+															"TaskSubmissionUser.do", //16
 															"#"
 												};
 	static interface Page {
@@ -221,9 +222,9 @@ public interface Constants {
 		static int ADMIN_SETTING		= 10;
 		static int USER_DASHBOARD		= 11;
 		static int USER_PROJECT			= 12;
-		static int USER_TASK			= 13;
-		static int USER_ACTIVITY		= 14;
-		static int USER_TASKSUBMISSION	= 15;
+		static int USER_TASK_HEAD		= 13;
+		static int USER_TASK_SUBORDINATE= 14;
+		static int USER_ACTIVITY		= 15;
 		static int USER_REPORT			= 16;
 	}
 
