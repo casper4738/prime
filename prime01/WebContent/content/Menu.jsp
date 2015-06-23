@@ -108,7 +108,7 @@
 			});
     		
     		//##1.Reload First Menu Page
-    		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_TASK]%>");
+    		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>");
     	});
 	</script>
 <!-- End Of Written JS -->
