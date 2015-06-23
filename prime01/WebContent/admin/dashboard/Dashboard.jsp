@@ -30,7 +30,7 @@
 					<img class="photo" src="image/resize-Lighthouse.jpg" />
 				</div>
 
-				
+
 			</section>
 
 			<section class="col-lg-5 connectedSortable">
