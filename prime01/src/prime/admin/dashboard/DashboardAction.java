@@ -8,9 +8,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import prime.utility.ImageUtil;
-import prime.utility.PrimeUtil;
-
 public class DashboardAction extends Action {
 
 	@Override
