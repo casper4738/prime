@@ -17,6 +17,9 @@ public interface EmployeeManager {
 	public List<EmployeeBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow)
 			throws SQLException;
 	
+	public List<EmployeeBean> getListEmployeeHead(String columnSearch, String value,  Integer positionLevel, Integer startRow, Integer endRow)
+			throws SQLException;
+	
 	public List<EmployeeBean> getListByColumnAndDivision(String columnSearch, String value, Integer divisionId, Integer startRow, Integer endRow)
 			throws SQLException;
 	
@@ -26,4 +29,4 @@ public interface EmployeeManager {
 			throws SQLException;
 	
 	public Integer getNewId() throws SQLException;
-}
+}  

@@ -5,7 +5,7 @@ public class EmployeeBean {
 	private Integer gender = 0;
 	private Integer divisionId = 0;
 	private Integer positionId = 0;
-	private Integer employeeLevel = 0;
+	/*private Integer employeeLevel = 0;*/
 	private Integer managerId = 0;
 	private Integer contactNumber;
 	private String employeeName;
@@ -44,12 +44,12 @@ public class EmployeeBean {
 	public void setPositionId(Integer positionId) {
 		this.positionId = positionId;
 	}
-	public Integer getEmployeeLevel() {
+	/*public Integer getEmployeeLevel() {
 		return employeeLevel;
 	}
 	public void setEmployeeLevel(Integer employeeLevel) {
 		this.employeeLevel = employeeLevel;
-	}
+	}*/
 	public Integer getManagerId() {
 		return managerId;
 	}

@@ -78,6 +78,13 @@ public interface Constants {
 				put("DESCRIPTION", "DECRIPTION HOLIDAY");
 			}
 		});
+		
+		static final Map<String, String>PROJECT_SEARCHCOLUMNS = Collections.unmodifiableMap(
+			new LinkedHashMap<String, String>() {{
+				put("NAME", "Project Name");
+				put("DESCRIPTION", "Project Description");
+			}
+		});
 	}
 
 	//##C.Page Handling

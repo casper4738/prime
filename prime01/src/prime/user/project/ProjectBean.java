@@ -2,13 +2,26 @@ package prime.user.project;
 
 import java.sql.Date;
 
-public class ProjectBean {
+import prime.admin.employee.EmployeeBean;
+
+public class ProjectBean extends EmployeeBean {
 	private Integer projectId;
 	private String projectName;
 	private Integer projectReceiver;
 	private Integer projectAssigner;
 	private String projectDescription;
-	private String projectStatus;
+	private Integer projectStatus;
+	private Date projectStartDate;
+	private Date projectEstimateDate;
+	private String roleName;
+	private Integer projectMemberId;
+	private String projectChangeNote;
+	public String getProjectChangeNote() {
+		return projectChangeNote;
+	}
+	public void setProjectChangeNote(String projectChangeNote) {
+		this.projectChangeNote = projectChangeNote;
+	}
 	public Integer getProjectId() {
 		return projectId;
 	}
@@ -51,7 +64,24 @@ public class ProjectBean {
 	public void setProjectEstimateDate(Date projectEstimateDate) {
 		this.projectEstimateDate = projectEstimateDate;
 	}
-	private Date projectStartDate;
-	private Date projectEstimateDate;
+	public Integer getProjectStatus() {
+		return projectStatus;
+	}
+	public void setProjectStatus(Integer projectStatus) {
+		this.projectStatus = projectStatus;
+	}
+	public String getRoleName() {
+		return roleName;
+	}
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
+	public Integer getProjectMemberId() {
+		return projectMemberId;
+	}
+	public void setProjectMemberId(Integer projectMemberId) {
+		this.projectMemberId = projectMemberId;
+	}
+	
 	
 }

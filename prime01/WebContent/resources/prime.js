@@ -4,9 +4,13 @@ function flyToPage(task) {
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));
 }
 
+function dosubmit() {
+	var tmpForm = document.forms[0];
+	menuLoadHandler(tmpForm.action, serialize(tmpForm));
+}
+
 function flyToEditDelete(task, value, confirmMessage) {
 	var tmpForm = document.forms[0]; 
-	
 	if(confirmMessage != null){
 		if(!confirm(confirmMessage))	
 			return;
