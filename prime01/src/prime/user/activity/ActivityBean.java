@@ -11,6 +11,10 @@ public class ActivityBean extends TaskBean {
 	private String activityChangeNote;
 	private String activityLastStatus;
 	private java.sql.Date activityChangeDate;
+	
+	public ActivityBean() {
+		setActivityChangeDate(new java.sql.Date(new java.util.Date().getTime()));
+	}
 
 	public Integer getActivityId() {
 		return activityId;

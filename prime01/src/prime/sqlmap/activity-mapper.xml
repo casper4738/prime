@@ -227,7 +227,7 @@
 	<insert id="insertActivityDetail" parameterClass="java.util.Map">
 		INSERT INTO ACTIVITY_DETAILS
 			(ACTIVITY_ID , ACTIVITY_CHANGE_DATE, ACTIVITY_STATUS, ACTIVITY_CHANGE_NOTE)  
-		VALUES (#activityId#, CURRENT_TIMESTAMP, #status#, #activityDetailNote#)
+		VALUES (#activityId#, SYSDATE, #status#, #activityDetailNote#)
 	</insert>
 	
 	<!-- Show for Progress Bar -->

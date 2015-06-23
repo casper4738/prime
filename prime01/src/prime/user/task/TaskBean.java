@@ -20,6 +20,11 @@ public class TaskBean {
 	private String taskReceiverName;
 	private String taskChangeNote;
 	
+	public TaskBean() {
+		setTaskStartDate(new java.sql.Date(new java.util.Date().getTime()));
+		setTaskEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
+	}
+	
 	public Double getPercentage() {
 		return percentage;
 	}

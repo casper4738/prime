@@ -12,7 +12,6 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 		with transaction management. They are all optional (see the Developer Guide 
 		for more). -->
 	<settings useStatementNamespaces="true" />
-	
 	<!-- Type aliases allow you to use a shorter name for long fully qualified 
 		class names. -->
 	<!-- <typeAlias alias="order" type="testdomain.Order"/> -->

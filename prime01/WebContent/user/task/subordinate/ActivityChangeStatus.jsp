@@ -28,6 +28,11 @@
 			document.forms[0].activityStatus.value = value;
 			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
 		}
+		
+		function dosubmit(value) {
+			document.forms[0].activityStatus.value = value;
+			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
+		}
 	</script>
 </head> 
 <body class="skin-blue sidebar-mini">

@@ -6,6 +6,19 @@
 <!DOCTYPE html>
 <html>
 <head> 
+	<script type="text/javascript">
+		function doback() {
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = "<%=Constants.Task.GOTOVIEW%>";
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+		
+		function docancel() {
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = "success";
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+    </script>
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
@@ -26,6 +39,7 @@
 			<div class="box-body">
                 	<html:form action="/TaskSubordinateUser">
                 		<html:hidden name="TaskSubordinateUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOADD%>"/>
+                		<html:hidden name="TaskHeadUserForm" property="taskId" />
                 		<html:hidden name="TaskSubordinateUserForm" property="activityBean.activityId" />
                 		<html:hidden name="TaskSubordinateUserForm" property="activityBean.taskId" />
                 		<html:hidden name="TaskSubordinateUserForm" property="activityBean.activityStatus" />
@@ -47,7 +61,8 @@
                 			<tr>
                 				<td colspan="6" align="center">
                 					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
-                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+                					<html:button property="" value="Batal" styleClass="btn btn-default" onclick="doback()"/>
+                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="docancel()"/>
                 				</td>
                 			</tr>
                 		</table>
