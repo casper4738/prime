@@ -2,6 +2,10 @@
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
+<%@page import="java.text.SimpleDateFormat" %>  
+<%@page import="java.util.Date" %>  
+<%@page import="java.text.DateFormat" %>  
+<%@ page import="prime.admin.employee.EmployeeBean" %>
 
 <!DOCTYPE html>
 <html>
@@ -243,7 +247,19 @@
 						                		<td><bean:write name="iter" property="startFrom"/> </td>
 						                		<td><bean:write name="iter" property="weekEnd"/> </td>
 						                		<td>
-						                			<input type="button" property="" value="Edit" styleClass="btn btn-default" onclick=""/>
+						                			<%-- <logic:lessThan name="iter" property="startFrom" value="24/24/2015"> --%>
+						                			<% 
+							                			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+							                			Date date = new Date();
+							                			System.out.println(dateFormat.format(date));
+							                			//System.out.println(startFrom);
+							                			/*  EmployeeBean eBean = (EmployeeBean) request.getAttribute("listWeekendByEmployeeId");
+							                			 System.out.println(eBean.getStartFrom()+" --"); */
+						                				//if(.after(date)){
+						                			%>
+              											<input type="button" property="" value="Edit" class="btn btn-default" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDITWEEKEND%>', '<bean:write name="iter" property="startFrom"/>')"/>
+						                			<%   //}%>	
+						                				<%-- </logic:lessThan> --%>
 						                		</td>
 						                	</tr>
 							           	</logic:iterate>

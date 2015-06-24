@@ -68,38 +68,38 @@
                 	<html:form action="/ProjectUser">
                 		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectName" />
-                		<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner" />
-                		<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver" />
+                		<html:hidden name="ProjectUserForm" property="projectBean.employeeId" />
+                		<html:hidden name="ProjectUserForm" property="projectBean.roleId" />
                 		<table class="form-input" align="center">
                 			<tr>
-                				<td>Task Name</td>
+                				<td  width="100px">Task Name</td>
                 				<td>:</td>
-                				<td><html:text name="ProjectUserForm" property="projectBean.projectName" styleClass="form-control"/></td>
+                				<td><html:text name="ProjectUserForm" property="projectBean.taskName" styleClass="form-control"/></td>
                 			</tr>
                 			
                 			<tr>
                 				<td>Member Name</td>
                 				<td>:</td>
-                				<td><html:text name="ProjectUserForm" property="projectBean.projectName" styleClass="form-control"/></td>
+                				<td><html:text name="ProjectUserForm" property="projectBean.employeeName" styleClass="form-control"/></td>
                 			</tr>
                 			
                 			<tr>
                 				<td>Role</td>
                 				<td>:</td>
-                				<td><html:text name="ProjectUserForm" property="projectBean.projectName" styleClass="form-control"/></td>
+                				<td><html:text name="ProjectUserForm" property="projectBean.roleName" styleClass="form-control"/></td>
                 			</tr> 	
                 			<tr>
                 				<td>Start Date</td>
                 				<td>:</td>
                 				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                					<html:text name="ProjectUserForm" property="projectBean.projectStartDate" styleClass="form-control" styleId="start-date"/></td>
+                					<html:text name="ProjectUserForm" property="projectBean.taskStartDate" styleClass="form-control" styleId="start-date"/></td>
                 					</div>
                 			</tr>
                 			<tr>
                 				<td>Estimate Date</td>
                 				<td>:</td>
                 				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                					<html:text name="ProjectUserForm" property="projectBean.projectEstimateDate" styleClass="form-control" styleId="estimate-date"/>
+                					<html:text name="ProjectUserForm" property="projectBean.taskEstimateDate" styleClass="form-control" styleId="estimate-date"/>
 							</div>
 						</td>
                 			</tr>
@@ -108,7 +108,7 @@
                 			<tr>
                 				<td>Project Description</td>
                 				<td>:</td>
-                				<td><html:textarea name="ProjectUserForm" property="projectBean.projectDescription" styleClass="form-control"></html:textarea></td>
+                				<td><html:textarea name="ProjectUserForm" property="projectBean.taskDescription" styleClass="form-control"></html:textarea></td>
                 				
                 			</tr>
                 			

@@ -29,6 +29,7 @@ public class EmployeeBean {
 	private String weekEnd;
 	private String monthYear;
 	private Date mondayDate;
+	private Byte filePic;
 	
 	public EmployeeBean() {
 		setHireDate(new java.sql.Date(new java.util.Date().getTime()));
@@ -134,12 +135,14 @@ public class EmployeeBean {
 		return resignDate;
 	}
 	public void setResignDate(Date resignDate) {
+		System.out.println(resignDate + "ResignDate");
 		this.resignDate = resignDate;
 	}
 	public Date getHireDate() {
 		return hireDate;
 	}
 	public void setHireDate(Date hireDate) {
+		System.out.println(hireDate + "hireDate");
 		this.hireDate = hireDate;
 	}
 	public Date getStartDate() {
@@ -195,6 +198,14 @@ public class EmployeeBean {
 	}
 	public void setWeekEnd(String weekEnd) {
 		this.weekEnd = weekEnd;
+	}
+
+	public Byte getFilePic() {
+		return filePic;
+	}
+
+	public void setFilePic(Byte filePic) {
+		this.filePic = filePic;
 	}
 
 }

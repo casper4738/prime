@@ -39,7 +39,7 @@
 			<div class="box-body">
                 	<html:form action="/TaskSubordinateUser">
                 		<html:hidden name="TaskSubordinateUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOEDIT%>"/>
-                		<html:hidden name="TaskHeadUserForm" property="taskId" />
+                		<html:hidden name="TaskSubordinateUserForm" property="taskId" />
                 		<html:hidden name="TaskSubordinateUserForm" property="activityBean.activityId" />
                 		<html:hidden name="TaskSubordinateUserForm" property="activityBean.taskId" />
                 		<html:hidden name="TaskSubordinateUserForm" property="activityBean.activityStatus" />
@@ -49,7 +49,7 @@
                 				<td width="150px">Activity Name</td>
                 				<td>: </td>
                 				<td>
-                				<td><html:text name="TaskSubordinateUserForm" property="activityBean.activityName" styleClass="form-control"/></td>
+                				<td><html:text name="TaskSubordinateUserForm" property="activityBean.activityName" styleClass="form-control" disabled="true"/></td>
                 			</tr>
                 			
                 			<tr>

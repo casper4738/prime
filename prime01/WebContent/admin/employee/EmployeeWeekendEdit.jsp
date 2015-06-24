@@ -159,12 +159,9 @@
 									<td>Start Weekend</td>
 									<td>:</td>
 									<td>
-										<html:select name="EmployeeAdminForm"
-											property="employeeBean.monthYear" styleClass="form-control"
-											styleId="monthYear" onchange="getMondays(this)">
-											<html:option value="">--Select--</html:option>
-											<html:optionsCollection name="listMonthYear" label="value" value="key" />
-										</html:select>
+										<html:text name="EmployeeAdminForm"
+											property="employeeBean.employeeName"
+											styleClass="form-control" disabled="true" />
 									</td>			
 								</tr>
 								<tr>

@@ -47,6 +47,19 @@ public class TaskManagerImpl implements TaskManager {
 	public Integer getNewId() throws SQLException {
 		return (Integer) mapper.queryForObject("task.getNewId", null);
 	}
+	
+	@Override
+	public Boolean isAlreadySubmit(Integer taskId) throws SQLException {
+		return (Boolean) mapper.queryForObject("task.isAlreadySubmit",taskId);
+	}
+
+	@Override
+	public Boolean isCheckStatus(Integer taskId, Integer status) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("taskId", taskId);
+		map.put("status", status);
+		return (Boolean) mapper.queryForObject("task.isCheckStatus",map);
+	}
 
 	/*Task Head*/
 	@Override

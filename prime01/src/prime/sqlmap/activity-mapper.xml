@@ -18,65 +18,81 @@
 	
 	<update id="update" parameterClass="prime.user.activity.ActivityBean">
 		UPDATE ACTIVITIES SET 
-			ACTIVITY_NAME=#activityName#, 
-			ACTIVITY_DESCRIPTION=#activityDescription#
-		WHERE ACTIVITY_ID=#activityId#
+			ACTIVITY_DESCRIPTION = #activityDescription#
+		WHERE 
+			ACTIVITY_ID=#activityId#
 	</update>
 	
 	<select id="getNewId" resultClass="java.lang.Integer">
-		SELECT NVL(MAX(ACTIVITY_ID)+1, 1) 
-		FROM ACTIVITIES
+		SELECT 
+			NVL(MAX(ACTIVITY_ID)+1, 1) 
+		FROM 
+			ACTIVITIES
 	</select>
 	
 	<select id="get" resultClass="prime.user.activity.ActivityBean" parameterClass="java.lang.Integer">
-		SELECT ACTIVITY_ID AS activityId, 
-			TASK_ID AS taskId,
-			ACTIVITY_NAME AS activityName,
-			ACTIVITY_DESCRIPTION AS  activityDescription
-		FROM ACTIVITIES
-		WHERE ACTIVITY_ID=#id#
+		SELECT
+			ACTIVITY_ID 			AS activityId, 
+			TASK_ID 				AS taskId,
+			ACTIVITY_NAME 			AS activityName,
+			ACTIVITY_DESCRIPTION 	AS activityDescription
+		FROM 
+			ACTIVITIES
+		WHERE 
+			ACTIVITY_ID=#id#
 	</select>
 	
 	<select id="getDetail" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
-		SELECT ACTIVITY_NAME AS activityName,
-			ACT.ACTIVITY_ID AS activityId, 
-		    ACTIVITY_NAME AS activityName, 
-		    ACT.ACTIVITY_DESCRIPTION AS activityDescription,
+		SELECT 
+			ACTIVITY_NAME 				 AS activityName,
+			ACT.ACTIVITY_ID 			 AS activityId, 
+		    ACTIVITY_NAME 				 AS activityName, 
+		    ACT.ACTIVITY_DESCRIPTION 	 AS activityDescription,
 		    ACT_DET.ACTIVITY_CHANGE_DATE AS activityChangeDate,
-		    ACT.ACTIVITY_LAST_STATUS AS activityLastStatus,
-			TASK.TASK_NAME AS taskName
-        FROM ACTIVITIES ACT
-        JOIN ACTIVITY_DETAILS ACT_DET ON ACT_DET.ACTIVITY_ID=ACT.ACTIVITY_ID
-        JOIN TASKS TASK ON TASK.TASK_ID = ACT.TASK_ID
-		WHERE ACT_DET.ACTIVITY_ID=#activityId# 
-			AND TO_CHAR(ACTIVITY_CHANGE_DATE, 'yyyy-mm-dd hh:mi:ss') = #activityChangeDate#
+		    ACT.ACTIVITY_LAST_STATUS 	 AS activityLastStatus,
+			TASK.TASK_NAME 				 AS taskName
+        FROM 
+        	ACTIVITIES ACT
+        JOIN 
+        	ACTIVITY_DETAILS ACT_DET ON ACT_DET.ACTIVITY_ID=ACT.ACTIVITY_ID
+        JOIN 
+        	TASKS TASK ON TASK.TASK_ID = ACT.TASK_ID
+		WHERE 
+			ACT_DET.ACTIVITY_ID=#activityId# 
+		AND TO_CHAR(ACT_DET.ACTIVITY_CHANGE_DATE, 'yyyy-mm-dd hh24:mi:ss') = #activityChangeDate#
 	</select>
 	
 	<select id="getListActivityDetail" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
-		(SELECT ACTIVITY_CHANGE_DATE AS activityChangeDate,
-			ACTIVITY_STATUS AS activityStatus,
+		(SELECT 
+			ACTIVITY_CHANGE_DATE AS activityChangeDate,
+			ACTIVITY_STATUS 	 AS activityStatus,
 			ACTIVITY_CHANGE_NOTE AS activityChangeNote
-        FROM ACTIVITY_DETAILS ACT_DET
-		WHERE ACTIVITY_ID=#activityId#
-	    ORDER BY ACTIVITY_CHANGE_DATE DESC) page
+        FROM 
+        	ACTIVITY_DETAILS ACT_DET
+		WHERE 
+			ACTIVITY_ID=#activityId#
+	    ORDER BY 
+	    	ACTIVITY_CHANGE_DATE DESC) page
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 	
 	<select id="getListByColumn" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
         (SELECT DISTINCT
-            ACT.ACTIVITY_ID AS activityId, 
-            ACTIVITY_NAME AS activityName, 
-            ACT.ACTIVITY_DESCRIPTION AS activityDescription,
-            ACT.ACTIVITY_LAST_STATUS AS activityLastStatus,
+            ACT.ACTIVITY_ID 		 	 AS activityId, 
+            ACTIVITY_NAME 	 		 	 AS activityName, 
+            ACT.ACTIVITY_DESCRIPTION 	 AS activityDescription,
+            ACT.ACTIVITY_LAST_STATUS 	 AS activityLastStatus,
             ACT_DET.ACTIVITY_CHANGE_DATE AS activityChangeDate
-        FROM ACTIVITIES ACT
+        FROM 
+        	ACTIVITIES ACT
         JOIN (
             SELECT AD.ACTIVITY_ID, MAX(AD.ACTIVITY_CHANGE_DATE) AS ACTIVITY_CHANGE_DATE FROM ACTIVITY_DETAILS AD
             GROUP BY AD.ACTIVITY_ID
         ) ACT_DET ON ACT_DET.ACTIVITY_ID=ACT.ACTIVITY_ID
-        WHERE ACT.TASK_ID = #taskId#
+        WHERE 
+        	ACT.TASK_ID = #taskId#
         <dynamic prepend="AND">
             <isNotNull property="columnSearch">
                    <isEqual property="columnSearch" compareValue="NAME">

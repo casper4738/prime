@@ -67,7 +67,8 @@
 		  D.DIVISION_NAME AS divisionName,
 		  E.EMAIL AS email,
 		  E.CONTACT_NUMBER AS contactNumber,
-		  PD.PROJECT_STATUS AS projectStatus
+		  PD.PROJECT_STATUS AS projectStatus,
+		  P.PROJECT_ID AS projectId
 		  FROM   EMPLOYEES E,
 		  DIVISIONS D,
 		  PROJECT_DETAILS PD,
@@ -143,7 +144,7 @@
          T.TASK_NAME AS taskName,
          R.ROLE_NAME AS roleName,
          T.TASK_ASSIGNER AS taskAssigner,
-         TD.TASK_STATUS AS taskStatus,
+         T.TASK_LAST_STATUS AS taskStatus,
          P.PROJECT_ID AS projectId,
          PM.ROLE_ID AS roleId
          FROM   TASKS T,
@@ -158,5 +159,41 @@
         AND PM.ROLE_ID = R.ROLE_ID
         AND P.PROJECT_ID=PM.PROJECT_ID
         AND PM.EMPLOYEE_ID = #projectMemberId#
+	</select>
+	
+	
+	
+	<resultMap id="listRoles" class="java.util.HashMap">
+    		 <result property="key" column="projectMemberId" />
+     		 <result property="value" column="roleName" />
+	</resultMap>
+	<select id="getProjectRoles" parameterClass="java.util.Map" resultMap="listRoles" >
+		SELECT   DISTINCT PM.PROJECT_MEMBER_ID AS projectMemberId,
+		R.ROLE_NAME AS roleName
+  		FROM   PROJECTS P,
+        EMPLOYEES E,
+        PROJECT_DETAILS PD,
+        PROJECT_MEMBERS PM,
+        ROLES R
+ 		WHERE P.PROJECT_ID = PM.PROJECT_ID	
+        AND E.EMPLOYEE_ID = PM.EMPLOYEE_ID
+        AND R.ROLE_ID = PM.ROLE_ID
+        AND PM.EMPLOYEE_ID = #employeeId#
+        AND PM.PROJECT_ID = #projectId#
+	</select>
+	
+	
+	<select id="getDataProjectMember" resultClass="prime.user.project.ProjectBean"
+		parameterClass="java.util.Map">
+		SELECT   DISTINCT PM.PROJECT_MEMBER_ID, E.EMPLOYEE_NAME, R.ROLE_ID, R.ROLE_NAME
+ 		FROM   PROJECTS P,
+        EMPLOYEES E,
+        PROJECT_DETAILS PD,
+        PROJECT_MEMBERS PM,
+        ROLES R
+ 		WHERE P.PROJECT_ID = PM.PROJECT_ID
+        AND E.EMPLOYEE_ID = PM.EMPLOYEE_ID
+        AND R.ROLE_ID = PM.ROLE_ID
+        AND PM.PROJECT_MEMBER_ID=5
 	</select>
 </sqlMap> 

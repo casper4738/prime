@@ -32,14 +32,21 @@ public interface Constants {
 		static final String DODAYOFF	= "t27";
 		static final String GOTOWEEKEND	= "t25";
 		static final String DOWEEKEND	= "t28";
-		static final String DORESET 	= "t29";
-		static final String DOLOCK 		= "t30";
-		static final String DOUNLOCK 	= "t31";
+		static final String DORESET 	= "t33";
+		static final String DOLOCK 		= "t34";
+		static final String DOUNLOCK 	= "t35";
+		static final String GOTOEDITWEEKEND	= "t29";
+		static final String DOEDITWEEKEND	= "t30";
+		static final String GOTOEDITDAYOFF	= "t31";
+		static final String DOEDITDAYOFF	= "t32";
 		
 		interface TASK {
-			final String GOTOTASKTYPE	= "t12";
-			final String GOTOSUBMIT		= "t13";
-			final String DOSUBMIT		= "t14";
+			final String GOTOTASKTYPE	= "t101";
+			final String GOTOSUBMIT		= "t102";
+			final String DOSUBMIT		= "t103";
+			final String DOAPPROVAL		= "t104";
+			final String DOREJECT		= "t105";
+			final String DOABORT		= "t106";
 		}
 		
 		interface ACTIVITY {
@@ -119,6 +126,14 @@ public interface Constants {
 				put("DESCRIPTION", "Project Description");
 			}
 		});
+		
+		final Map<String, String> LOG_SEARCHCOLUMNS = Collections.unmodifiableMap(
+				new LinkedHashMap<String, String>() {{
+					put("ID", "Audit Trail Id");
+					put("USERNAME", "Username");
+					put("TABLE", "Audit Trail Table");
+				}
+			});
 	}
 
 	//##C.Page Handling
@@ -141,14 +156,8 @@ public interface Constants {
 		final int SUBMIT   = 3;
 		final int FINISH   = 4;
 		final int ABORT    = 5;
-		
-		final Map<Integer, String> LIST_STATUSACTIVITY = Collections.unmodifiableMap(
-			new LinkedHashMap<Integer, String>() {{
-				put(PROGRESS, "START");
-				put(PAUSE, "PAUSE");
-				put(FINISH, "FINISH");
-			}
-		});
+		final int REJECT   = 6;
+		final int APPROVAL = 7;
 	}
 	
 	//---2.Standard Day Conversion
@@ -166,8 +175,8 @@ public interface Constants {
 	static interface UserStatus {
 		int LOCKED = 0;
 		int OK     = 1;
-		int WITHLOCK = 3;
-		int WITHABORT = 4;
+		int WITHLOCK = 2;
+		int WITHABORT = 3;
 	}
 	
 	//##E.Response
@@ -222,7 +231,7 @@ public interface Constants {
 															"PositionAdmin.do",		 //6
 															"RoleAdmin.do",			 //7
 															"HolidayAdmin.do",		 //8
-															"#",					 //9
+															"LogAdmin.do",			 //9
 															"SettingAdmin.do",		 //10
 															"DashboardUser.do",		 //11
 															"ProjectUser.do",		 //12
