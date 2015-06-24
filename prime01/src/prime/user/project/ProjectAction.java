@@ -10,6 +10,13 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.employee.EmployeeBean;
+import prime.admin.employee.EmployeeManager;
+import prime.admin.employee.EmployeeManagerImpl;
+import prime.constants.Constants;
+import prime.user.activity.ActivityBean;
+import prime.user.activity.ActivityManager;
+import prime.user.activity.ActivityManagerImpl;
 import prime.user.task.TaskBean;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
@@ -23,6 +30,74 @@ public class ProjectAction extends Action {
 		//return super.execute(mapping, form, request, response);
 		ProjectForm pForm =(ProjectForm) form;
 		ProjectManager manager= new ProjectManagerImpl();
+		EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
+		//ActivityManager tmpActivityManager = new ActivityManagerImpl();
+		
+		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
+			//##.Get Data
+			//EmployeeBean tmpTaskAssign 	= tmpEmployeeManager.getEmployeeById(100);
+		//	EmployeeBean tmpTaskReceive = tmpEmployeeManager.getEmployeeById(pForm.getProjectReceiver());
+			
+			//##.Add Data
+			System.out.println("masuk add " + manager.getNewId());
+			
+			//pForm.getProjectBean().setProjectId(manager.getNewId());
+			//pForm.getProjectBean().setProjectAssigner(101);
+			//pForm.getProjectBean().setProjectAssigner(tmpTaskAssign.getEmployeeId());
+			//pForm.getProjectBean().setProjectReceiver(tmpTaskAssign.getEmployeeId());
+			
+			return mapping.findForward("add");
+		} 
+		else if (Constants.Task.DOADD.equals(pForm.getTask())){
+			//##.Insert Data Task
+			//System.out.println("do "+manager.getNewId());
+			pForm.getProjectBean().setProjectId(manager.getNewId());
+			pForm.getProjectBean().setProjectReceiver(101);
+			pForm.getProjectBean().setProjectStatus(1);
+			pForm.getProjectBean().setProjectChangeNote("First Time");
+			manager.insert(pForm.getProjectBean());
+			manager.insertDetail(pForm.getProjectBean());
+
+			
+			int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+			List<ProjectBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
+					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
+			request.setAttribute("listProject", list);
+			request.setAttribute("listSearchColumn", Constants.Search.PROJECT_SEARCHCOLUMNS);
+			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+			setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+			return mapping.findForward("success");
+		}
+		else if (Constants.Task.GOTOVIEW.equals(pForm.getTask())){
+			//##.View Detail Project
+			pForm.setProjectBean(manager.getProjectById(pForm.getProjectId()));
+			//pForm.getRoleId();
+			int countRows = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+			
+			List<ProjectBean> list =manager.getListProjectMember(pForm.getColumnSearch(), pForm.getSearch(), 
+					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
+					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
+					pForm.getProjectId());
+			request.setAttribute("listProjectMember", list);
+			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+			return mapping.findForward("details");
+		}
+		else if("memberDetails".equals(pForm.getTask())){
+			System.out.println("masuk member" + pForm.getProjectMemberId());
+			pForm.setProjectBean(manager.getProjectMemberDetailById(pForm.getEmployeeId()));
+			
+			int countRows = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+			
+			List<ProjectBean> list =manager.getListProjectMemberDetails(pForm.getColumnSearch(), pForm.getSearch(), 
+					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
+					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
+					pForm.getEmployeeId());
+			request.setAttribute("listProjectMemberDetails", list);
+			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+			return mapping.findForward("detailMember");
+			
+		}
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		List<ProjectBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
@@ -30,6 +105,8 @@ public class ProjectAction extends Action {
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 		
 		request.setAttribute("listProject", list);
+		request.setAttribute("listSearchColumn", Constants.Search.PROJECT_SEARCHCOLUMNS);
+		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 		setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		return mapping.findForward("success");
 	}

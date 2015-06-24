@@ -3,6 +3,7 @@
 <%@page import="java.io.BufferedWriter"%>
 <%@page import="java.io.File"%>
 <%@page import="java.io.FileOutputStream"%>
+<%@page import="prime.constants.Constants"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
@@ -10,8 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-	<meta charset="UTF-8">
-	<title>Prime</title>
+	<!-- CSS -->
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
@@ -19,17 +19,49 @@
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
+    <link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	<!-- End CSS -->
+	
+	<!-- JS -->
+	<script src="resources/prime.js"></script>
+	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
+	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
+	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$('#table-1').dataTable( {
+			paging    : false,
+			searching : false,
+			info	  : false
+	    } );
+	</script>
+	<!-- End JS -->
+	<script>
+		function flyToTaskDetail(task, value) {
+			alert(value)
+			var tmpForm = document.forms[0]; 
+			tmpForm.task.value = task;
+			tmpForm.projectId.value = value;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+			//document.forms[0].submit();
+		}
+	</script>
 </head>
 <body class="skin-blue sidebar-mini">
-	<div class="wrapper">
-		<jsp:include page="/content/Header.jsp"></jsp:include>
+			<html:form action="<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>" method="post">
+				<html:hidden property="task"/>
+				<html:hidden name="ProjectUserForm" property="projectId"/>
+			</html:form>
 		
-		<div class="content-wrapper">
+		
 			<section class="content-header">
-				<h1>Project<small>Project Management</small>
-				</h1>
+				<h1>Project User</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><i class="fa fa-dashboard"></i> Home</li>
 					<li class="active">Project</li>
 				</ol>
 			</section>
@@ -39,33 +71,26 @@
 				<div class="col-xs-12"><div class="box">
 					<div class="box-header"><h3 class="box-title">Projects</h3></div>
 					
-					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('add')">
+					<p><span class="button-add btn btn-app bg-olive" onclick="javascript:flyToPage('<%=Constants.Task.GOTOADD%>')">
 	                    <i class="fa fa-edit"></i>Add
                     </span>
-                    <span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
-					<div class="show-in-page">
-						Show per page
-						<html:select name="ProjectUserForm" property="showInPage" onchange="change(this.value)" >
-							<html:option value="5">5</html:option>
-							<html:option value="10">10</html:option>
-							<html:option value="25">25</html:option>
-							<html:option value="50">50</html:option>
-						</html:select>
-					</div>
-					<div class="search-table">
-						<html:form action="/TaskUser" >
-							<html:hidden name="ProjectUserForm" property="task" value="search"/>
-							<html:hidden name="ProjectUserForm" property="tmpId"/>
-							<html:hidden name="ProjectUserForm" property="goToPage"/>
-							<html:hidden name="ProjectUserForm" property="showInPage"/>
-							<html:select name="ProjectUserForm" property="columnSearch" styleClass="columnSearch">
-								<html:option value="SHOW_ALL">SHOW ALL</html:option>
-								<html:option value="DESCRIPTION">DESCRIPTION</html:option>
+                    <p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
+					<!-- Search Handler Tag -->
+						<div class="show-in-page">
+							Show per page
+							<html:select property="showInPage" name="ProjectUserForm">
+								<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 							</html:select>
-							<html:text name="ProjectUserForm" property="search" styleClass="textSearch"/>
-							<input type="submit" onclick="javascript:flyToPage('search')" class="buttonSearch myButton" value='Search'>
-						</html:form>
-					</div>
+						</div>
+						<div class="search-table">
+							<html:select name="ProjectUserForm" property="columnSearch">
+								<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
+							</html:select>
+							<html:text name="ProjectUserForm" property="search"/>
+							<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('search')" value='Search'/>
+							<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('search')" value='Show All'/>
+						</div>
+					<!-- End Of Search Handler -->
 					<div class="box-body"><table 
 					
 					class="table table-bordered table-striped table-hover">
@@ -87,9 +112,9 @@
 			                	    <td><bean:write name="iter" property="projectAssigner"/></td>
 			                	    <td><bean:write name="iter" property="projectStartDate"/></td>
 			                	    <td><bean:write name="iter" property="projectEstimateDate"/></td>
-			                	    <td>Status</td>
+			                	    <td><bean:write name="iter" property="projectStatus"/></td>
 			                        <td align="center">
-			                        	<input type="submit"  class="buttonSearch myButton" value='Details'>
+			                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.GOTOVIEW %>', '<bean:write name="iter" property="projectId"/>')">
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>
@@ -125,15 +150,10 @@
 					<div class="paginate-2">
 						Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
 					</div>
-		        </div></div>
-		        
 		        </div>
+		        
+		       
 			</section>
-		</div>
-		<!-- /.content-wrapper -->
-		<jsp:include page="/content/Footer.jsp"></jsp:include>
-	</div>
-
 	<script src="resources/prime.js"></script>
 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>

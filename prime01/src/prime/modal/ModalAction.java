@@ -22,6 +22,7 @@ import prime.admin.position.PositionBean;
 import prime.admin.position.PositionManager;
 import prime.admin.position.PositionManagerImpl;
 import prime.constants.Constants;
+import prime.user.activity.ActivityBean;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -33,6 +34,7 @@ public class ModalAction extends Action {
 		//##0.Temp Variable
 		//---.Normally Used Temp Variable
 		int tmpI, tmpJ;
+		String tmpTarget = "success";
 		
 		
 		//---.Depend on the object
@@ -48,6 +50,11 @@ public class ModalAction extends Action {
 		String task = pForm.getTask();
 		
         switch (task) {
+	        case "simpleNote" :
+        		tmpTarget = "simpleNote";
+        		request.setAttribute("activityId", pForm.getParam2());
+        		request.setAttribute("taskId"    , pForm.getParam3());
+	        	break;
             case "modalTable":  
             	String table=pForm.getParam1();
             	switch(table){
@@ -111,15 +118,13 @@ public class ModalAction extends Action {
         		request.setAttribute("listSearchColumn", Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
         		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
         		setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+        		tmpTarget = "success";
         		break;
          
             default:
                 break;
         }
-		
-		
-		
-		return mapping.findForward("success");
+		return mapping.findForward(tmpTarget);
 	}
 	
 	private void setPaging(HttpServletRequest request, int countRows, int page, int view) {

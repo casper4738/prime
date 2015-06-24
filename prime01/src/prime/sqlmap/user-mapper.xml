@@ -8,39 +8,54 @@
 		(#userName#, #password#, #sysLevel#, #statusUser#, #isActiveDirectory#)
 	</insert>
 	
+	<select id="get" resultClass="prime.admin.user.UserBean" parameterClass="java.lang.String">
+		SELECT 
+		USERNAME AS userName,
+		SYSTEM_LEVEL AS sysLevel,
+		PASSWORD AS password,
+		STATUS_USER AS statusUser,
+		EMP.EMPLOYEE_NAME AS employeeName
+		FROM USERS US
+		JOIN EMPLOYEES EMP ON US.EMPLOYEE_ID = EMP.EMPLOYEE_ID
+		WHERE US.USERNAME=#username#
+	</select>
+	
 	<update id="update"  parameterClass="prime.admin.user.UserBean">
 		UPDATE USERS SET
 		USERNAME=#userName#,
 		PASSWORD=#password#,
 		SYSTEM_LEVEL=#sysLevel#,
-		STATUS_USER=#statusUser#,
-		IS_ACTIVE_DIR=#isActiveDirectory#
-		WHERE USERNAME=#userName#
+		WHERE EMPLOYEE_ID=#employeeId#
 	</update>
 	
 	<select id="getListByColumn" resultClass="prime.admin.user.UserBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT USERNAME AS userName, 
 		SYSTEM_LEVEL AS sysLevel,
-		USERNAME.EMPLOYEE_ID AS employeeId,
-		EMPLOYEE.EMPLOYEE_NAME AS employeeName
-		FROM USERNAME
-		INNER JOIN EMPLOYEE ON USERNAME.EMPLOYEE_ID = EMPLOYEE.EMPLOYEE_ID
+		US.EMPLOYEE_ID AS employeeId,
+		EMP.EMPLOYEE_NAME AS employeeName,
+		STATUS_USER AS statusUser
+		FROM USERS US
+		JOIN EMPLOYEES EMP ON US.EMPLOYEE_ID = EMP.EMPLOYEE_ID
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
-		       	UPPER(columnSearch) LIKE UPPER('%'||#value#||'%')
+		       	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
 			</isNotNull>
 	    </dynamic>
 	    ORDER BY USERNAME ASC) page 
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 	
-	<select id="getCountByColumn" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+	<select id="getCountListByColumn" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
-		FROM USERNAME 
+		FROM USERS 
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
-		        UPPER(columnSearch) LIKE UPPER('%'||#value#||'%')
+		      	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(USERNAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
 	</select>

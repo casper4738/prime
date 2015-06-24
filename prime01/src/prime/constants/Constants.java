@@ -66,6 +66,13 @@ public interface Constants {
 	        }
 	    });
 		
+		final Map<String, String> USER_SEARCHCOLUMNS = Collections.unmodifiableMap(
+		        new LinkedHashMap<String, String>() {{
+		        	put("NAME", "USERNAME");
+		        	put("ID", "EMPLOYEE ID");
+		        }
+		    });
+		
 		final Map<String, String> POSITION_SEARCHCOLUMNS = Collections.unmodifiableMap(
 			new LinkedHashMap<String, String>() {{
 				put("NAME", "POSITION NAME");
@@ -100,6 +107,13 @@ public interface Constants {
 			new LinkedHashMap<String, String>() {{
 				put("NAME", "Activity Name");
 				put("DESCRIPTION", "Task Description");
+			}
+		});
+		
+		static final Map<String, String>PROJECT_SEARCHCOLUMNS = Collections.unmodifiableMap(
+			new LinkedHashMap<String, String>() {{
+				put("NAME", "Project Name");
+				put("DESCRIPTION", "Project Description");
 			}
 		});
 	}
@@ -227,8 +241,7 @@ public interface Constants {
 		static int USER_PROJECT			= 12;
 		static int USER_TASK_HEAD		= 13;
 		static int USER_TASK_SUBORDINATE= 14;
-		static int USER_ACTIVITY		= 15;
-		static int USER_REPORT			= 16;
+		static int USER_REPORT			= 15;
 	}
 
 }

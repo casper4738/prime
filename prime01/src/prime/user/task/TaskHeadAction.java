@@ -1,5 +1,6 @@
 package prime.user.task;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -56,6 +57,7 @@ public class TaskHeadAction extends Action {
 			pForm.getTaskBean().setTaskReceiver(tmpTaskReceive.getEmployeeId());
 			pForm.getTaskBean().setTaskAssignerName(tmpTaskAssign.getEmployeeName());
 			pForm.getTaskBean().setTaskReceiverName(tmpTaskReceive.getEmployeeName());
+			
 			return mapping.findForward("add");
 		} else if (Constants.Task.TASK.GOTOSUBMIT.equals(pForm.getTask())) {
 			//##.Add Data
@@ -125,8 +127,12 @@ public class TaskHeadAction extends Action {
 			pForm.setTaskId(pForm.getActivityBean().getTaskId());
 			return mapping.findForward("forward");
 		} else if (Constants.Task.ACTIVITY.DOCHANGESTATUS.equals(pForm.getTask())) {
+			System.out.println(pForm.getActivityStatus());
+			
 			//##.Insert Data Detail
+			System.out.println("Before = " + pForm.getActivityBean().getActivityStatus());
 			pForm.getActivityBean().setActivityStatus(pForm.getActivityStatus());
+			System.out.println("After  = " + pForm.getActivityBean().getActivityStatus());
 			tmpActivityManager.insertDetail(pForm.getActivityBean());
 			return mapping.findForward("forward");
 		} 

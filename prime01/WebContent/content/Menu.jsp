@@ -79,7 +79,7 @@
 		</div>
 		
 		<!-- Modal -->
-		<div id="content-modal" class="modal fade bs-example-modal-lg" role="dialog">
+		<div id="content-modal" class="modal fade" role="dialog">
 		  <div class="modal-dialog modal-lg">
 		    <!-- Modal content-->
 		    <div class="modal-content">
@@ -107,8 +107,7 @@
 			    cache: false
 			});
     		
-    		//##1.Reload First Menu Page
-    		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_TASK]%>");
+    		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>");
     	});
 	</script>
 <!-- End Of Written JS -->

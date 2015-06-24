@@ -12,6 +12,11 @@ public class ProjectForm extends ActionForm {
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
 	private Integer tmpId;
+	private Integer projectId;
+	private Integer projectReceiver;
+	private Integer projectMemberId;
+	private Integer roleId;
+	private Integer employeeId;
 
 	public String getTask() {
 		return task;
@@ -83,6 +88,46 @@ public class ProjectForm extends ActionForm {
 
 	public void setProjectBean(ProjectBean projectBean) {
 		this.projectBean = projectBean;
+	}
+
+	public Integer getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(Integer projectId) {
+		this.projectId = projectId;
+	}
+
+	public Integer getProjectReceiver() {
+		return projectReceiver;
+	}
+
+	public void setProjectReceiver(Integer projectReceiver) {
+		this.projectReceiver = projectReceiver;
+	}
+
+	public Integer getProjectMemberId() {
+		return projectMemberId;
+	}
+
+	public void setProjectMemberId(Integer projectMemberId) {
+		this.projectMemberId = projectMemberId;
+	}
+
+	public Integer getRoleId() {
+		return roleId;
+	}
+
+	public void setRoleNumber(Integer roleId) {
+		this.roleId = roleId;
+	}
+
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
 	}
 	
 }

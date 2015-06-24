@@ -6,15 +6,19 @@
 <!DOCTYPE html>
 <html>
 <head> 
-	<meta charset="UTF-8">
-	<title>Prime</title>
-	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+		function doback() {
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = "<%=Constants.Task.GOTOVIEW%>";
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+		
+		function docancel() {
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = "success";
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+    </script>
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
@@ -35,6 +39,7 @@
 			<div class="box-body">
                 	<html:form action="/TaskSubordinateUser">
                 		<html:hidden name="TaskSubordinateUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOEDIT%>"/>
+                		<html:hidden name="TaskHeadUserForm" property="taskId" />
                 		<html:hidden name="TaskSubordinateUserForm" property="activityBean.activityId" />
                 		<html:hidden name="TaskSubordinateUserForm" property="activityBean.taskId" />
                 		<html:hidden name="TaskSubordinateUserForm" property="activityBean.activityStatus" />
@@ -55,8 +60,9 @@
                 			</tr>
                 			<tr>
                 				<td colspan="6" align="center">
-                					<html:submit value="Save" styleClass="btn btn-primary"/>
-                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+                					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
+                					<html:button property="" value="Batal" styleClass="btn btn-default" onclick="doback()"/>
+                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="docancel()"/>
                 				</td>
                 			</tr>
                 		</table>
