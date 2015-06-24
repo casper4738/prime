@@ -25,8 +25,16 @@
 	    });
 		
 		function dosubmit(value) {
+			alert("Meli Jelek 2");
 			document.forms[0].activityStatus.value = value;
 			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
+		}
+		
+		function doSubmitX(activityId, taskId) {
+			alert("Meli Jelek");
+			//document.forms[0].activityStatus.value = value;
+			//menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
+			modalLoadHandler("task=simpleNote&param2=" + activityId + "&param3=" + taskId);
 		}
 	</script>
 </head> 
@@ -80,7 +88,7 @@
 	               <tr>	<td><input type="button" value="Start" class="btn btn-sm btn-primary" onclick="dosubmit('<%=Constants.Status.PROGRESS%>')"/></td>
 	               		<td><input type="button" value="Pause" class="btn btn-sm  btn-warning" onclick="dosubmit('<%=Constants.Status.PAUSE%>')"/></td>
 	               		<td><input type="button" value="Finish" class="btn btn-sm  btn-success" onclick="dosubmit('<%=Constants.Status.FINISH%>')"/></td>
-	               		<td><input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="dosubmit('<%=Constants.Status.ABORT%>')"/></td>
+	               		<td><input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doSubmitX('${TaskHeadUserForm.activityBean.activityId}', '${TaskHeadUserForm.activityBean.taskId}')"/></td>
 	               </tr>
 	            </table></div>
 		
@@ -91,11 +99,8 @@
 	               		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOCHANGESTATUS%>"/>
 	               		<html:hidden name="TaskHeadUserForm" property="activityBean.activityId" />
 	               		<html:hidden name="TaskHeadUserForm" property="activityStatus" />
+	               		<html:hidden name="TaskHeadUserForm" property="activityBean.activityChangeNote" />
 	               		<html:hidden name="TaskHeadUserForm" property="taskId" />
-	               		<table class="form-input" align="center" style="width:60%">
-	               			<tr><td>Note</td></tr>
-	               			<tr><td><html:textarea name="TaskHeadUserForm" property="activityBean.activityChangeNote" styleClass="form-control" rows="5"/></td></tr>
-	               		</table>
 	               	</html:form>
                 	
                 	

@@ -79,7 +79,7 @@
 		</div>
 		
 		<!-- Modal -->
-		<div id="content-modal" class="modal fade bs-example-modal-lg" role="dialog">
+		<div id="content-modal" class="modal fade" role="dialog">
 		  <div class="modal-dialog modal-lg">
 		    <!-- Modal content-->
 		    <div class="modal-content">
