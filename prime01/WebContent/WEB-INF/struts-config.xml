@@ -83,7 +83,6 @@
 		</action>
 		<action path="/LogAdmin" 		    name="LogAdminForm" type="prime.admin.log.LogAction" scope="request">
 			<forward name="success" 		path="/admin/log/LogHome.jsp">						    </forward>
-			<forward name="forward" 		path="/admin/log/Forward.jsp">							</forward>
 		</action>
 		
 		<!-- Operator & Monitor [User] -->

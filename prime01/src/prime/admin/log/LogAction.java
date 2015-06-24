@@ -32,6 +32,7 @@ public class LogAction extends Action {
 		// countRows),
 		// PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
 		// countRows));
+		
 
 		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),
 				pForm.getSearch());
@@ -41,7 +42,7 @@ public class LogAction extends Action {
 								pForm.getShowInPage(), countRows), PrimeUtil
 						.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
 								countRows));
-
+		System.out.println(list);
 		// ##1.Attribute for Table Show
 		request.setAttribute("listLog", list);
 		request.setAttribute("listSearchColumn",
