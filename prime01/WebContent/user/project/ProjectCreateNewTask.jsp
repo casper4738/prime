@@ -38,6 +38,8 @@
                 		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.Project.DOCREATETASK%>"/>
                 		<html:hidden name="ProjectUserForm" property="projectBean.employeeId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectMemberId" />
+                		<html:hidden name="ProjectUserForm" property="projectBean.taskBean.taskStatus" value='<%=Constants.Status.CREATE+""%>'/>
+                		<html:hidden name="ProjectUserForm" property="projectBean.taskBean.taskChangeNote" value=""/>
                 		<table class="form-input" align="center">
                 			<tr>
                 				<td  width="100px">Task Name</td>

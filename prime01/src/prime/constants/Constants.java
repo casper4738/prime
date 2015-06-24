@@ -42,7 +42,10 @@ public interface Constants {
 		
 
 		interface Project {
-			final String DOCREATETASK		= "p01";
+			final String GOTOPROJECTDETAIL	= "p01";
+			final String GOTOTASKMEMBER		= "p02";
+			final String GOTOCREATETASK		= "p03";
+			final String DOCREATETASK		= "p04";
 		}
 		
 		interface TASK {

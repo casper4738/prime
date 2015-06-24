@@ -13,19 +13,21 @@
 			</isNotNull>
 		</dynamic>
 	</select>
-	<select id="getListByCol" resultClass="prime.user.project.ProjectBean"
-		parameterClass="java.util.Map">
+	<select id="getListByColumn" resultClass="prime.user.project.ProjectBean" parameterClass="java.util.Map">
 		SELECT * FROM (SELECT page.*, ROWNUM rnum FROM
-		(SELECT P.PROJECT_ID AS  projectId,
-		P.PROJECT_NAME AS projectName,
-		P.PROJECT_RECEIVER as projectReceiver,
-		P.PROJECT_ASSIGNER as projectAssigner,
-		P.PROJECT_START_DATE as projectStartDate,
-		P.PROJECT_ESTIMATE_DATE as projectEstimateDate,
-		P.PROJECT_DESCRIPTION as projectDescription,
-		PD.PROJECT_STATUS as projectStatus
-		FROM PROJECTS P, PROJECT_DETAILS PD
-		WHERE P.PROJECT_ID=PD.PROJECT_ID
+		(SELECT  
+			P.PROJECT_ID 			AS projectId,
+			P.PROJECT_NAME 			AS projectName,
+		    P.PROJECT_RECEIVER 		AS projectReceiver,
+		    P.PROJECT_ASSIGNER 		AS projectAssigner,
+		    P.PROJECT_START_DATE 	AS projectStartDate,
+		    P.PROJECT_ESTIMATE_DATE AS projectEstimateDate,
+		    P.PROJECT_DESCRIPTION 	AS projectDescription,
+		    P.PROJECT_LAST_STATUS 	AS projectLastStatus
+		 FROM 
+		 	PROJECTS P
+		 JOIN 
+		 	PROJECT_DETAILS PD ON P.PROJECT_ID = PD.PROJECT_ID
 		<dynamic prepend="WHERE">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
@@ -34,51 +36,58 @@
 			</isNotNull>
 		</dynamic>
 		ORDER BY P.PROJECT_ID ASC) page
-		WHERE ROWNUM <![CDATA[ <= ]]>
-		#endRow#) WHERE rnum <![CDATA[ >= ]]>
-		#startRow#
+		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 	
-	<select id="get" resultClass="prime.user.project.ProjectBean"
-		parameterClass="java.lang.Integer">
-		SELECT PROJECT_ID AS projectId,
-		PROJECT_NAME AS projectName,
-		PROJECT_RECEIVER as projectReceiver,
-		PROJECT_ASSIGNER as projectAssigner,
-		PROJECT_START_DATE as projectStartDate,
-		PROJECT_ESTIMATE_DATE as projectEstimateDate,
-		PROJECT_DESCRIPTION as projectDescription
-		FROM PROJECTS
-		WHERE PROJECT_ID=#id#
+	<select id="get" resultClass="prime.user.project.ProjectBean" parameterClass="java.lang.Integer">
+		SELECT 
+			PROJECT_ID 					AS projectId,
+			PROJECT_NAME 				AS projectName,
+			PROJECT_RECEIVER 			AS projectReceiver,
+			PROJECT_ASSIGNER 			AS projectAssigner,
+			PROJECT_START_DATE 			AS projectStartDate,
+			PROJECT_ESTIMATE_DATE 		AS projectEstimateDate,
+			PROJECT_LAST_STATUS 		AS projectLastStatus,
+			PROJECT_DESCRIPTION 		AS projectDescription,
+			EMP_ASSIGN.EMPLOYEE_NAME 	AS projectAssignerName,
+			EMP_RECEIVE.EMPLOYEE_NAME 	AS projectReceiverName
+		FROM PROJECTS PRO
+		JOIN EMPLOYEES EMP_ASSIGN  ON PRO.PROJECT_ASSIGNER = EMP_ASSIGN.EMPLOYEE_ID
+		JOIN EMPLOYEES EMP_RECEIVE ON PRO.PROJECT_RECEIVER = EMP_RECEIVE.EMPLOYEE_ID
+		WHERE 
+			PROJECT_ID=#id#
 	</select>
 	
-	<select id="getProjectMember" resultClass ="prime.user.project.ProjectBean"
-		parameterClass="java.util.Map">
-		  SELECT  DISTINCT E.EMPLOYEE_ID AS employeeId,
-		  E.EMPLOYEE_NAME  AS employeeName,
-		  (
-		  SELECT 
-		  listagg (R.ROLE_NAME, ', ') WITHIN GROUP (ORDER BY R.ROLE_NAME)
-		    FROM ROLES R
-		  JOIN PROJECT_MEMBERS PMX ON R.ROLE_ID = PMX.ROLE_ID
-		   WHERE  PMX.PROJECT_ID = 1 AND PMX.EMPLOYEE_ID=E.EMPLOYEE_ID
-		  )
-		   AS roleName,
-		  D.DIVISION_NAME AS divisionName,
-		  E.EMAIL AS email,
-		  E.CONTACT_NUMBER AS contactNumber,
-		  PD.PROJECT_STATUS AS projectStatus,
-		  P.PROJECT_ID AS projectId
-		  FROM   EMPLOYEES E,
-		  DIVISIONS D,
-		  PROJECT_DETAILS PD,
-		  PROJECTS P,
-		  PROJECT_MEMBERS PM
-		   WHERE       P.PROJECT_ID = PM.PROJECT_ID
-		  AND E.EMPLOYEE_ID = PM.EMPLOYEE_ID
-		  AND E.DIVISION_ID = D.DIVISION_ID
-		  AND P.PROJECT_ID=PD.PROJECT_ID
-          AND P.PROJECT_ID = #projectId#
+	<select id="getListProjectMember" resultClass ="prime.user.project.ProjectBean" parameterClass="java.util.Map">
+		SELECT * FROM (SELECT page.*, ROWNUM rnum FROM
+		(SELECT DISTINCT
+			E.EMPLOYEE_ID 			AS employeeId,
+		    E.EMPLOYEE_NAME 		AS employeeName,
+		    (SELECT LISTAGG (R.ROLE_NAME, ', ') WITHIN GROUP (ORDER BY R.ROLE_NAME)
+				FROM ROLES R
+		        JOIN PROJECT_MEMBERS PMX ON R.ROLE_ID = PMX.ROLE_ID
+		        WHERE   PMX.PROJECT_ID = 1 AND PMX.EMPLOYEE_ID = E.EMPLOYEE_ID
+		    ) 						AS roleName,
+		    D.DIVISION_NAME 		AS divisionName,
+		    E.EMAIL					AS email,
+		    E.CONTACT_NUMBER 		AS contactNumber,
+		    PD.PROJECT_STATUS 		AS projectStatus,
+		    P.PROJECT_ID 			AS projectId
+		FROM EMPLOYEES E
+		JOIN DIVISIONS D ON D.DIVISION_ID = E.DIVISION_ID
+		JOIN PROJECT_MEMBERS PM ON E.EMPLOYEE_ID = PM.EMPLOYEE_ID
+		JOIN PROJECTS P ON P.PROJECT_ID = PM.PROJECT_ID
+		JOIN PROJECT_DETAILS PD ON P.PROJECT_ID = PD.PROJECT_ID         
+		WHERE P.PROJECT_ID = #projectId#
+		<dynamic prepend="AND">
+			<isNotNull property="columnSearch">
+				<isEqual property="columnSearch" compareValue="NAME">
+					UPPER(P.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+			</isNotNull>
+		</dynamic>
+		ORDER BY P.PROJECT_ID ASC) page
+		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 		
 	</select>
 	
@@ -101,8 +110,7 @@
 		(#projectId#,#projectAssigner#,#projectReceiver#,CURRENT_TIMESTAMP,#projectStatus#,#projectChangeNote#)
 	</insert>
 	
-	<select id="getProjectMemberDetailsTask" resultClass="prime.user.project.ProjectBean"
-		parameterClass="java.lang.Integer">
+	<select id="getProjectMemberDetailsTask" resultClass="prime.user.project.ProjectBean" parameterClass="java.lang.Integer">
 		SELECT   E.EMPLOYEE_NAME as employeeName , 
 		T.TASK_START_DATE as taskStartDate, 
 		T.TASK_NAME as taskName
@@ -135,30 +143,33 @@
 	</select>
 	
 	
-	<select id="getProjectMemberDetails" resultClass="prime.user.project.ProjectBean"
-		parameterClass="java.util.Map">
-		SELECT   DISTINCT
-         
-         T.TASK_START_DATE AS taskStartDate,
-         T.TASK_ESTIMATE_DATE AS taskEstimateDate,
-         T.TASK_NAME AS taskName,
-         R.ROLE_NAME AS roleName,
-         T.TASK_ASSIGNER AS taskAssigner,
-         T.TASK_LAST_STATUS AS taskStatus,
-         P.PROJECT_ID AS projectId,
-         PM.ROLE_ID AS roleId
-         FROM   TASKS T,
-         ROLES R,
-         TASK_DETAILS TD,
-         PROJECT_MEMBERS PM,
-         EMPLOYEES E,
-           PROJECTS P
-        
-         WHERE  E.EMPLOYEE_ID=PM.EMPLOYEE_ID
-         AND PM.PROJECT_MEMBER_ID=T.PROJECT_MEMBER_ID
-        AND PM.ROLE_ID = R.ROLE_ID
-        AND P.PROJECT_ID=PM.PROJECT_ID
-        AND PM.EMPLOYEE_ID = #projectMemberId#
+	<select id="getListProjectMemberDetails" resultClass="prime.user.project.ProjectBean" 	parameterClass="java.util.Map">
+		SELECT TASK.TASK_ID AS taskId,
+		    TASK_NAME AS taskBean.taskName,
+		    TASK_RECEIVER as taskReceiver,
+		    TASK_ASSIGNER as taskAssigner,
+		    TASK_START_DATE as taskStartDate,
+		    TASK_ESTIMATE_DATE as taskEstimateDate,
+		    TASK_DESCRIPTION as taskDescription,
+		    TASK.PROJECT_MEMBER_ID as projectMemberId,
+		    EMP_ASSIGN.EMPLOYEE_NAME as taskAssignerName,
+		    EMP_RECEIVE.EMPLOYEE_NAME as taskReceiverName,
+		    TASK.TASK_LAST_STATUS AS taskLastStatus,
+		    NVL(((SELECT COUNT(ACTIVITY_ID) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS=4) /
+		      (SELECT NULLIF(COUNT(ACTIVITY_ID),0) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID)
+		    ) * 100, 0) AS percentage,
+		    ROLE.ROLE_ID AS roleId,
+		    ROLE.ROLE_NAME AS roleName
+		FROM TASKS TASK
+		JOIN EMPLOYEES EMP_ASSIGN ON TASK.TASK_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
+		JOIN EMPLOYEES EMP_RECEIVE ON TASK.TASK_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
+		JOIN (
+		    SELECT TD.TASK_ID, MAX(TD.TASK_CHANGE_DATE) AS TASK_CHANGE_DATE FROM TASK_DETAILS TD
+		    GROUP BY TD.TASK_ID
+		) TASK_DET ON TASK_DET.TASK_ID=TASK.TASK_ID
+		JOIN PROJECT_MEMBERS PROJ_MBR ON PROJ_MBR.PROJECT_MEMBER_ID = TASK.PROJECT_MEMBER_ID
+		JOIN ROLES ROLE ON PROJ_MBR.ROLE_ID = ROLE.ROLE_ID
+		WHERE PROJ_MBR.EMPLOYEE_ID = #projectMemberId#
 	</select>
 	
 	
