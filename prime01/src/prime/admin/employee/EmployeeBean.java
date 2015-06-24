@@ -1,11 +1,12 @@
 package prime.admin.employee;
 
+import java.sql.Date;
+
 public class EmployeeBean {
 	private Integer employeeId;
 	private Integer gender = 0;
 	private Integer divisionId = 0;
 	private Integer positionId = 0;
-	/*private Integer employeeLevel = 0;*/
 	private Integer managerId = 0;
 	private String contactNumber;
 	private String employeeName;
@@ -16,134 +17,184 @@ public class EmployeeBean {
 	private String managerName;
 	private String employeeStatus;
 	private String resignNote;
-	private String birthdate;
-	private String resignDate;
-	private String hireDate;
+	private Date birthdate;
+	private Date resignDate;
+	private Date hireDate;
+	private Date startDate;
+	private Date endDate;
+	private Integer totalDay = 1;
+	private String descriptionDayOff;
+	private String descriptionWeekEnd;
+	private Date startFrom;
+	private String weekEnd;
+	private String monthYear;
+	private Date mondayDate;
+	
+	public EmployeeBean() {
+		setHireDate(new java.sql.Date(new java.util.Date().getTime()));
+		setBirthdate(new java.sql.Date(new java.util.Date().getTime()));
+		setResignDate(new java.sql.Date(new java.util.Date().getTime()));
+		setStartDate(new java.sql.Date(new java.util.Date().getTime()));
+		setEndDate(new java.sql.Date(new java.util.Date().getTime()));
+		setStartFrom(new java.sql.Date(new java.util.Date().getTime()));
+	}
 	
 	public Integer getEmployeeId() {
-		System.out.println(employeeId+" EmpId");
 		return employeeId;
 	}
 	public void setEmployeeId(Integer employeeId) {
 		this.employeeId = employeeId;
 	}
 	public Integer getGender() {
-		System.out.println(gender+" Gender");
 		return gender;
 	}
 	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
 	public Integer getDivisionId() {
-		System.out.println(divisionId+" divId");
 		return divisionId;
 	}
 	public void setDivisionId(Integer divisionId) {
 		this.divisionId = divisionId;
 	}
 	public Integer getPositionId() {
-		System.out.println(positionId+" positionId");
 		return positionId;
 	}
 	public void setPositionId(Integer positionId) {
 		this.positionId = positionId;
 	}
-	/*public Integer getEmployeeLevel() {
-		return employeeLevel;
-	}
-	public void setEmployeeLevel(Integer employeeLevel) {
-		this.employeeLevel = employeeLevel;
-	}*/
+	
 	public Integer getManagerId() {
-		System.out.println(managerId+" ManId");
 		return managerId;
 	}
 	public void setManagerId(Integer managerId) {
 		this.managerId = managerId;
 	}
 	public String getContactNumber() {
-		System.out.println(contactNumber+" contactNumber");
 		return contactNumber;
 	}
 	public void setContactNumber(String contactNumber) {
 		this.contactNumber = contactNumber;
 	}
 	public String getEmployeeName() {
-		System.out.println(employeeName+" employeeName");
 		return employeeName;
 	}
 	public void setEmployeeName(String employeeName) {
 		this.employeeName = employeeName;
 	}
 	public String getAddress() {
-		System.out.println(address+" address");
 		return address;
 	}
 	public void setAddress(String address) {
 		this.address = address;
 	}
 	public String getEmail() {
-		System.out.println(email+" email");
 		return email;
 	}
 	public void setEmail(String email) {
 		this.email = email;
 	}
 	public String getDivisionName() {
-		System.out.println(divisionName+" divisionName");
 		return divisionName;
 	}
 	public void setDivisionName(String divisionName) {
 		this.divisionName = divisionName;
 	}
 	public String getPositionName() {
-		System.out.println(divisionName+" divisionName");
 		return positionName;
 	}
 	public void setPositionName(String positionName) {
 		this.positionName = positionName;
 	}
 	public String getManagerName() {
-		System.out.println(divisionName+" divisionName");
 		return managerName;
 	}
 	public void setManagerName(String managerName) {
 		this.managerName = managerName;
 	}
 	public String getEmployeeStatus() {
-		System.out.println(divisionName+" divisionName");
 		return employeeStatus;
 	}
 	public void setEmployeeStatus(String employeeStatus) {
 		this.employeeStatus = employeeStatus;
 	}
 	public String getResignNote() {
-		System.out.println(divisionName+" divisionName");
 		return resignNote;
 	}
 	public void setResignNote(String resignNote) {
 		this.resignNote = resignNote;
 	}
-	public String getBirthdate() {
-		System.out.println(divisionName+" divisionName");
+	public Date getBirthdate() {
 		return birthdate;
 	}
-	public void setBirthdate(String birthdate) {
+	public void setBirthdate(Date birthdate) {
 		this.birthdate = birthdate;
 	}
-	public String getResignDate() {
-		System.out.println(divisionName+" divisionName");
+	public Date getResignDate() {
 		return resignDate;
 	}
-	public void setResignDate(String resignDate) {
+	public void setResignDate(Date resignDate) {
 		this.resignDate = resignDate;
 	}
-	public String getHireDate() {
-		System.out.println(hireDate+" hireDate");
+	public Date getHireDate() {
 		return hireDate;
 	}
-	public void setHireDate(String hireDate) {
+	public void setHireDate(Date hireDate) {
 		this.hireDate = hireDate;
+	}
+	public Date getStartDate() {
+		return startDate;
+	}
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
+	}
+	public Date getEndDate() {
+		return endDate;
+	}
+	public void setEndDate(Date endDate) {
+		this.endDate = endDate;
+	}
+	public Integer getTotalDay() {
+		return totalDay;
+	}
+	public void setTotalDay(Integer totalDay) {
+		this.totalDay = totalDay;
+	}
+	public String getDescriptionDayOff() {
+		return descriptionDayOff;
+	}
+	public void setDescriptionDayOff(String descriptionDayOff) {
+		this.descriptionDayOff = descriptionDayOff;
+	}
+	public String getMonthYear() {
+		return monthYear;
+	}
+	public void setMonthYear(String monthYear) {
+		this.monthYear = monthYear;
+	}
+	public Date getMondayDate() {
+		return mondayDate;
+	}
+	public void setMondayDate(Date mondayDate) {
+		this.mondayDate = mondayDate;
+	}
+	public String getDescriptionWeekEnd() {
+		return descriptionWeekEnd;
+	}
+	public void setDescriptionWeekEnd(String descriptionWeekEnd) {
+		this.descriptionWeekEnd = descriptionWeekEnd;
+	}
+	public Date getStartFrom() {
+		return startFrom;
+	}
+	public void setStartFrom(Date startFrom) {
+		this.startFrom = startFrom;
+	}
+	public String getWeekEnd() {
+		return weekEnd;
+	}
+	public void setWeekEnd(String weekEnd) {
+		this.weekEnd = weekEnd;
 	}
 
 }

@@ -8,11 +8,21 @@ import prime.admin.employee.EmployeeBean;
 public interface EmployeeManager {
 	public void insert(EmployeeBean e) throws SQLException;
 	
+	public void insertResign(EmployeeBean e) throws SQLException;
+	
+	public void insertWeekend(EmployeeBean e) throws SQLException;
+	
+	public void insertDayoff(EmployeeBean e) throws SQLException;
+	
 	public void update(EmployeeBean e) throws SQLException;
 	
 	public void delete(Integer id) throws SQLException;
 	
 	public EmployeeBean getEmployeeById(Integer id) throws SQLException;
+	
+	public List<EmployeeBean> getListWeekendByEmployeeId(Integer id) throws SQLException;
+	
+	public List<EmployeeBean> getListDayoffByEmployeeId(Integer id) throws SQLException;
 	
 	public List<EmployeeBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow)
 			throws SQLException;

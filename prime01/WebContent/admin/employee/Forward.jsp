@@ -14,6 +14,7 @@
 
 <html:form action="/EmployeeAdmin">
 	<html:hidden name="EmployeeAdminForm" property="task"/>
+	<html:hidden name="EmployeeAdminForm" property="tmpId"/>
 	<html:hidden name="EmployeeAdminForm" property="message"/>
 </html:form>
 
@@ -29,5 +30,16 @@
 	<script>flyToForward('success', '<bean:message key="label.message.delete"/>')</script>
 </logic:equal>
 
+<logic:equal name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DORESIGN%>">
+	<script>flyToForward('success', '<bean:message key="label.message.resign"/>')</script>
+</logic:equal>
+
+<logic:equal name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DODAYOFF%>">
+	<script>flyToForward("<%=Constants.Task.GOTOVIEW%>", '<bean:message key="label.message.dayoff"/>')</script>
+</logic:equal>
+
+<logic:equal name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOWEEKEND%>">
+	<script>flyToForward("<%=Constants.Task.GOTOVIEW%>", '<bean:message key="label.message.weekend"/>')</script>
+</logic:equal>
 </body>
 </html>

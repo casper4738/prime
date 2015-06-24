@@ -19,17 +19,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
 
 	public void insert(EmployeeBean e) throws SQLException {
 		try {
-			System.out.println(e.getEmployeeId()+"--");
-			System.out.println(e.getEmployeeName()+"--");
-			System.out.println(e.getAddress()+"--");
-			System.out.println(e.getContactNumber()+"--");
-			System.out.println(e.getEmail()+"--");
-			System.out.println(e.getBirthdate()+"--");
-			System.out.println(e.getGender()+"--");
-			System.out.println(e.getHireDate()+"--");
-			System.out.println(e.getDivisionId()+"--");
-			System.out.println(e.getPositionId()+"--");
-			System.out.println(e.getManagerId()+"--");
 			mapper.startTransaction();
 			mapper.insert("employee.insert", e);
 			mapper.commitTransaction();
@@ -37,9 +26,52 @@ public class EmployeeManagerImpl implements EmployeeManager {
 			mapper.endTransaction();
 		}
 	}
+	
+	public void insertResign(EmployeeBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.insert("employee.insertResign", e);
+			mapper.update("employee.updateStatusUser", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
 
+	public void insertWeekend(EmployeeBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.insert("employee.insertWeekend", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+	public void insertDayoff(EmployeeBean e) throws SQLException {
+		try {
+			System.out.println("CEK");
+			mapper.startTransaction();
+			mapper.insert("employee.insertDayoff", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
 	public void update(EmployeeBean e) throws SQLException {
 		try {
+			System.out.println(e.getEmployeeId()+"--EmpID");
+			System.out.println(e.getEmployeeName()+"--Name");
+			System.out.println(e.getAddress()+"--Address");
+			System.out.println(e.getContactNumber()+"--Numb");
+			System.out.println(e.getEmail()+"--Email");
+			System.out.println(e.getBirthdate()+"--Birth");
+			System.out.println(e.getGender()+"--Gender");
+			System.out.println(e.getHireDate()+"--HireDate");
+			System.out.println(e.getDivisionId()+"--Division");
+			System.out.println(e.getPositionId()+"--Position");
+			System.out.println(e.getManagerId()+"--Manager");
 			mapper.startTransaction();
 			mapper.update("employee.update", e);
 			mapper.commitTransaction();
@@ -60,8 +92,15 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	}
 	
 	public EmployeeBean getEmployeeById(Integer id) throws SQLException {
-		System.out.println(id + " ID DAPAT");
 		return (EmployeeBean) mapper.queryForObject("employee.get", id);
+	}
+	
+	public List<EmployeeBean> getListWeekendByEmployeeId(Integer id) throws SQLException {
+		return mapper.queryForList("employee.getWeekend", id);
+	}
+	
+	public List<EmployeeBean> getListDayoffByEmployeeId(Integer id) throws SQLException {
+		return mapper.queryForList("employee.getDayoff", id);
 	}
 
 	public List<EmployeeBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow) 

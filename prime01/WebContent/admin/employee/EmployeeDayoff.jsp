@@ -51,12 +51,11 @@
 				<div class="box-header"><h3 class="box-title">Data Manage Employee</h3></div>
 				<div class="box-body">
                  	<html:form action="/EmployeeAdmin">
-                 		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOEDIT%>"/>
-                 		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
-                 		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
+                 		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DODAYOFF%>"/>
+                 		<html:hidden name="EmployeeAdminForm" property="tmpId"/>
                  		<table class="form-input" align="center" style="width: 500px;">
                  			<tr>
-                 				<td>Employee ID</td>
+                 				<td>Employee Id</td>
                  				<td>:</td>
                  				<td>
                  				<html:text name="EmployeeAdminForm" property="employeeBean.employeeId" styleClass="form-control" disabled="true"/>
@@ -89,67 +88,20 @@
                  				<td>Total Days</td>
                  				<td>:</td>
                  				<td>
-                 					<html:text name="EmployeeAdminForm" property="employeeBean.totalDay" styleClass="form-control"/>
+                 					<html:text name="EmployeeAdminForm" property="employeeBean.totalDay" styleClass="form-control" disabled="true"/>
 								</td>
                  			</tr>
                  			<tr>
-                 				<td>Email</td>
+                 				<td>Description</td>
                  				<td>:</td>
                  				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.email" styleClass="form-control"/>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Gender</td>
-                 				<td>:</td>
-                 				<td>              			
-                 					<html:radio name="EmployeeAdminForm" property="employeeBean.gender" value="0" styleClass="minimal">Male</html:radio>
-                 					<html:radio name="EmployeeAdminForm" property="employeeBean.gender" value="1" styleClass="minimal">Female</html:radio>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Position</td>
-                 				<td>:</td>
-                 				<td>
-                 				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control">
-                 					<html:options collection="listPosition" property="positionId" labelProperty="positionName" />
-                 				</html:select>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Division</td>
-                 				<td>:</td>
-                 				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Head</td>
-                 				<td>:</td>
-                 				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.managerName" styleClass="form-control" disabled="true"/>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Hire Date</td>
-                 				<td>:</td>
-                 				<td>
-                 					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                 				  		<html:text name="EmployeeAdminForm" property="employeeBean.hireDate" styleClass="form-control pull-right" styleId="datepicker_hiredate"/>
-                 				  	</div>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Profile Picture</td>
-                 				<td>:</td>
-                 				<td>
-                 				  <input type="file" id="exampleInputFile">
-							</td>
+                 					<html:textarea name="EmployeeAdminForm" property="employeeBean.descriptionDayOff" styleClass="form-control"/>
+								</td>
                  			</tr>
                  			<tr>
                  				<td colspan="3" align="center">
-                 					<html:submit value="Save" styleClass="btn btn-primary"/>
-                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+                 					<html:button property="" value="Save" styleClass="btn btn-default" onclick="dosubmit()"/>
+                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('view')"/>
                  				</td>
                  			</tr>
 					</table>

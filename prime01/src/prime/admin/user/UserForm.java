@@ -9,7 +9,25 @@ public class UserForm extends ActionForm {
 	private String search;
 	private String columnSearch;
 	private Integer goToPage = 1;
-	private Integer showInPage;
+	private Integer showInPage = 10;
+	private String tmpValue;
+	private String message;
+
+	public String getTmpValue() {
+		return tmpValue;
+	}
+
+	public void setTmpValue(String tmpValue) {
+		this.tmpValue = tmpValue;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
 
 	public UserBean getUserBean() {
 		return userBean;

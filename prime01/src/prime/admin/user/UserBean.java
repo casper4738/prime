@@ -8,7 +8,21 @@ public class UserBean extends EmployeeBean{
 	private String password;
 	private String userName;
 	private String statusUser;
+	private Integer employeeId;
+	private String employeeName;
 	
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
+	}
+	public String getEmployeeName() {
+		return employeeName;
+	}
+	public void setEmployeeName(String employeeName) {
+		this.employeeName = employeeName;
+	}
 	public Boolean getIsActiveDirectory() {
 		return isActiveDirectory;
 	}

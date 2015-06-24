@@ -49,8 +49,8 @@ public class UserManagerImpl implements UserManager {
 		}
 	}
 	
-	public UserBean getEmployeeById(Integer id) throws SQLException {
-		return (UserBean) mapper.queryForObject("employee.get", id);
+	public UserBean getUserByUsername(String username) throws SQLException {
+		return (UserBean) mapper.queryForObject("user.get", username);
 	}
 
 	public List<UserBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow) 
@@ -65,13 +65,14 @@ public class UserManagerImpl implements UserManager {
 	}
 
 	public Integer getNewId() throws SQLException {
-		return (Integer) mapper.queryForObject("employee.getNewId", null);
+		return (Integer) mapper.queryForObject("user.getNewId", null);
 	}
 
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
-		return (Integer) mapper.queryForObject("user.getCountByColumn", map);
+		return (Integer) mapper.queryForObject("user.getCountListByColumn", map);
 	}
+
 }
