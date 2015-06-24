@@ -191,9 +191,10 @@
 											</div>
 											<div id="chooseDivision" style="display:inline">
 				               					<html:select name="EmployeeAdminForm" property="divisionId" styleClass="form-control" styleId="divisionId">
+					               					<html:option value="NULL">--All--</html:option>
 					               					<html:options collection="listDivision" property="divisionId" labelProperty="divisionName" />
 					               				</html:select>
-											</div>
+					               			</div>
 										</td>
 			               			</tr>
 			               			<tr>

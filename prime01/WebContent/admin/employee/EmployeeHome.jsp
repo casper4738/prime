@@ -55,6 +55,7 @@
 					<span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
 		          		<i class="fa fa-edit"></i>Add
 		         	</span>
+		         	<span class="message"><bean:write name="EmployeeAdminForm" property="message" /></span>
 		         </p>
 	                
 				<!-- Search Handler Tag -->
@@ -116,8 +117,10 @@
 					                        </logic:notEmpty>
 					                        </td>
 					                        <td align="center">
-					                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
-					                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTORESIGN%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/resign.png" /> 
+					                        	<logic:empty name="iter" property="resignDate">
+						                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
+						                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTORESIGN%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/resign.png" /> 
+					                        	</logic:empty>
 					                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOVIEW%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/viewmore.png" />
 					                        </td>
 					                    </tr>

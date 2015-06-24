@@ -25,6 +25,5 @@
 <logic:equal name="DivisionAdminForm" property="task" value="<%=Constants.Task.DODELETE%>">
 	<script>flyToForward('success', '<bean:message key="label.message.delete"/>')</script>
 </logic:equal>
-
 </body>
 </html>

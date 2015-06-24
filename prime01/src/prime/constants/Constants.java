@@ -27,8 +27,11 @@ public interface Constants {
 		static final String GOTOVIEW 	= "t10";
 		static final String DOSEARCH	= "t11";
 		static final String GOTORESIGN	= "t23";
+		static final String DORESIGN	= "t26";
 		static final String GOTODAYOFF	= "t24";
+		static final String DODAYOFF	= "t27";
 		static final String GOTOWEEKEND	= "t25";
+		static final String DOWEEKEND	= "t28";
 		
 		interface TASK {
 			final String GOTOTASKTYPE	= "t12";

@@ -48,9 +48,10 @@
 				<div class="box-header"><h3 class="box-title">Data Manage Employee</h3></div>
 				<div class="box-body">
                  	<html:form action="/EmployeeAdmin">
-                 		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOEDIT%>"/>
+                 		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DORESIGN%>"/>
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
+                 		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
                  		<table class="form-input" align="center" style="width: 500px;">
                  			<tr>
                  				<td>Employee ID</td>
@@ -82,7 +83,7 @@
                  			</tr>
                  			<tr>
                  				<td colspan="3" align="center">
-                 					<html:submit value="Save" styleClass="btn btn-primary"/>
+                 					<html:button value="Save" styleClass="btn btn-primary" onclick="dosubmit()" property=""/>
                  					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                  				</td>
                  			</tr>

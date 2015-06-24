@@ -9,7 +9,7 @@ public class EmployeeForm extends ActionForm {
 	private String search;
 	private String columnSearch;
 	private String message;
-	private Integer managerId = 1;
+	private Integer managerId = 0;
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
 	private Integer tmpId;

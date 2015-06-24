@@ -32,6 +32,18 @@
                 format: "yyyy-mm-dd"
             });
         });
+		
+		function doGoToEdit() {
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = "<%=Constants.Task.GOTOEDIT%>";
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+		
+		function doGoToResign() {
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = "<%=Constants.Task.GOTORESIGN%>";
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
     </script>
     <!-- End Of JS -->
 </head>
@@ -55,12 +67,13 @@
                		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
                		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
                		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
+               		<html:hidden name="EmployeeAdminForm" property="tmpId" />
                		<table class="form-input" align="center" style="width: 500px;">
                			<tr>
               				<td>Employee ID</td>
               				<td>:</td>
               				<td>
-               					<html:text name="EmployeeAdminForm" property="employeeBean.employeeId" styleClass="form-control" disabled="true"/>
+               					<bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>
 							</td>
                  		</tr>
              			<tr>
@@ -159,11 +172,14 @@
                			</tr>
                			<tr>
                				<td colspan="3">
+               					<span class="message"><bean:write name="EmployeeAdminForm" property="message" /></span>
                					<table class="form-input" align="center" style="width: 500px;">
 			             			<tr>
 			               				<td width="150px">
-			               					<input type="button" property="" value="Set DayOff" styleClass="btn btn-default" 
-			               					onclick="flyToEditDelete('<%=Constants.Task.GOTODAYOFF%>', '<bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>')"/>
+			               					<logic:equal name="EmployeeAdminForm" property="employeeBean.resignDate" value="">
+				               					<input type="button" property="" value="Set DayOff" styleClass="btn btn-default" 
+				               					onclick="flyToEditDelete('<%=Constants.Task.GOTODAYOFF%>', '<bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>')"/>
+			               					</logic:equal>
 			               				</td>
 			               			</tr>
 			               		</table>
@@ -174,8 +190,30 @@
 											<th>End Date</th>
 											<th>Total Days</th>
 											<th>Desc</th>
+											<th>Action</th>
 						                </tr>
 						            </thead>	
+						            <tbody>
+						            <logic:notEmpty name="listDayoffByEmployeeId">
+									   <logic:iterate id="iter" name="listDayoffByEmployeeId">
+						                	<tr>
+						                		<td><bean:write name="iter" property="startDate"/> </td>
+						                		<td><bean:write name="iter" property="endDate"/> </td>
+						                		<td><%=1%> </td>
+						                		<td><bean:write name="iter" property="descriptionDayOff"/> </td>
+						                		<td>
+						                			<input type="button" property="" value="Edit" styleClass="btn btn-default" onclick=""/>
+						                			<input type="button" property="" value="Del" styleClass="btn btn-default" onclick=""/>
+						                		</td>
+						                	</tr>
+							           	</logic:iterate>
+									</logic:notEmpty>
+									<logic:empty name="listDayoffByEmployeeId">
+										<tr>
+											<td align="center" colspan="11"><bean:message key="label.table.notfound" /></td>
+										</tr>
+									</logic:empty>
+									</tbody>
 			             		</table>
                				</td>
                			</tr>
@@ -183,7 +221,11 @@
                				<td colspan="3">
                					<table class="form-input" align="center" style="width: 500px;">
 			             			<tr>
-			               				<td width="150px"><input type="button" property="" value="Set WeekEnd" styleClass="btn btn-default" onclick="flyToEditDelete('<%=Constants.Task.GOTOWEEKEND%>', '<bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>')"/></td>
+			               				<td width="150px">
+			               					<logic:equal name="EmployeeAdminForm" property="employeeBean.resignDate" value="">
+			               						<input type="button" property="" value="Set WeekEnd" styleClass="btn btn-default" onclick="flyToEditDelete('<%=Constants.Task.GOTOWEEKEND%>', '<bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>')"/>
+			               					</logic:equal>
+			               				</td>
 			               			</tr>
 			               		</table>
 			               		<table id="table-1" class="table table-bordered table-striped table-hover">
@@ -191,16 +233,39 @@
 										<tr>
 											<th>Start Weekend</th>
 											<th>Set Weekend</th>
+											<th>Action</th>
 						                </tr>
 						            </thead>	
+						            <tbody>
+						            <logic:notEmpty name="listWeekendByEmployeeId">
+									   <logic:iterate id="iter" name="listWeekendByEmployeeId">
+						                	<tr>
+						                		<td><bean:write name="iter" property="startFrom"/> </td>
+						                		<td><bean:write name="iter" property="weekEnd"/> </td>
+						                		<td>
+						                			<input type="button" property="" value="Edit" styleClass="btn btn-default" onclick=""/>
+						                		</td>
+						                	</tr>
+							           	</logic:iterate>
+									</logic:notEmpty>
+									<logic:empty name="listWeekendByEmployeeId">
+										<tr>
+											<td align="center" colspan="11"><bean:message key="label.table.notfound" /></td>
+										</tr>
+									</logic:empty>
+									</tbody>
 			             		</table>
 							</td>
                			</tr>
                			<tr>
                				<td colspan="3" align="center">
-               					<html:submit value="Edit" styleClass="btn btn-primary"/>
+               					<logic:equal name="EmployeeAdminForm" property="employeeBean.resignDate" value="">
+               						<%-- <html:button value="Edit" styleClass="btn btn-primary" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '${EmployeeAdminForm.employeeBean.employeeId}'))" property=""/>
+               						<html:button property="" value="Resign" styleClass="btn btn-default" onclick="flyToEditDelete('<%=Constants.Task.GOTORESIGN%>', '${EmployeeAdminForm.employeeBean.employeeId}')"/> --%>
+               						<html:button property="" value="Edit" styleClass="btn btn-primary" onclick="doGoToEdit()"/>
+               						<html:button property="" value="Resign" styleClass="btn btn-primary" onclick="doGoToResign()"/>
+               					</logic:equal>
                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
-               					<html:button property="" value="Resign" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                				</td>
                			</tr>
 					</table>

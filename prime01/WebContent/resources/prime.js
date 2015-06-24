@@ -160,9 +160,7 @@ function modalSubmitReturnValue(retValue,retForm){
 			var res = retValue.split(',');
 			document.getElementById('headName').value=res[1];
 			document.forms[0].managerId.value=res[0].replace('[','');
-			alert(res[4])
 			document.getElementById('divisionName').value=res[4];
-			alert('aaa')
 			if(document.getElementById('divisionName').value!=="" || document.getElementById('divisionName').value!=="NULL"){
 				document.getElementById('isDivision').style.display="inline"
 				document.getElementById('chooseDivision').style.display="none"
