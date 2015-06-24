@@ -6,15 +6,19 @@
 <!DOCTYPE html>
 <html>
 <head> 
-	<meta charset="UTF-8">
-	<title>Prime</title>
-	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
+	<script type="text/javascript">
+	function flyToEdit() {
+		var tmpForm = document.forms[0]; 
+		tmpForm.task.value = "<%=Constants.Task.DORESET%>";
+		menuLoadHandler(tmpForm.action, serialize(tmpForm));
+	}
+	</script>
 </head>
 <body class="skin-blue sidebar-mini">
 			<section class="content-header">
@@ -38,31 +42,21 @@
                   			<tr>
                   				<td>Employee Name</td>
                   				<td>:</td>
-                  				<td><html:text readonly="true" name="UserAdminForm" property="userBean.employeeName" styleClass="form-control"/></td>
+                  				<td><html:text disabled="true" name="UserAdminForm" property="userBean.employeeName" styleClass="form-control"/></td>
                   			</tr>
                   			<tr>
                   				<td>Username</td>
                   				<td>:</td>
-                  				<td><html:text readonly="true" name="UserAdminForm" property="userBean.userName" styleClass="form-control"/></td>
-                  			</tr>
-                  			<tr>
-                  				<td>Password</td>
-                  				<td>:</td>
-                  				<td><html:text name="UserAdminForm" property="userBean.password" styleClass="form-control"/></td>
-                  			</tr>
-                  			<tr>
-                  				<td>Confirm Password</td>
-                  				<td>:</td>
-                  				<td><html:text name="UserAdminForm" property="userBean.password" styleClass="form-control"/></td>
+                  				<td><html:text disabled="true" name="UserAdminForm" property="userBean.userName" styleClass="form-control"/></td>
                   			</tr>
                   			<tr>
                   				<td>Sys Level</td>
                   				<td>:</td>
                   				<td>
                   					<html:select name="UserAdminForm" property="userBean.sysLevel" styleClass="form-control" styleId="sysLevel">
-				               			<html:option value="">Admin</html:option>
-				               			<html:option value="">Operator</html:option>
-				               			<html:option value="">Operator + Monitor</html:option>
+				               			<html:option value='<%=Constants.SystemLevel.ADMIN+""%>'>0 - Admin</html:option>
+				               			<html:option value='<%=Constants.SystemLevel.OPERATOR+""%>'>1 - Operator</html:option>
+				               			<html:option value='<%=Constants.SystemLevel.OPERATOR_MONITOR+""%>'>2 - Operator + Monitor</html:option>
 				               		</html:select>
 				               	</td>
                   			</tr> 
@@ -70,11 +64,11 @@
                   				<td colspan="3" align="center">
                   					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+                  					<html:button property="" value="Reset Password" styleClass="btn btn-default" onclick="flyToEdit()" />
                   				</td>
                   			</tr>
                   		</table>
                   	</html:form>
-                    </div>
 		        	</div></div>
 		        </div>
 			</section>

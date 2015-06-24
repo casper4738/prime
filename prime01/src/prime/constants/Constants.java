@@ -32,6 +32,13 @@ public interface Constants {
 		static final String DODAYOFF	= "t27";
 		static final String GOTOWEEKEND	= "t25";
 		static final String DOWEEKEND	= "t28";
+		static final String DORESET 	= "t33";
+		static final String DOLOCK 		= "t34";
+		static final String DOUNLOCK 	= "t35";
+		static final String GOTOEDITWEEKEND	= "t29";
+		static final String DOEDITWEEKEND	= "t30";
+		static final String GOTOEDITDAYOFF	= "t31";
+		static final String DOEDITDAYOFF	= "t32";
 		
 		interface TASK {
 			final String GOTOTASKTYPE	= "t101";
@@ -168,11 +175,39 @@ public interface Constants {
 	static interface UserStatus {
 		int LOCKED = 0;
 		int OK     = 1;
+		int WITHLOCK = 2;
+		int WITHABORT = 3;
 	}
 	
+	//---4.Standard Audit Trails / Log Table Conversion			
+	static interface LogTable{
+		int EMPLOYEES 			= 1;
+		int USERS 				= 2;
+		int DIVISIONS 			= 3;
+		int POSITIONS 			= 4;
+		int ROLES 				= 5;
+		int RESIGN_EMPLOYEES	= 6;
+		int DAY_OFFS 			= 7;
+		int NATIONAL_HOLIDAYS 	= 8;
+		int WEEKEND_HOLIDAYS 	= 9;
+		int ACTIVITIES 			= 10;
+		int TASKS 				= 11;
+		int PROJECTS 			= 12;
+		int NOTIFICATIONS 		= 13;
+	}
+	static interface LogAction{
+	//---4.Standard Audit Trails / Log Audit Trail Action Conversion		
+		final String INSERT	= "I";
+		String BEFORE 		= "UB";
+		String AFTER 		= "UA";
+		String DELETE 		= "D";
+	}
+		
 	//##E.Response
 	static interface Confirmation {
 		String DELETE 		= "Are you sure you want to delete this ?";
+		String LOCK			= "Are you sure you want to lock this ?";
+		String UNLOCK		= "Are you sure you want to unlock this ?";
 	}
 	
 	static interface Response {
@@ -249,4 +284,5 @@ public interface Constants {
 		static int USER_REPORT			= 15;
 	}
 
+	
 }

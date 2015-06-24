@@ -15,6 +15,10 @@ public class EmployeeForm extends ActionForm {
 	private Integer tmpId;
 	private String result;
 	private Integer divisionId;
+	private String listMondayDate;
+	private String weekEnd;
+	private String weekEnds;
+	
 	public EmployeeBean getEmployeeBean() {
 		return employeeBean;
 	}
@@ -80,6 +84,24 @@ public class EmployeeForm extends ActionForm {
 	}
 	public void setDivisionId(Integer divisionId) {
 		this.divisionId = divisionId;
+	}
+	public String getListMondayDate() {
+		return listMondayDate;
+	}
+	public void setMondayDate(String listMondayDate) {
+		this.listMondayDate = listMondayDate;
+	}
+	public String getWeekEnd() {
+		return weekEnd;
+	}
+	public void setWeekEnd(String weekEnd) {
+		this.weekEnd = weekEnd;
+	}
+	public String getWeekEnds() {
+		return weekEnds;
+	}
+	public void setWeekEnds(String weekEnds) {
+		this.weekEnds = weekEnds;
 	}
 	
 	

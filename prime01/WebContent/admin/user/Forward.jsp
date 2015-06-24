@@ -29,5 +29,17 @@
 	<script>flyToForward('success', '<bean:message key="label.message.delete"/>')</script>
 </logic:equal>
 
+<logic:equal name="UserAdminForm" property="task" value="<%=Constants.Task.DORESET%>">
+	<script>flyToForward('success', '<bean:message key="label.message.password"/>')</script>
+</logic:equal>
+
+<logic:equal name="UserAdminForm" property="task" value="<%=Constants.Task.DOLOCK%>">
+	<script>flyToForward('success', '<bean:message key="label.message.lock"/>')</script>
+</logic:equal>
+
+<logic:equal name="UserAdminForm" property="task" value="<%=Constants.Task.DOUNLOCK%>">
+	<script>flyToForward('success', '<bean:message key="label.message.unlock"/>')</script>
+</logic:equal>
+
 </body>
 </html>

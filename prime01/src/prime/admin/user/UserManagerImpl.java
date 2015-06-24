@@ -75,4 +75,24 @@ public class UserManagerImpl implements UserManager {
 		return (Integer) mapper.queryForObject("user.getCountListByColumn", map);
 	}
 
+	public void resetPassword(UserBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.update("user.reset", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+		
+	}
+	
+	public void lockUser(UserBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.update("user.lock", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
 }

@@ -114,18 +114,38 @@
 			                        	<span class="label label-success">Active</span>
 			                        </logic:equal>
 			                        <logic:equal name="iter" property="statusUser" value="0">
-			                        	<span class="label label-danger">Not Active</span>
+			                        	<span class="label label-danger">Locked</span>
+			                        </logic:equal>
+			                        <logic:equal name="iter" property="statusUser" value="2">
+			                        <span class="label label-warning">With lock</span>
+			                        </logic:equal>
+			                        <logic:equal name="iter" property="statusUser" value="3">
+			                        	<span class="label label-warning">With Abort</span>
 			                        </logic:equal>
 			                        </td>
 			                        <td align="center">
+			                          <logic:equal name="iter" property="statusUser" value="0">
 			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="userName"/>')" src="resources/image/edit.png" />
-			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.DODELETE%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.DELETE %>')" src="resources/image/locked.png" />
-			                        </td>
+			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOUNLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.UNLOCK %>')" src="resources/image/unlocked.png" />
+									</logic:equal>
+			                         <logic:equal name="iter" property="statusUser" value="1">
+			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="userName"/>')" src="resources/image/edit.png" />
+			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.LOCK %>')" src="resources/image/locked.png" />
+			                        </logic:equal>
+									  <logic:equal name="iter" property="statusUser" value="2">
+			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="userName"/>')" src="resources/image/edit.png" />
+			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.LOCK %>')" src="resources/image/locked.png" />
+			                        </logic:equal>
+			                          <logic:equal name="iter" property="statusUser" value="3">
+			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="userName"/>')" src="resources/image/edit.png" />
+			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.LOCK %>')" src="resources/image/locked.png" />
+			                        </logic:equal>
+			                    	</td>
 			                    </tr>
 		                    </logic:iterate>
 							</logic:notEmpty>
 	                   </tbody>
-		            </table></div>
+		    	       </table></div>
 					<ul class="pagination">
 						<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
 						<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
@@ -155,5 +175,12 @@
 		        
 		        </div>
 			</section>
+			<script src="resources/prime.js"></script>
+			<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+			<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+			<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+			<script src="resources/plugins/fastclick/fastclick.min.js"></script>
+			<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
+			<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 </body>
 </html>

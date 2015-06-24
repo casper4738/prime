@@ -30,20 +30,6 @@ public class DashboardAction extends Action {
 		String str;
 		
 		List<String> list = new ArrayList<String>();
-//		str = "{title: '"+"Event 1"+"', start: new Date(y, m, 1), backgroundColor: '"+str2+"', borderColor: '"+str3+"'},";
-//		list.add(str);
-//
-//		str = "{title: '"+"Event 2"+"', start: new Date(y, m, 2), backgroundColor: '"+str2+"', borderColor: '"+str3+"'},";
-//		list.add(str);
-//		
-//		str = "{title: '"+"Event 3"+"', start: new Date(y, m, 3), backgroundColor: '"+str2+"', borderColor: '"+str3+"'},";
-//		list.add(str);
-//		
-//		str = "{title: '"+"Event 4"+"', start: new Date(y, m, 4), backgroundColor: '"+str2+"', borderColor: '"+str3+"'},";
-//		list.add(str);
-//		
-//		str = "{title: '"+"Event 5"+"', start: new Date(y, m, 5), backgroundColor: '"+str2+"', borderColor: '"+str3+"'}";
-//		list.add(str);
 
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		for (HolidayBean e : tmpManager.getListByYear(year)) {
@@ -61,6 +47,9 @@ public class DashboardAction extends Action {
 					+ "},";
 			list.add(str);
 		}
+		
+		
+		
 		System.out.println("masuk");
 		request.setAttribute("teslist", list);
 		return mapping.findForward("success");
