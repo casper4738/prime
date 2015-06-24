@@ -12,7 +12,7 @@ public interface UserManager {
 	
 	public void delete(String username) throws SQLException;
 	
-	public UserBean getEmployeeById(Integer id) throws SQLException;
+	public UserBean getUserByUsername(String username) throws SQLException;
 	
 	public List<UserBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow)
 			throws SQLException;

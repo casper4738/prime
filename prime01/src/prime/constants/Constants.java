@@ -60,6 +60,13 @@ public interface Constants {
 	        }
 	    });
 		
+		final Map<String, String> USER_SEARCHCOLUMNS = Collections.unmodifiableMap(
+		        new LinkedHashMap<String, String>() {{
+		        	put("NAME", "USERNAME");
+		        	put("ID", "EMPLOYEE ID");
+		        }
+		    });
+		
 		final Map<String, String> POSITION_SEARCHCOLUMNS = Collections.unmodifiableMap(
 			new LinkedHashMap<String, String>() {{
 				put("NAME", "POSITION NAME");
