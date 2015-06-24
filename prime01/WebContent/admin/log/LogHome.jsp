@@ -35,11 +35,8 @@
 	<!-- End JS -->
 </head>
 <body class="skin-blue sidebar-mini">
-	<html:form action="/LogAdmin">
-	<html:hidden name="LogAdminForm" property="task"/>
-	<html:hidden name="LogAdminForm" property="tmpId"/>
-	<html:hidden name="LogAdminForm" property="goToPage"/>
-	<html:hidden name="LogAdminForm" property="showInPage"/>
+	
+	
 
 	<section class="content-header">
 		<h1>Manage Log</h1>
@@ -65,14 +62,19 @@
 					</html:select>
 				</div>
 				<div class="search-table">
+					<html:form action="/LogAdmin">
+					<html:hidden name="LogAdminForm" property="task"/>
+					<html:hidden name="LogAdminForm" property="tmpId"/>
+					<html:hidden name="LogAdminForm" property="goToPage"/>
+					<html:hidden name="LogAdminForm" property="showInPage"/>
 					<html:select name="LogAdminForm" property="columnSearch" styleClass="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
 					<html:text name="LogAdminForm" property="search" styleClass="textSearch"/>
 					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
 					<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
-				</div>
 					</html:form>
+				</div>
 				<!-- End Of Search Handler -->
 		
 				<!-- Table List -->
@@ -94,10 +96,45 @@
 				                		<td><bean:write name="iter" property="auditTrailId"/> </td>
 				                		<td><bean:write name="iter" property="username"/> </td>
 				                		<td>
+				                		<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.EMPLOYEES+""%>'>
+												EMPLOYEES
+											</logic:equal>
+											<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.USERS+""%>'>
+												USERS
+											</logic:equal>
+											<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.DIVISIONS+""%>'>
+												DIVISIONS
+											</logic:equal>
+											<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.POSITIONS+""%>'>
+												POSITIONS
+											</logic:equal>
+											<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.ROLES+""%>'>
+												ROLES
+											</logic:equal>
+											<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.RESIGN_EMPLOYEES+""%>'>
+												RESIGN_EMPLOYEES
+											</logic:equal>
+											<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.DAY_OFFS+""%>'>
+												DAY_OFFS
+											</logic:equal>
+											<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.NATIONAL_HOLIDAYS+""%>'>
+												NATIONAL_HOLIDAYS
+											</logic:equal>
+											<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.WEEKEND_HOLIDAYS+""%>'>
+												WEEKEND_HOLIDAYS
+											</logic:equal>
 				                			<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.ACTIVITIES+""%>'>
 												ACTIVITIES
 											</logic:equal>
-															                			
+											<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.TASKS+""%>'>
+												TASKS
+											</logic:equal>	
+											<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.PROJECTS+""%>'>
+												PROJECTS
+											</logic:equal>
+											<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.NOTIFICATIONS+""%>'>
+												NOTIFICATIONS
+											</logic:equal>				                			
 				                		 </td>
 				                		<td><bean:write name="iter" property="auditTrailTime"/> </td>
 						                <td>
@@ -105,7 +142,13 @@
 												INSERT
 											</logic:equal>
 											<logic:equal name="iter" property="auditTrailAction" value='<%=Constants.LogAction.AFTER+""%>'>
-												AFTER 
+												UPDATE AFTER 
+											</logic:equal>
+											<logic:equal name="iter" property="auditTrailAction" value='<%=Constants.LogAction.BEFORE+""%>'>
+												UPDATE BEFORE 
+											</logic:equal>
+											<logic:equal name="iter" property="auditTrailAction" value='<%=Constants.LogAction.DELETE+""%>'>
+												DELETE
 											</logic:equal>
 						                 </td>
 						             </tr>
@@ -136,17 +179,17 @@
 							<li><html:link styleClass="paging" href="#" onclick="page(${pageNext})" >>></html:link> </li>
 							<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 							
+							
 							<html:text name="LogAdminForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 							<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
+							
 						</ul>
 						<div class="paginate-2">
 							Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
 						</div>
 						<!-- End of Paging -->
-		        	</div>
-	        	</div>
-	      </div>
+	        </div></div>
+	        </div>
 	</section>
-	
 </body>
 </html>

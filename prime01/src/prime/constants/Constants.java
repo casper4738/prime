@@ -187,26 +187,26 @@ public interface Constants {
 	
 	//---4.Standard Audit Trails / Log Table Conversion			
 	static interface LogTable{
-		int EMPLOYEES 			= 1;
-		int USERS 				= 2;
-		int DIVISIONS 			= 3;
-		int POSITIONS 			= 4;
-		int ROLES 				= 5;
-		int RESIGN_EMPLOYEES	= 6;
-		int DAY_OFFS 			= 7;
-		int NATIONAL_HOLIDAYS 	= 8;
-		int WEEKEND_HOLIDAYS 	= 9;
-		int ACTIVITIES 			= 10;
-		int TASKS 				= 11;
-		int PROJECTS 			= 12;
-		int NOTIFICATIONS 		= 13;
+		final int EMPLOYEES 			= 1;
+		final int USERS 				= 2;
+		final int DIVISIONS 			= 3;
+		final int POSITIONS 			= 4;
+		final int ROLES 				= 5;
+		final int RESIGN_EMPLOYEES		= 6;
+		final int DAY_OFFS 				= 7;
+		final int NATIONAL_HOLIDAYS 	= 8;
+		final int WEEKEND_HOLIDAYS 		= 9;
+		final int ACTIVITIES 			= 10;
+		final int TASKS 				= 11;
+		final int PROJECTS 				= 12;
+		final int NOTIFICATIONS 		= 13;
 	}
 	static interface LogAction{
 	//---4.Standard Audit Trails / Log Audit Trail Action Conversion		
-		final String INSERT	= "I";
-		String BEFORE 		= "UB";
-		String AFTER 		= "UA";
-		String DELETE 		= "D";
+		final String INSERT		= "I";
+		final String BEFORE 	= "UB";
+		final String AFTER 		= "UA";
+		final String DELETE 	= "D";
 	}
 		
 	//##E.Response
@@ -289,6 +289,4 @@ public interface Constants {
 		static int USER_TASK_SUBORDINATE= 14;
 		static int USER_REPORT			= 15;
 	}
-
-	
 }

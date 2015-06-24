@@ -1,10 +1,6 @@
 package prime.utility;
 
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -12,7 +8,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.xml.bind.DatatypeConverter;
 
 public class PrimeUtil {
 
@@ -56,5 +51,13 @@ public class PrimeUtil {
 		c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));
 		return new java.sql.Date(c.getTimeInMillis());
 	}
-		
+
+	private static SimpleDateFormat DATEFORMAT_TIME = new SimpleDateFormat("HH:mm");
+	private static SimpleDateFormat DATEFORMAT_DATE = new SimpleDateFormat("HH:mm");
+    public static String setDateToTimeString(Date date){
+    	return DATEFORMAT_TIME.format(date);
+    }
+    public static String setDateToDateString(Date date){
+    	return DATEFORMAT_DATE.format(date);
+    }
 }

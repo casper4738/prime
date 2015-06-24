@@ -30,7 +30,7 @@ public class UserAction extends Action {
 		
 		UserManager tmpManager = new UserManagerImpl();
 		UserForm userForm = (UserForm) form;
-		
+		System.out.println(userForm.getTask()+" TASK");
 		if(Constants.Task.GOTOADD.equals(userForm.getTask())){
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(userForm.getTask())) {
