@@ -30,9 +30,8 @@
 		}
 		
 		function doSubmitX(activityId, taskId) {
-			//document.forms[0].activityStatus.value = value;
-			//menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
-			modalLoadHandler("task=simpleNote&param2=" + activityId + "&param3=" + taskId);
+			alert(activityId+"|"+taskId);
+			modalLoadHandler("task=activityNote&param2=" + activityId + "&param3=" + taskId);
 		}
 	</script>
 </head> 
@@ -76,13 +75,15 @@
 	          			<span class="label label-success">Progress</span>
 	          		</logic:equal>
 				</td>
-					<td>Last Change Date : <bean:write name="TaskHeadUserForm" property="activityBean.activityChangeDate"  format="dd MMMM yyyy hh:mm:ss"/> </td>
+					<td>Last Change Date : <bean:write name="TaskHeadUserForm" property="activityBean.activityChangeDate"  format="dd MMMM yyyy HH:mm:ss"/> </td>
 				</tr>
 				<tr><td colspan="2">Description : <bean:write name="TaskHeadUserForm" property="activityBean.activityDescription" /> </td></tr>
 				</table>
 				
 				<p><span class="message"><bean:write name="TaskHeadUserForm" property="message" /></span></p>
 				<jsp:include page="../ButtonActivityStatus.jsp">
+  	    			<jsp:param name="taskId" value="${TaskHeadUserForm.taskId}" />
+  	    			<jsp:param name="activityId" value="${TaskHeadUserForm.activityBean.activityId}" />
   	    			<jsp:param name="status" value="${TaskHeadUserForm.activityBean.activityLastStatus}" />
   	    		</jsp:include>
 				<br/>
@@ -118,7 +119,7 @@
 	                <logic:notEmpty name="listActivity">
 						<logic:iterate id="iter" name="listActivity">
 		                	<tr>
-		                		<td align="center"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy hh:mm:ss"/></td>
+		                		<td align="center"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy HH:mm:ss"/></td>
 		                		<td align="center">
 			                		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.CREATE+""%>'>
 					            		<span class="label label-warning">Receive</span>

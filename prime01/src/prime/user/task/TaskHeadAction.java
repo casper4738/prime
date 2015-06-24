@@ -92,19 +92,18 @@ public class TaskHeadAction extends Action {
 			return mapping.findForward("editActivity");
 		} else if (Constants.Task.ACTIVITY.GOTOCHANGESTATUS.equals(pForm.getTask())) {
 			//##.Change Data
-			request.setAttribute("listStatus", Constants.Status.LIST_STATUSACTIVITY);
 			pForm.setActivityBean(tmpActivityManager.getActivityDetailById(pForm.getActivityId(), pForm.getActivityChangeDate()));
-			pForm.getActivityBean().setActivityChangeNote(null);
-			
 			int countRows = tmpActivityManager.getCountActivityDetail(pForm.getColumnSearch(), pForm.getSearch(), pForm.getActivityId());
 			List<ActivityBean> list = tmpActivityManager.getListActivityDetail(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getActivityId());
+			
 			request.setAttribute("listActivity", list);
 			request.setAttribute("listSearchColumn", Constants.Search.ACTIVITY_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+			
 			return mapping.findForward("changeStatusActivity");
 		} else if (Constants.Task.DOADD.equals(pForm.getTask())) {
 			//##. Insert Data

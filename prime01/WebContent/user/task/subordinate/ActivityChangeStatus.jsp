@@ -81,14 +81,11 @@
 				</table>
 				
 				<p><span class="message"><bean:write name="TaskSubordinateUserForm" property="message" /></span></p>
-				<div class="form-action"><table align="center" class="btn-status-activity">
-	               <tr>	<td><input type="button" value="Start" class="btn btn-sm btn-primary" onclick="dosubmit('<%=Constants.Status.PROGRESS%>')"/></td>
-	               		<td><input type="button" value="Pause" class="btn btn-sm  btn-warning" onclick="dosubmit('<%=Constants.Status.PAUSE%>')"/></td>
-	               		<td><input type="button" value="Finish" class="btn btn-sm  btn-success" onclick="dosubmit('<%=Constants.Status.FINISH%>')"/></td>
-	               		<td><input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="dosubmit('<%=Constants.Status.ABORT%>')"/></td>
-	               </tr>
-	            </table></div>
-		
+				<jsp:include page="../ButtonActivityStatus.jsp">
+  	    			<jsp:param name="taskId" value="${TaskSubordinateUserForm.taskId}" />
+  	    			<jsp:param name="activityId" value="${TaskSubordinateUserForm.activityBean.activityId}" />
+  	    			<jsp:param name="status" value="${TaskSubordinateUserForm.activityBean.activityLastStatus}" />
+  	    		</jsp:include>
 				<br/>
 			
 				<div class="box-body">
@@ -97,10 +94,6 @@
 	               		<html:hidden name="TaskSubordinateUserForm" property="activityBean.activityId" />
 	               		<html:hidden name="TaskSubordinateUserForm" property="activityStatus" />
 	               		<html:hidden name="TaskSubordinateUserForm" property="taskId" />
-	               		<table class="form-input" align="center" style="width:60%">
-	               			<tr><td>Note</td></tr>
-	               			<tr><td><html:textarea name="TaskSubordinateUserForm" property="activityBean.activityChangeNote" styleClass="form-control" rows="5"/></td></tr>
-	               		</table>
 	               	</html:form>
                 	
                 	

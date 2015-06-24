@@ -2,6 +2,7 @@ package prime.user.project;
 
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 import prime.user.activity.ActivityBean;
 import prime.user.task.TaskBean;
@@ -33,5 +34,8 @@ public interface ProjectManager {
 			throws SQLException;
 	
 	public List<ProjectBean> getListRoles (Integer employeeId, Integer projectId) 
+			throws SQLException;
+	
+	public Map getRoleName (Integer employeeId, Integer projectId)
 			throws SQLException;
 }

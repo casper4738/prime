@@ -150,32 +150,17 @@
 	                		
 	                		</td>
 	                		<td><bean:write name="iter" property="activityDescription"/></td>
-	                		<td align="center" width="150px"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy hh:mm:ss"/></td>
+	                		<td align="center" width="150px"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy HH:mm:ss"/></td>
 	                		<td align="center" width="80px">
-		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.CREATE+""%>'>
-		                			<span class="label label-warning">Receive</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.SUBMIT+""%>'>
-		                			<span class="label label-primary">Submit</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.PAUSE+""%>'>
-		                			<span class="label label-warning">Pause</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.FINISH+""%>'>
-		                			<span class="label label-primary">Finish</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.ABORT+""%>'>
-		                			<span class="label label-danger">Abort</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.PROGRESS+""%>'>
-		                			<span class="label label-success">Progress</span>
-		                		</logic:equal>
+	                			<jsp:include page="../Status.jsp">
+                	    			<jsp:param name="status" value="${iter.activityLastStatus}" />
+                	    		</jsp:include>
 	                		</td>
 	                		<td align="center">
 	                        	<input type="submit" class="btn btn-info btn-xs" value='Edit' onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.GOTOEDIT%>', '<bean:write name="iter" property="activityId"/>')" src="resources/image/edit.png" width="18px"/>
 	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToChangeStatusAct('<%=Constants.Task.ACTIVITY.GOTOCHANGESTATUS%>', 
 		                        	'<bean:write name="iter" property="activityId"/>',
-		                        	'<bean:write name="iter" property="activityChangeDate" format="yyyy-MM-dd hh:mm:ss"/>')" />
+		                        	'<bean:write name="iter" property="activityChangeDate" format="yyyy-MM-dd HH:mm:ss"/>')" />
 	                        </td>	
 	                    </tr> 
                     </logic:iterate>
