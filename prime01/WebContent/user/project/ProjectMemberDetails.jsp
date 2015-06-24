@@ -51,12 +51,12 @@
 		document.forms[0].submit();
 	}
 	
-	function flyToAddTask(task, valueMember, valueRole) {
-		
+	function flyToTaskDetail() {
+		alert(document.forms[0].roleId.value);
 		var tmpForm = document.forms[0]; 
 		tmpForm.task.value = task;
-		tmpForm.projectMemberId.value = valueMember;
-		tmpForm.roleId.value = valueRole;
+		tmpForm.employeeId.value = valueMember;
+		tmpForm.projectId.value= valueProject;
 		menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		//document.forms[0].submit();
 	}
@@ -93,15 +93,16 @@
                     </p>
                    
                    	<div class="form-action">
+                   	
 					<table align="center">
 	                   <tr>	<td style="padding:5px;">
-	                   			<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToPage('addTask')"/></td>
-	                   		<td></td>
-	                   		<html:select name="ProjectUserForm" property="roleId">
+	                   			<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToTaskDetail()"/></td>
+	                   		<td><html:select name="ProjectUserForm" property="roleId">
 	                   			
 	                   				<html:options collection="listRoles" property="key" labelProperty="value"/>
 	                   			
-	                   		</html:select>
+	                   		</html:select></td>
+	                   		
 	                   		
 	                   </tr>
 	                </table>

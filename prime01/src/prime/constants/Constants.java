@@ -151,14 +151,6 @@ public interface Constants {
 		final int ABORT    = 5;
 		final int REJECT   = 6;
 		final int APPROVAL = 7;
-		
-		final Map<Integer, String> LIST_STATUSACTIVITY = Collections.unmodifiableMap(
-			new LinkedHashMap<Integer, String>() {{
-				put(PROGRESS, "START");
-				put(PAUSE, "PAUSE");
-				put(FINISH, "FINISH");
-			}
-		});
 	}
 	
 	//---2.Standard Day Conversion

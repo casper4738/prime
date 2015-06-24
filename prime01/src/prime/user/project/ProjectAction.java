@@ -96,14 +96,15 @@ public class ProjectAction extends Action {
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getEmployeeId());
 			
-			request.setAttribute("listRoles", listRole);
+			//request.setAttribute("listRoles", listRole);
+			request.setAttribute("listRoles", manager.getRoleName(pForm.getEmployeeId(),pForm.getProjectId()));
 			request.setAttribute("listProjectMemberDetails", list);
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("detailMember");
 			
 		}
 		else if("addTask".equals(pForm.getTask())){
-			System.out.println("masuk add task " + pForm.getProjectId() + " "+pForm.getEmployeeId());
+			System.out.println("masuk add task " + pForm.getRoleId()+" - "+ pForm.getProjectBean().getRoleId());
 			
 			return mapping.findForward("createTask");
 		}
