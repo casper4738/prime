@@ -13,7 +13,7 @@
 <body>
 
 <html:form action="/UserAdmin">
-	<html:hidden name="UserAdminForm" property="task"/>
+	<html:text name="UserAdminForm" property="task"/>
 	<html:hidden name="UserAdminForm" property="message"/>
 </html:form>
 

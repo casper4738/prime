@@ -94,6 +94,7 @@
 					</logic:notEmpty>
                   </tbody>
             </table></div>
+            
 			<ul class="pagination">
 				<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
 				<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
