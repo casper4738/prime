@@ -6,7 +6,6 @@ function flyToPage(task) {
 
 function dosubmit() {
 	var tmpForm = document.forms[0];
-	alert("do submit = " + tmpForm.action + " " + serialize(tmpForm));
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));
 }
 
@@ -64,8 +63,6 @@ function isNumeric(n) {
 }
 
 function menuLoadHandler(targettedMenu, targettedData){
-	alert(targettedData);
-	
 	//##0. Show Loading [Hard Code the HTML Tag until Found Better Solution]
 	$('#content-main').html("<div class=\"info-modal\">" +
 				            "<div class=\"modal\">" +
@@ -109,7 +106,6 @@ function menuLoadHandler(targettedMenu, targettedData){
 //****Modal Variable
 var modalTargettedObject;
 function modalLoadHandler(targettedData, targettedObject){
-	alert(targettedData);
 	//##0. Show Loading [Hard Code the HTML Tag until Found Better Solution]
     $('#content-modal-body').removeData('bs.modal');
 	$('#content-modal-body').html("<div class=\"info-modal\">" +
@@ -186,8 +182,6 @@ function modalSubmitRefreshPageWithoutReturn(retValue, retForm, refreshedValue, 
     	    $("[data-dismiss=modal]").trigger({ type: "click" });
     	    
     	    //##2.Reload Menu
-    	    alert("B = " + refreshedForm);
-    	    alert("C = " + refreshedValue);
     	    menuLoadHandler(refreshedForm, refreshedValue);
       },
       
