@@ -33,6 +33,10 @@
 	<script>flyToForward('success', '<bean:message key="label.message.update"/>')</script>
 </logic:equal>
 
+<logic:equal name="TaskHeadUserForm" property="task" value="<%=Constants.Task.TASK.DOAPPROVAL%>">
+	<script>flyToForward('<%=Constants.Task.GOTOVIEW%>', '<bean:message key="label.message.update"/>')</script>
+</logic:equal>
+
 <logic:equal name="TaskHeadUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOADD%>">
 	<script>flyToForward('<%=Constants.Task.GOTOVIEW%>', '<bean:message key="label.message.insert"/>')</script>
 </logic:equal>

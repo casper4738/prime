@@ -91,10 +91,20 @@
 	                	    <td><bean:write name="iter" property="taskName"/></td>
 	                	    <td align="center">
 	                	    	<logic:greaterThan name="iter" property="percentage" value="50">
-	                	    		<span class="badge bg-green"><bean:write name="iter" property="percentage"/>%</span>
+	                	    		<span class="badge bg-green">
+		                	    		<jsp:include page="../Percentage.jsp">
+		                	    			<jsp:param name="status" value="${iter.taskLastStatus}" />
+		                	    			<jsp:param name="percentage" value="${iter.percentage}" />
+		                	    		</jsp:include>
+	                	    		</span>
 		                		</logic:greaterThan>
 		                		<logic:lessEqual name="iter" property="percentage" value="50">
-	                	    		<span class="badge bg-red"><bean:write name="iter" property="percentage"/>%</span>
+	                	    		<span class="badge bg-red">
+		                	    		<jsp:include page="../Percentage.jsp">
+		                	    			<jsp:param name="status" value="${iter.taskLastStatus}" />
+		                	    			<jsp:param name="percentage" value="${iter.percentage}" />
+		                	    		</jsp:include>
+	                	    		</span>
 		                		</logic:lessEqual>
 	                	    </td>
 	                	    <td><bean:write name="iter" property="taskDescription"/></td>
@@ -103,24 +113,9 @@
 	                	    <td align="center"><bean:write name="iter" property="taskStartDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center"><bean:write name="iter" property="taskEstimateDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center">
-		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.CREATE+""%>'>
-		                			<span class="label label-warning">Receive</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.SUBMIT+""%>'>
-		                			<span class="label label-primary">Submit</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.PAUSE+""%>'>
-		                			<span class="label label-warning">Pause</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.FINISH+""%>'>
-		                			<span class="label label-primary">Finish</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.ABORT+""%>'>
-		                			<span class="label label-danger">Abort</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="taskLastStatus" value='<%=Constants.Status.PROGRESS+""%>'>
-		                			<span class="label label-success">Progress</span>
-		                		</logic:equal>
+		                		<jsp:include page="../Status.jsp">
+                	    			<jsp:param name="status" value="${iter.taskLastStatus}" />
+                	    		</jsp:include>
 	                		</td>
 	                        <td align="center">
 	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.GOTOVIEW %>', '<bean:write name="iter" property="taskId"/>')">

@@ -23,6 +23,7 @@ public class ProjectBean extends EmployeeBean {
 	private String taskStatus;
 	private String divisionName;
 	private Integer roleId;
+	private String taskDescription;
 	
 	public String getDivisionName() {
 		return divisionName;
@@ -138,6 +139,12 @@ public class ProjectBean extends EmployeeBean {
 	}
 	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
+	}
+	public String getTaskDescription() {
+		return taskDescription;
+	}
+	public void setTaskDescription(String taskDescription) {
+		this.taskDescription = taskDescription;
 	}
 	
 	

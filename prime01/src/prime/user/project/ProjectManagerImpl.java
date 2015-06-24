@@ -15,6 +15,8 @@ import com.ibatis.sqlmap.client.SqlMapClient;
 
 
 
+
+
 import prime.user.task.TaskBean;
 import prime.utility.IbatisHelper;
 
@@ -119,6 +121,30 @@ public class ProjectManagerImpl implements ProjectManager {
 		map.put("projectMemberId", projectMemberId);
 		return mapper.queryForList("project.getProjectMemberDetails", map);
 	}
+
+	@Override
+	public List<ProjectBean> getListRoles(Integer employeeId, Integer projectId)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("employeeId", employeeId);
+		map.put("projectId", projectId);
+		return mapper.queryForList("project.getProjectRoles", map);
+	}
+
+	@Override
+	public Map getRoleName(Integer employeeId, Integer projectId)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		HashMap hMap = new HashMap();
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("employeeId", employeeId);
+		map.put("projectId", projectId);
+		
+		hMap= (HashMap) mapper.queryForMap("project.getProjectRoles", map, "key", "value");
+		return hMap; 
+	}
+	
 	
 	
 	

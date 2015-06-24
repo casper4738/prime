@@ -25,9 +25,10 @@ import prime.utility.PrimeUtil;
 public class TaskHeadAction extends Action {
 
 	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		int employeeId = 100;
+		
 		TaskHeadForm pForm = (TaskHeadForm) form;
 		TaskManager manager = new TaskManagerImpl();
 		EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
@@ -49,7 +50,7 @@ public class TaskHeadAction extends Action {
 			return mapping.findForward("chooseType");
 		} else if (Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##.Get Data
-			EmployeeBean tmpTaskAssign 	= tmpEmployeeManager.getEmployeeById(100);
+			EmployeeBean tmpTaskAssign 	= tmpEmployeeManager.getEmployeeById(employeeId);
 			EmployeeBean tmpTaskReceive = tmpEmployeeManager.getEmployeeById(pForm.getTaskReceiver());
 
 			//##.Add Data
@@ -74,6 +75,9 @@ public class TaskHeadAction extends Action {
 			request.setAttribute("listActivity", list);
 			request.setAttribute("listSearchColumn", Constants.Search.ACTIVITY_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+			request.setAttribute("isAllFinished", tmpActivityManager.isAllFinished(pForm.getTaskId()));
+			request.setAttribute("isAlreadySubmit", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.SUBMIT));
+			request.setAttribute("isAlreadyReject", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.REJECT));
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("taskDetail");
 		} else if (Constants.Task.ACTIVITY.GOTOADD.equals(pForm.getTask())) {
@@ -88,19 +92,18 @@ public class TaskHeadAction extends Action {
 			return mapping.findForward("editActivity");
 		} else if (Constants.Task.ACTIVITY.GOTOCHANGESTATUS.equals(pForm.getTask())) {
 			//##.Change Data
-			request.setAttribute("listStatus", Constants.Status.LIST_STATUSACTIVITY);
 			pForm.setActivityBean(tmpActivityManager.getActivityDetailById(pForm.getActivityId(), pForm.getActivityChangeDate()));
-			pForm.getActivityBean().setActivityChangeNote(null);
-			
 			int countRows = tmpActivityManager.getCountActivityDetail(pForm.getColumnSearch(), pForm.getSearch(), pForm.getActivityId());
 			List<ActivityBean> list = tmpActivityManager.getListActivityDetail(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getActivityId());
+			
 			request.setAttribute("listActivity", list);
 			request.setAttribute("listSearchColumn", Constants.Search.ACTIVITY_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+			
 			return mapping.findForward("changeStatusActivity");
 		} else if (Constants.Task.DOADD.equals(pForm.getTask())) {
 			//##. Insert Data
@@ -123,25 +126,43 @@ public class TaskHeadAction extends Action {
 			return mapping.findForward("forward");
 		} else if (Constants.Task.ACTIVITY.DOEDIT.equals(pForm.getTask())) {
 			//##.Update Data Activity
+			System.out.println("id-----------------");
+			System.out.println("id:"+pForm.getActivityBean().getActivityId());
+			System.out.println("id:"+pForm.getActivityBean().getActivityName());
+			System.out.println("id:"+pForm.getActivityBean().getActivityDescription());
+			System.out.println("id:"+pForm.getActivityBean().getTaskId());
 			tmpActivityManager.update(pForm.getActivityBean());
-			pForm.setTaskId(pForm.getActivityBean().getTaskId());
 			return mapping.findForward("forward");
 		} else if (Constants.Task.ACTIVITY.DOCHANGESTATUS.equals(pForm.getTask())) {
-			System.out.println(pForm.getActivityStatus());
-			
-			//##.Insert Data Detail
-			System.out.println("Before = " + pForm.getActivityBean().getActivityStatus());
+			//##.Insert Task Data Detail
+			if(pForm.getActivityStatus() == Constants.Status.PROGRESS) {
+				TaskBean bean = new TaskBean();
+				bean.setTaskId(pForm.getTaskId());
+				bean.setTaskStatus(Constants.Status.PROGRESS);
+				bean.setTaskChangeNote("");
+				manager.insertDetail(bean);
+			}
+			//##.Insert Activity Data Detail
 			pForm.getActivityBean().setActivityStatus(pForm.getActivityStatus());
-			System.out.println("After  = " + pForm.getActivityBean().getActivityStatus());
 			tmpActivityManager.insertDetail(pForm.getActivityBean());
+			return mapping.findForward("forward");
+		} else if (Constants.Task.TASK.DOAPPROVAL.equals(pForm.getTask())) {
+			//##.Approval Task
+			pForm.getTaskBean().setTaskStatus(Constants.Status.APPROVAL);
+			pForm.getTaskBean().setTaskChangeNote("");
+			manager.insertDetail(pForm.getTaskBean());
+			return mapping.findForward("forward");
+		} else if (Constants.Task.TASK.DOABORT.equals(pForm.getTask())) {
+			//##.Abort Task
+			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");
 		} 
 		
-		int countRows  = manager.getCountByColumnHead(pForm.getColumnSearch(), pForm.getSearch(), 100);
+		int countRows  = manager.getCountByColumnHead(pForm.getColumnSearch(), pForm.getSearch(), employeeId);
 		List<TaskBean> list = manager.getListByColumnHead(pForm.getColumnSearch(), pForm.getSearch(),
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), 
-				100);
+				employeeId);
 		
 		request.setAttribute("listTask", list);
 		request.setAttribute("listSearchColumn", Constants.Search.TASK_SEARCHCOLUMNS);

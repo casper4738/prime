@@ -5,6 +5,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,6 +47,14 @@ public class PrimeUtil {
 			map.put(i, i);
 		}
 		return map;
+	}
+	
+	public static java.sql.Date getDate(String inDate, String format) throws ParseException {
+		SimpleDateFormat dateFormat = new SimpleDateFormat(format);
+		Calendar c = Calendar.getInstance();
+		c.setTimeInMillis(dateFormat.parse(inDate).getTime());
+		c.set(c.get(Calendar.YEAR), c.get(Calendar.MONTH), c.get(Calendar.DATE));
+		return new java.sql.Date(c.getTimeInMillis());
 	}
 		
 }

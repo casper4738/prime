@@ -34,9 +34,12 @@ public interface Constants {
 		static final String DOWEEKEND	= "t28";
 		
 		interface TASK {
-			final String GOTOTASKTYPE	= "t12";
-			final String GOTOSUBMIT		= "t13";
-			final String DOSUBMIT		= "t14";
+			final String GOTOTASKTYPE	= "t101";
+			final String GOTOSUBMIT		= "t102";
+			final String DOSUBMIT		= "t103";
+			final String DOAPPROVAL		= "t104";
+			final String DOREJECT		= "t105";
+			final String DOABORT		= "t106";
 		}
 		
 		interface ACTIVITY {
@@ -146,14 +149,8 @@ public interface Constants {
 		final int SUBMIT   = 3;
 		final int FINISH   = 4;
 		final int ABORT    = 5;
-		
-		final Map<Integer, String> LIST_STATUSACTIVITY = Collections.unmodifiableMap(
-			new LinkedHashMap<Integer, String>() {{
-				put(PROGRESS, "START");
-				put(PAUSE, "PAUSE");
-				put(FINISH, "FINISH");
-			}
-		});
+		final int REJECT   = 6;
+		final int APPROVAL = 7;
 	}
 	
 	//---2.Standard Day Conversion

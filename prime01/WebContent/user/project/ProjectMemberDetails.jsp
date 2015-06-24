@@ -60,6 +60,14 @@
 		menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		//document.forms[0].submit();
 	}
+	function flyToAdd(value){
+		alert(value);
+		alert("cek"+document.getElementById("roleid").value);
+		var tmpForm = document.forms[0]; 
+		tmpForm.task.value = value;
+		tmpForm.projectMemberId.value = document.getElementById("roleid").value;
+		menuLoadHandler(tmpForm.action, serialize(tmpForm));
+	}
 	</script>
 </head>
 <body class="skin-blue sidebar-mini">
@@ -83,9 +91,9 @@
 						<td>Position : <bean:write name="ProjectUserForm" property="projectBean.positionName" /> </td>
 					</tr>
 					<tr><td>Phone Number : <bean:write name="ProjectUserForm" property="projectBean.contactNumber"/> </td>
-						<td>Email : <bean:write name="ProjectUserForm" property="projectBean.email"/> </td>
+						<td>Division : <bean:write name="ProjectUserForm" property="projectBean.divisionName" /> </td>
 					
-					<tr><td>Division : <bean:write name="ProjectUserForm" property="projectBean.divisionName" /> </td>
+					<tr><td>Email : <bean:write name="ProjectUserForm" property="projectBean.email"/> </td>
 					</tr>
 					</table>
 					
@@ -95,8 +103,12 @@
                    	<div class="form-action">
 					<table align="center">
 	                   <tr>	<td style="padding:5px;">
-	                   			<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToAddTask('addTask')"/></td>
-	                   		<td></td>
+	                   			<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToAdd('addTask')"/></td>
+	                   		<td><html:select name="ProjectUserForm" property="roleId" styleId="roleid">
+	                   			
+	                   				<html:options collection="listRoles" property="key" labelProperty="value"/>
+	                   			
+	                   		</html:select></td>
 	                   </tr>
 	                </table>
 	                </div>
@@ -115,7 +127,7 @@
 						<html:form action="/ProjectUser" >
 							<html:hidden name="ProjectUserForm" property="task"/>
 							<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
-							<html:hidden name="ProjectUserForm" property="projectId"/>
+							<html:hidden name="ProjectUserForm" property="projectMemberId"/>
 							
 							
 							<html:hidden name="ProjectUserForm" property="goToPage"/>
@@ -147,9 +159,9 @@
 			                		<td width="250px"><bean:write name="iter" property="taskName"/></td>
 			                		<td><bean:write name="iter" property="roleName"/></td>
 			                		<td><bean:write name="iter" property="taskAssigner"/></td>
-			                		<td align="center" width="150px"><bean:write name="iter" property="taskStartDate" /></td>
+			                		<td><bean:write name="iter" property="taskStartDate" format="dd MMMM yyyy"/></td>
 			                		
-			                		<td><bean:write name="iter" property="taskEstimateDate"/></td>
+			                		<td><bean:write name="iter" property="taskEstimateDate" format="dd MMMM yyyy"/></td>
 			                		<td><bean:write name="iter" property="taskStatus"/></td>
 			                		<td>80%</td>
 			                		<td align="center">

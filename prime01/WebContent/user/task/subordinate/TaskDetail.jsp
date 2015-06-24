@@ -45,6 +45,10 @@
 			tmpForm.activityId.value = activityId;
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
+		
+		function doTaskAct(taskId) {
+			modalLoadHandler("task=taskNote&param2=" + taskId);
+		}
 	</script>
 </head>
 <body class="skin-blue sidebar-mini">
@@ -78,11 +82,28 @@
 			<p><span class="message"><bean:write name="TaskSubordinateUserForm" property="message" /></span></p>
 			<br/><br/>
 			<div class="form-action"><table align="center">
-               <tr>	<td style="padding:5px;">
-               			<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')"/></td>
-               		<td><logic:equal name="isSubmit" value='true'>
-		               		<input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/>
-	               	</logic:equal></td>
+               <tr> <td style="padding:5px;">
+	               		<logic:notEqual name="isAllFinished" value="true">
+		               		<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
+	               		</logic:notEqual>
+               			<logic:equal name="isAllFinished" value="true">
+	               			<logic:equal name="TaskSubordinateUserForm" property="taskBean.taskAssigner" value="${TaskHeadUserForm.taskBean.taskReceiver}">
+		               			<input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/>
+	               			</logic:equal>
+	               		</logic:equal>
+              			<logic:equal name="isAlreadySubmit" value="true">
+	               			<logic:notEqual name="TaskSubordinateUserForm" property="taskBean.taskAssigner" value="${TaskHeadUserForm.taskBean.taskReceiver}">
+		               			<input type="button" value="Approval" class="btn btn-sm  btn-success" onclick="flyToPage('<%=Constants.Task.TASK.DOAPPROVAL%>')"/>
+		               			<input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="doTaskAct('<%=Constants.Task.TASK.DOREJECT%>')"/>
+	               			</logic:notEqual>
+	               		</logic:equal>
+	               		<logic:equal name="isAlreadyReject" value="true">
+	               			<logic:notEqual name="TaskSubordinateUserForm" property="taskBean.taskAssigner" value="${TaskHeadUserForm.taskBean.taskReceiver}">
+		               			<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
+		               			<input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/>
+	               			</logic:notEqual>
+	               		</logic:equal>
+	               	</td>
                </tr>
             </table></div>
 			
@@ -126,31 +147,15 @@
 	                		<td><bean:write name="iter" property="activityDescription"/></td>
 	                		<td align="center" width="150px"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy hh:mm:ss"/></td>
 	                		<td align="center" width="80px">
-		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.CREATE+""%>'>
-		                			<span class="label label-warning">Receive</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.SUBMIT+""%>'>
-		                			<span class="label label-primary">Submit</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.PAUSE+""%>'>
-		                			<span class="label label-warning">Pause</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.FINISH+""%>'>
-		                			<span class="label label-primary">Finish</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.ABORT+""%>'>
-		                			<span class="label label-danger">Abort</span>
-		                		</logic:equal>
-		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.PROGRESS+""%>'>
-		                			<span class="label label-success">Progress</span>
-		                		</logic:equal>
+		                		<jsp:include page="../Status.jsp">
+                	    			<jsp:param name="status" value="${iter.activityLastStatus}" />
+                	    		</jsp:include>
 	                		</td>
 	                		<td align="center">
-	                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.GOTOEDIT%>', '<bean:write name="iter" property="activityId"/>')" src="resources/image/edit.png" />
-	                        	<input type="image" onclick="flyToChangeStatusAct('<%=Constants.Task.ACTIVITY.GOTOCHANGESTATUS%>', 
-	                        	'<bean:write name="iter" property="activityId"/>',
-	                        	'<bean:write name="iter" property="activityChangeDate" format="yyyy-MM-dd hh:mm:ss"/>'
-	                        	)" src="resources/image/viewmore.png" />
+	                        	<input type="submit" class="btn btn-info btn-xs" value='Edit' onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.GOTOEDIT%>', '<bean:write name="iter" property="activityId"/>')" src="resources/image/edit.png" width="18px"/>
+	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToChangeStatusAct('<%=Constants.Task.ACTIVITY.GOTOCHANGESTATUS%>', 
+		                        	'<bean:write name="iter" property="activityId"/>',
+		                        	'<bean:write name="iter" property="activityChangeDate" format="yyyy-MM-dd hh:mm:ss"/>')" />
 	                        </td>	
 	                    </tr> 
                     </logic:iterate>
