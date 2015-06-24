@@ -6,15 +6,30 @@
 <!DOCTYPE html>
 <html>
 <head> 
+
+	<script type="text/javascript">
+		function doback() {
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = "<%=Constants.Task.GOTOVIEW%>";
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+		
+		function docancel() {
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = "success";
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+    </script>
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage Tasks<small>Task Management</small></h1>
+		<h1>Manage Tasks</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li>Task & Activities</li>
+			<li>As Head</li>
 		  	<li>Task Detail</li>
-		  	<li>Add Activity</li>
+		  	<li class="active">Add Activity</li>
 		</ol>
 	</section>
 
@@ -25,6 +40,7 @@
 			<div class="box-body">
                 	<html:form action="/TaskHeadUser">
                 		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOADD%>"/>
+                		<html:hidden name="TaskHeadUserForm" property="taskId" />
                 		<html:hidden name="TaskHeadUserForm" property="activityBean.activityId" />
                 		<html:hidden name="TaskHeadUserForm" property="activityBean.taskId" />
                 		<html:hidden name="TaskHeadUserForm" property="activityBean.activityStatus" />
@@ -46,7 +62,8 @@
                 			<tr>
                 				<td colspan="6" align="center">
                 					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
-                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+                					<html:button property="" value="Batal" styleClass="btn btn-default" onclick="doback()"/>
+                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="docancel()"/>
                 				</td>
                 			</tr>
                 		</table>

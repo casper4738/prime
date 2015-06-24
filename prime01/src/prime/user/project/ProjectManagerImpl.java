@@ -8,6 +8,14 @@ import java.util.Map;
 import com.ibatis.sqlmap.client.SqlMapClient;
 
 
+
+
+
+
+
+
+
+import prime.user.task.TaskBean;
 import prime.utility.IbatisHelper;
 
 public class ProjectManagerImpl implements ProjectManager {
@@ -38,5 +46,81 @@ public class ProjectManagerImpl implements ProjectManager {
 		map.put("value", value);
 		return (Integer) mapper.queryForObject("project.getCountListByCol", map);
 	}
+
+	@Override
+	public ProjectBean getProjectById(Integer id) throws SQLException {
+		// TODO Auto-generated method stub
+		return (ProjectBean) mapper.queryForObject("project.get", id);
+	}
+
+	@Override
+	public List<ProjectBean> getListProjectMember(String columnSearch, String value,
+			Integer startRow, Integer endRow, Integer projectId)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("projectId", projectId);
+		return mapper.queryForList("project.getProjectMember", map);
+	}
+
+	@Override
+	public Integer getNewId() throws SQLException {
+		// TODO Auto-generated method stub
+		return (Integer) mapper.queryForObject("project.getNewId", null);
+	}
+
+	@Override
+	public void insert(ProjectBean e) throws SQLException {
+		// TODO Auto-generated method stub
+		System.out.println("masuk insert");
+		try {
+			mapper.startTransaction();
+			mapper.insert("project.insert", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+
+	@Override
+	public void insertDetail(ProjectBean e) throws SQLException {
+		// TODO Auto-generated method stub
+		System.out.println("masuk insert detail");
+		try {
+			mapper.startTransaction();
+			mapper.insert("project.insertDetail", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+
+	@Override
+	public ProjectBean getProjectMemberDetailById(Integer id)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return (ProjectBean) mapper.queryForObject("project.getDataEmployee", id);
+	}
+
+	@Override
+	public List<ProjectBean> getListProjectMemberDetails(String columnSearch,
+			String value, Integer startRow, Integer endRow, Integer projectMemberId)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("projectMemberId", projectMemberId);
+		return mapper.queryForList("project.getProjectMemberDetails", map);
+	}
+	
+	
+	
 	
 }

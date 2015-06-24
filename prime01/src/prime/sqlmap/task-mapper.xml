@@ -21,7 +21,7 @@
 		INSERT INTO TASK_DETAILS 
 			(TASK_ID, TASK_CHANGE_DATE, TASK_STATUS, TASK_CHANGE_NOTE)
 		VALUES 
-			(#taskId#, CURRENT_TIMESTAMP, #taskStatus#, #taskChangeNote#)
+			(#taskId#, SYSDATE, #taskStatus#, #taskChangeNote#)
 	</insert>
 	
 	<select id="getNewId" resultClass="java.lang.Integer">

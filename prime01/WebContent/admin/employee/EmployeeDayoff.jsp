@@ -25,10 +25,10 @@
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
-            $('#datepicker_birthdate').datepicker({
+            $('#datepicker_startdate').datepicker({
                 format: "yyyy-mm-dd"
             }); 
-            $('#datepicker_hiredate').datepicker({
+            $('#datepicker_enddate').datepicker({
                 format: "yyyy-mm-dd"
             });
         });
@@ -62,33 +62,35 @@
                  				<html:text name="EmployeeAdminForm" property="employeeBean.employeeId" styleClass="form-control" disabled="true"/>
 							</td>
                  			</tr>
-               			<tr>
+               				<tr>
                  				<td width="150px">Name</td>
                  				<td>:</td>
-                 				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control"/></td>
+                 				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control" disabled="true"/></td>
                  			</tr>
                  			<tr>
-                 				<td>Address</td>
-                 				<td>:</td>
-                 				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.address" styleClass="form-control"/>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Birth Date</td>
+                 				<td>Start Date</td>
                  				<td>:</td>
                  				<td>
                  					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                 				  		<html:text name="EmployeeAdminForm" property="employeeBean.birthdate" styleClass="form-control pull-right" styleId="datepicker_birthdate"/>
+                 				  		<html:text name="EmployeeAdminForm" property="employeeBean.startDate" styleClass="form-control pull-right" styleId="datepicker_startdate"/>
                  				  	</div>
-							</td>
+								</td>
                  			</tr>
                  			<tr>
-                 				<td>Contact Number</td>
+                 				<td>End Date</td>
                  				<td>:</td>
                  				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.contactNumber" styleClass="form-control"/>
-							</td>
+                 					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                 				  		<html:text name="EmployeeAdminForm" property="employeeBean.endDate" styleClass="form-control pull-right" styleId="datepicker_enddate"/>
+                 				  	</div>
+								</td>
+                 			</tr>
+                 			<tr>
+                 				<td>Total Days</td>
+                 				<td>:</td>
+                 				<td>
+                 					<html:text name="EmployeeAdminForm" property="employeeBean.totalDay" styleClass="form-control"/>
+								</td>
                  			</tr>
                  			<tr>
                  				<td>Email</td>

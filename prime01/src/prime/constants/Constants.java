@@ -26,6 +26,9 @@ public interface Constants {
 		static final String GOTOMANAGER = "t9";
 		static final String GOTOVIEW 	= "t10";
 		static final String DOSEARCH	= "t11";
+		static final String GOTORESIGN	= "t23";
+		static final String GOTODAYOFF	= "t24";
+		static final String GOTOWEEKEND	= "t25";
 		
 		interface TASK {
 			final String GOTOTASKTYPE	= "t12";
@@ -103,6 +106,13 @@ public interface Constants {
 				put("DESCRIPTION", "Task Description");
 			}
 		});
+		
+		static final Map<String, String>PROJECT_SEARCHCOLUMNS = Collections.unmodifiableMap(
+			new LinkedHashMap<String, String>() {{
+				put("NAME", "Project Name");
+				put("DESCRIPTION", "Project Description");
+			}
+		});
 	}
 
 	//##C.Page Handling
@@ -119,7 +129,7 @@ public interface Constants {
 	//##D.Standard Value
 	//---1.Standard Status Value
 	static interface Status {
-		final int RECEIVE  = 0;
+		final int CREATE   = 0;
 		final int PROGRESS = 1;
 		final int PAUSE    = 2;
 		final int SUBMIT   = 3;
@@ -228,8 +238,7 @@ public interface Constants {
 		static int USER_PROJECT			= 12;
 		static int USER_TASK_HEAD		= 13;
 		static int USER_TASK_SUBORDINATE= 14;
-		static int USER_ACTIVITY		= 15;
-		static int USER_REPORT			= 16;
+		static int USER_REPORT			= 15;
 	}
 
 }

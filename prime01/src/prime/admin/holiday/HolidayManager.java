@@ -16,6 +16,8 @@ public interface HolidayManager {
 	public List<HolidayBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow)
 			throws SQLException;
 	
+	public List<HolidayBean> getListByYear(Integer paramYear) throws SQLException;
+	
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 	
 	public Integer getNewId() throws SQLException;

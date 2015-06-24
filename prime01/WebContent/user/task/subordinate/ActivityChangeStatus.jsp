@@ -25,16 +25,13 @@
 	    });
 		
 		function dosubmit(value) {
-			alert("Meli Jelek 2");
 			document.forms[0].activityStatus.value = value;
 			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
 		}
 		
-		function doSubmitX(activityId, taskId) {
-			alert("Meli Jelek");
-			//document.forms[0].activityStatus.value = value;
-			//menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
-			modalLoadHandler("task=simpleNote&param2=" + activityId + "&param3=" + taskId);
+		function dosubmit(value) {
+			document.forms[0].activityStatus.value = value;
+			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
 		}
 	</script>
 </head> 
@@ -44,7 +41,7 @@
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li>Task & Activities</li>
-			<li>As Head</li>
+			<li>As Subordinate</li>
 		  	<li>Task Detail</li>
 		  	<li class="active">Activity Status</li>
 		</ol>
@@ -55,64 +52,67 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Activity Status</h3></div>
 				<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-				<tr><td>Task Name : <bean:write name="TaskHeadUserForm" property="activityBean.taskName"/> </td>
-					<td>Activity Name : <bean:write name="TaskHeadUserForm" property="activityBean.activityName" /> </td>
+				<tr><td>Task Name : <bean:write name="TaskSubordinateUserForm" property="activityBean.taskName"/> </td>
+					<td>Activity Name : <bean:write name="TaskSubordinateUserForm" property="activityBean.activityName" /> </td>
 				</tr>
 				<tr><td>Last Status : 
-					<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.CREATE+""%>'>
+					<logic:equal name="TaskSubordinateUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.CREATE+""%>'>
 	            		<span class="label label-warning">Receive</span>
 	          		</logic:equal>
-	          		<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.SUBMIT+""%>'>
+	          		<logic:equal name="TaskSubordinateUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.SUBMIT+""%>'>
 	          			<span class="label label-primary">Submit</span>
 	          		</logic:equal>
-	          		<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.PAUSE+""%>'>
+	          		<logic:equal name="TaskSubordinateUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.PAUSE+""%>'>
 	          			<span class="label label-warning">Pause</span>
 	          		</logic:equal>
-	          		<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.FINISH+""%>'>
+	          		<logic:equal name="TaskSubordinateUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.FINISH+""%>'>
 	          			<span class="label label-primary">Finish</span>
 	          		</logic:equal>
-	          		<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.ABORT+""%>'>
+	          		<logic:equal name="TaskSubordinateUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.ABORT+""%>'>
 	          			<span class="label label-danger">Abort</span>
 	          		</logic:equal>
-	          		<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.PROGRESS+""%>'>
+	          		<logic:equal name="TaskSubordinateUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.PROGRESS+""%>'>
 	          			<span class="label label-success">Progress</span>
 	          		</logic:equal>
 				</td>
-					<td>Last Change Date : <bean:write name="TaskHeadUserForm" property="activityBean.activityChangeDate"  format="dd MMMM yyyy hh:mm:ss"/> </td>
+					<td>Last Change Date : <bean:write name="TaskSubordinateUserForm" property="activityBean.activityChangeDate"  format="dd MMMM yyyy hh:mm:ss"/> </td>
 				</tr>
-				<tr><td colspan="2">Description : <bean:write name="TaskHeadUserForm" property="activityBean.activityDescription" /> </td></tr>
+				<tr><td colspan="2">Description : <bean:write name="TaskSubordinateUserForm" property="activityBean.activityDescription" /> </td></tr>
 				</table>
 				
-				<p><span class="message"><bean:write name="TaskHeadUserForm" property="message" /></span></p>
+				<p><span class="message"><bean:write name="TaskSubordinateUserForm" property="message" /></span></p>
 				<div class="form-action"><table align="center" class="btn-status-activity">
 	               <tr>	<td><input type="button" value="Start" class="btn btn-sm btn-primary" onclick="dosubmit('<%=Constants.Status.PROGRESS%>')"/></td>
 	               		<td><input type="button" value="Pause" class="btn btn-sm  btn-warning" onclick="dosubmit('<%=Constants.Status.PAUSE%>')"/></td>
 	               		<td><input type="button" value="Finish" class="btn btn-sm  btn-success" onclick="dosubmit('<%=Constants.Status.FINISH%>')"/></td>
-	               		<td><input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doSubmitX('${TaskHeadUserForm.activityBean.activityId}', '${TaskHeadUserForm.activityBean.taskId}')"/></td>
+	               		<td><input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="dosubmit('<%=Constants.Status.ABORT%>')"/></td>
 	               </tr>
 	            </table></div>
 		
 				<br/>
 			
 				<div class="box-body">
-	               	<html:form action="/TaskHeadUser">
-	               		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOCHANGESTATUS%>"/>
-	               		<html:hidden name="TaskHeadUserForm" property="activityBean.activityId" />
-	               		<html:hidden name="TaskHeadUserForm" property="activityStatus" />
-	               		<html:hidden name="TaskHeadUserForm" property="activityBean.activityChangeNote" />
-	               		<html:hidden name="TaskHeadUserForm" property="taskId" />
+	               	<html:form action="/TaskSubordinateUser">
+	               		<html:hidden name="TaskSubordinateUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOCHANGESTATUS%>"/>
+	               		<html:hidden name="TaskSubordinateUserForm" property="activityBean.activityId" />
+	               		<html:hidden name="TaskSubordinateUserForm" property="activityStatus" />
+	               		<html:hidden name="TaskSubordinateUserForm" property="taskId" />
+	               		<table class="form-input" align="center" style="width:60%">
+	               			<tr><td>Note</td></tr>
+	               			<tr><td><html:textarea name="TaskSubordinateUserForm" property="activityBean.activityChangeNote" styleClass="form-control" rows="5"/></td></tr>
+	               		</table>
 	               	</html:form>
                 	
                 	
 				<div class="search-table">
-					<html:form action="/TaskHeadUser" >
-						<html:hidden name="TaskHeadUserForm" property="task"/>
-						<html:hidden name="TaskHeadUserForm" property="taskBean.taskId"/>
-						<html:hidden name="TaskHeadUserForm" property="taskId"/>
-						<html:hidden name="TaskHeadUserForm" property="activityId"/>
-						<html:hidden name="TaskHeadUserForm" property="activityChangeDate"/>
-						<html:hidden name="TaskHeadUserForm" property="goToPage"/>
-						<html:hidden name="TaskHeadUserForm" property="showInPage"/>
+					<html:form action="/TaskSubordinateUser" >
+						<html:hidden name="TaskSubordinateUserForm" property="task"/>
+						<html:hidden name="TaskSubordinateUserForm" property="taskBean.taskId"/>
+						<html:hidden name="TaskSubordinateUserForm" property="taskId"/>
+						<html:hidden name="TaskSubordinateUserForm" property="activityId"/>
+						<html:hidden name="TaskSubordinateUserForm" property="activityChangeDate"/>
+						<html:hidden name="TaskSubordinateUserForm" property="goToPage"/>
+						<html:hidden name="TaskSubordinateUserForm" property="showInPage"/>
 					</html:form>
 				</div>
 					<table id="table-1" class="table table-bordered table-striped table-hover">
@@ -168,7 +168,7 @@
 						<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 						
 						<div class="paginate-3">
-							<html:text name="TaskHeadUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+							<html:text name="TaskSubordinateUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 							<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
 						</div>
 					</ul>

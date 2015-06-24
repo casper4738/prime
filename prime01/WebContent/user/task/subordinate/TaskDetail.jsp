@@ -53,7 +53,7 @@
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li>Tasks & Activities</li>
-			<li>As Head</li>
+			<li>As Subordinate</li>
 			<li class="active">Task Detail</li>
 		</ol>
 	</section>
@@ -63,19 +63,19 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Data Task</h3></div>
 			<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-			<tr><td>Task Name : <bean:write name="TaskHeadUserForm" property="taskBean.taskName"/> </td>
-				<td>Task Assigner : <bean:write name="TaskHeadUserForm" property="taskBean.taskAssignerName" /> </td>
+			<tr><td>Task Name : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskName"/> </td>
+				<td>Task Assigner : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskAssignerName" /> </td>
 			</tr>
-			<tr><td>Start Date : <bean:write name="TaskHeadUserForm" property="taskBean.taskStartDate" format="dd MMMM yyyy"/> </td>
-				<td>Task Receiver : <bean:write name="TaskHeadUserForm" property="taskBean.taskReceiverName"/> </td>
-			</tr><tr><td>Estimated Date : <bean:write name="TaskHeadUserForm" property="taskBean.taskEstimateDate" format="dd MMMM yyyy" />
+			<tr><td>Start Date : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskStartDate" format="dd MMMM yyyy"/> </td>
+				<td>Task Receiver : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskReceiverName"/> </td>
+			</tr><tr><td>Estimated Date : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskEstimateDate" format="dd MMMM yyyy" />
 				</td><td>Status : </td>
 			</tr>
-			<tr><td colspan="2">Description : <bean:write name="TaskHeadUserForm" property="taskBean.taskDescription" /> </td></tr>
+			<tr><td colspan="2">Description : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskDescription" /> </td></tr>
 			</table>
 			
 			
-			<p><span class="message"><bean:write name="TaskHeadUserForm" property="message" /></span></p>
+			<p><span class="message"><bean:write name="TaskSubordinateUserForm" property="message" /></span></p>
 			<br/><br/>
 			<div class="form-action"><table align="center">
                <tr>	<td style="padding:5px;">
@@ -88,24 +88,24 @@
 			
 			<div class="show-in-page">
 				Show per page
-				<html:select name="TaskHeadUserForm" property="showInPage" onchange="change(this.value)" >
+				<html:select name="TaskSubordinateUserForm" property="showInPage" onchange="change(this.value)" >
 					<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 				</html:select>
 			</div>
 			
 			<div class="search-table">
-				<html:form action="/TaskHeadUser" >
-					<html:hidden name="TaskHeadUserForm" property="task"/>
-					<html:hidden name="TaskHeadUserForm" property="taskBean.taskId"/>
-					<html:hidden name="TaskHeadUserForm" property="taskId"/>
-					<html:hidden name="TaskHeadUserForm" property="activityId"/>
-					<html:hidden name="TaskHeadUserForm" property="activityChangeDate"/>
-					<html:hidden name="TaskHeadUserForm" property="goToPage"/>
-					<html:hidden name="TaskHeadUserForm" property="showInPage"/>
-					<html:select name="TaskHeadUserForm" property="columnSearch" styleClass="columnSearch">
+				<html:form action="/TaskSubordinateUser" >
+					<html:hidden name="TaskSubordinateUserForm" property="task"/>
+					<html:hidden name="TaskSubordinateUserForm" property="taskBean.taskId"/>
+					<html:hidden name="TaskSubordinateUserForm" property="taskId"/>
+					<html:hidden name="TaskSubordinateUserForm" property="activityId"/>
+					<html:hidden name="TaskSubordinateUserForm" property="activityChangeDate"/>
+					<html:hidden name="TaskSubordinateUserForm" property="goToPage"/>
+					<html:hidden name="TaskSubordinateUserForm" property="showInPage"/>
+					<html:select name="TaskSubordinateUserForm" property="columnSearch" styleClass="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
-					<html:text name="TaskHeadUserForm" property="search" styleClass="textSearch"/>
+					<html:text name="TaskSubordinateUserForm" property="search" styleClass="textSearch"/>
 					<input type="submit" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOEDIT%>')" class="buttonSearch myButton" value='Search'>
 				</html:form>
 			</div>
@@ -173,7 +173,7 @@
 				<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 				
 				<div class="paginate-3">
-					<html:text name="TaskHeadUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+					<html:text name="TaskSubordinateUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 					<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
 				</div>
 			</ul>
