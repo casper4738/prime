@@ -1,8 +1,11 @@
 package prime.admin.employee;
 
+import java.lang.reflect.Array;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.DateFormat;
 import java.text.DateFormatSymbols;
-import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -36,8 +39,6 @@ public class EmployeeAction extends Action {
 		PositionManager tmpPositionManager = new PositionManagerImpl();
 		
 		System.out.println("Task = " + pForm.getTask());
-		System.out.println("Task1 = " + Constants.Task.DORESIGN);
-		System.out.println("Task1 = " + Constants.Task.DODAYOFF);
 		
 		if(Constants.Task.GOTOMANAGER.equals(pForm.getTask())) {
 			request.setAttribute("listDivision", tmpDivisionManager.getListAll());
@@ -69,20 +70,13 @@ public class EmployeeAction extends Action {
 		} else if(Constants.Task.GOTORESIGN.equals(pForm.getTask())) {
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
 			System.out.println(pForm.getTmpId()+" Employee ID MASUK RESIGN");
-			if(tmpEmployee.getManagerId() != null) {
-				EmployeeBean tmpManager = manager.getEmployeeById(tmpEmployee.getManagerId());
-			}
 			pForm.setEmployeeBean(tmpEmployee);
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
 			return mapping.findForward("resign");
 		} else if(Constants.Task.GOTOVIEW.equals(pForm.getTask())) {
-			System.out.println("VIEW "+ pForm.getTmpId());
 			pForm.setEmployeeBean(manager.getEmployeeById(pForm.getTmpId()));
-			System.out.println("VIEW1");
 			List<EmployeeBean> listWeekendByEmployeeId = manager.getListWeekendByEmployeeId(pForm.getTmpId());
-			System.out.println("VIEW2");
 			List<EmployeeBean> listDayoffByEmployeeId = manager.getListDayoffByEmployeeId(pForm.getTmpId());
-			System.out.println("VIEW3");
 			request.setAttribute("listWeekendByEmployeeId", listWeekendByEmployeeId);	
 			request.setAttribute("listDayoffByEmployeeId", listDayoffByEmployeeId);
 			return mapping.findForward("view");
@@ -95,9 +89,6 @@ public class EmployeeAction extends Action {
 		} else if(Constants.Task.GOTOWEEKEND.equals(pForm.getTask())) {
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
 			System.out.println(pForm.getTmpId()+" Employee ID MASUK WEEKEND");
-			if(tmpEmployee.getManagerId() != null) {
-				EmployeeBean tmpManager = manager.getEmployeeById(tmpEmployee.getManagerId());
-			}
 			pForm.setEmployeeBean(tmpEmployee);
 			Map<Integer, String> monthsList = new HashMap<Integer, String>();
 		    String[] months = new DateFormatSymbols().getMonths();
@@ -127,11 +118,39 @@ public class EmployeeAction extends Action {
 			manager.update(tmpEmployee);
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOWEEKEND.equals(pForm.getTask())) {
+			System.out.println(pForm.getEmployeeBean().getDescriptionWeekEnd()+" DESC WEEK");
+			System.out.println(pForm.getWeekEnds()+" WEKEND");
+			System.out.println(pForm.getListMondayDate()+" Start");
+			pForm.getEmployeeBean().setWeekEnd(pForm.getWeekEnds());
+			String startDateString= pForm.getListMondayDate();
+			
+			DateFormat df = new SimpleDateFormat("dd/MM/yyyy"); 
+		    java.sql.Date startDate = new java.sql.Date(df.parse(startDateString).getTime());
+
+		    pForm.getEmployeeBean().setStartFrom(startDate);
 			manager.insertWeekend(pForm.getEmployeeBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DODAYOFF.equals(pForm.getTask())) {
 			manager.insertDayoff(pForm.getEmployeeBean());
 			return mapping.findForward("forward");
+		} else if(Constants.Task.GOTOEDITWEEKEND.equals(pForm.getTask())) {
+			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
+			System.out.println(pForm.getTmpId()+" Employee ID MASUK EDIT WEEKEND");
+			pForm.setEmployeeBean(tmpEmployee);
+			Map<Integer, String> monthsList = new HashMap<Integer, String>();
+		    String[] months = new DateFormatSymbols().getMonths();
+		    
+		    Calendar now = Calendar.getInstance();
+		    int year = now.get(Calendar.YEAR);
+		    String yearInString = String.valueOf(year);
+		    for (int i = 0; i < months.length-1; i++) {
+		      String month = months[i];
+		      System.out.println("month = " + month + yearInString);
+		      String str = months[i]+" "+yearInString;
+		      monthsList .put(i, str);
+		    }
+			request.setAttribute("listMonthYear", monthsList);
+			return mapping.findForward("weekendEdit");
 		}
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());

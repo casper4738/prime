@@ -32,6 +32,10 @@ public interface Constants {
 		static final String DODAYOFF	= "t27";
 		static final String GOTOWEEKEND	= "t25";
 		static final String DOWEEKEND	= "t28";
+		static final String GOTOEDITWEEKEND	= "t29";
+		static final String DOEDITWEEKEND	= "t30";
+		static final String GOTOEDITDAYOFF	= "t31";
+		static final String DOEDITDAYOFF	= "t32";
 		
 		interface TASK {
 			final String GOTOTASKTYPE	= "t101";

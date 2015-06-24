@@ -44,7 +44,8 @@
    			<forward name="view" 			path="/admin/employee/EmployeeView.jsp">					</forward>
    			<forward name="resign" 			path="/admin/employee/EmployeeResign.jsp">					</forward>
    			<forward name="dayoff" 			path="/admin/employee/EmployeeDayoff.jsp">					</forward>
-   			<forward name="weekend" 			path="/admin/employee/EmployeeWeekend.jsp">					</forward>
+   			<forward name="weekend" 		path="/admin/employee/EmployeeWeekend.jsp">					</forward>
+   			<forward name="weekendEdit" 	path="/admin/employee/EmployeeWeekendEdit.jsp">					</forward>
 		</action>
 		<action path="/UserAdmin" 			name="UserAdminForm" type="prime.admin.user.UserAction" scope="request">
 			<forward name="add" 			path="/admin/user/UserAdd.jsp">								</forward>

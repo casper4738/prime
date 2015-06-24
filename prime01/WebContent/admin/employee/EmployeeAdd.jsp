@@ -114,7 +114,7 @@
 		<div class="col-xs-12"><div class="box" align="center">
 				<div class="box-header"><h1 class="box-title"><br/><br/><b>Add New Employee</b></h2><br/><br/></div>
 					<div class="box-body">
-			               	<html:form action="/EmployeeAdmin">
+			               	<html:form action="/EmployeeAdmin" enctype="multipart/form-data">
 			               		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
@@ -210,7 +210,7 @@
 			               				<td>Profile Picture [Max. <%=Constants.MAX_IMAGE_FILESIZE %> KB]</td>
 			               				<td>:</td>
 			               				<td>
-			               				  <input type="file" id="input-image" accept="image/*">
+			               				  <html:file styleId="input-image" accept="image/*" name="EmployeeAdminForm" property="employeeBean.filePic"/>
 										</td>
 			               			</tr>
 			               			<tr>
