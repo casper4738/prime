@@ -51,11 +51,12 @@
 		document.forms[0].submit();
 	}
 	
-	function flyToTaskDetail(task, value) {
-		alert(value)
+	function flyToAddTask(task, valueMember, valueRole) {
+		
 		var tmpForm = document.forms[0]; 
 		tmpForm.task.value = task;
-		tmpForm.projectMemberId.value = value;
+		tmpForm.projectMemberId.value = valueMember;
+		tmpForm.roleId.value = valueRole;
 		menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		//document.forms[0].submit();
 	}
@@ -94,8 +95,8 @@
                    	<div class="form-action">
 					<table align="center">
 	                   <tr>	<td style="padding:5px;">
-	                   			<input type="button" value="Add New Project Member" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')"/></td>
-	                   		<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/></td>
+	                   			<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToAddTask('addTask')"/></td>
+	                   		<td></td>
 	                   </tr>
 	                </table>
 	                </div>
@@ -107,7 +108,7 @@
 							<html:option value="10">10</html:option>
 							<html:option value="25">25</html:option>
 							<html:option value="50">50</html:option>
-						</html:select>
+						</html:select>	
 					</div>
 					
 					<div class="search-table">
@@ -152,10 +153,8 @@
 			                		<td><bean:write name="iter" property="taskStatus"/></td>
 			                		<td>80%</td>
 			                		<td align="center">
-			                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.GOTOEDIT%>', '<bean:write name="iter" property="projectMemberId"/>')" src="resources/image/edit.png" />
-			                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.DODELETE%>', '<bean:write name="iter" property="projectMemberId"/>')" src="resources/image/remove.png" />
-                       	        		<input type="image" onclick="flyToChangeStatusAct()" src="resources/image/viewmore.png" />
-                       	        		<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.GOTOVIEW %>', '<bean:write name="iter" property="projectMemberId"/>')">
+			                        	
+                       	        		<input type="submit" class="btn btn-primary btn-xs" value='Abort' onclick="flyToTaskDetail('<%=Constants.Task.GOTOVIEW %>', '<bean:write name="iter" property="projectMemberId"/>')">
 			                        </td>	
 			                    </tr> 
 		                    </logic:iterate>

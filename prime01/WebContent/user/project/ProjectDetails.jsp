@@ -51,11 +51,12 @@
 		document.forms[0].submit();
 	}
 	
-	function flyToTaskDetail(task, value) {
-		alert(value)
+	function flyToTaskDetail(task, valueMember) {
+		alert(valueMember)
 		var tmpForm = document.forms[0]; 
 		tmpForm.task.value = task;
-		tmpForm.projectMemberId.value = value;
+		tmpForm.employeeId.value = valueMember;
+		
 		menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		//document.forms[0].submit();
 	}
@@ -118,7 +119,8 @@
 							<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
 							<html:hidden name="ProjectUserForm" property="projectId"/>
 							<html:hidden name="ProjectUserForm" property="projectMemberId"/>
-							
+							<html:hidden name="ProjectUserForm" property="roleId"/>
+							<html:hidden name="ProjectUserForm" property="employeeId"/>
 							<html:hidden name="ProjectUserForm" property="goToPage"/>
 							<html:hidden name="ProjectUserForm" property="showInPage"/>
 							<html:select name="ProjectUserForm" property="columnSearch" styleClass="columnSearch">
@@ -153,7 +155,7 @@
 			                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.GOTOEDIT%>', '<bean:write name="iter" property="projectMemberId"/>')" src="resources/image/edit.png" />
 			                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.DODELETE%>', '<bean:write name="iter" property="projectMemberId"/>')" src="resources/image/remove.png" />
                        	        		<input type="image" onclick="flyToChangeStatusAct()" src="resources/image/viewmore.png" />
-                       	        		<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('memberDetails', '<bean:write name="iter" property="projectMemberId"/>')">
+                       	        		<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('memberDetails', '<bean:write name="iter" property="employeeId"/>')">
 			                        </td>	
 			                    </tr> 
 		                    </logic:iterate>

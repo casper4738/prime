@@ -54,32 +54,29 @@
 	
 	<select id="getProjectMember" resultClass ="prime.user.project.ProjectBean"
 		parameterClass="java.util.Map">
-		
-		  SELECT   E.EMPLOYEE_NAME  AS employeeName,
-    	  R.ROLE_NAME AS roleName,
-    	  D.DIVISION_NAME AS divisionName,
-	      E.EMAIL AS email,
-	      E.CONTACT_NUMBER AS contactNumber,
-	      PD.PROJECT_STATUS AS projectStatus,
-	      PM.PROJECT_MEMBER_ID AS projectMemberId
+		  SELECT  DISTINCT E.EMPLOYEE_ID AS employeeId,
+		  E.EMPLOYEE_NAME  AS employeeName,
+		  (
+		  SELECT 
+		  listagg (R.ROLE_NAME, ', ') WITHIN GROUP (ORDER BY R.ROLE_NAME)
+		    FROM ROLES R
+		  JOIN PROJECT_MEMBERS PMX ON R.ROLE_ID = PMX.ROLE_ID
+		   WHERE  PMX.PROJECT_ID = 1 AND PMX.EMPLOYEE_ID=E.EMPLOYEE_ID
+		  )
+		   AS roleName,
+		  D.DIVISION_NAME AS divisionName,
+		  E.EMAIL AS email,
+		  E.CONTACT_NUMBER AS contactNumber,
+		  PD.PROJECT_STATUS AS projectStatus
 		  FROM   EMPLOYEES E,
-	      ROLES R,
-	      DIVISIONS D,
-	      PROJECT_DETAILS PD,
-	      PROJECTS P,
-	      PROJECT_MEMBERS PM
-	      <dynamic prepend="WHERE">
-			<isNotNull property="columnSearch">
-				<isEqual property="columnSearch" compareValue="NAME">
-					UPPER(P.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
-				</isEqual>
-			</isNotNull>
-		</dynamic>
-	 	  WHERE       P.PROJECT_ID = PM.PROJECT_ID
-          AND E.EMPLOYEE_ID = PM.EMPLOYEE_ID
-          AND R.ROLE_ID = PM.ROLE_ID
-          AND E.DIVISION_ID = D.DIVISION_ID
-          AND P.PROJECT_ID=PD.PROJECT_ID
+		  DIVISIONS D,
+		  PROJECT_DETAILS PD,
+		  PROJECTS P,
+		  PROJECT_MEMBERS PM
+		   WHERE       P.PROJECT_ID = PM.PROJECT_ID
+		  AND E.EMPLOYEE_ID = PM.EMPLOYEE_ID
+		  AND E.DIVISION_ID = D.DIVISION_ID
+		  AND P.PROJECT_ID=PD.PROJECT_ID
           AND P.PROJECT_ID = #projectId#
 		
 	</select>
@@ -121,58 +118,45 @@
 	
 	<select id="getDataEmployee" resultClass="prime.user.project.ProjectBean"
 		parameterClass="java.lang.Integer">
-		SELECT  E.EMPLOYEE_NAME AS employeeName, 
+		SELECT DISTINCT E.EMPLOYEE_NAME AS employeeName, 
         PO.POSITION_NAME as positionName, 
         E.CONTACT_NUMBER AS contactNumber, 
         E.EMAIL AS email, 
         D.DIVISION_NAME AS divisionName
         FROM   EMPLOYEES E,
         PROJECT_MEMBERS PM,
-           
         POSITIONS PO,
         DIVISIONS D
-        
         WHERE E.EMPLOYEE_ID = PM.EMPLOYEE_ID
         AND PO.POSITION_ID=E.POSITION_ID
         AND D.DIVISION_ID=E.DIVISION_ID
-        AND PM.PROJECT_MEMBER_ID=#id#
+        AND PM.EMPLOYEE_ID=#id#
 	</select>
 	
 	
 	<select id="getProjectMemberDetails" resultClass="prime.user.project.ProjectBean"
 		parameterClass="java.util.Map">
-		SELECT   E.EMPLOYEE_NAME AS employeeName, 
-		PO.POSITION_NAME as positionName, 
-		E.CONTACT_NUMBER AS contactNumber, 
-		E.EMAIL AS email, 
-		D.DIVISION_NAME AS divisionName,
-		T.TASK_START_DATE AS taskStartDate, 
-		T.TASK_ESTIMATE_DATE AS taskEstimateDate, 
-		T.TASK_NAME AS taskName, 
-		R.ROLE_NAME AS roleName, 
-		T.TASK_ASSIGNER AS taskAssigner, 
-		TD.TASK_STATUS AS taskStatus          
- 	    FROM   EMPLOYEES E,
-        PROJECT_MEMBERS PM,
-        TASKS T,
-        PROJECTS P,
-        POSITIONS PO,
-        DIVISIONS D,
-        ROLES R,
-        TASK_DETAILS TD
-		<dynamic prepend="WHERE">
-			<isNotNull property="columnSearch">
-				<isEqual property="columnSearch" compareValue="NAME">
-					UPPER(P.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
-				</isEqual>
-			</isNotNull>
-		</dynamic>
- 		WHERE E.EMPLOYEE_ID = PM.EMPLOYEE_ID
-        AND PM.PROJECT_MEMBER_ID = T.PROJECT_MEMBER_ID
-        AND P.PROJECT_ID = PM.PROJECT_ID
-        AND PO.POSITION_ID=E.POSITION_ID
-        AND E.DIVISION_ID=D.DIVISION_ID
-        AND T.TASK_ID=TD.TASK_ID
-        AND PM.PROJECT_MEMBER_ID = #projectMemberId#
+		SELECT   DISTINCT
+         
+         T.TASK_START_DATE AS taskStartDate,
+         T.TASK_ESTIMATE_DATE AS taskEstimateDate,
+         T.TASK_NAME AS taskName,
+         R.ROLE_NAME AS roleName,
+         T.TASK_ASSIGNER AS taskAssigner,
+         TD.TASK_STATUS AS taskStatus,
+         P.PROJECT_ID AS projectId,
+         PM.ROLE_ID AS roleId
+         FROM   TASKS T,
+         ROLES R,
+         TASK_DETAILS TD,
+         PROJECT_MEMBERS PM,
+         EMPLOYEES E,
+           PROJECTS P
+        
+         WHERE  E.EMPLOYEE_ID=PM.EMPLOYEE_ID
+         AND PM.PROJECT_MEMBER_ID=T.PROJECT_MEMBER_ID
+        AND PM.ROLE_ID = R.ROLE_ID
+        AND P.PROJECT_ID=PM.PROJECT_ID
+        AND PM.EMPLOYEE_ID = #projectMemberId#
 	</select>
 </sqlMap> 

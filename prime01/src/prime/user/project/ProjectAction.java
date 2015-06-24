@@ -72,6 +72,7 @@ public class ProjectAction extends Action {
 		else if (Constants.Task.GOTOVIEW.equals(pForm.getTask())){
 			//##.View Detail Project
 			pForm.setProjectBean(manager.getProjectById(pForm.getProjectId()));
+			//pForm.getRoleId();
 			int countRows = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 			
 			List<ProjectBean> list =manager.getListProjectMember(pForm.getColumnSearch(), pForm.getSearch(), 
@@ -84,14 +85,14 @@ public class ProjectAction extends Action {
 		}
 		else if("memberDetails".equals(pForm.getTask())){
 			System.out.println("masuk member" + pForm.getProjectMemberId());
-			pForm.setProjectBean(manager.getProjectMemberDetailById(pForm.getProjectMemberId()));
+			pForm.setProjectBean(manager.getProjectMemberDetailById(pForm.getEmployeeId()));
 			
 			int countRows = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 			
 			List<ProjectBean> list =manager.getListProjectMemberDetails(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
-					pForm.getProjectMemberId());
+					pForm.getEmployeeId());
 			request.setAttribute("listProjectMemberDetails", list);
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("detailMember");
