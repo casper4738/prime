@@ -282,6 +282,4 @@ public interface Constants {
 		static int USER_TASK_SUBORDINATE= 14;
 		static int USER_REPORT			= 15;
 	}
-
-	
 }

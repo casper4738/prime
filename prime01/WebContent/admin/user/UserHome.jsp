@@ -36,7 +36,7 @@
 	
 	function flyToEdit(task, value, confirmMessage) {
 		var tmpForm = document.forms[0]; 
-		
+		alert(task)
 		if(confirmMessage != null){
 			if(!confirm(confirmMessage))	
 				return;
@@ -110,11 +110,11 @@
 			                		<td><bean:write name="iter" property="employeeId"/> </td>
 			                		<td><bean:write name="iter" property="employeeName"/> </td>
 			                        <td align="center">
-			                        <logic:equal name="iter" property="statusUser" value="1">
-			                        	<span class="label label-success">Active</span>
-			                        </logic:equal>
 			                        <logic:equal name="iter" property="statusUser" value="0">
 			                        	<span class="label label-danger">Locked</span>
+			                        </logic:equal>
+			                         <logic:equal name="iter" property="statusUser" value="1">
+			                        	<span class="label label-success">Active</span>
 			                        </logic:equal>
 			                        <logic:equal name="iter" property="statusUser" value="2">
 			                        <span class="label label-warning">With lock</span>
