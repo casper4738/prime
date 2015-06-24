@@ -127,8 +127,12 @@ public class TaskHeadAction extends Action {
 			pForm.setTaskId(pForm.getActivityBean().getTaskId());
 			return mapping.findForward("forward");
 		} else if (Constants.Task.ACTIVITY.DOCHANGESTATUS.equals(pForm.getTask())) {
+			System.out.println(pForm.getActivityStatus());
+			
 			//##.Insert Data Detail
+			System.out.println("Before = " + pForm.getActivityBean().getActivityStatus());
 			pForm.getActivityBean().setActivityStatus(pForm.getActivityStatus());
+			System.out.println("After  = " + pForm.getActivityBean().getActivityStatus());
 			tmpActivityManager.insertDetail(pForm.getActivityBean());
 			return mapping.findForward("forward");
 		} 

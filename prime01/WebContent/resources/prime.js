@@ -6,6 +6,7 @@ function flyToPage(task) {
 
 function dosubmit() {
 	var tmpForm = document.forms[0];
+	alert("do submit = " + tmpForm.action + " " + serialize(tmpForm));
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));
 }
 
@@ -63,6 +64,8 @@ function isNumeric(n) {
 }
 
 function menuLoadHandler(targettedMenu, targettedData){
+	alert(targettedData);
+	
 	//##0. Show Loading [Hard Code the HTML Tag until Found Better Solution]
 	$('#content-main').html("<div class=\"info-modal\">" +
 				            "<div class=\"modal\">" +
@@ -106,8 +109,9 @@ function menuLoadHandler(targettedMenu, targettedData){
 //****Modal Variable
 var modalTargettedObject;
 function modalLoadHandler(targettedData, targettedObject){
+	alert(targettedData);
 	//##0. Show Loading [Hard Code the HTML Tag until Found Better Solution]
-    $('#content-modal-body').removeData('bs.modal')
+    $('#content-modal-body').removeData('bs.modal');
 	$('#content-modal-body').html("<div class=\"info-modal\">" +
 						            "<div class=\"modal\">" +
 						              "<div class=\"modal-dialog\">" +
@@ -146,9 +150,59 @@ function modalLoadHandler(targettedData, targettedObject){
 	
 	//##1.Register Targetted Object For Value Receiver
 	modalTargettedObject = targettedObject;
-		
+	
 	//##1.Show The Modal
 	$('#content-modal').modal({ show:true, backdrop: false });
+}
+
+function modalSubmitRefreshPageWithoutReturn(retValue, retForm, refreshedValue, refreshedForm){
+	//##1.Show Loading Screen Inside Modal
+	$('#content-modal-body').html("<div class=\"info-modal\">" +
+            "<div class=\"modal\">" +
+              "<div class=\"modal-dialog\">" +
+                "<div class=\"modal-content\">" +
+                  "<div class=\"modal-header\">" +
+                    "<h4 class=\"modal-title\" align=\"center\">Content Loading</h4>" +
+                  "</div>" +
+                  "<div class=\"modal-body\" align=\"center\">" +
+                    "<div class=\"overlay\">" +
+	                  "<i class=\"fa fa-refresh fa-spin\"></i>" +
+	                "</div>" +
+                  "</div>" +
+                  "<div class=\"modal-footer\">" +
+                  "</div>" +
+                "</div>" +
+              "</div>" +
+            "</div>" +
+          "</div>");
+	
+	//##2.Do Submit Here With Ajax
+  $.ajax({ 
+      type	  : "POST",
+      url	  : retForm,  
+      data	  : retValue,
+      success : function(){
+    		//##1.Hide Modal
+    	    $("[data-dismiss=modal]").trigger({ type: "click" });
+    	    
+    	    //##2.Reload Menu
+    	    alert("B = " + refreshedForm);
+    	    alert("C = " + refreshedValue);
+    	    menuLoadHandler(refreshedForm, refreshedValue);
+      },
+      
+      error: function(){
+			$('#content-modal-body').html("<div class=\"box box-default\">" +
+		                				"<div class=\"box-header with-border\">" +
+		               	  				"<h1 align=\"center\"><b>Fail to fetch content</b></h1>" + 
+	    			                  		"<div class=\"callout callout-danger\" align=\"center\">" + 
+	    			                    		"<h4>Something wrong happened at here</h4>" + 
+	    			                    		"<p>Please contact the developer for further assistance !!</p>" + 
+	    			                  		"</div>" + 
+	    			                	"</div>" + 
+	    			              	  "</div>");
+      }
+   });
 }
 
 function modalSubmitReturnValue(retValue,retForm){
