@@ -145,7 +145,6 @@ for(int a = 0; a<arr.size();a++)
 	out.println(arr.get(a)); 
 	
 }
-
 %>
           ],
           editable: true,

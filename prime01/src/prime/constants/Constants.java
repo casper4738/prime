@@ -179,6 +179,29 @@ public interface Constants {
 		int WITHABORT = 3;
 	}
 	
+	//---4.Standard Audit Trails / Log Table Conversion			
+	static interface LogTable{
+		int EMPLOYEES 			= 1;
+		int USERS 				= 2;
+		int DIVISIONS 			= 3;
+		int POSITIONS 			= 4;
+		int ROLES 				= 5;
+		int RESIGN_EMPLOYEES	= 6;
+		int DAY_OFFS 			= 7;
+		int NATIONAL_HOLIDAYS 	= 8;
+		int WEEKEND_HOLIDAYS 	= 9;
+		int ACTIVITIES 			= 10;
+		int TASKS 				= 11;
+		int PROJECTS 			= 12;
+		int NOTIFICATIONS 		= 13;
+	}
+	
+	//---4.Standard Audit Trails / Log Audit Trail Action Conversion		
+		String INSERT 	= "I";
+		String BEFORE 	= "UB";
+		String AFTER 	= "UA";
+		String DELETE 	= "D";
+		
 	//##E.Response
 	static interface Confirmation {
 		String DELETE 		= "Are you sure you want to delete this ?";
