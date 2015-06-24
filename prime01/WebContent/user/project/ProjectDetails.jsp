@@ -51,12 +51,13 @@
 		document.forms[0].submit();
 	}
 	
-	function flyToTaskDetail(task, valueMember) {
-		alert(valueMember)
+	function flyToTaskDetail(task, valueMember, valueProject) {
+		alert(valueMember);
+		alert(valueProject);
 		var tmpForm = document.forms[0]; 
 		tmpForm.task.value = task;
 		tmpForm.employeeId.value = valueMember;
-		
+		tmpForm.projectId.value= valueProject;
 		menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		//document.forms[0].submit();
 	}
@@ -155,7 +156,7 @@
 			                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.GOTOEDIT%>', '<bean:write name="iter" property="projectMemberId"/>')" src="resources/image/edit.png" />
 			                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.DODELETE%>', '<bean:write name="iter" property="projectMemberId"/>')" src="resources/image/remove.png" />
                        	        		<input type="image" onclick="flyToChangeStatusAct()" src="resources/image/viewmore.png" />
-                       	        		<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('memberDetails', '<bean:write name="iter" property="employeeId"/>')">
+                       	        		<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('memberDetails', '<bean:write name="iter" property="employeeId"/>', '<bean:write name="iter" property="projectId"/>')">
 			                        </td>	
 			                    </tr> 
 		                    </logic:iterate>

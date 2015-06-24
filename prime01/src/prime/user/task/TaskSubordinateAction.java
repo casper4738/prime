@@ -24,9 +24,10 @@ import prime.utility.PrimeUtil;
 public class TaskSubordinateAction extends Action {
 
 	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		
+		int employeeId = 101;
+		
 		TaskSubordinateForm pForm = (TaskSubordinateForm) form;
 		TaskManager manager = new TaskManagerImpl();
 		EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
@@ -47,10 +48,10 @@ public class TaskSubordinateAction extends Action {
 			request.setAttribute("listActivity", list);
 			request.setAttribute("listSearchColumn", Constants.Search.ACTIVITY_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+			request.setAttribute("isAllFinished", tmpActivityManager.isAllFinished(pForm.getTaskId()));
+			request.setAttribute("isAlreadySubmit", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.SUBMIT));
+			request.setAttribute("isAlreadyReject", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.REJECT));
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
-			
-			System.out.println("cek:"+tmpActivityManager.isAllFinished(pForm.getTaskId())+"||"+pForm.getTaskId());
-			request.setAttribute("isSubmit", tmpActivityManager.isAllFinished(pForm.getTaskId()));
 			return mapping.findForward("taskDetail");
 		} else if (Constants.Task.ACTIVITY.GOTOADD.equals(pForm.getTask())) {
 			//##.Add Data
@@ -94,17 +95,35 @@ public class TaskSubordinateAction extends Action {
 			pForm.setTaskId(pForm.getActivityBean().getTaskId());
 			return mapping.findForward("forward");
 		} else if (Constants.Task.ACTIVITY.DOCHANGESTATUS.equals(pForm.getTask())) {
-			//##.Insert Data Detail
+			//##.Insert Task Data Detail
+			if(pForm.getActivityStatus() == Constants.Status.PROGRESS) {
+				TaskBean bean = new TaskBean();
+				bean.setTaskId(pForm.getTaskId());
+				bean.setTaskStatus(Constants.Status.PROGRESS);
+				bean.setTaskChangeNote("");
+				manager.insertDetail(bean);
+			}
+			//##.Insert Activity Data Detail
 			pForm.getActivityBean().setActivityStatus(pForm.getActivityStatus());
 			tmpActivityManager.insertDetail(pForm.getActivityBean());
 			return mapping.findForward("forward");
+		} else if (Constants.Task.TASK.DOAPPROVAL.equals(pForm.getTask())) {
+			//##.Approval Task
+			pForm.getTaskBean().setTaskStatus(Constants.Status.APPROVAL);
+			pForm.getTaskBean().setTaskChangeNote("");
+			manager.insertDetail(pForm.getTaskBean());
+			return mapping.findForward("forward");
+		} else if (Constants.Task.TASK.DOABORT.equals(pForm.getTask())) {
+			//##.Abort Task
+			manager.insertDetail(pForm.getTaskBean());
+			return mapping.findForward("forward");
 		} 
 		
-		int countRows  = manager.getCountByColumnSubordinate(pForm.getColumnSearch(), pForm.getSearch(), 100);
+		int countRows  = manager.getCountByColumnSubordinate(pForm.getColumnSearch(), pForm.getSearch(), employeeId);
 		List<TaskBean> list = manager.getListByColumnSubordinate(pForm.getColumnSearch(), pForm.getSearch(),
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), 
-				100);
+				employeeId);
 		
 		request.setAttribute("listTask", list);
 		request.setAttribute("listSearchColumn", Constants.Search.TASK_SEARCHCOLUMNS);

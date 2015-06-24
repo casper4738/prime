@@ -55,6 +55,10 @@ public class ModalAction extends Action {
         		request.setAttribute("activityId", pForm.getParam2());
         		request.setAttribute("taskId"    , pForm.getParam3());
 	        	break;
+	        case "taskNote" :
+        		tmpTarget = "taskNote";
+        		request.setAttribute("taskId"    , pForm.getParam2());
+	        	break;
             case "modalTable":  
             	String table=pForm.getParam1();
             	switch(table){

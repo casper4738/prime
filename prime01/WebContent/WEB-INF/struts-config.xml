@@ -139,6 +139,7 @@
 		<action path="/Modal" name="ModalForm" type="prime.modal.ModalAction" scope="request">
 			<forward name="success" 		path="/content/Modal.jsp">											</forward>
 			<forward name="simpleNote" 		path="/content/Modal_2.jsp">										</forward>
+			<forward name="taskNote" 		path="/content/Modal_4.jsp">										</forward>
 		</action>
 		
 	</action-mappings>

@@ -36,26 +36,6 @@
 	    } );
 		
 		<!-- Method Specified For Modal Handling-->
-		function modalFlyToPage(task) {
-			var tmpForm = document.forms[0];
-			tmpForm.task.value = task;
-			modalLoadHandler(serialize(tmpForm));
-		}
-		
-		function modalPage(page) {
-			var tmpForm = document.forms[0]; 
-			if(page == -1) {
-				tmpForm.goToPage.value = document.getElementById('page').value;
-			} else {
-				tmpForm.goToPage.value = page;			
-			}
-			modalLoadHandler(serialize(tmpForm));
-		}
-		
-		function modalSelectHandler(retValue,retForm){
-			modalSubmitReturnValue(retValue,retForm);
-		}
-		
 		function submitHandler(){
 			var tmpForm = document.getElementById("currentForm");
 			var tmpRetData = serialize(tmpForm);
@@ -66,8 +46,6 @@
 			var tmpTargetAction = "<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>";
 		
 			modalSubmitRefreshPageWithoutReturn(tmpRetData, tmpRetAction, tmpTargetData, tmpTargetAction);
-			
-<%-- 			modalSubmitRefreshPageAndWithoutReturn("task=<%=Constants.Task.ACTIVITY.DOCHANGESTATUS%>&activityBean.activityStatus=<%=Constants.Status.ABORT%>&activityBean.activityChangeNote=" + tmpNote + "&activityBean.activityId=" + id, "<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>"); --%>
 		}
 	</script>
 	<!-- End JS -->
@@ -75,13 +53,12 @@
 <body class="skin-blue sidebar-mini">
 	<section class="content">
        	<html:form action="/TaskHeadUser" styleId="currentForm">
-       		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOCHANGESTATUS%>"/>
-       		<html:hidden name="TaskHeadUserForm" property="activityBean.activityId" value="${activityId}"/>
-       		<html:hidden name="TaskHeadUserForm" property="activityStatus" value='<%=Constants.Status.ABORT+""%>'/>
-       		<html:hidden name="TaskHeadUserForm" property="taskId" value='${taskId}'/>
-       		<table class="form-input" align="center" style="width:60%">
+       		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.TASK.DOABORT%>"/>
+       		<html:hidden name="TaskHeadUserForm" property="taskBean.taskId" value="${taskId}"/>
+       		<html:hidden name="TaskHeadUserForm" property="taskId" value="${taskId}"/>
+       		<table class="form-input" align="center" style="width:100%">
        			<tr><td>Note</td></tr>
-       			<tr><td><html:textarea name="TaskHeadUserForm" property="activityBean.activityChangeNote" styleClass="form-control" rows="5"/></td></tr>
+       			<tr><td><html:textarea name="TaskHeadUserForm" property="activityBean.activityChangeNote" styleClass="form-control" rows="8"/></td></tr>
        		</table>
        		
        		<center>

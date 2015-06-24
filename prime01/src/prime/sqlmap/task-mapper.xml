@@ -8,12 +8,12 @@
 		VALUES
 			(#taskId#, #taskName#, #taskReceiver#, #taskAssigner#, #taskStartDate#, 
 			#taskEstimateDate#,#taskDescription#,
-		<isEqual property="projectMemberId" compareValue="0">
-			null
-		</isEqual>
-		<isNotEqual property="projectMemberId" compareValue="0">
-			#projectMemberId#
-		</isNotEqual>
+			<isEqual property="projectMemberId" compareValue="0">
+				null
+			</isEqual>
+			<isNotEqual property="projectMemberId" compareValue="0">
+				#projectMemberId#
+			</isNotEqual>
 			)
 	</insert>
 
@@ -45,6 +45,24 @@
 		JOIN EMPLOYEES EMP_ASSIGN ON TASK.TASK_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
 		JOIN EMPLOYEES EMP_RECEIVE ON TASK.TASK_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
 		WHERE TASK_ID=#id#
+	</select>
+	
+	<select id="isAlreadySubmit" resultClass="java.lang.Boolean" parameterClass="java.lang.Integer">
+		SELECT
+		    CASE WHEN COUNT(1) > 0 THEN 1
+		         ELSE 0
+		    END  
+		FROM TASKS 
+		WHERE TASK_ID =#taskId# AND NVL(TASK_LAST_STATUS, 0) = 3
+	</select>
+	
+	<select id="isCheckStatus" resultClass="java.lang.Boolean" parameterClass="java.util.Map">
+		SELECT
+		    CASE WHEN COUNT(1) > 0 THEN 1
+		         ELSE 0
+		    END  
+		FROM TASKS 
+		WHERE TASK_ID =#taskId# AND NVL(TASK_LAST_STATUS, 0) = #status#
 	</select>
 	
 	<!-- TASK HEAD -->

@@ -24,20 +24,20 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Task Submission Form</h3></div>
 			<div class="box-body">
-                	<html:form action="/TaskHeadUser">
-                		<html:hidden name="TaskHeadUserForm" property="task" value='<%=Constants.Task.TASK.DOSUBMIT+""%>'/>
-                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskId" />
-                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskStatus" value='<%=Constants.Status.SUBMIT+""%>'/>
+                	<html:form action="/TaskSubordinateUser">
+                		<html:hidden name="TaskSubordinateUserForm" property="task" value='<%=Constants.Task.TASK.DOSUBMIT+""%>'/>
+                		<html:hidden name="TaskSubordinateUserForm" property="taskBean.taskId" />
+                		<html:hidden name="TaskSubordinateUserForm" property="taskBean.taskStatus" value='<%=Constants.Status.SUBMIT+""%>'/>
                 		<table class="form-input" align="center">
                 			<tr>
                 				<td>Task Name</td>
                 				<td>:</td>
-                				<td><html:text style="width: 400px;" name="TaskHeadUserForm" readonly="true" property="taskBean.taskName" styleClass="form-control"/></td>
+                				<td><html:text style="width: 400px;" name="TaskSubordinateUserForm" readonly="true" property="taskBean.taskName" styleClass="form-control"/></td>
                 			</tr>
                 			<tr>
                 				<td>Note</td>
                 				<td>:</td>
-                				<td><html:textarea style="width: 400px; height: 120px;" name="TaskHeadUserForm" property="taskBean.taskChangeNote" styleClass="form-control"/></td>
+                				<td><html:textarea style="width: 400px; height: 120px;" name="TaskSubordinateUserForm" property="taskBean.taskChangeNote" styleClass="form-control"/></td>
                 			</tr>
                 			<tr>
                 				<td colspan="3" align="center">

@@ -83,9 +83,9 @@
 						<td>Position : <bean:write name="ProjectUserForm" property="projectBean.positionName" /> </td>
 					</tr>
 					<tr><td>Phone Number : <bean:write name="ProjectUserForm" property="projectBean.contactNumber"/> </td>
-						<td>Email : <bean:write name="ProjectUserForm" property="projectBean.email"/> </td>
+						<td>Division : <bean:write name="ProjectUserForm" property="projectBean.divisionName" /> </td>
 					
-					<tr><td>Division : <bean:write name="ProjectUserForm" property="projectBean.divisionName" /> </td>
+					<tr><td>Email : <bean:write name="ProjectUserForm" property="projectBean.email"/> </td>
 					</tr>
 					</table>
 					
@@ -95,8 +95,16 @@
                    	<div class="form-action">
 					<table align="center">
 	                   <tr>	<td style="padding:5px;">
-	                   			<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToAddTask('addTask')"/></td>
+	                   			<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToPage('addTask')"/></td>
 	                   		<td></td>
+	                   		<html:select name="ProjectUserForm" property="roleId">
+	                   			<logic:iterate id="iterRole" name="listRoles">
+	                   				<html:option value='<bean:write name="iterRole" property="roleId"/>'><bean:write name="iterRole" property="roleName"/></html:option>
+	                   			</logic:iterate>
+	                   		</html:select>
+	                   		<logic:iterate id="iterRole" name="listRoles">
+	                   				asfdd<bean:write name="iterRole" property="roleId"/>
+	                   			</logic:iterate>
 	                   </tr>
 	                </table>
 	                </div>
@@ -147,9 +155,9 @@
 			                		<td width="250px"><bean:write name="iter" property="taskName"/></td>
 			                		<td><bean:write name="iter" property="roleName"/></td>
 			                		<td><bean:write name="iter" property="taskAssigner"/></td>
-			                		<td align="center" width="150px"><bean:write name="iter" property="taskStartDate" /></td>
+			                		<td><bean:write name="iter" property="taskStartDate" format="dd MMMM yyyy"/></td>
 			                		
-			                		<td><bean:write name="iter" property="taskEstimateDate"/></td>
+			                		<td><bean:write name="iter" property="taskEstimateDate" format="dd MMMM yyyy"/></td>
 			                		<td><bean:write name="iter" property="taskStatus"/></td>
 			                		<td>80%</td>
 			                		<td align="center">

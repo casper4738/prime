@@ -31,4 +31,7 @@ public interface ProjectManager {
 	
 	public List<ProjectBean> getListProjectMemberDetails(String columnSearch, String value, Integer startRow, Integer endRow, Integer taskId)
 			throws SQLException;
+	
+	public List<ProjectBean> getListRoles (Integer employeeId, Integer projectId) 
+			throws SQLException;
 }

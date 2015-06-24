@@ -25,13 +25,11 @@
 	    });
 		
 		function dosubmit(value) {
-			alert("Meli Jelek 2");
 			document.forms[0].activityStatus.value = value;
 			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
 		}
 		
 		function doSubmitX(activityId, taskId) {
-			alert("Meli Jelek");
 			//document.forms[0].activityStatus.value = value;
 			//menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
 			modalLoadHandler("task=simpleNote&param2=" + activityId + "&param3=" + taskId);
@@ -84,14 +82,9 @@
 				</table>
 				
 				<p><span class="message"><bean:write name="TaskHeadUserForm" property="message" /></span></p>
-				<div class="form-action"><table align="center" class="btn-status-activity">
-	               <tr>	<td><input type="button" value="Start" class="btn btn-sm btn-primary" onclick="dosubmit('<%=Constants.Status.PROGRESS%>')"/></td>
-	               		<td><input type="button" value="Pause" class="btn btn-sm  btn-warning" onclick="dosubmit('<%=Constants.Status.PAUSE%>')"/></td>
-	               		<td><input type="button" value="Finish" class="btn btn-sm  btn-success" onclick="dosubmit('<%=Constants.Status.FINISH%>')"/></td>
-	               		<td><input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doSubmitX('${TaskHeadUserForm.activityBean.activityId}', '${TaskHeadUserForm.activityBean.taskId}')"/></td>
-	               </tr>
-	            </table></div>
-		
+				<jsp:include page="../ButtonActivityStatus.jsp">
+  	    			<jsp:param name="status" value="${TaskHeadUserForm.activityBean.activityLastStatus}" />
+  	    		</jsp:include>
 				<br/>
 			
 				<div class="box-body">
