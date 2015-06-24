@@ -22,10 +22,20 @@
 	
 	<update id="update"  parameterClass="prime.admin.user.UserBean">
 		UPDATE USERS SET
-		USERNAME=#userName#,
-		PASSWORD=#password#,
-		SYSTEM_LEVEL=#sysLevel#,
-		WHERE EMPLOYEE_ID=#employeeId#
+		SYSTEM_LEVEL=#sysLevel# 
+		WHERE USERNAME=#userName#
+	</update>
+	
+	<update id="reset" parameterClass="prime.admin.user.UserBean">
+		 UPDATE USERS SET
+		 PASSWORD = dbms_crypto.hash(to_clob('12345'), 2)
+		 WHERE USERNAME = #userName#
+	</update>
+	
+	<update id="lock" parameterClass="prime.admin.user.UserBean">
+		 UPDATE USERS SET
+		 STATUS_USER = '2'
+		 WHERE USERNAME = #userName#
 	</update>
 	
 	<select id="getListByColumn" resultClass="prime.admin.user.UserBean" parameterClass="java.util.Map">

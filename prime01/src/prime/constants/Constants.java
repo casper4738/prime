@@ -32,6 +32,9 @@ public interface Constants {
 		static final String DODAYOFF	= "t27";
 		static final String GOTOWEEKEND	= "t25";
 		static final String DOWEEKEND	= "t28";
+		static final String DORESET 	= "t29";
+		static final String DOLOCK 		= "t30";
+		static final String DOUNLOCK 	= "t31";
 		
 		interface TASK {
 			final String GOTOTASKTYPE	= "t12";
@@ -163,11 +166,15 @@ public interface Constants {
 	static interface UserStatus {
 		int LOCKED = 0;
 		int OK     = 1;
+		int WITHLOCK = 3;
+		int WITHABORT = 4;
 	}
 	
 	//##E.Response
 	static interface Confirmation {
 		String DELETE 		= "Are you sure you want to delete this ?";
+		String LOCK			= "Are you sure you want to lock this ?";
+		String UNLOCK		= "Are you sure you want to unlock this ?";
 	}
 	
 	static interface Response {
@@ -244,4 +251,5 @@ public interface Constants {
 		static int USER_REPORT			= 15;
 	}
 
+	
 }

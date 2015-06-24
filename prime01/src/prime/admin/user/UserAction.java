@@ -37,9 +37,18 @@ public class UserAction extends Action {
 			//##. Edit Data
 			userForm.setUserBean(tmpManager.getUserByUsername(userForm.getTmpValue()));
 			return mapping.findForward("edit");
+		} else if(Constants.Task.DOLOCK.equals(userForm.getTask())) {
+			//##. Lock User and Go to Forward
+			userForm.setUserBean(tmpManager.getUserByUsername(userForm.getTmpValue()));
+			tmpManager.lockUser(userForm.getUserBean());
+			return mapping.findForward("forward");
+		} else if(Constants.Task.DORESET.equals(userForm.getTask())) {
+			//##. Reset Password and Go to Forward
+			System.out.println("masuk ke reset");
+			tmpManager.resetPassword(userForm.getUserBean());
+			return mapping.findForward("forward");
 		} else if(Constants.Task.DOEDIT.equals(userForm.getTask())) {
 			//##.Update Data and Go to Forward
-			System.out.println("coba lagi");
 			tmpManager.update(userForm.getUserBean());
 			return mapping.findForward("forward");
 		}

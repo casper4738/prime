@@ -20,4 +20,8 @@ public interface UserManager {
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 	
 	public Integer getNewId() throws SQLException;
+	
+	public void resetPassword(UserBean e) throws SQLException;
+	
+	public void lockUser(UserBean e) throws SQLException;
 }
