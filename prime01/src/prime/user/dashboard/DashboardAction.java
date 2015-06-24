@@ -184,9 +184,9 @@ public class DashboardAction extends Action{
 		response.setHeader("cache-control", "no-cache");
 		PrintWriter tmpOut = response.getWriter();
 		String tmpTimeString = "";
-		for(tmpI = 0 ; tmpI < tmpTime.length ; tmpI++){
+		for(tmpI = 0 ; tmpI < Constants.DAILY_TIME.length ; tmpI++){
 			tmpTimeString += "<th>";
-			tmpTimeString += tmpTime[tmpI];
+			tmpTimeString += Constants.DAILY_TIME[tmpI];
 			tmpTimeString += "</th>";
 		}
 		String tmpValueString = "";
