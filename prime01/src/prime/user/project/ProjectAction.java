@@ -18,6 +18,8 @@ import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
 import prime.user.task.TaskBean;
+import prime.user.task.TaskManager;
+import prime.user.task.TaskManagerImpl;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -26,11 +28,15 @@ public class ProjectAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		int tmpEmployeeId = 100;
+		
+		
 		// TODO Auto-generated method stub
 		//return super.execute(mapping, form, request, response);
 		ProjectForm pForm =(ProjectForm) form;
 		ProjectManager manager= new ProjectManagerImpl();
-		EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
+		TaskManager tmpTaskManager = new TaskManagerImpl();
+		
 
 		
 		//ActivityManager tmpActivityManager = new ActivityManagerImpl();
@@ -106,9 +112,19 @@ public class ProjectAction extends Action {
 			
 		}
 		else if("addTask".equals(pForm.getTask())){
-			//System.out.println("masuk add task " + pForm.getProjectMemberId()+" - "+ pForm.getProjectBean().getProjectMemberId());
+			System.out.println("masuk add task " + pForm.getProjectMemberId()+" - "+ pForm.getProjectBean().getProjectMemberId());
+			pForm.setProjectBean(manager.getDataProjectMemberByProjectMemberId(pForm.getProjectMemberId()));
+			return mapping.findForward("createTask");
+		} else if(Constants.Task.Project.DOCREATETASK.equals(pForm.getTask())){
+			pForm.setProjectBean(manager.getDataProjectMemberByProjectMemberId(pForm.getProjectMemberId()));
 			
+			pForm.getProjectBean().getTaskBean().setTaskId(tmpTaskManager.getNewId());
+			pForm.getProjectBean().getTaskBean().setTaskAssigner(tmpEmployeeId);
+			pForm.getProjectBean().getTaskBean().setTaskReceiver(pForm.getProjectBean().getEmployeeId());
+			pForm.getProjectBean().getTaskBean().setProjectMemberId(pForm.getProjectBean().getProjectMemberId());
 			
+			tmpTaskManager.insert(pForm.getProjectBean().getTaskBean());
+			tmpTaskManager.insertDetail(pForm.getProjectBean().getTaskBean());
 			return mapping.findForward("createTask");
 		}
 		

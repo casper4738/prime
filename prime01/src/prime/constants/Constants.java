@@ -40,6 +40,11 @@ public interface Constants {
 		static final String GOTOEDITDAYOFF	= "t31";
 		static final String DOEDITDAYOFF	= "t32";
 		
+
+		interface Project {
+			final String DOCREATETASK		= "p01";
+		}
+		
 		interface TASK {
 			final String GOTOTASKTYPE	= "t101";
 			final String GOTOSUBMIT		= "t102";
@@ -59,6 +64,7 @@ public interface Constants {
 			final String GOTOEDIT 			= "t21";
 			final String GOTOCHANGESTATUS 	= "t22";
 		}
+		
 	}
 
 	//##B.Search Handling
