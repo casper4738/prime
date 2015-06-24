@@ -32,6 +32,10 @@ public interface Constants {
 		static final String DODAYOFF	= "t27";
 		static final String GOTOWEEKEND	= "t25";
 		static final String DOWEEKEND	= "t28";
+		static final String GOTOEDITWEEKEND	= "t29";
+		static final String DOEDITWEEKEND	= "t30";
+		static final String GOTOEDITDAYOFF	= "t31";
+		static final String DOEDITDAYOFF	= "t32";
 		
 		interface TASK {
 			final String GOTOTASKTYPE	= "t101";
@@ -151,14 +155,6 @@ public interface Constants {
 		final int ABORT    = 5;
 		final int REJECT   = 6;
 		final int APPROVAL = 7;
-		
-		final Map<Integer, String> LIST_STATUSACTIVITY = Collections.unmodifiableMap(
-			new LinkedHashMap<Integer, String>() {{
-				put(PROGRESS, "START");
-				put(PAUSE, "PAUSE");
-				put(FINISH, "FINISH");
-			}
-		});
 	}
 	
 	//---2.Standard Day Conversion

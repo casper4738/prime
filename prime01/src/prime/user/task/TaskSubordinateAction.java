@@ -65,7 +65,6 @@ public class TaskSubordinateAction extends Action {
 			return mapping.findForward("editActivity");
 		} else if (Constants.Task.ACTIVITY.GOTOCHANGESTATUS.equals(pForm.getTask())) {
 			//##.Change Data
-			request.setAttribute("listStatus", Constants.Status.LIST_STATUSACTIVITY);
 			pForm.setActivityBean(tmpActivityManager.getActivityDetailById(pForm.getActivityId(), pForm.getActivityChangeDate()));
 			pForm.getActivityBean().setActivityChangeNote(null);
 			
