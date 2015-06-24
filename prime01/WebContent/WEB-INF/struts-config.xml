@@ -11,9 +11,10 @@
 		<form-bean name="RoleAdminForm" 			type="prime.admin.role.RoleForm"></form-bean>
 		<form-bean name="HolidayAdminForm" 			type="prime.admin.holiday.HolidayForm"></form-bean>
 		<form-bean name="SettingAdminForm" 			type="prime.admin.setting.SettingForm"></form-bean>
+		<form-bean name="LogAdminForm" 			    type="prime.admin.log.LogForm"></form-bean>
 		
 		<!-- Operator & Monitor [User] -->
-		<form-bean name="ProjectUserForm" 		type="prime.user.project.ProjectForm"></form-bean>
+		<form-bean name="ProjectUserForm" 		    type="prime.user.project.ProjectForm"></form-bean>
 		<form-bean name="TaskHeadUserForm" 			type="prime.user.task.TaskHeadForm"></form-bean>		
 		<form-bean name="TaskSubordinateUserForm" 	type="prime.user.task.TaskSubordinateForm"></form-bean>		
 		<form-bean name="DashboardUserForm" 		type="prime.user.dashboard.DashboardForm"></form-bean>
@@ -79,6 +80,10 @@
 			<forward name="edit" 			path="/admin/setting/SettingEdit.jsp">						</forward>
 			<forward name="success" 		path="/admin/setting/SettingHome.jsp">						</forward>
 			<forward name="forward" 		path="/admin/setting/Forward.jsp">							</forward>
+		</action>
+		<action path="/LogAdmin" 		    name="LogAdminForm" type="prime.admin.log.LogAction" scope="request">
+			<forward name="success" 		path="/admin/log/LogHome.jsp">						    </forward>
+			<forward name="forward" 		path="/admin/log/Forward.jsp">							</forward>
 		</action>
 		
 		<!-- Operator & Monitor [User] -->

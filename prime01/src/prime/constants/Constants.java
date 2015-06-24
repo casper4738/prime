@@ -215,7 +215,7 @@ public interface Constants {
 															"PositionAdmin.do",		 //6
 															"RoleAdmin.do",			 //7
 															"HolidayAdmin.do",		 //8
-															"#",					 //9
+															"LogAdmin.do",			 //9
 															"SettingAdmin.do",		 //10
 															"DashboardUser.do",		 //11
 															"ProjectUser.do",		 //12
