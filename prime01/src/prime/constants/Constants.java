@@ -116,6 +116,14 @@ public interface Constants {
 				put("DESCRIPTION", "Project Description");
 			}
 		});
+		
+		final Map<String, String> LOG_SEARCHCOLUMNS = Collections.unmodifiableMap(
+				new LinkedHashMap<String, String>() {{
+					put("ID", "Audit Trail Id");
+					put("USERNAME", "Username");
+					put("TABLE", "Audit Trail Table");
+				}
+			});
 	}
 
 	//##C.Page Handling

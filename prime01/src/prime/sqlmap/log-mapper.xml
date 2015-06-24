@@ -1,0 +1,47 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="log">
+<select id="getListByCol" resultClass="prime.admin.log.logBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT AUDIT_TRAIL_ID AS auditTrailId,
+		USERNAME AS username, 
+		AUDIT_TRAIL_TIME AS auditTrailTime,
+		AUDIT_TRAIL_TABLE AS auditTrailTable,
+		AUDIT_TRAIL_ACTION AS auditTrailAction,
+		AUDIT_TRAIL_VALUE AS auditTrailValue
+		FROM AUDIT_TRAILS
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		       	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(AUDIT_TRAIL_ID) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="USERNAME">
+			          UPPER(USERNAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="TABLE">
+			          UPPER(AUDIT_TRAIL_TABLE) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	 	</select>
+	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1) 
+		FROM AUDIT_TRAILS 
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		      	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(AUDIT_TRAIL_ID) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="USERNAME">
+			          UPPER(USERNAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="TABLE">
+			          UPPER(AUDIT_TRAIL_TABLE) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+	        </isNotNull>
+	    </dynamic>
+	</select>
+</sqlMap>
+
+	
+	
