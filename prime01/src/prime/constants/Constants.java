@@ -116,6 +116,14 @@ public interface Constants {
 				put("DESCRIPTION", "Project Description");
 			}
 		});
+		
+		final Map<String, String> LOG_SEARCHCOLUMNS = Collections.unmodifiableMap(
+				new LinkedHashMap<String, String>() {{
+					put("ID", "Audit Trail Id");
+					put("USERNAME", "Username");
+					put("TABLE", "Audit Trail Table");
+				}
+			});
 	}
 
 	//##C.Page Handling
@@ -215,7 +223,7 @@ public interface Constants {
 															"PositionAdmin.do",		 //6
 															"RoleAdmin.do",			 //7
 															"HolidayAdmin.do",		 //8
-															"#",					 //9
+															"LogAdmin.do",			 //9
 															"SettingAdmin.do",		 //10
 															"DashboardUser.do",		 //11
 															"ProjectUser.do",		 //12
