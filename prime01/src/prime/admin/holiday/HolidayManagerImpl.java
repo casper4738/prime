@@ -71,5 +71,16 @@ public class HolidayManagerImpl implements HolidayManager {
 		map.put("value", value);
 		return (Integer) mapper.queryForObject("holiday.getCountListByCol", map);
 	}
+	
+	public Integer getYear (Integer year) throws SQLException {
+		return (Integer) mapper.queryForObject("holiday.getYear", null);
+	}
+
+	@Override
+	public List<HolidayBean> getListByYear(Integer paramYear) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("paramYear", paramYear+"");
+		return mapper.queryForList("holiday.getListByYear", map);
+	}
 
 }
