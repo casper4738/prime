@@ -195,12 +195,13 @@ public interface Constants {
 		int PROJECTS 			= 12;
 		int NOTIFICATIONS 		= 13;
 	}
-	
+	static interface LogAction{
 	//---4.Standard Audit Trails / Log Audit Trail Action Conversion		
-		String INSERT 	= "I";
-		String BEFORE 	= "UB";
-		String AFTER 	= "UA";
-		String DELETE 	= "D";
+		final String INSERT	= "I";
+		String BEFORE 		= "UB";
+		String AFTER 		= "UA";
+		String DELETE 		= "D";
+	}
 		
 	//##E.Response
 	static interface Confirmation {

@@ -93,9 +93,21 @@
 				                	<tr>
 				                		<td><bean:write name="iter" property="auditTrailId"/> </td>
 				                		<td><bean:write name="iter" property="username"/> </td>
-				                		<td><bean:write name="iter" property="auditTrailTable" /> </td>
+				                		<td>
+				                			<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.ACTIVITIES+""%>'>
+												ACTIVITIES
+											</logic:equal>
+															                			
+				                		 </td>
 				                		<td><bean:write name="iter" property="auditTrailTime"/> </td>
-						                <td><bean:write name="iter" property="auditTrailAction"/> </td>
+						                <td>
+						                	<logic:equal name="iter" property="auditTrailAction" value='<%=Constants.LogAction.INSERT+""%>'>
+												INSERT
+											</logic:equal>
+											<logic:equal name="iter" property="auditTrailAction" value='<%=Constants.LogAction.AFTER+""%>'>
+												AFTER 
+											</logic:equal>
+						                 </td>
 						             </tr>
 					             </logic:iterate>
 							 </logic:notEmpty>
