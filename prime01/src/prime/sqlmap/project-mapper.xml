@@ -183,20 +183,17 @@
 	</select>
 	
 	
-	<select id="getProjectMemberId" resultClass="prime.user.project.ProjectBean"
+	<select id="getDataProjectMember" resultClass="prime.user.project.ProjectBean"
 		parameterClass="java.util.Map">
-		SELECT   DISTINCT PM.PROJECT_MEMBER_ID AS projectMemberId, 
-		E.EMPLOYEE_NAME AS projectName,
-  		FROM   PROJECTS P,
+		SELECT   DISTINCT PM.PROJECT_MEMBER_ID, E.EMPLOYEE_NAME, R.ROLE_ID, R.ROLE_NAME
+ 		FROM   PROJECTS P,
         EMPLOYEES E,
         PROJECT_DETAILS PD,
         PROJECT_MEMBERS PM,
         ROLES R
- 		WHERE P.PROJECT_ID = PM.PROJECT_ID	
+ 		WHERE P.PROJECT_ID = PM.PROJECT_ID
         AND E.EMPLOYEE_ID = PM.EMPLOYEE_ID
         AND R.ROLE_ID = PM.ROLE_ID
-        AND PM.EMPLOYEE_ID = #employeeId#
-        AND PM.PROJECT_ID = #projectId#
-        AND PM.ROLE_ID = #roleId#
+        AND PM.PROJECT_MEMBER_ID=5
 	</select>
 </sqlMap> 

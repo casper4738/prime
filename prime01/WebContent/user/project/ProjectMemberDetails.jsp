@@ -51,14 +51,22 @@
 		document.forms[0].submit();
 	}
 	
-	function flyToTaskDetail() {
-		alert(document.forms[0].roleId.value);
+	function flyToAddTask(task, valueMember, valueRole) {
+		
 		var tmpForm = document.forms[0]; 
 		tmpForm.task.value = task;
-		tmpForm.employeeId.value = valueMember;
-		tmpForm.projectId.value= valueProject;
+		tmpForm.projectMemberId.value = valueMember;
+		tmpForm.roleId.value = valueRole;
 		menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		//document.forms[0].submit();
+	}
+	function flyToAdd(value){
+		alert(value);
+		alert("cek"+document.getElementById("roleid").value);
+		var tmpForm = document.forms[0]; 
+		tmpForm.task.value = value;
+		tmpForm.projectMemberId.value = document.getElementById("roleid").value;
+		menuLoadHandler(tmpForm.action, serialize(tmpForm));
 	}
 	</script>
 </head>
@@ -93,17 +101,14 @@
                     </p>
                    
                    	<div class="form-action">
-                   	
 					<table align="center">
 	                   <tr>	<td style="padding:5px;">
-	                   			<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToTaskDetail()"/></td>
-	                   		<td><html:select name="ProjectUserForm" property="roleId">
+	                   			<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToAdd('addTask')"/></td>
+	                   		<td><html:select name="ProjectUserForm" property="roleId" styleId="roleid">
 	                   			
 	                   				<html:options collection="listRoles" property="key" labelProperty="value"/>
 	                   			
 	                   		</html:select></td>
-	                   		
-	                   		
 	                   </tr>
 	                </table>
 	                </div>
@@ -122,7 +127,7 @@
 						<html:form action="/ProjectUser" >
 							<html:hidden name="ProjectUserForm" property="task"/>
 							<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
-							<html:hidden name="ProjectUserForm" property="projectId"/>
+							<html:hidden name="ProjectUserForm" property="projectMemberId"/>
 							
 							
 							<html:hidden name="ProjectUserForm" property="goToPage"/>

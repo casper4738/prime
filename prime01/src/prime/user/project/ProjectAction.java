@@ -31,6 +31,8 @@ public class ProjectAction extends Action {
 		ProjectForm pForm =(ProjectForm) form;
 		ProjectManager manager= new ProjectManagerImpl();
 		EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
+
+		
 		//ActivityManager tmpActivityManager = new ActivityManagerImpl();
 		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
@@ -87,7 +89,7 @@ public class ProjectAction extends Action {
 			System.out.println("masuk member" + pForm.getProjectId() + " "+pForm.getEmployeeId());
 			pForm.setProjectBean(manager.getProjectMemberDetailById(pForm.getEmployeeId()));
 			
-			List<ProjectBean>listRole=manager.getListRoles(pForm.getEmployeeId(),pForm.getProjectId() );
+			
 			
 			int countRows = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 			
@@ -104,7 +106,8 @@ public class ProjectAction extends Action {
 			
 		}
 		else if("addTask".equals(pForm.getTask())){
-			System.out.println("masuk add task " + pForm.getRoleId()+" - "+ pForm.getProjectBean().getRoleId());
+			//System.out.println("masuk add task " + pForm.getProjectMemberId()+" - "+ pForm.getProjectBean().getProjectMemberId());
+			
 			
 			return mapping.findForward("createTask");
 		}

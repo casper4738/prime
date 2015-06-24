@@ -93,7 +93,6 @@ public class TaskHeadAction extends Action {
 		} else if (Constants.Task.ACTIVITY.GOTOCHANGESTATUS.equals(pForm.getTask())) {
 			//##.Change Data
 			pForm.setActivityBean(tmpActivityManager.getActivityDetailById(pForm.getActivityId(), pForm.getActivityChangeDate()));
-			
 			int countRows = tmpActivityManager.getCountActivityDetail(pForm.getColumnSearch(), pForm.getSearch(), pForm.getActivityId());
 			List<ActivityBean> list = tmpActivityManager.getListActivityDetail(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),

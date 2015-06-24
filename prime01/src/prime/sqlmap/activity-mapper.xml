@@ -59,8 +59,7 @@
         	TASKS TASK ON TASK.TASK_ID = ACT.TASK_ID
 		WHERE 
 			ACT_DET.ACTIVITY_ID=#activityId# 
-			AND (TO_CHAR(ACT_DET.ACTIVITY_CHANGE_DATE, 'yyyy-mm-dd hh24:mi:ss') LIKE '%'||#activityChangeDate#||'%'
-			OR TO_CHAR(ACT_DET.ACTIVITY_CHANGE_DATE, 'yyyy-mm-dd hh:mi:ss') LIKE '%'||#activityChangeDate#||'%')
+		AND TO_CHAR(ACT_DET.ACTIVITY_CHANGE_DATE, 'yyyy-mm-dd hh24:mi:ss') = #activityChangeDate#
 	</select>
 	
 	<select id="getListActivityDetail" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
