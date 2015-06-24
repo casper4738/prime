@@ -280,7 +280,8 @@
 	</select>
 	
 	<select id="getRangeTimeByActivityId" resultClass="prime.user.activity.ActivityBean" parameterClass="java.lang.Integer">
-		SELECT ACTIVITY_CHANGE_DATE as changeDate
+		SELECT ACTIVITY_CHANGE_DATE as activityChangeDate,
+			   ACTIVITY_STATUS as activityStatus
 		FROM ACTIVITY_DETAILS 
 		WHERE ACTIVITY_ID = #activityId#
 	    ORDER BY ACTIVITY_CHANGE_DATE

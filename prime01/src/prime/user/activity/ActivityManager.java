@@ -50,6 +50,4 @@ public interface ActivityManager {
 	public Integer getCountToDoListById(Integer receiverId, String columnSearch, String value) throws SQLException;
 	
 	public Integer getCountActivityDetail(String columnSearch, String value, Integer activityId) throws SQLException;
-
-	
 }

@@ -15,6 +15,7 @@
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/datatables/extensions/FixedColumns/css/dataTables.fixedColumns.min.css" rel="stylesheet" type="text/css" />
 	<!-- End of CSS -->
 	
@@ -37,29 +38,22 @@
   		  $.ajax({ 
   	          type	  : "POST",
   	          url	  : "<%=Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]%>",  // Send the login info to this page
-  	          data	  : "task=a",
+  	          data	  : "task=refreshActivityProgress",
   	          success : function(msg){
-  	        	  var param = msg.split(';');
-  	        	  if(param[0] == "1"){
-  	        		  $('#table-1').html(param[1]);
+  	        		$('#table-1').html(msg);
 
-  	    			var table = $('#table-1').dataTable( {
-  	    				ordering 		: false,
-  	    				paging    		: false,
-  	    				searching 		: false,
-  	    				info	  		: false,
-  	    		        scrollY	  		: "300px",
-  	    		        scrollX	  		: "100%",
-  	    		        scrollCollapse	: true,
-	  	    		    fnInitComplete  : function (o) {
-	  	    		      alert("LALALA");
-	  	    		    	alert(o);
-	  	    		    	$.fn.dataTable.scrollLeft(1200);
-	  	    		    	alert($.fn.dataTable.scrollLeft());
-	  	    		    }
-  	    		    });
-  	    		    new $.fn.dataTable.FixedColumns(table, {leftColumns: 2});
-  	        	  }
+ 	    			var table = $('#table-1').dataTable( {
+ 	    				ordering 		: false,
+ 	    				paging    		: false,
+ 	    				searching 		: false,
+ 	    				info	  		: false,
+ 	    		        scrollY	  		: "250px",
+ 	    		        scrollX	  		: "100%",
+ 	    		       "autoWidth"		: true,
+ 	    		        scrollCollapse	: true
+ 	    		    });
+ 	    		    new $.fn.dataTable.FixedColumns(table, {leftColumns: 2});
+ 	    		   table.columns.adjust().draw();
   	          },   
   	       });
 		});
@@ -119,7 +113,6 @@
 							<html:hidden name="DashboardUserForm" property="task"/>
 							<html:hidden name="DashboardUserForm" property="tmpId"/>
 							<html:hidden name="DashboardUserForm" property="tmpValue"/>
-							<html:hidden name="DashboardUserForm" property="currentDate"/>
 						</html:form>	
 						<div class="box box-primary">
 							<div class="box-header">
@@ -217,7 +210,7 @@
                 <div class="box-header">
                   <h3 class="box-title">Activity Progress</h3>
 	                <div class="box-body no-padding">
-	                  <table id="table-1" class="table table-striped">
+	                  <table id="table-1" class="cell-border" cellspacing="0" width="100%">
 	                  </table>
 	                </div><!-- /.box-body -->
 	               </div>

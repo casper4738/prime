@@ -1,9 +1,9 @@
 package prime.utility;
 
-import java.sql.Date;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,4 +60,12 @@ public class PrimeUtil {
     public static String setDateToDateString(Date date){
     	return DATEFORMAT_DATE.format(date);
     }
+
+	public static Date parseDateStringToTime(String date) {
+	    try {
+	        return (Date) new SimpleDateFormat("HH:mm").parse(date);
+	    } catch (java.text.ParseException e) {
+	        return new Date(0);
+	    }
+	}
 }
