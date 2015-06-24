@@ -6,7 +6,6 @@ function flyToPage(task) {
 
 function dosubmit() {
 	var tmpForm = document.forms[0];
-	alert("do submit = " + tmpForm.action + " " + serialize(tmpForm));
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));
 }
 
@@ -64,8 +63,6 @@ function isNumeric(n) {
 }
 
 function menuLoadHandler(targettedMenu, targettedData){
-	alert(targettedData);
-	
 	//##0. Show Loading [Hard Code the HTML Tag until Found Better Solution]
 	$('#content-main').html("<div class=\"info-modal\">" +
 				            "<div class=\"modal\">" +
@@ -109,7 +106,6 @@ function menuLoadHandler(targettedMenu, targettedData){
 //****Modal Variable
 var modalTargettedObject;
 function modalLoadHandler(targettedData, targettedObject){
-	alert(targettedData);
 	//##0. Show Loading [Hard Code the HTML Tag until Found Better Solution]
     $('#content-modal-body').removeData('bs.modal');
 	$('#content-modal-body').html("<div class=\"info-modal\">" +
@@ -186,8 +182,6 @@ function modalSubmitRefreshPageWithoutReturn(retValue, retForm, refreshedValue, 
     	    $("[data-dismiss=modal]").trigger({ type: "click" });
     	    
     	    //##2.Reload Menu
-    	    alert("B = " + refreshedForm);
-    	    alert("C = " + refreshedValue);
     	    menuLoadHandler(refreshedForm, refreshedValue);
       },
       
@@ -213,9 +207,7 @@ function modalSubmitReturnValue(retValue,retForm){
 			var res = retValue.split(',');
 			document.getElementById('headName').value=res[1];
 			document.forms[0].managerId.value=res[0].replace('[','');
-			alert(res[4])
 			document.getElementById('divisionName').value=res[4];
-			alert('aaa')
 			if(document.getElementById('divisionName').value!=="" || document.getElementById('divisionName').value!=="NULL"){
 				document.getElementById('isDivision').style.display="inline"
 				document.getElementById('chooseDivision').style.display="none"
