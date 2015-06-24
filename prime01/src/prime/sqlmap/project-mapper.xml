@@ -161,8 +161,17 @@
         AND PM.EMPLOYEE_ID = #projectMemberId#
 	</select>
 	
-	<select id="getProjectRoles" resultClass="prime.user.project.ProjectBean"
-		parameterClass="java.util.Map">
+	<select id="" resultClass="prime.user.project.ProjectBean"
+		>
+		
+      
+	</select>
+	
+	<resultMap id="listRoles" class="java.util.HashMap">
+    		 <result property="key" column="roleId" />
+     		 <result property="value" column="roleName" />
+	</resultMap>
+	<select id="getProjectRoles" parameterClass="java.util.Map" resultMap="listRoles" >
 		SELECT   DISTINCT R.ROLE_ID AS roleId,
 		R.ROLE_NAME AS roleName
   		FROM   PROJECTS P,
@@ -175,8 +184,8 @@
         AND R.ROLE_ID = PM.ROLE_ID
         AND PM.EMPLOYEE_ID = #employeeId#
         AND PM.PROJECT_ID = #projectId#
-      
 	</select>
+	
 	
 	<select id="getProjectMemberId" resultClass="prime.user.project.ProjectBean"
 		parameterClass="java.util.Map">

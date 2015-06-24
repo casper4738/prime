@@ -150,7 +150,7 @@
 	                		
 	                		</td>
 	                		<td><bean:write name="iter" property="activityDescription"/></td>
-	                		<td align="center" width="150px"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy hh:mm:ss"/></td>
+	                		<td align="center" width="150px"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy HH:mm:ss"/></td>
 	                		<td align="center" width="80px">
 		                		<logic:equal name="iter" property="activityLastStatus" value='<%=Constants.Status.CREATE+""%>'>
 		                			<span class="label label-warning">Receive</span>

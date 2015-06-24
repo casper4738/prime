@@ -118,7 +118,7 @@
 	                <logic:notEmpty name="listActivity">
 						<logic:iterate id="iter" name="listActivity">
 		                	<tr>
-		                		<td align="center"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy hh:mm:ss"/></td>
+		                		<td align="center"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy HH:mm:ss"/></td>
 		                		<td align="center">
 			                		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.CREATE+""%>'>
 					            		<span class="label label-warning">Receive</span>

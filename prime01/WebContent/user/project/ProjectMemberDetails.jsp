@@ -98,13 +98,11 @@
 	                   			<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToPage('addTask')"/></td>
 	                   		<td></td>
 	                   		<html:select name="ProjectUserForm" property="roleId">
-	                   			<logic:iterate id="iterRole" name="listRoles">
-	                   				<html:option value='<bean:write name="iterRole" property="roleId"/>'><bean:write name="iterRole" property="roleName"/></html:option>
-	                   			</logic:iterate>
+	                   			
+	                   				<html:options collection="listRoles" property="key" labelProperty="value"/>
+	                   			
 	                   		</html:select>
-	                   		<logic:iterate id="iterRole" name="listRoles">
-	                   				asfdd<bean:write name="iterRole" property="roleId"/>
-	                   			</logic:iterate>
+	                   		
 	                   </tr>
 	                </table>
 	                </div>
