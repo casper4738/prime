@@ -19,7 +19,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import prime.admin.division.DivisionBean;
 import prime.admin.division.DivisionManager;
 import prime.admin.division.DivisionManagerImpl;
 import prime.admin.position.PositionManager;
@@ -71,6 +70,7 @@ public class EmployeeAction extends Action {
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
 			System.out.println(pForm.getTmpId()+" Employee ID MASUK RESIGN");
 			pForm.setEmployeeBean(tmpEmployee);
+			pForm.setEmployeeId(pForm.getTmpId());
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
 			return mapping.findForward("resign");
 		} else if(Constants.Task.GOTOVIEW.equals(pForm.getTask())) {

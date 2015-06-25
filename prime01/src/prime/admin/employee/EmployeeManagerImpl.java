@@ -113,12 +113,14 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		return mapper.queryForList("employee.getListByColumn", map);
 	}
 	
-	public List<EmployeeBean> getListEmployeeHead(String columnSearch, String value, Integer positionLevel, Integer startRow, Integer endRow) 
+	public List<EmployeeBean> getListEmployeeHead(String columnSearch, String value, Integer positionLevel, Integer startRow, Integer endRow, String paramCondition, Integer employeeId) 
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
-		map.put("value", value);			
+		map.put("value", value);		
 		map.put("positionLevel", positionLevel);
+		map.put("paramCondition", paramCondition);
+		map.put("employeeId", employeeId);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		return mapper.queryForList("employee.getListEmployeeHead", map);
@@ -144,6 +146,16 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
 		return (Integer) mapper.queryForObject("employee.getCountByColumn", map);
+	}
+	
+	public Integer getCountByColumnEmployeeHead(String columnSearch, String value, Integer positionLevel, String paramCondition, Integer employeeId) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("positionLevel", positionLevel);
+		map.put("paramCondition", paramCondition);
+		map.put("employeeId", employeeId);
+		map.put("value", value);
+		return (Integer) mapper.queryForObject("employee.getCountByColumnEmployeeHead", map);
 	}
 	
 	public Integer getCountByColumnAndDivision(String columnSearch, String value, Integer divisionId) throws SQLException {

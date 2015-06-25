@@ -110,23 +110,24 @@
                  				<td>Position</td>
                  				<td>:</td>
                  				<td>
-                 				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control">
-                 					<html:options collection="listPosition" property="positionId" labelProperty="positionName" />
-                 				</html:select>
-							</td>
-                 			</tr>
-                 			<tr>
-                 				<td>Division</td>
-                 				<td>:</td>
-                 				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
-							</td>
+	                 				<%-- <html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control">
+	                 					<html:options collection="listPosition" property="positionId" labelProperty="positionName" />
+	                 				</html:select> --%>
+	                 				<html:text name="EmployeeAdminForm" property="employeeBean.positionName" styleClass="form-control" disabled="true"/>
+								</td>
                  			</tr>
                  			<tr>
                  				<td>Head</td>
                  				<td>:</td>
                  				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.managerName" styleClass="form-control" disabled="true"/>
+	                 				<html:text name="EmployeeAdminForm" property="employeeBean.managerName" styleClass="form-control" disabled="true"/>
+								</td>
+							</tr>
+                 			<tr>
+                 				<td>Division</td>
+                 				<td>:</td>
+                 				<td>
+                 				<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true"/>
 							</td>
                  			</tr>
                  			<tr>

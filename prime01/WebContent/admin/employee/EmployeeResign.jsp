@@ -29,6 +29,17 @@
                 format: "yyyy-mm-dd"
             });
         });
+		
+		function openModalHandler(){
+			//##0.Preparing Parameter For Modal Showing
+			var tmpDataPosition=$('#positionId').val();
+			var tmpTask ="modalTable";
+			var tmpTable ="employeeHead";
+			var tmpParam =document.forms[0].employeeId.value;
+			alert(tmpParam)
+			//##1.Accessing Prime Method For Modal Showing
+			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeResign&param4="+tmpParam , $('#result'));
+		}
     </script>
     <!-- End Of JS -->
 </head>
@@ -51,7 +62,10 @@
                  		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DORESIGN%>"/>
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
+                 		<html:hidden name="EmployeeAdminForm" property="employeeId" />
+                 		<html:hidden name="EmployeeAdminForm" property="substituteHeadId" />
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
+                 		<html:hidden name="EmployeeAdminForm" property="employeeBean.positionId" styleId="positionId"/>
                  		<table class="form-input" align="center" style="width: 500px;">
                  			<tr>
                  				<td>Employee ID</td>
@@ -72,14 +86,24 @@
                  					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                  				  		<html:text name="EmployeeAdminForm" property="employeeBean.resignDate" styleClass="form-control pull-right" styleId="datepicker_resigndate"/>
                  				  	</div>
-							</td>
+								</td>
                  			</tr>
                  			<tr>
                  				<td>Resign Note</td>
                  				<td>:</td>
                  				<td>
-                 				<html:textarea name="EmployeeAdminForm" property="employeeBean.resignNote" styleClass="form-control"/>
-							</td>
+	                 				<html:textarea name="EmployeeAdminForm" property="employeeBean.resignNote" styleClass="form-control"/>
+								</td>
+                 			</tr>
+                 			<tr>
+                 				<td>Choose Subtitute Head</td>
+                 				<td>:</td>
+                 				<td class="input-group">
+	                 				<html:text name="EmployeeAdminForm" property="employeeBean.substituteHead" styleClass="form-control" styleId="substituteHead" disabled="true"/>
+	               					<span class="input-group-btn">
+                    					<input type="button" class="btn btn-info" type="button" onclick="openModalHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
+						            </span>
+								</td>
                  			</tr>
                  			<tr>
                  				<td colspan="3" align="center">
