@@ -81,6 +81,8 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	
 	public void updatePositionDivision(EmployeeBean e) throws SQLException {
 		try {
+			System.out.println(e.getManagerId()+" ++");
+			System.out.println(e.getDivisionId()+" ++");
 			mapper.startTransaction();
 			mapper.update("employee.updatePositionDivision", e);
 			mapper.commitTransaction();
@@ -186,6 +188,16 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		map.put("value", value);
 		map.put("divisionId", divisionId);
 		return (Integer) mapper.queryForObject("employee.getCountByColumnAndDivision", map);
+	}
+
+	@Override
+	public EmployeeBean getEmployeeWeekendByIdAndStartFrom(Integer id,
+			String startFrom) throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("startFrom", startFrom);
+		return (EmployeeBean) mapper.queryForObject("employee.getEmployeeWeekendByIdAndStartFrom", map);
 	}
 
 	

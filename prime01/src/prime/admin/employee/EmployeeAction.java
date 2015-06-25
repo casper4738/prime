@@ -143,22 +143,9 @@ public class EmployeeAction extends Action {
 			manager.insertDayoff(pForm.getEmployeeBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.GOTOEDITWEEKEND.equals(pForm.getTask())) {
-			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
-			System.out.println(pForm.getTmpId()+" Employee ID MASUK EDIT WEEKEND");
+			System.out.println("Masuk EditWeekend"+ pForm.getTmpId()+"--"+pForm.getTmpString());
+			EmployeeBean tmpEmployee = manager.getEmployeeWeekendByIdAndStartFrom(pForm.getTmpId(),pForm.getTmpString());
 			pForm.setEmployeeBean(tmpEmployee);
-			Map<Integer, String> monthsList = new HashMap<Integer, String>();
-		    String[] months = new DateFormatSymbols().getMonths();
-		    
-		    Calendar now = Calendar.getInstance();
-		    int year = now.get(Calendar.YEAR);
-		    String yearInString = String.valueOf(year);
-		    for (int i = 0; i < months.length-1; i++) {
-		      String month = months[i];
-		      System.out.println("month = " + month + yearInString);
-		      String str = months[i]+" "+yearInString;
-		      monthsList .put(i, str);
-		    }
-			request.setAttribute("listMonthYear", monthsList);
 			return mapping.findForward("weekendEdit");
 		} else if(Constants.Task.GOTOEDITPOSITION.equals(pForm.getTask())) {
 			System.out.println("Masuk EditPosDiv"+ pForm.getTmpId());
@@ -168,6 +155,8 @@ public class EmployeeAction extends Action {
 				EmployeeBean tmpManager = manager.getEmployeeById(tmpEmployee.getManagerId());
 			}
 			
+			pForm.setDivisionId(tmpEmployee.getDivisionId());
+			pForm.setManagerId(tmpEmployee.getManagerId());
 			pForm.setEmployeeBean(tmpEmployee);
 			pForm.setEmployeeId(pForm.getTmpId());
 			pForm.setSubstituteHeadId(pForm.getTmpId());
@@ -176,11 +165,11 @@ public class EmployeeAction extends Action {
 			return mapping.findForward("positionDivisionEdit");
 		}else if(Constants.Task.DOEDITPOSITION.equals(pForm.getTask())) {
 			// FOR UPDATE SELF EMPLOYEE
+			pForm.getEmployeeBean().setDivisionId(pForm.getDivisionId());
+			pForm.getEmployeeBean().setManagerId(pForm.getManagerId());
 			EmployeeBean tmpEmployee = pForm.getEmployeeBean();
 			manager.updatePositionDivision(tmpEmployee);
 			
-			System.out.println(pForm.getEmployeeBean().getEmployeeId()+" EMPID");
-			System.out.println(pForm.getSubstituteHeadId()+ "SUBHEAD");
 			//FOR UPDATE HEAD ID WHERE OLD HEAD ID WAS CHANGE POSITION OR DIVISION 
 			manager.updateHead(pForm.getEmployeeBean().getEmployeeId(),pForm.getSubstituteHeadId());
 			return mapping.findForward("forward");

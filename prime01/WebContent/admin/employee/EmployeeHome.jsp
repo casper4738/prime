@@ -119,7 +119,7 @@
 					                        <td align="center">
 					                        	<logic:empty name="iter" property="resignDate">
 						                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
-						                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDITPOSITION%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/editposdiv.png" />
+						                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDITPOSITION%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/editposdiv.png" width="18"/>
 						                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTORESIGN%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/resign.png" /> 
 					                        	</logic:empty>
 					                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOVIEW%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/viewmore.png" />
@@ -142,7 +142,7 @@
 							<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
 							<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
 							<logic:iterate id="p" name="listPage">
-								<logic:equal name="p" value="${pageNow}">
+							 	<logic:equal name="p" value="${pageNow}">
 									<li><html:link styleClass="active" href="#">${p}</html:link> </li>
 								</logic:equal>
 								<logic:notEqual name="p" value="${pageNow}">

@@ -81,7 +81,7 @@
 				</table>
 				
 				<p><span class="message"><bean:write name="TaskHeadUserForm" property="message" /></span></p>
-				<jsp:include page="../ButtonActivityStatus.jsp">
+				<jsp:include page="/content/ButtonActivityStatus.jsp">
   	    			<jsp:param name="taskId" value="${TaskHeadUserForm.taskId}" />
   	    			<jsp:param name="activityId" value="${TaskHeadUserForm.activityBean.activityId}" />
   	    			<jsp:param name="status" value="${TaskHeadUserForm.activityBean.activityLastStatus}" />

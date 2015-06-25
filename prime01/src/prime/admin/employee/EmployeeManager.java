@@ -28,6 +28,8 @@ public interface EmployeeManager {
 	
 	public List<EmployeeBean> getListWeekendByEmployeeId(Integer id) throws SQLException;
 	
+	public EmployeeBean getEmployeeWeekendByIdAndStartFrom(Integer id, String startFrom) throws SQLException;
+	
 	public List<EmployeeBean> getListDayoffByEmployeeId(Integer id) throws SQLException;
 	
 	public List<EmployeeBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow)

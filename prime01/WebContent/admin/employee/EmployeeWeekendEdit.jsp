@@ -130,11 +130,7 @@
 					<div class="box-body">
 						<html:form action="/EmployeeAdmin">
 							<html:hidden name="EmployeeAdminForm" property="task"
-								value="<%=Constants.Task.DOWEEKEND%>" />
-							<html:hidden name="EmployeeAdminForm"
-								property="employeeBean.divisionId" />
-							<html:hidden name="EmployeeAdminForm"
-								property="employeeBean.managerId" />
+								value="<%=Constants.Task.DOEDITWEEKEND%>" />
 							<html:hidden name="EmployeeAdminForm"
 								property="weekEnds" />
 							<html:hidden name="EmployeeAdminForm"
@@ -144,9 +140,9 @@
 								<tr>
 									<td>Employee ID</td>
 									<td>:</td>
-									<td><html:text name="EmployeeAdminForm"
-											property="employeeBean.employeeId" styleClass="form-control"
-											disabled="true" /></td>
+									<td>
+										<html:text name="EmployeeAdminForm" property="employeeBean.employeeId" styleClass="form-control" disabled="true" />
+									</td>
 								</tr>
 								<tr>
 									<td width="150px">Name</td>
@@ -160,22 +156,9 @@
 									<td>:</td>
 									<td>
 										<html:text name="EmployeeAdminForm"
-											property="employeeBean.employeeName"
+											property="employeeBean.startFrom"
 											styleClass="form-control" disabled="true" />
 									</td>			
-								</tr>
-								<tr>
-									<td colspan="2">&nbsp;</td>
-									<td>
-										<div id="viewMondayDate" style="display: none">
-											<%-- <html:select name="EmployeeAdminForm"
-											property="mondayDate" styleClass="form-control"
-											styleId="mondayDate">
-											</html:select> --%>
-											<select name="mondayDate" id="mondayDate" class="form-control">
-											</select>
-										</div>
-									</td>
 								</tr>
 								<tr>
 									<td>Set Weekend</td>
