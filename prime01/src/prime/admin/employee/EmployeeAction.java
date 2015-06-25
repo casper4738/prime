@@ -37,8 +37,6 @@ public class EmployeeAction extends Action {
 		DivisionManager tmpDivisionManager = new DivisionManagerImpl();
 		PositionManager tmpPositionManager = new PositionManagerImpl();
 		
-		System.out.println("Task = " + pForm.getTask());
-		
 		if(Constants.Task.GOTOMANAGER.equals(pForm.getTask())) {
 			request.setAttribute("listDivision", tmpDivisionManager.getListAll());
 			int countRows  = manager.getCountByColumnAndDivision(pForm.getColumnSearch(), pForm.getSearch(), pForm.getEmployeeBean().getDivisionId());
@@ -55,7 +53,6 @@ public class EmployeeAction extends Action {
 			request.setAttribute("listDivision", tmpDivisionManager.getListAll());
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
-			System.out.println("Masuk Edit1"+ pForm.getTmpId());
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
 			System.out.println(pForm.getTmpId()+" Employee ID "+ tmpEmployee.getManagerId());
 			if(tmpEmployee.getManagerId() != null) {
