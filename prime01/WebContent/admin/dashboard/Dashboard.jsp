@@ -92,7 +92,6 @@
     <!-- Page specific script -->
     <script type="text/javascript">
       $(function () {
-    	  alert("???");
         /* initialize the external events
          -----------------------------------------------------------------*/
         function ini_events(ele) {
@@ -126,7 +125,6 @@
 	    var m = date.getMonth();
 		var y = date.getFullYear();
         
-		alert(d);
 		$('#calendar').fullCalendar({
 	          header: {
 		            left: 'prev,next today',
@@ -214,7 +212,6 @@
         
         
         
-        alert("meli micin");
       });
     </script>
 </body>

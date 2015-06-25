@@ -2,7 +2,6 @@ package prime.admin.dashboard;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -33,13 +32,10 @@ public class DashboardAction extends Action {
 
 		HolidayManager tmpManager = new HolidayManagerImpl();
 		EmployeeManager empManager = new EmployeeManagerImpl();
-		String strHoliday = "#f56954";
-		String strHoliday2 = "#f56954";
 		
 		tmpManager.getListByYear(pForm.getYear());
 		System.out.println("asd" + pForm.getEmployeeId());
 		empManager.getListDayoffByEmployeeId(pForm.getEmployeeId());
-		String str;
 
 		List<String> list = new ArrayList<String>();
 		
