@@ -9,15 +9,36 @@ public class UserBean extends EmployeeBean{
 	private String password;
 	private String userName;
 	private Date changeDate;
+	private Integer statusUser;
+	private Integer employeeId;
+	private String employeeName;
+	private String logionSession;
+	private Date lastActive;
+	private String updateBy;
+	public String getLogionSession() {
+		return logionSession;
+	}
+	public void setLogionSession(String logionSession) {
+		this.logionSession = logionSession;
+	}
+	public Date getLastActive() {
+		return lastActive;
+	}
+	public void setLastActive(Date lastActive) {
+		this.lastActive = lastActive;
+	}
+	public String getUpdateBy() {
+		return updateBy;
+	}
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
 	public Date getChangeDate() {
 		return changeDate;
 	}
 	public void setChangeDate(Date changeDate) {
 		this.changeDate = changeDate;
 	}
-	private Integer statusUser;
-	private Integer employeeId;
-	private String employeeName;
 	
 	public Integer getEmployeeId() {
 		return employeeId;

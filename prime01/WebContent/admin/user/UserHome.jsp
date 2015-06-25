@@ -56,7 +56,7 @@
 				</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Manage Users</li>
+					<li class="active">Manage User</li>
 				</ol>
 			</section>
 
@@ -65,7 +65,7 @@
 				<div class="col-xs-12"><div class="box">
 					<div class="box-header"><h3 class="box-title">Data Manage User</h3></div>
 					
-					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('add')">
+					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
 	                    <i class="fa fa-edit"></i>Add
                     </span>
                     <span class="message"><bean:write name="UserAdminForm" property="message" /></span></p>
