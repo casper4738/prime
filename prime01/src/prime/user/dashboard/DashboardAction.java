@@ -206,15 +206,24 @@ public class DashboardAction extends Action{
 			}
 			tmpValueString += "</tr>";
 		}
-				
-		tmpOut.print("<thead>" +
-							"<th>#</th>"   +
-							"<th>Activity</th>"   + 
-					 		tmpTimeString +
-					 "</thead>" +
-					 "<tbody>"  +
-					 		tmpValueString +  
-					 "</tbody>");
+
+		if(tmpData.size() <= 0){
+			tmpOut.print("<thead>" +
+								"<th></th>"   +
+						 "</thead>" +
+						 "<tbody>"  +
+						 		"<td><h5><center>No Activity Progress Can be Shown</center></h5></td>" +  
+						 "</tbody>");
+		} else {
+			tmpOut.print("<thead>" +
+								"<th>#</th>"   +
+								"<th>Activity</th>"   + 
+						 		tmpTimeString +
+						 "</thead>" +
+						 "<tbody>"  +
+						 		tmpValueString +  
+						 "</tbody>");
+		}
 		tmpOut.flush();
 	}
 }
