@@ -226,6 +226,7 @@ public interface Constants {
 		String FAILLOGIN_ERROR				= "Something wrong with the system, please contact your administrator for further info !";
 		String FAILLOAD_CONTENT				= "Fail to load content, something must be wrong at here...";
 		String TABLE_EMPTY					= "No Data to be Shown";
+		String TABLE_HEAD_EMPTY				= "Employee Head Not Found. Please Select Another Position  !";
 	}
 	
 	//##F.Session Attribute

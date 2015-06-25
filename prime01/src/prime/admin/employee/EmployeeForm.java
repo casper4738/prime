@@ -10,6 +10,8 @@ public class EmployeeForm extends ActionForm {
 	private String columnSearch;
 	private String message;
 	private Integer managerId = 0;
+	private Integer substituteHeadId = 0;
+	private Integer employeeId = 0;
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
 	private Integer tmpId;
@@ -102,6 +104,18 @@ public class EmployeeForm extends ActionForm {
 	}
 	public void setWeekEnds(String weekEnds) {
 		this.weekEnds = weekEnds;
+	}
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
+	}
+	public Integer getSubstituteHeadId() {
+		return substituteHeadId;
+	}
+	public void setSubstituteHeadId(Integer substituteHeadId) {
+		this.substituteHeadId = substituteHeadId;
 	}
 	
 	

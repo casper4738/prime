@@ -40,7 +40,7 @@ public class ModalAction extends Action {
 		//---.Depend on the object
 		ModalForm pForm = (ModalForm) form;
 		
-		System.out.println(pForm.getTask() + " _ " + pForm.getParam1()+ " _ " + pForm.getParam2());
+		System.out.println(pForm.getTask() + " _ " + pForm.getParam1()+ " _ " + pForm.getParam2()+ " _ " + pForm.getParam3()+ " _ " + pForm.getParam4());
 		
 		System.out.println("Taskzz = " + pForm.getTask());
 		
@@ -68,11 +68,10 @@ public class ModalAction extends Action {
                 		PositionManager pManager = new PositionManagerImpl();
                 		listPosition = pManager.getPositionById(pForm.getParam2());
                 		
-                		System.out.println(listPosition.getPositionLevel() + "TEST");
                 		EmployeeManager manager = new EmployeeManagerImpl();
                 		
                     	//##1.Fetch Data From DB
-                		countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+                		countRows  = manager.getCountByColumnEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(), pForm.getParam3(), pForm.getParam4());
                 		
                 		//---.Depend On The Object
                 		/*list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
@@ -82,13 +81,20 @@ public class ModalAction extends Action {
                 		
                 		list = manager.getListEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(),
 								   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
-								   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows));
+								   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows), pForm.getParam3(), pForm.getParam4());
 
                 		//##2.Prepare Data for Modal-Table Show
                 		//---a.Modal Title
                 		request.setAttribute("modalListName", "Employees List");
-                		request.setAttribute("modalForm", "employeeHead");
-                		
+                		System.out.println(pForm.getParam3()+"--");
+                		if(pForm.getParam3().equals("employeeAdd")){
+                			System.out.println("AA");
+                			request.setAttribute("modalForm", "employeeHead");
+                		}else if(pForm.getParam3().equals("employeeResign")){
+                			System.out.println("BB");
+                			request.setAttribute("modalForm", "employeeResign");
+                		}
+                			
                 		//---b.Column Head
                 		//[P.S] : Just Hardcode Here, because it only 1 form
                 		ArrayList<String> tmpColHead = new ArrayList<String>();
@@ -112,7 +118,7 @@ public class ModalAction extends Action {
                 			tmpData.get(tmpI).add(list.get(tmpI).getManagerName());
                 		}
                 		break;
-                	default:
+            		default:
                 		break;
             	}
             	

@@ -8,6 +8,7 @@ public class ModalForm extends ActionForm {
 	private String param1;
 	private Integer param2;
 	private String param3;
+	private Integer param4;
 	
 	private String search = "";
 	private String  columnSearch = "";
@@ -76,6 +77,14 @@ public class ModalForm extends ActionForm {
 
 	public void setParam1(String param1) {
 		this.param1 = param1;
+	}
+
+	public Integer getParam4() {
+		return param4;
+	}
+
+	public void setParam4(Integer param4) {
+		this.param4 = param4;
 	}
 
 }

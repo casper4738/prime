@@ -27,11 +27,13 @@ public interface EmployeeManager {
 	public List<EmployeeBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow)
 			throws SQLException;
 	
-	public List<EmployeeBean> getListEmployeeHead(String columnSearch, String value,  Integer positionLevel, Integer startRow, Integer endRow)
+	public List<EmployeeBean> getListEmployeeHead(String columnSearch, String value,  Integer positionLevel, Integer startRow, Integer endRow, String paramCondition, Integer employeeId)
 			throws SQLException;
 	
 	public List<EmployeeBean> getListByColumnAndDivision(String columnSearch, String value, Integer divisionId, Integer startRow, Integer endRow)
 			throws SQLException;
+	
+	public Integer getCountByColumnEmployeeHead(String columnSearch, String value, Integer positionLevel, String paramCondition, Integer employeeId) throws SQLException;
 	
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 

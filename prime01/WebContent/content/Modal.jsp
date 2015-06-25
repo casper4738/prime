@@ -31,7 +31,7 @@
 			searching : false,
 			info	  : false,
 			language  : {
-		       "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
+		       "emptyTable":  "<center><%=Constants.Response.TABLE_HEAD_EMPTY %></center>"
 		    }
 	    } );
 		
