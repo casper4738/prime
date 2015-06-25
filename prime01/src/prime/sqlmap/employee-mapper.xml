@@ -56,7 +56,12 @@
 		EMAIL=#email#,
 		BIRTHDATE=#birthdate#,
 		GENDER=#gender#,
-		HIRE_DATE=#hireDate#,
+		HIRE_DATE=#hireDate#
+		WHERE EMPLOYEE_ID=#employeeId#
+	</update>
+	
+	<update id="updatePositionDivision" parameterClass="prime.admin.employee.EmployeeBean">
+		UPDATE EMPLOYEES SET
 		<isEqual property="divisionId" compareValue="0">
 			DIVISION_ID=NULL,
 		</isEqual>

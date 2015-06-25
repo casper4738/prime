@@ -71,19 +71,18 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	
 	public void update(EmployeeBean e) throws SQLException {
 		try {
-			System.out.println(e.getEmployeeId()+"--EmpID");
-			System.out.println(e.getEmployeeName()+"--Name");
-			System.out.println(e.getAddress()+"--Address");
-			System.out.println(e.getContactNumber()+"--Numb");
-			System.out.println(e.getEmail()+"--Email");
-			System.out.println(e.getBirthdate()+"--Birth");
-			System.out.println(e.getGender()+"--Gender");
-			System.out.println(e.getHireDate()+"--HireDate");
-			System.out.println(e.getDivisionId()+"--Division");
-			System.out.println(e.getPositionId()+"--Position");
-			System.out.println(e.getManagerId()+"--Manager");
 			mapper.startTransaction();
 			mapper.update("employee.update", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+	public void updatePositionDivision(EmployeeBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.update("employee.updatePositionDivision", e);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();

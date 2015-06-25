@@ -17,6 +17,7 @@ function searchAll(task) {
 }
 
 function flyToEditDelete(task, value, confirmMessage) {
+	alert(task+" edit")
 	var tmpForm = document.forms[0]; 
 	if(confirmMessage != null){
 		if(!confirm(confirmMessage))	

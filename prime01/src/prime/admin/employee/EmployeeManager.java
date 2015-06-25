@@ -16,6 +16,8 @@ public interface EmployeeManager {
 	
 	public void update(EmployeeBean e) throws SQLException;
 	
+	public void updatePositionDivision(EmployeeBean e) throws SQLException;
+	
 	public void updateStatusUser(Integer employeeId) throws SQLException;
 	
 	public void updateHead(Integer forCondition, Integer newHead) throws SQLException;

@@ -169,9 +169,22 @@ public class EmployeeAction extends Action {
 			}
 			
 			pForm.setEmployeeBean(tmpEmployee);
+			pForm.setEmployeeId(pForm.getTmpId());
+			pForm.setSubstituteHeadId(pForm.getTmpId());
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
-			return mapping.findForward("editposdiv");
-		}
+			request.setAttribute("listDivision", tmpDivisionManager.getListAll());
+			return mapping.findForward("positionDivisionEdit");
+		}else if(Constants.Task.DOEDITPOSITION.equals(pForm.getTask())) {
+			// FOR UPDATE SELF EMPLOYEE
+			EmployeeBean tmpEmployee = pForm.getEmployeeBean();
+			manager.updatePositionDivision(tmpEmployee);
+			
+			System.out.println(pForm.getEmployeeBean().getEmployeeId()+" EMPID");
+			System.out.println(pForm.getSubstituteHeadId()+ "SUBHEAD");
+			//FOR UPDATE HEAD ID WHERE OLD HEAD ID WAS CHANGE POSITION OR DIVISION 
+			manager.updateHead(pForm.getEmployeeBean().getEmployeeId(),pForm.getSubstituteHeadId());
+			return mapping.findForward("forward");
+		} 
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		List<EmployeeBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
