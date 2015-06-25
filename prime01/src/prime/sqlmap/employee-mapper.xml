@@ -123,8 +123,20 @@
 	        START_FROM AS startFrom,
 	        WEEKEND AS weekEnd,
 	        WEEKEND_NOTE AS descriptionWeekEnd
-        FROM WEEKEND_HOLIDAYS WH 
+	    FROM WEEKEND_HOLIDAYS WH 
         WHERE WH.EMPLOYEE_ID=#id#
+	</select>
+	
+	<select id="getEmployeeWeekendByIdAndStartFrom"  resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
+		SELECT 
+	        START_FROM AS startFrom,
+	        WEEKEND AS weekEnd,
+	        WEEKEND_NOTE AS descriptionWeekEnd,
+	        EMP.EMPLOYEE_ID AS employeeId,
+	        EMPLOYEE_NAME AS employeeName
+        FROM WEEKEND_HOLIDAYS WH 
+        JOIN EMPLOYEES EMP ON WH.EMPLOYEE_ID = EMP.EMPLOYEE_ID
+        WHERE WH.EMPLOYEE_ID=#id# AND TO_CHAR(WH.START_FROM, 'yyyy-mm-dd') = #startFrom#
 	</select>
 	
 	<select id="getDayoff"  resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.lang.Integer">
@@ -241,7 +253,7 @@
 		WHERE 1=1
 		<dynamic prepend="AND">
 	        <isEqual property="paramCondition" compareValue="employeeAdd">
-				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel#
+				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId#
 			</isEqual>
 			<isEqual property="paramCondition" compareValue="employeeResign">
 				POS.POSITION_LEVEL <![CDATA[ <= ]]> #positionLevel#  AND EMP.EMPLOYEE_ID != #employeeId#
@@ -281,7 +293,7 @@
 		WHERE 1=1
 		<dynamic prepend="AND">
 	        <isEqual property="paramCondition" compareValue="employeeAdd">
-				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel#
+				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId#
 			</isEqual>
 			<isEqual property="paramCondition" compareValue="employeeResign">
 				POS.POSITION_LEVEL <![CDATA[ <= ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId# 

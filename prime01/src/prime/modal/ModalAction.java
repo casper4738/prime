@@ -23,6 +23,7 @@ import prime.admin.position.PositionManager;
 import prime.admin.position.PositionManagerImpl;
 import prime.constants.Constants;
 import prime.user.activity.ActivityBean;
+import prime.user.project.*;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -94,10 +95,13 @@ public class ModalAction extends Action {
                 			System.out.println("BB");
                 			request.setAttribute("modalForm", "employeeResign");
                 		}else if(pForm.getParam3().equals("employeeUser")){
-                			System.out.println("CC");
+                			System.out.println("PEWOPWAEO");
                 			request.setAttribute("modalForm", "employeeUser");
+                		}else if(pForm.getParam3().equals("projectMember")){
+                			System.out.println("CC");
+                			request.setAttribute("modalForm", "projectMember");
                 		}
-                			
+                		
                 		//---b.Column Head
                 		//[P.S] : Just Hardcode Here, because it only 1 form
                 		ArrayList<String> tmpColHead = new ArrayList<String>();
@@ -121,6 +125,7 @@ public class ModalAction extends Action {
                 			tmpData.get(tmpI).add(list.get(tmpI).getManagerName());
                 		}
                 		break;
+            		
             		default:
                 		break;
             	}

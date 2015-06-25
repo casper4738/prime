@@ -44,6 +44,16 @@
                 format: "yyyy-mm-dd"
             });
         });
+		
+		function openModalHandler(){
+			//##0.Preparing Parameter For Modal Showing
+			var tmpDataPosition=2;
+			var tmpTask ="modalTable";
+			var tmpTable ="employeeHead";
+			
+			//##1.Accessing Prime Method For Modal Showing
+			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=projectMember", $('#result'));
+		}
 	</script>
 	
 	<!-- End JS -->
@@ -68,6 +78,7 @@
                 	<html:form action="/ProjectUser">
                 		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectName" />
+                		<html:hidden name="ProjectUserForm" property="employeeId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver" />
                 		<table class="form-input" align="center">
@@ -94,10 +105,12 @@
                 			<tr>
                 				<td>Project Assigner</td>
                 				<td>:</td>
-                				<td>
-                					<html:text name="ProjectUserForm" property="projectBean.projectAssigner" styleClass="form-control"  />	
-							<input type="button" class="buttonSearch myButton" value="search" id="btn-searchassigner" data-toggle="modal" data-target="#search-modal"/>
-						</td>
+                				<td class="input-group">
+                					<html:text name="ProjectUserForm" property="projectBean.employeeName" styleClass="form-control" styleId="employeeName" disabled="true"/>
+	               					<span class="input-group-btn">
+                    					<input type="button" class="btn btn-info" type="button" onclick="openModalHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
+						            </span>
+								</td>
                 			</tr>
                 			
                 			<tr>

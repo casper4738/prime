@@ -72,4 +72,17 @@ public class RoleManagerImpl implements RoleManager {
 		return (Integer) mapper.queryForObject("role.getCountListByCol", map);
 	}
 
+	@Override
+	public List<RoleBean> getRolesByEmployeeIdAndProjectId(Integer employeeId, Integer projectId) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("employeeId", employeeId);
+		map.put("projectId", projectId);
+		return mapper.queryForList("role.getRolesByEmployeeIdAndProjectId", map);
+	}
+	
+	@Override
+	public List<RoleBean> getListAllRole() throws SQLException {
+		return mapper.queryForList("role.selectAll", null);
+	}
+	
 }

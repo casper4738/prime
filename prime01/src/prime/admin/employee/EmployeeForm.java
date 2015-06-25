@@ -15,6 +15,7 @@ public class EmployeeForm extends ActionForm {
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
 	private Integer tmpId;
+	private String tmpString;
 	private String result;
 	private Integer divisionId;
 	private String listMondayDate;
@@ -117,6 +118,10 @@ public class EmployeeForm extends ActionForm {
 	public void setSubstituteHeadId(Integer substituteHeadId) {
 		this.substituteHeadId = substituteHeadId;
 	}
-	
-	
+	public String getTmpString() {
+		return tmpString;
+	}
+	public void setTmpString(String tmpString) {
+		this.tmpString = tmpString;
+	}
 }

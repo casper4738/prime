@@ -13,22 +13,34 @@ public class ProjectBean extends EmployeeBean {
 	private Integer projectAssigner;
 	private Integer projectMemberId;
 	private Integer projectStatus;
-	private Integer roleId;
+	private Integer projectLastStatus;
+	private Double percentage;
 	private String projectDescription;
 	private String projectName;
-	private String roleName;
 	private String projectChangeNote;
-	private String taskName;
-	private String positionName;
-	private String taskStatus;
-	private String divisionName;
-	private String taskDescription;
+	private String projectAssignerName;
+	private String projectReceiverName;
 	private Date projectStartDate;
 	private Date projectEstimateDate;
-	private Date taskStartDate;
-	private Date taskEstimateDate;
 	private TaskBean taskBean;
 	private RoleBean roleBean;
+	private String roleName;
+	
+	public Double getPercentage() {
+		return percentage;
+	}
+
+	public void setPercentage(Double percentage) {
+		this.percentage = percentage;
+	}
+
+	public String getRoleName() {
+		return roleName;
+	}
+
+	public void setRoleName(String roleName) {
+		this.roleName = roleName;
+	}
 
 	public ProjectBean() {
 		taskBean = new TaskBean();
@@ -36,58 +48,22 @@ public class ProjectBean extends EmployeeBean {
 
 		setProjectStartDate(new java.sql.Date(new java.util.Date().getTime()));
 		setProjectEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
-		setTaskStartDate(new java.sql.Date(new java.util.Date().getTime()));
-		setTaskEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
 	}
 
-	public String getDivisionName() {
-		return divisionName;
+	public String getProjectAssignerName() {
+		return projectAssignerName;
 	}
 
-	public void setDivisionName(String divisionName) {
-		this.divisionName = divisionName;
+	public void setProjectAssignerName(String projectAssignerName) {
+		this.projectAssignerName = projectAssignerName;
 	}
 
-	public Date getTaskEstimateDate() {
-		return taskEstimateDate;
+	public String getProjectReceiverName() {
+		return projectReceiverName;
 	}
 
-	public void setTaskEstimateDate(Date taskEstimateDate) {
-		this.taskEstimateDate = taskEstimateDate;
-	}
-
-	public String getPositionName() {
-		return positionName;
-	}
-
-	public void setPositionName(String positionName) {
-		this.positionName = positionName;
-	}
-
-	public String getTaskStatus() {
-		return taskStatus;
-	}
-
-	public void setTaskStatus(String taskStatus) {
-		this.taskStatus = taskStatus;
-	}
-
-	public String getTaskAssigner() {
-		return taskAssigner;
-	}
-
-	public void setTaskAssigner(String taskAssigner) {
-		this.taskAssigner = taskAssigner;
-	}
-
-	private String taskAssigner;
-
-	public String getProjectChangeNote() {
-		return projectChangeNote;
-	}
-
-	public void setProjectChangeNote(String projectChangeNote) {
-		this.projectChangeNote = projectChangeNote;
+	public void setProjectReceiverName(String projectReceiverName) {
+		this.projectReceiverName = projectReceiverName;
 	}
 
 	public Integer getProjectId() {
@@ -96,14 +72,6 @@ public class ProjectBean extends EmployeeBean {
 
 	public void setProjectId(Integer projectId) {
 		this.projectId = projectId;
-	}
-
-	public String getProjectName() {
-		return projectName;
-	}
-
-	public void setProjectName(String projectName) {
-		this.projectName = projectName;
 	}
 
 	public Integer getProjectReceiver() {
@@ -122,12 +90,52 @@ public class ProjectBean extends EmployeeBean {
 		this.projectAssigner = projectAssigner;
 	}
 
+	public Integer getProjectMemberId() {
+		return projectMemberId;
+	}
+
+	public void setProjectMemberId(Integer projectMemberId) {
+		this.projectMemberId = projectMemberId;
+	}
+
+	public Integer getProjectStatus() {
+		return projectStatus;
+	}
+
+	public void setProjectStatus(Integer projectStatus) {
+		this.projectStatus = projectStatus;
+	}
+
+	public Integer getProjectLastStatus() {
+		return projectLastStatus;
+	}
+
+	public void setProjectLastStatus(Integer projectLastStatus) {
+		this.projectLastStatus = projectLastStatus;
+	}
+
 	public String getProjectDescription() {
 		return projectDescription;
 	}
 
 	public void setProjectDescription(String projectDescription) {
 		this.projectDescription = projectDescription;
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public String getProjectChangeNote() {
+		return projectChangeNote;
+	}
+
+	public void setProjectChangeNote(String projectChangeNote) {
+		this.projectChangeNote = projectChangeNote;
 	}
 
 	public Date getProjectStartDate() {
@@ -144,62 +152,6 @@ public class ProjectBean extends EmployeeBean {
 
 	public void setProjectEstimateDate(Date projectEstimateDate) {
 		this.projectEstimateDate = projectEstimateDate;
-	}
-
-	public Integer getProjectStatus() {
-		return projectStatus;
-	}
-
-	public void setProjectStatus(Integer projectStatus) {
-		this.projectStatus = projectStatus;
-	}
-
-	public String getRoleName() {
-		return roleName;
-	}
-
-	public void setRoleName(String roleName) {
-		this.roleName = roleName;
-	}
-
-	public Integer getProjectMemberId() {
-		return projectMemberId;
-	}
-
-	public void setProjectMemberId(Integer projectMemberId) {
-		this.projectMemberId = projectMemberId;
-	}
-
-	public Date getTaskStartDate() {
-		return taskStartDate;
-	}
-
-	public void setTaskStartDate(Date taskStartDate) {
-		this.taskStartDate = taskStartDate;
-	}
-
-	public String getTaskName() {
-		return taskName;
-	}
-
-	public void setTaskName(String taskName) {
-		this.taskName = taskName;
-	}
-
-	public Integer getRoleId() {
-		return roleId;
-	}
-
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
-	}
-
-	public String getTaskDescription() {
-		return taskDescription;
-	}
-
-	public void setTaskDescription(String taskDescription) {
-		this.taskDescription = taskDescription;
 	}
 
 	public TaskBean getTaskBean() {
