@@ -24,8 +24,11 @@
 		$('#table-1').dataTable( {
 			paging    : false,
 			searching : false,
-			info	  : false
-	    } );
+			info	  : false,
+		    language  : { 
+		    	"emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>" 
+		    }
+	    });
 		
 		function flyToTaskDetail(task, value) {
 			var tmpForm = document.forms[0]; 
@@ -74,9 +77,7 @@
 					</html:form>
 				</div>
 			<!-- End Of Search Handler -->
-			<div class="box-body"><table 
-			
-			class="table table-bordered table-striped table-hover">
+			<div class="box-body"><table id="table-1" class="table table-bordered table-striped table-hover">
 				<thead><tr>
 					<th width="100px">Project Name</th>
 					<th width="100px">Description</th>

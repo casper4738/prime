@@ -21,7 +21,10 @@
 		$('#table-1').dataTable( {
 			paging    : false,
 			searching : false,
-			info	  : false
+			info	  : false,
+		    language  : { 
+		    	"emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>" 
+		    }
 	    });
 		
 		function flyToTaskDetail(task, valueMember) {
@@ -48,10 +51,10 @@
 			<div class="box-header"><h3 class="box-title-center">Data Project Member</h3></div>
 			<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
 			<tr><td>Project Name : <bean:write name="ProjectUserForm" property="projectBean.projectName"/> </td>
-				<td>Project Assigner : <bean:write name="ProjectUserForm" property="projectBean.projectAssigner" /> </td>
+				<td>Project Assigner : <bean:write name="ProjectUserForm" property="projectBean.projectAssignerName" /> </td>
 			</tr>
 			<tr><td>Start Date : <bean:write name="ProjectUserForm" property="projectBean.projectStartDate" format="dd MMMM yyyy"/> </td>
-				<td>Project Receiver : <bean:write name="ProjectUserForm" property="projectBean.projectReceiver"/> </td>
+				<td>Project Receiver : <bean:write name="ProjectUserForm" property="projectBean.projectReceiverName"/> </td>
 			</tr><tr><td>Estimated Date : <bean:write name="ProjectUserForm" property="projectBean.projectEstimateDate" format="dd MMMM yyyy" />
 				</td><td>Status :  
 					<jsp:include page="/content/Status.jsp">
@@ -67,7 +70,7 @@
             <div class="form-action">
 				<table align="center"><tr>
 					<td style="padding:5px;">
-						<input type="button" value="Add New Project Member" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')"/></td>
+						<input type="button" value="Add New Project Member" class="btn btn-sm btn-primary" onclick="flyToPage('addmember')"/></td>
 					<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/></td>
 				</tr></table>
             </div>
@@ -95,7 +98,7 @@
 				</html:form>
 			</div>
 			<div class="box-body">
-				<table class="table table-bordered table-striped table-hover">
+				<table id="table-1" class="table table-bordered table-striped table-hover">
 				<thead><tr>
 					<th>Employee Name</th>
 					<th>Role</th>
@@ -125,11 +128,6 @@
 	                    </tr> 
                     </logic:iterate>
 					</logic:notEmpty>
-					<logic:empty name="listProjectMember">
-						<tr>
-							<td align="center" colspan="6">DATA KOSONG</td>
-						</tr>
-					</logic:empty>
                   </tbody>
             </table></div>
 			<ul class="pagination">

@@ -36,8 +36,8 @@
 			<div class="box-body">
                 	<html:form action="/ProjectUser">
                 		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.Project.DOCREATETASK%>"/>
+                		<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.employeeId" />
-                		<html:hidden name="ProjectUserForm" property="projectBean.projectMemberId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.taskBean.taskStatus" value='<%=Constants.Status.CREATE+""%>'/>
                 		<html:hidden name="ProjectUserForm" property="projectBean.taskBean.taskChangeNote" value=""/>
                 		<table class="form-input" align="center">
@@ -51,18 +51,21 @@
                 				<td>:</td>
                 				<td><html:text name="ProjectUserForm" property="projectBean.employeeName" styleClass="form-control" disabled="true" /></td>
                 			</tr>
-                			
                 			<tr>
                 				<td>Role</td>
                 				<td>:</td>
-                				<td><html:text name="ProjectUserForm" property="projectBean.roleName" styleClass="form-control" disabled="true" /></td>
+                				<td><html:select name="ProjectUserForm" property="projectBean.roleBean.roleId" styleId="roleid" styleClass="form-control">
+		                  		  		<html:options collection="listRoles" property="roleId" labelProperty="roleName"/>
+		                  		  	</html:select>
+								</td>
                 			</tr> 	
                 			<tr>
                 				<td>Start Date</td>
                 				<td>:</td>
                 				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                					<html:text name="ProjectUserForm" property="projectBean.taskBean.taskStartDate" styleClass="form-control" styleId="start-date"/></td>
+                					<html:text name="ProjectUserForm" property="projectBean.taskBean.taskStartDate" styleClass="form-control" styleId="start-date"/>
                 					</div>
+               					</td>
                 			</tr>
                 			<tr>
                 				<td>Estimate Date</td>

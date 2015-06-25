@@ -24,20 +24,13 @@
 			language  : { "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"  }
 	    });
 		
-		function flyToAddTask(task, valueMember, valueRole) {
-			var tmpForm = document.forms[0]; 
+		function flyToTaskDetail(task, value) {
+			var tmpForm = document.forms[0];
 			tmpForm.task.value = task;
-			tmpForm.projectMemberId.value = valueMember;
-			tmpForm.roleId.value = valueRole;
+			tmpForm.taskId.value = value;
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
-		function flyToAdd(value){
-			var tmpForm = document.forms[0]; 
-			tmpForm.task.value = value;
-			tmpForm.projectMemberId.value = document.getElementById("roleid").value;
-			menuLoadHandler(tmpForm.action, serialize(tmpForm));
-		}
 	</script>
 	<!-- End JS -->
 </head>
@@ -55,23 +48,19 @@
 			<div class="col-xs-12"><div class="box">
 				<div class="box-header"><h3 class="box-title-center">Data Project Member</h3></div>
 				<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-				<tr><td>Member Name : <bean:write name="ProjectUserForm" property="projectBean.employeeName"/> </td>
-					<td>Position : <bean:write name="ProjectUserForm" property="projectBean.positionName" /> </td>
+				<tr><td>Member Name : <bean:write name="ProjectUserForm" property="employeeBean.employeeName"/> </td>
+					<td>Position : <bean:write name="ProjectUserForm" property="employeeBean.positionName" /> </td>
 				</tr>
-				<tr><td>Phone Number : <bean:write name="ProjectUserForm" property="projectBean.contactNumber"/> </td>
-					<td>Division : <bean:write name="ProjectUserForm" property="projectBean.divisionName" /> </td>
-				
-				<tr><td>Email : <bean:write name="ProjectUserForm" property="projectBean.email"/> </td>
+				<tr><td>Phone Number : <bean:write name="ProjectUserForm" property="employeeBean.contactNumber"/> </td>
+					<td>Division : <bean:write name="ProjectUserForm" property="employeeBean.divisionName" /> </td>
+				<tr><td>Email : <bean:write name="ProjectUserForm" property="employeeBean.email"/> </td>
 				</tr>
 				</table>
 				
-				<p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>     
+				<p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
 				<div class="form-action"><table align="center">
                   <tr><td style="padding:5px;">
-                  		<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToAdd('addTask')"/></td>
-                  	  <td><html:select name="ProjectUserForm" property="roleId" styleId="roleid">
-                  		  <html:options collection="listRoles" property="key" labelProperty="value"/>
-                  		  </html:select>
+                  		<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.Project.GOTOCREATETASK%>')"/>
                	  </td></tr>
 				</table></div>
 				
@@ -85,8 +74,10 @@
 				<div class="search-table">
 					<html:form action="/ProjectUser" >
 						<html:hidden name="ProjectUserForm" property="task"/>
+						<html:hidden name="ProjectUserForm" property="taskId"/>
 						<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
-						<html:hidden name="ProjectUserForm" property="projectMemberId"/>
+						<html:hidden name="ProjectUserForm" property="projectBean.employeeId"/>
+						<html:hidden name="ProjectUserForm" property="projectBean.employeeName"/>
 						<html:hidden name="ProjectUserForm" property="goToPage"/>
 						<html:hidden name="ProjectUserForm" property="showInPage"/>
 						<html:select name="ProjectUserForm" property="columnSearch" styleClass="columnSearch">
@@ -141,7 +132,7 @@
 			                		</logic:lessEqual>
 		                		</td>
 		                		<td align="center">
-		                        	<input type="submit" class="btn btn-primary btn-xs" value='Abort' onclick="flyToTaskDetail('<%=Constants.Task.GOTOVIEW %>', '<bean:write name="iter" property="projectMemberId"/>')">
+		                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.TASK.GOTODETAIL %>', '<bean:write name="iter" property="taskBean.taskId"/>')">
 		                        </td>	
 		                    </tr> 
 	                    </logic:iterate>

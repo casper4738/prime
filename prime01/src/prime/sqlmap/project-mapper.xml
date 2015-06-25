@@ -66,7 +66,7 @@
 		    (SELECT LISTAGG (R.ROLE_NAME, ', ') WITHIN GROUP (ORDER BY R.ROLE_NAME)
 				FROM ROLES R
 		        JOIN PROJECT_MEMBERS PMX ON R.ROLE_ID = PMX.ROLE_ID
-		        WHERE   PMX.PROJECT_ID = 1 AND PMX.EMPLOYEE_ID = E.EMPLOYEE_ID
+		        WHERE   PMX.PROJECT_ID = P.PROJECT_ID AND PMX.EMPLOYEE_ID = E.EMPLOYEE_ID
 		    ) 						AS roleName,
 		    D.DIVISION_NAME 		AS divisionName,
 		    E.EMAIL					AS email,
@@ -88,19 +88,23 @@
 		</dynamic>
 		ORDER BY P.PROJECT_ID ASC) page
 		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
-		
 	</select>
 	
 	<insert id="insert" parameterClass="prime.user.project.ProjectBean">
 		INSERT INTO PROJECTS(PROJECT_ID, PROJECT_NAME, PROJECT_ASSIGNER, PROJECT_RECEIVER, PROJECT_START_DATE, 
-		PROJECT_ESTIMATE_DATE, PROJECT_DESCRIPTION)
+		PROJECT_ESTIMATE_DATE, PROJECT_DESCRIPTION,PROJECT_LAST_STATUS)
 		VALUES
-		(#projectId#,#projectName#,#projectAssigner#,#projectReceiver#,#projectStartDate#,#projectEstimateDate#,#projectDescription#)
+		(#projectId#,#projectName#,#projectAssigner#,#projectReceiver#,#projectStartDate#,#projectEstimateDate#,#projectDescription#,#projectLastStatus#)
 	</insert>
 	
 	<select id="getNewId" resultClass="java.lang.Integer">
 		SELECT NVL(MAX(PROJECT_ID)+1, 1)
 		FROM PROJECTS
+	</select>
+	
+	<select id="getNewMemberId" resultClass="java.lang.Integer">
+		SELECT NVL(MAX(PROJECT_MEMBER_ID)+1, 1)
+		FROM PROJECT_MEMBERS
 	</select>
 	
 	<insert id="insertDetail" parameterClass="prime.user.project.ProjectBean">
@@ -125,8 +129,7 @@
 	</select>
 	
 	
-	<select id="getDataEmployee" resultClass="prime.user.project.ProjectBean"
-		parameterClass="java.lang.Integer">
+	<select id="getDataEmployee" resultClass="prime.user.project.ProjectBean" parameterClass="java.lang.Integer">
 		SELECT DISTINCT E.EMPLOYEE_NAME AS employeeName, 
         PO.POSITION_NAME as positionName, 
         E.CONTACT_NUMBER AS contactNumber, 
@@ -185,28 +188,8 @@
 		) TASK_DET ON TASK_DET.TASK_ID=TASK.TASK_ID
 		JOIN PROJECT_MEMBERS PROJ_MBR ON PROJ_MBR.PROJECT_MEMBER_ID = TASK.PROJECT_MEMBER_ID
 		JOIN ROLES ROLE ON PROJ_MBR.ROLE_ID = ROLE.ROLE_ID
-		WHERE PROJ_MBR.EMPLOYEE_ID = #projectMemberId#
-   </select>
-	
-	<resultMap id="listRoles" class="java.util.HashMap">
-    		 <result property="key" column="projectMemberId" />
-     		 <result property="value" column="roleName" />
-	</resultMap>
-	<select id="getProjectRoles" parameterClass="java.util.Map" resultMap="listRoles" >
-		SELECT   DISTINCT PM.PROJECT_MEMBER_ID AS projectMemberId,
-		R.ROLE_NAME AS roleName
-  		FROM   PROJECTS P,
-        EMPLOYEES E,
-        PROJECT_DETAILS PD,
-        PROJECT_MEMBERS PM,
-        ROLES R
- 		WHERE P.PROJECT_ID = PM.PROJECT_ID	
-        AND E.EMPLOYEE_ID = PM.EMPLOYEE_ID
-        AND R.ROLE_ID = PM.ROLE_ID
-        AND PM.EMPLOYEE_ID = #employeeId#
-        AND PM.PROJECT_ID = #projectId#
-	</select>
-	
+		WHERE PROJ_MBR.EMPLOYEE_ID = #employeeId#
+   	</select>
 	
 	<select id="getDataProjectMemberByProjectMemberId" resultClass="prime.user.project.ProjectBean" parameterClass="java.lang.Integer">
 		SELECT DISTINCT 
@@ -221,4 +204,25 @@
 		  JOIN EMPLOYEES E ON E.EMPLOYEE_ID = PM.EMPLOYEE_ID
 		 WHERE PM.PROJECT_MEMBER_ID = #id#
 	</select>
+	
+	<select id="getProjectMemberIdByAll" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT 
+			PROJECT_MEMBER_ID
+		FROM 
+			PROJECT_MEMBERS
+		WHERE 
+			PROJECT_ID = #projectId#
+		AND 
+			ROLE_ID = #roleId# 
+		AND 
+			EMPLOYEE_ID = #employeeId#
+	</select>
+	
+	<insert id="insertMember" parameterClass="prime.user.project.ProjectBean">
+		INSERT INTO PROJECT_MEMBERS(PROJECT_MEMBER_ID, PROJECT_ID, ROLE_ID, EMPLOYEE_ID)
+		VALUES
+		(#projectMemberId#,#projectId#,#roleBean.roleId#,#employeeId#)
+	</insert>
+	
+	
 </sqlMap> 

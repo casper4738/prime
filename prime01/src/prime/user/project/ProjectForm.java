@@ -2,8 +2,14 @@ package prime.user.project;
 
 import org.apache.struts.action.ActionForm;
 
+import prime.admin.employee.EmployeeBean;
+import prime.user.task.TaskBean;
+
 public class ProjectForm extends ActionForm {
-	private ProjectBean projectBean  = new ProjectBean();
+
+	private ProjectBean projectBean = new ProjectBean();
+	private EmployeeBean employeeBean = new EmployeeBean();
+	private TaskBean taskBean = new TaskBean();
 	private String task;
 	private String search;
 	private String columnSearch;
@@ -17,6 +23,35 @@ public class ProjectForm extends ActionForm {
 	private Integer projectMemberId;
 	private Integer roleId;
 	private Integer employeeId;
+	private Integer taskId;
+
+	public TaskBean getTaskBean() {
+		return taskBean;
+	}
+
+	public void setTaskBean(TaskBean taskBean) {
+		this.taskBean = taskBean;
+	}
+
+	public Integer getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(Integer taskId) {
+		this.taskId = taskId;
+	}
+
+	public EmployeeBean getEmployeeBean() {
+		return employeeBean;
+	}
+
+	public void setEmployeeBean(EmployeeBean employeeBean) {
+		this.employeeBean = employeeBean;
+	}
+
+	public void setRoleId(Integer roleId) {
+		this.roleId = roleId;
+	}
 
 	public String getTask() {
 		return task;
@@ -129,5 +164,5 @@ public class ProjectForm extends ActionForm {
 	public void setEmployeeId(Integer employeeId) {
 		this.employeeId = employeeId;
 	}
-	
+
 }

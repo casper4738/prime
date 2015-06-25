@@ -223,6 +223,13 @@ function modalSubmitReturnValue(retValue,retForm){
 			var res = retValue.split(',');
 			document.getElementById('substituteHead').value=res[1];
 			document.forms[0].substituteHeadId.value=res[0].replace('[','');
+		} else if(retForm=='projectMember'){
+			alert("cc")
+			var res = retValue.split(',');
+			document.getElementById('employeeName').value=res[1];
+			alert(res[0].replace('[','')+" DD")
+			document.forms[0].employeeId.value=res[0].replace('[','');
+			alert(document.forms[0].employeeId.value+" IDEMP")
 		}
 	}
 	
