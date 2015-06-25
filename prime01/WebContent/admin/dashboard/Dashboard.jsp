@@ -25,6 +25,8 @@
 	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
+	
+	
    
 </head>
 
@@ -84,6 +86,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" type="text/javascript"></script>
     <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
     
+    <script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <!-- Page specific script -->
     <script type="text/javascript">
       $(function () {

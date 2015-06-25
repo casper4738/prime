@@ -50,6 +50,8 @@
                  				<td><html:text name="PositionAdminForm" property="positionBean.positionName" styleClass="form-control"/></td>
                  			</tr>
                  			<tr>
+                 				<td>Position Level</td>
+                  				<td>:</td>
                  				<td><html:select name="PositionAdminForm" property="positionBean.positionLevel" styleClass="form-control">
 							      		<html:optionsCollection name="listPositionLevel" label="value" value="key"/>
 							     	</html:select>

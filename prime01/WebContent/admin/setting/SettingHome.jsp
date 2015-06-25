@@ -71,9 +71,9 @@
                     </div>
 		        	</div></div>
 		        </div>
+			</section>
 		</div>
 		<!-- /.content-wrapper -->
-			</section>
 	
 
 	<script src="resources/prime.js"></script>
