@@ -1,7 +1,6 @@
 package prime.admin.user;
 
-import java.sql.Date;
-
+import java.util.Date;
 import prime.admin.employee.EmployeeBean;
 
 public class UserBean extends EmployeeBean{

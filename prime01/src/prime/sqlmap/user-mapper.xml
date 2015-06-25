@@ -47,7 +47,7 @@
 	
 	<update id="changeActionDate" parameterClass="prime.admin.user.UserBean">
 		UPDATE USERS SET
-		ACTION_DATE = (sysdate+(2/(24 * 60)))
+		ACTION_DATE = (SYSDATE + (1/(24 * 60)))
 		WHERE USERNAME = #userName#
 	</update>
 	

@@ -117,10 +117,10 @@
 			                        	<span class="label label-success">Active</span>
 			                        </logic:equal>
 			                        <logic:equal name="iter" property="statusUser" value="2">
-			                        	<span class="label label-warning">Wait Locked</span>
+			                        	<span class="label label-warning">Locked</span>
 			                        </logic:equal>
 			                        <logic:equal name="iter" property="statusUser" value="3">
-			                        	<span class="label label-warning">Wait Abort</span>
+			                        	<span class="label label-warning">Active</span>
 			                        </logic:equal>
 			                        </td>
 			                        <td align="center">

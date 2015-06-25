@@ -53,7 +53,7 @@ public class PrimeUtil {
 	}
 
 	private static SimpleDateFormat DATEFORMAT_TIME = new SimpleDateFormat("HH:mm");
-	private static SimpleDateFormat DATEFORMAT_DATE = new SimpleDateFormat("HH:mm");
+	private static SimpleDateFormat DATEFORMAT_DATE = new SimpleDateFormat("dd/MM/yyyy HH:mm");
     public static String setDateToTimeString(Date date){
     	return DATEFORMAT_TIME.format(date);
     }
@@ -63,7 +63,15 @@ public class PrimeUtil {
 
 	public static Date parseDateStringToTime(String date) {
 	    try {
-	        return (Date) new SimpleDateFormat("HH:mm").parse(date);
+	        return DATEFORMAT_TIME.parse(date);
+	    } catch (java.text.ParseException e) {
+	        return new Date(0);
+	    }
+	}
+
+	public static Date parseDateStringToDate(String date) {
+	    try {
+	        return DATEFORMAT_DATE.parse(date);
 	    } catch (java.text.ParseException e) {
 	        return new Date(0);
 	    }
