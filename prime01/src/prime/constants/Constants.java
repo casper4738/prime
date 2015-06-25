@@ -36,9 +36,8 @@ public interface Constants {
 		static final String DOEDITWEEKEND	= "t30";
 		static final String GOTOEDITDAYOFF	= "t31";
 		static final String DOEDITDAYOFF	= "t32";
-		static final String DORESET 	= "t33";
-		static final String DOLOCK 		= "t34";
-		static final String DOUNLOCK 	= "t35";
+		static final String DORESET 		= "t33";
+		static final String DOLOCK 			= "t34";
 		static final String GOTOEDITPOSITION 	= "t36";
 		static final String DOEDITPOSITION 		= "t37";
 		
