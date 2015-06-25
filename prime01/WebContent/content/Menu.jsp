@@ -127,8 +127,8 @@
 			    cache: false
 			});
     		
-    		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>");
-					});
+    		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.ADMIN_DASHBOARD]%>");
+		});
 </script>
 <!-- End Of Written JS -->
 <!--  End JS-->

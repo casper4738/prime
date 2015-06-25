@@ -17,7 +17,6 @@ function searchAll(task) {
 }
 
 function flyToEditDelete(task, value, confirmMessage) {
-	alert(task+" edit")
 	var tmpForm = document.forms[0]; 
 	if(confirmMessage != null){
 		if(!confirm(confirmMessage))	
@@ -156,10 +155,6 @@ function modalSubmitReturnValue(retValue,retForm){
 	//##0.Set Return Value to Targetted Object
 	if(modalTargettedObject != null){
 		modalTargettedObject.val(retValue);
-<<<<<<< HEAD
-		
-=======
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 		if(retForm=='employeeHead'){
 			var res = retValue.split(',');
 			document.getElementById('headName').value=res[1];
