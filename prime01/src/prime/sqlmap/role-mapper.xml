@@ -44,6 +44,7 @@
 	    ORDER BY ROLE_NAME ASC) page 
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
+	
 	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
 		FROM ROLES 
@@ -55,4 +56,24 @@
 	        </isNotNull>
 	    </dynamic>
 	</select>
+	
+	<select id="selectAll" resultClass="prime.admin.role.RoleBean">
+		SELECT
+		    ROLE_ID		AS roleId,
+		    ROLE_NAME	AS roleName
+		FROM ROLES
+	</select>
+	
+	<select id="getRolesByEmployeeIdAndProjectId" resultClass="prime.admin.role.RoleBean" parameterClass="java.util.Map">
+		SELECT
+		    ROLE.ROLE_ID	AS roleId,
+		    ROLE.ROLE_NAME	AS roleName
+		FROM PROJECT_MEMBERS PROJ_MBR
+		JOIN ROLES ROLE ON PROJ_MBR.ROLE_ID = ROLE.ROLE_ID
+		WHERE 
+			PROJ_MBR.EMPLOYEE_ID = #employeeId#
+		AND
+			PROJ_MBR.PROJECT_ID  = #projectId#  
+	</select>
+	
 </sqlMap>

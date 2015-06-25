@@ -142,7 +142,7 @@
 							<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
 							<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
 							<logic:iterate id="p" name="listPage">
-								<logic:equal name="p" value="${pageNow}">
+							 	<logic:equal name="p" value="${pageNow}">
 									<li><html:link styleClass="active" href="#">${p}</html:link> </li>
 								</logic:equal>
 								<logic:notEqual name="p" value="${pageNow}">
