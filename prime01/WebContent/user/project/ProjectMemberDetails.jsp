@@ -128,8 +128,6 @@
 							<html:hidden name="ProjectUserForm" property="task"/>
 							<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
 							<html:hidden name="ProjectUserForm" property="projectMemberId"/>
-							
-							
 							<html:hidden name="ProjectUserForm" property="goToPage"/>
 							<html:hidden name="ProjectUserForm" property="showInPage"/>
 							<html:select name="ProjectUserForm" property="columnSearch" styleClass="columnSearch">
