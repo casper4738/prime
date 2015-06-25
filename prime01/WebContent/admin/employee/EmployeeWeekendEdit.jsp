@@ -98,11 +98,8 @@
 				weekEnds+=document.forms[0].weekEnd[i].value+","
 			}
 		}
-		
 		weekEnds = weekEnds.substring(0, weekEnds.length - 1);
 		document.forms[0].weekEnds.value=weekEnds;
-		document.forms[0].listMondayDate.value=document.forms[0].mondayDate.value;
-		
 		var tmpForm = document.forms[0];
 		menuLoadHandler(tmpForm.action, serialize(tmpForm));
 	}

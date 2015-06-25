@@ -200,5 +200,18 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		return (EmployeeBean) mapper.queryForObject("employee.getEmployeeWeekendByIdAndStartFrom", map);
 	}
 
+	@Override
+	public void updateWeekend(EmployeeBean e) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			System.out.println(e.getStartFrom()+"--");
+			mapper.startTransaction();
+			mapper.update("employee.updateWeekend", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+
 	
 }

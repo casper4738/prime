@@ -42,6 +42,10 @@
 	<script>flyToForward("<%=Constants.Task.GOTOVIEW%>", '<bean:message key="label.message.weekend"/>')</script>
 </logic:equal>
 
+<logic:equal name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOEDITWEEKEND%>">
+	<script>flyToForward("<%=Constants.Task.GOTOVIEW%>", '<bean:message key="label.message.weekend"/>')</script>
+</logic:equal>
+
 <logic:equal name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOEDITPOSITION%>">
 	<script>flyToForward('success', '<bean:message key="label.message.update"/>')</script>
 </logic:equal>

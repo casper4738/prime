@@ -42,6 +42,13 @@
 		(#employeeId#, #startFrom#, #weekEnd#,#descriptionWeekEnd#)
 	</insert>
 	
+	<update id="updateWeekend" parameterClass="prime.admin.employee.EmployeeBean">
+		UPDATE WEEKEND_HOLIDAYS SET
+		WEEKEND=#weekEnd#,
+		WEEKEND_NOTE=#descriptionWeekEnd#
+		WHERE EMPLOYEE_ID=#employeeId# AND START_FROM = #startFrom#
+	</update>
+	
 	<insert id="insertDayoff" parameterClass="prime.admin.employee.EmployeeBean">
 		INSERT INTO DAY_OFFS
 		(EMPLOYEE_ID , DAYOFF_START_DATE, DAYOFF_END_DATE, DAYOFF_NOTE) VALUES 

@@ -127,9 +127,6 @@ public class EmployeeAction extends Action {
 			manager.update(tmpEmployee);
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOWEEKEND.equals(pForm.getTask())) {
-			System.out.println(pForm.getEmployeeBean().getDescriptionWeekEnd()+" DESC WEEK");
-			System.out.println(pForm.getWeekEnds()+" WEKEND");
-			System.out.println(pForm.getListMondayDate()+" Start");
 			pForm.getEmployeeBean().setWeekEnd(pForm.getWeekEnds());
 			String startDateString= pForm.getListMondayDate();
 			
@@ -143,10 +140,28 @@ public class EmployeeAction extends Action {
 			manager.insertDayoff(pForm.getEmployeeBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.GOTOEDITWEEKEND.equals(pForm.getTask())) {
-			System.out.println("Masuk EditWeekend"+ pForm.getTmpId()+"--"+pForm.getTmpString());
 			EmployeeBean tmpEmployee = manager.getEmployeeWeekendByIdAndStartFrom(pForm.getTmpId(),pForm.getTmpString());
 			pForm.setEmployeeBean(tmpEmployee);
+			
+			/*String res = pForm.getEmployeeBean().getWeekEnd();
+			String[] resSplit = res.split(",");
+			System.out.println(resSplit.length + "LENGTH");
+			
+			for(int i = 0;i<resSplit.length;i++){
+				pForm.setWeekEnd(resSplit[i]);
+			}*/
+			//pForm.setWeekEnd("Monday");
+			
 			return mapping.findForward("weekendEdit");
+		} else if(Constants.Task.DOEDITWEEKEND.equals(pForm.getTask())) {
+			System.out.println(pForm.getEmployeeBean().getDescriptionWeekEnd()+" DESC WEEK");
+			System.out.println(pForm.getWeekEnds()+" WEKEND");
+			pForm.getEmployeeBean().setWeekEnd(pForm.getWeekEnds());
+			manager.updateWeekend(pForm.getEmployeeBean());
+			return mapping.findForward("forward");
+		}  else if(Constants.Task.DOEDITDAYOFF.equals(pForm.getTask())) {
+			//pForm.getEmployeeBean().set;
+			manager.updateWeekend(pForm.getEmployeeBean());
 		} else if(Constants.Task.GOTOEDITPOSITION.equals(pForm.getTask())) {
 			System.out.println("Masuk EditPosDiv"+ pForm.getTmpId());
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());

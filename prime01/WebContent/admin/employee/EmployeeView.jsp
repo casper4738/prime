@@ -56,6 +56,18 @@
 			tmpForm.tmpString.value = valueString;
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
+		
+		function flyToEditDeleteDayOff(task, valueId, valueString, confirmMessage) {
+			var tmpForm = document.forms[0]; 
+			if(confirmMessage != null){
+				if(!confirm(confirmMessage))	
+					return;
+			}
+			tmpForm.task.value = task;
+			tmpForm.tmpId.value = valueId;
+			tmpForm.tmpString.value = valueString;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
     </script>
     <!-- End Of JS -->
 </head>
@@ -79,8 +91,8 @@
                		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
                		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
                		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
-               		<html:text name="EmployeeAdminForm" property="tmpId" />
-               		<html:text name="EmployeeAdminForm" property="tmpString" />
+               		<html:hidden name="EmployeeAdminForm" property="tmpId" />
+               		<html:hidden name="EmployeeAdminForm" property="tmpString" />
                		<table class="form-input" align="center" style="width: 500px;">
                			<tr>
               				<td>Employee ID</td>
@@ -215,8 +227,23 @@
 						                		<td><%=1%> </td>
 						                		<td><bean:write name="iter" property="descriptionDayOff"/> </td>
 						                		<td>
-						                			<input type="button" value="Edit" styleClass="btn btn-default" onclick=""/>
-						                			<input type="button" value="Del" styleClass="btn btn-default" onclick=""/>
+						                			<bean:define id="datey" name="iter" property="startDate"  toScope="request"/>
+						                			<% 
+							                			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+						                			
+							                		try {
+							                				java.sql.Date startDate = (java.sql.Date) request.getAttribute("datey");
+							                				java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
+					                					if(date.compareTo(startDate) < 0) {
+					                				%>
+					                					<input type="button" value="Del" styleClass="btn btn-default" onclick="flyToEditDeleteDayOff('<%=Constants.Task.DOEDITDAYOFF%>', <bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>, '<bean:write name="iter" property="startDate"/>','<%=Constants.Confirmation.DELETE %>')"/>
+					                				<%
+					                					} 
+						                			} catch (Exception e) {
+						                				out.print("CAST : "+e.getMessage());
+						                				
+						                			}
+						                			%>
 						                		</td>
 						                	</tr>
 							           	</logic:iterate>
@@ -259,9 +286,9 @@
 						                			<% 
 							                			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 						                			
-						                			try {
-						                				java.sql.Date startForm = (java.sql.Date) request.getAttribute("datex");
-						                			java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
+							                			try {
+							                				java.sql.Date startForm = (java.sql.Date) request.getAttribute("datex");
+							                				java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
 					                					if(date.compareTo(startForm) < 0) {
 					                				%>
 					                					<input type="button" value="Edit" styleClass="btn btn-default" onclick="flyToEditWeekend('<%=Constants.Task.GOTOEDITWEEKEND%>', <bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>, '<bean:write name="iter" property="startFrom"/>')"/>

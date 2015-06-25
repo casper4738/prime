@@ -136,14 +136,12 @@ public class EmployeeBean {
 		return resignDate;
 	}
 	public void setResignDate(Date resignDate) {
-		System.out.println(resignDate + "ResignDate");
 		this.resignDate = resignDate;
 	}
 	public Date getHireDate() {
 		return hireDate;
 	}
 	public void setHireDate(Date hireDate) {
-		System.out.println(hireDate + "hireDate");
 		this.hireDate = hireDate;
 	}
 	public Date getStartDate() {
