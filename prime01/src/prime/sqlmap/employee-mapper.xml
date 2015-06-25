@@ -30,10 +30,10 @@
 		(#employeeId#, #resignDate#, #resignNote#)
 	</insert>
 	
-	<update id="updateStatusUser" parameterClass="prime.admin.employee.EmployeeBean">
+	<update id="updateStatusUser" parameterClass="java.lang.Integer">
 		UPDATE USERS SET
-		STATUS_USER = 'Locked'
-		WHERE EMPLOYEE_ID=#employeeId#
+		STATUS_USER = 0
+		WHERE EMPLOYEE_ID=$employeeId$ 
 	</update>
 	
 	<insert id="insertWeekend" parameterClass="prime.admin.employee.EmployeeBean">
@@ -56,7 +56,12 @@
 		EMAIL=#email#,
 		BIRTHDATE=#birthdate#,
 		GENDER=#gender#,
-		HIRE_DATE=#hireDate#,
+		HIRE_DATE=#hireDate#
+		WHERE EMPLOYEE_ID=#employeeId#
+	</update>
+	
+	<update id="updatePositionDivision" parameterClass="prime.admin.employee.EmployeeBean">
+		UPDATE EMPLOYEES SET
 		<isEqual property="divisionId" compareValue="0">
 			DIVISION_ID=NULL,
 		</isEqual>
@@ -71,6 +76,12 @@
 			HEAD_ID=null
 		</isEqual>
 		WHERE EMPLOYEE_ID=#employeeId#
+	</update>
+	
+	<update id="updateHead" parameterClass="java.util.Map">
+		UPDATE EMPLOYEES SET
+		HEAD_ID=#newHead#
+		WHERE HEAD_ID=#forCondition#
 	</update>
 	
 	<select id="getNewId" resultClass="java.lang.Integer">
@@ -273,7 +284,7 @@
 				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel#
 			</isEqual>
 			<isEqual property="paramCondition" compareValue="employeeResign">
-				POS.POSITION_LEVEL <![CDATA[ <= ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId#
+				POS.POSITION_LEVEL <![CDATA[ <= ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId# 
 			</isEqual>
 		</dynamic>
 	    <dynamic prepend="AND">

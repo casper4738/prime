@@ -64,13 +64,14 @@ public class EmployeeAction extends Action {
 			System.out.println("Masuk Edit2");
 			pForm.setEmployeeBean(tmpEmployee);
 			System.out.println("Masuk Edit");
-			request.setAttribute("listPosition", tmpPositionManager.getListAll());
+			//request.setAttribute("listPosition", tmpPositionManager.getListAll());
 			return mapping.findForward("edit");
 		} else if(Constants.Task.GOTORESIGN.equals(pForm.getTask())) {
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
 			System.out.println(pForm.getTmpId()+" Employee ID MASUK RESIGN");
 			pForm.setEmployeeBean(tmpEmployee);
 			pForm.setEmployeeId(pForm.getTmpId());
+			pForm.getEmployeeBean().setResignDate(new java.sql.Date(new java.util.Date().getTime()));
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
 			return mapping.findForward("resign");
 		} else if(Constants.Task.GOTOVIEW.equals(pForm.getTask())) {
@@ -112,6 +113,14 @@ public class EmployeeAction extends Action {
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DORESIGN.equals(pForm.getTask())) {
 			manager.insertResign(pForm.getEmployeeBean());
+			// FOR UPDATE HEAD ID WHERE OLD HEAD ID WAS RESIGN 
+			System.out.println(pForm.getEmployeeBean().getEmployeeId() + "EmployeeId");
+			System.out.println(pForm.getSubstituteHeadId() + "SubstituteHead");
+			manager.updateHead(pForm.getEmployeeBean().getEmployeeId(),pForm.getSubstituteHeadId());
+			
+			//FOR UPDATE STATUS USER
+			manager.updateStatusUser(pForm.getEmployeeBean().getEmployeeId());
+			
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
 			EmployeeBean tmpEmployee = pForm.getEmployeeBean();
@@ -151,7 +160,31 @@ public class EmployeeAction extends Action {
 		    }
 			request.setAttribute("listMonthYear", monthsList);
 			return mapping.findForward("weekendEdit");
-		}
+		} else if(Constants.Task.GOTOEDITPOSITION.equals(pForm.getTask())) {
+			System.out.println("Masuk EditPosDiv"+ pForm.getTmpId());
+			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
+			System.out.println(pForm.getTmpId()+" Employee ID "+ tmpEmployee.getManagerId());
+			if(tmpEmployee.getManagerId() != null) {
+				EmployeeBean tmpManager = manager.getEmployeeById(tmpEmployee.getManagerId());
+			}
+			
+			pForm.setEmployeeBean(tmpEmployee);
+			pForm.setEmployeeId(pForm.getTmpId());
+			pForm.setSubstituteHeadId(pForm.getTmpId());
+			request.setAttribute("listPosition", tmpPositionManager.getListAll());
+			request.setAttribute("listDivision", tmpDivisionManager.getListAll());
+			return mapping.findForward("positionDivisionEdit");
+		}else if(Constants.Task.DOEDITPOSITION.equals(pForm.getTask())) {
+			// FOR UPDATE SELF EMPLOYEE
+			EmployeeBean tmpEmployee = pForm.getEmployeeBean();
+			manager.updatePositionDivision(tmpEmployee);
+			
+			System.out.println(pForm.getEmployeeBean().getEmployeeId()+" EMPID");
+			System.out.println(pForm.getSubstituteHeadId()+ "SUBHEAD");
+			//FOR UPDATE HEAD ID WHERE OLD HEAD ID WAS CHANGE POSITION OR DIVISION 
+			manager.updateHead(pForm.getEmployeeBean().getEmployeeId(),pForm.getSubstituteHeadId());
+			return mapping.findForward("forward");
+		} 
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		List<EmployeeBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),

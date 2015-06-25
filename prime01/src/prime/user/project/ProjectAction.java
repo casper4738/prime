@@ -115,18 +115,19 @@ public class ProjectAction extends Action {
 			System.out.println("masuk add task " + pForm.getProjectMemberId()+" - "+ pForm.getProjectBean().getProjectMemberId());
 			pForm.setProjectBean(manager.getDataProjectMemberByProjectMemberId(pForm.getProjectMemberId()));
 			return mapping.findForward("createTask");
-		} else if(Constants.Task.Project.DOCREATETASK.equals(pForm.getTask())){
-			pForm.setProjectBean(manager.getDataProjectMemberByProjectMemberId(pForm.getProjectMemberId()));
-			
-			pForm.getProjectBean().getTaskBean().setTaskId(tmpTaskManager.getNewId());
-			pForm.getProjectBean().getTaskBean().setTaskAssigner(tmpEmployeeId);
-			pForm.getProjectBean().getTaskBean().setTaskReceiver(pForm.getProjectBean().getEmployeeId());
-			pForm.getProjectBean().getTaskBean().setProjectMemberId(pForm.getProjectBean().getProjectMemberId());
-			
-			tmpTaskManager.insert(pForm.getProjectBean().getTaskBean());
-			tmpTaskManager.insertDetail(pForm.getProjectBean().getTaskBean());
-			return mapping.findForward("createTask");
-		}
+		} 
+//		else if(Constants.Task.Project.DOCREATETASK.equals(pForm.getTask())){
+//			pForm.setProjectBean(manager.getDataProjectMemberByProjectMemberId(pForm.getProjectMemberId()));
+//			
+//			pForm.getProjectBean().getTaskBean().setTaskId(tmpTaskManager.getNewId());
+//			pForm.getProjectBean().getTaskBean().setTaskAssigner(tmpEmployeeId);
+//			pForm.getProjectBean().getTaskBean().setTaskReceiver(pForm.getProjectBean().getEmployeeId());
+//			pForm.getProjectBean().getTaskBean().setProjectMemberId(pForm.getProjectBean().getProjectMemberId());
+//			
+//			tmpTaskManager.insert(pForm.getProjectBean().getTaskBean());
+//			tmpTaskManager.insertDetail(pForm.getProjectBean().getTaskBean());
+//			return mapping.findForward("createTask");
+//		}
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		List<ProjectBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),

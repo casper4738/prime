@@ -80,9 +80,9 @@
                  				<td>:</td>
                  				<td>
                  					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                 				  		<html:text name="EmployeeAdminForm" property="employeeBean.birthdate" styleClass="form-control pull-right" styleId="datepicker_birthdate"/>
+                 				  		<html:text name="EmployeeAdminForm" property="employeeBean.birthdate" styleClass="form-control pull-right" styleId="datepicker_birthdate" />
                  				  	</div>
-							</td>
+								</td>
                  			</tr>
                  			<tr>
                  				<td>Contact Number</td>
