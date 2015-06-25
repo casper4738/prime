@@ -31,13 +31,23 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		try {
 			mapper.startTransaction();
 			mapper.insert("employee.insertResign", e);
-			mapper.update("employee.updateStatusUser", e);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
 		}
 	}
-
+	
+	public void updateStatusUser(Integer employeeId) throws SQLException {
+		try {
+			mapper.startTransaction();
+			System.out.println(employeeId+ "  EMPLOYEEID");
+			mapper.update("employee.updateStatusUser", employeeId);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
 	public void insertWeekend(EmployeeBean e) throws SQLException {
 		try {
 			mapper.startTransaction();
@@ -80,6 +90,19 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		}
 	}
 
+	public void updateHead(Integer forCondition, Integer newHead) throws SQLException {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("forCondition", forCondition);
+			map.put("newHead", newHead);
+			mapper.startTransaction();
+			mapper.update("employee.updateHead", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
 	public void delete(Integer id) throws SQLException {
 		// TODO Auto-generated method stub
 		try {
@@ -165,4 +188,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		map.put("divisionId", divisionId);
 		return (Integer) mapper.queryForObject("employee.getCountByColumnAndDivision", map);
 	}
+
+	
 }

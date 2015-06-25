@@ -203,9 +203,8 @@ function modalSubmitReturnValue(retValue,retForm){
 	//##0.Set Return Value to Targetted Object
 	if(modalTargettedObject != null){
 		modalTargettedObject.val(retValue);
-		alert(retForm)
+		
 		if(retForm=='employeeHead'){
-			alert("aa")
 			var res = retValue.split(',');
 			document.getElementById('headName').value=res[1];
 			document.forms[0].managerId.value=res[0].replace('[','');
@@ -219,7 +218,6 @@ function modalSubmitReturnValue(retValue,retForm){
 				document.getElementById('chooseDivision').style.display="inline"
 			}
 		} else if(retForm=='employeeResign'){
-			alert("bb")
 			var res = retValue.split(',');
 			document.getElementById('substituteHead').value=res[1];
 			document.forms[0].substituteHeadId.value=res[0].replace('[','');
