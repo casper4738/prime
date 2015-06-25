@@ -1,6 +1,8 @@
 package prime.admin.user;
 
+import java.sql.Date;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,15 +12,8 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-import prime.admin.employee.EmployeeManager;
-import prime.admin.employee.EmployeeManagerImpl;
+
 import prime.constants.Constants;
-import prime.user.activity.ActivityManager;
-import prime.user.activity.ActivityManagerImpl;
-import prime.user.task.TaskBean;
-import prime.user.task.TaskHeadForm;
-import prime.user.task.TaskManager;
-import prime.user.task.TaskManagerImpl;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -30,6 +25,8 @@ public class UserAction extends Action {
 		
 		UserManager tmpManager = new UserManagerImpl();
 		UserForm userForm = (UserForm) form;
+		Date tmpTimeNow = new Date(new java.util.Date().getTime());
+		
 		System.out.println(userForm.getTask()+" TASK");
 		if(Constants.Task.GOTOADD.equals(userForm.getTask())){
 			return mapping.findForward("add");
@@ -40,11 +37,30 @@ public class UserAction extends Action {
 		} else if(Constants.Task.DOLOCK.equals(userForm.getTask())) {
 			//##. Lock User and Go to Forward
 			userForm.setUserBean(tmpManager.getUserByUsername(userForm.getTmpValue()));
+				if (userForm.getUserBean().getStatusUser() == Constants.UserStatus.OK){
+					if (userForm.getUserBean().getChangeDate().after(tmpTimeNow)){
+						//Change Status to Wait Locked
+						tmpManager.lockUser(userForm.getUserBean());
+					} else {
+						//Change Status to Locked
+						tmpManager.changeActionDate(userForm.getUserBean());
+						tmpManager.lockUser(userForm.getUserBean());
+					}
+				} 
+				else if(userForm.getUserBean().getStatusUser() == Constants.UserStatus.LOCKED) {
+					if (userForm.getUserBean().getChangeDate().after(tmpTimeNow)){
+						//Change Status to Wait Abort
+						tmpManager.unlockUser(userForm.getUserBean());
+					} else {
+						//Change Status to Unlocked
+						tmpManager.changeActionDate(userForm.getUserBean());
+						tmpManager.unlockUser(userForm.getUserBean());
+					}
+				}
 			tmpManager.lockUser(userForm.getUserBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DORESET.equals(userForm.getTask())) {
 			//##. Reset Password and Go to Forward
-			System.out.println("masuk ke reset");
 			tmpManager.resetPassword(userForm.getUserBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOEDIT.equals(userForm.getTask())) {
@@ -59,9 +75,37 @@ public class UserAction extends Action {
 				PrimeUtil.getEndRow(userForm.getGoToPage(), userForm.getShowInPage(), countRows));
 
 		//##1.Attribute for Table Show
+		Date curnTime;
+		Date compTime;
+		
+		for(int tmpI = 0 ; tmpI < list.size() ; tmpI++){
+			switch(list.get(tmpI).getStatusUser()){
+				case Constants.UserStatus.OK   :
+					if (list.get(tmpI).getChangeDate().after(tmpTimeNow)){
+						//Status Wait Abort
+						list.get(tmpI).setStatusUser(3);
+					} else {
+						//Status Ok
+						list.get(tmpI).setStatusUser(1);
+					}
+					 break;
+				case Constants.UserStatus.LOCKED :
+					if (list.get(tmpI).getChangeDate().after(tmpTimeNow)){
+						//Status Wait Locked
+						list.get(tmpI).setStatusUser(2);
+					} else {
+						//Status Locked
+						list.get(tmpI).setStatusUser(0);
+					}
+					
+					break;
+			}
+		}
+		
 		request.setAttribute("listUser", list);
 		request.setAttribute("listSearchColumn", Constants.Search.USER_SEARCHCOLUMNS);
 		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+		
 		setPaging(request, userForm, countRows, userForm.getGoToPage(), userForm.getShowInPage());
 		return mapping.findForward("success");
 	}
