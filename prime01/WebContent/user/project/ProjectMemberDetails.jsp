@@ -65,27 +65,20 @@
 				</tr>
 				</table>
 				
-				<p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span>
-	                  </p>
-	                 
-	                 	<div class="form-action">
-				<table align="center">
-	                  <tr>	<td style="padding:5px;">
-	                  			<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToAdd('addTask')"/></td>
-	                  		<td><html:select name="ProjectUserForm" property="roleId" styleId="roleid">
-	                  				<html:options collection="listRoles" property="key" labelProperty="value"/>
-	                  		</html:select></td>
-	                  </tr>
-	               </table>
-	               </div>
+				<p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>     
+				<div class="form-action"><table align="center">
+                  <tr><td style="padding:5px;">
+                  		<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToAdd('addTask')"/></td>
+                  	  <td><html:select name="ProjectUserForm" property="roleId" styleId="roleid">
+                  		  <html:options collection="listRoles" property="key" labelProperty="value"/>
+                  		  </html:select>
+               	  </td></tr>
+				</table></div>
 				
 				<div class="show-in-page">
 					Show per page
 					<html:select name="ProjectUserForm" property="showInPage" onchange="change(this.value)" >
-						<html:option value="5">5</html:option>
-						<html:option value="10">10</html:option>
-						<html:option value="25">25</html:option>
-						<html:option value="50">50</html:option>
+						<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 					</html:select>	
 				</div>
 				
@@ -97,8 +90,7 @@
 						<html:hidden name="ProjectUserForm" property="goToPage"/>
 						<html:hidden name="ProjectUserForm" property="showInPage"/>
 						<html:select name="ProjectUserForm" property="columnSearch" styleClass="columnSearch">
-							<html:option value="SHOW_ALL">SHOW ALL</html:option>
-							<html:option value="NAME">ACTIVITY NAME</html:option>
+							<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 						</html:select>
 						<html:text name="ProjectUserForm" property="search" styleClass="textSearch"/>
 						<input type="submit" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOEDIT%>')" class="buttonSearch myButton" value='Search'>
@@ -121,32 +113,35 @@
 						<logic:iterate id="iter" name="listProjectMemberDetails">
 		                	<tr>
 		                		<td width="250px"><bean:write name="iter" property="taskBean.taskName"/></td>
-		                		<td><bean:write name="iter" property="roleBean.roleName"/></td>
-		                		<td><bean:write name="iter" property="taskBean.taskAssigner"/></td>
-		                		<td><bean:write name="iter" property="taskBean.taskStartDate" format="dd MMMM yyyy"/></td>
-		                		<td><bean:write name="iter" property="taskBean.taskEstimateDate" format="dd MMMM yyyy"/></td>
-		                		<td><bean:write name="iter" property="taskBean.taskLastStatus"/></td>
-		                		<td>
-			                		<logic:greaterThan name="iter" property="percentage" value="50">
+		                		<td align="center"><bean:write name="iter" property="roleBean.roleName"/></td>
+		                		<td><bean:write name="iter" property="taskBean.taskAssignerName"/></td>
+		                		<td align="center"><bean:write name="iter" property="taskBean.taskStartDate" format="dd MMMM yyyy"/></td>
+		                		<td align="center"><bean:write name="iter" property="taskBean.taskEstimateDate" format="dd MMMM yyyy"/></td>
+		                		<td align="center">
+			                		<jsp:include page="/content/Status.jsp">
+	                	    			<jsp:param name="status" value="${iter.taskBean.taskLastStatus}" />
+	                	    		</jsp:include>
+		                		</td>
+		                		<td align="center">
+			                		<logic:greaterThan name="iter" property="taskBean.percentage" value="50">
 		                	    		<span class="badge bg-green">
 			                	    		<jsp:include page="/content/Percentage.jsp">
 			                	    			<jsp:param name="status" value="${iter.taskBean.taskLastStatus}" />
-			                	    			<jsp:param name="percentage" value="${iter.percentage}" />
+			                	    			<jsp:param name="percentage" value="${iter.taskBean.percentage}" />
 			                	    		</jsp:include>
 		                	    		</span>
 			                		</logic:greaterThan>
-			                		<logic:lessEqual name="iter" property="percentage" value="50">
+			                		<logic:lessEqual name="iter" property="taskBean.percentage" value="50">
 		                	    		<span class="badge bg-red">
 			                	    		<jsp:include page="/content/Percentage.jsp">
 			                	    			<jsp:param name="status" value="${iter.taskBean.taskLastStatus}" />
-			                	    			<jsp:param name="percentage" value="${iter.percentage}" />
+			                	    			<jsp:param name="percentage" value="${iter.taskBean.percentage}" />
 			                	    		</jsp:include>
 		                	    		</span>
 			                		</logic:lessEqual>
 		                		</td>
 		                		<td align="center">
-		                        	
-	                     	        		<input type="submit" class="btn btn-primary btn-xs" value='Abort' onclick="flyToTaskDetail('<%=Constants.Task.GOTOVIEW %>', '<bean:write name="iter" property="projectMemberId"/>')">
+		                        	<input type="submit" class="btn btn-primary btn-xs" value='Abort' onclick="flyToTaskDetail('<%=Constants.Task.GOTOVIEW %>', '<bean:write name="iter" property="projectMemberId"/>')">
 		                        </td>	
 		                    </tr> 
 	                    </logic:iterate>

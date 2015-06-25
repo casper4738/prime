@@ -34,7 +34,7 @@
 
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage Tasks</h1></h1>
+		<h1>Manage Tasks</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li class="active">Task & Activities</li>
@@ -135,7 +135,7 @@
             <!-- Paging -->
 			<ul class="pagination">
 				<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
-				<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
+				<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"> << </html:link> </li>
 				
 				<logic:iterate id="p" name="listPage">
 					<logic:equal name="p" value="${pageNow}">

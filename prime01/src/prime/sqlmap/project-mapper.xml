@@ -142,24 +142,40 @@
         AND PM.EMPLOYEE_ID=#id#
 	</select>
 	
-	
-	<select id="getListProjectMemberDetails" resultClass="prime.user.project.ProjectBean" 	parameterClass="java.util.Map">
-		SELECT TASK.TASK_ID AS taskId,
-		    TASK_NAME AS taskBean.taskName,
-		    TASK_RECEIVER as taskReceiver,
-		    TASK_ASSIGNER as taskAssigner,
-		    TASK_START_DATE as taskStartDate,
-		    TASK_ESTIMATE_DATE as taskEstimateDate,
-		    TASK_DESCRIPTION as taskDescription,
-		    TASK.PROJECT_MEMBER_ID as projectMemberId,
-		    EMP_ASSIGN.EMPLOYEE_NAME as taskAssignerName,
-		    EMP_RECEIVE.EMPLOYEE_NAME as taskReceiverName,
-		    TASK.TASK_LAST_STATUS AS taskLastStatus,
+	<resultMap id="projectMemberDetails" class="prime.user.project.ProjectBean" >  
+        <result property="taskBean.taskId" 				column="taskId"/>  
+        <result property="taskBean.taskName" 			column="taskName"/>  
+        <result property="taskBean.taskReceiver" 		column="taskReceiver"/>  
+        <result property="taskBean.taskAssigner" 		column="taskAssigner"/>  
+        <result property="taskBean.taskStartDate" 		column="taskStartDate"/>  
+        <result property="taskBean.taskEstimateDate" 	column="taskStartDate"/>  
+        <result property="taskBean.taskDescription" 	column="taskDescription"/>  
+        <result property="taskBean.taskAssignerName" 	column="taskAssignerName"/>  
+        <result property="taskBean.taskReceiverName" 	column="taskReceiverName"/>  
+        <result property="taskBean.taskLastStatus" 		column="taskLastStatus"/>  
+        <result property="taskBean.percentage" 			column="percentage"/>  
+        <result property="roleBean.roleId" 				column="roleId"/>  
+        <result property="roleBean.roleName" 			column="roleName"/>  
+    </resultMap>  
+    
+   <select id="getListProjectMemberDetails" resultMap="projectMemberDetails">
+    	SELECT 
+    		TASK.TASK_ID 				AS taskId,
+		    TASK_NAME 					AS taskName,
+		    TASK_RECEIVER 				AS taskReceiver,
+		    TASK_ASSIGNER 				AS taskAssigner,
+		    TASK_START_DATE 			AS taskStartDate,
+		    TASK_ESTIMATE_DATE 			AS taskEstimateDate,
+		    TASK_DESCRIPTION 			AS taskDescription,
+		    TASK.PROJECT_MEMBER_ID 		AS projectMemberId,
+		    EMP_ASSIGN.EMPLOYEE_NAME 	AS taskAssignerName,
+		    EMP_RECEIVE.EMPLOYEE_NAME 	AS taskReceiverName,
+		    TASK.TASK_LAST_STATUS 		AS taskLastStatus,
 		    NVL(((SELECT COUNT(ACTIVITY_ID) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS=4) /
 		      (SELECT NULLIF(COUNT(ACTIVITY_ID),0) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID)
-		    ) * 100, 0) AS percentage,
-		    ROLE.ROLE_ID AS roleId,
-		    ROLE.ROLE_NAME AS roleName
+		    ) * 100, 0) 				AS percentage,
+		    ROLE.ROLE_ID 				AS roleId,
+		    ROLE.ROLE_NAME 				AS roleName
 		FROM TASKS TASK
 		JOIN EMPLOYEES EMP_ASSIGN ON TASK.TASK_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
 		JOIN EMPLOYEES EMP_RECEIVE ON TASK.TASK_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
@@ -170,9 +186,7 @@
 		JOIN PROJECT_MEMBERS PROJ_MBR ON PROJ_MBR.PROJECT_MEMBER_ID = TASK.PROJECT_MEMBER_ID
 		JOIN ROLES ROLE ON PROJ_MBR.ROLE_ID = ROLE.ROLE_ID
 		WHERE PROJ_MBR.EMPLOYEE_ID = #projectMemberId#
-	</select>
-	
-	
+   </select>
 	
 	<resultMap id="listRoles" class="java.util.HashMap">
     		 <result property="key" column="projectMemberId" />
