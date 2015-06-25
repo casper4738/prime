@@ -48,6 +48,14 @@
 			tmpForm.task.value = "<%=Constants.Task.GOTORESIGN%>";
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
+		
+		function flyToEditWeekend(task, valueId, valueString) {
+			var tmpForm = document.forms[0]; 
+			tmpForm.task.value = task;
+			tmpForm.tmpId.value = valueId;
+			tmpForm.tmpString.value = valueString;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
     </script>
     <!-- End Of JS -->
 </head>
@@ -71,7 +79,8 @@
                		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
                		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
                		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
-               		<html:hidden name="EmployeeAdminForm" property="tmpId" />
+               		<html:text name="EmployeeAdminForm" property="tmpId" />
+               		<html:text name="EmployeeAdminForm" property="tmpString" />
                		<table class="form-input" align="center" style="width: 500px;">
                			<tr>
               				<td>Employee ID</td>
@@ -206,8 +215,8 @@
 						                		<td><%=1%> </td>
 						                		<td><bean:write name="iter" property="descriptionDayOff"/> </td>
 						                		<td>
-						                			<input type="button" property="" value="Edit" styleClass="btn btn-default" onclick=""/>
-						                			<input type="button" property="" value="Del" styleClass="btn btn-default" onclick=""/>
+						                			<input type="button" value="Edit" styleClass="btn btn-default" onclick=""/>
+						                			<input type="button" value="Del" styleClass="btn btn-default" onclick=""/>
 						                		</td>
 						                	</tr>
 							           	</logic:iterate>
@@ -227,7 +236,7 @@
 			             			<tr>
 			               				<td width="150px">
 			               					<logic:equal name="EmployeeAdminForm" property="employeeBean.resignDate" value="">
-			               						<input type="button" property="" value="Set WeekEnd" styleClass="btn btn-default" onclick="flyToEditDelete('<%=Constants.Task.GOTOWEEKEND%>', '<bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>')"/>
+			               						<input type="button"  value="Set WeekEnd" styleClass="btn btn-default" onclick="flyToEditDelete('<%=Constants.Task.GOTOWEEKEND%>', '<bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>')"/>
 			               					</logic:equal>
 			               				</td>
 			               			</tr>
@@ -246,20 +255,23 @@
 						                	<tr>
 						                		<td><bean:write name="iter" property="startFrom"/> </td>
 						                		<td><bean:write name="iter" property="weekEnd"/> </td>
-						                		<td>
-						                			<%-- <logic:lessThan name="iter" property="startFrom" value="24/24/2015"> --%>
+						                		<td><bean:define id="datex" name="iter" property="startFrom"  toScope="request"/>
 						                			<% 
-							                			DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-							                			Date date = new Date();
-							                			System.out.println(dateFormat.format(date));
-							                			//System.out.println(startFrom);
-							                			/*  EmployeeBean eBean = (EmployeeBean) request.getAttribute("listWeekendByEmployeeId");
-							                			 System.out.println(eBean.getStartFrom()+" --"); */
-						                				//if(.after(date)){
+							                			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+						                			
+						                			try {
+						                				java.sql.Date startForm = (java.sql.Date) request.getAttribute("datex");
+						                			java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
+					                					if(date.compareTo(startForm) < 0) {
+					                				%>
+					                					<input type="button" value="Edit" styleClass="btn btn-default" onclick="flyToEditWeekend('<%=Constants.Task.GOTOEDITWEEKEND%>', <bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>, '<bean:write name="iter" property="startFrom"/>')"/>
+					                				<%
+					                					} 
+						                			} catch (Exception e) {
+						                				out.print("CAST : "+e.getMessage());
+						                				
+						                			}
 						                			%>
-              											<input type="button" property="" value="Edit" class="btn btn-default" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDITWEEKEND%>', '<bean:write name="iter" property="startFrom"/>')"/>
-						                			<%   //}%>	
-						                				<%-- </logic:lessThan> --%>
 						                		</td>
 						                	</tr>
 							           	</logic:iterate>
