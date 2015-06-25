@@ -63,40 +63,45 @@ function isNumeric(n) {
 	}
 }
 
+//****Modal Variable
+var PAGE_LOAD_ERROR = "<div class=\"box box-default\">" +
+						"<div class=\"box-header with-border\">" +
+							"<h1 align=\"center\"><b>Fail to fetch content</b></h1>" + 
+							"<div class=\"callout callout-danger\" align=\"center\">" + 
+								"<h4>Something wrong happened at here</h4>" + 
+								"<p>Please contact the developer for further assistance !!</p>" + 
+							"</div>" + 
+						"</div>" + 
+					"</div>";
+var PAGE_LOADING  = "<div class=\"info-modal\">" +
+						"<div class=\"modal\">" +
+						"<div class=\"modal-dialog\">" +
+						  "<div class=\"modal-content\">" +
+						    "<div class=\"modal-header\">" +
+						      "<h4 class=\"modal-title\" align=\"center\">Content Loading</h4>" +
+						    "</div>" +
+						    "<div class=\"modal-body\" align=\"center\">" +
+						      "<div class=\"overlay\">" +
+						        "<i class=\"fa fa-refresh fa-spin\"></i>" +
+						      "</div>" +
+						    "</div>" +
+						    "<div class=\"modal-footer\">" +
+						    "</div>" +
+						  "</div>" +
+						"</div>" +
+						"</div>" +
+					  "</div>";
+var modalTargettedObject;
+
 function menuLoadHandler(targettedMenu, targettedData){
 	//##0. Show Loading [Hard Code the HTML Tag until Found Better Solution]
-	$('#content-main').html("<div class=\"info-modal\">" +
-				            "<div class=\"modal\">" +
-				              "<div class=\"modal-dialog\">" +
-				                "<div class=\"modal-content\">" +
-				                  "<div class=\"modal-header\">" +
-				                    "<h4 class=\"modal-title\" align=\"center\">Content Loading</h4>" +
-				                  "</div>" +
-				                  "<div class=\"modal-body\" align=\"center\">" +
-				                    "<div class=\"overlay\">" +
-					                  "<i class=\"fa fa-refresh fa-spin\"></i>" +
-					                "</div>" +
-				                  "</div>" +
-				                  "<div class=\"modal-footer\">" +
-				                  "</div>" +
-				                "</div>" +
-				              "</div>" +
-				            "</div>" +
-				          "</div>");
+	$('#content-main').html(PAGE_LOADING);
 	
 	//##1.Start AJAX-Load
 	$('#content-main').load(targettedMenu, targettedData, function( response, status, xhr ) {
 		//---.Show Some Respect For Error Status
 		if(status == "error"){
-			$('#content-main').html("<div class=\"box box-default\">" +
-		                				"<div class=\"box-header with-border\">" +
-		               	  				"<h1 align=\"center\"><b>Fail to fetch content</b></h1>" + 
-	    			                  		"<div class=\"callout callout-danger\" align=\"center\">" + 
-	    			                    		"<h4>Something wrong happened at here</h4>" + 
-	    			                    		"<p>Please contact the developer for further assistance !!</p>" + 
-	    			                  		"</div>" + 
-	    			                	"</div>" + 
-	    			              	  "</div>");
+			$('#content-main').html(PAGE_LOAD_ERROR);
 		}
 	});
 	
@@ -104,44 +109,16 @@ function menuLoadHandler(targettedMenu, targettedData){
 	return false;
 }
 
-//****Modal Variable
-var modalTargettedObject;
 function modalLoadHandler(targettedData, targettedObject){
 	//##0. Show Loading [Hard Code the HTML Tag until Found Better Solution]
     $('#content-modal-body').removeData('bs.modal');
-	$('#content-modal-body').html("<div class=\"info-modal\">" +
-						            "<div class=\"modal\">" +
-						              "<div class=\"modal-dialog\">" +
-						                "<div class=\"modal-content\">" +
-						                  "<div class=\"modal-header\">" +
-						                    "<h4 class=\"modal-title\" align=\"center\">Content Loading</h4>" +
-						                  "</div>" +
-						                  "<div class=\"modal-body\" align=\"center\">" +
-						                    "<div class=\"overlay\">" +
-							                  "<i class=\"fa fa-refresh fa-spin\"></i>" +
-							                "</div>" +
-						                  "</div>" +
-						                  "<div class=\"modal-footer\">" +
-						                  "</div>" +
-						                "</div>" +
-						              "</div>" +
-						            "</div>" +
-						          "</div>");
-	
+	$('#content-modal-body').html(PAGE_LOADING);
 	
 	//##1.Load Specified Data For The Modal
 	$('#content-modal-body').load("Modal.do", targettedData, function( response, status, xhr ) {
 								//---.Show Some Respect For Error Status
 								if(status == "error"){
-									$('#content-modal-body').html("<div class=\"box box-default\">" +
-								                				"<div class=\"box-header with-border\">" +
-								               	  				"<h1 align=\"center\"><b>Fail to fetch content</b></h1>" + 
-							    			                  		"<div class=\"callout callout-danger\" align=\"center\">" + 
-							    			                    		"<h4>Something wrong happened at here</h4>" + 
-							    			                    		"<p>Please contact the developer for further assistance !!</p>" + 
-							    			                  		"</div>" + 
-							    			                	"</div>" + 
-							    			              	  "</div>");
+									$('#content-modal-body').html(PAGE_LOAD_ERROR);
 								}
 	});
 	
@@ -154,27 +131,10 @@ function modalLoadHandler(targettedData, targettedObject){
 
 function modalSubmitRefreshPageWithoutReturn(retValue, retForm, refreshedValue, refreshedForm){
 	//##1.Show Loading Screen Inside Modal
-	$('#content-modal-body').html("<div class=\"info-modal\">" +
-            "<div class=\"modal\">" +
-              "<div class=\"modal-dialog\">" +
-                "<div class=\"modal-content\">" +
-                  "<div class=\"modal-header\">" +
-                    "<h4 class=\"modal-title\" align=\"center\">Content Loading</h4>" +
-                  "</div>" +
-                  "<div class=\"modal-body\" align=\"center\">" +
-                    "<div class=\"overlay\">" +
-	                  "<i class=\"fa fa-refresh fa-spin\"></i>" +
-	                "</div>" +
-                  "</div>" +
-                  "<div class=\"modal-footer\">" +
-                  "</div>" +
-                "</div>" +
-              "</div>" +
-            "</div>" +
-          "</div>");
+	$('#content-modal-body').html(PAGE_LOADING);
 	
 	//##2.Do Submit Here With Ajax
-  $.ajax({ 
+	$.ajax({ 
       type	  : "POST",
       url	  : retForm,  
       data	  : retValue,
@@ -187,15 +147,7 @@ function modalSubmitRefreshPageWithoutReturn(retValue, retForm, refreshedValue, 
       },
       
       error: function(){
-			$('#content-modal-body').html("<div class=\"box box-default\">" +
-		                				"<div class=\"box-header with-border\">" +
-		               	  				"<h1 align=\"center\"><b>Fail to fetch content</b></h1>" + 
-	    			                  		"<div class=\"callout callout-danger\" align=\"center\">" + 
-	    			                    		"<h4>Something wrong happened at here</h4>" + 
-	    			                    		"<p>Please contact the developer for further assistance !!</p>" + 
-	    			                  		"</div>" + 
-	    			                	"</div>" + 
-	    			              	  "</div>");
+			$('#content-modal-body').html(PAGE_LOAD_ERROR);
       }
    });
 }
@@ -204,19 +156,22 @@ function modalSubmitReturnValue(retValue,retForm){
 	//##0.Set Return Value to Targetted Object
 	if(modalTargettedObject != null){
 		modalTargettedObject.val(retValue);
+<<<<<<< HEAD
 		
+=======
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 		if(retForm=='employeeHead'){
 			var res = retValue.split(',');
 			document.getElementById('headName').value=res[1];
 			document.forms[0].managerId.value=res[0].replace('[','');
 			document.getElementById('divisionName').value=res[4];
 			if(document.getElementById('divisionName').value!=="" || document.getElementById('divisionName').value!=="NULL"){
-				document.getElementById('isDivision').style.display="inline"
-				document.getElementById('chooseDivision').style.display="none"
+				document.getElementById('isDivision').style.display="inline";
+				document.getElementById('chooseDivision').style.display="none";
 				document.getElementById('divisionId').value=res[4];
 			}else{
-				document.getElementById('isDivision').style.display="none"
-				document.getElementById('chooseDivision').style.display="inline"
+				document.getElementById('isDivision').style.display="none";
+				document.getElementById('chooseDivision').style.display="inline";
 			}
 		} else if(retForm=='employeeResign'){
 			var res = retValue.split(',');

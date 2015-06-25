@@ -191,7 +191,7 @@ public class DashboardAction extends Action{
 		}
 		String tmpValueString = "";
 		for(tmpJ = 0 ; tmpJ < tmpData.size() ; tmpJ++){
-			tmpValueString += "<tr>";
+			tmpValueString += "<tr>"; 
 			tmpValueString += "<td width=\"5px\" >" + (tmpJ + 1) + "</td>";
 			tmpValueString += "<td>";
 			tmpValueString += tmpData.get(tmpJ).get(0); 

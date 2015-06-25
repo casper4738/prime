@@ -95,4 +95,24 @@ public class UserManagerImpl implements UserManager {
 			mapper.endTransaction();
 		}
 	}
+	
+	public void unlockUser(UserBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.update("user.unlock", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+	public void changeActionDate(UserBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.update("user.changeActionDate", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
 }

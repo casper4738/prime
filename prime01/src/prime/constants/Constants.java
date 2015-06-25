@@ -177,8 +177,6 @@ public interface Constants {
 	static interface UserStatus {
 		int LOCKED = 0;
 		int OK     = 1;
-		int WITHLOCK = 2;
-		int WITHABORT = 3;
 	}
 	
 	//---4.Standard Audit Trails / Log Table Conversion			

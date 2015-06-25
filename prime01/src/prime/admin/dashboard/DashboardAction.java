@@ -43,7 +43,8 @@ public class DashboardAction extends Action {
 		String str;
 
 		List<String> list = new ArrayList<String>();
-
+		
+		//##. Set National Holiday Data For Calendar
 		int year = Calendar.getInstance().get(Calendar.YEAR);
 		for (HolidayBean e : tmpManager.getListByYear(year)) {
 			Calendar c = Calendar.getInstance();
@@ -58,6 +59,8 @@ public class DashboardAction extends Action {
 					+ "borderColor: '" + strHoliday2 + "', " + "},";
 			list.add(str);
 		}
+		
+		//##. Set Day Off Data For Calendar
 
 		for (EmployeeBean e : empManager.getListDayoffByEmployeeId(pForm
 				.getEmployeeId())) {
@@ -84,6 +87,7 @@ public class DashboardAction extends Action {
 			System.out.println(e.getDescriptionDayOff());
 		}
 
+		//##1.Attribute for Dashboard Show
 		request.setAttribute("teslist", list);
 		return mapping.findForward("success");
 	}
