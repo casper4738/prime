@@ -43,7 +43,7 @@ public class UserAction extends Action {
 			compTime = userForm.getUserBean().getChangeDate();
 			compTime = PrimeUtil.parseDateStringToDate(PrimeUtil.setDateToDateString(compTime));
 			if (userForm.getUserBean().getStatusUser() == Constants.UserStatus.OK){
-				if (compTime.after(curnTime)){
+				if (compTime.after(curnTime)){    
 					//Change Status to Wait Locked
 					tmpManager.lockUser(userForm.getUserBean());
 				} else {
