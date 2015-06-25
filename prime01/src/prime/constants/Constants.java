@@ -41,13 +41,23 @@ public interface Constants {
 		static final String GOTOEDITPOSITION 	= "t36";
 		static final String DOEDITPOSITION 		= "t37";
 		
+		interface Project {
+			final String GOTOPROJECTDETAIL	= "p01";
+			final String GOTOTASKMEMBER		= "p02";
+			final String GOTOCREATETASK		= "p03";
+			final String GOTOCREATEMEMBER	= "p04";
+			final String DOCREATETASK		= "p05";
+			final String DOCREATEMEMBER		= "p06";
+		}
+		
 		interface TASK {
 			final String GOTOTASKTYPE	= "t101";
 			final String GOTOSUBMIT		= "t102";
-			final String DOSUBMIT		= "t103";
-			final String DOAPPROVAL		= "t104";
-			final String DOREJECT		= "t105";
-			final String DOABORT		= "t106";
+			final String GOTODETAIL		= "t103";
+			final String DOSUBMIT		= "t104";
+			final String DOAPPROVAL		= "t105";
+			final String DOREJECT		= "t106";
+			final String DOABORT		= "t107";
 		}
 		
 		interface ACTIVITY {

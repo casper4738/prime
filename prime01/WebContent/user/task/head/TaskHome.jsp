@@ -34,7 +34,7 @@
 
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage Tasks</h1></h1>
+		<h1>Manage Tasks</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li class="active">Task & Activities</li>
@@ -97,7 +97,7 @@
 	                	    <td align="center">
 	                	    	<logic:greaterThan name="iter" property="percentage" value="50">
 	                	    		<span class="badge bg-green">
-		                	    		<jsp:include page="../Percentage.jsp">
+		                	    		<jsp:include page="/content/Percentage.jsp">
 		                	    			<jsp:param name="status" value="${iter.taskLastStatus}" />
 		                	    			<jsp:param name="percentage" value="${iter.percentage}" />
 		                	    		</jsp:include>
@@ -105,7 +105,7 @@
 		                		</logic:greaterThan>
 		                		<logic:lessEqual name="iter" property="percentage" value="50">
 	                	    		<span class="badge bg-red">
-		                	    		<jsp:include page="../Percentage.jsp">
+		                	    		<jsp:include page="/content/Percentage.jsp">
 		                	    			<jsp:param name="status" value="${iter.taskLastStatus}" />
 		                	    			<jsp:param name="percentage" value="${iter.percentage}" />
 		                	    		</jsp:include>
@@ -118,7 +118,7 @@
 	                	    <td align="center"><bean:write name="iter" property="taskStartDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center"><bean:write name="iter" property="taskEstimateDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center">
-		                		<jsp:include page="../Status.jsp">
+		                		<jsp:include page="/content/Status.jsp">
                 	    			<jsp:param name="status" value="${iter.taskLastStatus}" />
                 	    		</jsp:include>
 	                		</td>
@@ -135,7 +135,7 @@
             <!-- Paging -->
 			<ul class="pagination">
 				<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
-				<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
+				<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"> << </html:link> </li>
 				
 				<logic:iterate id="p" name="listPage">
 					<logic:equal name="p" value="${pageNow}">

@@ -152,7 +152,7 @@
 	                		<td><bean:write name="iter" property="activityDescription"/></td>
 	                		<td align="center" width="150px"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy HH:mm:ss"/></td>
 	                		<td align="center" width="80px">
-	                			<jsp:include page="../Status.jsp">
+	                			<jsp:include page="/content/Status.jsp">
                 	    			<jsp:param name="status" value="${iter.activityLastStatus}" />
                 	    		</jsp:include>
 	                		</td>
