@@ -62,7 +62,6 @@ public class UserAction extends Action {
 					tmpManager.unlockUser(userForm.getUserBean());
 				}
 			}
-			tmpManager.lockUser(userForm.getUserBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DORESET.equals(userForm.getTask())) {
 			//##. Reset Password and Go to Forward
