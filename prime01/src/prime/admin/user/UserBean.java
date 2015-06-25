@@ -1,5 +1,7 @@
 package prime.admin.user;
 
+import java.sql.Date;
+
 import prime.admin.employee.EmployeeBean;
 
 public class UserBean extends EmployeeBean{
@@ -7,7 +9,14 @@ public class UserBean extends EmployeeBean{
 	private Integer sysLevel;
 	private String password;
 	private String userName;
-	private String statusUser;
+	private Date changeDate;
+	public Date getChangeDate() {
+		return changeDate;
+	}
+	public void setChangeDate(Date changeDate) {
+		this.changeDate = changeDate;
+	}
+	private Integer statusUser;
 	private Integer employeeId;
 	private String employeeName;
 	
@@ -47,10 +56,10 @@ public class UserBean extends EmployeeBean{
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public String getStatusUser() {
+	public Integer getStatusUser() {
 		return statusUser;
 	}
-	public void setStatusUser(String statusUser) {
+	public void setStatusUser(Integer statusUser) {
 		this.statusUser = statusUser;
 	}
 	

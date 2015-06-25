@@ -117,10 +117,10 @@
 			                        	<span class="label label-success">Active</span>
 			                        </logic:equal>
 			                        <logic:equal name="iter" property="statusUser" value="2">
-			                        <span class="label label-warning">With lock</span>
+			                        	<span class="label label-warning">Wait Locked</span>
 			                        </logic:equal>
 			                        <logic:equal name="iter" property="statusUser" value="3">
-			                        	<span class="label label-warning">With Abort</span>
+			                        	<span class="label label-warning">Wait Abort</span>
 			                        </logic:equal>
 			                        </td>
 			                        <td align="center">
@@ -129,14 +129,6 @@
 			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOUNLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.UNLOCK %>')" src="resources/image/unlocked.png" />
 									</logic:equal>
 			                         <logic:equal name="iter" property="statusUser" value="1">
-			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="userName"/>')" src="resources/image/edit.png" />
-			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.LOCK %>')" src="resources/image/locked.png" />
-			                        </logic:equal>
-									  <logic:equal name="iter" property="statusUser" value="2">
-			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="userName"/>')" src="resources/image/edit.png" />
-			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.LOCK %>')" src="resources/image/locked.png" />
-			                        </logic:equal>
-			                          <logic:equal name="iter" property="statusUser" value="3">
 			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="userName"/>')" src="resources/image/edit.png" />
 			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.LOCK %>')" src="resources/image/locked.png" />
 			                        </logic:equal>
