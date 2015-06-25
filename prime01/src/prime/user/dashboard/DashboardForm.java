@@ -7,7 +7,7 @@ import prime.user.activity.ActivityBean;
 
 public class DashboardForm extends ActionForm {
 	//private ActivityBean activityBean = new ActivityBean();
-	private String task;
+	private String task = "";
 	private String search;
 	private String columnSearch;
 	private String message;

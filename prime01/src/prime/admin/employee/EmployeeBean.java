@@ -8,6 +8,7 @@ public class EmployeeBean {
 	private Integer divisionId = 0;
 	private Integer positionId = 0;
 	private Integer managerId = 0;
+	private Integer totalDay = 1;
 	private String contactNumber;
 	private String employeeName;
 	private String address;
@@ -22,10 +23,9 @@ public class EmployeeBean {
 	private Date hireDate;
 	private Date startDate;
 	private Date endDate;
-	private Integer totalDay = 1;
+	private Date startFrom;
 	private String descriptionDayOff;
 	private String descriptionWeekEnd;
-	private Date startFrom;
 	private String weekEnd;
 	private String monthYear;
 	private Date mondayDate;

@@ -1,3 +1,4 @@
+<%@page import="prime.constants.Constants"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
@@ -5,9 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-	<meta charset="UTF-8">
-	<title>Prime</title>
-	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+	<!-- CSS -->
 	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
@@ -15,33 +14,105 @@
     <link href="resources/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/datatables/extensions/FixedColumns/css/dataTables.fixedColumns.min.css" rel="stylesheet" type="text/css" />
+	<!-- End of CSS -->
+	
+	<!-- JS -->
+	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+	<script src="resources/plugins/jQueryUI/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+    <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src='resources/plugins/fastclick/fastclick.min.js'></script>
+    <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/datatables/extensions/FixedColumns/js/dataTables.fixedColumns.min.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+		    
+		    //Table Handling
+  		  
+  		  //Do Login Data checking
+  		  $.ajax({ 
+  	          type	  : "POST",
+  	          url	  : "<%=Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]%>",  // Send the login info to this page
+  	          data	  : "task=refreshActivityProgress",
+  	          success : function(msg){
+  	        		$('#table-1').html(msg);
+
+ 	    			var table = $('#table-1').dataTable( {
+ 	    				ordering 		: false,
+ 	    				paging    		: false,
+ 	    				searching 		: false,
+ 	    				info	  		: false,
+ 	    		        scrollY	  		: "250px",
+ 	    		        scrollX	  		: "100%",
+ 	    		       "autoWidth"		: true,
+ 	    		        scrollCollapse	: true
+ 	    		    });
+ 	    		    new $.fn.dataTable.FixedColumns(table, {leftColumns: 2});
+ 	    		   table.columns.adjust().draw();
+  	          },   
+  	       });
+		});
+	
+		var date = new Date();
+    	var d = date.getDate();
+        var month = new Array();
+	    	month[0] = "January";
+	    	month[1] = "February";
+	    	month[2] = "March";
+	    	month[3] = "April";
+	    	month[4] = "May";
+	    	month[5] = "June";
+	    	month[6] = "July";
+	    	month[7] = "August";
+	    	month[8] = "September";
+	    	month[9] = "October";
+	    	month[10] = "November";
+	    	month[11] = "December";
+    	var m = month[date.getMonth()],
+            y = date.getFullYear();
+    	
+    	var month_digit=date.getMonth()+1;
+    	
+    	function insertActivity() {
+    	    var table = document.getElementById("tableProgress");
+    	    var row = table.insertRow(1);
+    	    var cell = new Array();
+    	    for(var i=0; i<=1500;i++){
+    	    	cell[i] = row.insertCell(i);
+    	    }
+    	    cell[0].innerHTML = "Activity 1";
+    	}
+    	
+    	function activityDetail(task,activityId,status){
+    		document.forms[0].task.value = task;
+    		document.forms[0].tmpId.value = activityId;
+    		document.forms[0].tmpValue.value = status;
+    		document.forms[0].submit();
+    	}
+    </script>
+    <!-- End Of JS -->
 </head>
-<body class="skin-blue sidebar-mini" onload="fLoad()">
-	<div class="wrapper">
-		<jsp:include page="/content/Header.jsp"></jsp:include>
-		<div class="content-wrapper">
-			<section class="content-header">
-				<h1>Dashboard <small>Control panel</small>
-				</h1>
-				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-					<li class="active">Dashboard</li>
-				</ol>
-			</section>
-			<section class="content">
-				<div class="row">
+<body class="skin-blue sidebar-mini">
+	<section class="content-header">
+		<h1>Dashboard <small>Control panel</small>
+		</h1>
+		<ol class="breadcrumb">
+			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li class="active">Dashboard</li>
+		</ol>
+	</section>
+	<section class="content">
+		<div class="row">
 					<section class="col-lg-7 connectedSortable">
 						<html:form action="/DashboardUser"> 
 							<html:hidden name="DashboardUserForm" property="task"/>
 							<html:hidden name="DashboardUserForm" property="tmpId"/>
 							<html:hidden name="DashboardUserForm" property="tmpValue"/>
-							<html:hidden name="DashboardUserForm" property="currentDate"/>
 						</html:form>	
 						<div class="box box-primary">
 							<div class="box-header">
@@ -133,187 +204,18 @@
 		                </div>
 		            </section>
 		        </div>
-				<!-- Progress box -->
-                <div class="box box-success">
-                	<div class="box-header">
-	                	<h3 class="box-title">Progress Bar</h3>
-	                	<div class="box-tools pull-right" data-toggle="tooltip">
-	                    	<i class="fa fa-square text-green" title="Start"></i>
-	                   		<i class="fa fa-square text-red" title="Pause"></i>
-		                </div>
-	                	<table>
-               				<tr>
-               					<td>
-               						<html:button property="" value="<"></html:button>
-               						<html:button property="" value=">"></html:button>
-               						<html:button property="" value="today"></html:button>
-               					</td>
-               					<td align="center" width="90%"><h1><div id="day"></div></h1></td>
-               				</tr>
-                  		</table>
-                	</div>
-	               	<!-- <div class="box-body chat" id="chat-box"> -->
-	               		<div align="center" class="box-body chat" id="chat-box">
-	               		<table border="1" style="background-color: #EBEBE6; width: 100%;" >
-	               			 <tr>
-	               				<td style="width:100px">
-	               					<table border="1" style="height: 100%; width: 100%;">
-				               			<tr height="22px">
-				               				<td style="width:100px">&nbsp;</td>
-				               			</tr>
-				               			<logic:iterate id="iterCurr" name="currentListActivity">
-				               			<tr height="39px">
-				               				<td><bean:write name="iterCurr" property="activityName"/></td>
-				               			</tr>
-				               			</logic:iterate>
-				               		</table>
-				               	</td>
-				               	<td>
-				               		<!-- <div class="table-progress">  -->
-				               		<table border="1" style="width: 100%; height: 100%">	
-			               				<tr style="background-color: #CCFFFF;">
-			               					<!-- <td style="width:100px">&nbsp;</td> -->
-			               					<td align="center" style="width:100px;">
-			               						<span class="text">00.00</span>
-			               					</td>
-			               					<td align="center" style="width:100px">01.00</td>
-			               					<td align="center" style="width:100px">02.00</td>
-			               					<td align="center" style="width:100px">03.00</td>
-			               					<td align="center" style="width:100px">04.00</td>
-			               					<td align="center" style="width:100px">05.00</td>
-			               					<td align="center" style="width:100px">06.00</td>
-			               					<td align="center" style="width:100px">07.00</td>
-			               					<td align="center" style="width:100px">08.00</td>
-			               					<td align="center" style="width:100px">09.00</td>
-			               					<td align="center" style="width:100px">10.00</td>
-			               					<td align="center" style="width:100px">11.00</td>
-			               					<td align="center" style="width:100px">12.00</td>
-			               					<td align="center" style="width:100px">13.00</td>
-			               					<td align="center" style="width:100px">14.00</td>
-			               					<td align="center" style="width:100px">15.00</td>
-			               					<td align="center" style="width:100px">16.00</td>
-			               					<td align="center" style="width:100px">17.00</td>
-			               					<td align="center" style="width:100px">18.00</td>
-			               					<td align="center" style="width:100px">19.00</td>
-			               					<td align="center" style="width:100px">20.00</td>
-			               					<td align="center" style="width:100px">21.00</td>
-			               					<td align="center" style="width:100px">22.00</td>
-			               					<td align="center" style="width:100px">23.00</td>
-			               					<td align="center" style="width:100px">24.00</td>
-			               				</tr>
-			               				<%-- <logic:iterate id="iter" name="currentListActivity"> --%>
-			               				<!-- cth pkl 08:00 - 09.35 dan 10.35 - 12.00 -->
-			               				<!-- <tr>
-			               					<td colspan=25>
-			               						<div class="progress progress-m active">
-								                  <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="margin-left:32%;width:6.3%"/>
-								                </div>
-								                <div class="progress progress-m active">
-								                  <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" style="margin-left:6.9%;width:9.8%"/>
-			               						</div>
-			               					</td>
-			               				</tr> -->
-			               				<logic:iterate id="iterListAct" name="currentListActivity" indexId="idx">
-			               				<tr style="background-color: #FFFFFF">
-			               					<bean:write name="iterListAct" property="activityId"/> 
-			               					<td colspan=25>
-			               						<logic:iterate id="iterTime" name="activityRangeTime2">
-			               							<bean:write name="iterTime" property="activityChangeDate"/> 
-			               						</logic:iterate>
-			               					</td>
-			               				</tr>
-			               				</logic:iterate>
-			               			</table>
-				                    <!-- </div> --><!-- /.table-progress -->
-				               	</td>
-	               			</tr>
-	               		</table>
-	               	</div>	
-	           	</div><!-- /.box (progress box) -->
+		        
+		        <!-- Activity Progress -->
+              <div class="box">
+                <div class="box-header">
+                  <h3 class="box-title">Activity Progress</h3>
+	                <div class="box-body no-padding">
+	                  <table id="table-1" class="cell-border" cellspacing="0" width="100%">
+	                  </table>
+	                </div><!-- /.box-body -->
+	               </div>
+	            </div>
+		        <!-- End of Activity Progress -->
             </section>
-		</div>
-		<jsp:include page="/content/Footer.jsp"></jsp:include>
-	</div>
-
-	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-	
-	<script src="http://code.jquery.com/ui/1.11.2/jquery-ui.min.js" type="text/javascript"></script>
-	
-	<script>
-		$.widget.bridge('uibutton', $.ui.button);
-	</script>
-	<!-- 
-	<script src="http://cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
-	 -->
-	<!-- progress -->
-    <!-- <script src="resources/plugins/jQuery/jQuery-2.1.4.min.js"></script> -->
-    <script src="resources/prime.js"></script>
-    <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <!-- <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js" type="text/javascript"></script> -->
-    <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-    <script src='resources/plugins/fastclick/fastclick.min.js'></script>
-    <script src="resources/dist/js/app.min.js" type="text/javascript"></script>
-    <script src="resources/dist/js/demo.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
-	<!-- progress -->
-	<script src="resources/plugins/morris/morris.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/sparkline/jquery.sparkline.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/jvectormap/jquery-jvectormap-world-mill-en.js" type="text/javascript"></script>
-	<script src="resources/plugins/knob/jquery.knob.js" type="text/javascript"></script>
-	<script src="resources/plugins/daterangepicker/daterangepicker.js" type="text/javascript"></script>
-	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-	<script src="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>111	
-	<script src="resources/dist/js/pages/dashboard.js" type="text/javascript"></script>
-	<script type="text/javascript">
-		var date = new Date();
-    	var d = date.getDate();
-        var month = new Array();
-	    	month[0] = "January";
-	    	month[1] = "February";
-	    	month[2] = "March";
-	    	month[3] = "April";
-	    	month[4] = "May";
-	    	month[5] = "June";
-	    	month[6] = "July";
-	    	month[7] = "August";
-	    	month[8] = "September";
-	    	month[9] = "October";
-	    	month[10] = "November";
-	    	month[11] = "December";
-    	var m = month[date.getMonth()],
-            y = date.getFullYear();
-    	
-    	var month_digit=date.getMonth()+1;
-    	function fLoad(){
-    		document.getElementById("day").innerHTML=d+"-"+m+"-"+y;
-    		document.forms[0].currentDate.value = d+"/"+month_digit+"/"+y;
-    		document.forms[0].task.value = "TEST"
-    		//alert(d+"/"+month_digit+"/"+y)1
-    	}
-    	
-    	function insertActivity() {
-    	    var table = document.getElementById("tableProgress");
-    	    var row = table.insertRow(1);
-    	    var cell = new Array();
-    	    for(var i=0; i<=1500;i++){
-    	    	cell[i] = row.insertCell(i);
-    	    }
-    	    cell[0].innerHTML = "Activity 1";
-    	    /* document.getElementById("pause").style.display="inline"
-    	    document.getElementById("start").style.display="none" */
-    	}
-    	
-    	function activityDetail(task,activityId,status){
-    		document.forms[0].task.value = task;
-    		document.forms[0].tmpId.value = activityId;
-    		document.forms[0].tmpValue.value = status;
-    		/* document.getElementById("pause").style.display="inline"
-        	document.getElementById("start").style.display="none"
-            document.getElementById("trash").style.display="none" */
-    		document.forms[0].submit();
-    	}
-    </script>
 </body>
 </html>

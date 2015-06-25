@@ -139,10 +139,10 @@
           events: [
 
                    
-<% List<String> arr = (ArrayList) request.getAttribute("teslist");
-for(int a = 0; a<arr.size();a++)
+<% List<String> arrHoliday = (ArrayList) request.getAttribute("teslist");
+for(int a = 0; a<arrHoliday.size();a++)
 {
-	out.println(arr.get(a)); 
+	out.println(arrHoliday.get(a)); 
 	
 }
 %>

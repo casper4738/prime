@@ -38,4 +38,6 @@ public interface ProjectManager {
 	
 	public Map getRoleName (Integer employeeId, Integer projectId)
 			throws SQLException;
+	
+	public ProjectBean getDataProjectMemberByProjectMemberId(Integer projectMemberId) throws SQLException;
 }

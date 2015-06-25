@@ -145,7 +145,11 @@ public class ProjectManagerImpl implements ProjectManager {
 		return hMap; 
 	}
 	
-	
+
+	@Override
+	public ProjectBean getDataProjectMemberByProjectMemberId(Integer projectMemberId) throws SQLException {
+		return (ProjectBean) mapper.queryForObject("project.getDataProjectMemberByProjectMemberId", projectMemberId); 
+	}
 	
 	
 	
