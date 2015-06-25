@@ -21,18 +21,7 @@ public class LogAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		LogForm pForm = (LogForm) form;
-		LogManager tmpManager = new LogManagerImpl();
-
-		// int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),
-		// pForm.getSearch());
-		// List<DivisionBean> list =
-		// tmpManager.getListByColumn(pForm.getColumnSearch(),
-		// pForm.getSearch(),
-		// PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(),
-		// countRows),
-		// PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
-		// countRows));
-		
+		LogManager tmpManager = new LogManagerImpl();		
 
 		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),
 				pForm.getSearch());

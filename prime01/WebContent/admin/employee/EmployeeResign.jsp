@@ -36,7 +36,7 @@
 			var tmpTask ="modalTable";
 			var tmpTable ="employeeHead";
 			var tmpParam =document.forms[0].employeeId.value;
-			alert(tmpParam)
+			
 			//##1.Accessing Prime Method For Modal Showing
 			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeResign&param4="+tmpParam , $('#result'));
 		}

@@ -31,13 +31,23 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		try {
 			mapper.startTransaction();
 			mapper.insert("employee.insertResign", e);
-			mapper.update("employee.updateStatusUser", e);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
 		}
 	}
-
+	
+	public void updateStatusUser(Integer employeeId) throws SQLException {
+		try {
+			mapper.startTransaction();
+			System.out.println(employeeId+ "  EMPLOYEEID");
+			mapper.update("employee.updateStatusUser", employeeId);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
 	public void insertWeekend(EmployeeBean e) throws SQLException {
 		try {
 			mapper.startTransaction();
@@ -61,17 +71,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	
 	public void update(EmployeeBean e) throws SQLException {
 		try {
-			System.out.println(e.getEmployeeId()+"--EmpID");
-			System.out.println(e.getEmployeeName()+"--Name");
-			System.out.println(e.getAddress()+"--Address");
-			System.out.println(e.getContactNumber()+"--Numb");
-			System.out.println(e.getEmail()+"--Email");
-			System.out.println(e.getBirthdate()+"--Birth");
-			System.out.println(e.getGender()+"--Gender");
-			System.out.println(e.getHireDate()+"--HireDate");
-			System.out.println(e.getDivisionId()+"--Division");
-			System.out.println(e.getPositionId()+"--Position");
-			System.out.println(e.getManagerId()+"--Manager");
 			mapper.startTransaction();
 			mapper.update("employee.update", e);
 			mapper.commitTransaction();
@@ -79,7 +78,30 @@ public class EmployeeManagerImpl implements EmployeeManager {
 			mapper.endTransaction();
 		}
 	}
+	
+	public void updatePositionDivision(EmployeeBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.update("employee.updatePositionDivision", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
 
+	public void updateHead(Integer forCondition, Integer newHead) throws SQLException {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("forCondition", forCondition);
+			map.put("newHead", newHead);
+			mapper.startTransaction();
+			mapper.update("employee.updateHead", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
 	public void delete(Integer id) throws SQLException {
 		// TODO Auto-generated method stub
 		try {
@@ -165,4 +187,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		map.put("divisionId", divisionId);
 		return (Integer) mapper.queryForObject("employee.getCountByColumnAndDivision", map);
 	}
+
+	
 }

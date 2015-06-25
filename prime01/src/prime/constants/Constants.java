@@ -32,13 +32,14 @@ public interface Constants {
 		static final String DODAYOFF	= "t27";
 		static final String GOTOWEEKEND	= "t25";
 		static final String DOWEEKEND	= "t28";
-		static final String DORESET 	= "t33";
-		static final String DOLOCK 		= "t34";
-		static final String DOUNLOCK 	= "t35";
 		static final String GOTOEDITWEEKEND	= "t29";
 		static final String DOEDITWEEKEND	= "t30";
 		static final String GOTOEDITDAYOFF	= "t31";
 		static final String DOEDITDAYOFF	= "t32";
+		static final String DORESET 		= "t33";
+		static final String DOLOCK 			= "t34";
+		static final String GOTOEDITPOSITION 	= "t36";
+		static final String DOEDITPOSITION 		= "t37";
 		
 		interface Project {
 			final String GOTOPROJECTDETAIL	= "p01";
@@ -185,8 +186,6 @@ public interface Constants {
 	static interface UserStatus {
 		int LOCKED = 0;
 		int OK     = 1;
-		int WITHLOCK = 2;
-		int WITHABORT = 3;
 	}
 	
 	//---4.Standard Audit Trails / Log Table Conversion			

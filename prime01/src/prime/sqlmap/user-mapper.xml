@@ -14,7 +14,8 @@
 		SYSTEM_LEVEL AS sysLevel,
 		PASSWORD AS password,
 		STATUS_USER AS statusUser,
-		EMP.EMPLOYEE_NAME AS employeeName
+		EMP.EMPLOYEE_NAME AS employeeName,
+		ACTION_DATE AS changeDate
 		FROM USERS US
 		JOIN EMPLOYEES EMP ON US.EMPLOYEE_ID = EMP.EMPLOYEE_ID
 		WHERE US.USERNAME=#username#
@@ -34,8 +35,20 @@
 	
 	<update id="lock" parameterClass="prime.admin.user.UserBean">
 		 UPDATE USERS SET
-		 STATUS_USER = '2'
+		 STATUS_USER = '0'
 		 WHERE USERNAME = #userName#
+	</update>
+	
+	<update id="unlock" parameterClass="prime.admin.user.UserBean">
+		 UPDATE USERS SET
+		 STATUS_USER = '1'
+		 WHERE USERNAME = #userName#
+	</update>
+	
+	<update id="changeActionDate" parameterClass="prime.admin.user.UserBean">
+		UPDATE USERS SET
+		ACTION_DATE = (SYSDATE + (1/(24 * 60)))
+		WHERE USERNAME = #userName#
 	</update>
 	
 	<select id="getListByColumn" resultClass="prime.admin.user.UserBean" parameterClass="java.util.Map">
@@ -44,6 +57,7 @@
 		SYSTEM_LEVEL AS sysLevel,
 		US.EMPLOYEE_ID AS employeeId,
 		EMP.EMPLOYEE_NAME AS employeeName,
+		ACTION_DATE AS changeDate,
 		STATUS_USER AS statusUser
 		FROM USERS US
 		JOIN EMPLOYEES EMP ON US.EMPLOYEE_ID = EMP.EMPLOYEE_ID

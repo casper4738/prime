@@ -158,7 +158,6 @@ public class ProjectAction extends Action {
 			tmpProjectManager.insertMember(pForm.getProjectBean());
 			return mapping.findForward("forward");
 		}
-		
 		int countRows  = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		List<ProjectBean> list = tmpProjectManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
