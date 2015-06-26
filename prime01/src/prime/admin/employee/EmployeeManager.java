@@ -16,7 +16,7 @@ public interface EmployeeManager {
 	
 	public void update(EmployeeBean e) throws SQLException;
 	
-	public void updateWeekend(EmployeeBean e) throws SQLException;
+	/*public void updateWeekend(EmployeeBean e) throws SQLException;*/
 	
 	public void updatePositionDivision(EmployeeBean e) throws SQLException;
 	
@@ -25,6 +25,10 @@ public interface EmployeeManager {
 	public void updateHead(Integer forCondition, Integer newHead) throws SQLException;
 	
 	public void delete(Integer id) throws SQLException;
+	
+	public void deleteDayOff(Integer id, String startDate) throws SQLException;
+	
+	public void deleteWeekEnd(Integer id, String startFrom) throws SQLException;
 	
 	public EmployeeBean getEmployeeById(Integer id) throws SQLException;
 	

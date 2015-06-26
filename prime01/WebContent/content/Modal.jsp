@@ -16,7 +16,7 @@
 	<!-- End CSS -->
 	
 	<!-- JS -->
-	<script src="resources/prime.js"></script>
+	<!-- <script src="resources/prime.js"></script> -->
 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
@@ -36,14 +36,17 @@
 	    } );
 		
 		<!-- Method Specified For Modal Handling-->
-		function modalFlyToPage(task) {
-			var tmpForm = document.forms[0];
-			tmpForm.task.value = task;
+		function modalFlyToPage(pColumSearch) {
+			var tmpForm = document.getElementById("idForm");
+			
+			if(pColumSearch=="All"){
+				tmpForm.columnSearch.value = pColumSearch;
+			}
 			modalLoadHandler(serialize(tmpForm));
 		}
 		
 		function modalPage(page) {
-			var tmpForm = document.forms[0]; 
+			var tmpForm = document.getElementById("idForm");
 			if(page == -1) {
 				tmpForm.goToPage.value = document.getElementById('page').value;
 			} else {
@@ -52,7 +55,14 @@
 			modalLoadHandler(serialize(tmpForm));
 		}
 		
+		function modalChange(value) {
+			var tmpForm = document.getElementById("idForm");
+			tmpForm.showInPage.value = value;
+			modalLoadHandler(serialize(tmpForm));
+		}
+		
 		function modalSelectHandler(retValue,retForm){
+			alert(retValue+"--"+retForm)
 			modalSubmitReturnValue(retValue,retForm);
 		}
 	</script>
@@ -62,9 +72,9 @@
 	<section class="content">
 		<div class="row">
 		    <!-- Temporary Form -->
-		    <html:form action="/Modal">
-		      <html:hidden name="ModalForm" property="task"/>
-		    </html:form>
+		    
+		      
+		    
 		    <!-- End Of Temporary Form -->
 		    
 			<div class="col-xs-12"><div class="box">
@@ -72,19 +82,25 @@
 				<!-- Search Handler Tag -->
 				<div class="show-in-page">
 					Show per page
-					<html:select property="showInPage" name="ModalForm">
+					<html:select property="showInPage" name="ModalForm" onchange="modalChange(this.value)">
 						<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 					</html:select>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('<%=Constants.Task.DOSEARCH%>')" value='Refresh'/>
-					
+					<%-- <input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('<%=Constants.Task.DOSEARCH%>')" value='Refresh'/>--%>
 				</div>
+				<html:form action="/Modal" styleId="idForm">
 				<div class="search-table">
+					<html:hidden name="ModalForm" property="task"/> 
+				    <html:hidden name="ModalForm" property="param1"/>
+				    <html:hidden name="ModalForm" property="param2"/>
+				    <html:hidden name="ModalForm" property="param3"/>
+				    <html:hidden name="ModalForm" property="param4"/>
+				    <html:hidden name="ModalForm" property="showInPage"/>
 					<html:select name="ModalForm" property="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
 					<html:text name="ModalForm" property="search"/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
+					<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage()" value='Search'/>
+					<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('All')" value='Show All'/>
 				</div>
 				<!-- End Of Search Handler -->
 		
@@ -100,22 +116,20 @@
 			                </tr>
 			            </thead>
 			            <tbody>
-			               	
-			               	   <!-- If No Data -->
-				               <!-- If Data Exists -->
-				               <logic:notEmpty name="listTableData">
-									<logic:iterate id="rowData" name="listTableData" indexId="dataIdx">
-					                	<tr>
-											<logic:iterate id="obj" name="rowData">
-					                			<td>${obj}</td>
-					                		</logic:iterate>
-						                        <td align="center">
-													<input type="button" class="btn bg-olive" style="height:32px" onclick="modalSelectHandler('${rowData}','${modalForm}')" value='Select'/>
-						                        </td>
-							             </tr>
-						             </logic:iterate>
-								</logic:notEmpty>
-			               </tbody>
+		               	   <!-- If Data Exists -->
+			               <logic:notEmpty name="listTableData">
+								<logic:iterate id="rowData" name="listTableData" indexId="dataIdx">
+				                	<tr>
+										<logic:iterate id="obj" name="rowData">
+				                			<td>${obj}</td>
+				                		</logic:iterate>
+					                        <td align="center">
+												<input type="button" class="btn bg-olive" style="height:32px" onclick="modalSelectHandler('${rowData}','${modalForm}')" value='Select'/>
+					                        </td>
+						             </tr>
+					             </logic:iterate>
+							</logic:notEmpty>
+		               </tbody>
 				   </table>
 			    </div>
 			    <!-- End Of Table List -->
@@ -143,9 +157,10 @@
 					Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
 				</div>
 				<!-- End Of Paging Number Handler Tag -->
+				</html:form>
         	</div>
        	</div>
-	      </div>
+	    </div>
 	</section>
 </body>
 </html>

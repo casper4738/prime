@@ -49,11 +49,21 @@
 		WHERE EMPLOYEE_ID=#employeeId# AND START_FROM = #startFrom#
 	</update>
 	
+	<delete id="deleteWeekEnd" parameterClass="java.util.Map">
+		DELETE FROM WEEKEND_HOLIDAYS
+		WHERE EMPLOYEE_ID=#id# AND TO_CHAR(START_FROM, 'yyyy-mm-dd') = #startFrom#
+	</delete>
+	
 	<insert id="insertDayoff" parameterClass="prime.admin.employee.EmployeeBean">
 		INSERT INTO DAY_OFFS
 		(EMPLOYEE_ID , DAYOFF_START_DATE, DAYOFF_END_DATE, DAYOFF_NOTE) VALUES 
 		(#employeeId#, #startDate#, #endDate#,#descriptionDayOff#)
 	</insert>
+	
+	<delete id="deleteDayOff" parameterClass="java.util.Map">
+		DELETE FROM DAY_OFFS
+		WHERE EMPLOYEE_ID=#id# AND TO_CHAR(DAYOFF_START_DATE, 'yyyy-mm-dd') = #startDate#
+	</delete>
 	
 	<update id="update" parameterClass="prime.admin.employee.EmployeeBean">
 		UPDATE EMPLOYEES SET
@@ -181,8 +191,26 @@
 		)RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
+	        	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(EMP.EMPLOYEE_ID) LIKE UPPER(#value#)
+				</isEqual>
 		       	<isEqual property="columnSearch" compareValue="NAME">
 			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="GENDER">
+			          UPPER(EMP.GENDER) LIKE #value#
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="EMAIL">
+			          UPPER(EMP.EMAIL) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="DIVISION">
+			          UPPER(DIVISION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="POSITION">
+			          UPPER(POSITION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="MANAGER">
+			          UPPER(MANAGER.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
@@ -192,16 +220,156 @@
 	
 	<select id="getCountByColumn" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
-		FROM EMPLOYEES 
+		FROM EMPLOYEES EMP 
+		LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
+		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
+		LEFT JOIN (
+		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME FROM EMPLOYEES E
+		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
+		LEFT JOIN (	
+		    SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
+		)RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
+		       	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(EMP.EMPLOYEE_ID) LIKE UPPER(#value#)
+				</isEqual>
 		       	<isEqual property="columnSearch" compareValue="NAME">
-			          UPPER(EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="GENDER">
+			          UPPER(GENDER) LIKE UPPER(#value#)
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="EMAIL">
+			          UPPER(EMAIL) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="DIVISION">
+			          UPPER(DIVISION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="POSITION">
+			          UPPER(POSITION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="MANAGER">
+			          UPPER(MANAGER.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+	        </isNotNull>
+	    </dynamic>
+	</select>
+	
+	
+	
+	<select id="getCountByColumnEmployeeHead" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1) 
+		FROM EMPLOYEES EMP
+		LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
+		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
+		LEFT JOIN (
+		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME FROM EMPLOYEES E
+		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
+		WHERE EMP.EMPLOYEE_ID NOT IN (SELECT EMPLOYEE_ID FROM RESIGN_EMPLOYEES)
+		<dynamic prepend="AND">
+	        <isEqual property="paramCondition" compareValue="employeeAdd">
+				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel#
+			</isEqual>
+			<isEqual property="paramCondition" compareValue="employeeEditPosDiv">
+				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId# 
+			</isEqual>
+			<isEqual property="paramCondition" compareValue="employeeResign">
+				POS.POSITION_LEVEL <![CDATA[ <= ]]> #positionLevel#  AND EMP.EMPLOYEE_ID != #employeeId#
+			</isEqual>
+		</dynamic>
+	    <dynamic prepend="AND">
+	        <isNotNull property="columnSearch">
+		       	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(EMP.EMPLOYEE_ID) LIKE UPPER(#value#)
+				</isEqual>
+		       	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="GENDER">
+			          UPPER(EMP.GENDER) LIKE #value#
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="EMAIL">
+			          UPPER(EMP.EMAIL) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="DIVISION">
+			          UPPER(DIVISION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="POSITION">
+			          UPPER(POSITION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="MANAGER">
+			          UPPER(MANAGER.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
 	</select>
 	
+	<select id="getListEmployeeHead" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT 
+		    EMP.EMPLOYEE_ID AS employeeId, 
+		    EMP.EMPLOYEE_NAME AS employeeName,
+		    GENDER AS gender,
+		    ADDRESS AS address,
+		    BIRTHDATE AS birthdate,
+		    HIRE_DATE AS hireDate,
+		    CONTACT_NUMBER AS contactNumber,
+		    EMAIL AS email,
+		    DIVISION_NAME AS divisionName,
+		    POSITION_NAME AS positionName,
+		    MANAGER.EMPLOYEE_NAME AS managerName,
+		    MANAGER.DIVISION_ID AS divisionId
+		FROM EMPLOYEES EMP 
+		LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
+		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
+		LEFT JOIN (
+		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME, MGRDIV.DIVISION_ID AS DIVISION_ID FROM EMPLOYEES E
+		    LEFT JOIN DIVISIONS MGRDIV ON MGRDIV.DIVISION_ID = E.DIVISION_ID
+		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
+		WHERE EMP.EMPLOYEE_ID NOT IN (SELECT EMPLOYEE_ID FROM RESIGN_EMPLOYEES)
+		<dynamic prepend="AND">
+	        <isEqual property="paramCondition" compareValue="employeeAdd">
+				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel#
+			</isEqual>
+			<isEqual property="paramCondition" compareValue="employeeEditPosDiv">
+				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId# 
+			</isEqual>
+			<isEqual property="paramCondition" compareValue="employeeResign">
+				POS.POSITION_LEVEL <![CDATA[ <= ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId# 
+			</isEqual>
+		</dynamic>
+	    <dynamic prepend="AND">
+	        <isNotNull property="columnSearch">
+		       	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(EMP.EMPLOYEE_ID) LIKE UPPER(#value#)
+				</isEqual>
+		       	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="GENDER">
+			          UPPER(EMP.GENDER) LIKE #value#
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="EMAIL">
+			          UPPER(EMP.EMAIL) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="DIVISION">
+			          UPPER(DIVISION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="POSITION">
+			          UPPER(POSITION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="MANAGER">
+			          UPPER(MANAGER.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	    ORDER BY EMP.EMPLOYEE_ID ASC) page 
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
+	
+	
+	<!-- NOT USE NOW (FM CREATE)
 	<select id="getListByColumnAndDivision" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT 
@@ -214,7 +382,7 @@
         EMAIL AS email,
         DIVISION_NAME AS divisionName,
         POSITION_NAME AS positionName,
-        <!-- EMPLOYEE_LEVEL AS employeeLevel, -->
+        EMPLOYEE_LEVEL AS employeeLevel,
         MANAGER.EMPLOYEE_NAME AS managerName
         FROM EMPLOYEES EMP 
         INNER JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
@@ -246,74 +414,5 @@
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
-	</select>
-	
-	<select id="getCountByColumnEmployeeHead" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT COUNT(1) 
-		FROM EMPLOYEES EMP
-		JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
-		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-		LEFT JOIN (
-		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME, MGRDIV.DIVISION_ID AS DIVISION_ID FROM EMPLOYEES E
-		    JOIN DIVISIONS MGRDIV ON MGRDIV.DIVISION_ID = E.DIVISION_ID
-		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-		WHERE 1=1
-		<dynamic prepend="AND">
-	        <isEqual property="paramCondition" compareValue="employeeAdd">
-				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId#
-			</isEqual>
-			<isEqual property="paramCondition" compareValue="employeeResign">
-				POS.POSITION_LEVEL <![CDATA[ <= ]]> #positionLevel#  AND EMP.EMPLOYEE_ID != #employeeId#
-			</isEqual>
-		</dynamic>
-	    <dynamic prepend="AND">
-	        <isNotNull property="columnSearch">
-		       	<isEqual property="columnSearch" compareValue="NAME">
-			          UPPER(EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
-				</isEqual> 
-	        </isNotNull>
-	    </dynamic>
-	</select>
-	
-	<select id="getListEmployeeHead" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
-		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
-		(SELECT 
-		    EMP.EMPLOYEE_ID AS employeeId, 
-		    EMP.EMPLOYEE_NAME AS employeeName,
-		    GENDER AS gender,
-		    ADDRESS AS address,
-		    BIRTHDATE AS birthdate,
-		    HIRE_DATE AS hireDate,
-		    CONTACT_NUMBER AS contactNumber,
-		    EMAIL AS email,
-		    DIVISION_NAME AS divisionName,
-		    POSITION_NAME AS positionName,
-		    MANAGER.EMPLOYEE_NAME AS managerName,
-		    MANAGER.DIVISION_ID AS divisionId
-		FROM EMPLOYEES EMP 
-		JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
-		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-		LEFT JOIN (
-		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME, MGRDIV.DIVISION_ID AS DIVISION_ID FROM EMPLOYEES E
-		    JOIN DIVISIONS MGRDIV ON MGRDIV.DIVISION_ID = E.DIVISION_ID
-		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-		WHERE 1=1
-		<dynamic prepend="AND">
-	        <isEqual property="paramCondition" compareValue="employeeAdd">
-				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId#
-			</isEqual>
-			<isEqual property="paramCondition" compareValue="employeeResign">
-				POS.POSITION_LEVEL <![CDATA[ <= ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId# 
-			</isEqual>
-		</dynamic>
-	    <dynamic prepend="AND">
-	        <isNotNull property="columnSearch">
-		       	<isEqual property="columnSearch" compareValue="NAME">
-			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
-				</isEqual> 
-	        </isNotNull>
-	    </dynamic>
-	    ORDER BY EMP.EMPLOYEE_ID ASC) page 
-	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
-	</select>
+	</select> -->
 </sqlMap>

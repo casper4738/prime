@@ -39,13 +39,11 @@
 			var tmpTask ="modalTable";
 			var tmpTable ="employeeHead";
 			var tmpParam =document.forms[0].employeeId.value;
-			alert("AA"+ pParam)
+			
 			//##1.Accessing Prime Method For Modal Showing
 			if(pParam=='head'){
-				modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeAdd&param4="+tmpParam, $('#result'));
+				modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeEditPosDiv&param4="+tmpParam, $('#result'));
 			}else if(pParam=='substituteHead'){
-				alert("BB")
-				alert(tmpParam)
 				modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeResign&param4="+tmpParam, $('#result'));
 			}
 		}
@@ -77,12 +75,12 @@
 				<div class="box-body">
                  	<html:form action="/EmployeeAdmin">
                  		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOEDITPOSITION%>"/>
-                 		<html:text name="EmployeeAdminForm" property="employeeBean.divisionId" />
+                 		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionName" />
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
-			            <html:text name="EmployeeAdminForm" property="employeeBean.managerId" />
-                 		<html:text name="EmployeeAdminForm" property="managerId"/>
-                 		<html:text name="EmployeeAdminForm" property="employeeId"/>
+			            <html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
+                 		<html:hidden name="EmployeeAdminForm" property="managerId"/>
+                 		<html:hidden name="EmployeeAdminForm" property="employeeId"/>
                  		<html:hidden name="EmployeeAdminForm" property="substituteHeadId" />
                  		<table class="form-input" align="center" style="width: 500px;">
                  			<tr>

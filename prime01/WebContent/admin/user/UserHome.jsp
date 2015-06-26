@@ -12,9 +12,15 @@
 	<!-- End of CSS -->
 	
 	<!-- JS -->
+	<script src="resources/prime.js"></script>
+	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
+	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
+	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	$('#table-1').dataTable( {
 	   paging    : false,
@@ -167,13 +173,6 @@
 		        </div></div>
 		        
 		        </div>
-			</section>
-			<script src="resources/prime.js"></script>
-			<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-			<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-			<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-			<script src="resources/plugins/fastclick/fastclick.min.js"></script>
-			<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
-			<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+			</section>			
 </body>
 </html>

@@ -1,7 +1,5 @@
 package prime.admin.employee;
 
-import java.lang.reflect.Array;
-import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
@@ -37,24 +35,14 @@ public class EmployeeAction extends Action {
 		DivisionManager tmpDivisionManager = new DivisionManagerImpl();
 		PositionManager tmpPositionManager = new PositionManagerImpl();
 		
-		if(Constants.Task.GOTOMANAGER.equals(pForm.getTask())) {
-			request.setAttribute("listDivision", tmpDivisionManager.getListAll());
-			int countRows  = manager.getCountByColumnAndDivision(pForm.getColumnSearch(), pForm.getSearch(), pForm.getEmployeeBean().getDivisionId());
-			
-			List<EmployeeBean> list = manager.getListByColumnAndDivision(pForm.getColumnSearch(), pForm.getSearch(), pForm.getEmployeeBean().getDivisionId(), 
-																		 PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
-																		 PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
-			request.setAttribute("listEmployee", list);
-			request.setAttribute("listSearchColumn", Constants.Search.POSITION_SEARCHCOLUMNS);
-			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
-			return mapping.findForward("choose_manager");
-		} else if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
+		System.out.println("Task = " + pForm.getTask());
+		
+		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
 			request.setAttribute("listDivision", tmpDivisionManager.getListAll());
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
-			System.out.println(pForm.getTmpId()+" Employee ID "+ tmpEmployee.getManagerId());
 			if(tmpEmployee.getManagerId() != null) {
 				EmployeeBean tmpManager = manager.getEmployeeById(tmpEmployee.getManagerId());
 			}
@@ -65,7 +53,6 @@ public class EmployeeAction extends Action {
 			return mapping.findForward("edit");
 		} else if(Constants.Task.GOTORESIGN.equals(pForm.getTask())) {
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
-			System.out.println(pForm.getTmpId()+" Employee ID MASUK RESIGN");
 			pForm.setEmployeeBean(tmpEmployee);
 			pForm.setEmployeeId(pForm.getTmpId());
 			pForm.getEmployeeBean().setResignDate(new java.sql.Date(new java.util.Date().getTime()));
@@ -80,13 +67,10 @@ public class EmployeeAction extends Action {
 			return mapping.findForward("view");
 		} else if(Constants.Task.GOTODAYOFF.equals(pForm.getTask())) {
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
-			System.out.println(pForm.getTmpId()+" Employee ID MASUK DAYOFF");
 			pForm.setEmployeeBean(tmpEmployee);
-			request.setAttribute("listPosition", tmpPositionManager.getListAll());
 			return mapping.findForward("dayoff");
 		} else if(Constants.Task.GOTOWEEKEND.equals(pForm.getTask())) {
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
-			System.out.println(pForm.getTmpId()+" Employee ID MASUK WEEKEND");
 			pForm.setEmployeeBean(tmpEmployee);
 			Map<Integer, String> monthsList = new HashMap<Integer, String>();
 		    String[] months = new DateFormatSymbols().getMonths();
@@ -111,8 +95,6 @@ public class EmployeeAction extends Action {
 		} else if(Constants.Task.DORESIGN.equals(pForm.getTask())) {
 			manager.insertResign(pForm.getEmployeeBean());
 			// FOR UPDATE HEAD ID WHERE OLD HEAD ID WAS RESIGN 
-			System.out.println(pForm.getEmployeeBean().getEmployeeId() + "EmployeeId");
-			System.out.println(pForm.getSubstituteHeadId() + "SubstituteHead");
 			manager.updateHead(pForm.getEmployeeBean().getEmployeeId(),pForm.getSubstituteHeadId());
 			
 			//FOR UPDATE STATUS USER
@@ -139,30 +121,19 @@ public class EmployeeAction extends Action {
 		} else if(Constants.Task.GOTOEDITWEEKEND.equals(pForm.getTask())) {
 			EmployeeBean tmpEmployee = manager.getEmployeeWeekendByIdAndStartFrom(pForm.getTmpId(),pForm.getTmpString());
 			pForm.setEmployeeBean(tmpEmployee);
-			
-			/*String res = pForm.getEmployeeBean().getWeekEnd();
-			String[] resSplit = res.split(",");
-			System.out.println(resSplit.length + "LENGTH");
-			
-			for(int i = 0;i<resSplit.length;i++){
-				pForm.setWeekEnd(resSplit[i]);
-			}*/
-			//pForm.setWeekEnd("Monday");
-			
 			return mapping.findForward("weekendEdit");
 		} else if(Constants.Task.DOEDITWEEKEND.equals(pForm.getTask())) {
-			System.out.println(pForm.getEmployeeBean().getDescriptionWeekEnd()+" DESC WEEK");
-			System.out.println(pForm.getWeekEnds()+" WEKEND");
-			pForm.getEmployeeBean().setWeekEnd(pForm.getWeekEnds());
-			manager.updateWeekend(pForm.getEmployeeBean());
+			//WAKTU EDIT
+			/*pForm.getEmployeeBean().setWeekEnd(pForm.getWeekEnds());
+			manager.updateWeekend(pForm.getEmployeeBean());*/ 
+			//WAKTU DELETE
+			manager.deleteWeekEnd(pForm.getTmpId(),pForm.getTmpString());
 			return mapping.findForward("forward");
 		}  else if(Constants.Task.DOEDITDAYOFF.equals(pForm.getTask())) {
-			//pForm.getEmployeeBean().set;
-			manager.updateWeekend(pForm.getEmployeeBean());
+			manager.deleteDayOff(pForm.getTmpId(),pForm.getTmpString());
+			return mapping.findForward("forward");
 		} else if(Constants.Task.GOTOEDITPOSITION.equals(pForm.getTask())) {
-			System.out.println("Masuk EditPosDiv"+ pForm.getTmpId());
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
-			System.out.println(pForm.getTmpId()+" Employee ID "+ tmpEmployee.getManagerId());
 			if(tmpEmployee.getManagerId() != null) {
 				EmployeeBean tmpManager = manager.getEmployeeById(tmpEmployee.getManagerId());
 			}
@@ -188,6 +159,7 @@ public class EmployeeAction extends Action {
 		} 
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+		
 		List<EmployeeBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
 														  PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 														  PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
@@ -195,7 +167,7 @@ public class EmployeeAction extends Action {
 		//##1.Attribute For Table Paging
 		request.setAttribute("listEmployee", list);
 		request.setAttribute("listSearchColumn", Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
-		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+		//request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 		setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		
 		return mapping.findForward("success");

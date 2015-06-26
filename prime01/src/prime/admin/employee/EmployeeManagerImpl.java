@@ -40,7 +40,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	public void updateStatusUser(Integer employeeId) throws SQLException {
 		try {
 			mapper.startTransaction();
-			System.out.println(employeeId+ "  EMPLOYEEID");
 			mapper.update("employee.updateStatusUser", employeeId);
 			mapper.commitTransaction();
 		} finally {
@@ -60,7 +59,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	
 	public void insertDayoff(EmployeeBean e) throws SQLException {
 		try {
-			System.out.println("CEK");
 			mapper.startTransaction();
 			mapper.insert("employee.insertDayoff", e);
 			mapper.commitTransaction();
@@ -81,8 +79,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	
 	public void updatePositionDivision(EmployeeBean e) throws SQLException {
 		try {
-			System.out.println(e.getManagerId()+" ++");
-			System.out.println(e.getDivisionId()+" ++");
 			mapper.startTransaction();
 			mapper.update("employee.updatePositionDivision", e);
 			mapper.commitTransaction();
@@ -201,7 +197,7 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	}
 
 	@Override
-	public void updateWeekend(EmployeeBean e) throws SQLException {
+	/*public void updateWeekend(EmployeeBean e) throws SQLException {
 		// TODO Auto-generated method stub
 		try {
 			System.out.println(e.getStartFrom()+"--");
@@ -211,7 +207,33 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		} finally {
 			mapper.endTransaction();
 		}
-	}
+	}*/
 
+	public void deleteDayOff(Integer id, String startDate) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			mapper.startTransaction();
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			map.put("startDate", startDate);
+			mapper.delete("employee.deleteDayOff", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
 	
+	public void deleteWeekEnd(Integer id, String startFrom) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			mapper.startTransaction();
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			map.put("startFrom", startFrom);
+			mapper.delete("employee.deleteWeekEnd", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
 }

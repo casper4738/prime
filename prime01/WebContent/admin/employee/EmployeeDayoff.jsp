@@ -48,7 +48,7 @@
 		<section class="content">
 		<div class="row">
 			<div class="col-xs-12"><div class="box">
-				<div class="box-header"><h3 class="box-title">Data Manage Employee</h3></div>
+				<div class="box-header"><h3 class="box-title">Data Manage Employee Day Off</h3></div>
 				<div class="box-body">
                  	<html:form action="/EmployeeAdmin">
                  		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DODAYOFF%>"/>
@@ -101,7 +101,7 @@
                  			<tr>
                  				<td colspan="3" align="center">
                  					<html:button property="" value="Save" styleClass="btn btn-default" onclick="dosubmit()"/>
-                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('view')"/>
+                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('t10')"/>
                  				</td>
                  			</tr>
 					</table>

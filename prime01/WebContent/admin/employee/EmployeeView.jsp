@@ -57,7 +57,7 @@
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
-		function flyToEditDeleteDayOff(task, valueId, valueString, confirmMessage) {
+		function flyToDelete(task, valueId, valueString, confirmMessage) {
 			var tmpForm = document.forms[0]; 
 			if(confirmMessage != null){
 				if(!confirm(confirmMessage))	
@@ -236,7 +236,7 @@
 							                				java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
 					                					if(date.compareTo(startDate) < 0) {
 					                				%>
-					                					<input type="button" value="Del" styleClass="btn btn-default" onclick="flyToEditDeleteDayOff('<%=Constants.Task.DOEDITDAYOFF%>', <bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>, '<bean:write name="iter" property="startDate"/>','<%=Constants.Confirmation.DELETE %>')"/>
+					                					<input type="button" value="Del" styleClass="btn btn-default" onclick="flyToDelete('<%=Constants.Task.DOEDITDAYOFF%>', <bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>, '<bean:write name="iter" property="startDate"/>','<%=Constants.Confirmation.DELETE %>')"/>
 					                				<%
 					                					} 
 						                			} catch (Exception e) {
@@ -291,7 +291,8 @@
 							                				java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
 					                					if(date.compareTo(startForm) < 0) {
 					                				%>
-					                					<input type="button" value="Edit" styleClass="btn btn-default" onclick="flyToEditWeekend('<%=Constants.Task.GOTOEDITWEEKEND%>', <bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>, '<bean:write name="iter" property="startFrom"/>')"/>
+					                					<%-- <input type="button" value="Edit" styleClass="btn btn-default" onclick="flyToEditWeekend('<%=Constants.Task.GOTOEDITWEEKEND%>', <bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>, '<bean:write name="iter" property="startFrom"/>')"/> --%>
+					                					<input type="button" value="Del" styleClass="btn btn-default" onclick="flyToDelete('<%=Constants.Task.DOEDITWEEKEND%>', <bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>, '<bean:write name="iter" property="startFrom"/>','<%=Constants.Confirmation.DELETE %>')"/>
 					                				<%
 					                					} 
 						                			} catch (Exception e) {

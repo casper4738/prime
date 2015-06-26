@@ -38,12 +38,16 @@
 	<script>flyToForward("<%=Constants.Task.GOTOVIEW%>", '<bean:message key="label.message.dayoff"/>')</script>
 </logic:equal>
 
+<logic:equal name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOEDITDAYOFF%>">
+	<script>flyToForward("<%=Constants.Task.GOTOVIEW%>", '<bean:message key="label.message.deletedayoff"/>')</script>
+</logic:equal>
+
 <logic:equal name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOWEEKEND%>">
 	<script>flyToForward("<%=Constants.Task.GOTOVIEW%>", '<bean:message key="label.message.weekend"/>')</script>
 </logic:equal>
 
 <logic:equal name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOEDITWEEKEND%>">
-	<script>flyToForward("<%=Constants.Task.GOTOVIEW%>", '<bean:message key="label.message.weekend"/>')</script>
+	<script>flyToForward("<%=Constants.Task.GOTOVIEW%>", '<bean:message key="label.message.deleteweekend"/>')</script>
 </logic:equal>
 
 <logic:equal name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOEDITPOSITION%>">
