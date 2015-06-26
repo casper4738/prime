@@ -27,6 +27,7 @@
                 	<html:form action="/TaskSubordinateUser">
                 		<html:hidden name="TaskSubordinateUserForm" property="task" value='<%=Constants.Task.TASK.DOSUBMIT+""%>'/>
                 		<html:hidden name="TaskSubordinateUserForm" property="taskBean.taskId" />
+                		<html:hidden name="TaskSubordinateUserForm" property="taskId" />
                 		<html:hidden name="TaskSubordinateUserForm" property="taskBean.taskStatus" value='<%=Constants.Status.SUBMIT+""%>'/>
                 		<table class="form-input" align="center">
                 			<tr>

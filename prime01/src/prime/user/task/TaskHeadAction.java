@@ -1,6 +1,5 @@
 package prime.user.task;
 
-import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -22,25 +21,33 @@ import prime.user.activity.ActivityManagerImpl;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
+
+
 public class TaskHeadAction extends Action {
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+
 		int employeeId = 100;
+		request.setAttribute("employeeIdActive", employeeId);
 		
 		TaskHeadForm pForm = (TaskHeadForm) form;
 		TaskManager manager = new TaskManagerImpl();
 		EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
 		ActivityManager tmpActivityManager = new ActivityManagerImpl();
-
+		
+		System.out.println("A. "+pForm.getTask());
+		System.out.println("B. "+Constants.Task.TASK.DOSUBMIT);
+		
 		if (Constants.Task.TASK.GOTOTASKTYPE.equals(pForm.getTask())) {
 			pForm.getTaskBean().setTaskId(manager.getNewId());
 			
-			int countRows  = tmpEmployeeManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-			List<EmployeeBean> list = tmpEmployeeManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+			int countRows  = tmpEmployeeManager.getCountListByTreeWithoutDivision(pForm.getColumnSearch(), pForm.getSearch(), employeeId);
+			List<EmployeeBean> list = tmpEmployeeManager.getListByTreeWithoutDivision(pForm.getColumnSearch(), pForm.getSearch(),
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
-					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
+					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
+					employeeId
+					);
 			
 			//##Attribute for Table Show
 			request.setAttribute("listEmployee",list);
@@ -75,14 +82,14 @@ public class TaskHeadAction extends Action {
 			request.setAttribute("listActivity", list);
 			request.setAttribute("listSearchColumn", Constants.Search.ACTIVITY_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
-			request.setAttribute("isAllFinished", tmpActivityManager.isAllFinished(pForm.getTaskId()));
+			request.setAttribute("isAllFinished", tmpActivityManager.isAllFinished(pForm.getTaskId(), Constants.Status.FINISH, Constants.Status.ABORT));
 			request.setAttribute("isAlreadySubmit", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.SUBMIT));
 			request.setAttribute("isAlreadyReject", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.REJECT));
+			request.setAttribute("isAlreadyApprove", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.APPROVAL));
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("taskDetail");
 		} else if (Constants.Task.ACTIVITY.GOTOADD.equals(pForm.getTask())) {
 			//##.Add Data
-			pForm.getActivityBean().setActivityId(tmpActivityManager.getNewId());
 			pForm.getActivityBean().setTaskId(pForm.getTaskBean().getTaskId());
 			pForm.getActivityBean().setActivityStatus(Constants.Status.CREATE);
 			return mapping.findForward("addActivity");
@@ -111,18 +118,29 @@ public class TaskHeadAction extends Action {
 			pForm.getTaskBean().setTaskStatus(Constants.Status.CREATE);
 			pForm.getTaskBean().setTaskChangeNote("");
 			pForm.getTaskBean().setProjectMemberId(0);
+			
 			manager.insert(pForm.getTaskBean());
 			manager.insertDetail(pForm.getTaskBean());
+			
 			return mapping.findForward("forward");
 		} else if (Constants.Task.TASK.DOSUBMIT.equals(pForm.getTask())) {
+			
+			System.out.println("1."+pForm.getTaskBean().getTaskId());
+			System.out.println("2."+pForm.getTaskBean().getTaskStatus());
+			System.out.println("3."+pForm.getTaskBean().getTaskChangeNote());
+			
 			//##.Submit Task
 			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");
 		} else if (Constants.Task.ACTIVITY.DOADD.equals(pForm.getTask())) {
 			//##.Insert Data Activity
+			pForm.getActivityBean().setActivityId(tmpActivityManager.getNewId());
+			
 			tmpActivityManager.insert(pForm.getActivityBean());
 			tmpActivityManager.insertDetail(pForm.getActivityBean());
+
 			pForm.setTaskId(pForm.getActivityBean().getTaskId());
+			
 			return mapping.findForward("forward");
 		} else if (Constants.Task.ACTIVITY.DOEDIT.equals(pForm.getTask())) {
 			//##.Update Data Activity
@@ -150,6 +168,17 @@ public class TaskHeadAction extends Action {
 			//##.Approval Task
 			pForm.getTaskBean().setTaskStatus(Constants.Status.APPROVAL);
 			pForm.getTaskBean().setTaskChangeNote("");
+			manager.insertDetail(pForm.getTaskBean());
+			return mapping.findForward("forward");
+		} else if (Constants.Task.TASK.DOREJECT.equals(pForm.getTask())) {
+			//##.Reject Task
+			pForm.getTaskBean().setTaskStatus(Constants.Status.REJECT);
+			pForm.getTaskBean().setTaskChangeNote("");
+			
+			System.out.println("1."+pForm.getTaskBean().getTaskId());
+			System.out.println("2."+pForm.getTaskBean().getTaskChangeDate());
+			System.out.println("3."+pForm.getTaskBean().getTaskStatus());
+			
 			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");
 		} else if (Constants.Task.TASK.DOABORT.equals(pForm.getTask())) {

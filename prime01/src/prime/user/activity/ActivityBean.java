@@ -1,6 +1,9 @@
 package prime.user.activity;
 
+import java.util.Date;
+
 import prime.user.task.TaskBean;
+import prime.utility.PrimeUtil;
 
 public class ActivityBean extends TaskBean {
 
@@ -9,11 +12,11 @@ public class ActivityBean extends TaskBean {
 	private String activityName;
 	private String activityDescription;
 	private String activityChangeNote;
-	private String activityLastStatus;
-	private java.sql.Date activityChangeDate;
-	
+	private Integer activityLastStatus;
+	private Date activityChangeDate;
+
 	public ActivityBean() {
-		setActivityChangeDate(new java.sql.Date(new java.util.Date().getTime()));
+		setActivityChangeDate(new Date());
 	}
 
 	public Integer getActivityId() {
@@ -56,20 +59,19 @@ public class ActivityBean extends TaskBean {
 		this.activityChangeNote = activityChangeNote;
 	}
 
-	public String getActivityLastStatus() {
+	public Integer getActivityLastStatus() {
 		return activityLastStatus;
 	}
 
-	public void setActivityLastStatus(String activityLastStatus) {
+	public void setActivityLastStatus(Integer activityLastStatus) {
 		this.activityLastStatus = activityLastStatus;
 	}
 
-	public java.sql.Date getActivityChangeDate() {
-		return activityChangeDate;
+	public Date getActivityChangeDate() {
+		return this.activityChangeDate;
 	}
 
-	public void setActivityChangeDate(java.sql.Date activityChangeDate) {
+	public void setActivityChangeDate(Date activityChangeDate) {
 		this.activityChangeDate = activityChangeDate;
 	}
-
 }

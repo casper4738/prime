@@ -47,6 +47,19 @@ public interface EmployeeManager {
 	public List<EmployeeBean> getListByColumnAndDivision(String columnSearch, String value, Integer divisionId, Integer startRow, Integer endRow)
 			throws SQLException;
 	
+	/*select employee by tree and division and level  */
+	public List<EmployeeBean> getListByTreeWithDivision(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
+			throws SQLException;
+	
+	public Integer getCountListByTreeWithDivision(String columnSearch, String value, Integer employeeId)  throws SQLException;
+	/* end select employee by tree and division and level  */
+	
+	/*select employee by tree and level  */
+	public List<EmployeeBean> getListByTreeWithoutDivision(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
+			throws SQLException;
+	public Integer getCountListByTreeWithoutDivision(String columnSearch, String value, Integer employeeId)  throws SQLException;
+	/* end select employee by tree and level  */
+	
 	public Integer getCountByColumnEmployeeHead(String columnSearch, String value, Integer positionLevel, String paramCondition, Integer employeeId) throws SQLException;
 	
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;

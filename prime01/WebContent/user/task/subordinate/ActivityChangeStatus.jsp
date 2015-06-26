@@ -29,9 +29,9 @@
 			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
 		}
 		
-		function dosubmit(value) {
-			document.forms[0].activityStatus.value = value;
-			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
+		function doSubmitX(activityId, taskId) {
+			alert(activityId+"|"+taskId);
+			modalLoadHandler("task=activityNote&param2=" + activityId + "&param3=" + taskId);
 		}
 	</script>
 </head> 
@@ -55,25 +55,10 @@
 				<tr><td>Task Name : <bean:write name="TaskSubordinateUserForm" property="activityBean.taskName"/> </td>
 					<td>Activity Name : <bean:write name="TaskSubordinateUserForm" property="activityBean.activityName" /> </td>
 				</tr>
-				<tr><td>Last Status : 
-					<logic:equal name="TaskSubordinateUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.CREATE+""%>'>
-	            		<span class="label label-warning">Receive</span>
-	          		</logic:equal>
-	          		<logic:equal name="TaskSubordinateUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.SUBMIT+""%>'>
-	          			<span class="label label-primary">Submit</span>
-	          		</logic:equal>
-	          		<logic:equal name="TaskSubordinateUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.PAUSE+""%>'>
-	          			<span class="label label-warning">Pause</span>
-	          		</logic:equal>
-	          		<logic:equal name="TaskSubordinateUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.FINISH+""%>'>
-	          			<span class="label label-primary">Finish</span>
-	          		</logic:equal>
-	          		<logic:equal name="TaskSubordinateUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.ABORT+""%>'>
-	          			<span class="label label-danger">Abort</span>
-	          		</logic:equal>
-	          		<logic:equal name="TaskSubordinateUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.PROGRESS+""%>'>
-	          			<span class="label label-success">Progress</span>
-	          		</logic:equal>
+				<tr><td>Last Status :
+					<jsp:include page="/content/Status.jsp">
+       	    			<jsp:param name="status" value="${TaskSubordinateUserForm.activityBean.activityLastStatus}" />
+       	    		</jsp:include>
 				</td>
 					<td>Last Change Date : <bean:write name="TaskSubordinateUserForm" property="activityBean.activityChangeDate"  format="dd MMMM yyyy hh:mm:ss"/> </td>
 				</tr>
@@ -88,26 +73,21 @@
   	    		</jsp:include>
 				<br/>
 			
-				<div class="box-body">
-	               	<html:form action="/TaskSubordinateUser">
-	               		<html:hidden name="TaskSubordinateUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOCHANGESTATUS%>"/>
-	               		<html:hidden name="TaskSubordinateUserForm" property="activityBean.activityId" />
-	               		<html:hidden name="TaskSubordinateUserForm" property="activityStatus" />
-	               		<html:hidden name="TaskSubordinateUserForm" property="taskId" />
-	               	</html:form>
-                	
-                	
 				<div class="search-table">
 					<html:form action="/TaskSubordinateUser" >
-						<html:hidden name="TaskSubordinateUserForm" property="task"/>
+						<html:hidden name="TaskSubordinateUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOCHANGESTATUS%>"/>
 						<html:hidden name="TaskSubordinateUserForm" property="taskBean.taskId"/>
 						<html:hidden name="TaskSubordinateUserForm" property="taskId"/>
 						<html:hidden name="TaskSubordinateUserForm" property="activityId"/>
 						<html:hidden name="TaskSubordinateUserForm" property="activityChangeDate"/>
+	               		<html:hidden name="TaskSubordinateUserForm" property="activityBean.activityId" />
+	               		<html:hidden name="TaskSubordinateUserForm" property="activityBean.activityChangeNote"/>
+	               		<html:hidden name="TaskSubordinateUserForm" property="activityStatus" />
 						<html:hidden name="TaskSubordinateUserForm" property="goToPage"/>
 						<html:hidden name="TaskSubordinateUserForm" property="showInPage"/>
 					</html:form>
 				</div>
+				<div class="box-body">
 					<table id="table-1" class="table table-bordered table-striped table-hover">
 					<thead><tr>
 						<th width="150px">Change Date</th>
@@ -118,26 +98,11 @@
 	                <logic:notEmpty name="listActivity">
 						<logic:iterate id="iter" name="listActivity">
 		                	<tr>
-		                		<td align="center"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy hh:mm:ss"/></td>
+		                		<td align="center"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy HH:mm:ss"/></td>
 		                		<td align="center">
-			                		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.CREATE+""%>'>
-					            		<span class="label label-warning">Receive</span>
-					          		</logic:equal>
-					          		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.SUBMIT+""%>'>
-					          			<span class="label label-primary">Submit</span>
-					          		</logic:equal>
-					          		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.PAUSE+""%>'>
-					          			<span class="label label-warning">Pause</span>
-					          		</logic:equal>
-					          		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.FINISH+""%>'>
-					          			<span class="label label-primary">Finish</span>
-					          		</logic:equal>
-					          		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.ABORT+""%>'>
-					          			<span class="label label-danger">Abort</span>
-					          		</logic:equal>
-					          		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.PROGRESS+""%>'>
-					          			<span class="label label-success">Progress</span>
-					          		</logic:equal>
+					          		<jsp:include page="/content/Status.jsp">
+	                	    			<jsp:param name="status" value="${iter.activityStatus}" />
+	                	    		</jsp:include>
 		                		</td>
 		                		<td><bean:write name="iter" property="activityChangeNote"/></td>
 		                    </tr> 

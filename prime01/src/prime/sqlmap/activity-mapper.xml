@@ -129,8 +129,6 @@
 		FROM ACTIVITIES WHERE TASK_ID= #taskId# AND NVL(ACTIVITY_LAST_STATUS, 0) != 4
 	</select>
 	
-	
-	
 	<!-- show in select activity form (dashboard) -->
 	
 	<select id="getCountActivityDetail" resultClass="java.lang.Integer" parameterClass="java.util.Map">
@@ -263,28 +261,30 @@
 	    TASK_RECEIVER=#id#
 	    ORDER BY ACTIVITY_NAME
 	</select> -->
+	
 	<!-- Show for Progress Bar Activity-->
 	<select id="getCurrentListActivity" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
 		SELECT ACT.ACTIVITY_NAME as activityName,
-		ACT.ACTIVITY_ID as activityId
+			   ACT.ACTIVITY_ID as activityId
 		FROM ACTIVITIES ACT
 		INNER JOIN (        
 		    SELECT DISTINCT ACTIVITY_ID
-		    FROM ACTIVITY_DETAILS WHERE  ACTIVITY_CHANGE_DATE between 
+		    FROM ACTIVITY_DETAILS WHERE ACTIVITY_CHANGE_DATE between 
 		               TO_TIMESTAMP('$currentDate$ 00:00:00','dd-mm-yyyy hh24:mi:ss') 
-		        AND TO_TIMESTAMP('$currentDate$ 23:59:59','dd-mm-yyyy hh24:mi:ss')       
+		        	   AND TO_TIMESTAMP('$currentDate$ 23:59:59','dd-mm-yyyy hh24:mi:ss')       
 		) AD ON AD.ACTIVITY_ID = ACT.ACTIVITY_ID
 		INNER JOIN TASKS TSK ON TSK.TASK_ID = ACT.TASK_ID
-		WHERE TASK_RECEIVER=#id#
+		WHERE TASK_RECEIVER=#employeeId#
 	    ORDER BY ACTIVITY_NAME
 	</select>
 	
-	<select id="getRangeTimeByActivityId" resultClass="prime.user.activity.ActivityBean" parameterClass="java.lang.Integer">
+	<select id="getRangeTimeByActivityId" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
 		SELECT ACTIVITY_CHANGE_DATE as activityChangeDate,
 			   ACTIVITY_STATUS as activityStatus
 		FROM ACTIVITY_DETAILS 
-		WHERE ACTIVITY_ID = #activityId#
-	    ORDER BY ACTIVITY_CHANGE_DATE
+		WHERE ACTIVITY_ID = #activityId# AND
+			  (ACTIVITY_CHANGE_DATE &lt;= TO_TIMESTAMP('$currentDate$ 23:59:59','dd-mm-yyyy hh24:mi:ss')) 
+	    ORDER BY ACTIVITY_CHANGE_DATE DESC
 	</select>
 	
 </sqlMap>

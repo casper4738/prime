@@ -37,9 +37,9 @@
 		   $('#datepicker_activitydate').datepicker({
                format	: "yyyy-mm-dd"
            });
-	  		  
+	 	    
   		   //Load Activity Progress Timetable
-  		   loadActivityProgress();
+  		   loadActivityProgress(true);
 		});
     	
 		//##.Activity Detail
@@ -53,39 +53,43 @@
 		//##.Activity Progress
 		function loadActivityProgress(isToday){
 			//Set Current Date
-		  	var tmpDate = new Date();
+			var tmpDate;
+			switch(isToday){
+				case false :
+				  	tmpDate = $('#datepicker_activitydate').datepicker('getDate');
+					break;
+				case true  :
+				  	tmpDate = new Date();
+					break;
+			}
 	        var tmpMonthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-			alert(tmpDate);
-	        var d = tmpDate.getDate();
+			var d = tmpDate.getDate();
 			var m = tmpDate.getMonth() + 1;
 			var y = tmpDate.getFullYear();
 			var tmpRefreshDate = d + "/" + m + "/" + y;
 			$('#datepicker_activitydate').datepicker('setDate', tmpDate);
-			alert("2");
 			$('#date_activitydate').html("<b>" + ((d < 10) ? ("0" + d) : d) + " " + tmpMonthList[m - 1] + " " + y + "</b>");    
 			
-			alert("WAT");
-			
 	  		//Do Login Data checking
-	  		$.ajax({ 
-	  	    	type 	: "POST",
-	  	    	url	  	: "<%=Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]%>",  
-	  	    	data	: "task=refreshActivityProgress&loadDate=" + tmpRefreshDate,
-	  	    	success : function(msg){
-	  	    		var table;
-			  		$('#table-1').html(msg);
-			 		table = $('#table-1').dataTable( {
-			 			ordering 		: false,
-			 			paging    		: false,
-			 			searching 		: false,
-			 			info	  		: false,
-			 			scrollY	  		: "250px",
-			 		    scrollX	  		: "100%",
-			 		    scrollCollapse	: true
-			 	    });
-			 	    new $.fn.dataTable.FixedColumns(table, {leftColumns: 2});
-		  	    }
-	  	   });
+	  		$('#table-wrapper').html(PAGE_LOADING);
+	  		$('#table-wrapper').load("<%=Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]%>", "task=refreshActivityProgress&currentDate=" + tmpRefreshDate, function( response, status, xhr ) {
+								//---.Show Some Respect For Error Status
+								if(status == "error"){
+									$('#table-wrapper').html(PAGE_LOAD_ERROR);
+								} else {
+					  	    	    var table = $('#table-1').dataTable({
+					  										 			ordering 		: false,
+					  										 			paging    		: false,
+					  										 			searching 		: false,
+					  										 			info	  		: false,
+					  										 			scrollY	  		: "250px",
+					  										 		    scrollX	  		: "100%",
+					  										 		    scrollCollapse	: true,
+					  													language  		: {"emptyTable":  "<center><%=Constants.Response.TABLE_HEAD_EMPTY %></center>"}
+					  										 	    });
+						  		    new $.fn.dataTable.FixedColumns(table, {leftColumns: 3});
+								}
+	  		});
 		}
     </script>
     <!-- End Of JS -->
@@ -222,8 +226,8 @@
                   	</table>
 					<div class="box-body no-padding">
                   	  <center><h3 id="date_activitydate"></h3></center>
-	                  <table id="table-1" class="display" cellspacing="0" width="100%" height="100%">
-	                  </table>
+	                  	<div id="table-wrapper">
+	                  	</div>
 	                </div><!-- /.box-body -->
 	            </div>
             </div>

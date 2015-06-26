@@ -1,11 +1,7 @@
 package prime.modal;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -24,8 +20,6 @@ import prime.admin.position.PositionManagerImpl;
 import prime.admin.user.UserManager;
 import prime.admin.user.UserManagerImpl;
 import prime.constants.Constants;
-import prime.user.activity.ActivityBean;
-import prime.user.project.*;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -76,6 +70,7 @@ public class ModalAction extends Action {
 	        case "taskNote" :
         		tmpTarget = "taskNote";
         		request.setAttribute("taskId"    , pForm.getParam2());
+        		request.setAttribute("task"    , pForm.getParam3());
 	        	break;
             case "modalTable":  
             	String table=pForm.getParam1();

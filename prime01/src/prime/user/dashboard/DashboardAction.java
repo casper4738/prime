@@ -103,83 +103,66 @@ public class DashboardAction extends Action{
 	
 	private void refreshActivityProgressList(HttpServletRequest request, HttpServletResponse response, DashboardForm pForm, ActivityManager manager) throws SQLException, IOException {
 		//##0.Temp Variable
-		int tmpI, tmpJ;
+		int tmpI, tmpJ, tmpK;
+		Date curnTime, compTime;
 		ArrayList<Object> tmpActivityList;
-		List<ActivityBean> tmpActivityDetail;
-		boolean tmpLastStatus;
-		ArrayList<ArrayList<Object>> tmpData = new ArrayList<ArrayList<Object>>();
+		boolean tmpOverloop, tmpLastStatus;
+		List<ActivityBean> tmpCurnListActivity, tmpActivityDetail;
+		ArrayList<ArrayList<Object>> tmpData;
+		Date tmpDateRequest, tmpDateNow;
 		
 		//---.Activities Progress on Specified Date
 		//---a.Get Activities List on Specified Date
-		DateFormat tmpDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		Date tmpDate = new Date();
-		List<ActivityBean> currentListActivity = manager.getCurrentListActivity(101, tmpDateFormat.format(tmpDate));
-		request.setAttribute("currentListActivity", currentListActivity);
-	    
-		for(tmpI = 0 ; tmpI < currentListActivity.size() ; tmpI++){
-			tmpActivityList = new ArrayList<Object>();
+		tmpDateRequest = PrimeUtil.parseDateStringToDate(pForm.getCurrentDate());
+		tmpDateNow	   = PrimeUtil.parseDateStringToDate(PrimeUtil.setDateToDateString(new Date()));
+		
+		tmpData = new ArrayList<ArrayList<Object>>();
+		tmpCurnListActivity = manager.getCurrentListActivity(101, pForm.getCurrentDate());
+		System.out.println("Size = " + tmpCurnListActivity.size());
+		for(tmpI = 0 ; tmpI < tmpCurnListActivity.size() ; tmpI++){
 			
-			//tmpActivityDetails.add(currentListActivity.get(tmpI).getActivityId());
-			tmpActivityList.add(currentListActivity.get(tmpI).getActivityName());	
+			tmpActivityList = new ArrayList<Object>();
+			tmpActivityList.add(tmpCurnListActivity.get(tmpI).getActivityId());
+			tmpActivityList.add(tmpCurnListActivity.get(tmpI).getActivityName());	
 			for(tmpJ = 0 ; tmpJ < Constants.DAILY_TIME.length ; tmpJ++){
 				tmpActivityList.add(false);
 			}
-			tmpActivityDetail = manager.getActivityRangeTime(currentListActivity.get(tmpI).getActivityId());
-			if(tmpActivityDetail.get(0).getActivityStatus() == Constants.Status.PAUSE  ||
-			   tmpActivityDetail.get(0).getActivityStatus() == Constants.Status.FINISH ||
-			   tmpActivityDetail.get(0).getActivityStatus() == Constants.Status.ABORT  ||
-			   tmpActivityDetail.get(0).getActivityStatus() == Constants.Status.SUBMIT) {
-			   tmpLastStatus  = true;
-			} else {
-				tmpLastStatus = false;
-			}
+			tmpK = Constants.DAILY_TIME.length - 1;
 			
-			int tmpK = 0;
-			boolean tmpOverloop = false;
-			Date curnTime;
-			Date compTime;
+			tmpActivityDetail = manager.getActivityRangeTime(tmpCurnListActivity.get(tmpI).getActivityId(), pForm.getCurrentDate());
 			for(tmpJ = 0 ; tmpJ < tmpActivityDetail.size() ; tmpJ++) {
+				if(tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.PAUSE  ||
+				   tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.FINISH ||
+				   tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.ABORT  ||
+				   tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.SUBMIT ||
+				   tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.CREATE) {
+				   tmpLastStatus  = false;
+				} else {
+				   tmpLastStatus  = true;
+				}
+				
 				tmpOverloop = false;
-				while(tmpK < Constants.DAILY_TIME.length){
-					curnTime = PrimeUtil.parseDateStringToTime(Constants.DAILY_TIME[tmpK]);
-					compTime = PrimeUtil.parseDateStringToTime(PrimeUtil.setDateToTimeString(tmpActivityDetail.get(tmpJ).getActivityChangeDate()));
-					tmpOverloop = compTime.after(curnTime);
-					
+				while(tmpK >= 0){
+					curnTime    = PrimeUtil.parseDateStringToTime(Constants.DAILY_TIME[tmpK]);
+					compTime    = PrimeUtil.parseDateStringToTime(PrimeUtil.setDateToTimeString(tmpActivityDetail.get(tmpJ).getActivityChangeDate()));
+					tmpOverloop = compTime.before(curnTime);
+					System.out.println(curnTime + " _ " + compTime);
 					if(tmpOverloop){
-						tmpActivityList.set(tmpK + 1, tmpLastStatus);
-						tmpK++;
+						tmpActivityList.set(tmpK + 2, tmpLastStatus);
+						tmpK--;
 					} else {
+						//For Extra Checking when the time difference was too small
+						if(!tmpLastStatus){
+							tmpK++;	
+						}
 						break;
 					}
-				}
-				if(tmpActivityDetail.get(tmpJ).getActivityStatus() == Constants.Status.PROGRESS){
-					tmpLastStatus = true;
-				}
-				else if(tmpActivityDetail.get(tmpJ).getActivityStatus() == Constants.Status.PAUSE  || 
-						tmpActivityDetail.get(tmpJ).getActivityStatus() == Constants.Status.FINISH ||
-						tmpActivityDetail.get(tmpJ).getActivityStatus() == Constants.Status.ABORT  ||
-						tmpActivityDetail.get(tmpJ).getActivityStatus() == Constants.Status.SUBMIT ||
-						tmpActivityDetail.get(tmpJ).getActivityStatus() == Constants.Status.CREATE) {
-					tmpLastStatus = false;
-				}
-			}
-			
-			//##.For Closing State [If Latest State is True]
-			curnTime = PrimeUtil.parseDateStringToTime(PrimeUtil.setDateToDateString(new Date()));
-			compTime = PrimeUtil.parseDateStringToTime(PrimeUtil.setDateToDateString(tmpDate));
-			tmpOverloop = compTime.before(curnTime);
-			if(tmpOverloop){ 
-				while(tmpK < Constants.DAILY_TIME.length){			
-					tmpActivityList.set(tmpK + 1, tmpLastStatus);
-					tmpK++;
 				}
 			}
 			tmpData.add(tmpActivityList);
 		}
 		
 		//---b.Get Activities
-		request.setAttribute("listActivities", tmpData);
-		
 		response.setContentType("text/text;charset=utf-8");
 		response.setHeader("cache-control", "no-cache");
 		PrintWriter tmpOut = response.getWriter();
@@ -196,11 +179,14 @@ public class DashboardAction extends Action{
 			tmpValueString += "<td>";
 			tmpValueString += tmpData.get(tmpJ).get(0); 
 			tmpValueString += "</td>";
-			for(int tmpK = 1 ; tmpK < tmpData.get(tmpJ).size() ; tmpK++){
+			tmpValueString += "<td>";
+			tmpValueString += tmpData.get(tmpJ).get(1); 
+			tmpValueString += "</td>";
+			for(tmpK = 2 ; tmpK < tmpData.get(tmpJ).size() ; tmpK++){
 				if((boolean)tmpData.get(tmpJ).get(tmpK)){	
 					tmpValueString += "<td bgcolor='green'>";
 				} else {
-					tmpValueString += "<td >";
+					tmpValueString += "<td>";
 				}
 				tmpValueString += "</td>";
 			}
@@ -208,21 +194,34 @@ public class DashboardAction extends Action{
 		}
 
 		if(tmpData.size() <= 0){
-			tmpOut.print("<thead>" +
-								"<th></th>"   +
+			tmpOut.print("<table id=\"table-1\" class=\"display\" cellspacing=\"0\" width=\"100%\" >" + 
+						 "<thead>" +
+								"<th></th>"  +
+								"<th></th>"  +
+								"<th></th>"  +
 						 "</thead>" +
 						 "<tbody>"  +
-						 		"<td><h5><center>No Activity Progress Can be Shown</center></h5></td>" +  
-						 "</tbody>");
+						 		"<tr>" +
+						 			"<td></td>" +
+						 			"<td>"  +
+					 					"<center>No Activity Progress in this day.</center>" + 
+					 				"</td>" +
+						 			"<td></td>" +
+						 		"</tr>" + 
+						 "</tbody>" +
+					 	 "</table>");
 		} else {
-			tmpOut.print("<thead>" +
+			tmpOut.print("<table id=\"table-1\" class=\"display cell-border compact\" cellspacing=\"0\" width=\"100%\">" + 
+						 "<thead>" +
 								"<th>#</th>"   +
-								"<th>Activity</th>"   + 
+								"<th width=\"200px\">Activity ID</th>"   + 
+								"<th width=\"200px\">Activity Name</th>"   + 
 						 		tmpTimeString +
 						 "</thead>" +
 						 "<tbody>"  +
 						 		tmpValueString +  
-						 "</tbody>");
+						 "</tbody>" +
+					 	 "</table>");
 		}
 		tmpOut.flush();
 	}

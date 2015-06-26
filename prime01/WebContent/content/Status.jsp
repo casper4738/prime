@@ -8,19 +8,32 @@
 <logic:equal name="status" value='<%=Constants.Status.CREATE+""%>'>
 	<span class="label label-warning">Receive</span>
 </logic:equal>
-<logic:equal name="status" value='<%=Constants.Status.SUBMIT+""%>'>
-	<span class="label label-primary">Submit</span>
+
+<logic:equal name="status" value='<%=Constants.Status.PROGRESS+""%>'>
+	<span class="label label-success">Progress</span>
 </logic:equal>
+
 <logic:equal name="status" value='<%=Constants.Status.PAUSE+""%>'>
 	<span class="label label-warning">Pause</span>
 </logic:equal>
+
+<logic:equal name="status" value='<%=Constants.Status.SUBMIT+""%>'>
+	<span class="label label-info">Submit</span>
+</logic:equal>
+
 <logic:equal name="status" value='<%=Constants.Status.FINISH+""%>'>
 	<span class="label label-primary">Finish</span>
 </logic:equal>
+
 <logic:equal name="status" value='<%=Constants.Status.ABORT+""%>'>
 	<span class="label label-danger">Abort</span>
 </logic:equal>
-<logic:equal name="status" value='<%=Constants.Status.PROGRESS+""%>'>
-	<span class="label label-success">Progress</span>
+
+<logic:equal name="status" value='<%=Constants.Status.REJECT+""%>'>
+	<span class="label label-danger">Reject</span>
+</logic:equal>
+
+<logic:equal name="status" value='<%=Constants.Status.APPROVAL+""%>'>
+	<span class="label label-success">Approval</span>
 </logic:equal>
 		    
