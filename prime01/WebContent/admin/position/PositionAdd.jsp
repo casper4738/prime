@@ -24,19 +24,17 @@
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 	
-	<script type="text/javascript">
+<script type="text/javascript">
 	function validateForm() {
+		document.getElementById('validatorName').innerHTML = "";
 	    var positionName =  document.getElementById('nameValidator').value;
-	    var positionLevel =  document.getElementById('levelValidator').value;
+	    var validate = true;
+	    
 	    if (positionName == null || positionName == "") {
-	        document.getElementById('validator').innerHTML="Name must be filled out";
-	        return false;
+	        document.getElementById('validatorName').innerHTML="Name must be filled out";
+	        validate = false;
 	    }
-	    else if (positionLevel == null || positionLevel == "") {
-	    	document.getElementById('validator').innerHTML="Level must be filled out";
-	        return false;
-	    }
-	    else dosubmit();
+	    if(validate == true) dosubmit();
 	}
 	</script>
 	
@@ -67,6 +65,9 @@
                   				<td><html:text name="PositionAdminForm" property="positionBean.positionName" styleClass="form-control" styleId="nameValidator" maxlength="50"/></td>
                   			</tr>
                   			<tr>
+                  				<td colspan="3" align="center"> <span  id="validatorName" style="color: red"> </span> </td>
+                  			</tr>
+                  			<tr>
                   				<td>Position Level</td>
                   				<td>:</td>
                   				<td><html:select name="PositionAdminForm" property="positionBean.positionLevel" styleClass="form-control" styleId="levelValidator">
@@ -79,9 +80,6 @@
                   					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
-                  			</tr>
-                  			<tr>
-                  				<td colspan="3" align="center"> <span  id="validator" style="color: red"> </span> </td>
                   			</tr>
                   		</table>
                   	</html:form>

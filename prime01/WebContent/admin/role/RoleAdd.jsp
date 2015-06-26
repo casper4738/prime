@@ -18,12 +18,15 @@
 	
 	<script type="text/javascript">
 	function validateForm() {
-	    var roleName =  document.getElementById('roleValidator').value;
+		document.getElementById('validatorName').innerHTML = "";
+	    var roleName =  document.getElementById('nameValidator').value;
+	    var validate = true;
+	    
 	    if (roleName == null || roleName == "") {
-	        document.getElementById('validator').innerHTML="Name must be filled out";
-	        return false;
+	        document.getElementById('validatorName').innerHTML="Role name must be filled out";
+	        validate = false;
 	    }
-	    else dosubmit();
+	    if(validate == true) dosubmit();
 	}
 	</script>
 </head>
@@ -49,16 +52,16 @@
                   			<tr>
                   				<td>Role Name</td>
                   				<td>:</td>
-                  				<td><html:text name="RoleAdminForm" property="roleBean.roleName" styleClass="form-control" styleId="roleValidator" maxlength="50"/></td>
+                  				<td><html:text name="RoleAdminForm" property="roleBean.roleName" styleClass="form-control" styleId="nameValidator" maxlength="50"/></td>
+                  			</tr>
+                  			<tr>
+                  				<td colspan="3" align="center"> <span  id="validatorName" style="color: red"> </span> </td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">
                   					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
-                  			</tr>
-                  			<tr>
-                  				<td colspan="3" align="center"> <span  id="validator" style="color: red"> </span> </td>
                   			</tr>
                   		</table>
                   	</html:form>

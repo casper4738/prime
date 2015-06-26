@@ -18,6 +18,7 @@
 	
 	<script type="text/javascript">
 	function validateForm() {
+		document.getElementById('validator').innerHTML="";
 	    var divisionName =  document.getElementById('nameValidator').value;
 	    if (divisionName == null || divisionName == "") {
 	        document.getElementById('validator').innerHTML="Name must be filled out";
@@ -53,13 +54,13 @@
                
                   			</tr>
                   			<tr>
+                  			<td colspan="3" align="center"> <span  id="validator" style="color: red"> </span> </td>
+                  			</tr>
+                  			<tr>
                   				<td colspan="3" align="center">
                   					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
-                  			</tr>
-                  			<tr>
-                  			<td colspan="3" align="center"> <span  id="validator" style="color: red"> </span> </td>
                   			</tr>
                   		</table>
                   	</html:form>
