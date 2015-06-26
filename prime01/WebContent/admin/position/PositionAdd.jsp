@@ -25,17 +25,25 @@
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 	
 <script type="text/javascript">
-	function validateForm() {
-		document.getElementById('validatorName').innerHTML = "";
-	    var positionName =  document.getElementById('nameValidator').value;
-	    var validate = true;
-	    
-	    if (positionName == null || positionName == "") {
-	        document.getElementById('validatorName').innerHTML="Name must be filled out";
-	        validate = false;
-	    }
-	    if(validate == true) dosubmit();
-	}
+function validateForm() {
+	document.getElementById('validator').innerHTML="";
+	var specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,."; // specify special characters 
+    var positionName =  document.getElementById('nameValidator').value;
+    if (positionName == null || positionName == "") {
+        document.getElementById('validator').innerHTML="Name must be filled out";
+        return false;
+    }
+    else {
+    	for (var i = 0; i < positionName.length; i++) {
+    	    if (specialChars.indexOf(positionName.charAt(i)) != -1) { 
+    			document.getElementById("validator").innerHTML = "Characters are not allowed"; 
+    			return false; 
+    		}
+    	}
+    	   dosubmit();
+    }
+    
+}
 	</script>
 	
 	<!-- End of JS -->
@@ -65,7 +73,11 @@
                   				<td><html:text name="PositionAdminForm" property="positionBean.positionName" styleClass="form-control" styleId="nameValidator" maxlength="50"/></td>
                   			</tr>
                   			<tr>
-                  				<td colspan="3" align="center"> <span  id="validatorName" style="color: red"> </span> </td>
+                  			<td>
+                  			</td>
+                  			<td>
+                  			</td>
+                  				<td> <span  id="validator" style="color: red"> </span> </td>
                   			</tr>
                   			<tr>
                   				<td>Position Level</td>

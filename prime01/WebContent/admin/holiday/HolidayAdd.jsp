@@ -70,7 +70,11 @@
                   				</td>
                   			</tr>
                   			<tr>
-                  				<td colspan="3" align="center"> <span  id="validatorDate" style="color: red"> </span> </td>
+                  			<td>
+                  			</td>
+                  			<td>
+                  			</td>
+                  				<td> <span  id="validatorDate" style="color: red"> </span> </td>
                   			</tr>
                   			<tr>
                   				<td>Holiday Description</td>
@@ -78,7 +82,11 @@
                   				<td><html:text name="HolidayAdminForm" property="holidayBean.holidayDescription" styleClass="form-control" styleId="descriptionValidator" maxlength="100"/></td>
                   			</tr>
                   			<tr>
-                  				<td colspan="3" align="center"> <span  id="validatorDescription" style="color: red"> </span> </td>
+                  			<td>
+                  			</td>
+                  			<td>
+                  			</td>
+                  				<td> <span  id="validatorDescription" style="color: red"> </span> </td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">

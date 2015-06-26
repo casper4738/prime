@@ -18,15 +18,23 @@
 	
 	<script type="text/javascript">
 	function validateForm() {
-		document.getElementById('validatorName').innerHTML = "";
+		document.getElementById('validator').innerHTML="";
+		var specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,."; // specify special characters 
 	    var roleName =  document.getElementById('nameValidator').value;
-	    var validate = true;
-	    
 	    if (roleName == null || roleName == "") {
-	        document.getElementById('validatorName').innerHTML="Role name must be filled out";
-	        validate = false;
+	        document.getElementById('validator').innerHTML="Name must be filled out";
+	        return false;
 	    }
-	    if(validate == true) dosubmit();
+	    else {
+	    	for (var i = 0; i < roleName.length; i++) {
+	    	    if (specialChars.indexOf(roleName.charAt(i)) != -1) { 
+	    			document.getElementById("validator").innerHTML = "Characters are not allowed"; 
+	    			return false; 
+	    		}
+	    	}
+	    	   dosubmit();
+	    }
+	    
 	}
 	</script>
 </head>
@@ -55,7 +63,11 @@
                   				<td><html:text name="RoleAdminForm" property="roleBean.roleName" styleClass="form-control" styleId="nameValidator" maxlength="50"/></td>
                   			</tr>
                   			<tr>
-                  				<td colspan="3" align="center"> <span  id="validatorName" style="color: red"> </span> </td>
+                  			<td>
+                  			</td>
+                  			<td>
+                  			</td>
+                  				<td> <span  id="validator" style="color: red"> </span> </td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">

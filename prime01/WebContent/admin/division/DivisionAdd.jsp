@@ -17,14 +17,26 @@
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
 	
 	<script type="text/javascript">
+
 	function validateForm() {
 		document.getElementById('validator').innerHTML="";
+		var specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,."; // specify special characters
+		var emailChars = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;  
 	    var divisionName =  document.getElementById('nameValidator').value;
 	    if (divisionName == null || divisionName == "") {
 	        document.getElementById('validator').innerHTML="Name must be filled out";
 	        return false;
 	    }
-	    else dosubmit();
+	    else {
+	    	for (var i = 0; i < divisionName.length; i++) {
+	    	    if (specialChars.indexOf(divisionName.charAt(i)) != -1) { 
+	    			document.getElementById("validator").innerHTML = "Characters are not allowed"; 
+	    			return false; 
+	    		}
+	    	}
+	    	   dosubmit();
+	    }
+	    
 	}
 	</script>
 </head>
@@ -54,7 +66,11 @@
                
                   			</tr>
                   			<tr>
-                  			<td colspan="3" align="center"> <span  id="validator" style="color: red"> </span> </td>
+                  			<td>
+                  			</td>
+                  			<td>
+                  			</td>
+                  			<td> <span  id="validator" style="color: red"> </span> </td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">
