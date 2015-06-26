@@ -26,13 +26,13 @@
 	
 	<script type="text/javascript">
 	function validateForm() {
-	    var holidayDescription =  document.getElementById('nameValidator').value;
-	    var holidayDate =  document.getElementById('levelValidator').value;
-	    if (holidayDescription == null || holidayDescription == "") {
+	    var positionName =  document.getElementById('nameValidator').value;
+	    var positionLevel =  document.getElementById('levelValidator').value;
+	    if (positionName == null || positionName == "") {
 	        document.getElementById('validator').innerHTML="Name must be filled out";
 	        return false;
 	    }
-	    else if (holidayDate == null || holidayDate == "") {
+	    else if (positionLevel == null || positionLevel == "") {
 	    	document.getElementById('validator').innerHTML="Level must be filled out";
 	        return false;
 	    }
@@ -64,7 +64,7 @@
                   			<tr>
                   				<td>Position Name</td>
                   				<td>:</td>
-                  				<td><html:text name="PositionAdminForm" property="positionBean.positionName" styleClass="form-control" styleId="nameValidator"/></td>
+                  				<td><html:text name="PositionAdminForm" property="positionBean.positionName" styleClass="form-control" styleId="nameValidator" maxlength="50"/></td>
                   			</tr>
                   			<tr>
                   				<td>Position Level</td>

@@ -62,7 +62,7 @@
                   			<tr>
                   				<td>Holiday Description</td>
                   				<td>: </td>
-                  				<td><html:text name="HolidayAdminForm" property="holidayBean.holidayDescription" styleClass="form-control" styleId="descriptionValidator"/></td>
+                  				<td><html:text name="HolidayAdminForm" property="holidayBean.holidayDescription" styleClass="form-control" styleId="descriptionValidator" maxlength="100"/></td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">

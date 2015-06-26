@@ -49,7 +49,7 @@
                   			<tr>
                   				<td>Division Name</td>
                   				<td>:</td>
-                  				<td><html:text name="DivisionAdminForm" property="divisionBean.divisionName" styleClass="form-control" styleId="nameValidator"/></td>
+                  				<td><html:text name="DivisionAdminForm" property="divisionBean.divisionName" styleClass="form-control" styleId="nameValidator" maxlength="50"/></td>
                
                   			</tr>
                   			<tr>
