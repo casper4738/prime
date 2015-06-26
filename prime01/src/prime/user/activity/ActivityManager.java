@@ -27,16 +27,12 @@ public interface ActivityManager {
 
 	public Boolean isAllFinished(Integer taskId) throws SQLException;
 	
-
-	
-	
-	
 	
 	public List<ActivityBean> getToDoListById(Integer id) throws SQLException;
 	
-	public List<ActivityBean> getCurrentListActivity(Integer id,String currentDate) throws SQLException;
+	public List<ActivityBean> getCurrentListActivity(Integer employeeId,String currentDate) throws SQLException;
 	
-	public List<ActivityBean> getActivityRangeTime(Integer id) throws SQLException;
+	public List<ActivityBean> getActivityRangeTime(Integer activityId, String currentDate) throws SQLException;
 	
 	public void insertToDoList(Integer receiverId, Integer activityId) throws SQLException;
 	

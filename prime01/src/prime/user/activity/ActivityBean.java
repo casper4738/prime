@@ -9,7 +9,7 @@ public class ActivityBean extends TaskBean {
 	private String activityName;
 	private String activityDescription;
 	private String activityChangeNote;
-	private String activityLastStatus;
+	private Integer activityLastStatus;
 	private java.sql.Date activityChangeDate;
 	
 	public ActivityBean() {
@@ -56,11 +56,11 @@ public class ActivityBean extends TaskBean {
 		this.activityChangeNote = activityChangeNote;
 	}
 
-	public String getActivityLastStatus() {
+	public Integer getActivityLastStatus() {
 		return activityLastStatus;
 	}
 
-	public void setActivityLastStatus(String activityLastStatus) {
+	public void setActivityLastStatus(Integer activityLastStatus) {
 		this.activityLastStatus = activityLastStatus;
 	}
 
@@ -71,5 +71,4 @@ public class ActivityBean extends TaskBean {
 	public void setActivityChangeDate(java.sql.Date activityChangeDate) {
 		this.activityChangeDate = activityChangeDate;
 	}
-
 }
