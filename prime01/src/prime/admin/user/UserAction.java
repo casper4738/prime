@@ -39,6 +39,7 @@ public class UserAction extends Action {
 			return mapping.findForward("edit");
 		} else if (Constants.Task.DOADD.equals(userForm.getTask())) {
 			userForm.getUserBean().setEmployeeId(userForm.getEmployeeId());
+			userForm.getUserBean().setUpdateBy("dedy");
 			tmpManager.insert(userForm.getUserBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOLOCK.equals(userForm.getTask())) {
