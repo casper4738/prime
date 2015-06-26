@@ -24,7 +24,6 @@
 		}
 		
 		function doSetRole(){
-				alert("masuk");
 			  var tempRoleId="";
 			  for(var i=0; i < document.forms[0].roleId.length; i++)
 			  {
@@ -33,11 +32,9 @@
 				   tempRoleId+=document.forms[0].roleId[i].value+","
 			   }
 			  }
-			  alert("masuk lagi "+tempRoleId);
 			  tempRoleId = tempRoleId.substring(0, tempRoleId.length - 1);
 			  document.forms[0].tempRoleId.value=tempRoleId;
 			  
-			  alert(tempRoleId+" masuk lagi wooy " + document.forms[0].tempRoleId.value)
 			  var tmpForm = document.forms[0];
 			  menuLoadHandler(tmpForm.action, serialize(tmpForm));
 			 }
@@ -57,63 +54,48 @@
 <body class="skin-blue sidebar-mini">
 	
 	<section class="content-header">
-		<h1>Project<small>management project</small>
-		</h1>
+		<h1>Project User</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Project</li>
+			<li><i class="fa fa-dashboard"></i> Home</li>
+			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
+			<li class="active">Project Detail</li>
 		</ol>
 	</section>
 
 	<section class="content">
 	<div class="row">
 		<div class="col-xs-12"><div class="box">
-			<div class="box-header"><h3 class="box-title">Add New Project Member</h3></div>
+			<div class="box-header"><h3 class="box-title-center">Add New Project Member</h3></div>
 			<div class="box-body">
                 	<html:form action="/ProjectUser">
-                		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.Project.DOCREATEMEMBER%>"/>
+                		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.PROJECT.DOCREATEMEMBER%>"/>
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectName" />
                 	    <html:hidden name="ProjectUserForm" property="employeeId" />
                 	    <html:hidden name="ProjectUserForm" property="tempRoleId" />
                 	    <html:hidden name="ProjectUserForm" property="projectId" />
-                		<table class="form-input" align="center">
-                			<tr>
-                				<td>Employee Name</td>
+                		<table class="form-input" align="center" style="width:60%" >
+                			<tr><td width="200px">Employee Name</td>
                 				<td>:</td>
                 				<td class="input-group">
                 					<html:text name="ProjectUserForm" property="projectBean.employeeName" styleClass="form-control" styleId="employeeName" disabled="true"/>
 	               					<span class="input-group-btn">
                     					<input type="button" class="btn btn-info" type="button" onclick="openModalHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
 						            </span>
-								</td>
-                			</tr>
-                			
-                			<tr>
-                				<td>Choose Member Role</td>
-                				<td>:</td>
-                				<td>
-                				 	<!-- <html:select name="ProjectUserForm" property="projectBean.roleBean.roleId" styleId="roleid" styleClass="form-control">
-		                  		  		<html:options collection="listAllRoles" property="roleId" labelProperty="roleName"/>
-		                  		  	</html:select> -->
-		                  		  	
-		                  		  	<logic:notEmpty name="listAllRoles">
+							</td></tr>
+                			<tr><td valign="top">Choose Member Role</td>
+                				<td valign="top">:</td>
+                				<td><logic:notEmpty name="listAllRoles">
 		                  		  		<logic:iterate id="iterate" name="listAllRoles">
-		                  		  			
-		                  		  			<html:checkbox property="roleId" value="${iterate.roleId }" /> <bean:write name="iterate" property="roleName"/><br>
+		                  		  			<html:checkbox property="roleId" value="${iterate.roleId}" /> <bean:write name="iterate" property="roleName"/><br>
 		                  		  		</logic:iterate>
 		                  		  	</logic:notEmpty>
-		                  		  	
-		                  		  	
                 				</td>
-                				
                 			</tr>
-                			
-                			<tr>
-                				<td colspan="3" align="center">
+                			<tr><td colspan="3" align="center">
                 					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="doSetRole()"/>
                 					<input type="button" class="btn btn-default" value='Cancel' onclick="flyToBack(
-	                        		'<%=Constants.Task.Project.GOTOPROJECTDETAIL %>', 
+	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
 	                        		'<bean:write name="ProjectUserForm" property="projectBean.projectId"/>')">
                 				</td>
                 			</tr>
@@ -124,7 +106,5 @@
         	</div>
         	</div>
 	</section>
-		
-		
 </body>
 </html>

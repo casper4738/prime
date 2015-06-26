@@ -46,8 +46,10 @@ public interface Constants {
 			final String GOTOTASKMEMBER		= "p02";
 			final String GOTOCREATETASK		= "p03";
 			final String GOTOCREATEMEMBER	= "p04";
-			final String DOCREATETASK		= "p05";
-			final String DOCREATEMEMBER		= "p06";
+			final String GOTOEDITMEMBER		= "p05";
+			final String DOCREATETASK		= "p06";
+			final String DOCREATEMEMBER		= "p07";
+			final String DOEDITMEMBER		= "p08";
 		}
 		
 		interface TASK {

@@ -36,6 +36,17 @@
 			tmpForm.projectId.value = value;
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
+		
+	
+		/* function dari indra */
+		/* $(document).ready(function () {
+			$('.btnCancel').on('click',function (){
+				var task= $('#hdTask').val();
+			     var assignTo = $(this).closest('tr').find('.assTo').val(); 
+				 alert(task);
+			});
+			
+	    }); */
 	</script>
 	<!-- End JS -->
 </head>
@@ -44,7 +55,7 @@
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
-			<li class="active">Project</li>
+			<li class="active">Manage Project</li>
 		</ol>
 	</section>
 
@@ -53,7 +64,7 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title">Projects</h3></div>
 			
-			<p><span class="button-add btn btn-app bg-olive" onclick="javascript:flyToPage('<%=Constants.Task.GOTOADD%>')">
+			<p><span class="button-add btn btn-app bg-olive btnCancel" onclick="javascript:flyToPage('<%=Constants.Task.GOTOADD%>')">
                    <i class="fa fa-edit"></i>Add
                   </span>
                   <p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
@@ -66,7 +77,7 @@
 				</div>
 				<div class="search-table">
 					<html:form action="<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>" method="post">
-						<html:hidden property="task"/>
+						<html:hidden property="task" styleId="hdTask"/>
 						<html:hidden name="ProjectUserForm" property="projectId"/>
 						<html:select name="ProjectUserForm" property="columnSearch">
 							<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
@@ -91,7 +102,9 @@
                 <logic:notEmpty name="listProject">
 					<logic:iterate id="iter" name="listProject">
 	                	<tr>
-	                	    <td><bean:write name="iter" property="projectName"/></td>
+	                	    <td>
+	                	    	<html:hidden property="projectName" name="iter" styleClass="assTo"/>
+	                	    <bean:write name="iter" property="projectName"/></td>
 	                	    <td><bean:write name="iter" property="projectDescription"/></td>
 	                	    <td><bean:write name="iter" property="projectAssigner"/></td>
 	                	    <td><bean:write name="iter" property="projectStartDate" format="dd MMMM yyyy"/></td>
@@ -102,9 +115,8 @@
                 	    		</jsp:include>
               	    			</td>
 	                        <td align="center">
-	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail(
-	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
-	                        		'<bean:write name="iter" property="projectId"/>')">
+	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' 
+		                        	onclick="flyToTaskDetail('<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', '<bean:write name="iter" property="projectId"/>')" >
 	                        </td>
 	                    </tr>
                     </logic:iterate>

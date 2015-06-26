@@ -52,13 +52,11 @@ public class ProjectManagerImpl implements ProjectManager {
 	}
 	
 	@Override
-	public List<ProjectBean> getListRoles(Integer employeeId, Integer projectId)
-			throws SQLException {
-		// TODO Auto-generated method stub
+	public List<RoleOption> getRoleByProjectMember(Integer employeeId, Integer projectId) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("employeeId", employeeId);
 		map.put("projectId", projectId);
-		return mapper.queryForList("project.getProjectRoles", map);
+		return mapper.queryForList("project.getRoleByProjectMember", map);
 	}
 	
 	
@@ -130,6 +128,20 @@ public class ProjectManagerImpl implements ProjectManager {
 		}
 	}
 
+	
+	
+	@Override
+	public void updateMemberRole(Integer projectMemberId) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			mapper.startTransaction();
+			mapper.update("project.updateRoleMember", projectMemberId);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+
 	@Override
 	public void insertDetail(ProjectBean e) throws SQLException {
 		try {
@@ -164,5 +176,17 @@ public class ProjectManagerImpl implements ProjectManager {
 		return (Integer) mapper.queryForObject("project.getProjectMemberIdByAll", map);
 	}
 
+	@Override
+	public Integer getStatusRoleMember(Integer projectMemberId, Integer roleId,
+			Integer projectMemberStatus) throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectMemberId", projectMemberId);
+		map.put("roleId", roleId);
+		map.put("projectMemberStatus", projectMemberStatus);
+		return (Integer) mapper.queryForObject("project.getStatusRoleMember", map);
+	}
+
+	
 
 }

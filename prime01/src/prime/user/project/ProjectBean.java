@@ -20,7 +20,6 @@ public class ProjectBean extends EmployeeBean {
 	private String projectChangeNote;
 	private String projectAssignerName;
 	private String projectReceiverName;
-	private String tempRoleId;
 	private Date projectStartDate;
 	private Date projectEstimateDate;
 	private TaskBean taskBean;
@@ -171,14 +170,6 @@ public class ProjectBean extends EmployeeBean {
 
 	public void setRoleBean(RoleBean roleBean) {
 		this.roleBean = roleBean;
-	}
-
-	public String getTempRoleId() {
-		return tempRoleId;
-	}
-
-	public void setTempRoleId(String tempRoleId) {
-		this.tempRoleId = tempRoleId;
 	}
 
 }
