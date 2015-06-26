@@ -122,7 +122,9 @@ function modalLoadHandler(targettedData, targettedObject){
 	});
 	
 	//##1.Register Targetted Object For Value Receiver
-	modalTargettedObject = targettedObject;
+	if(targettedObject != null){
+		modalTargettedObject = targettedObject;
+	}
 	
 	//##1.Show The Modal
 	$('#content-modal').modal({ show:true, backdrop: false });
@@ -163,7 +165,6 @@ function modalSubmitReturnValue(retValue,retForm){
 			
 			var temp = document.getElementById('divisionName').value;
 			temp = temp.trim();
-			
 			if(temp == "null"){
 				document.getElementById('isDivision').style.display="none";
 				document.getElementById('chooseDivision').style.display="inline";
