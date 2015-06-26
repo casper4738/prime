@@ -40,6 +40,13 @@ public interface Constants {
 		static final String GOTOEDITDAYOFF	= "t31";
 		static final String DOEDITDAYOFF	= "t32";
 		
+		interface Project {
+			   final String GOTOPROJECTDETAIL = "p01";
+			   final String GOTOTASKMEMBER  = "p02";
+			   final String GOTOCREATETASK  = "p03";
+			   final String DOCREATETASK  = "p04";
+			  }
+		
 		interface TASK {
 			final String GOTOTASKTYPE	= "t101";
 			final String GOTOSUBMIT		= "t102";

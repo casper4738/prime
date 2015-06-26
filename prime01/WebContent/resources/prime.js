@@ -124,7 +124,7 @@ function modalLoadHandler(targettedData, targettedObject){
 	//##1.Register Targetted Object For Value Receiver
 	modalTargettedObject = targettedObject;
 	
-	//##1.Show The Modal
+	//##2.Show The Modal
 	$('#content-modal').modal({ show:true, backdrop: false });
 }
 
@@ -142,7 +142,9 @@ function modalSubmitRefreshPageWithoutReturn(retValue, retForm, refreshedValue, 
     	    $("[data-dismiss=modal]").trigger({ type: "click" });
     	    
     	    //##2.Reload Menu
-    	    menuLoadHandler(refreshedForm, refreshedValue);
+    	    if(refreshedForm != null){
+        	    menuLoadHandler(refreshedForm, refreshedValue);
+    	    }
       },
       
       error: function(){

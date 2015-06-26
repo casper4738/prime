@@ -5,21 +5,20 @@
 		SELECT 
 			COUNT(0)
 		FROM USERS  
-		WHERE LOWER(USERNAME)=LOWER(#name#)
+		WHERE LOWER(USERNAME)=LOWER(#userName#)
 	</select>
 	
 	<select id="isUserValidated" resultClass="java.lang.Integer" parameterClass="java.util.HashMap">
 		SELECT 
 			COUNT(0)
 		FROM USERS  
-		WHERE LOWER(USERNAME)=LOWER(#username#) AND
+		WHERE LOWER(USERNAME)=LOWER(#userName#) AND
 			  PASSWORD=dbms_crypto.hash(to_clob(#password#), 2)
 	</select>
 	
-	
 	<select id="getUserDetails" resultClass="prime.login.LoginBean" parameterClass="java.lang.String">
 		SELECT 
-				USERNAME 		as username,
+				USERNAME 		as userName,
 				IS_ACTIVE_DIR 	as isActiveDirectory,
 				STATUS_USER		as statusUser,
 				LOGIN_SESSION	as loginSession,

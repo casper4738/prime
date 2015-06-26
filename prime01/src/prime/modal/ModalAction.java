@@ -50,6 +50,9 @@ public class ModalAction extends Action {
 		String task = pForm.getTask();
 		
         switch (task) {
+        	case "changePwd" : 
+        		tmpTarget = "changePwd";
+        		break;
 	        case "activityNote" :
         		tmpTarget = "activityNote";
         		request.setAttribute("activityId", pForm.getParam2());

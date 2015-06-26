@@ -14,6 +14,8 @@ public interface UserManager {
 	
 	public UserBean getUserByUsername(String username) throws SQLException;
 	
+	public boolean isUserValidated(String username, String password);
+	
 	public List<UserBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow)
 			throws SQLException;
 	
@@ -22,6 +24,8 @@ public interface UserManager {
 	public Integer getNewId() throws SQLException;
 	
 	public void resetPassword(UserBean e) throws SQLException;
+	
+	public void changePassword(UserBean e) throws SQLException;
 	
 	public void lockUser(UserBean e) throws SQLException;
 	

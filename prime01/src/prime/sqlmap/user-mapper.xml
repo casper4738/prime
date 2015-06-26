@@ -21,6 +21,20 @@
 		WHERE US.USERNAME=#username#
 	</select>
 	
+	<select id="isUserValidated" resultClass="java.lang.Integer" parameterClass="java.util.HashMap">
+		SELECT 
+			COUNT(0)
+		FROM USERS  
+		WHERE LOWER(USERNAME)=LOWER(#userName#) AND
+			  PASSWORD=dbms_crypto.hash(to_clob(#password#), 2)
+	</select>
+	
+	<update id="changePassword" parameterClass="prime.admin.user.UserBean">
+		 UPDATE USERS SET
+		 PASSWORD = dbms_crypto.hash(to_clob(#newPassword#), 2)
+		 WHERE USERNAME = #userName#
+	</update>
+	
 	<update id="update"  parameterClass="prime.admin.user.UserBean">
 		UPDATE USERS SET
 		SYSTEM_LEVEL=#sysLevel# 

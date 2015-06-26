@@ -7,18 +7,20 @@ public class UserBean extends EmployeeBean{
 	private Boolean isActiveDirectory;
 	private Integer sysLevel;
 	private String password;
-	private String userName;
+	private String userName = "Memud";
 	private Date changeDate;
+	private Integer statusUser;
+	private Integer employeeId;
+	private String employeeName;
+	private String newPassword;
+	private String confirmPassword;
+	
 	public Date getChangeDate() {
 		return changeDate;
 	}
 	public void setChangeDate(Date changeDate) {
 		this.changeDate = changeDate;
 	}
-	private Integer statusUser;
-	private Integer employeeId;
-	private String employeeName;
-	
 	public Integer getEmployeeId() {
 		return employeeId;
 	}
@@ -60,6 +62,18 @@ public class UserBean extends EmployeeBean{
 	}
 	public void setStatusUser(Integer statusUser) {
 		this.statusUser = statusUser;
+	}
+	public String getNewPassword() {
+		return newPassword;
+	}
+	public void setNewPassword(String newPassword) {
+		this.newPassword = newPassword;
+	}
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
 	}
 	
 }
