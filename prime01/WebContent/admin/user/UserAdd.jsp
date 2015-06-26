@@ -6,17 +6,28 @@
 <!DOCTYPE html>
 <html>
 <head> 
+	<!-- CSS -->
 	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
+	<!-- End of CSS -->
+	
 	<script type="text/javascript">
-	function flyToEdit() {
-		var tmpForm = document.forms[0]; 
-		tmpForm.task.value = "<%=Constants.Task.DORESET%>";
-		menuLoadHandler(tmpForm.action, serialize(tmpForm));
+	
+	function flyTo(){
+		//Confirm Password
+		var tmpPassword = document.getElementById('password');
+		var tmpConfirmPassword = document.getElementById('confirmPassword');
+		if (tmpPassword.value  == tmpConfirmPassword.value) {
+			var tmpForm = document.forms[0]; 
+			tmpForm.task.value = "<%=Constants.Task.DOADD%>";
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}else{
+			alert("Password does not match");
+		}
 	}
 	
 	function openModalHandler(){
@@ -28,29 +39,32 @@
 		//##1.Accessing Prime Method For Modal Showing
 		modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeUser", $('#result'));
 	}
+	
 	</script>
+	
 </head>
 <body class="skin-blue sidebar-mini">
+
 			<section class="content-header">
-				<h1>Manage User<small>management system</small>
-				</h1>
+				<h1>Manage User</h1>
 				<ol class="breadcrumb">
 					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 					<li class="active">Manage User</li>
+					<li class="active">Add User</li>
 				</ol>
 			</section>
 
 			<section class="content">
 			<div class="row">
-				<div class="col-xs-12"><div class="box">
-					<div align = "center"class="box-header"><h3 class="box-title">Add User</h3></div>
+				<div class="col-xs-12"><div class="box" align="center">
+					<div class="box-header"><h1 class="box-title"><br/><br/><b>Add New User</b><br/><br/></h1></div>
 					<div class="box-body">
-                  	<html:form action="/UserAdmin">
-                  		<html:hidden name="UserAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
+                  	<html:form action="/UserAdmin" styleId= "userForm">
+                  		<html:hidden name="UserAdminForm" property="task"/>
                   		<html:hidden name="UserAdminForm" property="employeeId" />
-                  		<table class="form-input" align="center">
+                  		<table class="form-input" style="width: 500px;">
                   			<tr>
-                  				<td>Employee Name</td>
+                  				<td width="200px">Employee Name</td>
                   				<td>:</td>
                   				<td class="input-group">
 			               			<html:text name="UserAdminForm" property="userBean.employeeName" styleClass="form-control" styleId="employeeName" disabled="true"/>
@@ -67,7 +81,12 @@
                   			<tr>
                   				<td>Password</td>
                   				<td>:</td>
-                  				<td><html:password name="UserAdminForm"  property="userBean.password" styleClass="form-control"/></td>
+                  				<td><html:password name="UserAdminForm"  property="userBean.password" styleClass="form-control" styleId="password"/></td>
+                  			</tr>
+                  			<tr>
+                  				<td>Confirm Password</td>
+                  				<td>:</td>
+                  				<td><html:password name="UserAdminForm"  property="userBean.tmpConfirmPassword" styleClass="form-control" styleId="confirmPassword"/></td>
                   			</tr>
                   			<tr>
                   				<td>Sys Level</td>
@@ -82,23 +101,22 @@
                   			</tr> 
                   			<tr>
                   				<td colspan="3" align="center">
-                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
+                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="flyTo()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
                   			</tr>
                   		</table>
                   	</html:form>
 		        	</div></div>
-		        </div>
+		        </div></div>
 			</section>
-
 	<script src="resources/prime.js"></script>
 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
- 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+
 </body>
 </html>
