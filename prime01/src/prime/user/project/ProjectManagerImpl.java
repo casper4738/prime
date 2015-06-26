@@ -61,6 +61,15 @@ public class ProjectManagerImpl implements ProjectManager {
 		return mapper.queryForList("project.getProjectRoles", map);
 	}
 	
+	
+	
+	@Override
+	public List<ProjectBean> getProjectNamebyProjectId(Integer projectId)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return mapper.queryForList("project.getProjectNamebyProjectId", projectId);
+	}
+
 	@Override
 	public Integer getNewId() throws SQLException {
 		// TODO Auto-generated method stub

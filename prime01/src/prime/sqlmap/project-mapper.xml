@@ -68,6 +68,12 @@
 		        JOIN PROJECT_MEMBERS PMX ON R.ROLE_ID = PMX.ROLE_ID
 		        WHERE   PMX.PROJECT_ID = P.PROJECT_ID AND PMX.EMPLOYEE_ID = E.EMPLOYEE_ID
 		    ) 						AS roleName,
+		    
+		     (SELECT LISTAGG (R.ROLE_ID, ', ') WITHIN GROUP (ORDER BY R.ROLE_NAME)
+				FROM ROLES R
+		        JOIN PROJECT_MEMBERS PMX ON R.ROLE_ID = PMX.ROLE_ID
+		        WHERE   PMX.PROJECT_ID = P.PROJECT_ID AND PMX.EMPLOYEE_ID = E.EMPLOYEE_ID
+		    ) 						AS tempRoleId,
 		    D.DIVISION_NAME 		AS divisionName,
 		    E.EMAIL					AS email,
 		    E.CONTACT_NUMBER 		AS contactNumber,
@@ -224,5 +230,11 @@
 		(#projectMemberId#,#projectId#,#roleBean.roleId#,#employeeId#)
 	</insert>
 	
+	<select id="getProjectNamebyProjectId" parameterClass="java.lang.Integer" resultClass="prime.user.project.ProjectBean">
+		SELECT PROJECT_ID AS projectId,
+		PROJECT_NAME AS projectName
+		FROM PROJECTS
+		WHERE PROJECT_ID=#projectId#
+	</select>
 	
 </sqlMap> 

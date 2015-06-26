@@ -18,12 +18,23 @@
 	
 	<script type="text/javascript">
 	function validateForm() {
-	    var roleName =  document.getElementById('roleValidator').value;
+		document.getElementById('validator').innerHTML="";
+		var specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,."; // specify special characters 
+	    var roleName =  document.getElementById('nameValidator').value;
 	    if (roleName == null || roleName == "") {
 	        document.getElementById('validator').innerHTML="Name must be filled out";
 	        return false;
 	    }
-	    else dosubmit();
+	    else {
+	    	for (var i = 0; i < roleName.length; i++) {
+	    	    if (specialChars.indexOf(roleName.charAt(i)) != -1) { 
+	    			document.getElementById("validator").innerHTML = "Characters are not allowed"; 
+	    			return false; 
+	    		}
+	    	}
+	    	   dosubmit();
+	    }
+	    
 	}
 	</script>
 </head>
@@ -49,16 +60,20 @@
                   			<tr>
                   				<td>Role Name</td>
                   				<td>:</td>
-                  				<td><html:text name="RoleAdminForm" property="roleBean.roleName" styleClass="form-control" styleId="roleValidator" maxlength="50"/></td>
+                  				<td><html:text name="RoleAdminForm" property="roleBean.roleName" styleClass="form-control" styleId="nameValidator" maxlength="50"/></td>
+                  			</tr>
+                  			<tr>
+                  			<td>
+                  			</td>
+                  			<td>
+                  			</td>
+                  				<td> <span  id="validator" style="color: red"> </span> </td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">
                   					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
-                  			</tr>
-                  			<tr>
-                  				<td colspan="3" align="center"> <span  id="validator" style="color: red"> </span> </td>
                   			</tr>
                   		</table>
                   	</html:form>

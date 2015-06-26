@@ -39,7 +39,7 @@
 			<div class="box-body">
                 	<html:form action="/TaskSubordinateUser">
                 		<html:hidden name="TaskSubordinateUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOADD%>"/>
-                		<html:hidden name="TaskHeadUserForm" property="taskId" />
+                		<html:hidden name="TaskSubordinateUserForm" property="taskId" />
                 		<html:hidden name="TaskSubordinateUserForm" property="activityBean.activityId" />
                 		<html:hidden name="TaskSubordinateUserForm" property="activityBean.taskId" />
                 		<html:hidden name="TaskSubordinateUserForm" property="activityBean.activityStatus" />

@@ -209,4 +209,11 @@ public class ActivityManagerImpl implements ActivityManager {
 		map.put("currentDate", currentDate);
 		return mapper.queryForList("activity.getRangeTimeByActivityId", map);
 	}
+
+	@Override
+	public Boolean isAllFinished(Integer taskId, Integer finish, Integer abort)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

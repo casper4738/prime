@@ -1,16 +1,20 @@
 package prime.utility;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 import javax.xml.bind.DatatypeConverter;
 
 public class ImageUtil {
+
+	// resize image
 	public static BufferedImage resizeImage(BufferedImage oriImage, int newWidth, int newHeight) {
 		BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, oriImage.getType());
 		Graphics2D g2 = resizedImage.createGraphics();
@@ -19,52 +23,64 @@ public class ImageUtil {
 		return resizedImage;
 	}
 
-	public static BufferedImage readImage(File fileImage) throws IOException {
-		return ImageIO.read(fileImage);
+	// convert image to buffered image
+	public static BufferedImage convertToBufferedImage(Image source) {
+		int width = source.getWidth(null);
+		int height = source.getHeight(null);
+		BufferedImage dest = new BufferedImage(width, height, 2);
+
+		Graphics2D g2 = (Graphics2D) dest.getGraphics();
+		g2.drawImage(source, 0, 0, null);
+		g2.dispose();
+
+		return dest;
 	}
 
-	public static boolean saveImage(BufferedImage image, String type, File path) throws IOException {
-		return ImageIO.write(image, type, path);
+	// convert image to array
+	public static byte[] convertImageToByte(BufferedImage image, String type) {
+		try {
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(image, type, baos);
+			baos.flush();
+			return baos.toByteArray();
+		} catch (Exception ex) {
+		}
+		return null;
+	}
+
+	// convert image to array
+	public static byte[] convertImageToByte(Image img, String type) {
+		try {
+			BufferedImage image = convertToBufferedImage(img);
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			ImageIO.write(image, type, baos);
+			baos.flush();
+			return baos.toByteArray();
+		} catch (Exception ex) {
+		}
+		return null;
+	}
+
+	// convert byte array back to BufferedImage
+	public static BufferedImage convertByteToImage(byte[] imageInByte) throws Exception{
+		InputStream in = new ByteArrayInputStream(imageInByte);
+		BufferedImage image = ImageIO.read(in);
+		return image;
 	}
 	
 
-	// convert image to byte array
-	public static String encodeToString(String location) {
-		String encoded = null;
-//		File folder = new File("C:\\Users\\Public\\Pictures\\Resource");
-//		File fileImage = new File(folder + "\\Lighthouse.jpg");
-		File fileImage = new File(location);
-		try {
-			FileInputStream imageInFile = new FileInputStream(fileImage);
-			byte imageData[] = new byte[(int) fileImage.length()];
-			imageInFile.read(imageData);
-			encoded = DatatypeConverter.printBase64Binary(imageData);
-			imageInFile.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-		return encoded;
+	public static byte[] decode(String image) {
+		return DatatypeConverter.parseBase64Binary(image);
+	}
+	
+	// save image
+	public static boolean saveImage(BufferedImage image, String type, File path) throws IOException {
+		return ImageIO.write(image, type, path);
 	}
 
-	// convert byte array to image and image resizing
-	public static void decode(String image) {
-		File folder = new File("C:\\Users\\adrian.dp\\git\\prime\\prime01\\WebContent");
-		File folderSub = new File(folder + "\\image");
-		File fileImageExport = new File(folderSub + "\\Lighthouse.jpg");
-		File fileResize = new File("C:\\Users\\adrian.dp\\git\\prime\\prime01\\WebContent\\image\\resize-Lighthouse.jpg");
-		byte[] decoded = DatatypeConverter.parseBase64Binary(image);
-		FileOutputStream imageOutFile;
-		try {
-			imageOutFile = new FileOutputStream(fileImageExport);
-			imageOutFile.write(decoded);
-			imageOutFile.close();
-			BufferedImage originalImage = ImageUtil.readImage(fileImageExport);
-			BufferedImage resizeImage = ImageUtil.resizeImage(originalImage, 300, 300);
-			ImageUtil.saveImage(resizeImage, "JPG", fileResize);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	//read image
+	public static BufferedImage readImage(File fileImage) throws IOException {
+		return ImageIO.read(fileImage);
 	}
-
 	
 }

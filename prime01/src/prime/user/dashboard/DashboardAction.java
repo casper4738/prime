@@ -116,26 +116,26 @@ public class DashboardAction extends Action{
 		tmpDateRequest = PrimeUtil.parseDateStringToDate(pForm.getCurrentDate());
 		tmpDateNow	   = PrimeUtil.parseDateStringToDate(PrimeUtil.setDateToDateString(new Date()));
 		
-		
 		tmpData = new ArrayList<ArrayList<Object>>();
 		tmpCurnListActivity = manager.getCurrentListActivity(101, pForm.getCurrentDate());
+		System.out.println("Size = " + tmpCurnListActivity.size());
 		for(tmpI = 0 ; tmpI < tmpCurnListActivity.size() ; tmpI++){
+			
 			tmpActivityList = new ArrayList<Object>();
 			tmpActivityList.add(tmpCurnListActivity.get(tmpI).getActivityId());
 			tmpActivityList.add(tmpCurnListActivity.get(tmpI).getActivityName());	
-			
 			for(tmpJ = 0 ; tmpJ < Constants.DAILY_TIME.length ; tmpJ++){
 				tmpActivityList.add(false);
 			}
 			tmpK = Constants.DAILY_TIME.length - 1;
-			tmpActivityDetail = manager.getActivityRangeTime(tmpCurnListActivity.get(tmpI).getActivityId(), pForm.getCurrentDate());
 			
+			tmpActivityDetail = manager.getActivityRangeTime(tmpCurnListActivity.get(tmpI).getActivityId(), pForm.getCurrentDate());
 			for(tmpJ = 0 ; tmpJ < tmpActivityDetail.size() ; tmpJ++) {
 				if(tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.PAUSE  ||
 				   tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.FINISH ||
 				   tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.ABORT  ||
 				   tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.SUBMIT ||
-				   tmpActivityDetail.get(tmpJ).getActivityStatus() == Constants.Status.CREATE) {
+				   tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.CREATE) {
 				   tmpLastStatus  = false;
 				} else {
 				   tmpLastStatus  = true;
@@ -146,8 +146,9 @@ public class DashboardAction extends Action{
 					curnTime    = PrimeUtil.parseDateStringToTime(Constants.DAILY_TIME[tmpK]);
 					compTime    = PrimeUtil.parseDateStringToTime(PrimeUtil.setDateToTimeString(tmpActivityDetail.get(tmpJ).getActivityChangeDate()));
 					tmpOverloop = compTime.before(curnTime);
+					System.out.println(curnTime + " _ " + compTime);
 					if(tmpOverloop){
-						tmpActivityList.set(tmpK, tmpLastStatus);
+						tmpActivityList.set(tmpK + 2, tmpLastStatus);
 						tmpK--;
 					} else {
 						//For Extra Checking when the time difference was too small
@@ -185,7 +186,7 @@ public class DashboardAction extends Action{
 				if((boolean)tmpData.get(tmpJ).get(tmpK)){	
 					tmpValueString += "<td bgcolor='green'>";
 				} else {
-					tmpValueString += "<td bgcolor='white' >";
+					tmpValueString += "<td>";
 				}
 				tmpValueString += "</td>";
 			}
