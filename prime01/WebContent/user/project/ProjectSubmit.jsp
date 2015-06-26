@@ -30,22 +30,17 @@
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		$(document).ready(function () {
-	        //alert($('#roleId').val());
-	        
-	        var data = $('#roleId').val();
-			var arr = data.split(', ');
-	       // alert(arr.length);
-	        for(i=0;i<arr.length;i++){
-	        //	alert("Nomor = " + arr[i]);
-	        	var temp = "#" + arr[i].toString();
-	        //	alert(temp);
-	        	$(temp).attr("checked", true);
-	        	
-	        }  
-// 	       $("#1").attr("checked", true);
-// 	        $("#4").attr("checked", true);
-	    });
+	
+		
+		function openModalHandler(){
+			//##0.Preparing Parameter For Modal Showing
+			var tmpDataPosition=2;
+			var tmpTask ="modalTable";
+			var tmpTable ="employeeHead";
+			
+			//##1.Accessing Prime Method For Modal Showing
+			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=projectMember", $('#result'));
+		}
 	</script>
 	
 	<!-- End JS -->
@@ -65,40 +60,34 @@
 	<section class="content">
 	<div class="row">
 		<div class="col-xs-12"><div class="box">
-			<div class="box-header"><h3 class="box-title">Edit Member Role</h3></div>
+			<div class="box-header"><h3 class="box-title">Data Project</h3></div>
 			<div class="box-body">
-                	<html:form action="/ProjectUser"  >
+                	<html:form action="/ProjectUser">
                 		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectName" />
-                		<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner" />
-                		<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver" />
-                		<html:hidden name="ProjectUserForm" property="tempRoleId" styleId="roleId" />
+             			<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
                 		<table class="form-input" align="center">
+                		
                 			<tr>
-                				
-                				<td>
-                				 	<!-- <html:select name="ProjectUserForm" property="projectBean.roleBean.roleId" styleId="roleid" styleClass="form-control">
-		                  		  		<html:options collection="listAllRoles" property="roleId" labelProperty="roleName"/>
-		                  		  	</html:select> -->
-		                  		  	
-		                  		  	<logic:notEmpty name="listAllRoles">
-		                  		  		<logic:iterate id="iterate" name="listAllRoles">
-		                  		  			<input type="checkbox" id='<bean:write name="iterate" property="roleId"/>'> <bean:write name="iterate" property="roleName"/><br>
-		                  		  		</logic:iterate>
-		                  		  	</logic:notEmpty>
-		                  		  	
-		                  		  	
-                				</td>
+                				<td>Project Name</td>
+                				<td>:</td>
+                				<td><html:text name="ProjectUserForm" property="projectBean.projectName" styleClass="form-control"/></td>
+                			</tr>
+                		
+                		
+                			<tr>
+                				<td>Note </td>
+                				<td>:</td>
+                				<td><html:textarea name="ProjectUserForm" property="projectBean.projectDescription" styleClass="form-control"></html:textarea></td>
                 				
                 			</tr>
+                			
                 			<tr>
-                				<td colspan="3" >
+                				<td colspan="3" align="center">
                 					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="dosubmit()"/>
                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                 				</td>
                 			</tr>
-                			
-                			
                 		</table>
                 	</html:form>
                   </div>
@@ -125,31 +114,6 @@
 	<!--/. Modal  -->
 		
 		
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$('#btn-searchassigner').click(function(){
-				//##0.Fetching Data
-		        $.ajax({ 
-	                type    : "POST",
-	                url     : "ProjectUser.do",  // Send the login info to this page
-	                data    : ("task=search-assigner"),
-	                success : function(msg){
-	               				$('#search-modal-body').html(msg);	 						
-	                 		  }
-		        });
-			});
-		});
-		
-		function helmyTest(id){
-	        $.ajax({ 
-                type   : "POST",
-                url    : "ProjectUser.do",  // Send the login info to this page
-                data   : ("task=search-assigner2"),
-                success : function(msg){
-               				$('#search-modal-body').html(msg);	 						
-                 		  }
-	        });
-		}
-	</script>
+	
 </body>
 </html>

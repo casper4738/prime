@@ -36,16 +36,12 @@ public class ProjectAction extends Action {
 		ActivityManager tmpActivityManager	= new ActivityManagerImpl();
 		RoleManager 	tmpRoleManager 		= new RoleManagerImpl();
 		
-		System.out.println("cell 1: "+pForm.getTask());
-		System.out.println("cell 2: "+Constants.Task.Project.DOCREATETASK);
-		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##.Get Data
 			//EmployeeBean tmpTaskAssign 	= tmpEmployeeManager.getEmployeeById(100);
 		//	EmployeeBean tmpTaskReceive = tmpEmployeeManager.getEmployeeById(pForm.getProjectReceiver());
 			
 			//##.Add Data
-			System.out.println("masuk add " + tmpProjectManager.getNewId());
 			
 			//pForm.getProjectBean().setProjectId(manager.getNewId());
 			//pForm.getProjectBean().setProjectAssigner(101);
@@ -56,7 +52,6 @@ public class ProjectAction extends Action {
 		} 
 		else if (Constants.Task.DOADD.equals(pForm.getTask())){
 			//##.Insert Data Task
-			//System.out.println("do "+manager.getNewId());
 			pForm.getProjectBean().setProjectId(tmpProjectManager.getNewId());
 			pForm.getProjectBean().setProjectReceiver(101);
 			pForm.getProjectBean().setProjectLastStatus(1);
@@ -76,7 +71,7 @@ public class ProjectAction extends Action {
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 			setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("success");
-		} else if (Constants.Task.Project.GOTOPROJECTDETAIL.equals(pForm.getTask())){
+		} else if (Constants.Task.PROJECT.GOTOPROJECTDETAIL.equals(pForm.getTask())){
 			//##.View Detail Project
 			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
 			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
@@ -89,7 +84,7 @@ public class ProjectAction extends Action {
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("details");
-		} else if(Constants.Task.Project.GOTOTASKMEMBER.equals(pForm.getTask())){
+		} else if(Constants.Task.PROJECT.GOTOTASKMEMBER.equals(pForm.getTask())){
 			//##. Get Data
 			pForm.setEmployeeBean(tmpEmployeeManager.getEmployeeById(pForm.getEmployeeId()));
 			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
@@ -110,11 +105,10 @@ public class ProjectAction extends Action {
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());			
 			
 			return mapping.findForward("detailMember");
-		} else if(Constants.Task.Project.GOTOCREATETASK.equals(pForm.getTask())){
+		} else if(Constants.Task.PROJECT.GOTOCREATETASK.equals(pForm.getTask())){
 			request.setAttribute("listRoles", tmpRoleManager.getRolesByEmployeeIdAndProjectId(pForm.getProjectBean().getEmployeeId(),  pForm.getProjectBean().getProjectId()));
-			
 			return mapping.findForward("createTask");
-		} else if(Constants.Task.Project.DOCREATETASK.equals(pForm.getTask())){
+		} else if(Constants.Task.PROJECT.DOCREATETASK.equals(pForm.getTask())){
 			
 			pForm.getProjectBean().getTaskBean().setTaskId(tmpTaskManager.getNewId());
 			pForm.getProjectBean().getTaskBean().setTaskAssigner(tmpEmployeeId);
@@ -141,22 +135,46 @@ public class ProjectAction extends Action {
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());	
 			return mapping.findForward("taskDetail");
 		} else if("addmember".equals(pForm.getTask())){
-			System.out.println("addmember");
 			//belum diisi
 			//pForm.getProjectBean().getRoleBean().setRoleId(pForm.getRoleId());
 			//pForm.getProjectBean().setEmployeeId(pFor);
 			request.setAttribute("listAllRoles", tmpRoleManager.getListAllRole());
 			return mapping.findForward("addMember");
-		} else if(Constants.Task.Project.DOCREATEMEMBER.equals(pForm.getTask())){
-			System.out.println("celllllll");
-			pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
+		} else if(Constants.Task.PROJECT.DOCREATEMEMBER.equals(pForm.getTask())){
+			
+			System.out.println("banyak "+pForm.getTempRoleId());
+			String roles=pForm.getTempRoleId();
+			String []rolesSplit=roles.split(",");
+			System.out.println("size "+rolesSplit.length);
+			
 			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeId());
 
 			pForm.setEmployeeId(pForm.getProjectBean().getEmployeeId());
 			pForm.setProjectId(pForm.getProjectBean().getProjectId());
 			
-			tmpProjectManager.insertMember(pForm.getProjectBean());
+			for(int i=0;i<rolesSplit.length;i++){
+				//System.out.println(rolesSplit[i]);
+				pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
+				pForm.getProjectBean().getRoleBean().setRoleId(Integer.valueOf(rolesSplit[i]));
+				tmpProjectManager.insertMember(pForm.getProjectBean());
+			}
+			//tmpProjectManager.insertMember(pForm.getProjectBean());
 			return mapping.findForward("forward");
+		}
+		else if(Constants.Task.TASK.GOTOSUBMIT.equals(pForm.getTask())){
+			System.out.println("id "+pForm.getProjectId());
+			request.setAttribute("projectName", tmpProjectManager.getProjectNamebyProjectId(pForm.getProjectId()));
+			System.out.println("masuk "+pForm.getProjectBean().getProjectName());
+			return mapping.findForward("submitProject");
+		}
+		else if("submitProject".equals(pForm.getTask())){
+			
+		}
+		else if(Constants.Task.ACTIVITY.GOTOEDIT.equals(pForm.getTask())){
+			System.out.println("masuk edit ");
+			request.setAttribute("listAllRoles", tmpRoleManager.getListAllRole());
+			System.out.println("role id "+pForm.getTempRoleId());
+			return mapping.findForward("editMemberRole");
 		}
 		int countRows  = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		List<ProjectBean> list = tmpProjectManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
@@ -170,13 +188,12 @@ public class ProjectAction extends Action {
 		return mapping.findForward("success");
 	}
 
-	private void setPaging(HttpServletRequest request, ProjectForm pForm,
-			int countRows, int page, int view) {
+	private void setPaging(HttpServletRequest request, ProjectForm pForm, int countRows, int page, int view) {
 		// TODO Auto-generated method stub
 		PaginationUtility pageUtil = new PaginationUtility();
 		pageUtil.setCountRows(countRows);
 		pageUtil.setView(view);
-
+		
 		request.setAttribute("totalData", countRows);
 		request.setAttribute("listPage", pageUtil.getListPaging(page));
 		request.setAttribute("pageNow", pageUtil.getPage());

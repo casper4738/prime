@@ -37,17 +37,26 @@
     		    	return alert('File upload not supported!');
     		    var F = this.files;
     		    if(F && F[0]) {
+					var pathFile = document.getElementById("input-image").value;
+					//document.forms[0].path.value = pathFile;
+					var tmppath = URL.createObjectURL(event.target.files[0]);
+					document.forms[0].path.value = tmppath;
     		    	for(var i=0; i<F.length; i++){
     		    		readImage( F[i] );
     		    	}
     		    }
+				alert("file:"+serialize(document.getElementById("tes")  ) );
     		});
     	});
 		
 		function readImage(file) {
 		    var reader = new FileReader();
 		    var image  = new Image();
-		  
+		    
+		    var reader2 = new FileReader();
+		    reader2.readAsArrayBuffer(file);
+		    alert("test = " + reader2);
+		    
 		    reader.readAsDataURL(file);  
 		    reader.onload = function(_file) {
 		        image.src    = _file.target.result;              // url.createObjectURL(file);
@@ -59,7 +68,9 @@
 		            var s = file.size/1024;
 		            	
 	            	if(s <= <%=Constants.MAX_IMAGE_FILESIZE%>){
-		            	$('#upload-preview').html('<img src="'+ this.src +'" style="width:64px;height:64px"> <br/><b>' + w +'x' +h+ ' <br/>'+s +'KB <br/>'+t+' <br>'+n+'<br/></b>');
+	            		
+		            	$('#upload-preview').html('<img src="'+ this.src +'" style="width:64px;height:64px"> <br/><b>' + w +'x' +h+ ' <br/>'+s +'KB <br/>'+t+' <br>'+n+'<br/>	</b>');
+		            	
 	            	} else {
 			            alert("File size too big !!");
 			            
@@ -84,7 +95,28 @@
 		    };
 		    
 		}
-		
+		var imgFile = document.getElementById('submitfile');
+		if (imgFile.files && imgFile.files[0]) {
+		    var width;
+		    var height;
+		    var fileSize;
+		    var reader = new FileReader();
+		    reader.onload = function(event) {
+		        var dataUri = event.target.result,
+		        img = document.createElement("img");
+		        img.src = dataUri;
+		        width = img.width;
+		        height = img.height;
+		        fileSize = imgFile.files[0].size;
+		        alert(width);
+		        alert(height);
+		        alert(fileSize);
+		   };
+		   reader.onerror = function(event) {
+		       console.error("File could not be read! Code " + event.target.error.code);
+		   };
+		   reader.readAsDataURL(imgFile.files[0]);
+		}
 		function openModalHandler(){
 			//##0.Preparing Parameter For Modal Showing
 			var tmpDataPosition=$('#positionId').val();
@@ -92,7 +124,7 @@
 			var tmpTable ="employeeHead";
 			
 			//##1.Accessing Prime Method For Modal Showing
-			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeAdd&param4=0", $('#result'));
+			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeAdd", $('#result'));
 		}
     </script>
 	<!-- End JS -->
@@ -114,98 +146,14 @@
 		<div class="col-xs-12"><div class="box" align="center">
 				<div class="box-header"><h1 class="box-title"><br/><br/><b>Add New Employee</b></h2><br/><br/></div>
 					<div class="box-body">
-			               	<html:form action="/EmployeeAdmin" enctype="multipart/form-data">
+			               	<html:form action="/EmployeeAdmin" enctype="multipart/form-data" styleId="tes">
 			               		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
 			               		<html:hidden name="EmployeeAdminForm" property="managerId"/>
+			               		<html:hidden name="EmployeeAdminForm" property="path"/>
 			               		<html:hidden name="EmployeeAdminForm" property="result" styleId="result"/>
 			               		<table class="form-input" style="width: 500px;">
-			             			<tr>
-			               				<td width="200px">Name</td>
-			               				<td>:</td>
-			               				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control"/></td>
-			               			</tr>
-			               			<tr>
-			               				<td>Address</td>
-			               				<td>:</td>
-			               				<td><html:text name="EmployeeAdminForm" property="employeeBean.address" styleClass="form-control"/></td>
-			               			</tr>
-			               			<tr>
-			               				<td>Birth Date</td>
-			               				<td>:</td>
-			               				<td>
-			               					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-			               				  		<html:text name="EmployeeAdminForm" property="employeeBean.birthdate" styleClass="form-control pull-right" styleId="datepicker_birthdate"/>
-			               				  	</div>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Contact Number</td>
-			               				<td>:</td>
-			               				<td>
-			               					<html:text name="EmployeeAdminForm" property="employeeBean.contactNumber" styleClass="form-control"/>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Email</td>
-			               				<td>:</td>
-			               				<td>
-			               					<html:text name="EmployeeAdminForm" property="employeeBean.email" styleClass="form-control"/>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Gender</td>
-			               				<td>:</td>
-			               				<td>              			
-			               					<html:radio name="EmployeeAdminForm" property="employeeBean.gender" value="0" styleClass="minimal">Male</html:radio>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			               					<html:radio name="EmployeeAdminForm" property="employeeBean.gender" value="1" styleClass="minimal">Female</html:radio>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Position</td>
-			               				<td>:</td>
-			               				<td>
-				               				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control" styleId="positionId">
-				               					<html:options collection="listPosition" property="positionId" labelProperty="positionName" />
-				               				</html:select>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Head</td>
-			               				<td>:</td>
-			               				<td class="input-group">
-			               					<html:text name="EmployeeAdminForm" property="employeeBean.managerName" styleClass="form-control" styleId="headName" disabled="true"/>
-			               					<span class="input-group-btn">
-                      							<input type="button" class="btn btn-info" type="button" onclick="openModalHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
-								            </span>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Division</td>
-			               				<td>:</td>
-				               			<td>
-				               				<div id="isDivision" style="display: none">
-							               		<html:hidden name="EmployeeAdminForm" property="divisionId" />
-				               					<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true" styleId="divisionName"/>
-											</div>
-											<div id="chooseDivision" style="display:inline">
-				               					<html:select name="EmployeeAdminForm" property="divisionId" styleClass="form-control" styleId="divisionId">
-					               					<html:option value="NULL">--All--</html:option>
-					               					<html:options collection="listDivision" property="divisionId" labelProperty="divisionName" />
-					               				</html:select>
-					               			</div>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Hire Date</td>
-			               				<td>:</td>
-			               				<td>
-			               					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-			               				  		<html:text name="EmployeeAdminForm" property="employeeBean.hireDate" styleClass="form-control pull-right" styleId="datepicker_hiredate"/>
-			               				  	</div>
-										</td>
-			               			</tr>
 			               			<tr>
 			               				<td>Profile Picture [Max. <%=Constants.MAX_IMAGE_FILESIZE %> KB]</td>
 			               				<td>:</td>

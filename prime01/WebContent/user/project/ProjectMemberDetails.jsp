@@ -31,6 +31,13 @@
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
+		function flyToBack(task, value) {
+			var tmpForm = document.forms[0]; 
+			tmpForm.task.value = task;
+			tmpForm.projectId.value = value;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+		
 	</script>
 	<!-- End JS -->
 </head>
@@ -46,6 +53,9 @@
 	<section class="content">
 		<div class="row">
 			<div class="col-xs-12"><div class="box">
+				<input type="submit" class="btn btn-primary btn-xs" value='Back' onclick="flyToBack(
+	                        		'<%=Constants.Task.Project.GOTOPROJECTDETAIL %>', 
+	                        		'<bean:write name="ProjectUserForm" property="projectId"/>')">
 				<div class="box-header"><h3 class="box-title-center">Data Project Member</h3></div>
 				<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
 				<tr><td>Member Name : <bean:write name="ProjectUserForm" property="employeeBean.employeeName"/> </td>
@@ -80,6 +90,7 @@
 						<html:hidden name="ProjectUserForm" property="projectBean.employeeName"/>
 						<html:hidden name="ProjectUserForm" property="goToPage"/>
 						<html:hidden name="ProjectUserForm" property="showInPage"/>
+						<html:hidden name="ProjectUserForm" property="projectId"/>
 						<html:select name="ProjectUserForm" property="columnSearch" styleClass="columnSearch">
 							<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 						</html:select>

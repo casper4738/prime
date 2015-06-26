@@ -32,11 +32,24 @@
             $('#datepicker_hiredate').datepicker({
                 format: "yyyy-mm-dd"
             });
+            
+//             <img alt="Embedded Image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIA..." />
+            
+			var pathFile = document.getElementById("input-image").value;
+			//document.forms[0].path.value = pathFile;
+			var tmppath = URL.createObjectURL(event.target.files[0]);
+			document.forms[0].path.value = tmppath;
+            
+            return;
     		$("#input-image").change(function (e) {
     		    if(this.disabled) 
     		    	return alert('File upload not supported!');
     		    var F = this.files;
     		    if(F && F[0]) {
+					var pathFile = document.getElementById("input-image").value;
+					//document.forms[0].path.value = pathFile;
+					var tmppath = URL.createObjectURL(event.target.files[0]);
+					document.forms[0].path.value = tmppath;
     		    	for(var i=0; i<F.length; i++){
     		    		readImage( F[i] );
     		    	}
@@ -47,7 +60,50 @@
 		function readImage(file) {
 		    var reader = new FileReader();
 		    var image  = new Image();
-		  
+		    alert("?????");
+		    $.ajax({
+		        url: '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',
+		        type: "POST",
+		        data: {task : "asd", profpic : file},
+		        processData: false
+		    });
+		    return
+		    var reader2 = new FileReader();
+		    reader2.onprogress  = function(evt){
+			    alert(evt.lengthComputable);
+		        // evt is an ProgressEvent.
+		        if (evt.lengthComputable) {
+		        	//alert(Math.round((evt.loaded / evt.total) * 100));
+		          var percentLoaded = Math.round((evt.loaded / evt.total) * 100);
+		          // Increase the progress bar length.
+		          if (percentLoaded <= 100) {
+		        	  //alert("Trast" + percentLoaded);
+		        	  //$('#progress-barsing').attr("width", (percentLoaded.toString() + '%'));
+		          }
+		        }
+		    };
+		    reader2.onloadend = function(evt) {
+		        if (evt.target.readyState == FileReader.DONE) { // DONE == 2
+		        	alert(evt.target.result);
+		        	var arrBuff = new ArrayBuffer(evt.target.result.length);
+		        	var writer = new Uint8Array(arrBuff);
+		        	for (var i = 0, len = evt.target.result.length; i < len; i++) {
+		        	    writer[i] = evt.target.result.charCodeAt(i);
+		        	}
+// 		          	$.ajax({
+<%-- 		        	    url			: '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>', --%>
+// 		        	    dataType	: 'json',
+// 		        	    type		: 'POST',
+// 		        	    processData : false,
+// 		        	    data		: {task : "asd", profpic : writer}, //your string data
+// 		        	    success		: function (response) {
+// 		        	        alert("hi");
+// 		        	    }
+// 		        	}); 
+ 		        }
+		    };
+		    reader2.readAsBinaryString(file);
+		    
 		    reader.readAsDataURL(file);  
 		    reader.onload = function(_file) {
 		        image.src    = _file.target.result;              // url.createObjectURL(file);
@@ -59,7 +115,9 @@
 		            var s = file.size/1024;
 		            	
 	            	if(s <= <%=Constants.MAX_IMAGE_FILESIZE%>){
-		            	$('#upload-preview').html('<img src="'+ this.src +'" style="width:64px;height:64px"> <br/><b>' + w +'x' +h+ ' <br/>'+s +'KB <br/>'+t+' <br>'+n+'<br/></b>');
+	            		
+		            	$('#upload-preview').html('<img src="'+ this.src +'" style="width:64px;height:64px"> <br/><b>' + w +'x' +h+ ' <br/>'+s +'KB <br/>'+t+' <br>'+n+'<br/>	</b>');
+		            	
 	            	} else {
 			            alert("File size too big !!");
 			            
@@ -84,7 +142,28 @@
 		    };
 		    
 		}
-		
+		var imgFile = document.getElementById('submitfile');
+		if (imgFile.files && imgFile.files[0]) {
+		    var width;
+		    var height;
+		    var fileSize;
+		    var reader = new FileReader();
+		    reader.onload = function(event) {
+		        var dataUri = event.target.result,
+		        img = document.createElement("img");
+		        img.src = dataUri;
+		        width = img.width;
+		        height = img.height;
+		        fileSize = imgFile.files[0].size;
+		        alert(width);
+		        alert(height);
+		        alert(fileSize);
+		   };
+		   reader.onerror = function(event) {
+		       console.error("File could not be read! Code " + event.target.error.code);
+		   };
+		   reader.readAsDataURL(imgFile.files[0]);
+		}
 		function openModalHandler(){
 			//##0.Preparing Parameter For Modal Showing
 			var tmpDataPosition=$('#positionId').val();
@@ -92,7 +171,7 @@
 			var tmpTable ="employeeHead";
 			
 			//##1.Accessing Prime Method For Modal Showing
-			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeAdd&param4=0", $('#result'));
+			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeAdd", $('#result'));
 		}
     </script>
 	<!-- End JS -->
@@ -114,104 +193,28 @@
 		<div class="col-xs-12"><div class="box" align="center">
 				<div class="box-header"><h1 class="box-title"><br/><br/><b>Add New Employee</b></h2><br/><br/></div>
 					<div class="box-body">
-			               	<html:form action="/EmployeeAdmin" enctype="multipart/form-data">
-			               		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
+			               	<html:form action="/EmployeeAdmin" enctype="multipart/form-data" styleId="tes">
+			               		<html:hidden name="EmployeeAdminForm" property="task" value="bytearray"/>
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
 			               		<html:hidden name="EmployeeAdminForm" property="managerId"/>
+			               		<html:hidden name="EmployeeAdminForm" property="path"/>
 			               		<html:hidden name="EmployeeAdminForm" property="result" styleId="result"/>
 			               		<table class="form-input" style="width: 500px;">
-			             			<tr>
-			               				<td width="200px">Name</td>
-			               				<td>:</td>
-			               				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control"/></td>
-			               			</tr>
-			               			<tr>
-			               				<td>Address</td>
-			               				<td>:</td>
-			               				<td><html:text name="EmployeeAdminForm" property="employeeBean.address" styleClass="form-control"/></td>
-			               			</tr>
-			               			<tr>
-			               				<td>Birth Date</td>
-			               				<td>:</td>
-			               				<td>
-			               					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-			               				  		<html:text name="EmployeeAdminForm" property="employeeBean.birthdate" styleClass="form-control pull-right" styleId="datepicker_birthdate"/>
-			               				  	</div>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Contact Number</td>
-			               				<td>:</td>
-			               				<td>
-			               					<html:text name="EmployeeAdminForm" property="employeeBean.contactNumber" styleClass="form-control"/>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Email</td>
-			               				<td>:</td>
-			               				<td>
-			               					<html:text name="EmployeeAdminForm" property="employeeBean.email" styleClass="form-control"/>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Gender</td>
-			               				<td>:</td>
-			               				<td>              			
-			               					<html:radio name="EmployeeAdminForm" property="employeeBean.gender" value="0" styleClass="minimal">Male</html:radio>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-			               					<html:radio name="EmployeeAdminForm" property="employeeBean.gender" value="1" styleClass="minimal">Female</html:radio>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Position</td>
-			               				<td>:</td>
-			               				<td>
-				               				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control" styleId="positionId">
-				               					<html:options collection="listPosition" property="positionId" labelProperty="positionName" />
-				               				</html:select>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Head</td>
-			               				<td>:</td>
-			               				<td class="input-group">
-			               					<html:text name="EmployeeAdminForm" property="employeeBean.managerName" styleClass="form-control" styleId="headName" disabled="true"/>
-			               					<span class="input-group-btn">
-                      							<input type="button" class="btn btn-info" type="button" onclick="openModalHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
-								            </span>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Division</td>
-			               				<td>:</td>
-				               			<td>
-				               				<div id="isDivision" style="display: none">
-							               		<html:hidden name="EmployeeAdminForm" property="divisionId" />
-				               					<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true" styleId="divisionName"/>
-											</div>
-											<div id="chooseDivision" style="display:inline">
-				               					<html:select name="EmployeeAdminForm" property="divisionId" styleClass="form-control" styleId="divisionId">
-					               					<html:option value="NULL">--All--</html:option>
-					               					<html:options collection="listDivision" property="divisionId" labelProperty="divisionName" />
-					               				</html:select>
-					               			</div>
-										</td>
-			               			</tr>
-			               			<tr>
-			               				<td>Hire Date</td>
-			               				<td>:</td>
-			               				<td>
-			               					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-			               				  		<html:text name="EmployeeAdminForm" property="employeeBean.hireDate" styleClass="form-control pull-right" styleId="datepicker_hiredate"/>
-			               				  	</div>
-										</td>
-			               			</tr>
 			               			<tr>
 			               				<td>Profile Picture [Max. <%=Constants.MAX_IMAGE_FILESIZE %> KB]</td>
 			               				<td>:</td>
 			               				<td>
-			               				  <html:file styleId="input-image" accept="image/*" name="EmployeeAdminForm" property="employeeBean.filePic"/>
+			               				  <html:file styleId="input-image" accept="image/*" name="EmployeeAdminForm" property="profpic"/>
 										</td>
+			               			</tr>
+			               			<tr>
+			               				<td colspan="3">
+							                  <div class="progress">
+							                    <div class="progress-bar progress-bar-green" role="progressbar" id="progress-barsing" style="width:0%">
+							                    </div>
+							                  </div>
+			               				</td>
 			               			</tr>
 			               			<tr>
 			               				<td></td>
@@ -222,7 +225,7 @@
 			               			</tr>
 			               			<tr>
 			               				<td colspan="3" align="center">
-			               					<input type="button" value="Save" class="btn btn-primary"  onclick="dosubmit()"/> 
+			               					<input type="submit" value="Save" class="btn btn-primary" /> 
 			               					<input type="button" value="Cancel" class="btn btn-default" onclick="flyToPage('<%=Constants.Task.BACKTOMAIN%>')"/>					
 			               				</td>
 			               			</tr>

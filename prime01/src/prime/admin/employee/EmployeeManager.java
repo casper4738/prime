@@ -16,6 +16,8 @@ public interface EmployeeManager {
 	
 	public void update(EmployeeBean e) throws SQLException;
 	
+	/*public void updateWeekend(EmployeeBean e) throws SQLException;*/
+	
 	public void updatePositionDivision(EmployeeBean e) throws SQLException;
 	
 	public void updateStatusUser(Integer employeeId) throws SQLException;
@@ -24,9 +26,15 @@ public interface EmployeeManager {
 	
 	public void delete(Integer id) throws SQLException;
 	
+	public void deleteDayOff(Integer id, String startDate) throws SQLException;
+	
+	public void deleteWeekEnd(Integer id, String startFrom) throws SQLException;
+	
 	public EmployeeBean getEmployeeById(Integer id) throws SQLException;
 	
 	public List<EmployeeBean> getListWeekendByEmployeeId(Integer id) throws SQLException;
+	
+	public EmployeeBean getEmployeeWeekendByIdAndStartFrom(Integer id, String startFrom) throws SQLException;
 	
 	public List<EmployeeBean> getListDayoffByEmployeeId(Integer id) throws SQLException;
 	
@@ -38,6 +46,19 @@ public interface EmployeeManager {
 	
 	public List<EmployeeBean> getListByColumnAndDivision(String columnSearch, String value, Integer divisionId, Integer startRow, Integer endRow)
 			throws SQLException;
+	
+	/*select employee by tree and division and level  */
+	public List<EmployeeBean> getListByTreeWithDivision(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
+			throws SQLException;
+	
+	public Integer getCountListByTreeWithDivision(String columnSearch, String value, Integer employeeId)  throws SQLException;
+	/* end select employee by tree and division and level  */
+	
+	/*select employee by tree and level  */
+	public List<EmployeeBean> getListByTreeWithoutDivision(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
+			throws SQLException;
+	public Integer getCountListByTreeWithoutDivision(String columnSearch, String value, Integer employeeId)  throws SQLException;
+	/* end select employee by tree and level  */
 	
 	public Integer getCountByColumnEmployeeHead(String columnSearch, String value, Integer positionLevel, String paramCondition, Integer employeeId) throws SQLException;
 	

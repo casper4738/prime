@@ -69,8 +69,8 @@
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
 					<html:text name="TaskHeadUserForm" property="search" styleClass="textSearch"/>
-					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('search')" value='Search'/>
-					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchAll('search')" value='Show All'/>
+					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('<bean:write name="TaskHeadUserForm" property="task" />')" value='Search'/>
+					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchAll('<bean:write name="TaskHeadUserForm" property="task" />')" value='Show All'/>
 				</html:form>
 			</div>
 			<!-- End Of Search Handler -->

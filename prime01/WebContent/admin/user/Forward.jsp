@@ -37,9 +37,5 @@
 	<script>flyToForward('success', '<bean:message key="label.message.lock"/>')</script>
 </logic:equal>
 
-<logic:equal name="UserAdminForm" property="task" value="<%=Constants.Task.DOUNLOCK%>">
-	<script>flyToForward('success', '<bean:message key="label.message.unlock"/>')</script>
-</logic:equal>
-
 </body>
 </html>

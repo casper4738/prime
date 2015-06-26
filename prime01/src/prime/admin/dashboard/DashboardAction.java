@@ -2,7 +2,6 @@ package prime.admin.dashboard;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +37,6 @@ public class DashboardAction extends Action {
 		String strDayOff = "F7F707";
 		String strDayOff2 = "#f56954";
 		tmpManager.getListByYear(pForm.getYear());
-		System.out.println("asd" + pForm.getEmployeeId());
 		empManager.getListDayoffByEmployeeId(pForm.getEmployeeId());
 		String str;
 
@@ -64,27 +62,22 @@ public class DashboardAction extends Action {
 
 		for (EmployeeBean e : empManager.getListDayoffByEmployeeId(pForm
 				.getEmployeeId())) {
-			System.out.println(pForm.getEmployeeId());
 			Calendar c = Calendar.getInstance();
 			c.setTime(e.getStartDate());
 			int yStart = c.get(Calendar.YEAR);
 			int mStart = c.get(Calendar.MONTH);
 			int dStart = c.get(Calendar.DATE);
-			System.out.println(e.getStartDate());
 
 			c.setTime(e.getEndDate());
 			int yEnd = c.get(Calendar.YEAR);
 			int mEnd = c.get(Calendar.MONTH);
 			int dEnd = c.get(Calendar.DATE)+1;
-			System.out.println(e.getEndDate());
-
 			str = "{" + "title: '" + e.getDescriptionDayOff() + "', "
 					+ "start: new Date(" + yStart + ", " + mStart + ", "
 					+ dStart + "), " + "end: new Date(" + yEnd + ", " + mEnd
 					+ ", " + dEnd + ")," + "backgroundColor: '" + strDayOff
 					+ "', " + "borderColor: '" + strDayOff2 + "', " + "},";
 			list.add(str);
-			System.out.println(e.getDescriptionDayOff());
 		}
 
 		//##1.Attribute for Dashboard Show

@@ -38,6 +38,8 @@ public interface ProjectManager {
 	
 	public List<ProjectBean> getListProjectMemberDetails(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId)
 			throws SQLException;
+	
+	public List<ProjectBean> getProjectNamebyProjectId(Integer projectId) throws SQLException;
 
 	public Integer getProjectMemberIdByAll(ProjectBean e) throws SQLException;
 	

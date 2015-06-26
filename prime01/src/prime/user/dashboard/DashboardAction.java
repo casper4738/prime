@@ -197,7 +197,7 @@ public class DashboardAction extends Action{
 			tmpValueString += tmpData.get(tmpJ).get(0); 
 			tmpValueString += "</td>";
 			for(int tmpK = 1 ; tmpK < tmpData.get(tmpJ).size() ; tmpK++){
-				if((boolean)tmpData.get(tmpJ).get(tmpK)){	
+				if((Boolean)tmpData.get(tmpJ).get(tmpK)){	
 					tmpValueString += "<td bgcolor='green'>";
 				} else {
 					tmpValueString += "<td >";

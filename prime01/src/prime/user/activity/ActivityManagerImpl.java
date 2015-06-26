@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import prime.constants.Constants;
 import prime.utility.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -64,8 +65,8 @@ public class ActivityManagerImpl implements ActivityManager {
 	@Override
 	public ActivityBean getActivityDetailById(Integer activityId, String activityChangeDate) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("activityId", activityId);
-		map.put("activityChangeDate", activityChangeDate);
+		map.put("paramActivityId", activityId);
+		map.put("paramActivityChangeDate", activityChangeDate);
 		return (ActivityBean) mapper.queryForObject("activity.getDetail", map);
 	}
 	
@@ -114,8 +115,12 @@ public class ActivityManagerImpl implements ActivityManager {
 	}
 	
 	
-	public Boolean isAllFinished(Integer taskId) throws SQLException {
-		return (Boolean) mapper.queryForObject("activity.isAllFinished",taskId);
+	public Boolean isAllFinished(Integer taskId, Integer finish, Integer abort) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("taskId", taskId);
+		map.put("finish", finish);
+		map.put("abort", abort);
+		return (Boolean) mapper.queryForObject("activity.isAllFinished", map);
 	}
 
 	@Override

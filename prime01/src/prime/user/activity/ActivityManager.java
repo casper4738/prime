@@ -25,7 +25,7 @@ public interface ActivityManager {
 
 	public Integer getNewId() throws SQLException;
 
-	public Boolean isAllFinished(Integer taskId) throws SQLException;
+	public Boolean isAllFinished(Integer taskId, Integer finish, Integer abort) throws SQLException;
 	
 
 	

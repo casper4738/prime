@@ -53,12 +53,12 @@
 <body class="skin-blue sidebar-mini">
 	<section class="content">
        	<html:form action="/TaskHeadUser" styleId="currentForm">
-       		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.TASK.DOABORT%>"/>
+       		<html:hidden name="TaskHeadUserForm" property="task" value="${task}"/>
        		<html:hidden name="TaskHeadUserForm" property="taskBean.taskId" value="${taskId}"/>
        		<html:hidden name="TaskHeadUserForm" property="taskId" value="${taskId}"/>
        		<table class="form-input" align="center" style="width:100%">
        			<tr><td>Note</td></tr>
-       			<tr><td><html:textarea name="TaskHeadUserForm" property="activityBean.activityChangeNote" styleClass="form-control" rows="8"/></td></tr>
+       			<tr><td><html:textarea name="TaskHeadUserForm" property="taskBean.taskChangeNote" styleClass="form-control" rows="8"/></td></tr>
        		</table>
        		
        		<center>

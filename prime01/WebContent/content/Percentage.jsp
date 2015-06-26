@@ -13,7 +13,15 @@
 	${param.percentage - 1}
 </logic:equal>
 
+<logic:equal name="status" value='<%=Constants.Status.ABORT+""%>'>
+	${param.percentage - 1}
+</logic:equal>
+
 <logic:notEqual name="status" value='<%=Constants.Status.SUBMIT+""%>'>
-	${param.percentage}
+	<logic:notEqual name="status" value='<%=Constants.Status.REJECT+""%>'>
+		<logic:notEqual name="status" value='<%=Constants.Status.ABORT+""%>'>
+			${param.percentage}
+		</logic:notEqual>
+	</logic:notEqual>
 </logic:notEqual>
 %

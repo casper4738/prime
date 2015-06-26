@@ -103,7 +103,7 @@
               	    			</td>
 	                        <td align="center">
 	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail(
-	                        		'<%=Constants.Task.Project.GOTOPROJECTDETAIL %>', 
+	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
 	                        		'<bean:write name="iter" property="projectId"/>')">
 	                        </td>
 	                    </tr>

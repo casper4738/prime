@@ -32,6 +32,7 @@
 		}
 		
 		function flyToChangeStatusAct(task, activityId, activityChangeDate) {
+			alert(activityId+" | "+activityChangeDate) ;
 			var tmpForm = document.forms[0];
 			tmpForm.task.value = task;
 			tmpForm.activityId.value = activityId;
@@ -73,39 +74,25 @@
 			<tr><td>Start Date : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskStartDate" format="dd MMMM yyyy"/> </td>
 				<td>Task Receiver : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskReceiverName"/> </td>
 			</tr><tr><td>Estimated Date : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskEstimateDate" format="dd MMMM yyyy" />
-				</td><td>Status : </td>
+				</td><td>Status : 
+						<jsp:include page="/content/Status.jsp">
+		  	    			<jsp:param name="status" value="${TaskSubordinateUserForm.taskBean.taskLastStatus}" />
+		  	    		</jsp:include>
+				</td>
 			</tr>
 			<tr><td colspan="2">Description : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskDescription" /> </td></tr>
 			</table>
 			
 			
 			<p><span class="message"><bean:write name="TaskSubordinateUserForm" property="message" /></span></p>
-			<br/><br/>
-			<div class="form-action"><table align="center">
-               <tr> <td style="padding:5px;">
-	               		<logic:notEqual name="isAllFinished" value="true">
-		               		<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
-	               		</logic:notEqual>
-               			<logic:equal name="isAllFinished" value="true">
-	               			<logic:equal name="TaskSubordinateUserForm" property="taskBean.taskAssigner" value="${TaskHeadUserForm.taskBean.taskReceiver}">
-		               			<input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/>
-	               			</logic:equal>
-	               		</logic:equal>
-              			<logic:equal name="isAlreadySubmit" value="true">
-	               			<logic:notEqual name="TaskSubordinateUserForm" property="taskBean.taskAssigner" value="${TaskHeadUserForm.taskBean.taskReceiver}">
-		               			<input type="button" value="Approval" class="btn btn-sm  btn-success" onclick="flyToPage('<%=Constants.Task.TASK.DOAPPROVAL%>')"/>
-		               			<input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="doTaskAct('<%=Constants.Task.TASK.DOREJECT%>')"/>
-	               			</logic:notEqual>
-	               		</logic:equal>
-	               		<logic:equal name="isAlreadyReject" value="true">
-	               			<logic:notEqual name="TaskSubordinateUserForm" property="taskBean.taskAssigner" value="${TaskHeadUserForm.taskBean.taskReceiver}">
-		               			<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
-		               			<input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/>
-	               			</logic:notEqual>
-	               		</logic:equal>
-	               	</td>
-               </tr>
-            </table></div>
+			<jsp:include page="/content/ButtonTaskStatus.jsp">
+				<jsp:param name="taskId" value="${TaskSubordinateUserForm.taskId}" />
+    			<jsp:param name="taskAssigner" value="${TaskSubordinateUserForm.taskBean.taskAssigner}" />
+    			<jsp:param name="taskReceiver" value="${TaskSubordinateUserForm.taskBean.taskReceiver}" />
+    			<jsp:param name="isAllFinished" value="${isAllFinished}" />
+    			<jsp:param name="isAlreadySubmit" value="${isAlreadySubmit}" />
+    			<jsp:param name="isAlreadyReject" value="${isAlreadyReject}" />
+    		</jsp:include>
 			
 			<div class="show-in-page">
 				Show per page
@@ -127,7 +114,8 @@
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
 					<html:text name="TaskSubordinateUserForm" property="search" styleClass="textSearch"/>
-					<input type="submit" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOEDIT%>')" class="buttonSearch myButton" value='Search'>
+					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('<bean:write name="TaskSubordinateUserForm" property="task" />')" value='Search'/>
+					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchAll('<bean:write name="TaskSubordinateUserForm" property="task" />')" value='Show All'/>
 				</html:form>
 			</div>
 			<div class="box-body">
@@ -145,17 +133,21 @@
 	                	<tr>
 	                		<td width="250px"><bean:write name="iter" property="activityName"/></td>
 	                		<td><bean:write name="iter" property="activityDescription"/></td>
-	                		<td align="center" width="150px"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy hh:mm:ss"/></td>
+	                		<td align="center" width="150px"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy HH:mm:ss"/></td>
 	                		<td align="center" width="80px">
 		                		<jsp:include page="/content/Status.jsp">
                 	    			<jsp:param name="status" value="${iter.activityLastStatus}" />
                 	    		</jsp:include>
 	                		</td>
 	                		<td align="center">
-	                        	<input type="submit" class="btn btn-info btn-xs" value='Edit' onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.GOTOEDIT%>', '<bean:write name="iter" property="activityId"/>')" src="resources/image/edit.png" width="18px"/>
+		                		<logic:notEqual name="iter" property="activityLastStatus" value='<%=Constants.Status.FINISH+""%>'>
+			                		<logic:notEqual name="iter" property="activityLastStatus" value='<%=Constants.Status.ABORT+""%>'>
+			                        	<input type="submit" class="btn btn-info btn-xs" value='Edit' onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.GOTOEDIT%>', '<bean:write name="iter" property="activityId"/>')" src="resources/image/edit.png" width="18px"/>
+									</logic:notEqual>
+								</logic:notEqual>
 	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToChangeStatusAct('<%=Constants.Task.ACTIVITY.GOTOCHANGESTATUS%>', 
 		                        	'<bean:write name="iter" property="activityId"/>',
-		                        	'<bean:write name="iter" property="activityChangeDate" format="yyyy-MM-dd hh:mm:ss"/>')" />
+		                        	'<bean:write name="iter" property="activityChangeDate" format="yyyy-MM-dd HH:mm:ss"/>')" />
 	                        </td>	
 	                    </tr> 
                     </logic:iterate>

@@ -72,7 +72,7 @@
            			<tr>
            				<td height="45px"><html:radio name="TaskHeadUserForm" property="radioChoose" styleId="head" value="0" onclick="onclickradio()" /></td>
            				<td width="150px"><label for="head">Self Assign</label></td>
-           				<td><input type="button" value="Next" style="display:none" class="btn bg-olive" id="myBtn" onclick="chooseReceiver(100)"/></td>
+           				<td><input type="button" value="Next" style="display:none" class="btn bg-olive" id="myBtn" onclick="chooseReceiver('${employeeIdActive}')"/></td>
        				</tr>
            			<tr><td width="25px"><html:radio name="TaskHeadUserForm" property="radioChoose" styleId="subordinate" value="1" onclick="onclickradio()" /></td>
            				<td><label for="subordinate">Subordinate</label></td> 	
@@ -108,13 +108,13 @@
 					<table class="table table-bordered table-striped table-hover" >
 						<thead>
 							<tr>
-								<th>Employee ID</th>
+								<th align="center">Employee ID</th>
 								<th>Name</th>
-								<th>Gender</th>
+								<th align="center">Gender</th>
 								<th>Address</th>
 								<th>Email</th>
-								<th>Division</th>
-								<th>Position</th>
+								<th align="center">Division</th>
+								<th align="center">Position</th>
 								<th>Manager</th>
 			                    <th width="90px">Actions</th>
 			                </tr>
@@ -125,7 +125,13 @@
 			                	<tr>
 			                		<td><bean:write name="iter" property="employeeId"/> </td>
 			                		<td><bean:write name="iter" property="employeeName"/> </td>
-			                		<td><bean:write name="iter" property="gender"/> </td>
+			                		<td><logic:equal name="iter" property="gender" value="0">
+				                			Male
+				                		</logic:equal>
+				                		<logic:equal name="iter" property="gender" value="1">
+				                			Female
+				                		</logic:equal>
+			                		<bean:write name="iter" property="gender"/> </td>
 			                		<td><bean:write name="iter" property="address"/> </td>
 			                		<td><bean:write name="iter" property="email"/> </td>
 			                		<td><bean:write name="iter" property="divisionName"/> </td>
@@ -137,11 +143,6 @@
 			                    </tr>
 		                    </logic:iterate>
 							</logic:notEmpty>
-							<logic:empty name="listEmployee">
-								<tr>
-									<td align="center" colspan="11"><bean:message key="label.table.notfound" /></td>
-								</tr>
-							</logic:empty>
 	                   </tbody>
 		            </table>
 		            </div>

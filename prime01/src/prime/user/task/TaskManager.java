@@ -13,9 +13,9 @@ public interface TaskManager {
 
 	public Integer getNewId() throws SQLException;
 	
-	public Boolean isAlreadySubmit(Integer taskId) throws SQLException;
-	
 	public Boolean isCheckStatus(Integer taskId, Integer status) throws SQLException;
+	
+	public Boolean isCheckStatusDetail(Integer taskId, Integer status) throws SQLException;
 
 	/*Task Head*/
 	public List<TaskBean> getListByColumnHead(String columnSearch, String value, Integer startRow, Integer endRow,

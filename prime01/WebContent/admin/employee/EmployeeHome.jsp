@@ -5,13 +5,6 @@
 <html>
 <head> 
 	<!-- CSS -->
-	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 	<!-- End CSS -->
 	
@@ -20,25 +13,24 @@
 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$('#table-1').dataTable( {
 			paging    : false,
 			searching : false,
-			info	  : false
+			info	  : false,
+			language  : {
+		          "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
+		    }
 	    } );
 	</script>
 	<!-- End JS -->
 </head>
 <body class="skin-blue sidebar-mini">
-	<html:form action="/EmployeeAdmin">
-	<html:hidden name="EmployeeAdminForm" property="task"/>
-	<html:hidden name="EmployeeAdminForm" property="tmpId"/>
-	</html:form>
 	<section class="content-header">
 		<h1>Manage Employee</h1>
 		<ol class="breadcrumb">
@@ -61,17 +53,24 @@
 				<!-- Search Handler Tag -->
 				<div class="show-in-page">
 					Show per page
-					<html:select property="showInPage" name="EmployeeAdminForm">
-						<html:optionsCollection name="listShowEntries" label="value" value="key"/>
+					<html:select property="showInPage" name="EmployeeAdminForm" onchange="change(this.value)" styleClass="columnSearch">
+						<html:optionsCollection name="listMaxDataPerPage" label="value" value="key"/>
 					</html:select>
 				</div>
 				<div class="search-table">
+				<html:form action="/EmployeeAdmin">
+					<html:hidden name="EmployeeAdminForm" property="task"/>
+					<html:hidden name="EmployeeAdminForm" property="tmpId"/>
+					<html:hidden name="EmployeeAdminForm" property="goToPage"/>
+					<html:hidden name="EmployeeAdminForm" property="showInPage"/>
+				
 					<html:select name="EmployeeAdminForm" property="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
 					<html:text name="EmployeeAdminForm" property="search"/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('search')" value='Search'/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('search')" value='Show All'/>
+					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
+					<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
+				</html:form>
 				</div>
 				<!-- End Of Search Handler -->
 		
@@ -105,35 +104,30 @@
 				                		</logic:equal>
 			                		</td>
 			                		<td><bean:write name="iter" property="email"/> </td>
-					                		<td align="center"><bean:write name="iter" property="divisionName"/> </td>
-					                		<td><bean:write name="iter" property="positionName"/> </td>
-					                		<td><bean:write name="iter" property="managerName"/> </td>
-					                        <td align="center">
-					                        <logic:empty name="iter" property="resignDate">
-					                        	<html:image src="resources/image/check-true.png" /> 
-					                        </logic:empty>
-					                        <logic:notEmpty name="iter" property="resignDate">
-					                        	<html:image src="resources/image/check-false.png" /> 
-					                        </logic:notEmpty>
-					                        </td>
-					                        <td align="center">
-					                        	<logic:empty name="iter" property="resignDate">
-						                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
-						                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDITPOSITION%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/editposdiv.png" />
-						                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTORESIGN%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/resign.png" /> 
-					                        	</logic:empty>
-					                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOVIEW%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/viewmore.png" />
-					                        </td>
-					                    </tr>
-				                    </logic:iterate>
-									</logic:notEmpty>
-									<logic:empty name="listEmployee">
-										<tr>
-											<td align="center" colspan="11"><bean:message key="label.table.notfound" /></td>
-										</tr>
-									</logic:empty>
-			                   </tbody>
-				            </table>
+			                		<td align="center"><bean:write name="iter" property="divisionName"/> </td>
+			                		<td><bean:write name="iter" property="positionName"/> </td>
+			                		<td><bean:write name="iter" property="managerName"/> </td>
+			                        <td align="center">
+				                        <logic:empty name="iter" property="resignDate">
+				                        	<html:image src="resources/image/check-true.png" /> 
+				                        </logic:empty>
+				                        <logic:notEmpty name="iter" property="resignDate">
+				                        	<html:image src="resources/image/check-false.png" /> 
+				                        </logic:notEmpty>
+			                        </td>
+			                        <td align="center">
+			                        	<logic:empty name="iter" property="resignDate">
+				                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
+				                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDITPOSITION%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/editposdiv.png" width="18"/>
+				                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTORESIGN%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/resign.png" /> 
+			                        	</logic:empty>
+			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOVIEW%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/viewmore.png" />
+			                        </td>
+			                    </tr>
+		                    </logic:iterate>
+							</logic:notEmpty>
+		                   </tbody>
+			            </table>
 			            </div>
 			            <!-- End Of Table List -->
 			            
@@ -142,7 +136,7 @@
 							<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
 							<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
 							<logic:iterate id="p" name="listPage">
-								<logic:equal name="p" value="${pageNow}">
+							 	<logic:equal name="p" value="${pageNow}">
 									<li><html:link styleClass="active" href="#">${p}</html:link> </li>
 								</logic:equal>
 								<logic:notEqual name="p" value="${pageNow}">
@@ -163,6 +157,5 @@
 	        	</div>
 	      </div>
 	</section>
-	
 </body>
 </html>
