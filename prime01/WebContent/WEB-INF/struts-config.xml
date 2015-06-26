@@ -149,7 +149,7 @@
 			<forward name="success" 		path="/content/Modal.jsp">											</forward>
 			<forward name="activityNote" 	path="/content/Modal_2.jsp">										</forward>
 			<forward name="taskNote" 		path="/content/Modal_4.jsp">										</forward>
-			<forward name="changePwd" 	    path="/content/ChangePwd.jsp">										</forward>
+			<forward name="changePwd" 	    path="/content/ModalChangePwd.jsp">										</forward>
 		</action>
 		
 	</action-mappings>
