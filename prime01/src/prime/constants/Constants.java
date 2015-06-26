@@ -77,7 +77,12 @@ public interface Constants {
 		final Map<String, String> EMPLOYEE_SEARCHCOLUMNS = Collections.unmodifiableMap(
 	        new LinkedHashMap<String, String>() {{
 	        	put("NAME", "EMPLOYEE NAME");
-	        	put("ID", "EMPLOYEE ID");
+	        	put("ID", "EMPLOYEE ID");	        	
+	        	put("GENDER", "GENDER (0=M; 1;F)");
+	        	put("EMAIL", "EMAIL");
+	        	put("DIVISION", "DIVISION");
+	        	put("POSITION", "POSITION");
+	        	put("MANAGER", "MANAGER");
 	        }
 	    });
 		

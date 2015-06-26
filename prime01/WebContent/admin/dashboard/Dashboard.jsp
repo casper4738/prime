@@ -64,22 +64,20 @@
     
     <script src="resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-     <script src="https://code.jquery.com/ui/1.11.1/jquery-ui.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/jQueryUI/jquery-ui-1.10.3" type="text/javascript"></script>
     <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <script src='resources/plugins/fastclick/fastclick.min.js'></script>
     <script src="resources/dist/js/app.min.js" type="text/javascript"></script>
     <script src="resources/dist/js/demo.js" type="text/javascript"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.2/moment.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/moment/moment.min.js" type="text/javascript"></script>
     <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
     <!-- Page specific script -->
     <script type="text/javascript">
       $(function () {
-
         /* initialize the external events
          -----------------------------------------------------------------*/
         function ini_events(ele) {
           ele.each(function () {
-
             // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
             // it doesn't need to have a start or end
             var eventObject = {
@@ -100,69 +98,68 @@
         }
         ini_events($('#external-events div.external-event'));
 
+
         /* initialize the calendar
          -----------------------------------------------------------------*/
-        //Date for the calendar events (dummy data)
-        var date = new Date();
-        var d = date.getDate(),
-                m = date.getMonth(),
-                y = date.getFullYear();
-        $('#calendar').fullCalendar({
-          header: {
-            left: 'prev,next today',
-            center: 'title',
-          },
-          buttonText: {
-            today: 'today',
-            month: 'month',
-          },
-          eventClick:  function(event, jsEvent, view) {
-              $('#modalTitle').html(event.title);
-              $('#modalBody').html(event.description);
-              $('#eventUrl').attr('href',event.url);
-              $('#fullCalModal').modal();
-          },
-          //Random default events
-          events: [
-
-                   
-<% List<String> arrHoliday = (ArrayList) request.getAttribute("teslist");
-for(int a = 0; a<arrHoliday.size();a++)
-{
-	out.println(arrHoliday.get(a)); 
-	
-}
-%>
-          ],
-          editable: true,
-          droppable: true, // this allows things to be dropped onto the calendar !!!
-          drop: function (date, allDay) { // this function is called when something is dropped
-
-            // retrieve the dropped element's stored Event Object
-            var originalEventObject = $(this).data('eventObject');
-
-            // we need to copy it, so that multiple events don't have a reference to the same object
-            var copiedEventObject = $.extend({}, originalEventObject);
-
-            // assign it the date that was reported
-            copiedEventObject.start = date;
-            copiedEventObject.allDay = allDay;
-            copiedEventObject.backgroundColor = $(this).css("background-color");
-            copiedEventObject.borderColor = $(this).css("border-color");
-
-            // render the event on the calendar
-            // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
-            $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
-
-            // is the "remove after drop" checkbox checked?
-            if ($('#drop-remove').is(':checked')) {
-              // if so, remove the element from the "Draggable Events" list
-              $(this).remove();
-            }
-
-          }
-        });
-
+        //Date for the calendar events (dummy data)	       
+	    var date = new Date();
+	    var d = date.getDate();
+	    var m = date.getMonth();
+		var y = date.getFullYear();
+        
+		$('#calendar').fullCalendar({
+	          header: {
+		            left: 'prev,next today',
+		            center: 'title',
+		          },
+		          buttonText: {
+		            today: 'today',
+		            month: 'month',
+		          },
+		          eventClick:  function(event, jsEvent, view) {
+		              $('#modalTitle').html(event.title);
+		              $('#modalBody').html(event.description);
+		              $('#eventUrl').attr('href',event.url);
+		              $('#fullCalModal').modal();
+		          },
+		          
+		          //Random default events
+		          events: [
+						<% 
+							List<String> arrHoliday = (ArrayList) request.getAttribute("teslist");
+							for(int a = 0; a<arrHoliday.size();a++){
+								out.println(arrHoliday.get(a)); 
+							}
+						%>
+		          ],
+		          
+		          editable: true,
+		          droppable: true, // this allows things to be dropped onto the calendar !!!
+		          drop: function (date, allDay) { // this function is called when something is dropped
+			            // retrieve the dropped element's stored Event Object
+			            var originalEventObject = $(this).data('eventObject');
+		
+			            // we need to copy it, so that multiple events don't have a reference to the same object
+			            var copiedEventObject = $.extend({}, originalEventObject);
+		
+			            // assign it the date that was reported
+			            copiedEventObject.start = date;
+			            copiedEventObject.allDay = allDay;
+			            copiedEventObject.backgroundColor = $(this).css("background-color");
+			            copiedEventObject.borderColor = $(this).css("border-color");
+		
+			            // render the event on the calendar
+			            // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+			            $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+		
+			            // is the "remove after drop" checkbox checked?
+			            if ($('#drop-remove').is(':checked')) {
+			              // if so, remove the element from the "Draggable Events" list
+			              $(this).remove();
+			            }
+		          }
+		});
+        
         /* ADDING EVENTS */
         var currColor = "#3c8dbc"; //Red by default
         //Color chooser button
@@ -194,6 +191,9 @@ for(int a = 0; a<arrHoliday.size();a++)
           //Remove event from text input
           $("#new-event").val("");
         });
+        
+        
+        
       });
     </script>
 </body>

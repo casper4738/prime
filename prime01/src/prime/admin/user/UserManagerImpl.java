@@ -53,6 +53,36 @@ public class UserManagerImpl implements UserManager {
 		return (UserBean) mapper.queryForObject("user.get", username);
 	}
 
+	public boolean isUserValidated(String username, String password){
+		//##0.Temp Variable
+		boolean tmpUserValidated = false;
+		HashMap<String, String> tmpParam = new HashMap<String, String>();
+		tmpParam.put("userName", username);
+		tmpParam.put("password", password);
+		
+		//##1.Ibatis Proccess
+		try {
+			tmpUserValidated = ((Integer)mapper.queryForObject("user.isUserValidated", tmpParam) <= 0) ? false : true;	
+		} catch (Exception e){
+			//TO DO :: Add Error Log, if can
+			e.printStackTrace();
+		}
+		
+		return tmpUserValidated;
+		
+	}
+	
+	public void changePassword(UserBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.update("user.changePassword", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+		
+	}
+	
 	public List<UserBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow) 
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -74,6 +104,7 @@ public class UserManagerImpl implements UserManager {
 		map.put("value", value);
 		return (Integer) mapper.queryForObject("user.getCountListByColumn", map);
 	}
+	
 
 	public void resetPassword(UserBean e) throws SQLException {
 		try {

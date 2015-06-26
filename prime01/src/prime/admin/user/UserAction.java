@@ -29,21 +29,27 @@ public class UserAction extends Action {
 		Date compTime;
 		curnTime = new Date();
 		curnTime = PrimeUtil.parseDateStringToDate(PrimeUtil.setDateToDateString(curnTime));
-		
 		System.out.println(userForm.getTask()+" TASK");
+		
 		if(Constants.Task.GOTOADD.equals(userForm.getTask())){
+			userForm.getUserBean().setEmployeeId(tmpManager.getNewId());
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(userForm.getTask())) {
 			//##. Edit Data
 			userForm.setUserBean(tmpManager.getUserByUsername(userForm.getTmpValue()));
 			return mapping.findForward("edit");
+		} else if (Constants.Task.DOADD.equals(userForm.getTask())) {
+			userForm.getUserBean().setEmployeeId(userForm.getEmployeeId());
+			userForm.getUserBean().setUpdateBy("dedy");
+			tmpManager.insert(userForm.getUserBean());
+			return mapping.findForward("forward");
 		} else if(Constants.Task.DOLOCK.equals(userForm.getTask())) {
 			//##. Lock User and Go to Forward
 			userForm.setUserBean(tmpManager.getUserByUsername(userForm.getTmpValue()));
 			compTime = userForm.getUserBean().getChangeDate();
 			compTime = PrimeUtil.parseDateStringToDate(PrimeUtil.setDateToDateString(compTime));
 			if (userForm.getUserBean().getStatusUser() == Constants.UserStatus.OK){
-				if (compTime.after(curnTime)){
+				if (compTime.after(curnTime)){    
 					//Change Status to Wait Locked
 					tmpManager.lockUser(userForm.getUserBean());
 				} else {
@@ -71,7 +77,24 @@ public class UserAction extends Action {
 			//##.Update Data and Go to Forward
 			tmpManager.update(userForm.getUserBean());
 			return mapping.findForward("forward");
-		}
+		} 		
+		 else if("changePassword".equals(userForm.getTask())) {
+			 
+			 System.out.println("masukk sini");
+			 System.out.println("1. "+userForm.getUserBean().getPassword());
+			 System.out.println("2. "+userForm.getUserBean().getNewPassword());
+			 System.out.println("3. "+userForm.getUserBean().getConfirmPassword());
+			 
+			 if(tmpManager.isUserValidated("Memud", userForm.getUserBean().getPassword())){
+				 System.out.println("tesss masukk lalalla");
+					tmpManager.changePassword(userForm.getUserBean());
+					System.out.println("pwd si Memud = "+userForm.getUserBean().getPassword());
+			 } else {
+				 //TO DO :: Not Validated, Force Return
+				 System.out.println("Fail");
+			 }
+		} 
+		
 		int countRows  = tmpManager.getCountByColumn(userForm.getColumnSearch(), userForm.getSearch());
 		
 		List<UserBean> list = tmpManager.getListByColumn(userForm.getColumnSearch(), userForm.getSearch(),

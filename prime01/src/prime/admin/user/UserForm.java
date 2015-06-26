@@ -12,6 +12,16 @@ public class UserForm extends ActionForm {
 	private Integer showInPage = 10;
 	private String tmpValue;
 	private String message;
+	private Integer employeeId;
+	private String password;
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public String getTmpValue() {
 		return tmpValue;
@@ -75,6 +85,14 @@ public class UserForm extends ActionForm {
 
 	public void setShowInPage(Integer showInPage) {
 		this.showInPage = showInPage;
+	}
+
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
 	}
 
 

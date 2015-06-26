@@ -54,7 +54,7 @@
 		<div class="row">
 			<div class="col-xs-12"><div class="box">
 				<input type="submit" class="btn btn-primary btn-xs" value='Back' onclick="flyToBack(
-	                        		'<%=Constants.Task.Project.GOTOPROJECTDETAIL %>', 
+	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
 	                        		'<bean:write name="ProjectUserForm" property="projectId"/>')">
 				<div class="box-header"><h3 class="box-title-center">Data Project Member</h3></div>
 				<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
@@ -70,7 +70,7 @@
 				<p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
 				<div class="form-action"><table align="center">
                   <tr><td style="padding:5px;">
-                  		<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.Project.GOTOCREATETASK%>')"/>
+                  		<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.PROJECT.GOTOCREATETASK%>')"/>
                	  </td></tr>
 				</table></div>
 				

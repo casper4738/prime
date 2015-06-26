@@ -15,6 +15,20 @@
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
+	
+	<script type="text/javascript">
+	function validateForm() {
+		document.getElementById('validatorName').innerHTML = "";
+	    var roleName =  document.getElementById('nameValidator').value;
+	    var validate = true;
+	    
+	    if (roleName == null || roleName == "") {
+	        document.getElementById('validatorName').innerHTML="Role name must be filled out";
+	        validate = false;
+	    }
+	    if(validate == true) dosubmit();
+	}
+	</script>
 </head>
 <body class="skin-blue sidebar-mini">
 			<section class="content-header">
@@ -38,11 +52,14 @@
                   			<tr>
                   				<td>Role Name</td>
                   				<td>:</td>
-                  				<td><html:text name="RoleAdminForm" property="roleBean.roleName" styleClass="form-control"/></td>
+                  				<td><html:text name="RoleAdminForm" property="roleBean.roleName" styleClass="form-control" styleId="nameValidator" maxlength="50"/></td>
+                  			</tr>
+                  			<tr>
+                  				<td colspan="3" align="center"> <span  id="validatorName" style="color: red"> </span> </td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">
-                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
+                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
                   			</tr>

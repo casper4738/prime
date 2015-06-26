@@ -45,6 +45,9 @@ public class ModalAction extends Action {
 		String task = pForm.getTask();
 		
         switch (task) {
+        	case "changePwd" : 
+        		tmpTarget = "changePwd";
+        		break;
 	        case "activityNote" :
         		tmpTarget = "activityNote";
         		request.setAttribute("activityId", pForm.getParam2());
@@ -75,6 +78,8 @@ public class ModalAction extends Action {
                 									   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows))
                 									   );*/
                 		
+                		System.out.println(pForm.getColumnSearch()+"--Column Search");
+                		System.out.println(pForm.getSearch()+"--Search");
                 		list = manager.getListEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(),
 								   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
 								   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows), pForm.getParam3(), pForm.getParam4());
@@ -82,15 +87,16 @@ public class ModalAction extends Action {
                 		//##2.Prepare Data for Modal-Table Show
                 		//---a.Modal Title
                 		request.setAttribute("modalListName", "Employees List");
+                		request.setAttribute("listSearchColumn", Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
+                		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
                 		System.out.println(pForm.getParam3()+"--");
                 		if(pForm.getParam3().equals("employeeAdd")){
-                			System.out.println("AA");
                 			request.setAttribute("modalForm", "employeeHead");
                 		}else if(pForm.getParam3().equals("employeeResign")){
-                			System.out.println("BB");
                 			request.setAttribute("modalForm", "employeeResign");
+                		}else if(pForm.getParam3().equals("employeeUser")){
+                			request.setAttribute("modalForm", "employeeUser");
                 		}else if(pForm.getParam3().equals("projectMember")){
-                			System.out.println("CC");
                 			request.setAttribute("modalForm", "projectMember");
                 		}
                 		
@@ -126,6 +132,7 @@ public class ModalAction extends Action {
         		
         		//##3.Set Paging
         		request.setAttribute("listSearchColumn", Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
+        		System.out.println( Constants.PAGINGROWPAGE+"--ADA");
         		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
         		setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
         		tmpTarget = "success";

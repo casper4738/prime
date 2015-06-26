@@ -16,6 +16,32 @@
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
+	
+	<script type="text/javascript">
+	function validateForm() {
+		document.getElementById('validatorDate').innerHTML = "";
+		document.getElementById('validatorDescription').innerHTML = "";
+	    var holidayDescription =  document.getElementById('descriptionValidator').value;
+	    var holidayDate =  new Date(document.getElementById('datepicker').value);
+	    var today = new Date();
+	    var validate = true;
+	    
+	    if (holidayDescription == null || holidayDescription == "") {
+	        document.getElementById('validatorDescription').innerHTML="Description must be filled out";
+	        validate = false;
+	    }
+	     if (holidayDate == null || holidayDate == "") {
+	    	document.getElementById('validatorDate').innerHTML="Date must be filled out";
+	        validate = false;
+	    } if ( holidayDate < today){
+	    	//alert("Invalid value for year: " + regs[3] + " - must be > = " + (new Date()).getFullYear());
+	    	document.getElementById('validatorDate').innerHTML="Holiday date is not  valid";
+	        validate = false;
+	    }
+	    
+	    if(validate == true) dosubmit();
+	}
+	</script>
 </head>
 <body class="skin-blue sidebar-mini">
 			<section class="content-header">
@@ -44,13 +70,19 @@
                   				</td>
                   			</tr>
                   			<tr>
+                  				<td colspan="3" align="center"> <span  id="validatorDate" style="color: red"> </span> </td>
+                  			</tr>
+                  			<tr>
                   				<td>Holiday Description</td>
                   				<td>: </td>
-                  				<td><html:text name="HolidayAdminForm" property="holidayBean.holidayDescription" styleClass="form-control"/></td>
+                  				<td><html:text name="HolidayAdminForm" property="holidayBean.holidayDescription" styleClass="form-control" styleId="descriptionValidator" maxlength="100"/></td>
+                  			</tr>
+                  			<tr>
+                  				<td colspan="3" align="center"> <span  id="validatorDescription" style="color: red"> </span> </td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">
-                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
+                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
                   			</tr>

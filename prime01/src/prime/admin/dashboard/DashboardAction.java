@@ -32,56 +32,68 @@ public class DashboardAction extends Action {
 
 		HolidayManager tmpManager = new HolidayManagerImpl();
 		EmployeeManager empManager = new EmployeeManagerImpl();
-		String strHoliday = "#f56954";
-		String strHoliday2 = "#f56954";
-		String strDayOff = "F7F707";
-		String strDayOff2 = "#f56954";
+		
 		tmpManager.getListByYear(pForm.getYear());
 		empManager.getListDayoffByEmployeeId(pForm.getEmployeeId());
-		String str;
 
 		List<String> list = new ArrayList<String>();
 		
 		//##. Set National Holiday Data For Calendar
 		int year = Calendar.getInstance().get(Calendar.YEAR);
-		for (HolidayBean e : tmpManager.getListByYear(year)) {
-			Calendar c = Calendar.getInstance();
-			c.setTime(e.getHolidayDate());
-			int y = c.get(Calendar.YEAR);
-			int m = c.get(Calendar.MONTH);
-			int d = c.get(Calendar.DATE);
-
-			str = "{" + "title: '" + e.getHolidayDescription() + "', "
-					+ "start: new Date(" + y + ", " + m + ", " + d + "), "
-					+ "backgroundColor: '" + strHoliday + "', "
-					+ "borderColor: '" + strHoliday2 + "', " + "},";
-			list.add(str);
+		List<HolidayBean> listHolidayBean = tmpManager.getListByYear(year);
+		for (HolidayBean e : listHolidayBean) {
+			list.add(getHoliday(e)+  ", " );
 		}
 		
-		//##. Set Day Off Data For Calendar
-
-		for (EmployeeBean e : empManager.getListDayoffByEmployeeId(pForm
-				.getEmployeeId())) {
-			Calendar c = Calendar.getInstance();
-			c.setTime(e.getStartDate());
-			int yStart = c.get(Calendar.YEAR);
-			int mStart = c.get(Calendar.MONTH);
-			int dStart = c.get(Calendar.DATE);
-
-			c.setTime(e.getEndDate());
-			int yEnd = c.get(Calendar.YEAR);
-			int mEnd = c.get(Calendar.MONTH);
-			int dEnd = c.get(Calendar.DATE)+1;
-			str = "{" + "title: '" + e.getDescriptionDayOff() + "', "
-					+ "start: new Date(" + yStart + ", " + mStart + ", "
-					+ dStart + "), " + "end: new Date(" + yEnd + ", " + mEnd
-					+ ", " + dEnd + ")," + "backgroundColor: '" + strDayOff
-					+ "', " + "borderColor: '" + strDayOff2 + "', " + "},";
-			list.add(str);
+		for (EmployeeBean e : empManager.getListDayoffByEmployeeId(pForm.getEmployeeId())) {
+			list.add(getEmployeeDayOff(e)+  ", " );
 		}
 
 		//##1.Attribute for Dashboard Show
 		request.setAttribute("teslist", list);
 		return mapping.findForward("success");
 	}
+	
+	private String getHoliday(HolidayBean e) {
+		String backgroundColor = "#f56954";
+		String borderColor = "#f56954";
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(e.getHolidayDate());
+		int y = c.get(Calendar.YEAR);
+		int m = c.get(Calendar.MONTH);
+		int d = c.get(Calendar.DATE);
+
+		String str = "{title: \"" + e.getHolidayDescription() + " \", "
+				+ "start: new Date("+ y + ", " + m + ", " + d + "), "
+				+ "backgroundColor: '" + backgroundColor + "', "
+				+ "borderColor: '" + borderColor + "' } ";
+		return str;
+	}
+	
+	private String getEmployeeDayOff(EmployeeBean e) {
+		String backgroundColor = "F7F707";
+		String borderColor = "#f56954";
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(e.getStartDate());
+		int yStart = c.get(Calendar.YEAR);
+		int mStart = c.get(Calendar.MONTH);
+		int dStart = c.get(Calendar.DATE);
+		System.out.println(e.getStartDate());
+
+		c.setTime(e.getEndDate());
+		int yEnd = c.get(Calendar.YEAR);
+		int mEnd = c.get(Calendar.MONTH);
+		int dEnd = c.get(Calendar.DATE)+1;
+		System.out.println(e.getEndDate());
+
+		String str = "{title: \"" + e.getDescriptionDayOff() + "\", "
+				+ "start: new Date(" + yStart + ", " + mStart + ", "+ dStart + "), " 
+				+ "end: new Date(" + yEnd + ", " + mEnd + ", " + dEnd + ")," 
+				+ "backgroundColor: '" + backgroundColor+ "', " 
+				+ "borderColor: '" + borderColor + "' } ";
+		return str;
+	}
+	
 }

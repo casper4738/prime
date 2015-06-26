@@ -167,7 +167,7 @@ public class EmployeeAction extends Action {
 		//##1.Attribute For Table Paging
 		request.setAttribute("listEmployee", list);
 		request.setAttribute("listSearchColumn", Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
-		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+		//request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 		setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		
 		return mapping.findForward("success");

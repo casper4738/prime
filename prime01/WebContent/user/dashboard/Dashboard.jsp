@@ -37,65 +37,56 @@
 		   $('#datepicker_activitydate').datepicker({
                format	: "yyyy-mm-dd"
            });
-            
-  		  //Do Login Data checking
-  		  $.ajax({ 
-  	          type	  : "POST",
-  	          url	  : "<%=Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]%>",  // Send the login info to this page
-  	          data	  : "task=refreshActivityProgress",
-  	          success : function(msg){
-  	        	    var table;
-	  	        	$('#table-1').html(msg);
-	 	    		table = $('#table-1').dataTable( {
-	 	    			ordering 		: false,
-	 	    			paging    		: false,
-	 	    			searching 		: false,
-	 	    			info	  		: false,
-	 	    			scrollY	  		: "250px",
-	 	    		    scrollX	  		: "100%",
-	 	    		    scrollCollapse	: true
-	 	    		});
-	 	    		new $.fn.dataTable.FixedColumns(table, {leftColumns: 2});
-  	          }
-  	       });
+	  		  
+  		   //Load Activity Progress Timetable
+  		   loadActivityProgress();
 		});
-	
-		var date = new Date();
-    	var d = date.getDate();
-        var month = new Array();
-	    	month[0] = "January";
-	    	month[1] = "February";
-	    	month[2] = "March";
-	    	month[3] = "April";
-	    	month[4] = "May";
-	    	month[5] = "June";
-	    	month[6] = "July";
-	    	month[7] = "August";
-	    	month[8] = "September";
-	    	month[9] = "October";
-	    	month[10] = "November";
-	    	month[11] = "December";
-    	var m = month[date.getMonth()],
-            y = date.getFullYear();
     	
-    	var month_digit=date.getMonth()+1;
-    	
-    	function insertActivity() {
-    	    var table = document.getElementById("tableProgress");
-    	    var row = table.insertRow(1);
-    	    var cell = new Array();
-    	    for(var i=0; i<=1500;i++){
-    	    	cell[i] = row.insertCell(i);
-    	    }
-    	    cell[0].innerHTML = "Activity 1";
-    	}
-    	
+		//##.Activity Detail
     	function activityDetail(task,activityId,status){
     		document.forms[0].task.value = task;
     		document.forms[0].tmpId.value = activityId;
     		document.forms[0].tmpValue.value = status;
     		document.forms[0].submit();
     	}
+		
+		//##.Activity Progress
+		function loadActivityProgress(isToday){
+			//Set Current Date
+		  	var tmpDate = new Date();
+	        var tmpMonthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+			alert(tmpDate);
+	        var d = tmpDate.getDate();
+			var m = tmpDate.getMonth() + 1;
+			var y = tmpDate.getFullYear();
+			var tmpRefreshDate = d + "/" + m + "/" + y;
+			$('#datepicker_activitydate').datepicker('setDate', tmpDate);
+			alert("2");
+			$('#date_activitydate').html("<b>" + ((d < 10) ? ("0" + d) : d) + " " + tmpMonthList[m - 1] + " " + y + "</b>");    
+			
+			alert("WAT");
+			
+	  		//Do Login Data checking
+	  		$.ajax({ 
+	  	    	type 	: "POST",
+	  	    	url	  	: "<%=Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]%>",  
+	  	    	data	: "task=refreshActivityProgress&loadDate=" + tmpRefreshDate,
+	  	    	success : function(msg){
+	  	    		var table;
+			  		$('#table-1').html(msg);
+			 		table = $('#table-1').dataTable( {
+			 			ordering 		: false,
+			 			paging    		: false,
+			 			searching 		: false,
+			 			info	  		: false,
+			 			scrollY	  		: "250px",
+			 		    scrollX	  		: "100%",
+			 		    scrollCollapse	: true
+			 	    });
+			 	    new $.fn.dataTable.FixedColumns(table, {leftColumns: 2});
+		  	    }
+	  	   });
+		}
     </script>
     <!-- End Of JS -->
 </head>
@@ -224,13 +215,13 @@
 								</div>
                   			</td>
                   			<td>
-                  				<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('search')" value='Search'/>
-								<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('search')" value='Today'/>
+                  				<input type="button" class="btn bg-olive" style="height:32px" onclick="loadActivityProgress(false)" value='Search'/>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="loadActivityProgress(true)" value='Today'/>
                   			</td>			
                   		</tr>
                   	</table>
 					<div class="box-body no-padding">
-                  		<center><h3><b>19 June 2015</b></h3></center>
+                  	  <center><h3 id="date_activitydate"></h3></center>
 	                  <table id="table-1" class="display" cellspacing="0" width="100%" height="100%">
 	                  </table>
 	                </div><!-- /.box-body -->

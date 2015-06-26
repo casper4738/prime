@@ -122,9 +122,11 @@ function modalLoadHandler(targettedData, targettedObject){
 	});
 	
 	//##1.Register Targetted Object For Value Receiver
-	modalTargettedObject = targettedObject;
+	if(targettedObject != null){
+		modalTargettedObject = targettedObject;
+	}
 	
-	//##1.Show The Modal
+	//##2.Show The Modal
 	$('#content-modal').modal({ show:true, backdrop: false });
 }
 
@@ -142,7 +144,9 @@ function modalSubmitRefreshPageWithoutReturn(retValue, retForm, refreshedValue, 
     	    $("[data-dismiss=modal]").trigger({ type: "click" });
     	    
     	    //##2.Reload Menu
-    	    menuLoadHandler(refreshedForm, refreshedValue);
+    	    if(refreshedForm != null){
+        	    menuLoadHandler(refreshedForm, refreshedValue);
+    	    }
       },
       
       error: function(){
@@ -160,25 +164,30 @@ function modalSubmitReturnValue(retValue,retForm){
 			document.getElementById('headName').value=res[1];
 			document.forms[0].managerId.value=res[0].replace('[','');
 			document.getElementById('divisionName').value=res[4];
-			if(document.getElementById('divisionName').value!=="" || document.getElementById('divisionName').value!=="NULL"){
+			
+			var temp = document.getElementById('divisionName').value;
+			temp = temp.trim();
+			if(temp == "null"){
+				document.getElementById('isDivision').style.display="none";
+				document.getElementById('chooseDivision').style.display="inline";
+				document.getElementById('divisionId').value=0;
+			}else{
 				document.getElementById('isDivision').style.display="inline";
 				document.getElementById('chooseDivision').style.display="none";
 				document.getElementById('divisionId').value=res[4];
-			}else{
-				document.getElementById('isDivision').style.display="none";
-				document.getElementById('chooseDivision').style.display="inline";
 			}
 		} else if(retForm=='employeeResign'){
 			var res = retValue.split(',');
 			document.getElementById('substituteHead').value=res[1];
 			document.forms[0].substituteHeadId.value=res[0].replace('[','');
-		} else if(retForm=='projectMember'){
-			alert("cc")
+		} else if(retForm=='employeeUser'){
 			var res = retValue.split(',');
 			document.getElementById('employeeName').value=res[1];
-			alert(res[0].replace('[','')+" DD")
 			document.forms[0].employeeId.value=res[0].replace('[','');
-			alert(document.forms[0].employeeId.value+" IDEMP")
+		} else if(retForm=='projectMember'){
+			var res = retValue.split(',');
+			document.getElementById('employeeName').value=res[1];
+			document.forms[0].employeeId.value=res[0].replace('[','');
 		}
 	}
 	

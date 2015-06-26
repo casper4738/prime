@@ -33,7 +33,7 @@ public class LoginManagerImpl implements LoginManager {
 		//##0.Temp Variable
 		boolean tmpUserValidated = false;
 		HashMap<String, String> tmpParam = new HashMap<String, String>();
-		tmpParam.put("username", username);
+		tmpParam.put("userName", username);
 		tmpParam.put("password", password);
 		
 		//##1.Ibatis Proccess
