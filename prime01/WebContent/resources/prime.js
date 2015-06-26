@@ -162,18 +162,31 @@ function modalSubmitReturnValue(retValue,retForm){
 			document.getElementById('headName').value=res[1];
 			document.forms[0].managerId.value=res[0].replace('[','');
 			document.getElementById('divisionName').value=res[4];
-			if(document.getElementById('divisionName').value!=="" || document.getElementById('divisionName').value!=="NULL"){
+			
+			var temp = document.getElementById('divisionName').value;
+			temp = temp.trim();
+			
+			if(temp == "null"){
+				document.getElementById('isDivision').style.display="none";
+				document.getElementById('chooseDivision').style.display="inline";
+				document.getElementById('divisionId').value=0;
+			}else{
 				document.getElementById('isDivision').style.display="inline";
 				document.getElementById('chooseDivision').style.display="none";
 				document.getElementById('divisionId').value=res[4];
-			}else{
-				document.getElementById('isDivision').style.display="none";
-				document.getElementById('chooseDivision').style.display="inline";
 			}
 		} else if(retForm=='employeeResign'){
 			var res = retValue.split(',');
 			document.getElementById('substituteHead').value=res[1];
 			document.forms[0].substituteHeadId.value=res[0].replace('[','');
+		} else if(retForm=='employeeUser'){
+			var res = retValue.split(',');
+			document.getElementById('employeeName').value=res[1];
+			document.forms[0].employeeId.value=res[0].replace('[','');
+		} else if(retForm=='projectMember'){
+			var res = retValue.split(',');
+			document.getElementById('employeeName').value=res[1];
+			document.forms[0].employeeId.value=res[0].replace('[','');
 		}
 	}
 	

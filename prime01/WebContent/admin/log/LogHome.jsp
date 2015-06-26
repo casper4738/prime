@@ -93,8 +93,8 @@
 			               <logic:notEmpty name="listLog">
 								<logic:iterate id="iter" name="listLog">
 				                	<tr>
-				                		<td><bean:write name="iter" property="auditTrailId"/> </td>
-				                		<td><bean:write name="iter" property="username"/> </td>
+				                		<td align="center"><bean:write name="iter" property="auditTrailId"/> </td>
+				                		<td align="center"><bean:write name="iter" property="username"/> </td>
 				                		<td>
 				                		<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.EMPLOYEES+""%>'>
 												EMPLOYEES
@@ -136,7 +136,7 @@
 												NOTIFICATIONS
 											</logic:equal>				                			
 				                		 </td>
-				                		<td><bean:write name="iter" property="auditTrailTime"/> </td>
+				                		<td><bean:write name="iter" property="auditTrailTime" format="dd-MM-yyyy HH:mm:SS"/> </td>
 						                <td>
 						                	<logic:equal name="iter" property="auditTrailAction" value='<%=Constants.LogAction.INSERT+""%>'>
 												INSERT

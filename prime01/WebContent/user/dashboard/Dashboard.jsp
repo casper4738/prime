@@ -14,6 +14,7 @@
     <link href="resources/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/datatables/extensions/FixedColumns/css/dataTables.fixedColumns.min.css" rel="stylesheet" type="text/css" />
@@ -26,94 +27,86 @@
     <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <script src='resources/plugins/fastclick/fastclick.min.js'></script>
     <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/extensions/FixedColumns/js/dataTables.fixedColumns.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-		    
-		    //Table Handling
-  		  
-  		  //Do Login Data checking
-  		  $.ajax({ 
-  	          type	  : "POST",
-  	          url	  : "<%=Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]%>",  // Send the login info to this page
-  	          data	  : "task=refreshActivityProgress",
-  	          success : function(msg){
-  	        		$('#table-1').html(msg);
-
- 	    			var table = $('#table-1').dataTable( {
- 	    				ordering 		: false,
- 	    				paging    		: false,
- 	    				searching 		: false,
- 	    				info	  		: false,
- 	    		        scrollY	  		: "250px",
- 	    		        scrollX	  		: "100%",
- 	    		       "autoWidth"		: true,
- 	    		        scrollCollapse	: true
- 	    		    });
- 	    		    new $.fn.dataTable.FixedColumns(table, {leftColumns: 2});
- 	    		   table.columns.adjust().draw();
-  	          },   
-  	       });
+           //Prepare Calendar
+		   $('#datepicker_activitydate').datepicker({
+               format	: "yyyy-mm-dd"
+           });
+	  		  
+  		   //Load Activity Progress Timetable
+  		   loadActivityProgress();
 		});
-	
-		var date = new Date();
-    	var d = date.getDate();
-        var month = new Array();
-	    	month[0] = "January";
-	    	month[1] = "February";
-	    	month[2] = "March";
-	    	month[3] = "April";
-	    	month[4] = "May";
-	    	month[5] = "June";
-	    	month[6] = "July";
-	    	month[7] = "August";
-	    	month[8] = "September";
-	    	month[9] = "October";
-	    	month[10] = "November";
-	    	month[11] = "December";
-    	var m = month[date.getMonth()],
-            y = date.getFullYear();
     	
-    	var month_digit=date.getMonth()+1;
-    	
-    	function insertActivity() {
-    	    var table = document.getElementById("tableProgress");
-    	    var row = table.insertRow(1);
-    	    var cell = new Array();
-    	    for(var i=0; i<=1500;i++){
-    	    	cell[i] = row.insertCell(i);
-    	    }
-    	    cell[0].innerHTML = "Activity 1";
-    	}
-    	
+		//##.Activity Detail
     	function activityDetail(task,activityId,status){
     		document.forms[0].task.value = task;
     		document.forms[0].tmpId.value = activityId;
     		document.forms[0].tmpValue.value = status;
     		document.forms[0].submit();
     	}
+		
+		//##.Activity Progress
+		function loadActivityProgress(isToday){
+			//Set Current Date
+		  	var tmpDate = new Date();
+	        var tmpMonthList = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+			alert(tmpDate);
+	        var d = tmpDate.getDate();
+			var m = tmpDate.getMonth() + 1;
+			var y = tmpDate.getFullYear();
+			var tmpRefreshDate = d + "/" + m + "/" + y;
+			$('#datepicker_activitydate').datepicker('setDate', tmpDate);
+			alert("2");
+			$('#date_activitydate').html("<b>" + ((d < 10) ? ("0" + d) : d) + " " + tmpMonthList[m - 1] + " " + y + "</b>");    
+			
+			alert("WAT");
+			
+	  		//Do Login Data checking
+	  		$.ajax({ 
+	  	    	type 	: "POST",
+	  	    	url	  	: "<%=Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]%>",  
+	  	    	data	: "task=refreshActivityProgress&loadDate=" + tmpRefreshDate,
+	  	    	success : function(msg){
+	  	    		var table;
+			  		$('#table-1').html(msg);
+			 		table = $('#table-1').dataTable( {
+			 			ordering 		: false,
+			 			paging    		: false,
+			 			searching 		: false,
+			 			info	  		: false,
+			 			scrollY	  		: "250px",
+			 		    scrollX	  		: "100%",
+			 		    scrollCollapse	: true
+			 	    });
+			 	    new $.fn.dataTable.FixedColumns(table, {leftColumns: 2});
+		  	    }
+	  	   });
+		}
     </script>
     <!-- End Of JS -->
 </head>
 <body class="skin-blue sidebar-mini">
-	<section class="content-header">
-		<h1>Dashboard <small>Control panel</small>
-		</h1>
-		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Dashboard</li>
-		</ol>
-	</section>
-	<section class="content">
-		<div class="row">
+	<html:form action="/DashboardUser"> 
+		<html:hidden name="DashboardUserForm" property="task"/>
+		<html:hidden name="DashboardUserForm" property="tmpId"/>
+		<html:hidden name="DashboardUserForm" property="tmpValue"/>
+		
+		<section class="content-header">
+			<h1>Dashboard <small>Control panel</small>
+			</h1>
+			<ol class="breadcrumb">
+				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li class="active">Dashboard</li>
+			</ol>
+		</section>
+		<section class="content">
+			<div class="row">
 					<section class="col-lg-7 connectedSortable">
-						<html:form action="/DashboardUser"> 
-							<html:hidden name="DashboardUserForm" property="task"/>
-							<html:hidden name="DashboardUserForm" property="tmpId"/>
-							<html:hidden name="DashboardUserForm" property="tmpValue"/>
-						</html:form>	
 						<div class="box box-primary">
 							<div class="box-header">
 								<i class="ion ion-clipboard"></i>
@@ -206,16 +199,36 @@
 		        </div>
 		        
 		        <!-- Activity Progress -->
-              <div class="box">
+             <div class="box">
                 <div class="box-header">
-                  <h3 class="box-title">Activity Progress</h3>
-	                <div class="box-body no-padding">
-	                  <table id="table-1" class="cell-border" cellspacing="0" width="100%">
+					<i class="ion ion-clipboard"></i>
+                  	<h3 class="box-title">Activity Progress</h3>
+                  	<br><br>Search by Date : <br><br>
+                  	<table width="370px">
+                  		<tr>
+                  			<td>
+	                  			<div class="input-group" style="width:220px; height:20px; background-color:yellow;">
+			                 		<div class="input-group-addon">
+				           				<i class="fa fa-calendar"></i>
+				           			</div>
+				           			<html:text name="DashboardUserForm" property="currentDate" styleClass="form-control pull-right" styleId="datepicker_activitydate"/>		
+								</div>
+                  			</td>
+                  			<td>
+                  				<input type="button" class="btn bg-olive" style="height:32px" onclick="loadActivityProgress(false)" value='Search'/>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="loadActivityProgress(true)" value='Today'/>
+                  			</td>			
+                  		</tr>
+                  	</table>
+					<div class="box-body no-padding">
+                  	  <center><h3 id="date_activitydate"></h3></center>
+	                  <table id="table-1" class="display" cellspacing="0" width="100%" height="100%">
 	                  </table>
 	                </div><!-- /.box-body -->
-	               </div>
 	            </div>
-		        <!-- End of Activity Progress -->
-            </section>
+            </div>
+	        <!-- End of Activity Progress -->
+       </section>
+	</html:form>	
 </body>
 </html>

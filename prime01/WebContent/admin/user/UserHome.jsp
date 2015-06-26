@@ -13,6 +13,13 @@
 	<!-- End of CSS -->
 	
 	<!-- JS -->
+	<script src="resources/prime.js"></script>
+	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
+	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
+	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
@@ -35,8 +42,7 @@
 	}
 	
 	function flyToEdit(task, value, confirmMessage) {
-		var tmpForm = document.forms[0]; 
-		alert(task)
+		var tmpForm = document.forms[0];
 		if(confirmMessage != null){
 			if(!confirm(confirmMessage))	
 				return;
@@ -64,9 +70,9 @@
 			<section class="content">
 			<div class="row">
 				<div class="col-xs-12"><div class="box">
-					<div class="box-header"><h3 class="box-title">Data Manage User</h3></div>
+					<div class="box-header"><h1 class="box-title">Data Manage User</h1></div>
 					
-					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('add')">
+					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
 	                    <i class="fa fa-edit"></i>Add
                     </span>
                     <span class="message"><bean:write name="UserAdminForm" property="message" /></span></p>
@@ -124,13 +130,15 @@
 			                        </logic:equal>
 			                        </td>
 			                        <td align="center">
-			                          <logic:equal name="iter" property="statusUser" value="0">
-			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="userName"/>')" src="resources/image/edit.png" />
-			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOUNLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.UNLOCK %>')" src="resources/image/unlocked.png" />
-									</logic:equal>
 			                         <logic:equal name="iter" property="statusUser" value="1">
 			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="userName"/>')" src="resources/image/edit.png" />
 			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.LOCK %>')" src="resources/image/locked.png" />
+			                        </logic:equal>
+			                           <logic:equal name="iter" property="statusUser" value="2">
+			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.UNLOCK %>')" src="resources/image/unlocked.png" />
+			                        </logic:equal>
+			                           <logic:equal name="iter" property="statusUser" value="3">
+			                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.UNLOCK %>')" src="resources/image/unlocked.png" />
 			                        </logic:equal>
 			                    	</td>
 			                    </tr>
@@ -166,13 +174,6 @@
 		        </div></div>
 		        
 		        </div>
-			</section>
-			<script src="resources/prime.js"></script>
-			<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-			<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-			<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-			<script src="resources/plugins/fastclick/fastclick.min.js"></script>
-			<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
-			<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+			</section>			
 </body>
 </html>

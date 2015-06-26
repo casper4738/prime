@@ -13,11 +13,16 @@ public interface RoleManager {
 	
 	public RoleBean getRoleById(Integer id) throws SQLException;
 	
-	public List<RoleBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow)
-			throws SQLException;
-	
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 	
 	public Integer getNewId() throws SQLException;
+	
+	public List<RoleBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow)
+			throws SQLException;
+	
+	public List<RoleBean> getRolesByEmployeeIdAndProjectId(Integer employeeId, Integer projectId) throws SQLException;
+	
+	public List<RoleBean> getListAllRole() throws SQLException;
+	
 	
 }

@@ -16,6 +16,22 @@
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
+	
+	<script type="text/javascript">
+	function validateForm() {
+	    var holidayDescription =  document.getElementById('descriptionValidator').value;
+	    var holidayDate =  document.getElementById('datepicker').value;
+	    if (holidayDescription == null || holidayDescription == "") {
+	        document.getElementById('validator').innerHTML="Name must be filled out";
+	        return false;
+	    }
+	    else if (holidayDate == null || holidayDate == "") {
+	    	document.getElementById('validator').innerHTML="Date must be filled out";
+	        return false;
+	    }
+	    else dosubmit();
+	}
+	</script>
 </head>
 <body class="skin-blue sidebar-mini">
 			<section class="content-header">
@@ -46,13 +62,16 @@
                   			<tr>
                   				<td>Holiday Description</td>
                   				<td>: </td>
-                  				<td><html:text name="HolidayAdminForm" property="holidayBean.holidayDescription" styleClass="form-control"/></td>
+                  				<td><html:text name="HolidayAdminForm" property="holidayBean.holidayDescription" styleClass="form-control" styleId="descriptionValidator" maxlength="100"/></td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">
-                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
+                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
+                  			</tr>
+                  			<tr>
+                  				<td colspan="3" align="center"> <span  id="validator" style="color: red"> </span> </td>
                   			</tr>
                   		</table>
                   	</html:form>

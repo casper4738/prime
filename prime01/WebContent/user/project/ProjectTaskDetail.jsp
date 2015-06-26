@@ -57,7 +57,7 @@
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li>Tasks & Activities</li>
-			<li>As Subordinate</li>
+			<li>As Head</li>
 			<li class="active">Task Detail</li>
 		</ol>
 	</section>
@@ -67,40 +67,41 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Data Task</h3></div>
 			<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-			<tr><td>Task Name : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskName"/> </td>
-				<td>Task Assigner : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskAssignerName" /> </td>
+			<tr><td>Task Name : <bean:write name="ProjectUserForm" property="taskBean.taskName"/></td>
+				<td>Task Assigner : <bean:write name="ProjectUserForm" property="taskBean.taskAssignerName" /> </td>
 			</tr>
-			<tr><td>Start Date : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskStartDate" format="dd MMMM yyyy"/> </td>
-				<td>Task Receiver : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskReceiverName"/> </td>
-			</tr><tr><td>Estimated Date : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskEstimateDate" format="dd MMMM yyyy" />
+			<tr><td>Start Date : <bean:write name="ProjectUserForm" property="taskBean.taskStartDate" format="dd MMMM yyyy"/> </td>
+				<td>Task Receiver : <bean:write name="ProjectUserForm" property="taskBean.taskReceiverName"/> </td>
+			</tr><tr><td>Estimated Date : <bean:write name="ProjectUserForm" property="taskBean.taskEstimateDate" format="dd MMMM yyyy" />
 				</td><td>Status : </td>
 			</tr>
-			<tr><td colspan="2">Description : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskDescription" /> </td></tr>
+			<tr><td colspan="2">Description : <bean:write name="ProjectUserForm" property="taskBean.taskDescription" /> </td></tr>
 			</table>
 			
 			
-			<p><span class="message"><bean:write name="TaskSubordinateUserForm" property="message" /></span></p>
+			<p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
 			<br/><br/>
 			<div class="form-action"><table align="center">
-               <tr> <td style="padding:5px;">
+               <tr>	<td style="padding:5px;">
 	               		<logic:notEqual name="isAllFinished" value="true">
-		               		<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
+	               			<logic:equal name="ProjectUserForm" property="taskBean.taskAssigner" value="${ProjectUserForm.taskBean.taskReceiver}" >
+		               			<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
+	               			</logic:equal>
 	               		</logic:notEqual>
                			<logic:equal name="isAllFinished" value="true">
-	               			<logic:equal name="TaskSubordinateUserForm" property="taskBean.taskAssigner" value="${TaskHeadUserForm.taskBean.taskReceiver}">
+	               			<logic:equal name="ProjectUserForm" property="taskBean.taskAssigner" value="${ProjectUserForm.taskBean.taskReceiver}">
 		               			<input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/>
 	               			</logic:equal>
 	               		</logic:equal>
               			<logic:equal name="isAlreadySubmit" value="true">
-	               			<logic:notEqual name="TaskSubordinateUserForm" property="taskBean.taskAssigner" value="${TaskHeadUserForm.taskBean.taskReceiver}">
+	               			<logic:notEqual name="ProjectUserForm" property="taskBean.taskAssigner" value="${ProjectUserForm.taskBean.taskReceiver}">
 		               			<input type="button" value="Approval" class="btn btn-sm  btn-success" onclick="flyToPage('<%=Constants.Task.TASK.DOAPPROVAL%>')"/>
 		               			<input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="doTaskAct('<%=Constants.Task.TASK.DOREJECT%>')"/>
 	               			</logic:notEqual>
 	               		</logic:equal>
 	               		<logic:equal name="isAlreadyReject" value="true">
-	               			<logic:notEqual name="TaskSubordinateUserForm" property="taskBean.taskAssigner" value="${TaskHeadUserForm.taskBean.taskReceiver}">
-		               			<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
-		               			<input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/>
+	               			<logic:notEqual name="ProjectUserForm" property="taskBean.taskAssigner" value="${ProjectUserForm.taskBean.taskReceiver}">
+		               			<input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doTaskAct('<%=Constants.Task.TASK.DOABORT%>')"/>
 	               			</logic:notEqual>
 	               		</logic:equal>
 	               	</td>
@@ -109,24 +110,22 @@
 			
 			<div class="show-in-page">
 				Show per page
-				<html:select name="TaskSubordinateUserForm" property="showInPage" onchange="change(this.value)" >
+				<html:select name="ProjectUserForm" property="showInPage" onchange="change(this.value)" >
 					<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 				</html:select>
 			</div>
 			
 			<div class="search-table">
-				<html:form action="/TaskSubordinateUser" >
-					<html:hidden name="TaskSubordinateUserForm" property="task"/>
-					<html:hidden name="TaskSubordinateUserForm" property="taskBean.taskId"/>
-					<html:hidden name="TaskSubordinateUserForm" property="taskId"/>
-					<html:hidden name="TaskSubordinateUserForm" property="activityId"/>
-					<html:hidden name="TaskSubordinateUserForm" property="activityChangeDate"/>
-					<html:hidden name="TaskSubordinateUserForm" property="goToPage"/>
-					<html:hidden name="TaskSubordinateUserForm" property="showInPage"/>
-					<html:select name="TaskSubordinateUserForm" property="columnSearch" styleClass="columnSearch">
+				<html:form action="/ProjectUser" >
+					<html:hidden name="ProjectUserForm" property="task"/>
+					<html:hidden name="ProjectUserForm" property="taskBean.taskId"/>
+					<html:hidden name="ProjectUserForm" property="taskId"/>
+					<html:hidden name="ProjectUserForm" property="goToPage"/>
+					<html:hidden name="ProjectUserForm" property="showInPage"/>
+					<html:select name="ProjectUserForm" property="columnSearch" styleClass="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
-					<html:text name="TaskSubordinateUserForm" property="search" styleClass="textSearch"/>
+					<html:text name="ProjectUserForm" property="search" styleClass="textSearch"/>
 					<input type="submit" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOEDIT%>')" class="buttonSearch myButton" value='Search'>
 				</html:form>
 			</div>
@@ -137,7 +136,6 @@
 					<th>Description</th>
 					<th>Activity Change Date</th>
 					<th>Status</th>
-                    <th width="90px">Actions</th>
                 </tr></thead>
                 <tbody>
                 <logic:notEmpty name="listActivity">
@@ -145,18 +143,12 @@
 	                	<tr>
 	                		<td width="250px"><bean:write name="iter" property="activityName"/></td>
 	                		<td><bean:write name="iter" property="activityDescription"/></td>
-	                		<td align="center" width="150px"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy hh:mm:ss"/></td>
+	                		<td align="center" width="150px"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy HH:mm:ss"/></td>
 	                		<td align="center" width="80px">
-		                		<jsp:include page="/content/Status.jsp">
+	                			<jsp:include page="/content/Status.jsp">
                 	    			<jsp:param name="status" value="${iter.activityLastStatus}" />
                 	    		</jsp:include>
 	                		</td>
-	                		<td align="center">
-	                        	<input type="submit" class="btn btn-info btn-xs" value='Edit' onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.GOTOEDIT%>', '<bean:write name="iter" property="activityId"/>')" src="resources/image/edit.png" width="18px"/>
-	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToChangeStatusAct('<%=Constants.Task.ACTIVITY.GOTOCHANGESTATUS%>', 
-		                        	'<bean:write name="iter" property="activityId"/>',
-		                        	'<bean:write name="iter" property="activityChangeDate" format="yyyy-MM-dd hh:mm:ss"/>')" />
-	                        </td>	
 	                    </tr> 
                     </logic:iterate>
 					</logic:notEmpty>
@@ -178,7 +170,7 @@
 				<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 				
 				<div class="paginate-3">
-					<html:text name="TaskSubordinateUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+					<html:text name="ProjectUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 					<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
 				</div>
 			</ul>

@@ -206,7 +206,7 @@
 								<tr>
                  				<td colspan="3" align="center">
                  					<html:button property="" value="Save" styleClass="btn btn-default" onclick="doSetWeekEnd()"/>
-                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('view')"/>
+                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('t10')"/>
                  				</td>
                  			</tr>
 							</table>

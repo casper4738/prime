@@ -61,7 +61,7 @@ function openModalHandler(){
 				</a>
 					<ul class="dropdown-menu">
 						<li class="user-header"><img
-							src="resources/dist/img/user2-160x160.jpg" class="img-circle"
+							src="image/resize-Lighthouse.jpg" class="img-circle"
 							alt="User Image" />
 							<p>
 								Alexander<small>Administrator</small>

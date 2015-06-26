@@ -7,22 +7,28 @@
 <html>
 <head> 
 	<!-- CSS -->
-	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	 <link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 	<!-- End of CSS -->
 	
 	<!-- JS -->
+	<script src="resources/prime.js"></script>
+	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
+	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
+	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
-	$('#table-1').dataTable( {
-		   paging    : false,
-		   searching : false,
-		   info   : false,
-		   language  : {
+		$('#table-1').dataTable( {
+			paging    : false,
+			searching : false,
+			info	  : false,
+			language  : {
 		          "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
-		      }
-		     } );
+		    }
+	    } );
 	</script>
 	<!-- End of JS -->
 </head>
@@ -41,7 +47,8 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title">Data Manage Position</h3></div>
 			
-			<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
+			<p>
+				<span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
                    <i class="fa fa-edit"></i>Add
                </span>
                <span class="message"><bean:write name="PositionAdminForm" property="message" /></span>
@@ -50,19 +57,18 @@
 			<!-- Search Handler Tag -->
 		    <div class="show-in-page">
 		     	Show per page
-		     	<html:select property="showInPage" name="PositionAdminForm">
-		      		<html:optionsCollection name="listShowEntries" label="value" value="key"/>
+		     	<html:select property="showInPage" name="PositionAdminForm" onchange="change(this.value)">
+		      		<html:optionsCollection name="listMaxDataPerPage" label="value" value="key"/>
 		     	</html:select>
 		     	<input type="button" class="btn bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Refresh'/>
 		    </div>
 		    
 		    <div class="search-table">
 		    <html:form action="/PositionAdmin" >
-				<html:hidden name="PositionAdminForm" property="task" value="search"/>
+				<html:hidden name="PositionAdminForm" property="task"/>
 				<html:hidden name="PositionAdminForm" property="tmpId"/>
 				<html:hidden name="PositionAdminForm" property="goToPage"/>
 				<html:hidden name="PositionAdminForm" property="showInPage"/>
-
 				<html:select name="PositionAdminForm" property="columnSearch">
 		      		<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 		     	</html:select>
@@ -75,12 +81,14 @@
 		    
 		    <!-- Table List -->
 			<div class="box-body">
-			<table class="table table-bordered table-striped table-hover">
-				<thead><tr>
-					<th>Position Name</th>
-					<th width="100px">Position Level</th>
-                    <th width="90px">Actions</th>
-                </tr></thead>
+			<table id="table-1" class="table table-bordered table-striped table-hover">
+				<thead>
+					<tr>
+						<th>Position Name</th>
+						<th width="120px">Position Level</th>
+	                    <th width="90px">Actions</th>
+	                </tr>
+	            </thead>
                 <tbody>
                 <logic:notEmpty name="listPosition">
 					<logic:iterate id="iter" name="listPosition">
@@ -95,7 +103,8 @@
                     </logic:iterate>
 				</logic:notEmpty>
 				</tbody>
-            </table></div>
+            </table>
+            </div>
             <!-- End Of Table List -->
 			            
             <!-- Paging -->
@@ -114,10 +123,8 @@
 				<li><html:link styleClass="paging" href="#" onclick="page(${pageNext})" >>></html:link> </li>
 				<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 				
-				<div class="paginate-3">
-					<html:text name="PositionAdminForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
-					<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
-				</div>
+				<html:text name="PositionAdminForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+				<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
 			</ul>
 			
 			<div class="paginate-2">

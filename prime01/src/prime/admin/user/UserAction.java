@@ -29,22 +29,27 @@ public class UserAction extends Action {
 		Date compTime;
 		curnTime = new Date();
 		curnTime = PrimeUtil.parseDateStringToDate(PrimeUtil.setDateToDateString(curnTime));
-		
 		System.out.println(userForm.getTask()+" TASK");
 		
 		if(Constants.Task.GOTOADD.equals(userForm.getTask())){
+			userForm.getUserBean().setEmployeeId(tmpManager.getNewId());
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(userForm.getTask())) {
 			//##. Edit Data
 			userForm.setUserBean(tmpManager.getUserByUsername(userForm.getTmpValue()));
 			return mapping.findForward("edit");
+		} else if (Constants.Task.DOADD.equals(userForm.getTask())) {
+			userForm.getUserBean().setEmployeeId(userForm.getEmployeeId());
+			userForm.getUserBean().setUpdateBy("dedy");
+			tmpManager.insert(userForm.getUserBean());
+			return mapping.findForward("forward");
 		} else if(Constants.Task.DOLOCK.equals(userForm.getTask())) {
 			//##. Lock User and Go to Forward
 			userForm.setUserBean(tmpManager.getUserByUsername(userForm.getTmpValue()));
 			compTime = userForm.getUserBean().getChangeDate();
 			compTime = PrimeUtil.parseDateStringToDate(PrimeUtil.setDateToDateString(compTime));
 			if (userForm.getUserBean().getStatusUser() == Constants.UserStatus.OK){
-				if (compTime.after(curnTime)){
+				if (compTime.after(curnTime)){    
 					//Change Status to Wait Locked
 					tmpManager.lockUser(userForm.getUserBean());
 				} else {
@@ -63,7 +68,6 @@ public class UserAction extends Action {
 					tmpManager.unlockUser(userForm.getUserBean());
 				}
 			}
-			tmpManager.lockUser(userForm.getUserBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DORESET.equals(userForm.getTask())) {
 			//##. Reset Password and Go to Forward

@@ -32,28 +32,32 @@ public interface Constants {
 		static final String DODAYOFF	= "t27";
 		static final String GOTOWEEKEND	= "t25";
 		static final String DOWEEKEND	= "t28";
-		static final String DORESET 	= "t33";
-		static final String DOLOCK 		= "t34";
-		static final String DOUNLOCK 	= "t35";
 		static final String GOTOEDITWEEKEND	= "t29";
 		static final String DOEDITWEEKEND	= "t30";
 		static final String GOTOEDITDAYOFF	= "t31";
 		static final String DOEDITDAYOFF	= "t32";
+		static final String DORESET 		= "t33";
+		static final String DOLOCK 			= "t34";
+		static final String GOTOEDITPOSITION 	= "t36";
+		static final String DOEDITPOSITION 		= "t37";
 		
 		interface Project {
-			   final String GOTOPROJECTDETAIL = "p01";
-			   final String GOTOTASKMEMBER  = "p02";
-			   final String GOTOCREATETASK  = "p03";
-			   final String DOCREATETASK  = "p04";
-			  }
+			final String GOTOPROJECTDETAIL	= "p01";
+			final String GOTOTASKMEMBER		= "p02";
+			final String GOTOCREATETASK		= "p03";
+			final String GOTOCREATEMEMBER	= "p04";
+			final String DOCREATETASK		= "p05";
+			final String DOCREATEMEMBER		= "p06";
+		}
 		
 		interface TASK {
 			final String GOTOTASKTYPE	= "t101";
 			final String GOTOSUBMIT		= "t102";
-			final String DOSUBMIT		= "t103";
-			final String DOAPPROVAL		= "t104";
-			final String DOREJECT		= "t105";
-			final String DOABORT		= "t106";
+			final String GOTODETAIL		= "t103";
+			final String DOSUBMIT		= "t104";
+			final String DOAPPROVAL		= "t105";
+			final String DOREJECT		= "t106";
+			final String DOABORT		= "t107";
 		}
 		
 		interface ACTIVITY {
@@ -73,7 +77,12 @@ public interface Constants {
 		final Map<String, String> EMPLOYEE_SEARCHCOLUMNS = Collections.unmodifiableMap(
 	        new LinkedHashMap<String, String>() {{
 	        	put("NAME", "EMPLOYEE NAME");
-	        	put("ID", "EMPLOYEE ID");
+	        	put("ID", "EMPLOYEE ID");	        	
+	        	put("GENDER", "GENDER (0=M; 1;F)");
+	        	put("EMAIL", "EMAIL");
+	        	put("DIVISION", "DIVISION");
+	        	put("POSITION", "POSITION");
+	        	put("MANAGER", "MANAGER");
 	        }
 	    });
 		

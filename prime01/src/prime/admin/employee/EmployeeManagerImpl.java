@@ -31,13 +31,22 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		try {
 			mapper.startTransaction();
 			mapper.insert("employee.insertResign", e);
-			mapper.update("employee.updateStatusUser", e);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
 		}
 	}
-
+	
+	public void updateStatusUser(Integer employeeId) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.update("employee.updateStatusUser", employeeId);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
 	public void insertWeekend(EmployeeBean e) throws SQLException {
 		try {
 			mapper.startTransaction();
@@ -50,7 +59,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	
 	public void insertDayoff(EmployeeBean e) throws SQLException {
 		try {
-			System.out.println("CEK");
 			mapper.startTransaction();
 			mapper.insert("employee.insertDayoff", e);
 			mapper.commitTransaction();
@@ -61,17 +69,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	
 	public void update(EmployeeBean e) throws SQLException {
 		try {
-			System.out.println(e.getEmployeeId()+"--EmpID");
-			System.out.println(e.getEmployeeName()+"--Name");
-			System.out.println(e.getAddress()+"--Address");
-			System.out.println(e.getContactNumber()+"--Numb");
-			System.out.println(e.getEmail()+"--Email");
-			System.out.println(e.getBirthdate()+"--Birth");
-			System.out.println(e.getGender()+"--Gender");
-			System.out.println(e.getHireDate()+"--HireDate");
-			System.out.println(e.getDivisionId()+"--Division");
-			System.out.println(e.getPositionId()+"--Position");
-			System.out.println(e.getManagerId()+"--Manager");
 			mapper.startTransaction();
 			mapper.update("employee.update", e);
 			mapper.commitTransaction();
@@ -79,7 +76,30 @@ public class EmployeeManagerImpl implements EmployeeManager {
 			mapper.endTransaction();
 		}
 	}
+	
+	public void updatePositionDivision(EmployeeBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.update("employee.updatePositionDivision", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
 
+	public void updateHead(Integer forCondition, Integer newHead) throws SQLException {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("forCondition", forCondition);
+			map.put("newHead", newHead);
+			mapper.startTransaction();
+			mapper.update("employee.updateHead", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
 	public void delete(Integer id) throws SQLException {
 		// TODO Auto-generated method stub
 		try {
@@ -164,5 +184,56 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		map.put("value", value);
 		map.put("divisionId", divisionId);
 		return (Integer) mapper.queryForObject("employee.getCountByColumnAndDivision", map);
+	}
+
+	@Override
+	public EmployeeBean getEmployeeWeekendByIdAndStartFrom(Integer id,
+			String startFrom) throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("startFrom", startFrom);
+		return (EmployeeBean) mapper.queryForObject("employee.getEmployeeWeekendByIdAndStartFrom", map);
+	}
+
+	@Override
+	/*public void updateWeekend(EmployeeBean e) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			System.out.println(e.getStartFrom()+"--");
+			mapper.startTransaction();
+			mapper.update("employee.updateWeekend", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}*/
+
+	public void deleteDayOff(Integer id, String startDate) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			mapper.startTransaction();
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			map.put("startDate", startDate);
+			mapper.delete("employee.deleteDayOff", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+	public void deleteWeekEnd(Integer id, String startFrom) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			mapper.startTransaction();
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("id", id);
+			map.put("startFrom", startFrom);
+			mapper.delete("employee.deleteWeekEnd", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
 	}
 }

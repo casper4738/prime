@@ -3,16 +3,15 @@
 <sqlMap namespace="user">
 	<insert id="insert" parameterClass="prime.admin.user.UserBean">
 		INSERT INTO USERS
-		(USERNAME , PASSWORD, SYSTEM_LEVEL, STATUS_USER, IS_ACTIVE_DIR) 
+		(USERNAME, PASSWORD, SYSTEM_LEVEL, LAST_ACTIVE, EMPLOYEE_ID, STATUS_USER, ACTION_DATE, IS_ACTIVE_DIR, UPDATED_BY) 
 		VALUES 
-		(#userName#, #password#, #sysLevel#, #statusUser#, #isActiveDirectory#)
-	</insert>
+		(#userName#, dbms_crypto.hash(to_clob(#password#), 2), #sysLevel#, SYSDATE-(1/(24*60)), #employeeId#, '1', SYSDATE-(1/(24*60)), '1', #updateBy#)
+		</insert>
 	
 	<select id="get" resultClass="prime.admin.user.UserBean" parameterClass="java.lang.String">
 		SELECT 
 		USERNAME AS userName,
 		SYSTEM_LEVEL AS sysLevel,
-		PASSWORD AS password,
 		STATUS_USER AS statusUser,
 		EMP.EMPLOYEE_NAME AS employeeName,
 		ACTION_DATE AS changeDate
@@ -34,6 +33,10 @@
 		 PASSWORD = dbms_crypto.hash(to_clob(#newPassword#), 2)
 		 WHERE USERNAME = #userName#
 	</update>
+	
+	<select id = "getNewId" resultClass = "java.lang.Integer">
+	SELECT NVL(MAX(EMPLOYEE_ID)+1, 1) FROM EMPLOYEES
+	</select>
 	
 	<update id="update"  parameterClass="prime.admin.user.UserBean">
 		UPDATE USERS SET
