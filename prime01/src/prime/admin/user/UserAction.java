@@ -29,6 +29,7 @@ public class UserAction extends Action {
 		Date compTime;
 		curnTime = new Date();
 		curnTime = PrimeUtil.parseDateStringToDate(PrimeUtil.setDateToDateString(curnTime));
+		System.out.println(userForm.getTask()+" TASK");
 		
 		if(Constants.Task.GOTOADD.equals(userForm.getTask())){
 			userForm.getUserBean().setEmployeeId(tmpManager.getNewId());
@@ -76,7 +77,24 @@ public class UserAction extends Action {
 			//##.Update Data and Go to Forward
 			tmpManager.update(userForm.getUserBean());
 			return mapping.findForward("forward");
-		}
+		} 		
+		 else if("changePassword".equals(userForm.getTask())) {
+			 
+			 System.out.println("masukk sini");
+			 System.out.println("1. "+userForm.getUserBean().getPassword());
+			 System.out.println("2. "+userForm.getUserBean().getNewPassword());
+			 System.out.println("3. "+userForm.getUserBean().getConfirmPassword());
+			 
+			 if(tmpManager.isUserValidated("Memud", userForm.getUserBean().getPassword())){
+				 System.out.println("tesss masukk lalalla");
+					tmpManager.changePassword(userForm.getUserBean());
+					System.out.println("pwd si Memud = "+userForm.getUserBean().getPassword());
+			 } else {
+				 //TO DO :: Not Validated, Force Return
+				 System.out.println("Fail");
+			 }
+		} 
+		
 		int countRows  = tmpManager.getCountByColumn(userForm.getColumnSearch(), userForm.getSearch());
 		
 		List<UserBean> list = tmpManager.getListByColumn(userForm.getColumnSearch(), userForm.getSearch(),

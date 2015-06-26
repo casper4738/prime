@@ -2,17 +2,6 @@
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 
-<script type="text/javascript">
-function openModalHandler(){
-	//##0.Preparing Parameter For Modal Showing
-	var tmpTask ="changePwd";
-
-	//##1.Accessing Prime Method For Modal Showing
-	modalLoadHandler("task=" + tmpTask, $('#result'));
-}
-</script>
-
-
 <header class="main-header">
 	<a href="#" class="logo"> <span class="logo-lg"><b>PRIME</b>PROGRAM</span></a>
 	
@@ -61,17 +50,20 @@ function openModalHandler(){
 				</a>
 					<ul class="dropdown-menu">
 						<li class="user-header"><img
-							src="image/resize-Lighthouse.jpg" class="img-circle"
+							src="resources/dist/img/user2-160x160.jpg" class="img-circle"
 							alt="User Image" />
 							<p>
 								Alexander<small>Administrator</small>
 							</p></li>
 						<li class="user-footer">
 							<div class="pull-left">
-								<input type="button" class="btn btn-block btn-default"  onclick="openModalHandler()" value="Change Password"/>
+								<a href="#" class="btn btn-default btn-flat">Profile</a>
+							</div>
+							<div class="pull-left">
+								<a href="#" class="btn btn-default btn-flat">Change Password</a>
 							</div>
 							<div class="pull-right">
-								<input type="button" class="btn btn-block btn-default"  onclick="" value="Sign Out"/>
+								<a href="#" class="btn btn-default btn-flat">Sign out</a>
 							</div>
 						</li>
 					</ul></li>

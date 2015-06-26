@@ -9,6 +9,7 @@
 
 	<!-- CSS -->
 	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	    
 	<!-- End of CSS -->
 	
 	<!-- JS -->
