@@ -15,6 +15,7 @@ public class UserBean extends EmployeeBean{
 	private String logionSession;
 	private Date lastActive;
 	private String updateBy;
+	private String tmpConfirmPassword;
 	public String getLogionSession() {
 		return logionSession;
 	}
@@ -81,6 +82,12 @@ public class UserBean extends EmployeeBean{
 	}
 	public void setStatusUser(Integer statusUser) {
 		this.statusUser = statusUser;
+	}
+	public String getTmpConfirmPassword() {
+		return tmpConfirmPassword;
+	}
+	public void setTmpConfirmPassword(String tmpConfirmPassword) {
+		this.tmpConfirmPassword = tmpConfirmPassword;
 	}
 	
 }

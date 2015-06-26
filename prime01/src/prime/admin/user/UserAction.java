@@ -31,8 +31,6 @@ public class UserAction extends Action {
 		curnTime = PrimeUtil.parseDateStringToDate(PrimeUtil.setDateToDateString(curnTime));
 		
 		if(Constants.Task.GOTOADD.equals(userForm.getTask())){
-			System.out.println(" 1 " + userForm.getTask());
-			System.out.println(" 2 " + tmpManager.getNewId());
 			userForm.getUserBean().setEmployeeId(tmpManager.getNewId());
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(userForm.getTask())) {
@@ -40,8 +38,8 @@ public class UserAction extends Action {
 			userForm.setUserBean(tmpManager.getUserByUsername(userForm.getTmpValue()));
 			return mapping.findForward("edit");
 		} else if (Constants.Task.DOADD.equals(userForm.getTask())) {
-			System.out.println("DOADD" + userForm.getEmployeeId());
 			userForm.getUserBean().setEmployeeId(userForm.getEmployeeId());
+			userForm.getUserBean().setUpdateBy("dedy");
 			tmpManager.insert(userForm.getUserBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOLOCK.equals(userForm.getTask())) {
@@ -79,7 +77,6 @@ public class UserAction extends Action {
 			tmpManager.update(userForm.getUserBean());
 			return mapping.findForward("forward");
 		}
-		System.out.println("masuk ke home");
 		int countRows  = tmpManager.getCountByColumn(userForm.getColumnSearch(), userForm.getSearch());
 		
 		List<UserBean> list = tmpManager.getListByColumn(userForm.getColumnSearch(), userForm.getSearch(),
@@ -89,7 +86,6 @@ public class UserAction extends Action {
 		//##1.Attribute for Table Show
 		for(int tmpI = 0 ; tmpI < list.size() ; tmpI++){
 			compTime = list.get(tmpI).getChangeDate();
-			System.out.println("abcde" + compTime);
 			compTime = PrimeUtil.parseDateStringToDate(PrimeUtil.setDateToDateString(compTime));
 			switch(list.get(tmpI).getStatusUser()){
 				case Constants.UserStatus.OK   :

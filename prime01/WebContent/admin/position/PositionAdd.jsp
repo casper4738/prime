@@ -23,6 +23,23 @@
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+	
+	<script type="text/javascript">
+	function validateForm() {
+	    var positionName =  document.getElementById('nameValidator').value;
+	    var positionLevel =  document.getElementById('levelValidator').value;
+	    if (positionName == null || positionName == "") {
+	        document.getElementById('validator').innerHTML="Name must be filled out";
+	        return false;
+	    }
+	    else if (positionLevel == null || positionLevel == "") {
+	    	document.getElementById('validator').innerHTML="Level must be filled out";
+	        return false;
+	    }
+	    else dosubmit();
+	}
+	</script>
+	
 	<!-- End of JS -->
 </head>
 <body class="skin-blue sidebar-mini">
@@ -47,21 +64,24 @@
                   			<tr>
                   				<td>Position Name</td>
                   				<td>:</td>
-                  				<td><html:text name="PositionAdminForm" property="positionBean.positionName" styleClass="form-control"/></td>
+                  				<td><html:text name="PositionAdminForm" property="positionBean.positionName" styleClass="form-control" styleId="nameValidator" maxlength="50"/></td>
                   			</tr>
                   			<tr>
                   				<td>Position Level</td>
                   				<td>:</td>
-                  				<td><html:select name="PositionAdminForm" property="positionBean.positionLevel" styleClass="form-control">
+                  				<td><html:select name="PositionAdminForm" property="positionBean.positionLevel" styleClass="form-control" styleId="levelValidator">
 							      		<html:optionsCollection name="listPositionLevel" label="value" value="key"/>
 							     	</html:select>
 						     	</td>
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">
-                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
+                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
+                  			</tr>
+                  			<tr>
+                  				<td colspan="3" align="center"> <span  id="validator" style="color: red"> </span> </td>
                   			</tr>
                   		</table>
                   	</html:form>

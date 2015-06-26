@@ -13,6 +13,15 @@ public class UserForm extends ActionForm {
 	private String tmpValue;
 	private String message;
 	private Integer employeeId;
+	private String password;
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
 	public String getTmpValue() {
 		return tmpValue;
