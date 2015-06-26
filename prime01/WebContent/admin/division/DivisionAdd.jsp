@@ -15,6 +15,17 @@
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
+	
+	<script type="text/javascript">
+	function validateForm() {
+	    var divisionName =  document.getElementById('nameValidator').value;
+	    if (divisionName == null || divisionName == "") {
+	        document.getElementById('validator').innerHTML="Name must be filled out";
+	        return false;
+	    }
+	    else dosubmit();
+	}
+	</script>
 </head>
 <body class="skin-blue sidebar-mini">
 			<section class="content-header">
@@ -31,20 +42,24 @@
 				<div class="col-xs-12"><div class="box">
 					<div class="box-header"><h3 class="box-title">Data Division</h3></div>
 					<div class="box-body">
-                  	<html:form action="/DivisionAdmin">
+                  	<html:form action="/DivisionAdmin"	>
                   		<html:hidden name="DivisionAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
                   		<html:hidden name="DivisionAdminForm" property="divisionBean.divisionId" />
                   		<table class="form-input" align="center">
                   			<tr>
                   				<td>Division Name</td>
                   				<td>:</td>
-                  				<td><html:text name="DivisionAdminForm" property="divisionBean.divisionName" styleClass="form-control"/></td>
+                  				<td><html:text name="DivisionAdminForm" property="divisionBean.divisionName" styleClass="form-control" styleId="nameValidator" maxlength="50"/></td>
+               
                   			</tr>
                   			<tr>
                   				<td colspan="3" align="center">
-                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
+                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
+                  			</tr>
+                  			<tr>
+                  			<td colspan="3" align="center"> <span  id="validator" style="color: red"> </span> </td>
                   			</tr>
                   		</table>
                   	</html:form>

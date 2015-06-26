@@ -65,7 +65,7 @@
 				<div class="col-xs-12"><div class="box">
 					<div class="box-header"><h1 class="box-title">Data Manage User</h1></div>
 					
-					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
+					<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('add')">
 	                    <i class="fa fa-edit"></i>Add
                     </span>
                     <span class="message"><bean:write name="UserAdminForm" property="message" /></span></p>
