@@ -46,7 +46,11 @@
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
-			<li class="active">Project</li>
+			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
+			<li class="active"><a href="javascript:flyToBack(
+	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
+	                        		'<bean:write name="ProjectUserForm" property="projectId"/>')">Project Detail</a></li>
+			<li class="active">Project Member Detail</li>
 		</ol>
 	</section>
 

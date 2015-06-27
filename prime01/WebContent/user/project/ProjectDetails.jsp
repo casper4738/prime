@@ -33,12 +33,11 @@
 			tmpForm.employeeId.value = valueMember;
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
-		function flyToEdit(task, valueRole){
-			alert(valueRole);
+		function flyToEdit(task, employeeId){
+			alert("alr:"+employeeId)
 			var tmpForm = document.forms[0]; 
 			tmpForm.task.value = task;
-			tmpForm.tempRoleId.value = valueRole;
-			alert("wooy")
+			tmpForm.employeeId.value = employeeId;
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
@@ -59,19 +58,17 @@
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
-			<li class="active">Project</li>
+			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
+			<li class="active">Project Detail</li>
 		</ol>
 	</section>
 
 	<section class="content">	
-	
 	<div class="row">
-	
 		<div class="col-xs-12"><div class="box">
-		<html:button property="" value="Back" styleClass="btn btn-sm btn-primary" onclick="flyToPage('success')"/>
 			<div class="box-header"><h3 class="box-title-center">Data Project Member</h3></div>
 			<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-			<tr><td>Project Name : <bean:write name="ProjectUserForm" property="projectBean.projectName"/> </td>
+			<tr><td>Project Name : ${ProjectUserForm.projectBean.projectId} <bean:write name="ProjectUserForm" property="projectBean.projectName"/></td>
 				<td>Project Assigner : <bean:write name="ProjectUserForm" property="projectBean.projectAssignerName" /> </td>
 			</tr>
 			<tr><td>Start Date : <bean:write name="ProjectUserForm" property="projectBean.projectStartDate" format="dd MMMM yyyy"/> </td>
@@ -107,7 +104,6 @@
 				<html:form action="/ProjectUser" >
 					<html:hidden name="ProjectUserForm" property="task"/>
 					<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
-					<html:hidden name="ProjectUserForm" property="projectBean.tempRoleId"/>
 					<html:hidden name="ProjectUserForm" property="projectId"/>
 					<html:hidden name="ProjectUserForm" property="employeeId"/>
 					<html:hidden name="ProjectUserForm" property="goToPage"/>
@@ -141,12 +137,13 @@
 	                		<td><bean:write name="iter" property="email"/></td>
 	                		<td><bean:write name="iter" property="contactNumber"/></td>
 	                		<td align="center">
-	                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.ACTIVITY.GOTOEDIT%>', '<bean:write name="iter" property="tempRoleId"/>')" src="resources/image/edit.png" />
-	                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.DODELETE%>', '<bean:write name="iter" property="projectMemberId"/>')" src="resources/image/remove.png" />
-                     	        		<input type="image" onclick="flyToChangeStatusAct()" src="resources/image/viewmore.png" />
-                     	        		<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail(
+	                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.PROJECT.GOTOEDITMEMBER%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
+                 	        	<input type="image" onclick="flyToChangeStatusAct()" src="resources/image/remove.png"/>
+                     	        <input type="image" value='Details' onclick="flyToTaskDetail(
                      	        				'<%=Constants.Task.PROJECT.GOTOTASKMEMBER%>', 
-                     	        				'<bean:write name="iter" property="employeeId"/>')">
+                     	        				'<bean:write name="iter" property="employeeId"/>')"
+     	        								src="resources/image/viewmore.png"
+                     	        				>
 	                        </td>	
 	                    </tr> 
                     </logic:iterate>

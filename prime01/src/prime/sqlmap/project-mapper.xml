@@ -237,4 +237,33 @@
 		WHERE PROJECT_ID=#projectId#
 	</select>
 	
+	<select id="getRoleByProjectMember" resultClass="prime.user.project.RoleOption" parameterClass="java.util.Map" >
+		SELECT 
+			ROLE.ROLE_ID 							AS roleId, 
+			ROLE.ROLE_NAME							AS roleName, 
+			PROJ_MBR.PROJECT_MEMBER_ID  			AS projectMemberId, 
+			NVL(PROJ_MBR.PROJECT_MEMBER_STATUS, 0)  AS projectMemberStatus
+		FROM ROLES ROLE
+		LEFT JOIN (
+		    SELECT PROJECT_MEMBER_ID, ROLE_ID, PROJECT_MEMBER_STATUS FROM PROJECT_MEMBERS
+		    WHERE EMPLOYEE_ID = #employeeId# AND PROJECT_ID=#projectId#
+		) PROJ_MBR ON PROJ_MBR.ROLE_ID = ROLE.ROLE_ID
+		ORDER BY ROLE_NAME ASC
+	</select>
+	
+	<update id="updateRoleMember" parameterClass="java.lang.Integer">
+		UPDATE   PROJECT_MEMBERS
+  		SET   PROJECT_MEMBER_STATUS = #projectMemberStatus#
+ 		WHERE   PROJECT_MEMBER_ID = #projectMemberId#
+	</update>
+	
+	<select id="getStatusRoleMember" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT PROJECT_MEMBER_ID
+ 		FROM   PROJECT_MEMBERS
+ 		WHERE  PROJECT_MEMBER_ID = #projectMemberId# 
+ 		AND ROLE_ID = #roleId# 
+ 		AND PROJECT_MEMBER_STATUS = #projectMemberStatus#
+	</select>
+	
+	
 </sqlMap> 

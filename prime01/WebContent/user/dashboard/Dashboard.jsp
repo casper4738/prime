@@ -1,3 +1,5 @@
+<%@page import="java.util.List"%>
+<%@page import="java.util.ArrayList"%>
 <%@page import="prime.constants.Constants"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
@@ -98,6 +100,92 @@
 								}
 	  		});
 		}
+		
+		//##.Calendar Handling
+		$(function () {
+        	//.Initialize the external events
+	        function ini_events(ele) {
+	          ele.each(function () {
+	            // create an Event Object (http://arshaw.com/fullcalendar/docs/event_data/Event_Object/)
+	            // it doesn't need to have a start or end
+	            var eventObject = {
+	              title: $.trim($(this).text()) // use the element's text as the event title
+	            };
+	
+	            // store the Event Object in the DOM element so we can get to it later
+	            $(this).data('eventObject', eventObject);
+	
+	            // make the event draggable using jQuery UI
+	            $(this).draggable({
+	              zIndex: 1070,
+	              revert: true, // will cause the event to go back to its
+	              revertDuration: 0  //  original position after the drag
+	            });
+	
+	          });
+	        }
+        	ini_events($('#external-events div.external-event'));
+
+
+        	//.Date for the calendar events	
+		    var date = new Date();
+		    var d = date.getDate();
+		    var m = date.getMonth();
+			var y = date.getFullYear();
+
+			$('#calendar').fullCalendar({
+		          header: {
+			            left: 'prev,next today',
+			            center: 'title',
+			          },
+			          buttonText: {
+			            today: 'today',
+			            month: 'month',
+			          },
+			          eventClick:  function(event, jsEvent, view) {
+			              $('#modalTitle').html(event.title);
+			              $('#modalBody').html(event.description);
+			              $('#eventUrl').attr('href',event.url);
+			              $('#fullCalModal').modal();
+			          },
+			          
+			          //Random default events
+			          events: [
+							<% 
+								List<String> arrHoliday = (ArrayList) request.getAttribute("calendar");
+								for(int a = 0; a<arrHoliday.size();a++){
+									out.println(arrHoliday.get(a)); 
+								}
+							%>
+			          ],
+			          
+			          editable: true,
+			          droppable: true, // this allows things to be dropped onto the calendar !!!
+			          drop: function (date, allDay) { // this function is called when something is dropped
+				            // retrieve the dropped element's stored Event Object
+				            var originalEventObject = $(this).data('eventObject');
+			
+				            // we need to copy it, so that multiple events don't have a reference to the same object
+				            var copiedEventObject = $.extend({}, originalEventObject);
+			
+				            // assign it the date that was reported
+				            copiedEventObject.start = date;
+				            copiedEventObject.allDay = allDay;
+				            copiedEventObject.backgroundColor = $(this).css("background-color");
+				            copiedEventObject.borderColor = $(this).css("border-color");
+			
+				            // render the event on the calendar
+				            // the last `true` argument determines if the event "sticks" (http://arshaw.com/fullcalendar/docs/event_rendering/renderEvent/)
+				            $('#calendar').fullCalendar('renderEvent', copiedEventObject, true);
+			
+				            // is the "remove after drop" checkbox checked?
+				            if ($('#drop-remove').is(':checked')) {
+				              // if so, remove the element from the "Draggable Events" list
+				              $(this).remove();
+				            }
+			          }
+			});
+      });
     </script>
     <!-- End Of JS -->
 </head>
@@ -186,26 +274,12 @@
 						</div>
 					</section>
 					<section class="col-lg-5 connectedSortable">
-						<div class="box box-solid bg-green-gradient">
-							<div class="box-header"><i class="fa fa-calendar"></i>
-							<h3 class="box-title">Calendar</h3>
-							<div class="pull-right box-tools">
-			                    <div class="btn-group">
-			                    	<button class="btn btn-success btn-sm dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bars"></i></button>
-			                      	<ul class="dropdown-menu pull-right" role="menu">
-				                        <li><a href="#">Add new event</a></li>
-				                        <li><a href="#">Clear events</a></li>
-				                        <li class="divider"></li>
-				                        <li><a href="#">View calendar</a></li>
-			                      	</ul>
-			                    </div>
-		                    	<button class="btn btn-success btn-sm" data-widget="collapse"><i class="fa fa-minus"></i></button>
-		                    	<button class="btn btn-success btn-sm" data-widget="remove"><i class="fa fa-times"></i></button>
-		                  	</div>
-		                </div>
-		                <div class="box-body no-padding">
-		                	<div id="calendar" style="width: 100%"></div>
-		                </div>
+						<div class="box box-primary">
+			               <div class="box-body no-padding">
+			                 <!-- THE CALENDAR -->
+			                 <div id="calendar"></div>
+			               </div><!-- /.box-body -->
+			             </div><!-- /. box -->
 		            </section>
 		        </div>
 		        
@@ -240,6 +314,21 @@
             </div>
 	        <!-- End of Activity Progress -->
        </section>
+      
+		<div id="fullCalModal" class="modal fade">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+		                <h4 id="modalTitle" class="modal-title"></h4>
+		            </div>
+		            <div id="modalBody" class="modal-body"></div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
 	</html:form>	
 </body>
 </html>

@@ -1,5 +1,6 @@
 package prime.user.project;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,6 +11,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.employee.EmployeeBean;
 import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.role.RoleBean;
@@ -129,10 +131,13 @@ public class ProjectAction extends Action {
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getTaskId());
+			
 			request.setAttribute("listActivity", list);
 			request.setAttribute("listSearchColumn", Constants.Search.ACTIVITY_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+			
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());	
+			
 			return mapping.findForward("taskDetail");
 		} else if("addmember".equals(pForm.getTask())){
 			//belum diisi
@@ -166,15 +171,48 @@ public class ProjectAction extends Action {
 			request.setAttribute("projectName", tmpProjectManager.getProjectNamebyProjectId(pForm.getProjectId()));
 			System.out.println("masuk "+pForm.getProjectBean().getProjectName());
 			return mapping.findForward("submitProject");
-		}
-		else if("submitProject".equals(pForm.getTask())){
-			
-		}
-		else if(Constants.Task.ACTIVITY.GOTOEDIT.equals(pForm.getTask())){
-			System.out.println("masuk edit ");
-			request.setAttribute("listAllRoles", tmpRoleManager.getListAllRole());
-			System.out.println("role id "+pForm.getTempRoleId());
+		} else if(Constants.Task.PROJECT.GOTOEDITMEMBER.equals(pForm.getTask())){
+			EmployeeBean tmpEmployeeBean = tmpEmployeeManager.getEmployeeById(pForm.getEmployeeId());
+			pForm.getProjectBean().setEmployeeId(tmpEmployeeBean.getEmployeeId());
+			pForm.getProjectBean().setEmployeeName(tmpEmployeeBean.getEmployeeName());
+			request.setAttribute("listRoles",  tmpProjectManager.getRoleByProjectMember(pForm.getEmployeeId(), pForm.getProjectId()));
 			return mapping.findForward("editMemberRole");
+		} else if(Constants.Task.PROJECT.DOEDITMEMBER.equals(pForm.getTask())){
+			List<RoleOption> listx = tmpProjectManager.getRoleByProjectMember(pForm.getEmployeeId(), pForm.getProjectId());
+			
+			List<String> listTemp = new ArrayList<String>();
+			List<String> listInsert = new ArrayList<String>();
+			List<String> listUpdate = new ArrayList<String>();
+			
+			for (RoleOption e : listx) {
+//				listTemp.add(e.getProjectMemberId()+";"+e.getRoleId()+";"+);
+			}
+
+			listInsert.add("1");
+			listInsert.add("3");
+			listInsert.add("5");
+
+			listUpdate.addAll(listTemp);
+			listUpdate.removeAll(listInsert);
+			for (String string : listUpdate) {
+				System.out.println(string);
+			}
+			
+			System.out.println("------------");
+			
+			listInsert.removeAll(listTemp);
+			for (String string : listInsert) {
+				System.out.println(string);
+			}
+			
+			String roles=pForm.getTempRoleId();
+			String []rolesSplit=roles.split(",");
+			System.out.println("role : "+roles);
+			System.out.println("size : "+rolesSplit.length);
+			for (String string : rolesSplit) {
+				System.out.println("1. "+string);
+			}
+			return mapping.findForward("forward");
 		}
 		int countRows  = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		List<ProjectBean> list = tmpProjectManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
@@ -204,4 +242,5 @@ public class ProjectAction extends Action {
 
 		pForm.setGoToPage(pageUtil.getPage());
 	}
+	
 }
