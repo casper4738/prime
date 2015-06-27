@@ -9,10 +9,10 @@ public class ActivityBean extends TaskBean {
 
 	private Integer activityId;
 	private Integer activityStatus;
+	private Integer activityLastStatus;
 	private String activityName;
 	private String activityDescription;
 	private String activityChangeNote;
-	private Integer activityLastStatus;
 	private Date activityChangeDate;
 
 	public ActivityBean() {

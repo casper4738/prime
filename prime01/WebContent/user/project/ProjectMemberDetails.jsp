@@ -11,6 +11,7 @@
 	<!-- CSS -->
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
 	<!-- End CSS -->
 	
 	<!-- JS -->
@@ -71,7 +72,7 @@
 				</tr>
 				</table>
 				
-				<p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
+				<p><span class="message"><bean:write name="ProjectUserForm" property="message" />asas</span></p>
 				<div class="form-action"><table align="center">
                   <tr><td style="padding:5px;">
                   		<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.PROJECT.GOTOCREATETASK%>')"/>

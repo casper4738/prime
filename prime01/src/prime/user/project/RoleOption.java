@@ -4,7 +4,7 @@ public class RoleOption {
 
 	private Integer roleId;
 	private String roleName;
-	private String projectMemberId;
+	private Integer projectMemberId;
 	private Integer projectMemberStatus;
 
 	public Integer getRoleId() {
@@ -23,11 +23,11 @@ public class RoleOption {
 		this.roleName = roleName;
 	}
 
-	public String getProjectMemberId() {
+	public Integer getProjectMemberId() {
 		return projectMemberId;
 	}
 
-	public void setProjectMemberId(String projectMemberId) {
+	public void setProjectMemberId(Integer projectMemberId) {
 		this.projectMemberId = projectMemberId;
 	}
 

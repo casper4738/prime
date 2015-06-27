@@ -183,6 +183,12 @@ public class TaskHeadAction extends Action {
 			return mapping.findForward("forward");
 		} else if (Constants.Task.TASK.DOABORT.equals(pForm.getTask())) {
 			//##.Abort Task
+			ActivityBean activityBean = new ActivityBean();
+			activityBean.setActivityChangeNote("Activity aborted by role in task abort");
+			activityBean.setTaskStatus(Constants.Status.ABORT);
+			activityBean.setTaskId(pForm.getTaskBean().getTaskId());
+			
+			tmpActivityManager.insertDetailBySelectTask(activityBean);
 			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");
 		} 

@@ -21,6 +21,7 @@ import prime.constants.Constants;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
+import prime.user.task.TaskBean;
 import prime.user.task.TaskManager;
 import prime.user.task.TaskManagerImpl;
 import prime.utility.PaginationUtility;
@@ -165,8 +166,7 @@ public class ProjectAction extends Action {
 			}
 			//tmpProjectManager.insertMember(pForm.getProjectBean());
 			return mapping.findForward("forward");
-		}
-		else if(Constants.Task.TASK.GOTOSUBMIT.equals(pForm.getTask())){
+		} else if(Constants.Task.TASK.GOTOSUBMIT.equals(pForm.getTask())){
 			System.out.println("id "+pForm.getProjectId());
 			request.setAttribute("projectName", tmpProjectManager.getProjectNamebyProjectId(pForm.getProjectId()));
 			System.out.println("masuk "+pForm.getProjectBean().getProjectName());
@@ -178,40 +178,76 @@ public class ProjectAction extends Action {
 			request.setAttribute("listRoles",  tmpProjectManager.getRoleByProjectMember(pForm.getEmployeeId(), pForm.getProjectId()));
 			return mapping.findForward("editMemberRole");
 		} else if(Constants.Task.PROJECT.DOEDITMEMBER.equals(pForm.getTask())){
-			List<RoleOption> listx = tmpProjectManager.getRoleByProjectMember(pForm.getEmployeeId(), pForm.getProjectId());
+			List<RoleOption> listx = tmpProjectManager.getRoleByProjectMember(pForm.getProjectBean().getEmployeeId(), pForm.getProjectId());
 			
 			List<String> listTemp = new ArrayList<String>();
 			List<String> listInsert = new ArrayList<String>();
 			List<String> listUpdate = new ArrayList<String>();
 			
 			for (RoleOption e : listx) {
-				listTemp.add(e.getProjectMemberId()+";"+e.getRoleId()+";"+);
+				if(e.getProjectMemberId() != 0 && e.getProjectMemberStatus() == 1) {
+					listTemp.add(e.getRoleId()+";"+e.getProjectMemberId()+";"+e.getProjectMemberStatus());
+				}
 			}
 
-			listInsert.add("1");
-			listInsert.add("3");
-			listInsert.add("5");
+			String roles = pForm.getTempRoleId();
+			String []rolesSplit = roles.split(",");
+			for (String string : rolesSplit) {
+				System.out.println("insert : "+string);
+				listInsert.add(string);
+			}
 
-			listUpdate.addAll(listTemp);
-			listUpdate.removeAll(listInsert);
-			for (String string : listUpdate) {
-				System.out.println(string);
+			for (String string : listTemp) {
+				System.out.println("temp : "+string);
 			}
 			
-			System.out.println("------------");
+			
+			listUpdate.addAll(listTemp);
+			listUpdate.removeAll(listInsert);
+			
+			for (String string : listUpdate) {
+				System.out.println("update : "+string);
+				tmpProjectManager.updateStatusProjectMemberRole(Integer.parseInt(string.split(";")[1]),  0);
+				
+				TaskBean taskBean = new TaskBean();
+				taskBean.setTaskReceiver(pForm.getProjectBean().getEmployeeId());
+				taskBean.setProjectMemberId(Integer.parseInt(string.split(";")[1]));
+				taskBean.setTaskStatus(Constants.Status.ABORT);
+				taskBean.setTaskChangeNote("Task aborted by role in project abort");
+				tmpTaskManager.insertDetailBySelectTask(taskBean);
+				
+				ActivityBean activityBean = new ActivityBean();
+				activityBean.setActivityChangeNote("Activity aborted by role in project abort");
+				activityBean.setTaskReceiver(taskBean.getTaskReceiver());
+				activityBean.setProjectMemberId(taskBean.getProjectMemberId());
+				activityBean.setTaskStatus(taskBean.getTaskStatus());				
+				tmpActivityManager.insertDetailBySelectTask(activityBean);
+			}
 			
 			listInsert.removeAll(listTemp);
 			for (String string : listInsert) {
-				System.out.println(string);
+				String [] split = string.split(";");
+				int roleId 				= Integer.parseInt(split[0]);
+				int projectMemberId 	= Integer.parseInt(split[1]);
+				int projectMemberStatus = Integer.parseInt(split[2]);
+				System.out.println("sisa : "+string);
+				
+				if(projectMemberId == 0) {
+					pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
+					pForm.getProjectBean().setProjectMemberStatus(1);	
+					pForm.getProjectBean().getRoleBean().setRoleId(roleId);	
+					
+					System.out.println("2.1. "+pForm.getProjectBean().getProjectMemberId());
+					System.out.println("2.2. "+pForm.getProjectBean().getProjectMemberStatus());
+					System.out.println("2.3. "+pForm.getProjectBean().getRoleBean().getRoleId());
+					
+					tmpProjectManager.insertMember(pForm.getProjectBean());
+				} else if(projectMemberStatus == 0) {
+					tmpProjectManager.updateStatusProjectMemberRole(projectMemberId, 1);
+				}
 			}
 			
-			String roles=pForm.getTempRoleId();
-			String []rolesSplit=roles.split(",");
-			System.out.println("role : "+roles);
-			System.out.println("size : "+rolesSplit.length);
-			for (String string : rolesSplit) {
-				System.out.println("1. "+string);
-			}
+			
 			return mapping.findForward("forward");
 		}
 		int countRows  = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
