@@ -286,18 +286,33 @@
 	
 	<!-- Show for Progress Bar Activity-->
 	<select id="getCurrentListActivity" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
-		SELECT ACT.ACTIVITY_NAME as activityName,
-			   ACT.ACTIVITY_ID as activityId
-		FROM ACTIVITIES ACT
-		INNER JOIN (        
-		    SELECT DISTINCT ACTIVITY_ID
-		    FROM ACTIVITY_DETAILS WHERE ACTIVITY_CHANGE_DATE between 
-		               TO_TIMESTAMP('$currentDate$ 00:00:00','dd-mm-yyyy hh24:mi:ss') 
-		        	   AND TO_TIMESTAMP('$currentDate$ 23:59:59','dd-mm-yyyy hh24:mi:ss')       
-		) AD ON AD.ACTIVITY_ID = ACT.ACTIVITY_ID
-		INNER JOIN TASKS TSK ON TSK.TASK_ID = ACT.TASK_ID
-		WHERE TASK_RECEIVER=#employeeId#
-	    ORDER BY ACTIVITY_NAME
+        SELECT ACT.ACTIVITY_NAME as activityName,
+               ACT.ACTIVITY_ID as activityId,
+               ACT.ACTIVITY_LAST_STATUS as activityLastStatus
+        FROM ACTIVITIES ACT    
+        INNER JOIN (
+            SELECT DISTINCT ACTIVITY_ID
+            FROM ACTIVITY_DETAILS
+        	WHERE ACTIVITY_CHANGE_DATE &lt;= TO_TIMESTAMP('$currentDate$ 23:59:59', 'dd-mm-yyyy hh24:mi:ss')
+        ) AD1 ON AD1.ACTIVITY_ID = ACT.ACTIVITY_ID
+        INNER JOIN TASKS TSK ON TSK.TASK_ID = ACT.TASK_ID
+        WHERE TASK_RECEIVER=#employeeId#     
+        ORDER BY ACTIVITY_NAME
+	</select>
+	
+	<select id="getPreviousDateOnProgressActivity" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
+        SELECT AD1.ACTIVITY_ID, AD1.ACTIVITY_STATUS, AD1.activity_change_date FROM activity_details AD1
+		INNER JOIN (
+    		SELECT ACTIVITY_ID, MAX(ACTIVITY_CHANGE_DATE) as ACTIVITY_CHANGE_DATE FROM (
+        		SELECT ACTIVITY_ID, ACTIVITY_CHANGE_DATE, ACTIVITY_STATUS 
+        		FROM ACTIVITY_DETAILS
+        		WHERE ACTIVITY_CHANGE_DATE &lt;= TO_TIMESTAMP('$currentDate$ 00:00:01', 'dd-mm-yyyy hh24:mi:ss')
+    		)
+    		GROUP BY ACTIVITY_ID
+		) AD2 
+		ON AD1.ACTIVITY_ID= AD2.ACTIVITY_ID AND
+   		   AD1.ACTIVITY_CHANGE_DATE = AD2.ACTIVITY_CHANGE_DATE
+		WHERE AD1.ACTIVITY_STATUS = #statusProgress#
 	</select>
 	
 	<select id="getRangeTimeByActivityId" resultClass="prime.user.activity.ActivityBean" parameterClass="java.util.Map">
@@ -305,7 +320,7 @@
 			   ACTIVITY_STATUS as activityStatus
 		FROM ACTIVITY_DETAILS 
 		WHERE ACTIVITY_ID = #activityId# AND
-			  (ACTIVITY_CHANGE_DATE &lt;= TO_TIMESTAMP('$currentDate$ 23:59:59','dd-mm-yyyy hh24:mi:ss')) 
+			  ACTIVITY_CHANGE_DATE &lt;= TO_TIMESTAMP('$currentDate$ 23:59:59','dd-mm-yyyy hh24:mi:ss') 
 	    ORDER BY ACTIVITY_CHANGE_DATE DESC
 	</select>
 	
