@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import prime.constants.Constants;
 import prime.utility.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -139,6 +140,7 @@ public class ActivityManagerImpl implements ActivityManager {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("employeeId", employeeId);
 		map.put("currentDate", currentDate);
+		map.put("statusProgress", Constants.Status.PROGRESS);
 		return mapper.queryForList("activity.getCurrentListActivity", map);
 	}
 	

@@ -71,7 +71,7 @@
 			<div class="box-header"><h3 class="box-title">Add New Project Member</h3></div>
 			<div class="box-body">
                 	<html:form action="/ProjectUser">
-                		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.Project.DOCREATEMEMBER%>"/>
+<%--                 		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.Project.DOCREATEMEMBER%>"/> --%>
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectName" />
                 	    <html:hidden name="ProjectUserForm" property="employeeId" />
@@ -113,7 +113,7 @@
                 				<td colspan="3" align="center">
                 					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="doSetRole()"/>
                 					<input type="button" class="btn btn-default" value='Cancel' onclick="flyToBack(
-	                        		'<%=Constants.Task.Project.GOTOPROJECTDETAIL %>', 
+<%-- 	                        		'<%=Constants.Task.Project.GOTOPROJECTDETAIL %>',  --%>
 	                        		'<bean:write name="ProjectUserForm" property="projectBean.projectId"/>')">
                 				</td>
                 			</tr>

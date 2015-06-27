@@ -85,9 +85,16 @@
 					  										 			scrollY	  		: "250px",
 					  										 		    scrollX	  		: "100%",
 					  										 		    scrollCollapse	: true,
+					  										 		 	columnDefs: [
+							  										 		            { width: '1%' , targets: 0 },
+							  										 		            { width: '3%' , targets: 1 },
+							  										 		            { width: '15%', targets: 2 },
+							  										 		            { width: '3%' , targets: 3 }
+							  										 		        ],
 					  													language  		: {"emptyTable":  "<center><%=Constants.Response.TABLE_HEAD_EMPTY %></center>"}
 					  										 	    });
-						  		    new $.fn.dataTable.FixedColumns(table, {leftColumns: 3});
+						  		  	$('#table-wrapper').css('min-height','200');
+						  		    new $.fn.dataTable.FixedColumns(table, {leftColumns: 4});
 								}
 	  		});
 		}
