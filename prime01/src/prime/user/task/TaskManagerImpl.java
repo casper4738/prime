@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import prime.constants.Constants;
+import prime.user.project.ProjectBean;
 import prime.utility.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -38,7 +39,19 @@ public class TaskManagerImpl implements TaskManager {
 			mapper.endTransaction();
 		}
 	}
+	
 
+	@Override
+	public void insertDetailBySelectTask(TaskBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.insert("task.insertDetailBySelectTask", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
 	@Override
 	public TaskBean getTaskById(Integer id) throws SQLException {
 		return (TaskBean) mapper.queryForObject("task.get", id);

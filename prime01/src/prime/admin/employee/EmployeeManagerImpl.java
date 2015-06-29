@@ -133,7 +133,7 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		return mapper.queryForList("employee.getListByColumn", map);
 	}
 	
-	public List<EmployeeBean> getListEmployeeHead(String columnSearch, String value, Integer positionLevel, Integer startRow, Integer endRow, String paramCondition, Integer employeeId) 
+	public List<EmployeeBean> getListEmployeeHead(String columnSearch, String value, Integer positionLevel, Integer startRow, Integer endRow, String paramCondition, Integer employeeId, Integer divisionId) 
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
@@ -141,12 +141,14 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		map.put("positionLevel", positionLevel);
 		map.put("paramCondition", paramCondition);
 		map.put("employeeId", employeeId);
+		map.put("divisionId", divisionId);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		return mapper.queryForList("employee.getListEmployeeHead", map);
 	}
 
-	public List<EmployeeBean> getListByColumnAndDivision(String columnSearch, String value, Integer divisionId, Integer startRow, Integer endRow) 
+	/* NOT USE NOW
+	 public List<EmployeeBean> getListByColumnAndDivision(String columnSearch, String value, Integer divisionId, Integer startRow, Integer endRow) 
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
@@ -157,6 +159,14 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		return mapper.queryForList("employee.getListByColumnAndDivision", map);
 	}
 	
+	public Integer getCountByColumnAndDivision(String columnSearch, String value, Integer divisionId) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);
+		map.put("divisionId", divisionId);
+		return (Integer) mapper.queryForObject("employee.getCountByColumnAndDivision", map);
+	}
+	*/
 
 	/*select employee by tree and division and level  */
 	public List<EmployeeBean> getListByTreeWithDivision(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
@@ -211,23 +221,18 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		return (Integer) mapper.queryForObject("employee.getCountByColumn", map);
 	}
 	
-	public Integer getCountByColumnEmployeeHead(String columnSearch, String value, Integer positionLevel, String paramCondition, Integer employeeId) throws SQLException {
+	public Integer getCountByColumnEmployeeHead(String columnSearch, String value, Integer positionLevel, String paramCondition, Integer employeeId, Integer divisionId) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("positionLevel", positionLevel);
 		map.put("paramCondition", paramCondition);
 		map.put("employeeId", employeeId);
+		map.put("divisionId", divisionId);
 		map.put("value", value);
 		return (Integer) mapper.queryForObject("employee.getCountByColumnEmployeeHead", map);
 	}
 	
-	public Integer getCountByColumnAndDivision(String columnSearch, String value, Integer divisionId) throws SQLException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("columnSearch", columnSearch);
-		map.put("value", value);
-		map.put("divisionId", divisionId);
-		return (Integer) mapper.queryForObject("employee.getCountByColumnAndDivision", map);
-	}
+	
 
 	@Override
 	public EmployeeBean getEmployeeWeekendByIdAndStartFrom(Integer id,
@@ -278,5 +283,30 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		} finally {
 			mapper.endTransaction();
 		}
+	}
+
+	@Override
+	public String getTreeIdByEmployeeId(Integer employeeId) throws SQLException {
+		// TODO Auto-generated method stub
+		return (String) mapper.queryForObject("employee.getTreeIdByEmployeeId", employeeId);
+	}
+
+	@Override
+	public void updateTreeId(Integer length, String newTreeId,
+			String oldTreeId, Integer employeeId) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			System.out.println(newTreeId+ " new");
+			map.put("length", length);
+			map.put("newTreeId", newTreeId);
+			map.put("oldTreeId", oldTreeId);
+			map.put("employeeId", employeeId);
+			mapper.startTransaction();
+			mapper.update("employee.updateTreeId", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}	
 	}
 }

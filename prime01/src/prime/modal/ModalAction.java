@@ -78,12 +78,12 @@ public class ModalAction extends Action {
             			System.out.println(pForm.getColumnSearch() + " _ " +  pForm.getSearch());
                     	//##1.Fetch Data From DB
                 		countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-                		
+        		
                 		//---.Depend On The Object
                 		list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
                 									   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
                 									   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows));
-                		
+
                 		//##2.Prepare Data for Modal-Table Show
                 		//---a.Modal Title
                 		request.setAttribute("modalListName", "Employees List");
@@ -115,12 +115,12 @@ public class ModalAction extends Action {
             			break;
             		case "employeeHead":  
                     	//##1.Fetch Data From DB
-                		countRows  = manager.getCountByColumnEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(), pForm.getParam3(), pForm.getParam4());
+                		countRows  = manager.getCountByColumnEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(), pForm.getParam3(), pForm.getParam4(), pForm.getParam5());
                 		
                 		//---.Depend On The Object
                 		list = manager.getListEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(),
                 										   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
-                										   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows), pForm.getParam3(), pForm.getParam4());
+                										   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows), pForm.getParam3(), pForm.getParam4(), pForm.getParam5());
                 		
                 		//##2.Prepare Data for Modal-Table Show
                 		//---a.Modal Title
@@ -128,7 +128,7 @@ public class ModalAction extends Action {
                 		request.setAttribute("listSearchColumn", Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
                 		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
                 		
-                		if(pForm.getParam3().equals("employeeAdd")){
+                		if(pForm.getParam3().equals("employeeAdd") || pForm.getParam3().equals("employeeEditPosDiv")){
                 			request.setAttribute("modalForm", "employeeHead");
                 		}else if(pForm.getParam3().equals("employeeResign")){
                 			request.setAttribute("modalForm", "employeeResign");
@@ -157,7 +157,7 @@ public class ModalAction extends Action {
                 			tmpData.get(tmpI).add(list.get(tmpI).getEmail());
                 			tmpData.get(tmpI).add(list.get(tmpI).getDivisionName());
                 			tmpData.get(tmpI).add(list.get(tmpI).getPositionName());
-                			tmpData.get(tmpI).add(list.get(tmpI).getManagerName());
+                			tmpData.get(tmpI).add(list.get(tmpI).getManagerName());;
                 		}
                 		break;
             		default:

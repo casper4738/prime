@@ -167,12 +167,10 @@ public class ProjectForm extends ActionForm {
 	}
 
 	public String getTempRoleId() {
-		System.out.println("get role "+tempRoleId);
 		return tempRoleId;
 	}
 
 	public void setTempRoleId(String tempRoleId) {
-		System.out.println("set role "+tempRoleId);
 		this.tempRoleId = tempRoleId;
 	}
 

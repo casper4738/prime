@@ -42,6 +42,28 @@ public class ActivityManagerImpl implements ActivityManager {
 	}
 	
 	@Override
+	public void insertDetailBySelectTask(ActivityBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.insert("activity.insertDetailBySelectTask", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+	@Override
+	public void insertDetailByTaskId(ActivityBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.insert("activity.insertDetailByTaskId", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+	@Override
 	public void update(ActivityBean e) throws SQLException {
 		try {
 			mapper.startTransaction();

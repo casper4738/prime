@@ -131,11 +131,13 @@ public class ProjectManagerImpl implements ProjectManager {
 	
 	
 	@Override
-	public void updateMemberRole(Integer projectMemberId) throws SQLException {
-		// TODO Auto-generated method stub
+	public void updateStatusProjectMemberRole(Integer projectMemberId, Integer projectMemberStatus) throws SQLException {
 		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("projectMemberId", projectMemberId);
+			map.put("projectMemberStatus", projectMemberStatus);
 			mapper.startTransaction();
-			mapper.update("project.updateRoleMember", projectMemberId);
+			mapper.update("project.updateStatusProjectMemberRole", map);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
@@ -152,8 +154,6 @@ public class ProjectManagerImpl implements ProjectManager {
 			mapper.endTransaction();
 		}
 	}
-	
-	
 	
 	@Override
 	public void insertMember(ProjectBean e) throws SQLException {

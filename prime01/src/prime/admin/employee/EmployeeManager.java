@@ -24,6 +24,8 @@ public interface EmployeeManager {
 	
 	public void updateHead(Integer forCondition, Integer newHead) throws SQLException;
 	
+	public void updateTreeId(Integer length, String newTreeId, String oldTreeId, Integer employeeId) throws SQLException;
+	
 	public void delete(Integer id) throws SQLException;
 	
 	public void deleteDayOff(Integer id, String startDate) throws SQLException;
@@ -41,11 +43,17 @@ public interface EmployeeManager {
 	public List<EmployeeBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow)
 			throws SQLException;
 	
-	public List<EmployeeBean> getListEmployeeHead(String columnSearch, String value,  Integer positionLevel, Integer startRow, Integer endRow, String paramCondition, Integer employeeId)
+	public List<EmployeeBean> getListEmployeeHead(String columnSearch, String value,  Integer positionLevel, Integer startRow, Integer endRow, String paramCondition, Integer employeeId, Integer divisionId)
 			throws SQLException;
 	
+	public Integer getCountByColumnEmployeeHead(String columnSearch, String value, Integer positionLevel, String paramCondition, Integer employeeId, Integer divisionId) throws SQLException;
+	
+	/* NOT USE NOW
 	public List<EmployeeBean> getListByColumnAndDivision(String columnSearch, String value, Integer divisionId, Integer startRow, Integer endRow)
 			throws SQLException;
+	public Integer getCountByColumnAndDivision(String columnSearch, String value, Integer divisionId) 
+			throws SQLException;
+			*/
 	
 	/*select employee by tree and division and level  */
 	public List<EmployeeBean> getListByTreeWithDivision(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
@@ -60,12 +68,10 @@ public interface EmployeeManager {
 	public Integer getCountListByTreeWithoutDivision(String columnSearch, String value, Integer employeeId)  throws SQLException;
 	/* end select employee by tree and level  */
 	
-	public Integer getCountByColumnEmployeeHead(String columnSearch, String value, Integer positionLevel, String paramCondition, Integer employeeId) throws SQLException;
 	
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 
-	public Integer getCountByColumnAndDivision(String columnSearch, String value, Integer divisionId) 
-			throws SQLException;
-	
 	public Integer getNewId() throws SQLException;
+	
+	public String getTreeIdByEmployeeId(Integer employeeId) throws SQLException;
 }  

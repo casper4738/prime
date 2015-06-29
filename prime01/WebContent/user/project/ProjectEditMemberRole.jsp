@@ -24,12 +24,14 @@
 		function dosubmit() {
 			var tmpForm = document.forms[0];
 			var tempRoleId = "";
-			for(var i=0; i < document.forms[0].roleId.length; i++) {
-				if(document.forms[0].roleId[i].checked) {
-					tempRoleId+=document.forms[0].roleId[i].value+",";
+			for(var i=0; i < tmpForm.roleId.length; i++) {
+				if(tmpForm.roleId[i].checked) {
+					tempRoleId+=tmpForm.roleId[i].value+",";
 				}
 			}
 			tempRoleId = tempRoleId.substring(0, tempRoleId.length - 1);
+			alert(tempRoleId);
+			tmpForm.tempRoleId.value = tempRoleId; 
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 	</script>
@@ -74,11 +76,17 @@
                 			<tr><td valign="top">Choose Member Role</td>
                 				<td valign="top">:</td>
                 				<td><logic:iterate id="iter" name="listRoles">
-                						<logic:equal name="iter" property="projectMemberId" value="">
-                							<input type="checkbox" name="roleId" value="${iter.roleId};${iter.projectMemberId}"/><bean:write name="iter" property="roleName" />
+                						 | ${iter.roleId};${iter.projectMemberId};${iter.projectMemberStatus} |
+                						<logic:equal name="iter" property="projectMemberId" value="0">
+                							<input type="checkbox" name="roleId" value="${iter.roleId};${iter.projectMemberId};${iter.projectMemberStatus}"/><bean:write name="iter" property="roleName" />
                 						</logic:equal>
-                						<logic:notEqual name="iter" property="projectMemberId" value="">
-                							<input type="checkbox" name="roleId" value="${iter.roleId};${iter.projectMemberId}" checked="checked"/><bean:write name="iter" property="roleName" />
+                						<logic:notEqual name="iter" property="projectMemberId" value="0">
+	                						<logic:equal name="iter" property="projectMemberStatus" value="1">
+    	            							<input type="checkbox" name="roleId" value="${iter.roleId};${iter.projectMemberId};${iter.projectMemberStatus}" checked="checked"/><bean:write name="iter" property="roleName" />
+	                						</logic:equal>
+	                						<logic:equal name="iter" property="projectMemberStatus" value="0">
+    	            							<input type="checkbox" name="roleId" value="${iter.roleId};${iter.projectMemberId};${iter.projectMemberStatus}"/><bean:write name="iter" property="roleName" />
+	                						</logic:equal>
                 						</logic:notEqual>
                 						<br/>
 	                  		  		</logic:iterate>

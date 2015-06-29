@@ -3,11 +3,15 @@ package prime.user.task;
 import java.sql.SQLException;
 import java.util.List;
 
+import prime.user.project.ProjectBean;
+
 public interface TaskManager {
 
 	public void insert(TaskBean e) throws SQLException;
 	
 	public void insertDetail(TaskBean e) throws SQLException;
+	
+	public void insertDetailBySelectTask(TaskBean e) throws SQLException;
 
 	public TaskBean getTaskById(Integer id) throws SQLException;
 

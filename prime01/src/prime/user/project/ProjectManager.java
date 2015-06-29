@@ -15,7 +15,7 @@ public interface ProjectManager {
 	
 	public void insertMember(ProjectBean e) throws SQLException;
 	
-	public void updateMemberRole(Integer projectMemberId) throws SQLException;
+	public void updateStatusProjectMemberRole(Integer projectMemberId, Integer projectMemberStatus) throws SQLException;
 	 
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 	

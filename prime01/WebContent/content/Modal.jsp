@@ -35,8 +35,13 @@
 		    }
 	    } );
 		
+<<<<<<< HEAD
 		<!-- Method Specified For Modal Handling-->
 		function modalFlyToPage(pColumnSearch) {
+=======
+		//Method Specified For Modal Handling
+		function modalFlyToPage(pColumSearch) {
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 			var tmpForm = document.getElementById("idForm");
 			
 			if(pColumnSearch=="All"){
@@ -70,7 +75,11 @@
 <body class="skin-blue sidebar-mini">
 	<section class="content">
 		<div class="row">
+<<<<<<< HEAD
 			<div class="col-xs-12"><div class="box">
+=======
+		    <div class="col-xs-12"><div class="box">
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 				<div class="box-header"><h1 class="box-title"><b>${modalListName}</b></h1><br/><br/></div>
 				<!-- Search Handler Tag -->
 				<div class="show-in-page">
@@ -87,6 +96,7 @@
 				    <html:hidden name="ModalForm" property="param2"/>
 				    <html:hidden name="ModalForm" property="param3"/>
 				    <html:hidden name="ModalForm" property="param4"/>
+				    <html:hidden name="ModalForm" property="param5"/>
 				    <html:hidden name="ModalForm" property="showInPage"/>
 					<html:select name="ModalForm" property="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
@@ -116,9 +126,9 @@
 										<logic:iterate id="obj" name="rowData">
 				                			<td>${obj}</td>
 				                		</logic:iterate>
-					                        <td align="center">
-												<input type="button" class="btn bg-olive" style="height:32px" onclick="modalSelectHandler('${rowData}','${modalForm}')" value='Select'/>
-					                        </td>
+					                    <td align="center">
+											<input type="button" class="btn bg-olive" style="height:32px" onclick="modalSelectHandler('${rowData}','${modalForm}')" value='Select'/>
+					                    </td>
 						             </tr>
 					             </logic:iterate>
 							</logic:notEmpty>
