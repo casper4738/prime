@@ -105,13 +105,13 @@ public class UserAction extends Action {
 
 			switch(tmpResponseCode){
 				case 0 :
-					tmpResponse = "1#<div id=\"message\" style=\"color:red;font-size:8\">Username already exists</div>";
+					tmpResponse = "0#<div id=\"message\" style=\"color:red;font-size:8\">Username already exists</div>";
 					break;
 				case 1 :
-					tmpResponse = "1#<div id=\"message\" style=\"color:green;font-size:8\">Username can be used [not active directory]</div>";
+					tmpResponse = "1#<div id=\"message\" style=\"color:green;font-size:8\">Username can be used</div>";
 					break;
 				case 2 :
-					tmpResponse = "2#<div id=\"message\" style=\"color:green;font-size:8\">Username can be used [active directory]</div>";
+					tmpResponse = "2#<div id=\"message\" style=\"color:blue;font-size:8\">Username can be used [Active Directory]</div>";
 					break;
 			}
 			

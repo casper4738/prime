@@ -6,18 +6,16 @@ import prime.admin.employee.EmployeeBean;
 public class UserBean extends EmployeeBean {
 	private Boolean isActiveDirectory;
 	private Integer sysLevel;
-	private String password;
-	private String userName;
-	private Date changeDate;
+	private String 	password;
+	private String 	userName;
+	private Date 	changeDate;
 	private Integer statusUser;
 	private Integer employeeId;
-	private String employeeName;
-	private String newPassword;
-	private String confirmPassword;
-	private String logionSession;
-	private Date lastActive;
-	private String updateBy;
-	private String tmpConfirmPassword;
+	private String 	employeeName;
+	private String 	newPassword;
+	private String 	logionSession;
+	private Date 	lastActive;
+	private String 	updateBy;
 
 	public Boolean getIsActiveDirectory() {
 		return isActiveDirectory;
@@ -91,14 +89,6 @@ public class UserBean extends EmployeeBean {
 		this.newPassword = newPassword;
 	}
 
-	public String getConfirmPassword() {
-		return confirmPassword;
-	}
-
-	public void setConfirmPassword(String confirmPassword) {
-		this.confirmPassword = confirmPassword;
-	}
-
 	public String getLogionSession() {
 		return logionSession;
 	}
@@ -122,13 +112,4 @@ public class UserBean extends EmployeeBean {
 	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
 	}
-
-	public String getTmpConfirmPassword() {
-		return tmpConfirmPassword;
-	}
-
-	public void setTmpConfirmPassword(String tmpConfirmPassword) {
-		this.tmpConfirmPassword = tmpConfirmPassword;
-	}
-
 }

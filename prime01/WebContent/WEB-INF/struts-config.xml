@@ -154,10 +154,11 @@
 		
 		<!-- Modal -->
 		<action path="/Modal" name="ModalForm" type="prime.modal.ModalAction" scope="request">
-			<forward name="success" 		path="/content/Modal.jsp">											</forward>
-			<forward name="activityNote" 	path="/content/Modal_2.jsp">										</forward>
-			<forward name="taskNote" 		path="/content/Modal_4.jsp">										</forward>
-			<forward name="changePwd" 	    path="/content/ModalChangePwd.jsp">										</forward>
+			<forward name="employeeHead" 	path="/modal/ModalEmployeeHead.jsp">						</forward>
+			<forward name="employeeList" 	path="/modal/ModalEmployeeList.jsp">						</forward>
+			<forward name="activityNote" 	path="/modal/ModalActivityNote.jsp">						</forward>
+			<forward name="taskNote" 		path="/modal/ModalTaskNote.jsp">							</forward>
+			<forward name="changePwd" 	    path="/modal/ModalChangePassword.jsp">						</forward>
 		</action>
 		
 		<!-- Notification -->

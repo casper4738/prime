@@ -31,7 +31,7 @@ public class ModalAction extends Action {
 		//##0.Temp Variable
 		//---.Normally Used Temp Variable
 		int tmpI, tmpJ;
-		String tmpTarget = "success";
+		String tmpTarget = "";
 		
 		//---.Depend on the object
 		ModalForm pForm = (ModalForm) form;
@@ -75,7 +75,8 @@ public class ModalAction extends Action {
         		
             	switch(table){
             		case "employeeList"  :
-            			System.out.println(pForm.getColumnSearch() + " _ " +  pForm.getSearch());
+                		tmpTarget = "employeeList";
+                		
                     	//##1.Fetch Data From DB
                 		countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
         		
@@ -114,6 +115,8 @@ public class ModalAction extends Action {
                 		}
             			break;
             		case "employeeHead":  
+                		tmpTarget = "employeeHead";
+                		
                     	//##1.Fetch Data From DB
                 		countRows  = manager.getCountByColumnEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(), pForm.getParam3(), pForm.getParam4(), pForm.getParam5());
                 		
@@ -169,12 +172,12 @@ public class ModalAction extends Action {
         		request.setAttribute("listSearchColumn", Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
         		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
         		setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
-        		tmpTarget = "success";
         		break;
          
             default:
                 break;
         }
+        
 		return mapping.findForward(tmpTarget);
 	}
 	

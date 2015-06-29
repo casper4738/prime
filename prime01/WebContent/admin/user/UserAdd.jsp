@@ -33,7 +33,7 @@
 		function validateForm(){
 			var specialChars 	= "/*!@#$%^&*()\"{}_[]|\\?/<>,.";
 			var userName 		= document.getElementById('userName').value;
-		var password 			= document.getElementById('password').value;
+			var password 		= document.getElementById('password').value;
 			var employeeName 	= document.getElementById('employeeName').value;
 			var confirmPassword = document.getElementById('confirmPassword').value;
 			var tmpValidated 	= true;
@@ -105,7 +105,7 @@
 		}
 		
 		function checkActiveDirectory(){
-			  if($('#username').val().length <= 5){
+			  if($('#username').val().length <= 0){
 				  return;
 			  }
 			
@@ -118,8 +118,7 @@
 		          success : function(msg){
 		        	  var param = msg.split('#');
 	        		  $('#ajax-validating').html(param[1]);
-	        		  
-		        	  if(param[0] == "1"){ //Success [Normal]
+		        	  if(param[0] == "1"){ 		  //Success [Normal]
 		        		  unlockPasswordColumn();
 		        	  } else if(param[0] == "2"){ //Success [Active Directory]
 		        		  lockPasswordColumn(); 
@@ -166,75 +165,76 @@
 	</section>
 
 	<section class="content">
-	<div class="row">
-		<div class="col-xs-12"><div class="box" align="center">
-			<div class="box-header"><h1 class="box-title"><br/><br/><b>Add New User</b><br/><br/></h1></div>
-			<div class="box-body">
-                	<html:form action="/UserAdmin" styleId= "userForm">
-                		<html:hidden name="UserAdminForm" property="task"/>
-                		<html:hidden name="UserAdminForm" property="employeeId" />
-                		<table class="form-input" style="width: 500px" id="table-input">
-                			<tr>
-                				<td width="150px">Employee Name</td>
-                				<td>:</td>
-                				<td class="input-group">
-			               			<html:text name="UserAdminForm" property="userBean.employeeName" styleClass="form-control" styleId="employeeName" disabled="true"/>
-			               			<span class="input-group-btn">
-	                    					<input type="button" class="btn btn-info" type="button" onclick="openModalHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
-								    </span>
-								</td>
-                			</tr>
-                			<tr>
-                				<td>Username</td>
-                				<td>:</td>
-                				<td><html:text name="UserAdminForm" property="userBean.userName" styleClass="form-control" styleId="username" onblur="checkActiveDirectory()"/> </td>
-                			</tr>
-                			<tr>
-                				<td></td>
-                				<td></td>
-                				<td>	
-						            <div id="ajax-validating"/>	              
-                					<i><span id="validatorEmployee" style="color: red;font-size: 8"></span></i>
-                				</td>
-                			</tr>
-                			<tr>
-                				<td>Password</td>
-                				<td>:</td>
-                				<td><html:password name="UserAdminForm"  property="userBean.password" styleClass="form-control" styleId="password" maxlength="32" styleId="password"/></td>
-                			</tr>
-                			<tr>
-                				<td>Confirm Password</td>
-                				<td>:</td>
-                				<td><html:password name="UserAdminForm"  property="userBean.tmpConfirmPassword" styleClass="form-control" maxlength="32" styleId="confirmPassword"/></td>
-                			</tr>
-                  			<tr>
-                  				<td></td>
-								<td></td>
-                  				<td><i><span id="validatorConfirmPassword" style="color: red;font-size: 8"></span></i></td>
-                  			</tr>
-                			<tr>
-                				<td>Sys Level</td>
-                				<td>:</td>
-                				<td>
-                					<html:select name="UserAdminForm" property="userBean.sysLevel" styleClass="form-control" styleId="sysLevel">
-		               					<html:option value='<%=Constants.SystemLevel.ADMIN+""%>'>0 - Admin</html:option>
-		               					<html:option value='<%=Constants.SystemLevel.OPERATOR+""%>'>1 - Operator</html:option>
-		               					<html:option value='<%=Constants.SystemLevel.OPERATOR_MONITOR+""%>'>2 - Operator + Monitor</html:option>
-		               				</html:select>
-		               			</td>
-                			</tr> 
-                			<tr>
-                  				<td colspan="3" align="center">
-                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
-                  					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
-                  				</td>
-                			</tr>
-                		</table>
-                	</html:form>
-       			</div>
-       			</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="box" align="center">
+					<div class="box-header"><h1 class="box-title"><br/><br/><b>Add New User</b><br/><br/></h1></div>
+					<div class="box-body">
+	                	<html:form action="/UserAdmin" styleId= "userForm">
+	                		<html:hidden name="UserAdminForm" property="task"/>
+	                		<html:hidden name="UserAdminForm" property="employeeId" />
+	                		<table class="form-input" style="width: 500px" id="table-input">
+	                			<tr>
+	                				<td width="150px">Employee Name</td>
+	                				<td>:</td>
+	                				<td class="input-group">
+				               			<html:text name="UserAdminForm" property="userBean.employeeName" styleClass="form-control" styleId="employeeName" disabled="true"/>
+				               			<span class="input-group-btn">
+		                    					<input type="button" class="btn btn-info" type="button" onclick="openModalHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
+									    </span>
+									</td>
+	                			</tr>
+	                			<tr>
+	                				<td>Username</td>
+	                				<td>:</td>
+	                				<td><html:text name="UserAdminForm" property="userBean.userName" styleClass="form-control" styleId="username" onblur="checkActiveDirectory()"/> </td>
+	                			</tr>
+	                			<tr>
+	                				<td></td>
+	                				<td></td>
+	                				<td>	
+							            <div id="ajax-validating"></div>           
+	                					<i><span id="validatorEmployee" style="color: red;font-size: 8"></span></i>
+	                				</td>
+	                			</tr>
+	                			<tr>
+	                				<td>Password</td>
+	                				<td>:</td>
+	                				<td><html:password name="UserAdminForm"  property="userBean.password" styleClass="form-control" styleId="password" maxlength="32"/></td>
+	                			</tr>
+	                			<tr>
+	                				<td>Confirm Password</td>
+	                				<td>:</td>
+	                				<td><input type="password" class="form-control" maxlength="32" id="confirmPassword"/></td>
+	                			</tr>
+	                  			<tr>
+	                  				<td></td>
+									<td></td>
+	                  				<td><i><span id="validatorConfirmPassword" style="color: red;font-size: 8"></span></i></td>
+	                  			</tr>
+	                			<tr>
+	                				<td>Sys Level</td>
+	                				<td>:</td>
+	                				<td>
+	                					<html:select name="UserAdminForm" property="userBean.sysLevel" styleClass="form-control" styleId="sysLevel">
+			               					<html:option value='<%=Constants.SystemLevel.ADMIN+""%>'>0 - Admin</html:option>
+			               					<html:option value='<%=Constants.SystemLevel.OPERATOR+""%>'>1 - Operator</html:option>
+			               					<html:option value='<%=Constants.SystemLevel.OPERATOR_MONITOR+""%>'>2 - Operator + Monitor</html:option>
+			               				</html:select>
+			               			</td>
+	                			</tr> 
+	                			<tr>
+	                  				<td colspan="3" align="center">
+	                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
+	                  					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+	                  				</td>
+	                			</tr>
+	                		</table>
+	                	</html:form>
+	       			</div>
+      			</div>
        		</div>
-   		</div>
-		</section>
+ 		</div>
+	</section>
 </body>
 </html>

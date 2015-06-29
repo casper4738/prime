@@ -30,18 +30,14 @@
 			paging    : false,
 			searching : false,
 			info	  : false,
+	 		scrollY	  : "300px",
 			language  : {
 		       "emptyTable":  "<center><%=Constants.Response.TABLE_HEAD_EMPTY %></center>"
 		    }
 	    } );
 		
-<<<<<<< HEAD
-		<!-- Method Specified For Modal Handling-->
-		function modalFlyToPage(pColumnSearch) {
-=======
 		//Method Specified For Modal Handling
 		function modalFlyToPage(pColumSearch) {
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 			var tmpForm = document.getElementById("idForm");
 			
 			if(pColumnSearch=="All"){
@@ -75,11 +71,7 @@
 <body class="skin-blue sidebar-mini">
 	<section class="content">
 		<div class="row">
-<<<<<<< HEAD
 			<div class="col-xs-12"><div class="box">
-=======
-		    <div class="col-xs-12"><div class="box">
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 				<div class="box-header"><h1 class="box-title"><b>${modalListName}</b></h1><br/><br/></div>
 				<!-- Search Handler Tag -->
 				<div class="show-in-page">
