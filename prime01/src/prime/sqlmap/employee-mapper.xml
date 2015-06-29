@@ -474,8 +474,8 @@
 	
 	
 	<select id="getListByColumnEmployeeActive" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
-	  SELECT  FROM  (SELECT page., ROWNUM rnum FROM 
-	  (SELECT 
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT 
 	      EMP.EMPLOYEE_ID AS employeeId, 
 	      EMP.EMPLOYEE_NAME AS employeeName,
 	      GENDER AS gender,
@@ -503,7 +503,7 @@
 		        <isEqual property="columnSearch" compareValue="ID">
 		             UPPER(EMP.EMPLOYEE_ID) LIKE UPPER(#value#)
 			    </isEqual>
-			          <isEqual property="columnSearch" compareValue="NAME">
+			    <isEqual property="columnSearch" compareValue="NAME">
 			             UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 			    </isEqual> 
 			    <isEqual property="columnSearch" compareValue="GENDER">

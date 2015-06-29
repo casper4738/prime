@@ -78,10 +78,10 @@ public class ModalAction extends Action {
                 		tmpTarget = "employeeList";
                 		
                     	//##1.Fetch Data From DB
-                		countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-        		
+                		countRows  = manager.getCountByColumnEmployeeActive(pForm.getColumnSearch(), pForm.getSearch());
+                		
                 		//---.Depend On The Object
-                		list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+                		list = manager.getListByColumnEmployeeActive(pForm.getColumnSearch(), pForm.getSearch(),
                 									   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
                 									   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows));
 
