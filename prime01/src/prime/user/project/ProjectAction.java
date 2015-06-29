@@ -196,11 +196,6 @@ public class ProjectAction extends Action {
 				System.out.println("insert : "+string);
 				listInsert.add(string);
 			}
-
-			for (String string : listTemp) {
-				System.out.println("temp : "+string);
-			}
-			
 			
 			listUpdate.addAll(listTemp);
 			listUpdate.removeAll(listInsert);
