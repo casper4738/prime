@@ -396,8 +396,7 @@
 	<!-- SELECT COUNT NATIONAL HOLIDAY BETWEEN DAY OFF -->
 	<select id="getListNationalHoliday" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(0) FROM NATIONAL_HOLIDAYS WHERE  HOLIDAY_DATE BETWEEN 
-                TO_DATE(#startDayOff#,'dd-mm-yyyy') 
-                AND TO_DATE(#endDayOff#,'dd-mm-yyyy')
+                #startDayOff# AND #endDayOff#
 	</select>
 	
 	
@@ -430,8 +429,8 @@
 		WHERE EMP.TREE_ID LIKE  EMPX.TREE_ID||'%'
 		ORDER BY EMP.EMPLOYEE_ID ASC) page 
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
-	</select>
-	
+    </select>
+    
 	<select id="getCountListByTree" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT
 			COUNT(1)
@@ -450,6 +449,28 @@
 		WHERE EMP.TREE_ID LIKE  EMPX.TREE_ID||'%'
 	</select>
 	<!-- end of select employee by tree -->
+
+	<!-- SELECT COUNT WEEKEND EMPLOYEE BETWEEN DAY OFF -->
+	<select id="getListWeekendEmployee" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(0) FROM (
+	       SELECT EMPLOYEE_ID,start_from,regexp_substr(WEEKEND,'[^,]+', 1, level) AS  SPLIT_WEEKEND,(start_from +
+	       CASE WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Monday' THEN 0
+	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Tuesday' THEN 1
+	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Wednesday' THEN 2
+	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Thursday' THEN 3
+	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Friday' THEN 4
+	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Saturday' THEN 5
+	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Sunday' THEN 6
+	       END
+	       --ELSE 6 END
+	     )DATE_WEEKEND from WEEKEND_HOLIDAYS
+	     connect by regexp_substr(WEEKEND, '[^,]+', 1, level) is not null
+	  ) SETWEEKEND
+	  WHERE DATE_WEEKEND BETWEEN 
+	                TO_DATE('01-12-2015','dd-mm-yyyy') 
+	                AND TO_DATE('31-12-2015','dd-mm-yyyy') AND EMPLOYEE_ID=102
+	</select>
+	
 	
 	
 </sqlMap>

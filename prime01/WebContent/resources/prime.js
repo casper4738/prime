@@ -181,9 +181,9 @@ function modalSubmitReturnValue(retValue,retForm){
 			document.forms[0].substituteHeadId.value=res[0].replace('[','');
 		} else if(retForm=='employeeUser'){
 			var res = retValue.split(',');
-			document.getElementById('employeeName').value=res[1];
+			document.getElementById('employeeName').value=res[0].replace('[','') + " -" + res[1];
 			document.forms[0].employeeId.value=res[0].replace('[','');
-		} else if(retForm=='projectMember'){
+		} else if(retForm=='project'){
 			var res = retValue.split(',');
 			document.getElementById('employeeName').value=res[1];
 			document.forms[0].employeeId.value=res[0].replace('[','');

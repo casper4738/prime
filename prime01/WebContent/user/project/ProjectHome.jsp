@@ -80,6 +80,7 @@
 				<html:form action="<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>" method="post">
 					<html:hidden property="task" styleId="hdTask"/>
 					<html:hidden name="ProjectUserForm" property="projectId"/>
+					<html:hidden name="ProjectUserForm" property="projectBean.projectLastStatus"/>
 					<html:select name="ProjectUserForm" property="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>

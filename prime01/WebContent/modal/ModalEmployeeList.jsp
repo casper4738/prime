@@ -30,16 +30,15 @@
 			paging    : false,
 			searching : false,
 			info	  : false,
-	 		scrollY	  : "300px",
+	 		scrollY	  : "250px",
 			language  : {
-		       "emptyTable":  "<center><%=Constants.Response.TABLE_HEAD_EMPTY %></center>"
+		       "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
 		    }
 	    } );
 		
 		//Method Specified For Modal Handling
-		function modalFlyToPage(pColumSearch) {
+		function modalFlyToPage(pColumnSearch) {
 			var tmpForm = document.getElementById("idForm");
-			
 			if(pColumnSearch=="All"){
 				tmpForm.columnSearch.value = pColumnSearch;
 			}
@@ -63,6 +62,7 @@
 		}
 		
 		function modalSelectHandler(retValue,retForm){
+			alert("Form = " + retForm);
 			modalSubmitReturnValue(retValue,retForm);
 		}
 	</script>

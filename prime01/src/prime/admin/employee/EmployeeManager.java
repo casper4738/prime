@@ -1,5 +1,6 @@
 package prime.admin.employee;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -49,9 +50,14 @@ public interface EmployeeManager {
 	public Integer getCountByColumnEmployeeHead(String columnSearch, String value, Integer positionLevel, String paramCondition, Integer employeeId, Integer divisionId) throws SQLException;
 
 	/*select employee by tree */
-	public List<EmployeeBean> getListByTree(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
-			throws SQLException;
+	public List<EmployeeBean> getListByTree(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) throws SQLException;
 	
+	//GET COUNT NATIONAL HOLDIDAY FOR COUNTING DAYOFF EXCLUDE NATIONAL HOLIDAY
+	public Integer getCountNationalHolidayByDayOff(Date startDayOff, Date endDayOff) throws SQLException;
+	
+	//GET COUNT WEEKEND EMPLOYEE FOR COUNTING DAYOFF EXCLUDE WEEKEND
+	public Integer getCountWeekendByDayOff(Date startDayOff, Date endDayOff, Integer employeeId) throws SQLException;
+
 	public Integer getCountListByTree(String columnSearch, String value, Integer employeeId)  throws SQLException;
 	/* end of select employee by tree */
 	
