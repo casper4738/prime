@@ -74,9 +74,11 @@
 			<div class="box-header"><h3 class="box-title">Project Rejected Form</h3></div>
 			<div class="box-body">
                 	<html:form action="/ProjectUser">
-                		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
-                		<html:hidden name="ProjectUserForm" property="projectBean.projectName" />
+                		<html:hidden name="ProjectUserForm" property="task" value="doReject"/>
+                	
              			<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
+             			<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver"/>
+						<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner"/>
              			<html:hidden name="ProjectUserForm" property="projectId"/>
                 		<table class="form-input" align="center">
                 		
@@ -90,7 +92,7 @@
                 			<tr>
                 				<td>Note </td>
                 				<td>:</td>
-                				<td><html:textarea name="ProjectUserForm" property="projectBean.projectDescription" styleClass="form-control"></html:textarea></td>
+                				<td><html:textarea name="ProjectUserForm" property="projectBean.projectChangeNote" styleClass="form-control"></html:textarea></td>
                 				
                 			</tr>
                 			

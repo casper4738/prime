@@ -11,9 +11,32 @@ public class HolidayForm extends ActionForm {
 	private String search;
 	private String columnSearch;
 	private String message;
+	private java.sql.Date startHoliday;
+	private java.sql.Date untilHoliday;
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
 	private Date tmpId = new Date(new java.util.Date().getTime());
+	
+	public HolidayForm() {
+		setStartHoliday(new Date(new java.util.Date().getTime()));
+		setUntilHoliday(new Date(new java.util.Date().getTime()));
+	}
+
+	public java.sql.Date getStartHoliday() {
+		return startHoliday;
+	}
+
+	public void setStartHoliday(java.sql.Date startHoliday) {
+		this.startHoliday = startHoliday;
+	}
+
+	public java.sql.Date getUntilHoliday() {
+		return untilHoliday;
+	}
+
+	public void setUntilHoliday(java.sql.Date untilHoliday) {
+		this.untilHoliday = untilHoliday;
+	}
 
 	public HolidayBean getHolidayBean() {
 		return holidayBean;

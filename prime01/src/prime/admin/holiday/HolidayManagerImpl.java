@@ -54,8 +54,17 @@ public class HolidayManagerImpl implements HolidayManager {
 	public List<HolidayBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow) 
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
+		if("DATE".equals(columnSearch)) {
+			String[] string = value.split(";");
+			map.put("startHoliday", string[0]);
+			map.put("untilHoliday", string[1]);
+			
+			System.out.println("1."+string[0]);
+			System.out.println("2."+string[1]);
+		} else {
+			map.put("value", value);
+		}
 		map.put("columnSearch", columnSearch);
-		map.put("value", value);			
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		return mapper.queryForList("holiday.getListByCol", map);

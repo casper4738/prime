@@ -87,8 +87,10 @@
                  
             <div class="form-action">
 				<table align="center"><tr>
+				<logic:equal name="ProjectUserForm" property="projectBean.projectLastStatus" value="3">
 					<td style="padding:5px;"><input type="button" value="Approve" class="btn btn-sm btn-primary" onclick="flyToPage('approve')"/></td>
 					<td style="padding:5px;"><input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="flyToPage('reject', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
+				</logic:equal>	
 					<td style="padding:5px;"><input type="button" value="Change PM" class="btn btn-sm  btn-primary" onclick="flyToPage('changePM', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
 				</tr></table>
             </div>
@@ -106,6 +108,9 @@
 					<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
 					<html:hidden name="ProjectUserForm" property="projectBean.projectName"/>
 					<html:hidden name="ProjectUserForm" property="projectBean.projectReceiverName"/>
+					<html:hidden name="ProjectUserForm" property="projectBean.projectLastStatus"/>
+					<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver"/>
+					<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner"/>
 					<html:hidden name="ProjectUserForm" property="projectId"/>
 					<html:hidden name="ProjectUserForm" property="employeeId"/>
 					<html:hidden name="ProjectUserForm" property="goToPage"/>

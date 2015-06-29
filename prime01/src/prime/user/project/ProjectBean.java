@@ -27,6 +27,7 @@ public class ProjectBean extends EmployeeBean {
 	private TaskBean taskBean;
 	private RoleBean roleBean;
 	private String roleName;
+	private Double percentStatus;
 	
 	public ProjectBean() {
 		roleBean = new RoleBean();
@@ -175,6 +176,14 @@ public class ProjectBean extends EmployeeBean {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+
+	public Double getPercentStatus() {
+		return percentStatus;
+	}
+
+	public void setPercentStatus(Double percentStatus) {
+		this.percentStatus = percentStatus;
 	}
 
 }

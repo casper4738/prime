@@ -44,8 +44,17 @@ public class HolidayAction extends Action {
 			return mapping.findForward("forward");
 		}
 		
-		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-		List<HolidayBean> list = tmpManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+		String search = "";
+		if("DATE".equals(pForm.getColumnSearch())) {
+			search = pForm.getStartHoliday()+";"+pForm.getUntilHoliday();
+			request.setAttribute("checkSearch", "date");
+		} else {
+			search = pForm.getSearch();
+			request.setAttribute("checkSearch", "text");
+		}
+		
+		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearch(), search);
+		List<HolidayBean> list = tmpManager.getListByColumn(pForm.getColumnSearch(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 		

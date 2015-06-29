@@ -99,6 +99,19 @@ public class ProjectManagerImpl implements ProjectManager {
 		return (Integer) mapper.queryForObject("project.getCountListByCol", map);
 	}
 
+	
+	
+	@Override
+	public Double getPercentStatusProject(Integer projectId)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return (Double) mapper.queryForObject("project.getPercentStatusProject", projectId);
+	}
+
+	
+	
+	
+
 	@Override
 	public ProjectBean getProjectById(Integer id) throws SQLException {
 		// TODO Auto-generated method stub
