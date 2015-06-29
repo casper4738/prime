@@ -13,29 +13,32 @@
 			</isNotNull>
 		</dynamic>
 	</select>
+	
 	<select id="getListByColumn" resultClass="prime.user.project.ProjectBean" parameterClass="java.util.Map">
-		SELECT * FROM (SELECT page.*, ROWNUM rnum FROM
-		(SELECT  
-			P.PROJECT_ID 			AS projectId,
-			P.PROJECT_NAME 			AS projectName,
-		    P.PROJECT_RECEIVER 		AS projectReceiver,
-		    P.PROJECT_ASSIGNER 		AS projectAssigner,
-		    P.PROJECT_START_DATE 	AS projectStartDate,
-		    P.PROJECT_ESTIMATE_DATE AS projectEstimateDate,
-		    P.PROJECT_DESCRIPTION 	AS projectDescription,
-		    P.PROJECT_LAST_STATUS 	AS projectLastStatus
-		 FROM 
-		 	PROJECTS P
-		 JOIN 
-		 	PROJECT_DETAILS PD ON P.PROJECT_ID = PD.PROJECT_ID
+		SELECT  * FROM (SELECT page.*, ROWNUM rnum FROM
+		(SELECT  DISTINCT
+            PROJ.PROJECT_ID           	AS projectId,
+            PROJ.PROJECT_NAME           AS projectName,
+            PROJ.PROJECT_RECEIVER       AS projectReceiver,
+            PROJ.PROJECT_ASSIGNER       AS projectAssigner,
+            PROJ.PROJECT_START_DATE     AS projectStartDate,
+            PROJ.PROJECT_ESTIMATE_DATE 	AS projectEstimateDate,
+            PROJ.PROJECT_DESCRIPTION    AS projectDescription,
+            PROJ.PROJECT_LAST_STATUS    AS projectLastStatus,
+            EMP_ASSIGN.EMPLOYEE_NAME    AS projectAssignerName,
+            EMP_RECEIVE.EMPLOYEE_NAME   AS projectReceiverName
+        FROM PROJECTS PROJ
+        JOIN PROJECT_DETAILS PD ON PROJ.PROJECT_ID = PD.PROJECT_ID
+        JOIN EMPLOYEES EMP_ASSIGN ON PROJ.PROJECT_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
+        JOIN EMPLOYEES EMP_RECEIVE ON PROJ.PROJECT_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
 		<dynamic prepend="WHERE">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
-					UPPER(P.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
+					UPPER(PROJ.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 			</isNotNull>
 		</dynamic>
-		ORDER BY P.PROJECT_ID ASC) page
+		ORDER BY PROJ.PROJECT_ID ASC) page
 		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 	
@@ -152,7 +155,8 @@
         <result property="taskBean.taskReceiver" 		column="taskReceiver"/>  
         <result property="taskBean.taskAssigner" 		column="taskAssigner"/>  
         <result property="taskBean.taskStartDate" 		column="taskStartDate"/>  
-        <result property="taskBean.taskEstimateDate" 	column="taskStartDate"/>  
+        <result property="taskBean.taskEstimateDate" 	column="taskEstimateDate"/>
+        <result property="taskBean.taskChangeDate" 		column="taskChangeDate"/>    
         <result property="taskBean.taskDescription" 	column="taskDescription"/>  
         <result property="taskBean.taskAssignerName" 	column="taskAssignerName"/>  
         <result property="taskBean.taskReceiverName" 	column="taskReceiverName"/>  
@@ -179,7 +183,8 @@
 		      (SELECT NULLIF(COUNT(ACTIVITY_ID),0) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID)
 		    ) * 100, 0) 				AS percentage,
 		    ROLE.ROLE_ID 				AS roleId,
-		    ROLE.ROLE_NAME 				AS roleName
+		    ROLE.ROLE_NAME 				AS roleName,
+		    TASK_DET.TASK_CHANGE_DATE AS taskChangeDate
 		FROM TASKS TASK
 		JOIN EMPLOYEES EMP_ASSIGN ON TASK.TASK_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
 		JOIN EMPLOYEES EMP_RECEIVE ON TASK.TASK_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
@@ -259,6 +264,7 @@
  		AND ROLE_ID = #roleId# 
  		AND PROJECT_MEMBER_STATUS = #projectMemberStatus#
 	</select>
+	
 	
 	
 </sqlMap> 

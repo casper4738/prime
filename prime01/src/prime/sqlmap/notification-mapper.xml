@@ -1,47 +1,52 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="notification">
-<select id="getListByCol" resultClass="prime.user.notification.NotificationBean" parameterClass="java.util.Map">
+	<select id="getListByCol" resultClass="prime.user.notification.NotificationBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
-		(SELECT NOTIFICATION_ID AS notificationId,
-		SENDER AS sender, 
-		RECEIVER AS receiver,
-		NOTIFICATION_STATUS AS notificationStatus,
-		NOTIFICATION_TYPE AS notificationType,
-		NOTIFICATION_SEND_DATE AS notificationSendDate,
-		NOTIFICATION_NOTE AS notificationNote,
-		NOTIFICATION_TEMPLATE_ID AS notificationTemplateId,
-		UPDATED_BY AS updatedBy
-		FROM NOTIFICATIONS
+		(SELECT NOTIF.NOTIFICATION_ID AS notificationId,
+		E.EMPLOYEE_NAME AS senderName, 
+        EMP.EMPLOYEE_NAME AS receiverName,
+		NOTIF.NOTIFICATION_STATUS AS notificationStatus,
+        NOTIF.NOTIFICATION_TYPE AS notificationType,
+        NOTIF.NOTIFICATION_SEND_DATE AS notificationSendDate,
+        NOTIF.NOTIFICATION_NOTE AS notificationNote,
+        NOTIF.NOTIFICATION_TEMPLATE_ID AS notificationTemplateId,
+        NOTIF.UPDATED_BY AS updatedBy
+		FROM NOTIFICATIONS NOTIF
+        JOIN EMPLOYEES E ON E.EMPLOYEE_ID = NOTIF.SENDER
+        JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = NOTIF.RECEIVER
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="ID">
-			          UPPER(NOTIFICATION_ID) LIKE UPPER('%'||#value#||'%')
+			          UPPER(NOTIF.NOTIFICATION_ID) LIKE UPPER('%'||#value#||'%')
 				</isEqual> 
 				<isEqual property="columnSearch" compareValue="SENDER">
-			          UPPER(SENDER) LIKE UPPER('%'||#value#||'%')
+			          UPPER(E.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 				<isEqual property="columnSearch" compareValue="RECEIVER">
-			          UPPER(RECEIVER) LIKE UPPER('%'||#value#||'%')
+			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
-	    ORDER BY NOTIFICATION_ID ASC) page 
+	    ORDER BY NOTIF.NOTIFICATION_ID ASC) page 
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
-	 	</select>
-	 	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+ 	</select>
+	 	
+	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
-		FROM NOTIFICATIONS 
+	    FROM NOTIFICATIONS NOTIF
+        JOIN EMPLOYEES E ON E.EMPLOYEE_ID = NOTIF.SENDER
+        JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = NOTIF.RECEIVER
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="ID">
-			          UPPER(NOTIFICATION_ID) LIKE UPPER('%'||#value#||'%')
+			          UPPER(NOTIF.NOTIFICATION_ID) LIKE UPPER('%'||#value#||'%')
 				</isEqual> 
 				<isEqual property="columnSearch" compareValue="SENDER">
-			          UPPER(SENDER) LIKE UPPER('%'||#value#||'%')
+			          UPPER(E.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 				<isEqual property="columnSearch" compareValue="RECEIVER">
-			          UPPER(RECEIVER) LIKE UPPER('%'||#value#||'%')
+			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>

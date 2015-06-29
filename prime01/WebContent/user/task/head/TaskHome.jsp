@@ -7,9 +7,9 @@
 <html>
 <head>
 	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="resources/dist/css/skins/_all-skins.min.css"" rel="stylesheet" type="text/css" />
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	
 	<script type="text/javascript">
 		$('#table-1').dataTable( {
 			paging    : false,
@@ -102,7 +102,7 @@
 	                	    		</span>
 		                		</logic:greaterThan>
 		                		<logic:lessEqual name="iter" property="percentage" value="50">
-	                	    		<span class="badge bg-red">
+	                	    		<span class="badge bg-red" style="font-size: 8pt">
 		                	    		<jsp:include page="/content/Percentage.jsp">
 		                	    			<jsp:param name="status" value="${iter.taskLastStatus}" />
 		                	    			<jsp:param name="percentage" value="${iter.percentage}" />

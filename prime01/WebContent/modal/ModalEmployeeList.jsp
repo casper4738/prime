@@ -62,7 +62,6 @@
 		}
 		
 		function modalSelectHandler(retValue,retForm){
-			alert("Form = " + retForm);
 			modalSubmitReturnValue(retValue,retForm);
 		}
 	</script>

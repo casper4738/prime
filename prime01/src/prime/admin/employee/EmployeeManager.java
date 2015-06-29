@@ -49,32 +49,24 @@ public interface EmployeeManager {
 	
 	public Integer getCountByColumnEmployeeHead(String columnSearch, String value, Integer positionLevel, String paramCondition, Integer employeeId, Integer divisionId) throws SQLException;
 	
-	/* NOT USE NOW
-	public List<EmployeeBean> getListByColumnAndDivision(String columnSearch, String value, Integer divisionId, Integer startRow, Integer endRow)
-			throws SQLException;
-	public Integer getCountByColumnAndDivision(String columnSearch, String value, Integer divisionId) 
-			throws SQLException;
-			*/
+	public Integer getCountByColumnEmployeeActive(String columnSearch, String value) throws SQLException;
+	 
+	public List<EmployeeBean> getListByColumnEmployeeActive(String columnSearch, String value, Integer startRow, Integer endRow)
+	   throws SQLException;
+	 
+	public Date getEmployeeResignDate(Integer id) throws SQLException;
+
+	/*select employee by tree */
+	public List<EmployeeBean> getListByTree(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) throws SQLException;
 	
 	//GET COUNT NATIONAL HOLDIDAY FOR COUNTING DAYOFF EXCLUDE NATIONAL HOLIDAY
 	public Integer getCountNationalHolidayByDayOff(Date startDayOff, Date endDayOff) throws SQLException;
 	
 	//GET COUNT WEEKEND EMPLOYEE FOR COUNTING DAYOFF EXCLUDE WEEKEND
 	public Integer getCountWeekendByDayOff(Date startDayOff, Date endDayOff, Integer employeeId) throws SQLException;
-		
-	/*select employee by tree and division and level  */
-	public List<EmployeeBean> getListByTreeWithDivision(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
-			throws SQLException;
-	
-	public Integer getCountListByTreeWithDivision(String columnSearch, String value, Integer employeeId)  throws SQLException;
-	/* end select employee by tree and division and level  */
-	
-	/*select employee by tree and level  */
-	public List<EmployeeBean> getListByTreeWithoutDivision(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
-			throws SQLException;
-	public Integer getCountListByTreeWithoutDivision(String columnSearch, String value, Integer employeeId)  throws SQLException;
-	/* end select employee by tree and level  */
-	
+
+	public Integer getCountListByTree(String columnSearch, String value, Integer employeeId)  throws SQLException;
+	/* end of select employee by tree */
 	
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 

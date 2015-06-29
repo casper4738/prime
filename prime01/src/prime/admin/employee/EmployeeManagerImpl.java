@@ -169,8 +169,8 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	}
 	*/
 
-	/*select employee by tree and division and level  */
-	public List<EmployeeBean> getListByTreeWithDivision(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
+	/*select employee by tree */
+	public List<EmployeeBean> getListByTree(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
@@ -178,38 +178,17 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		map.put("employeeId", employeeId);
-		return mapper.queryForList("employee.getListByTreeWithDivision", map);
+		return mapper.queryForList("employee.getListByTree", map);
 	}
 
-	public Integer getCountListByTreeWithDivision(String columnSearch, String value, Integer employeeId)  throws SQLException {
+	public Integer getCountListByTree(String columnSearch, String value, Integer employeeId)  throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);			
 		map.put("employeeId", employeeId);
-		return (Integer) mapper.queryForObject("employee.getCountListByTreeWithDivision", map);
+		return (Integer) mapper.queryForObject("employee.getCountListByTree", map);
 	}
-	/* end select employee by tree and division and level  */
-	
-	/*select employee by tree and level  */
-	public List<EmployeeBean> getListByTreeWithoutDivision(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
-			throws SQLException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("columnSearch", columnSearch);
-		map.put("value", value);			
-		map.put("startRow", startRow);
-		map.put("endRow", endRow);
-		map.put("employeeId", employeeId);
-		return mapper.queryForList("employee.getListByTreeWithoutDivision", map);
-	}
-
-	public Integer getCountListByTreeWithoutDivision(String columnSearch, String value, Integer employeeId)  throws SQLException {
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("columnSearch", columnSearch);
-		map.put("value", value);			
-		map.put("employeeId", employeeId);
-		return (Integer) mapper.queryForObject("employee.getCountListByTreeWithoutDivision", map);
-	}
-	/* end select employee by tree and level  */
+	/* end of select employee by tree */
 	
 	public Integer getNewId() throws SQLException {
 		return (Integer) mapper.queryForObject("employee.getNewId", null);
@@ -246,18 +225,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	}
 
 	@Override
-	/*public void updateWeekend(EmployeeBean e) throws SQLException {
-		// TODO Auto-generated method stub
-		try {
-			System.out.println(e.getStartFrom()+"--");
-			mapper.startTransaction();
-			mapper.update("employee.updateWeekend", e);
-			mapper.commitTransaction();
-		} finally {
-			mapper.endTransaction();
-		}
-	}*/
-
 	public void deleteDayOff(Integer id, String startDate) throws SQLException {
 		// TODO Auto-generated method stub
 		try {
@@ -332,4 +299,30 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		map.put("employeeId", employeeId);
 		return (Integer) mapper.queryForObject("employee.getListWeekendEmployee", map);
 	}
+
+	 @Override
+	 public List<EmployeeBean> getListByColumnEmployeeActive(
+	   String columnSearch, String value, Integer startRow, Integer endRow)
+	   throws SQLException {
+	  Map<String, Object> map = new HashMap<String, Object>();
+	  map.put("columnSearch", columnSearch);
+	  map.put("value", value);   
+	  map.put("startRow", startRow);
+	  map.put("endRow", endRow);
+	  return mapper.queryForList("employee.getListByColumnEmployeeActive", map);
+	 }
+
+	 @Override
+	 public Integer getCountByColumnEmployeeActive(String columnSearch,
+	   String value) throws SQLException {
+	  Map<String, Object> map = new HashMap<String, Object>();
+	  map.put("columnSearch", columnSearch);
+	  map.put("value", value);
+	  return (Integer) mapper.queryForObject("employee.getCountByColumnEmployeeActive", map);
+	 }
+
+	 @Override
+	 public Date getEmployeeResignDate(Integer id) throws SQLException {
+	  return (Date) mapper.queryForObject("employee.getEmployeeResignDate", id);
+	 }
 }

@@ -266,6 +266,7 @@
 	    </dynamic>
 	</select>
 
+	
 	<select id="getCountByColumnEmployeeHead" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
 		FROM EMPLOYEES EMP
@@ -398,6 +399,57 @@
                 #startDayOff# AND #endDayOff#
 	</select>
 	
+	
+	<!-- select employee by tree -->
+	<select id="getListByTree" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT
+			EMP.EMPLOYEE_ID 	  AS employeeId, 
+	        EMP.EMPLOYEE_NAME 	  AS employeeName,
+	        GENDER 				  AS gender,
+	        ADDRESS 			  AS address,
+	        BIRTHDATE 			  AS birthdate,
+	        CONTACT_NUMBER 		  AS contactNumber,
+	        EMAIL 				  AS email,
+	        DIVISION_NAME 		  AS divisionName,
+	        POSITION_NAME 		  AS positionName,
+	        MANAGER.EMPLOYEE_NAME AS managerName
+		FROM EMPLOYEES EMP
+		LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
+		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
+		LEFT JOIN (
+		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME, MGRDIV.DIVISION_ID AS DIVISION_ID FROM EMPLOYEES E
+		    LEFT JOIN DIVISIONS MGRDIV ON MGRDIV.DIVISION_ID = E.DIVISION_ID
+		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
+		JOIN (
+		    SELECT X.EMPLOYEE_ID, X.TREE_ID
+		    FROM EMPLOYEES X
+		    WHERE X.EMPLOYEE_ID = #employeeId#
+		) EMPX ON EMPX.EMPLOYEE_ID != EMP.EMPLOYEE_ID
+		WHERE EMP.TREE_ID LIKE  EMPX.TREE_ID||'%'
+		ORDER BY EMP.EMPLOYEE_ID ASC) page 
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+    </select>
+    
+	<select id="getCountListByTree" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT
+			COUNT(1)
+		FROM EMPLOYEES EMP
+		LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
+		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
+		LEFT JOIN (
+		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME, MGRDIV.DIVISION_ID AS DIVISION_ID FROM EMPLOYEES E
+		    LEFT JOIN DIVISIONS MGRDIV ON MGRDIV.DIVISION_ID = E.DIVISION_ID
+		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
+		JOIN (
+		    SELECT X.EMPLOYEE_ID, X.TREE_ID
+		    FROM EMPLOYEES X
+		    WHERE X.EMPLOYEE_ID = #employeeId#
+		) EMPX ON EMPX.EMPLOYEE_ID != EMP.EMPLOYEE_ID
+		WHERE EMP.TREE_ID LIKE  EMPX.TREE_ID||'%'
+	</select>
+	<!-- end of select employee by tree -->
+
 	<!-- SELECT COUNT WEEKEND EMPLOYEE BETWEEN DAY OFF -->
 	<select id="getListWeekendEmployee" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(0) FROM (
@@ -415,114 +467,111 @@
 	     connect by regexp_substr(WEEKEND, '[^,]+', 1, level) is not null
 	  ) SETWEEKEND
 	  WHERE DATE_WEEKEND BETWEEN 
-	                TO_DATE('01-12-2015','dd-mm-yyyy') 
-	                AND TO_DATE('31-12-2015','dd-mm-yyyy') AND EMPLOYEE_ID=102
+	                #startDayOff# 
+	                AND #endDayOff# AND EMPLOYEE_ID=#employeeId#
 	</select>
 	
 	
-	<!-- select employee by tree and division and level  -->
-	<select id="getListByTreeWithDivision" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
+	
+	<select id="getListByColumnEmployeeActive" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
-		(SELECT
-			EMP.EMPLOYEE_ID 	  AS employeeId, 
-	        EMP.EMPLOYEE_NAME 	  AS employeeName,
-	        GENDER 				  AS gender,
-	        ADDRESS 			  AS address,
-	        BIRTHDATE 			  AS birthdate,
-	        CONTACT_NUMBER 		  AS contactNumber,
-	        EMAIL 				  AS email,
-	        DIVISION_NAME 		  AS divisionName,
-	        POSITION_NAME 		  AS positionName,
-	        MANAGER.EMPLOYEE_NAME AS managerName
-		FROM EMPLOYEES EMP
-		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-		JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
-		LEFT JOIN (
-		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME, MGRDIV.DIVISION_ID AS DIVISION_ID FROM EMPLOYEES E
-		    LEFT JOIN DIVISIONS MGRDIV ON MGRDIV.DIVISION_ID = E.DIVISION_ID
-		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-		LEFT JOIN (
-		    SELECT EMPX.DIVISION_ID, POSX.POSITION_LEVEL
-		    FROM EMPLOYEES EMPX
-		    JOIN POSITIONS POSX ON EMPX.POSITION_ID = POSX.POSITION_ID
-		    WHERE EMPX.EMPLOYEE_ID=#employeeId#
-		) MAN ON EMP.DIVISION_ID = MAN.DIVISION_ID
-			AND POS.POSITION_LEVEL=MAN.POSITION_LEVEL
-			AND MAN.EMPLOYEE_ID = EMP.HEAD_ID
-		ORDER BY EMP.EMPLOYEE_ID ASC) page 
-	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
-	</select>
-	
-	<select id="getCountListByTreeWithDivision" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT
-			COUNT(1)
-		FROM EMPLOYEES EMP
-		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-		JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
-		LEFT JOIN (
-		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME, MGRDIV.DIVISION_ID AS DIVISION_ID FROM EMPLOYEES E
-		    LEFT JOIN DIVISIONS MGRDIV ON MGRDIV.DIVISION_ID = E.DIVISION_ID
-		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-		JOIN (
-		    SELECT EMPX.DIVISION_ID, POSX.POSITION_LEVEL
-		    FROM EMPLOYEES EMPX
-		    JOIN POSITIONS POSX ON EMPX.POSITION_ID = POSX.POSITION_ID
-		    WHERE EMPX.EMPLOYEE_ID=#employeeId#
-		) MAN ON EMP.DIVISION_ID = MAN.DIVISION_ID 
-			AND POS.POSITION_LEVEL=MAN.POSITION_LEVEL
-			AND MAN.EMPLOYEE_ID = EMP.HEAD_ID
-		ORDER BY EMP.EMPLOYEE_ID ASC
-	</select>
-	<!-- end select employee by tree and level  -->
-	
-	
-	<!-- select employee by tree and level  -->
-	<select id="getListByTreeWithoutDivision" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
-		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
-		(SELECT
-			EMP.EMPLOYEE_ID 	  AS employeeId, 
-	        EMP.EMPLOYEE_NAME 	  AS employeeName,
-	        GENDER 				  AS gender,
-	        ADDRESS 			  AS address,
-	        BIRTHDATE 			  AS birthdate,
-	        CONTACT_NUMBER 		  AS contactNumber,
-	        EMAIL 				  AS email,
-	        DIVISION_NAME 		  AS divisionName,
-	        POSITION_NAME 		  AS positionName,
-	        MANAGER.EMPLOYEE_NAME AS managerName
-		FROM EMPLOYEES EMP
-		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-		JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
-		LEFT JOIN (
-		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME, MGRDIV.DIVISION_ID AS DIVISION_ID FROM EMPLOYEES E
-		    LEFT JOIN DIVISIONS MGRDIV ON MGRDIV.DIVISION_ID = E.DIVISION_ID
-		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-		LEFT JOIN (
-		    SELECT EMPX.DIVISION_ID, POSX.POSITION_LEVEL
-		    FROM EMPLOYEES EMPX
-		    JOIN POSITIONS POSX ON EMPX.POSITION_ID = POSX.POSITION_ID
-		    WHERE EMPX.EMPLOYEE_ID=#employeeId#
-		) MAN ON POS.POSITION_LEVEL>MAN.POSITION_LEVEL
-		ORDER BY EMP.EMPLOYEE_ID ASC) page 
-	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
-	</select>
-	
-	<select id="getCountListByTreeWithoutDivision" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT
-			COUNT(1)
-		FROM EMPLOYEES EMP
-		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-		JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
-		LEFT JOIN (
-		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME, MGRDIV.DIVISION_ID AS DIVISION_ID FROM EMPLOYEES E
-		    LEFT JOIN DIVISIONS MGRDIV ON MGRDIV.DIVISION_ID = E.DIVISION_ID
-		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-		JOIN (
-		    SELECT EMPX.DIVISION_ID, POSX.POSITION_LEVEL
-		    FROM EMPLOYEES EMPX
-		    JOIN POSITIONS POSX ON EMPX.POSITION_ID = POSX.POSITION_ID
-		    WHERE EMPX.EMPLOYEE_ID=#employeeId#
-		) MAN ON POS.POSITION_LEVEL>=MAN.POSITION_LEVEL
-		ORDER BY EMP.EMPLOYEE_ID ASC
-	</select>
+		(SELECT 
+	      EMP.EMPLOYEE_ID AS employeeId, 
+	      EMP.EMPLOYEE_NAME AS employeeName,
+	      GENDER AS gender,
+	      ADDRESS AS address,
+	      BIRTHDATE AS birthdate,
+	      HIRE_DATE AS hireDate,
+	      CONTACT_NUMBER AS contactNumber,
+	      EMAIL AS email,
+	      DIVISION_NAME AS divisionName,
+	      POSITION_NAME AS positionName,
+	      MANAGER.EMPLOYEE_NAME AS managerName,
+	      RE.RESIGN_DATE AS resignDate
+	  FROM EMPLOYEES EMP 
+	  LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
+	  JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
+	  LEFT JOIN (
+	      SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME FROM EMPLOYEES E
+	  ) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
+	  LEFT JOIN (
+	      SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
+	  )RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
+	  WHERE RE.RESIGN_DATE IS NULL
+	     <dynamic prepend="AND">
+	         <isNotNull property="columnSearch">
+		        <isEqual property="columnSearch" compareValue="ID">
+		             UPPER(EMP.EMPLOYEE_ID) LIKE UPPER(#value#)
+			    </isEqual>
+			    <isEqual property="columnSearch" compareValue="NAME">
+			             UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+			    </isEqual> 
+			    <isEqual property="columnSearch" compareValue="GENDER">
+			             UPPER(EMP.GENDER) LIKE #value#
+			    </isEqual> 
+			    <isEqual property="columnSearch" compareValue="EMAIL">
+			             UPPER(EMP.EMAIL) LIKE UPPER('%'||#value#||'%')
+			    </isEqual> 
+			    <isEqual property="columnSearch" compareValue="DIVISION">
+			             UPPER(DIVISION_NAME) LIKE UPPER('%'||#value#||'%')
+			    </isEqual> 
+			    <isEqual property="columnSearch" compareValue="POSITION">
+			             UPPER(POSITION_NAME) LIKE UPPER('%'||#value#||'%')
+			    </isEqual> 
+			    <isEqual property="columnSearch" compareValue="MANAGER">
+			             UPPER(MANAGER.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+			    </isEqual> 
+	         </isNotNull>
+     </dynamic>
+     ORDER BY EMP.EMPLOYEE_ID ASC) page 
+     WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow# 
+ 	</select>
+ 
+	<select id="getCountByColumnEmployeeActive" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		  SELECT COUNT(1) 
+		  FROM EMPLOYEES EMP 
+		  LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
+		  JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
+		  LEFT JOIN (
+		      SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME FROM EMPLOYEES E
+		  ) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
+		  LEFT JOIN ( 
+		      SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
+		  )RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
+		  WHERE RE.RESIGN_DATE IS NULL
+	     <dynamic prepend="AND">
+	         <isNotNull property="columnSearch">
+	          	<isEqual property="columnSearch" compareValue="ID">
+	             UPPER(EMP.EMPLOYEE_ID) LIKE UPPER(#value#)
+			    </isEqual>
+			          <isEqual property="columnSearch" compareValue="NAME">
+			             UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+			    </isEqual>
+			    <isEqual property="columnSearch" compareValue="GENDER">
+			             UPPER(GENDER) LIKE UPPER(#value#)
+			    </isEqual> 
+			    <isEqual property="columnSearch" compareValue="EMAIL">
+			             UPPER(EMAIL) LIKE UPPER('%'||#value#||'%')
+			    </isEqual> 
+			    <isEqual property="columnSearch" compareValue="DIVISION">
+			             UPPER(DIVISION_NAME) LIKE UPPER('%'||#value#||'%')
+			    </isEqual> 
+			    <isEqual property="columnSearch" compareValue="POSITION">
+			             UPPER(POSITION_NAME) LIKE UPPER('%'||#value#||'%')
+			    </isEqual> 
+			    <isEqual property="columnSearch" compareValue="MANAGER">
+			             UPPER(MANAGER.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+			    </isEqual>
+	         </isNotNull>
+	     </dynamic>
+	 </select>
+	 
+	 <select id="getEmployeeResignDate" resultClass="java.sql.Date" parameterClass="java.lang.Integer">
+		  SELECT RE.RESIGN_DATE
+		  FROM EMPLOYEES EMP 
+		  LEFT JOIN ( 
+		      SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
+		  )RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
+		  WHERE EMP.EMPLOYEE_ID=#employeeId#
+	 </select>
 </sqlMap>

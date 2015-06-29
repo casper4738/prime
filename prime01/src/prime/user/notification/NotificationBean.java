@@ -1,15 +1,18 @@
 package prime.user.notification;
 
-public class NotificationBean {
+public class NotificationBean  {
 private Integer notificationId;
 private Integer sender;
 private Integer receiver;
-private Integer notificationStatus;
+private Integer notificationStatus; //read and sent
 private Integer notificationType;
 private java.util.Date notificationSendDate;
 private String notificationNote;
 private Integer notificationTemplateId;
 private String updatedBy;
+private String senderName;
+private String receiverName;
+
 public Integer getNotificationId() {
 	return notificationId;
 }
@@ -63,6 +66,18 @@ public String getUpdatedBy() {
 }
 public void setUpdatedBy(String updatedBy) {
 	this.updatedBy = updatedBy;
+}
+public String getSenderName() {
+	return senderName;
+}
+public void setSenderName(String senderName) {
+	this.senderName = senderName;
+}
+public String getReceiverName() {
+	return receiverName;
+}
+public void setReceiverName(String receiverName) {
+	this.receiverName = receiverName;
 }
 
 
