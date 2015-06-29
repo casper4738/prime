@@ -5,16 +5,16 @@ import org.apache.struts.action.ActionForm;
 public class UserForm extends ActionForm {
 
 	private UserBean userBean = new UserBean();
-	private String task;
-	private String search;
-	private String columnSearch;
+	private String  task;
+	private String  search;
+	private String  columnSearch;
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
-	private String tmpValue;
-	private String message;
+	private String  tmpValue;
+	private String  message;
 	private Integer employeeId;
-	private String password;
-
+	private String  password;
+	
 	public String getPassword() {
 		return password;
 	}

@@ -1,5 +1,48 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="notiftemplate">
-
+	<insert id="insert" parameterClass="prime.admin.notiftemplate.NotifTemplateBean">
+		INSERT INTO NOTIFICATION_TEMPLATES
+		(NOTIFICATION_TEMPLATE_ID , NOTIFICATION_NAME, NOTIFICATION_VALUE, NOTIFICATION_DESCRIPTION) VALUES 
+		(#notifTemplateId#, #notifTemplateName#, #notifTemplateValue#, #notifTemplateDescription#)
+	</insert>
+	
+	<update id="update" parameterClass="prime.admin.notiftemplate.NotifTemplateBean">
+		UPDATE NOTIFICATION_TEMPLATES SET
+		NOTIFICATION_NAME=#notifTemplateName#,
+		NOTIFICATION_VALUE=#notifTemplateValue#,
+		NOTIFICATION_DESCRIPTION=#notifTemplateDescription#
+		WHERE NOTIFICATION_TEMPLATE_ID=#notifTemplateId#
+	</update>
+	
+	<select id="getNewId" resultClass="java.lang.Integer">
+		SELECT NVL(MAX(NOTIFICATION_TEMPLATE_ID)+1, 1) FROM NOTIFICATION_TEMPLATES
+	</select>
+	
+	<select id="get"  resultClass="prime.admin.notiftemplate.NotifTemplateBean" parameterClass="java.lang.Integer">
+		SELECT 
+	        NTF.NOTIFICATION_TEMPLATE_ID AS notifTemplateId, 
+	        NTF.NOTIFICATION_NAME AS notifTemplateName,
+	        NTF.NOTIFICATION_VALUE AS  notifTemplateValue,
+	        NTF.NOTIFICATION_DESCRIPTION AS notifTemplateDescription
+        FROM NOTIFICATION_TEMPLATES NTF 
+        WHERE NTF.NOTIFICATION_TEMPLATE_ID=#id#
+	</select>
+	
+	<select id="getListByColumn" resultClass="prime.admin.notiftemplate.NotifTemplateBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT 
+		    NTF.NOTIFICATION_TEMPLATE_ID AS notifTemplateId, 
+	        NTF.NOTIFICATION_NAME AS notifTemplateName,
+	        NTF.NOTIFICATION_VALUE AS  notifTemplateValue,
+	        NTF.NOTIFICATION_DESCRIPTION AS notifTemplateDescription
+		FROM NOTIFICATION_TEMPLATES NTF 
+	    ORDER BY NTF.NOTIFICATION_TEMPLATE_ID ASC) page 
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
+	
+	<select id="getCountByColumn" resultClass="java.lang.Integer" >
+		SELECT COUNT(1) 
+		FROM NOTIFICATION_TEMPLATES NTF 
+	</select>
 </sqlMap>

@@ -20,8 +20,6 @@ public class NotificationAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-//		LogForm pForm = (LogForm) form;
-//		LogManager tmpManager = new LogManagerImpl();
 		
 		NotificationForm pForm = (NotificationForm) form;
 		NotificationManager tmpManager = new NotificationManagerImpl();

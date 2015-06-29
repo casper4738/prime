@@ -58,17 +58,17 @@
 <body class="skin-blue sidebar-mini">
 
 	<section class="content-header">
-		<h1>Manage Log</h1>
+		<h1>View Log</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
-			<li class="active">Manage Logs</li>
+			<li class="active">View Logs</li>
 		</ol>
 	</section>
 
 	<section class="content">
 		<div class="row">
 			<div class="col-xs-12"><div class="box">
-				<div class="box-header"><h3 class="box-title">Data Manage Log</h3></div>
+				<div class="box-header"><h3 class="box-title">Data View Log</h3></div>
 				<p>
 		         	<span class="message"><bean:write name="LogAdminForm" property="message" /></span>
 		         </p>

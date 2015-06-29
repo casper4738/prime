@@ -40,7 +40,8 @@ public interface Constants {
 		static final String DOLOCK 				= "t34";
 		static final String GOTOEDITPOSITION 	= "t36";
 		static final String DOEDITPOSITION 		= "t37";
-		static final String DOVALIDATE			= "t38";
+		static final String DOVALIDATE1			= "t38";
+		static final String DOVALIDATE2			= "t39";
 		
 		interface PROJECT {
 			final String GOTOPROJECTDETAIL	= "p01";
@@ -238,11 +239,17 @@ public interface Constants {
 		final int NOTIFICATIONS 		= 13;
 	}
 	static interface LogAction{
-	//---4.Standard Audit Trails / Log Audit Trail Action Conversion		
+	//---5.Standard Audit Trails / Log Audit Trail Action Conversion		
 		final String INSERT		= "I";
 		final String BEFORE 	= "UB";
 		final String AFTER 		= "UA";
 		final String DELETE 	= "D";
+	}
+	
+	static interface NotificationStatus{
+	//---6.Standard Notifications Status Conversion
+		final int SENT = 1;
+		final int RECEIVED = 2;
 	}
 		
 	//##E.Response
@@ -303,7 +310,7 @@ public interface Constants {
 															"TaskSubordinateUser.do",//15
 															"ActivityUser.do",		 //16
 															"Notification.do", 	 	 //17
-															"#"
+															"Modal.do"				 //18
 												};
 	static interface Page {
 		static int LOGIN				= 0;
@@ -325,6 +332,8 @@ public interface Constants {
 		static int USER_TASK_SUBORDINATE= 15;
 		static int USER_REPORT			= 16;
 		static int USER_VIEWNOTIF		= 17;
+		
+		static int MODAL				= 18;
 	}
 	
 	//##K.Daily Time Constants

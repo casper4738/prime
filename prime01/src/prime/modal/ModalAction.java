@@ -1,5 +1,6 @@
 package prime.modal;
 
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,9 @@ import prime.admin.position.PositionManagerImpl;
 import prime.admin.user.UserManager;
 import prime.admin.user.UserManagerImpl;
 import prime.constants.Constants;
+import prime.login.LoginManager;
+import prime.login.LoginManagerImpl;
+import prime.utility.ActiveDirectoryManager;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -43,15 +47,33 @@ public class ModalAction extends Action {
         switch (task) {
         	case "changePwd" :
         		UserManager tmpManager = new UserManagerImpl();
-        		 if("changePassword".equals(pForm.getParam1())) {
-        			 if(tmpManager.isUserValidated("mahmud21", pForm.getUserBean().getPassword())){
-        					tmpManager.changePassword(pForm.getUserBean());
-        					request.setAttribute("flag", "true");
-        			 } else {
-        				 //TO DO :: Not Validated, Force Return
-        				 request.setAttribute("flag", "false");
+     			response.setContentType("text/text;charset=utf-8");
+     			response.setHeader("cache-control", "no-cache");
+     			PrintWriter tmpOut = response.getWriter();
+     			String tmpResponse = "";
+			 
+     			System.out.println("Param 1 = " + pForm.getParam1());
+     			
+        		 if("doChangePwd".equals(pForm.getParam1())) {
+            		 //---.Validate User
+        			 System.out.println(pForm.getParam3());
+            		 if(tmpManager.isUserValidated("ded", pForm.getParam3())){
+     					tmpManager.changePassword("ded", pForm.getParam6());
+             			tmpResponse = "1#<center><div id=\"message\" style=\"color:green;font-size:12px\">Password changed successfuly</div></center>";
+        			 } 
+            		 //---.Fail Just Return and Inform
+            		 else {
+            			tmpResponse = "0#<center><div id=\"message\" style=\"color:red;font-size:12px\"><i>Password doesn't match</div><center>";
         			 }
-        		}
+
+          			tmpOut.print(tmpResponse);
+          			tmpOut.flush();
+  					return null;
+        		 } 
+        		 else {
+        			 //Do Nothing
+        		 }
+        		 
         		 tmpTarget = "changePwd";
         		 break;
 	        case "activityNote" :
@@ -78,12 +100,12 @@ public class ModalAction extends Action {
                 		tmpTarget = "employeeList";
                 		
                     	//##1.Fetch Data From DB
-                		countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-        		
+                		countRows  = manager.getCountByColumnEmployeeActive(pForm.getColumnSearch(), pForm.getSearch());
+                		
                 		//---.Depend On The Object
-                		list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
-                									   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
-                									   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows));
+                		list = manager.getListByColumnEmployeeActive(pForm.getColumnSearch(), pForm.getSearch(),
+                									   				 PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
+                									   				 PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows));
 
                 		//##2.Prepare Data for Modal-Table Show
                 		//---a.Modal Title

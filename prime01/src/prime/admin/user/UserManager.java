@@ -25,7 +25,7 @@ public interface UserManager {
 	
 	public void resetPassword(UserBean e) throws SQLException;
 	
-	public void changePassword(UserBean e) throws SQLException;
+	public void changePassword(String username, String newPassword) throws SQLException;
 	
 	public void lockUser(UserBean e) throws SQLException;
 	

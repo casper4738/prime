@@ -3,20 +3,15 @@
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 
 <script type="text/javascript">
-function openModalHandler(){
-	//##0.Preparing Parameter For Modal Showing
-	var tmpTask ="changePwd";
-
-	//##1.Accessing Prime Method For Modal Showing
-	modalLoadHandler("task=" + tmpTask, $('#result'));
+function openModalHandler(task){
+	//##0.Accessing Prime Method For Modal Showing
+	modalLoadHandler("task=" + task);
 }
 </script>
 
 
 <header class="main-header">
 	<a href="#" class="logo"> <span class="logo-lg"><b>PRIME</b>PROGRAM</span></a>
-	
-	
 	<nav class="navbar navbar-static-top" role="navigation">
 		<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"> 
 			<span class="sr-only">Toggle navigation</span>
@@ -68,7 +63,7 @@ function openModalHandler(){
 							</p></li>
 						<li class="user-footer">
 							<div class="pull-left">
-								<input type="button" class="btn btn-block btn-default"  onclick="openModalHandler()" value="Change Password"/>
+								<input type="button" class="btn btn-block btn-default"  onclick="openModalHandler('changePwd')" value="Change Password"/>
 							</div>
 							<div class="pull-right">
 								<input type="button" class="btn btn-block btn-default"  onclick="" value="Sign Out"/>

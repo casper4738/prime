@@ -7,11 +7,12 @@ import prime.admin.user.UserBean;
 public class ModalForm extends ActionForm {
 	private String task;
 
-	private String param1;
+	private String param1 = "";
 	private Integer param2;
-	private String param3;
+	private String param3 = "";
 	private Integer param4;
 	private Integer param5;
+	private String param6 = "";
 	private String search = "";
 	private String columnSearch = "";
 	private Integer goToPage = 1;
@@ -105,6 +106,14 @@ public class ModalForm extends ActionForm {
 
 	public void setParam5(Integer param5) {
 		this.param5 = param5;
+	}
+
+	public String getParam6() {
+		return param6;
+	}
+
+	public void setParam6(String param6) {
+		this.param6 = param6;
 	}
 
 }

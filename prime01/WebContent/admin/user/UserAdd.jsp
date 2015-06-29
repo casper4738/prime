@@ -27,74 +27,104 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			lockPasswordColumn();
-			$('#ajax-validating').hide();
+			$('#username-validating').hide();
 		});
 		
 		function validateForm(){
-			var specialChars 	= "/*!@#$%^&*()\"{}_[]|\\?/<>,.";
-			var userName 		= document.getElementById('userName').value;
-			var password 		= document.getElementById('password').value;
-			var employeeName 	= document.getElementById('employeeName').value;
-			var confirmPassword = document.getElementById('confirmPassword').value;
+			var specialChars 	= "/*!@#$%^&*()\"{}[]|\\?/<>,";
+			var userName 		= $('#username').val();
+			var password 		= $('#password').val();
+			var employeeName 	= $('#employeeName').val();
+			var confirmPassword = $('#confirmPassword').val();
 			var tmpValidated 	= true;
 			
-			document.getElementById('validator').innerHTML="";
-			document.getElementById('validatorEmployee').innerHTML="";
-			document.getElementById('validatorPassword').innerHTML="";
-			document.getElementById('validatorConfirmPassword').innerHTML="";
+			$('#validatorEmployee').html("");
+			$('#validatorUsername').html("");
+			$('#validatorPassword').html("");
+			$('#validatorConfirmPassword').html("");
 			
 			if(employeeName == null || employeeName == "") {
-				document.getElementById('validatorEmployee').innerHTML="Employee must be filled out";
+				$('#validatorEmployee').html("Employee must be selected");
 				tmpValidated = false;
 			}
 			
 			if(userName == null || userName == "") {
-				 document.getElementById('validator').innerHTML="Name must be filled out";
+				 $('#validatorUsername').html("Name must be filled out");
 				 tmpValidated = false;
 			 }
 			
 			 if(userName != null || userName != ""){
 			 	 for (var i = 0; i < userName.length; i++) {
 		       	 	if (specialChars.indexOf(userName.charAt(i)) != -1) { 
-			        	document.getElementById("validator").innerHTML = "Characters are not allowed"; 
+			        	$("#validatorUsername").html("Characters are not allowed"); 
 			        	tmpValidated = false;
 			       	} 
 			     }
 			 }
 
-			 if(password == null || password == "") {
-				 document.getElementById('validatorPassword').innerHTML="Password must be filled out";
-				 tmpValidated = false;
+			 if(!$('#password').attr("disabled")){
+				 if(password == null || password == "") {
+					 $('#validatorPassword').html("Password must be filled out");
+					 tmpValidated = false;
+				 } else {
+					 if(password.length < 8){
+						 $('#validatorPassword').html("Password minimum 8 character");
+						 tmpValidated = false;
+					 } else {
+						 for (var i = 0; i < password.length; i++) {
+				          	if (specialChars.indexOf(password.charAt(i)) != -1) { 
+					        	$("#validatorPassword").html("Characters are not allowed"); 
+					        	tmpValidated = false;
+					       	} 
+					     }
+					 }
+				 }
+				 
+				 if(confirmPassword == null || confirmPassword == ""){
+					 $('#validatorConfirmPassword').html("Confirm Password must be filled out");
+					 tmpValidated = false;
+				 } else {
+					 if(confirmPassword != password){
+						 $('#validatorConfirmPassword').html("Password and Confirm Password must same");
+						 tmpValidated = false;
+					 }
+				 }
 			 }
 			 
-			 if(password != null || password != "") {
-			 	 for (var i = 0; i < password.length; i++) {
-		          	if (specialChars.indexOf(password.charAt(i)) != -1) { 
-			        	document.getElementById("validatorPassword").innerHTML = "Characters are not allowed"; 
-			        	tmpValidated = false;
-			       	} 
-			     }
-			 }
-			 
-			 if(confirmPassword == null || confirmPassword == ""){
-				 document.getElementById('validatorConfirmPassword').innerHTML="Confirm Password must be filled out";
-				 tmpValidated = false;
-			 }
-			 
-			 if(password.length < 8){
-				 document.getElementById('validatorPassword').innerHTML="Password minimum 8 character";
-				 tmpValidated = false;
-			 }
 			 
 			 if(tmpValidated){
-			     flyTo(); 
+				 //Do Database Checking, if Success Fly To
+				  $('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Validating employee data");
+				  $('#btn-save').hide();
+				  $('#btn-cancel').hide();
+				  $.ajax({ 
+			          type	  : "POST",
+			          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_USER]%>',  
+			          data	  : 'task=<%=Constants.Task.DOVALIDATE2%>&employeeId=' + $('#employeeId').val(),
+			          success : function(msg){
+							 param = msg.split('#');
+							 
+							 if(param[0] == "0"){ //Success
+				        	  	 flyTo(); 
+							 } else {			   //Failed
+								 $('#employee-validating').html(param[1]);
+							 	 $('#btn-save').show();
+								 $('#btn-cancel').show();
+							 }
+			          },
+			          
+			          error: function(){
+							alert("ERROR");
+			        	  	//TO DO :: Add Error Handling
+			          }
+			     });
 			 }
 		}		
 	
 		function flyTo(){
 			//Confirm Password
-			var tmpPassword = document.getElementById('password');
-			var tmpConfirmPassword = document.getElementById('confirmPassword');
+			var tmpPassword = $('#password');
+			var tmpConfirmPassword = $('#confirmPassword');
 			if (tmpPassword.value  == tmpConfirmPassword.value) {
 				var tmpForm = document.forms[0]; 
 				tmpForm.task.value = "<%=Constants.Task.DOADD%>";
@@ -109,15 +139,21 @@
 				  return;
 			  }
 			
-			  $('#ajax-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Checking username");
-			  $('#ajax-validating').show();
+			  //##1.Set Loading and Disable Button
+			  $('#username-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Checking username");
+			  $('#username-validating').show();
+			  $('#btn-save').attr("disabled", true);
+			  $('#validatorEmployee').html("");
+			  $('#validatorUsername').html("");
+			  $('#validatorPassword').html("");
+			  $('#validatorConfirmPassword').html("");
 			  $.ajax({ 
 		          type	  : "POST",
 		          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_USER]%>',  
-		          data	  : 'task=<%=Constants.Task.DOVALIDATE%>&userBean.userName=' + $('#username').val(),
+		          data	  : 'task=<%=Constants.Task.DOVALIDATE1%>&userBean.userName=' + $('#username').val(),
 		          success : function(msg){
 		        	  var param = msg.split('#');
-	        		  $('#ajax-validating').html(param[1]);
+	        		  $('#username-validating').html(param[1]);
 		        	  if(param[0] == "1"){ 		  //Success [Normal]
 		        		  unlockPasswordColumn();
 		        	  } else if(param[0] == "2"){ //Success [Active Directory]
@@ -126,6 +162,7 @@
 		        	  } else {
 		        		  lockPasswordColumn(); 
 		        	  }
+					  $('#btn-save').attr("disabled", false);
 		          },
 		          
 		          error: function(){
@@ -177,7 +214,7 @@
 					<div class="box-body">
 	                	<html:form action="/UserAdmin" styleId= "userForm">
 	                		<html:hidden name="UserAdminForm" property="task"/>
-	                		<html:hidden name="UserAdminForm" property="employeeId" />
+	                		<html:hidden name="UserAdminForm" property="employeeId" styleId="employeeId"/>
 	                		<table class="form-input" style="width: 500px" id="table-input">
 	                			<tr>
 	                				<td width="150px">Employee Name</td>
@@ -190,6 +227,13 @@
 									</td>
 	                			</tr>
 	                			<tr>
+	                				<td></td>
+	                				<td></td>
+	                				<td>	    
+	                					<i><span id="validatorEmployee" style="color: red;font-size: 8"></span></i>
+	                				</td>
+	                			</tr>
+	                			<tr>
 	                				<td>Username</td>
 	                				<td>:</td>
 	                				<td><html:text name="UserAdminForm" property="userBean.userName" styleClass="form-control" styleId="username" onblur="checkActiveDirectory()"/> </td>
@@ -198,8 +242,8 @@
 	                				<td></td>
 	                				<td></td>
 	                				<td>	
-							            <div id="ajax-validating"></div>           
-	                					<i><span id="validatorEmployee" style="color: red;font-size: 8"></span></i>
+							            <div id="username-validating"></div>           
+	                					<i><span id="validatorUsername" style="color: red;font-size: 8"></span></i>
 	                				</td>
 	                			</tr>
 	                			<tr>
@@ -207,6 +251,11 @@
 	                				<td>:</td>
 	                				<td><html:password name="UserAdminForm"  property="userBean.password" styleClass="form-control" styleId="password" maxlength="32"/></td>
 	                			</tr>
+	                  			<tr>
+	                  				<td></td>
+									<td></td>
+	                  				<td><i><span id="validatorPassword" style="color: red;font-size: 8"></span></i></td>
+	                  			</tr>
 	                			<tr>
 	                				<td>Confirm Password</td>
 	                				<td>:</td>
@@ -228,10 +277,15 @@
 			               				</html:select>
 			               			</td>
 	                			</tr> 
+	                  			<tr>
+	                  				<td></td>
+									<td></td>
+	                  				<td><div id="employee-validating"></div></td>
+	                  			</tr>
 	                			<tr>
 	                  				<td colspan="3" align="center">
-	                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
-	                  					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+	                  					<html:button property="" value="Save" styleClass="btn btn-primary" styleId="btn-save" onclick="validateForm()" />
+	                  					<html:button property="" value="Cancel" styleClass="btn btn-default" styleId="btn-cancel" onclick="flyToPage('success')"/>
 	                  				</td>
 	                			</tr>
 	                		</table>

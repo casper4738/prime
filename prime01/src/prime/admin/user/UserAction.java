@@ -13,6 +13,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.employee.EmployeeManager;
+import prime.admin.employee.EmployeeManagerImpl;
 import prime.constants.Constants;
 import prime.login.LoginManager;
 import prime.login.LoginManagerImpl;
@@ -44,6 +46,14 @@ public class UserAction extends Action {
 		} else if (Constants.Task.DOADD.equals(userForm.getTask())) {
 			userForm.getUserBean().setEmployeeId(userForm.getEmployeeId());
 			userForm.getUserBean().setUpdateBy("dedy");
+			
+			if(userForm.getUserBean().getPassword().length() <= 0){
+				userForm.getUserBean().setIsActiveDirectory(true);
+				userForm.getUserBean().setPassword("empty");
+			} else {
+				userForm.getUserBean().setIsActiveDirectory(false);
+			}
+			
 			tmpManager.insert(userForm.getUserBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOLOCK.equals(userForm.getTask())) {
@@ -80,7 +90,7 @@ public class UserAction extends Action {
 			//##.Update Data and Go to Forward
 			tmpManager.update(userForm.getUserBean());
 			return mapping.findForward("forward");
-		} else if(Constants.Task.DOVALIDATE.equals(userForm.getTask())){
+		} else if(Constants.Task.DOVALIDATE1.equals(userForm.getTask())){
 			response.setContentType("text/text;charset=utf-8");
 			response.setHeader("cache-control", "no-cache");
 			PrintWriter tmpOut = response.getWriter();
@@ -113,6 +123,31 @@ public class UserAction extends Action {
 				case 2 :
 					tmpResponse = "2#<div id=\"message\" style=\"color:blue;font-size:8\">Username can be used [Active Directory]</div>";
 					break;
+			}
+			
+			tmpOut.print(tmpResponse);
+			tmpOut.flush();
+			return null;
+		} else if(Constants.Task.DOVALIDATE2.equals(userForm.getTask())){
+			response.setContentType("text/text;charset=utf-8");
+			response.setHeader("cache-control", "no-cache");
+			PrintWriter tmpOut = response.getWriter();
+			String tmpResponse = "";
+			
+			//Check Username to Database
+			EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
+			int tmpResponseCode = 0;
+			//0 : Exists Database ; 1 : Empty Active Directory ; 2 : Empty Database
+			if(tmpEmployeeManager.getEmployeeResignDate(userForm.getEmployeeId()) != null){
+				tmpResponseCode = 1;	//Employee Already Resign
+			} else {
+				tmpResponseCode = 0;	//Success
+			}
+
+			if(tmpResponseCode == 1){
+				tmpResponse = "1#<div id=\"message\" style=\"color:red;font-size:8\">Employee already resign, please select other.</div>";
+			} else {
+				tmpResponse = "0#";
 			}
 			
 			tmpOut.print(tmpResponse);
