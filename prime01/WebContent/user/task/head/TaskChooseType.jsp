@@ -108,7 +108,7 @@
 					<table class="table table-bordered table-striped table-hover" >
 						<thead>
 							<tr>
-								<th align="center">Employee ID</th>
+								<th>Employee ID</th>
 								<th>Name</th>
 								<th align="center">Gender</th>
 								<th>Address</th>
@@ -123,7 +123,7 @@
 		                <logic:notEmpty name="listEmployee">
 							<logic:iterate id="iter" name="listEmployee">
 			                	<tr>
-			                		<td><bean:write name="iter" property="employeeId"/> </td>
+			                		<td align="center"><bean:write name="iter" property="employeeId"/> </td>
 			                		<td><bean:write name="iter" property="employeeName"/> </td>
 			                		<td><logic:equal name="iter" property="gender" value="0">
 				                			Male

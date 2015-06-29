@@ -30,12 +30,6 @@
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		$('#table-1').dataTable( {
-			paging    : false,
-			searching : false,
-			info	  : false
-	    } );
-		
 		$(document).ready(function () {
             $('#start-date').datepicker({
                 format: "yyyy-mm-dd"
@@ -83,7 +77,7 @@
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver" />
                 		<table class="form-input" align="center">
                 			<tr>
-                				<td>Project Name</td>
+                				<td width="200px">Project Name</td>
                 				<td>:</td>
                 				<td><html:text name="ProjectUserForm" property="projectBean.projectName" styleClass="form-control"/></td>
                 			</tr>
@@ -91,8 +85,9 @@
                 				<td>Start Date</td>
                 				<td>:</td>
                 				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                					<html:text name="ProjectUserForm" property="projectBean.projectStartDate" styleClass="form-control" styleId="start-date"/></td>
+                					<html:text name="ProjectUserForm" property="projectBean.projectStartDate" styleClass="form-control" styleId="start-date"/>
                 					</div>
+               					</td>
                 			</tr>
                 			<tr>
                 				<td>Estimate Date</td>
@@ -130,6 +125,7 @@
                 	</html:form>
                   </div>
         	</div>
+        </div></div>
 	</section>
 	<!-- /.content-wrapper -->
 		
