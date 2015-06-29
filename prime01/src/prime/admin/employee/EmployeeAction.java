@@ -55,6 +55,7 @@ public class EmployeeAction extends Action {
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
 			pForm.setEmployeeBean(tmpEmployee);
 			pForm.setEmployeeId(pForm.getTmpId());
+			pForm.setDivisionId(tmpEmployee.getDivisionId());
 			pForm.getEmployeeBean().setResignDate(new java.sql.Date(new java.util.Date().getTime()));
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
 			return mapping.findForward("resign");
@@ -88,18 +89,33 @@ public class EmployeeAction extends Action {
 			return mapping.findForward("weekend");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			pForm.getEmployeeBean().setEmployeeId(manager.getNewId());
-			pForm.getEmployeeBean().setDivisionId(pForm.getDivisionId());
+		
+			if(pForm.getManagerId()!=0){
+				pForm.getEmployeeBean().setDivisionId((manager.getEmployeeById(pForm.getManagerId()).getDivisionId()==null)?0:manager.getEmployeeById(pForm.getManagerId()).getDivisionId());
+			}else{
+				pForm.getEmployeeBean().setDivisionId(pForm.getDivisionId());
+			}
+			
 			pForm.getEmployeeBean().setManagerId(pForm.getManagerId());
+			pForm.getEmployeeBean().setTreeId(manager.getTreeIdByEmployeeId(pForm.getManagerId())+pForm.getEmployeeBean().getEmployeeId());
 			manager.insert(pForm.getEmployeeBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DORESIGN.equals(pForm.getTask())) {
 			manager.insertResign(pForm.getEmployeeBean());
+			
 			// FOR UPDATE HEAD ID WHERE OLD HEAD ID WAS RESIGN 
 			manager.updateHead(pForm.getEmployeeBean().getEmployeeId(),pForm.getSubstituteHeadId());
+						
+			// FOR UPDATE TREE ID SUB ORDINATE WHERE OLD EMPLOYEE WAS RESIGN 
+			System.out.println(pForm.getSubstituteHeadId()+" subHead");
+			if(pForm.getSubstituteHeadId()!=0){
+				manager.updateTreeId(pForm.getEmployeeBean().getTreeId().length(),manager.getTreeIdByEmployeeId(pForm.getSubstituteHeadId()),pForm.getEmployeeBean().getTreeId(),pForm.getEmployeeId());
+			}			
 			
 			//FOR UPDATE STATUS USER
-			manager.updateStatusUser(pForm.getEmployeeBean().getEmployeeId());
-			
+			/* THIS QUERY ALREADY USED TRIGGER
+			 	manager.updateStatusUser(pForm.getEmployeeBean().getEmployeeId());
+			 */
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
 			EmployeeBean tmpEmployee = pForm.getEmployeeBean();
@@ -147,14 +163,29 @@ public class EmployeeAction extends Action {
 			request.setAttribute("listDivision", tmpDivisionManager.getListAll());
 			return mapping.findForward("positionDivisionEdit");
 		}else if(Constants.Task.DOEDITPOSITION.equals(pForm.getTask())) {
-			// FOR UPDATE SELF EMPLOYEE
-			pForm.getEmployeeBean().setDivisionId(pForm.getDivisionId());
-			pForm.getEmployeeBean().setManagerId(pForm.getManagerId());
 			EmployeeBean tmpEmployee = pForm.getEmployeeBean();
+			// FOR UPDATE SELF EMPLOYEE
+			if(pForm.getManagerId()!=0){
+				System.out.println("CC "+ manager.getEmployeeById(pForm.getManagerId()).getTreeId()+pForm.getEmployeeId());
+				tmpEmployee.setTreeId(manager.getEmployeeById(pForm.getManagerId()).getTreeId()+pForm.getEmployeeId());
+				tmpEmployee.setDivisionId((manager.getEmployeeById(pForm.getManagerId()).getDivisionId()==null)?pForm.getDivisionId():manager.getEmployeeById(pForm.getManagerId()).getDivisionId());
+			}else{
+				System.out.println("DD" + pForm.getEmployeeId().toString());
+				tmpEmployee.setTreeId(pForm.getEmployeeId().toString());
+				tmpEmployee.setDivisionId(pForm.getDivisionId());
+			}	
+			
+						
+			pForm.getEmployeeBean().setManagerId(pForm.getManagerId());
 			manager.updatePositionDivision(tmpEmployee);
 			
+			// FOR UPDATE TREE ID SUB ORDINATE WHERE OLD EMPLOYEE WAS CHANGE POSITION OR DIVISION  
+			manager.updateTreeId(pForm.getEmployeeBean().getTreeId().length(),manager.getTreeIdByEmployeeId(pForm.getSubstituteHeadId()),pForm.getEmployeeBean().getTreeId(),pForm.getEmployeeId());
+						
 			//FOR UPDATE HEAD ID WHERE OLD HEAD ID WAS CHANGE POSITION OR DIVISION 
+			
 			manager.updateHead(pForm.getEmployeeBean().getEmployeeId(),pForm.getSubstituteHeadId());
+			
 			return mapping.findForward("forward");
 		} 
 		

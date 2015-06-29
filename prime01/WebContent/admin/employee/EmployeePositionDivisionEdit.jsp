@@ -31,6 +31,12 @@
             $('#datepicker_hiredate').datepicker({
                 format: "yyyy-mm-dd"
             });
+            if($('#managerDivisionId').val() != "" ){
+            	$('#isDivision').show();
+            }else{
+            	$('#chooseDivision').show();
+            }
+            
         });
 		
 		function openModalHandler(pParam){
@@ -39,21 +45,30 @@
 			var tmpTask ="modalTable";
 			var tmpTable ="employeeHead";
 			var tmpParam =document.forms[0].employeeId.value;
+			var tmpDiv =document.forms[0].divisionId.value;
 			
 			//##1.Accessing Prime Method For Modal Showing
 			if(pParam=='head'){
 				modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeEditPosDiv&param4="+tmpParam, $('#result'));
 			}else if(pParam=='substituteHead'){
-				modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeResign&param4="+tmpParam, $('#result'));
+				modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeResign&param4="+tmpParam+"&param5="+tmpDiv, $('#result'));
 			}
 		}
 		
 		function fChange(pView){
-			if(pView.value=="YES"){
-				  document.getElementById('viewSubstituteHead').style.display="inline"
-			}else{
-				document.getElementById('viewSubstituteHead').style.display="none"
-			}
+			if(pView=="" || pView==null){
+				document.getElementById('headName').value="";
+				document.getElementById('chooseDivision').style.display="inline";
+				document.getElementById('divisionId').selectedIndex="0";
+				document.forms[0].managerId.value=null;
+				document.getElementById('isDivision').style.display="none";
+			}/* else{
+				if(pView.value=="YES"){
+					  document.getElementById('viewSubstituteHead').style.display="inline"
+				}else{
+					document.getElementById('viewSubstituteHead').style.display="none"
+				}
+			} */	
 		}
     </script>
     <!-- End Of JS -->
@@ -75,13 +90,15 @@
 				<div class="box-body">
                  	<html:form action="/EmployeeAdmin">
                  		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOEDITPOSITION%>"/>
-                 		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
+                 		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" styleId="divisionId" />
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionName" />
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
 			            <html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
+			            <html:hidden name="EmployeeAdminForm" property="employeeBean.managerDivisionId" styleId="managerDivisionId" />
                  		<html:hidden name="EmployeeAdminForm" property="managerId"/>
                  		<html:hidden name="EmployeeAdminForm" property="employeeId"/>
                  		<html:hidden name="EmployeeAdminForm" property="substituteHeadId" />
+                 		<html:hidden name="EmployeeAdminForm" property="employeeBean.treeId" styleId="treeId"/>
                  		<table class="form-input" align="center" style="width: 500px;">
                  			<tr>
                  				<td>Employee ID</td>
@@ -99,7 +116,7 @@
 	               				<td>Position</td>
 	               				<td>:</td>
 	               				<td>
-		               				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control" styleId="positionId">
+		               				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control" styleId="positionId" onchange="fChange()">
 		               					<html:options collection="listPosition" property="positionId" labelProperty="positionName" />
 		               				</html:select>
 								</td>
@@ -121,7 +138,7 @@
 		               				<div id="isDivision" style="display: none">
 		               					<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true" styleId="divisionName"/>
 									</div>
-									<div id="chooseDivision" style="display:inline">
+									<div id="chooseDivision" style="display:none">
 		               					<html:select name="EmployeeAdminForm" property="divisionId" styleClass="form-control" styleId="divisionId">
 			               					<html:option value="NULL">--All--</html:option>
 			               					<html:options collection="listDivision" property="divisionId" labelProperty="divisionName" />
@@ -132,14 +149,18 @@
 	               			<tr>
 	               				<td>Change Subtitute Head For Subordinate</td>
 	               				<td>:</td>
-		               			<td>
-		               				<select name="changeSubstituteHead" class="form-control" onchange="fChange(this)">
+		               			<td class="input-group">
+		               				<!-- <select name="changeSubstituteHead" class="form-control" onchange="fChange(this)">
 		               					<option value="NO">NO</option>
 		               					<option value="YES">YES</option>
-		               				</select>
-								</td>
+		               				</select> -->
+	               					<html:text name="EmployeeAdminForm" property="employeeBean.substituteHead" styleClass="form-control" styleId="substituteHead" disabled="true"/>
+	               					<span class="input-group-btn">
+                    					<input type="button" class="btn btn-info" type="button" onclick="openModalHandler('substituteHead')" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
+						            </span>
+						        </td>
 	               			</tr>
-	               			<tr>
+	               			<%-- <tr>
 	               				<td colspan="2">&nbsp;</td>
 		               			<td>
 		               				<div id="viewSubstituteHead" style="display: none" class="input-group">
@@ -149,7 +170,7 @@
 							            </span>
 						            </div>
 								</td>
-	               			</tr>
+	               			</tr> --%>
                  			<tr>
                  				<td colspan="3" align="center">
                  					<html:button value="Save" styleClass="btn btn-primary" onclick="dosubmit()" property=""/>
