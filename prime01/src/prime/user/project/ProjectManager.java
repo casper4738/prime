@@ -15,11 +15,15 @@ public interface ProjectManager {
 	
 	public void insertMember(ProjectBean e) throws SQLException;
 	
+	public void updateStatusProjectMemberRole(Integer projectMemberId, Integer projectMemberStatus) throws SQLException;
+	 
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 	
 	public Integer getNewId() throws SQLException;
 	
 	public Integer getNewMemberId() throws SQLException;
+	
+	public Integer getStatusRoleMember(Integer projectMemberId, Integer roleId, Integer projectMemberStatus) throws SQLException;
 	
 	public Integer getCountByColumnEmployeeAll (String columnSearch, String value) throws SQLException;
 	
@@ -28,8 +32,6 @@ public interface ProjectManager {
 	public ProjectBean getDataProjectMemberByProjectMemberId(Integer projectMemberId) throws SQLException;
 	
 	public ProjectBean getProjectMemberDetailById(Integer id) throws SQLException;
-	
-	public List<ProjectBean> getListRoles (Integer employeeId, Integer projectId) throws SQLException;
 	
 	public List<ProjectBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow) throws SQLException;
 	
@@ -42,6 +44,8 @@ public interface ProjectManager {
 	public List<ProjectBean> getProjectNamebyProjectId(Integer projectId) throws SQLException;
 
 	public Integer getProjectMemberIdByAll(ProjectBean e) throws SQLException;
+	
+	public List<RoleOption> getRoleByProjectMember(Integer employeeId, Integer projectId) throws SQLException;
 	
 
 }

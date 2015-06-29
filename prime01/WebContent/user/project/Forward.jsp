@@ -27,5 +27,11 @@
 </logic:equal>
 
 
+<logic:equal name="ProjectUserForm" property="task" value="<%=Constants.Task.PROJECT.DOEDITMEMBER%>">
+	<script>flyToForward('<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL%>', '<bean:message key="label.message.insert"/>')</script>
+</logic:equal>
+
+
+
 </body>
 </html>

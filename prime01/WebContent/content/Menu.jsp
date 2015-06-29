@@ -120,7 +120,7 @@
 			    cache: false
 			});
     		
-    		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.ADMIN_DASHBOARD]%>");
+    		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>");
 		});
 </script>
 <!-- End Of Written JS -->

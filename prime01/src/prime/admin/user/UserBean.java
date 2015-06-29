@@ -7,7 +7,7 @@ public class UserBean extends EmployeeBean {
 	private Boolean isActiveDirectory;
 	private Integer sysLevel;
 	private String password;
-	private String userName = "mahmud21";
+	private String userName;
 	private Date changeDate;
 	private Integer statusUser;
 	private Integer employeeId;
