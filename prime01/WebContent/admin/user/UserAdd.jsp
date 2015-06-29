@@ -17,6 +17,67 @@
 	
 	<script type="text/javascript">
 	
+	function validateForm(){
+		document.getElementById('validator').innerHTML="";
+		document.getElementById('validatorEmployee').innerHTML="";
+		document.getElementById('validatorPassword').innerHTML="";
+		document.getElementById('validatorConfirmPassword').innerHTML="";
+		var specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,.";
+		var userName =  document.getElementById('userName').value;
+		var password =  document.getElementById('password').value;
+		var employeeName = document.getElementById('employeeName').value;
+		var confirmPassword = document.getElementById('confirmPassword').value;
+		var tmpValidated = true;
+	
+		if(employeeName == null || employeeName == ""){
+			document.getElementById('validatorEmployee').innerHTML="Employee must be filled out";
+			tmpValidated = false;
+		}
+		
+		if(userName == null || userName == ""){
+			 document.getElementById('validator').innerHTML="Name must be filled out";
+			 tmpValidated = false;
+		 }
+		
+		 if(userName != null || userName != ""){
+		 	 for (var i = 0; i < userName.length; i++) {
+		          if (specialChars.indexOf(userName.charAt(i)) != -1) { 
+		        document.getElementById("validator").innerHTML = "Characters are not allowed"; 
+		        tmpValidated = false;
+		       } 
+		     }
+		 }
+
+		 if(password == null || password == ""){
+			 document.getElementById('validatorPassword').innerHTML="Password must be filled out";
+			 tmpValidated = false;
+		 }
+		 
+		 if(password != null || password != ""){
+		 	 for (var i = 0; i < password.length; i++) {
+		          if (specialChars.indexOf(password.charAt(i)) != -1) { 
+		        document.getElementById("validatorPassword").innerHTML = "Characters are not allowed"; 
+		        tmpValidated = false;
+		       } 
+		     }
+		 }
+		 
+		 if(confirmPassword == null || confirmPassword == ""){
+			 document.getElementById('validatorConfirmPassword').innerHTML="Confirm Password must be filled out";
+			 tmpValidated = false;
+		 }
+		 
+		 if(password.length < 8){
+			 document.getElementById('validatorPassword').innerHTML="Password minimum 8 character";
+			 tmpValidated = false;
+		 }
+		 
+		
+		 if(tmpValidated){
+		     flyTo(); 
+		 }
+		 
+	}
 	function flyTo(){
 		//Confirm Password
 		var tmpPassword = document.getElementById('password');
@@ -62,9 +123,9 @@
                   	<html:form action="/UserAdmin" styleId= "userForm">
                   		<html:hidden name="UserAdminForm" property="task"/>
                   		<html:hidden name="UserAdminForm" property="employeeId" />
-                  		<table class="form-input" style="width: 500px;">
+                  		<table class="form-input" style="width: 500px" id="table-input">
                   			<tr>
-                  				<td width="200px">Employee Name</td>
+                  				<td width="150px">Employee Name</td>
                   				<td>:</td>
                   				<td class="input-group">
 			               			<html:text name="UserAdminForm" property="userBean.employeeName" styleClass="form-control" styleId="employeeName" disabled="true"/>
@@ -72,21 +133,57 @@
                       					<input type="button" class="btn btn-info" type="button" onclick="openModalHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
 								    </span>
 								</td>
+							<tr>
+								<td>
+								</td>
+								<td>
+								</td>
+                  				<td>
+                  					<i><span id="validatorEmployee" style="color: red;font-size: 8"></span></i>
+                  				</td>
                   			</tr>
+                  			
                   			<tr>
                   				<td>Username</td>
                   				<td>:</td>
-                  				<td><html:text name="UserAdminForm" property="userBean.userName" styleClass="form-control"/></td>
+                  				<td><html:text name="UserAdminForm" property="userBean.userName" styleId="userName" maxlength="25" styleClass="form-control"/></td>
+                  			</tr>
+                  			<tr>
+                  				<td>
+								</td>
+								<td>
+								</td>
+                  				<td>
+                  					<i><span id="validator" style="color: red;font-size: 8"></span></i>
+                  				</td>
                   			</tr>
                   			<tr>
                   				<td>Password</td>
                   				<td>:</td>
-                  				<td><html:password name="UserAdminForm"  property="userBean.password" styleClass="form-control" styleId="password"/></td>
+                  				<td><html:password name="UserAdminForm"  property="userBean.password" styleClass="form-control" maxlength="32" styleId="password"/></td>
+                  			</tr>
+                  			<tr>
+                  				<td>
+								</td>
+								<td>
+								</td>
+                  				<td>
+                  					<i><span id="validatorPassword" style="color: red;font-size: 8"></span></i>
+                  				</td>
                   			</tr>
                   			<tr>
                   				<td>Confirm Password</td>
                   				<td>:</td>
                   				<td><html:password name="UserAdminForm"  property="userBean.tmpConfirmPassword" styleClass="form-control" styleId="confirmPassword"/></td>
+                  			</tr>
+                  			<tr>
+                  			<td>
+								</td>
+								<td>
+								</td>
+                  				<td>
+                  					<i><span id="validatorConfirmPassword" style="color: red;font-size: 8"></span></i>
+                  				</td>
                   			</tr>
                   			<tr>
                   				<td>Sys Level</td>
@@ -101,7 +198,7 @@
                   			</tr> 
                   			<tr>
                   				<td colspan="3" align="center">
-                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="flyTo()" />
+                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
                   			</tr>
