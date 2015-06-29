@@ -122,6 +122,7 @@
 		        		  unlockPasswordColumn();
 		        	  } else if(param[0] == "2"){ //Success [Active Directory]
 		        		  lockPasswordColumn(); 
+		        	  	  resetPasswordColumn();
 		        	  } else {
 		        		  lockPasswordColumn(); 
 		        	  }
@@ -140,6 +141,10 @@
 		function unlockPasswordColumn(){
 			$('#password').attr("disabled", false);
 			$('#confirmPassword').attr("disabled", false);
+		}
+		function resetPasswordColumn(){
+			$('#password').val("");
+			$('#confirmPassword').val("");
 		}
 		
 		function openModalHandler(){

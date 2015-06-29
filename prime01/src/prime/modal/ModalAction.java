@@ -135,10 +135,10 @@ public class ModalAction extends Action {
                 			request.setAttribute("modalForm", "employeeHead");
                 		}else if(pForm.getParam3().equals("employeeResign")){
                 			request.setAttribute("modalForm", "employeeResign");
-                		}else if(pForm.getParam3().equals("employeeUser")){
-                			request.setAttribute("modalForm", "employeeUser");
                 		}else if(pForm.getParam3().equals("projectAssigner")){
                 			request.setAttribute("modalForm", "project");
+                		}else if(pForm.getParam3().equals("projectMember")){
+                			request.setAttribute("modalForm", "projectMember");
                 		}
                 		
                 		//---b.Column Head
