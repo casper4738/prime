@@ -7,7 +7,7 @@
 		E.EMPLOYEE_NAME AS senderName, 
         EMP.EMPLOYEE_NAME AS receiverName,
 		NOTIF.NOTIFICATION_STATUS AS notificationStatus,
-        NOTIF.NOTIFICATION_TYPE AS notificationType,
+        NOTIF_TEMPLATE.NOTIFICATION_NAME AS notificationNameType,
         NOTIF.NOTIFICATION_SEND_DATE AS notificationSendDate,
         NOTIF.NOTIFICATION_NOTE AS notificationNote,
         NOTIF.NOTIFICATION_TEMPLATE_ID AS notificationTemplateId,
@@ -15,6 +15,7 @@
 		FROM NOTIFICATIONS NOTIF
         JOIN EMPLOYEES E ON E.EMPLOYEE_ID = NOTIF.SENDER
         JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = NOTIF.RECEIVER
+        JOIN NOTIFICATION_TEMPLATES NOTIF_TEMPLATE ON NOTIF_TEMPLATE.NOTIFICATION_TEMPLATE_ID = NOTIF.NOTIFICATION_TEMPLATE_ID
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="ID">

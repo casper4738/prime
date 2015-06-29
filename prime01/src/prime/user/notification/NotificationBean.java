@@ -12,6 +12,7 @@ private Integer notificationTemplateId;
 private String updatedBy;
 private String senderName;
 private String receiverName;
+private String notificationNameType;
 
 public Integer getNotificationId() {
 	return notificationId;
@@ -78,6 +79,12 @@ public String getReceiverName() {
 }
 public void setReceiverName(String receiverName) {
 	this.receiverName = receiverName;
+}
+public String getNotificationNameType() {
+	return notificationNameType;
+}
+public void setNotificationNameType(String notificationNameType) {
+	this.notificationNameType = notificationNameType;
 }
 
 
