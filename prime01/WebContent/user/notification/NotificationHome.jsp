@@ -20,16 +20,20 @@
 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
-	<script type="text/javascript">
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+    
+		<script type="text/javascript">
 		$('#table-1').dataTable( {
 			paging    : false,
 			searching : false,
-			info	  : false
+			info	  : false,
+			language  : {
+		          "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
+		    }
 	    } );
 	</script>
 	<!-- End JS -->
@@ -83,27 +87,30 @@
 						<thead>
 							<tr>
 								<th>Notification Id</th>
-								<th>Sender</th>
-								<th>Receiver</th>
-								<th>Notification Status</th>
-								<th>Notification Type</th>
-								<th>Notification Send Date</th>
 								<th>Notification Note</th>
-								<th>Updated By</th>
+								<th>Notification Send Date</th>
+								<th>Notification Type</th>
+								<th>Notification Status</th>
+								<th>Sender</th>
 			                </tr>
 			            </thead>
 			              <tbody>
 			               <logic:notEmpty name="listNotification">
 								<logic:iterate id="iter" name="listNotification">
 				                	<tr>
-				                		<td align="center"><bean:write name="iter" property="notificationId"/> </td>
-				                		<td align="center"><bean:write name="iter" property="senderName"/> </td>
-				                		<td align="center"><bean:write name="iter" property="receiverName"/> </td>
-				                		<td align="center"><bean:write name="iter" property="notificationStatus"/> </td>
-				                		<td align="center"><bean:write name="iter" property="notificationType"/> </td>
-				                		<td align="center"><bean:write name="iter" property="notificationSendDate" format="dd-MM-yyyy"/> </td>
-				                		<td align="center"><bean:write name="iter" property="notificationNote"/> </td>
-				                		<td align="center"><bean:write name="iter" property="updatedBy"/> </td>
+				                		<td><bean:write name="iter" property="notificationId"/> </td>
+				                		<td> <a href="#"><bean:write name="iter" property="notificationNote"/></a></td>
+				                		<td><bean:write name="iter" property="notificationSendDate" format="dd-MM-yyyy"/> </td>
+				                		<td><bean:write name="iter" property="notificationNameType"/> </td>
+				                		<td align="center">
+				                			<logic:equal  name="iter" property="notificationStatus" value='<%=Constants.NotificationStatus.SENT+""%>'>
+												<span class="label label-info">SENT</span>
+											</logic:equal>
+											<logic:equal  name="iter" property="notificationStatus" value='<%=Constants.NotificationStatus.RECEIVED+""%>'>
+												<span class="label label-warning">RECEIVED</span>
+											</logic:equal>
+				                		</td>
+				                		<td><bean:write name="iter" property="senderName"/> </td>
 						             </tr>
 					             </logic:iterate>
 							 </logic:notEmpty>

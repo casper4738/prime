@@ -219,11 +219,17 @@ public interface Constants {
 		final int NOTIFICATIONS 		= 13;
 	}
 	static interface LogAction{
-	//---4.Standard Audit Trails / Log Audit Trail Action Conversion		
+	//---5.Standard Audit Trails / Log Audit Trail Action Conversion		
 		final String INSERT		= "I";
 		final String BEFORE 	= "UB";
 		final String AFTER 		= "UA";
 		final String DELETE 	= "D";
+	}
+	
+	static interface NotificationStatus{
+	//---6.Standard Notifications Status Conversion
+		final int SENT = 1;
+		final int RECEIVED = 2;
 	}
 		
 	//##E.Response
