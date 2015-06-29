@@ -1,13 +1,6 @@
 .button-add {
 	margin-bottom: 10px;
 }
-
-.paginate-2 {
-	float: right;
-	margin-right: 15px;
-	margin-bottom: 10px;
-}
-
 .show-in-page {
 	float: left;
 	margin-left: 10px;
@@ -24,9 +17,19 @@
 	font-size: 90%;
 	display: inline-block;
 	padding-left: 0;
-	margin: 2px 0px 20px 10px;
+	margin: 2px 0px 10px 10px;
 	border-radius: 4px;
-	width: 650px;
+}
+
+.paginate-2 {
+	float: right;
+	margin-right: 15px;
+	margin-bottom: 10px;
+}
+
+.paginate-3 {
+	position:relative;
+	float: left;
 }
 
 .pagination>li {
@@ -45,10 +48,11 @@
 	border: 1px solid #ddd
 }
 
-.pagination>li>a:hover {
-	color: #23527c;
-	background-color: #eee;
-	border-color: #ddd
+.pagination>li>a:hover,.pagination>li>a:FOCUS {
+	color: #fff;
+	cursor: default;
+	background-color: #337ab7;
+	border-color: #337ab7
 }
 
 .pagination .active {
@@ -58,8 +62,20 @@
 	border-color: #337ab7
 }
 
-.paginate-3 {
+.pagination li.active{
+	position: relative;
+	float: left;
+	padding: 6px 12px;
+	margin-left: -1px;
+	line-height: 1.42857143;
+	text-decoration: none;
+	background-color: #fff;
+	border: 1px solid #ddd;
 	
+	color: #fff;
+	cursor: default;
+	background-color: #337ab7;
+	border-color: #337ab7
 }
 
 .go-to-page {
