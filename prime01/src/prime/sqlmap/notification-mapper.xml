@@ -1,5 +1,49 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="notification">
-
+<select id="getListByCol" resultClass="prime.user.notification.NotificationBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT NOTIFICATION_ID AS notificationId,
+		SENDER AS sender, 
+		RECEIVER AS receiver,
+		NOTIFICATION_STATUS AS notificationStatus,
+		NOTIFICATION_TYPE AS notificationType,
+		NOTIFICATION_SEND_DATE AS notificationSendDate,
+		NOTIFICATION_NOTE AS notificationNote,
+		NOTIFICATION_TEMPLATE_ID AS notificationTemplateId,
+		UPDATED_BY AS updatedBy
+		FROM NOTIFICATIONS
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		       	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(NOTIFICATION_ID) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="SENDER">
+			          UPPER(SENDER) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="RECEIVER">
+			          UPPER(RECEIVER) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	    ORDER BY NOTIFICATION_ID ASC) page 
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	 	</select>
+	 	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1) 
+		FROM NOTIFICATIONS 
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		       	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(NOTIFICATION_ID) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="SENDER">
+			          UPPER(SENDER) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="RECEIVER">
+			          UPPER(RECEIVER) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	</select>
 </sqlMap>

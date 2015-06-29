@@ -151,6 +151,14 @@ public interface Constants {
 					put("TABLE", "Audit Trail Table");
 				}
 			});
+		
+		final Map<String, String> NOTIFICATION_SEARCHCOLUMNS = Collections.unmodifiableMap(
+				new LinkedHashMap<String, String>() {{
+					put("ID", "Notification Id");
+					put("SENDER", "Sender");
+					put("RECEIVER", "Receiver");
+				}
+			});
 	}
 
 	//##C.Page Handling
