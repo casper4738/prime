@@ -25,6 +25,8 @@ public class ProjectForm extends ActionForm {
 	private Integer roleId;
 	private Integer employeeId;
 	private Integer taskId;
+	private Integer divisionId;
+	private Integer positionId;
 
 	public TaskBean getTaskBean() {
 		return taskBean;
@@ -172,6 +174,22 @@ public class ProjectForm extends ActionForm {
 
 	public void setTempRoleId(String tempRoleId) {
 		this.tempRoleId = tempRoleId;
+	}
+
+	public Integer getDivisionId() {
+		return divisionId;
+	}
+
+	public void setDivisionId(Integer divisionId) {
+		this.divisionId = divisionId;
+	}
+
+	public Integer getPositionId() {
+		return positionId;
+	}
+
+	public void setPositionId(Integer positionId) {
+		this.positionId = positionId;
 	}
 
 }

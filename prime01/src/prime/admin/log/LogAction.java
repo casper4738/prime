@@ -34,9 +34,9 @@ public class LogAction extends Action {
 		
 		// ##1.Attribute for Table Show
 		request.setAttribute("listLog", list);
-		request.setAttribute("listSearchColumn",
-				Constants.Search.LOG_SEARCHCOLUMNS);
+		request.setAttribute("listSearchColumn", Constants.Search.LOG_SEARCHCOLUMNS);
 		request.setAttribute("listShowEntries", Constants.PAGINGROWPAGE);
+		request.setAttribute("listTableLog", Constants.Search.TABLELOG_SEARCHCOLUMNS);
 		setPaging(request, pForm, countRows, pForm.getGoToPage(),
 				pForm.getShowInPage());
 		

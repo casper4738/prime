@@ -5,38 +5,57 @@
 <html>
 <head> 
 	<!-- CSS -->
-	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
-    <link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
-	<!-- End CSS -->
+	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	<!-- End of CSS -->
 	
 	<!-- JS -->
-	<script src="resources/prime.js"></script>
-	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
-	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
-	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$('#table-1').dataTable( {
-			paging    : false,
-			searching : false,
-			info	  : false
-	    } );
+		   paging    : false,
+		   searching : false,
+		   info   	 : false,
+		   language  : { "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"}
+		});
+		
+		$(document).ready(function () {
+            $('#start').datepicker({
+                format: "yyyy-mm-dd"
+            });  
+            
+            $('#until').datepicker({
+                format: "yyyy-mm-dd"
+            });  
+            
+            $('.columnSearch').on('change',function(){
+            	onselect($(this).val());
+            });
+            onselect($('.columnSearch').val());
+        });
+		
+		function onselect(value) {
+			if(value == "DATE") {
+            	$('#textSearch').css('display', 'none') ;
+            	$('#date_start').css('display', 'block') ;
+            	$('#date_line').css('display', 'block') ;
+            	$('#date_until').css('display', 'block') ;
+            	$('#table-log').css('display', 'none') ;
+            } else if(value == "TABLE") {
+            	$('.table-log').css('display', 'block') ;
+            } else  {
+            	$('#textSearch').css('display', 'block') ;
+            	$('#date_start').css('display', 'none') ;
+            	$('#date_line').css('display', 'none') ;
+            	$('#date_until').css('display', 'none') ;
+            	$('#table-log').css('display', 'none') ;
+            }
+		}
 	</script>
 	<!-- End JS -->
 </head>
 <body class="skin-blue sidebar-mini">
-	
-	
 
 	<section class="content-header">
 		<h1>Manage Log</h1>
@@ -67,12 +86,38 @@
 					<html:hidden name="LogAdminForm" property="tmpId"/>
 					<html:hidden name="LogAdminForm" property="goToPage"/>
 					<html:hidden name="LogAdminForm" property="showInPage"/>
-					<html:select name="LogAdminForm" property="columnSearch" styleClass="columnSearch">
-						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
-					</html:select>
-					<html:text name="LogAdminForm" property="search" styleClass="textSearch"/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
+					<table>
+						<tr>
+							<td style="padding-left:5px"><html:select name="LogAdminForm" property="columnSearch" styleClass="form-control columnSearch">
+									<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
+								</html:select>
+							</td>
+							<td style="padding-left:5px"><html:select name="LogAdminForm" property="columnSearch" styleClass="form-control columnSearch table-log">
+									<html:optionsCollection name="listTableLog" label="value" value="key"/>
+								</html:select>
+							</td>
+							<td style="padding-left:5px"><html:text name="LogAdminForm" property="search" styleClass="form-control textSearch" styleId="textSearch"/></td>
+							<td style="padding-left:5px">
+								<div id="date_start">
+								<div class="input-group" style="width:140px"><div class="input-group-addon"><i class="fa fa-calendar" ></i></div>
+      				  					<html:text name="LogAdminForm" property="startHoliday" styleClass="form-control pull-right" styleId="start"/>
+      				  				</div>
+      				  				</div>
+      				  			</td>
+							<td style="padding-left:5px"><div id="date_line">-</div></td>
+							<td style="padding-left:5px">
+								<div id="date_until">
+								<div class="input-group" style="width:140px"><div class="input-group-addon"><i class="fa fa-calendar" ></i></div>
+      				  					<html:text name="LogAdminForm" property="untilHoliday" styleClass="form-control pull-right" styleId="until" />
+      				  				</div>
+      				  				</div>
+      				  			</td>
+							<td style="padding-left:5px">
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
+							</td>
+						</tr>
+					</table>
 					</html:form>
 				</div>
 				<!-- End Of Search Handler -->

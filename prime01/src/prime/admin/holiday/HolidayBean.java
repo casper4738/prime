@@ -1,10 +1,16 @@
 package prime.admin.holiday;
 
+import java.sql.Date;
+
 
 public class HolidayBean {
 
 	private java.sql.Date holidayDate;
 	private String holidayDescription;
+	
+	public HolidayBean() {
+		setHolidayDate(new Date(new java.util.Date().getTime()));
+	}
 
 	public java.sql.Date getHolidayDate() {
 		return holidayDate;

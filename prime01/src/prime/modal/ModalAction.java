@@ -116,15 +116,24 @@ public class ModalAction extends Action {
             			break;
             		case "employeeHead":  
                 		tmpTarget = "employeeHead";
-                		
-                    	//##1.Fetch Data From DB
-                		countRows  = manager.getCountByColumnEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(), pForm.getParam3(), pForm.getParam4(), pForm.getParam5());
-                		
-                		//---.Depend On The Object
-                		list = manager.getListEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(),
-                										   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
-                										   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows), pForm.getParam3(), pForm.getParam4(), pForm.getParam5());
-                		
+
+                		if(pForm.getParam3().equals("projectAssigner")){
+                			int employeeId=100;
+                			list = manager.getListByTree(pForm.getColumnSearch(), pForm.getSearch(),
+                					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
+                					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
+                					employeeId
+                					);
+                		}else{
+                			
+	                    	//##1.Fetch Data From DB
+	                		countRows  = manager.getCountByColumnEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(), pForm.getParam3(), pForm.getParam4(), pForm.getParam5());
+	                		
+	                		//---.Depend On The Object
+	                		list = manager.getListEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(),
+	                										   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
+	                										   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows), pForm.getParam3(), pForm.getParam4(), pForm.getParam5());
+                		}
                 		//##2.Prepare Data for Modal-Table Show
                 		//---a.Modal Title
                 		request.setAttribute("modalListName", "Employees List");
