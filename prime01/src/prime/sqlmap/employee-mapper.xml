@@ -266,6 +266,7 @@
 	    </dynamic>
 	</select>
 
+	
 	<select id="getCountByColumnEmployeeHead" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(1) 
 		FROM EMPLOYEES EMP
@@ -341,6 +342,9 @@
 	        <isEqual property="paramCondition" compareValue="employeeAdd">
 				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel#
 			</isEqual>
+			<isEqual property="paramCondition" compareValue="projectAssigner">
+				POS.POSITION_LEVEL <![CDATA[ <= ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId#  AND (EMP.DIVISION_ID = $divisionId$ OR EMP.DIVISION_ID IS NULL)
+			</isEqual>
 			<isEqual property="paramCondition" compareValue="employeeEditPosDiv">
 				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId# 
 			</isEqual>
@@ -397,55 +401,8 @@
 	</select>
 	
 	
-	<!-- NOT USE NOW (FM CREATE) -->
-	<!-- <select id="getListByColumnAndDivision" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
-		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
-		(SELECT 
-        EMP.EMPLOYEE_ID AS employeeId, 
-        EMP.EMPLOYEE_NAME AS employeeName,
-        GENDER AS gender,
-        ADDRESS AS address,
-        BIRTHDATE AS birthdate,
-        CONTACT_NUMBER AS contactNumber,
-        EMAIL AS email,
-        DIVISION_NAME AS divisionName,
-        POSITION_NAME AS positionName,
-        EMPLOYEE_LEVEL AS employeeLevel,
-        MANAGER.EMPLOYEE_NAME AS managerName
-        FROM EMPLOYEES EMP 
-        INNER JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
-        INNER JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-        LEFT JOIN (SELECT EMPLOYEE_ID, EMPLOYEE_NAME FROM EMPLOYEES) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-		WHERE 1=1 AND  DIV.DIVISION_ID = #divisionId#  
-		<dynamic prepend="AND">
-	        <isNotNull property="columnSearch">
-		       	<isEqual property="columnSearch" compareValue="NAME">
-					UPPER(EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
-				</isEqual> 
-	        </isNotNull>
-	    </dynamic>
-	    ORDER BY EMP.EMPLOYEE_ID ASC) page 
-	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
-	</select>
-	
-	<select id="getCountByColumnAndDivision" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT COUNT(1) 
-		FROM EMPLOYEES EMP 
-        INNER JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
-        INNER JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-        LEFT JOIN (SELECT EMPLOYEE_ID, EMPLOYEE_NAME FROM EMPLOYEES) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-        WHERE  1=1 AND DIV.DIVISION_ID = #divisionId# 
-	    <dynamic prepend="AND">
-	        <isNotNull property="columnSearch">
-		       	<isEqual property="columnSearch" compareValue="NAME">
-			         UPPER(EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
-				</isEqual> 
-	        </isNotNull>
-	    </dynamic>
-	</select> -->
-	
-	<!-- select employee by tree and division and level  -->
-	<select id="getListByTreeWithDivision" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
+	<!-- select employee by tree -->
+	<select id="getListByTree" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT
 			EMP.EMPLOYEE_ID 	  AS employeeId, 
@@ -459,94 +416,40 @@
 	        POSITION_NAME 		  AS positionName,
 	        MANAGER.EMPLOYEE_NAME AS managerName
 		FROM EMPLOYEES EMP
+		LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
 		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-		JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
-		LEFT JOIN (
-		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME, MGRDIV.DIVISION_ID AS DIVISION_ID FROM EMPLOYEES E
-		    LEFT JOIN DIVISIONS MGRDIV ON MGRDIV.DIVISION_ID = E.DIVISION_ID
-		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-		LEFT JOIN (
-		    SELECT EMPX.DIVISION_ID, POSX.POSITION_LEVEL
-		    FROM EMPLOYEES EMPX
-		    JOIN POSITIONS POSX ON EMPX.POSITION_ID = POSX.POSITION_ID
-		    WHERE EMPX.EMPLOYEE_ID=#employeeId#
-		) MAN ON EMP.DIVISION_ID = MAN.DIVISION_ID
-			AND POS.POSITION_LEVEL=MAN.POSITION_LEVEL
-			AND MAN.EMPLOYEE_ID = EMP.HEAD_ID
-		ORDER BY EMP.EMPLOYEE_ID ASC) page 
-	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
-	</select>
-	
-	<select id="getCountListByTreeWithDivision" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT
-			COUNT(1)
-		FROM EMPLOYEES EMP
-		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-		JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
 		LEFT JOIN (
 		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME, MGRDIV.DIVISION_ID AS DIVISION_ID FROM EMPLOYEES E
 		    LEFT JOIN DIVISIONS MGRDIV ON MGRDIV.DIVISION_ID = E.DIVISION_ID
 		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
 		JOIN (
-		    SELECT EMPX.DIVISION_ID, POSX.POSITION_LEVEL
-		    FROM EMPLOYEES EMPX
-		    JOIN POSITIONS POSX ON EMPX.POSITION_ID = POSX.POSITION_ID
-		    WHERE EMPX.EMPLOYEE_ID=#employeeId#
-		) MAN ON EMP.DIVISION_ID = MAN.DIVISION_ID 
-			AND POS.POSITION_LEVEL=MAN.POSITION_LEVEL
-			AND MAN.EMPLOYEE_ID = EMP.HEAD_ID
-		ORDER BY EMP.EMPLOYEE_ID ASC
-	</select>
-	<!-- end select employee by tree and level  -->
-	
-	
-	<!-- select employee by tree and level  -->
-	<select id="getListByTreeWithoutDivision" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
-		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
-		(SELECT
-			EMP.EMPLOYEE_ID 	  AS employeeId, 
-	        EMP.EMPLOYEE_NAME 	  AS employeeName,
-	        GENDER 				  AS gender,
-	        ADDRESS 			  AS address,
-	        BIRTHDATE 			  AS birthdate,
-	        CONTACT_NUMBER 		  AS contactNumber,
-	        EMAIL 				  AS email,
-	        DIVISION_NAME 		  AS divisionName,
-	        POSITION_NAME 		  AS positionName,
-	        MANAGER.EMPLOYEE_NAME AS managerName
-		FROM EMPLOYEES EMP
-		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-		JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
-		LEFT JOIN (
-		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME, MGRDIV.DIVISION_ID AS DIVISION_ID FROM EMPLOYEES E
-		    LEFT JOIN DIVISIONS MGRDIV ON MGRDIV.DIVISION_ID = E.DIVISION_ID
-		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-		LEFT JOIN (
-		    SELECT EMPX.DIVISION_ID, POSX.POSITION_LEVEL
-		    FROM EMPLOYEES EMPX
-		    JOIN POSITIONS POSX ON EMPX.POSITION_ID = POSX.POSITION_ID
-		    WHERE EMPX.EMPLOYEE_ID=#employeeId#
-		) MAN ON POS.POSITION_LEVEL>MAN.POSITION_LEVEL
+		    SELECT X.EMPLOYEE_ID, X.TREE_ID
+		    FROM EMPLOYEES X
+		    WHERE X.EMPLOYEE_ID = #employeeId#
+		) EMPX ON EMPX.EMPLOYEE_ID != EMP.EMPLOYEE_ID
+		WHERE EMP.TREE_ID LIKE  EMPX.TREE_ID||'%'
 		ORDER BY EMP.EMPLOYEE_ID ASC) page 
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 	
-	<select id="getCountListByTreeWithoutDivision" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+	<select id="getCountListByTree" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT
 			COUNT(1)
 		FROM EMPLOYEES EMP
+		LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
 		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-		JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
 		LEFT JOIN (
 		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME, MGRDIV.DIVISION_ID AS DIVISION_ID FROM EMPLOYEES E
 		    LEFT JOIN DIVISIONS MGRDIV ON MGRDIV.DIVISION_ID = E.DIVISION_ID
 		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
 		JOIN (
-		    SELECT EMPX.DIVISION_ID, POSX.POSITION_LEVEL
-		    FROM EMPLOYEES EMPX
-		    JOIN POSITIONS POSX ON EMPX.POSITION_ID = POSX.POSITION_ID
-		    WHERE EMPX.EMPLOYEE_ID=#employeeId#
-		) MAN ON POS.POSITION_LEVEL>=MAN.POSITION_LEVEL
-		ORDER BY EMP.EMPLOYEE_ID ASC
+		    SELECT X.EMPLOYEE_ID, X.TREE_ID
+		    FROM EMPLOYEES X
+		    WHERE X.EMPLOYEE_ID = #employeeId#
+		) EMPX ON EMPX.EMPLOYEE_ID != EMP.EMPLOYEE_ID
+		WHERE EMP.TREE_ID LIKE  EMPX.TREE_ID||'%'
 	</select>
+	<!-- end of select employee by tree -->
+	
+	
 </sqlMap>

@@ -93,11 +93,11 @@
 			<div class="box-body"><table id="table-1" class="table table-bordered table-striped table-hover">
 				<thead><tr>
 					<th width="100px">Project Name</th>
-					<th width="100px">Description</th>
+					<th>Description</th>
 					<th width="100px">Project Assigner</th>
-					<th width="100px">Start Date</th>
-					<th width="100px">Estimate Date</th>	
-					<th width="100px">Status</th>				
+					<th width="65px">Start Date</th>
+					<th width="65px">Estimate Date</th>	
+					<th width="30px">Status</th>				
                     <th width="100px">Actions</th>
                 </tr></thead>
                 <tbody>
@@ -106,17 +106,18 @@
 	                	<tr>
 	                	    <td><bean:write name="iter" property="projectName"/></td>
 	                	    <td><bean:write name="iter" property="projectDescription"/></td>
-	                	    <td><bean:write name="iter" property="projectAssigner"/></td>
-	                	    <td><bean:write name="iter" property="projectStartDate" format="dd MMMM yyyy"/></td>
-	                	    <td><bean:write name="iter" property="projectEstimateDate" format="dd MMMM yyyy"/></td>
+	                	    <td><bean:write name="iter" property="projectAssignerName"/> 
+	                	    	| <bean:write name="iter" property="projectReceiverName"/> 
+	                	    </td>
+	                	    <td align="center"><bean:write name="iter" property="projectStartDate" format="dd MMMM yyyy"/></td>
+	                	    <td align="center"><bean:write name="iter" property="projectEstimateDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center">
 		                	    <jsp:include page="/content/Status.jsp">
                 	    			<jsp:param name="status" value="${iter.projectLastStatus}" />
                 	    		</jsp:include>
               	    			</td>
 	                        <td width="150px" align="center">
-	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' 
-		                        	onclick="flyToTaskDetail('<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', '<bean:write name="iter" property="projectId"/>')" >
+	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', '<bean:write name="iter" property="projectId"/>')" >
 		                        <input type="submit" class="btn btn-primary btn-xs" value='Details As Head' 
 		                        	onclick="flyToTaskDetail('detailsAsHead', '<bean:write name="iter" property="projectId"/>')" >	
 	                        </td>

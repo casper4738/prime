@@ -49,7 +49,7 @@
 			<li><i class="fa fa-dashboard"></i> Home</li>
 			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
 			<li class="active"><a href="javascript:flyToBack(
-	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
+	                        		'detailsAsHead', 
 	                        		'<bean:write name="ProjectUserForm" property="projectId"/>')">Project Detail</a></li>
 			<li class="active">Project Member Detail</li>
 		</ol>
@@ -106,20 +106,18 @@
 					<table class="table table-bordered table-striped table-hover">
 					<thead><tr>
 						<th>Task Name</th>
-						<th>Role</th>
-						<th>Task Assigner</th>
+						<th>Task Assigenr</th>
 						<th>Start Date </th>
 						<th>Estimate Date</th>
 						<th>Status</th>
-						<th>Progress</th>
-	                    <th width="90px">Actions</th>
+						<th>Change Date</th>
+	                
 	                </tr></thead>
 	                <tbody>
-	                <logic:notEmpty name="listProjectMemberDetails">
-						<logic:iterate id="iter" name="listProjectMemberDetails">
+	                <logic:notEmpty name="listProjectMemberDetails"> <!-- ganti -->
+						<logic:iterate id="iter" name="listProjectMemberDetails"> <!-- ganti -->
 		                	<tr>
 		                		<td width="250px"><bean:write name="iter" property="taskBean.taskName"/></td>
-		                		<td align="center"><bean:write name="iter" property="roleBean.roleName"/></td>
 		                		<td><bean:write name="iter" property="taskBean.taskAssignerName"/></td>
 		                		<td align="center"><bean:write name="iter" property="taskBean.taskStartDate" format="dd MMMM yyyy"/></td>
 		                		<td align="center"><bean:write name="iter" property="taskBean.taskEstimateDate" format="dd MMMM yyyy"/></td>
@@ -128,27 +126,9 @@
 	                	    			<jsp:param name="status" value="${iter.taskBean.taskLastStatus}" />
 	                	    		</jsp:include>
 		                		</td>
-		                		<td align="center">
-			                		<logic:greaterThan name="iter" property="taskBean.percentage" value="50">
-		                	    		<span class="badge bg-green">
-			                	    		<jsp:include page="/content/Percentage.jsp">
-			                	    			<jsp:param name="status" value="${iter.taskBean.taskLastStatus}" />
-			                	    			<jsp:param name="percentage" value="${iter.taskBean.percentage}" />
-			                	    		</jsp:include>
-		                	    		</span>
-			                		</logic:greaterThan>
-			                		<logic:lessEqual name="iter" property="taskBean.percentage" value="50">
-		                	    		<span class="badge bg-red">
-			                	    		<jsp:include page="/content/Percentage.jsp">
-			                	    			<jsp:param name="status" value="${iter.taskBean.taskLastStatus}" />
-			                	    			<jsp:param name="percentage" value="${iter.taskBean.percentage}" />
-			                	    		</jsp:include>
-		                	    		</span>
-			                		</logic:lessEqual>
-		                		</td>
-		                		<td align="center">
-		                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.TASK.GOTODETAIL %>', '<bean:write name="iter" property="taskBean.taskId"/>')">
-		                        </td>	
+		                		
+		                		
+		                		<td align="center"><bean:write name="iter" property="taskBean.taskChangeDate" format="dd MMMM yyyy"/></td>	
 		                    </tr> 
 	                    </logic:iterate>
 						</logic:notEmpty>

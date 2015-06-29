@@ -63,15 +63,17 @@
 			<div class="box-header"><h3 class="box-title">Data Project</h3></div>
 			<div class="box-body">
                 	<html:form action="/ProjectUser">
-                		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
+                		<html:hidden name="ProjectUserForm" property="task" value="doSubmit"/>
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectName" />
              			<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
+             			<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver"/>
+						<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner"/>
                 		<table class="form-input" align="center">
                 		
                 			<tr>
                 				<td>Project Name</td>
                 				<td>:</td>
-                				<td><html:text name="ProjectUserForm" property="projectBean.projectName" styleClass="form-control"/></td>
+                				<td><html:text name="ProjectUserForm" property="projectBean.projectName" styleClass="form-control" disabled="true"/></td>
                 			</tr>
                 		
                 		

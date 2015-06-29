@@ -87,13 +87,9 @@
                  
             <div class="form-action">
 				<table align="center"><tr>
-					<td style="padding:5px;">
-						<input type="button" value="Add New Project Member" class="btn btn-sm btn-primary" onclick="flyToPage('addmember')"/></td>
-					
-					<logic:equal name="ProjectUserForm" property="projectBean.ProjectStatus" value="">
-	                			<center><span class="label label-danger">Not Active</span></center>
-               		</logic:equal>
-					<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToSubmit('<%=Constants.Task.TASK.GOTOSUBMIT%>', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
+					<td style="padding:5px;"><input type="button" value="Approve" class="btn btn-sm btn-primary" onclick="flyToPage('approve')"/></td>
+					<td style="padding:5px;"><input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="flyToPage('reject', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
+					<td style="padding:5px;"><input type="button" value="Change PM" class="btn btn-sm  btn-primary" onclick="flyToPage('changePM', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
 				</tr></table>
             </div>
 			
@@ -109,8 +105,7 @@
 					<html:hidden name="ProjectUserForm" property="task"/>
 					<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
 					<html:hidden name="ProjectUserForm" property="projectBean.projectName"/>
-					<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver"/>
-					<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner"/>
+					<html:hidden name="ProjectUserForm" property="projectBean.projectReceiverName"/>
 					<html:hidden name="ProjectUserForm" property="projectId"/>
 					<html:hidden name="ProjectUserForm" property="employeeId"/>
 					<html:hidden name="ProjectUserForm" property="goToPage"/>
@@ -151,9 +146,9 @@
 	                		<td><bean:write name="iter" property="email"/></td>
 	                		<td><bean:write name="iter" property="contactNumber"/></td>
 	                		<td align="center">
-	                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.PROJECT.GOTOEDITMEMBER%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
+	                        	
                      	        <input type="image" value='Details' onclick="flyToTaskDetail(
-                     	        				'<%=Constants.Task.PROJECT.GOTOTASKMEMBER%>', 
+                     	        				'detailMemberAsHead', 
                      	        				'<bean:write name="iter" property="employeeId"/>')"
      	        								src="resources/image/viewmore.png"
                      	        				>

@@ -1,6 +1,7 @@
 package prime.user.project;
 
 import java.sql.Date;
+import java.text.DecimalFormat;
 
 import prime.admin.employee.EmployeeBean;
 import prime.admin.role.RoleBean;
@@ -91,7 +92,7 @@ public class ProjectBean extends EmployeeBean {
 	public Double getPercentage() {
 		return percentage;
 	}
-
+	
 	public void setPercentage(Double percentage) {
 		this.percentage = percentage;
 	}

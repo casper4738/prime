@@ -30,14 +30,7 @@
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		$(document).ready(function () {
-            $('#start-date').datepicker({
-                format: "yyyy-mm-dd"
-            });  
-            $('#estimate-date').datepicker({
-                format: "yyyy-mm-dd"
-            });
-        });
+	
 		
 		function openModalHandler(){
 			//##0.Preparing Parameter For Modal Showing
@@ -48,6 +41,13 @@
 			//##1.Accessing Prime Method For Modal Showing
 			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=projectMember", $('#result'));
 		}
+		
+		function flyToBack(task, value) {
+			var tmpForm = document.forms[0]; 
+			tmpForm.task.value = task;
+			tmpForm.projectId.value = value;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
 	</script>
 	
 	<!-- End JS -->
@@ -56,60 +56,38 @@
 <body class="skin-blue sidebar-mini">
 	
 	<section class="content-header">
-		<h1>Project<small>management project</small>
-		</h1>
+		<h1>Project User</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Project</li>
+			<li><i class="fa fa-dashboard"></i> Home</li>
+			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
+			<li class="active"><a href="javascript:flyToBack(
+	                        		'detailsAsHead', 
+	                        		'<bean:write name="ProjectUserForm" property="projectId"/>')">Project Detail</a></li>
+			<li class="active">Project Approval Form</li>
 		</ol>
 	</section>
 
 	<section class="content">
 	<div class="row">
 		<div class="col-xs-12"><div class="box">
-			<div class="box-header"><h3 class="box-title">Data Project</h3></div>
+			<div class="box-header"><h3 class="box-title">Project Approval Form</h3></div>
 			<div class="box-body">
                 	<html:form action="/ProjectUser">
                 		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectName" />
-                		<html:hidden name="ProjectUserForm" property="employeeId" />
-                		<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner" />
-                		<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver" />
+             			<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
+             			<html:hidden name="ProjectUserForm" property="projectId"/>
                 		<table class="form-input" align="center">
+                		
                 			<tr>
-                				<td width="200px">Project Name</td>
+                				<td>Project Name</td>
                 				<td>:</td>
-                				<td><html:text name="ProjectUserForm" property="projectBean.projectName" styleClass="form-control"/></td>
+                				<td><html:text name="ProjectUserForm" property="projectBean.projectName" styleClass="form-control" disabled="true"/></td>
                 			</tr>
+                		
+                		
                 			<tr>
-                				<td>Start Date</td>
-                				<td>:</td>
-                				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                					<html:text name="ProjectUserForm" property="projectBean.projectStartDate" styleClass="form-control" styleId="start-date"/>
-                					</div>
-               					</td>
-                			</tr>
-                			<tr>
-                				<td>Estimate Date</td>
-                				<td>:</td>
-                				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                					<html:text name="ProjectUserForm" property="projectBean.projectEstimateDate" styleClass="form-control" styleId="estimate-date"/>
-							</div>
-						</td>
-                			</tr>
-                			<tr>
-                				<td>Project Assigner</td>
-                				<td>:</td>
-                				<td class="input-group">
-                					<html:text name="ProjectUserForm" property="projectBean.employeeName" styleClass="form-control" styleId="employeeName" disabled="true"/>
-	               					<span class="input-group-btn">
-                    					<input type="button" class="btn btn-info" type="button" onclick="openModalHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
-						            </span>
-								</td>
-                			</tr>
-                			
-                			<tr>
-                				<td>Project Description</td>
+                				<td>Note </td>
                 				<td>:</td>
                 				<td><html:textarea name="ProjectUserForm" property="projectBean.projectDescription" styleClass="form-control"></html:textarea></td>
                 				
@@ -118,14 +96,13 @@
                 			<tr>
                 				<td colspan="3" align="center">
                 					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="dosubmit()"/>
-                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+                					<input type="button" property="" value="Cancel" class="btn btn-default" onclick="flyToBack('detailsAsHead','<bean:write name="ProjectUserForm" property="projectId"/>')"/>
                 				</td>
                 			</tr>
                 		</table>
                 	</html:form>
                   </div>
         	</div>
-        </div></div>
 	</section>
 	<!-- /.content-wrapper -->
 		
@@ -148,31 +125,6 @@
 	<!--/. Modal  -->
 		
 		
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$('#btn-searchassigner').click(function(){
-				//##0.Fetching Data
-		        $.ajax({ 
-	                type    : "POST",
-	                url     : "ProjectUser.do",  // Send the login info to this page
-	                data    : ("task=search-assigner"),
-	                success : function(msg){
-	               				$('#search-modal-body').html(msg);	 						
-	                 		  }
-		        });
-			});
-		});
-		
-		function helmyTest(id){
-	        $.ajax({ 
-                type   : "POST",
-                url    : "ProjectUser.do",  // Send the login info to this page
-                data   : ("task=search-assigner2"),
-                success : function(msg){
-               				$('#search-modal-body').html(msg);	 						
-                 		  }
-	        });
-		}
-	</script>
+	
 </body>
 </html>
