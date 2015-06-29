@@ -31,7 +31,7 @@
 		});
 		
 		function validateForm(){
-			var specialChars 	= "/*!@#$%^&*()\"{}_[]|\\?/<>,.";
+			var specialChars 	= "/*!@#$%^&*()\"{}[]|\\?/<>,";
 			var userName 		= $('#username').val();
 			var password 		= $('#password').val();
 			var employeeName 	= $('#employeeName').val();
@@ -56,7 +56,7 @@
 			 if(userName != null || userName != ""){
 			 	 for (var i = 0; i < userName.length; i++) {
 		       	 	if (specialChars.indexOf(userName.charAt(i)) != -1) { 
-			        	$("validatorUsername").html("Characters are not allowed"); 
+			        	$("#validatorUsername").html("Characters are not allowed"); 
 			        	tmpValidated = false;
 			       	} 
 			     }
@@ -90,6 +90,7 @@
 					 }
 				 }
 			 }
+			 
 			 
 			 if(tmpValidated){
 				 //Do Database Checking, if Success Fly To
