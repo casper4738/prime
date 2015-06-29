@@ -87,7 +87,23 @@ public class ProjectAction extends Action {
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("details");
-		} else if(Constants.Task.PROJECT.GOTOTASKMEMBER.equals(pForm.getTask())){
+		}
+		else if ("detailsAsHead".equals(pForm.getTask())){
+			//##.View Detail Project
+			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
+			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+			List<ProjectBean> list = tmpProjectManager.getListProjectMember(pForm.getColumnSearch(), pForm.getSearch(), 
+					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
+					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
+					pForm.getProjectId());
+			request.setAttribute("listProjectMember", list);
+			request.setAttribute("listSearchColumn", Constants.Search.PROJECT_SEARCHCOLUMNS);
+			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+			return mapping.findForward("detailsAsHead");
+		
+		}
+		else if(Constants.Task.PROJECT.GOTOTASKMEMBER.equals(pForm.getTask())){
 			//##. Get Data
 			pForm.setEmployeeBean(tmpEmployeeManager.getEmployeeById(pForm.getEmployeeId()));
 			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));

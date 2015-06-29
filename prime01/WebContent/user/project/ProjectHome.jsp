@@ -114,9 +114,11 @@
                 	    			<jsp:param name="status" value="${iter.projectLastStatus}" />
                 	    		</jsp:include>
               	    			</td>
-	                        <td align="center">
+	                        <td width="150px" align="center">
 	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' 
 		                        	onclick="flyToTaskDetail('<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', '<bean:write name="iter" property="projectId"/>')" >
+		                        <input type="submit" class="btn btn-primary btn-xs" value='Details As Head' 
+		                        	onclick="flyToTaskDetail('detailsAsHead', '<bean:write name="iter" property="projectId"/>')" >	
 	                        </td>
 	                    </tr>
                     </logic:iterate>

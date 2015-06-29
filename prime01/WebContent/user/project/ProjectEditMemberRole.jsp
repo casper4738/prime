@@ -35,7 +35,6 @@
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 	</script>
-	
 	<!-- End JS -->
 	
 </head>
@@ -65,9 +64,6 @@
 	                		<tr><td width="200px">Employee Name</td>
                 				<td>:</td>
                 				<td class="input-group">
-                				${ProjectUserForm.projectBean.projectId}
-                				${ProjectUserForm.projectBean.employeeId}
-                				${ProjectUserForm.projectBean.employeeName}
                 					<html:text name="ProjectUserForm" property="projectBean.employeeName" styleClass="form-control" styleId="employeeName" disabled="true"/>
 	               					<span class="input-group-btn">
                     					<input type="button" class="btn btn-info" type="button" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
@@ -76,7 +72,6 @@
                 			<tr><td valign="top">Choose Member Role</td>
                 				<td valign="top">:</td>
                 				<td><logic:iterate id="iter" name="listRoles">
-                						 | ${iter.roleId};${iter.projectMemberId};${iter.projectMemberStatus} |
                 						<logic:equal name="iter" property="projectMemberId" value="0">
                 							<input type="checkbox" name="roleId" value="${iter.roleId};${iter.projectMemberId};${iter.projectMemberStatus}"/><bean:write name="iter" property="roleName" />
                 						</logic:equal>

@@ -131,9 +131,16 @@
 					<logic:iterate id="iter" name="listProjectMember">
 	                	<tr>
 	                		<td width="250px"><bean:write name="iter" property="employeeName"/></td>
-	                		<td><bean:write name="iter" property="roleName"/></td>
-	                		<td align="center" width="150px"><bean:write name="iter" property="divisionName" /></td>
+	                		<td>
 	                		
+	                		<logic:notEqual name="iter" property="roleName" value="">
+	                			<bean:write name="iter" property="roleName"/>
+	                		</logic:notEqual>
+	                		<logic:equal name="iter" property="roleName" value="">
+	                			<center><span class="label label-danger">Not Active</span></center>
+	                		</logic:equal>
+	                		</td>
+	                		<td align="center" width="150px"><bean:write name="iter" property="divisionName" /></td>
 	                		<td><bean:write name="iter" property="email"/></td>
 	                		<td><bean:write name="iter" property="contactNumber"/></td>
 	                		<td align="center">
@@ -150,35 +157,17 @@
 					</logic:notEmpty>
                   </tbody>
             </table></div>
-			<ul class="pagination">
-				<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
-				<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
-				
-				<logic:iterate id="p" name="listPage">
-					<logic:equal name="p" value="${pageNow}">
-						<li><html:link styleClass="active" href="#">${p}</html:link> </li>
-					</logic:equal>
-					<logic:notEqual name="p" value="${pageNow}">
-						<li><html:link styleClass="paging" href="#" onclick="page(${p})">${p}</html:link> </li>
-					</logic:notEqual>
-				</logic:iterate>
-				<li><html:link styleClass="paging" href="#" onclick="page(${pageNext})" >>></html:link> </li>
-				<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
-				
-				<div class="paginate-3">
-					<html:text name="ProjectUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
-					<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
-				</div>
-			</ul>
+            
+            <!-- Paging -->
+            <jsp:include page="/content/Pagination.jsp">
+    			<jsp:param name="formName" value="ProjectUserForm" />
+    		</jsp:include>
+			<!-- End of Paging -->
 			
-			<div class="paginate-2">
-				Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
-			</div>
         </div>
         </div></div>
 	</section>
-	
-		<!-- /.content-wrapper -->
+	<!-- /.content-wrapper -->
 	
 </body>
 </html>

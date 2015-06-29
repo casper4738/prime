@@ -24,22 +24,20 @@
 		}
 		
 		function doSetRole(){
-			  var tempRoleId="";
-			  for(var i=0; i < document.forms[0].roleId.length; i++)
-			  {
-			   if(document.forms[0].roleId[i].checked)
-			   {
-				   tempRoleId+=document.forms[0].roleId[i].value+","
-			   }
-			  }
-			  tempRoleId = tempRoleId.substring(0, tempRoleId.length - 1);
-			  document.forms[0].tempRoleId.value=tempRoleId;
-			  
-			  var tmpForm = document.forms[0];
-			  menuLoadHandler(tmpForm.action, serialize(tmpForm));
-			 }
+			var tempRoleId=""; 
+			for(var i=0; i < document.forms[0].roleId.length; i++) {
+				if(document.forms[0].roleId[i].checked) {
+					tempRoleId+=document.forms[0].roleId[i].value+",";
+			  	}
+			}
+		  	tempRoleId = tempRoleId.substring(0, tempRoleId.length - 1);
+		  	document.forms[0].tempRoleId.value=tempRoleId;
+		  
+		  	var tmpForm = document.forms[0];
+		  	menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+		
 		function flyToBack(task, value) {
-			
 			var tmpForm = document.forms[0]; 
 			tmpForm.task.value = task;
 			tmpForm.projectId.value = value;
@@ -68,11 +66,7 @@
 			<div class="box-header"><h3 class="box-title-center">Add New Project Member</h3></div>
 			<div class="box-body">
                 	<html:form action="/ProjectUser">
-<<<<<<< HEAD
-<%--                 		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.Project.DOCREATEMEMBER%>"/> --%>
-=======
                 		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.PROJECT.DOCREATEMEMBER%>"/>
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectName" />
                 	    <html:hidden name="ProjectUserForm" property="employeeId" />
@@ -99,11 +93,7 @@
                 			<tr><td colspan="3" align="center">
                 					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="doSetRole()"/>
                 					<input type="button" class="btn btn-default" value='Cancel' onclick="flyToBack(
-<<<<<<< HEAD
-<%-- 	                        		'<%=Constants.Task.Project.GOTOPROJECTDETAIL %>',  --%>
-=======
 	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 	                        		'<bean:write name="ProjectUserForm" property="projectBean.projectId"/>')">
                 				</td>
                 			</tr>
