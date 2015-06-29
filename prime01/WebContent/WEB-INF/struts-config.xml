@@ -28,6 +28,13 @@
 		<!-- Modal -->
 		<form-bean name="ModalForm"					type="prime.modal.ModalForm"></form-bean>
 		
+		<!-- NotifTemplate -->
+		<form-bean name="NotifTemplateForm"			type="prime.admin.notiftemplate.NotifTemplateForm"></form-bean>
+		
+		<!--Notification -->
+		<form-bean name="NotificationForm"			type="prime.user.notification.NotificationForm"></form-bean>
+		
+		
 	</form-beans>
 	
 	<action-mappings>
@@ -127,7 +134,8 @@
 			<forward name="add" 			path="/user/project/ProjectAdd.jsp"></forward>
 			<forward name="addMember" 		path="/user/project/ProjectAddMember.jsp"></forward>
 			<forward name="details"		 	path="/user/project/ProjectDetails.jsp"></forward>
-			<forward name="editMemberRole" 	path="/user/project/ProjectEditMemberRoles.jsp"></forward>
+			<forward name="detailsAsHead"	path="/user/project/ProjectDetailsAsHead.jsp"></forward>
+			<forward name="editMemberRole" 	path="/user/project/ProjectEditMemberRole.jsp"></forward>
 			<forward name="detailMember" 	path="/user/project/ProjectMemberDetails.jsp"></forward>
 			<forward name="createTask" 		path="/user/project/ProjectCreateNewTask.jsp"></forward>
 			<forward name="forward" 		path="/user/project/Forward.jsp"></forward>
@@ -152,6 +160,15 @@
 			<forward name="changePwd" 	    path="/content/ModalChangePwd.jsp">										</forward>
 		</action>
 		
+		<!-- Notification -->
+		<action path="/Notification" name="NotificationForm" type="prime.user.notification.NotificationAction" scope="request">
+			<forward name="success" 		path="/user/notification/NotificationHome.jsp">						</forward>
+		</action>
+		
+		<!-- Notif Template -->
+		<action path="/NotifTemplate" name="NotifTemplateForm" type="prime.admin.notiftemplate.NotifTemplateAction" scope="request">
+			<forward name="success" 		path="/admin/notiftemplate/NotifTemplateHome.jsp">					</forward>
+		</action>	
 	</action-mappings>
 	<message-resources parameter="application" />
 	

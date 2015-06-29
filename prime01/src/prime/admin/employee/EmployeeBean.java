@@ -8,6 +8,7 @@ public class EmployeeBean extends HolidayBean {
 	private Integer employeeId;
 	private Integer gender = 0;
 	private Integer divisionId = 0;
+	private Integer managerDivisionId = 0;
 	private Integer positionId = 0;
 	private Integer managerId = 0;
 	private Integer totalDay = 1;
@@ -33,6 +34,7 @@ public class EmployeeBean extends HolidayBean {
 	private Date mondayDate;
 	private Byte filePic;
 	private String substituteHead;
+	private String treeId;
 		
 	public EmployeeBean() {
 		setHireDate(new java.sql.Date(new java.util.Date().getTime()));
@@ -215,5 +217,21 @@ public class EmployeeBean extends HolidayBean {
 
 	public void setSubstituteHead(String substituteHead) {
 		this.substituteHead = substituteHead;
+	}
+
+	public String getTreeId() {
+		return treeId;
+	}
+
+	public void setTreeId(String treeId) {
+		this.treeId = treeId;
+	}
+
+	public Integer getManagerDivisionId() {
+		return managerDivisionId;
+	}
+
+	public void setManagerDivisionId(Integer managerDivisionId) {
+		this.managerDivisionId = managerDivisionId;
 	}
 }

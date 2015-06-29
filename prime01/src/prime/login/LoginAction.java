@@ -2,6 +2,7 @@ package prime.login;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Date;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -38,9 +39,10 @@ public class LoginAction extends Action {
 			String tmpPassword = tmpForm.getPassword();
 			
 			//---.User Validation Process
+			LoginBean tmpUserDetails = null;
 			if(tmpManager.isUserExists(tmpUsername)){
 				//---Fetch User Details [Differ between AD and Normal DB]
-				LoginBean tmpUserDetails = tmpManager.getUserDetails(tmpUsername);
+				tmpUserDetails = tmpManager.getUserDetails(tmpUsername);
 				
 				if(tmpUserDetails.isActiveDirectory()){
 					ActiveDirectoryManager tmpADManager = new ActiveDirectoryManager();
@@ -66,23 +68,33 @@ public class LoginAction extends Action {
 						}
 					}
 				}
+				
+				//Check Whether on-waiting for lock status or not
+				if(tmpLoginResultCode == 2){
+					if(tmpUserDetails.getActionDate().after(new Date())){
+						tmpLoginResultCode = 3;
+					}
+				}
 			}
 			
 			switch(tmpLoginResultCode){
 				case 0 :
-					tmpLoginResponse = "0;" + Constants.Response.FAILLOGIN_USERNOTEXISTS;
+					tmpLoginResponse = "0#" + Constants.Response.FAILLOGIN_USERNOTEXISTS;
 					break;
 				case 1 :
-					tmpLoginResponse = "0;" + Constants.Response.FAILLOGIN_VALIDATIONFAILED;
+					tmpLoginResponse = "0#" + Constants.Response.FAILLOGIN_VALIDATIONFAILED;
 					break;
 				case 2 :
-					tmpLoginResponse = "1;";
+					tmpLoginResponse = "1#";
+					
+					//If Success, Prepare Session
+					request.getSession(true).setAttribute(Constants.Session.USERDATA, tmpUserDetails);
 					break;
 				case 3 :
-					tmpLoginResponse = "0;" + Constants.Response.FAILLOGIN_USERLOCKED;
+					tmpLoginResponse = "0#" + Constants.Response.FAILLOGIN_USERLOCKED;
 					break;
 				default :
-					tmpLoginResponse = "0;" + Constants.Response.FAILLOGIN_SOMEFAILURE;
+					tmpLoginResponse = "0#" + Constants.Response.FAILLOGIN_SOMEFAILURE;
 					break;
 			}
 			

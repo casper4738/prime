@@ -12,42 +12,45 @@ public interface Constants {
 	//##A.Task Handling
 	static interface Task {
 		//---.Login Handling
-		static final String DOLOGIN		= "t0";
+		static final String DOLOGIN				= "t0";
 		
 		//---.Menu Handling
-		static final String BACKTOMAIN 	= "t1";
-		static final String GOTOEDIT	= "t2";
-		static final String DOEDIT 	 	= "t3";
-		static final String GOTOADD 	= "t4";
-		static final String DOADD 	 	= "t5";
-		static final String DODELETE 	= "t6";
-		static final String CHANGELANG 	= "t7";
-		static final String NONE		= "t8";
-		static final String GOTOMANAGER = "t9";
-		static final String GOTOVIEW 	= "t10";
-		static final String DOSEARCH	= "t11";
-		static final String GOTORESIGN	= "t23";
-		static final String DORESIGN	= "t26";
-		static final String GOTODAYOFF	= "t24";
-		static final String DODAYOFF	= "t27";
-		static final String GOTOWEEKEND	= "t25";
-		static final String DOWEEKEND	= "t28";
-		static final String GOTOEDITWEEKEND	= "t29";
-		static final String DOEDITWEEKEND	= "t30";
-		static final String GOTOEDITDAYOFF	= "t31";
-		static final String DOEDITDAYOFF	= "t32";
-		static final String DORESET 		= "t33";
-		static final String DOLOCK 			= "t34";
+		static final String BACKTOMAIN 			= "t1";
+		static final String GOTOEDIT			= "t2";
+		static final String DOEDIT 	 			= "t3";
+		static final String GOTOADD 			= "t4";
+		static final String DOADD 	 			= "t5";
+		static final String DODELETE 			= "t6";
+		static final String CHANGELANG 			= "t7";
+		static final String NONE				= "t8";
+		static final String GOTOMANAGER 		= "t9";
+		static final String GOTOVIEW 			= "t10";
+		static final String DOSEARCH			= "t11";
+		static final String GOTORESIGN			= "t23";
+		static final String DORESIGN			= "t26";
+		static final String GOTODAYOFF			= "t24";
+		static final String DODAYOFF			= "t27";
+		static final String GOTOWEEKEND			= "t25";
+		static final String DOWEEKEND			= "t28";
+		static final String GOTOEDITWEEKEND		= "t29";
+		static final String DOEDITWEEKEND		= "t30";
+		static final String GOTOEDITDAYOFF		= "t31";
+		static final String DOEDITDAYOFF		= "t32";
+		static final String DORESET 			= "t33";
+		static final String DOLOCK 				= "t34";
 		static final String GOTOEDITPOSITION 	= "t36";
 		static final String DOEDITPOSITION 		= "t37";
+		static final String DOVALIDATE			= "t38";
 		
 		interface PROJECT {
 			final String GOTOPROJECTDETAIL	= "p01";
 			final String GOTOTASKMEMBER		= "p02";
 			final String GOTOCREATETASK		= "p03";
 			final String GOTOCREATEMEMBER	= "p04";
-			final String DOCREATETASK		= "p05";
-			final String DOCREATEMEMBER		= "p06";
+			final String GOTOEDITMEMBER		= "p05";
+			final String DOCREATETASK		= "p06";
+			final String DOCREATEMEMBER		= "p07";
+			final String DOEDITMEMBER		= "p08";
 		}
 		
 		interface TASK {
@@ -236,12 +239,7 @@ public interface Constants {
 	
 	//##F.Session Attribute
 	static interface Session{
-		static String USERNAME 			 = "s1";
-		static String IS_ACTIVEDIRECTORY = "s2";
-		static String NAME 				 = "s2";
-		static String PROFILE_PICTURE 	 = "s3";
-		static String EMPLOYEE_ID		 = "s4";
-		static String SESSION_ID		 = "s5";
+		static String USERDATA = "t1";
 	}
 	
 	//##G.Active Directory
@@ -270,12 +268,14 @@ public interface Constants {
 															"HolidayAdmin.do",		 //8
 															"LogAdmin.do",			 //9
 															"SettingAdmin.do",		 //10
-															"DashboardUser.do",		 //11
-															"ProjectUser.do",		 //12
-															"TaskHeadUser.do",		 //13
-															"TaskSubordinateUser.do",//14
-															"ActivityUser.do",		 //15
-															"TaskSubmissionUser.do", //16
+															"NotifTemplate.do",		 //11
+															
+															"DashboardUser.do",		 //12
+															"ProjectUser.do",		 //13
+															"TaskHeadUser.do",		 //14
+															"TaskSubordinateUser.do",//15
+															"ActivityUser.do",		 //16
+															"Notification.do", 	 	 //17
 															"#"
 												};
 	static interface Page {
@@ -290,11 +290,14 @@ public interface Constants {
 		static int ADMIN_HOLIDAY		= 8;
 		static int ADMIN_LOG			= 9;
 		static int ADMIN_SETTING		= 10;
-		static int USER_DASHBOARD		= 11;
-		static int USER_PROJECT			= 12;
-		static int USER_TASK_HEAD		= 13;
-		static int USER_TASK_SUBORDINATE= 14;
-		static int USER_REPORT			= 15;
+		static int ADMIN_NOTIFTEMPLATE	= 11;
+		
+		static int USER_DASHBOARD		= 12;
+		static int USER_PROJECT			= 13;
+		static int USER_TASK_HEAD		= 14;
+		static int USER_TASK_SUBORDINATE= 15;
+		static int USER_REPORT			= 16;
+		static int USER_VIEWNOTIF		= 17;
 	}
 	
 	//##K.Daily Time Constants

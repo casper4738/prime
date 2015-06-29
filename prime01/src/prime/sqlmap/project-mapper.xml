@@ -67,13 +67,8 @@
 				FROM ROLES R
 		        JOIN PROJECT_MEMBERS PMX ON R.ROLE_ID = PMX.ROLE_ID
 		        WHERE   PMX.PROJECT_ID = P.PROJECT_ID AND PMX.EMPLOYEE_ID = E.EMPLOYEE_ID
+		        AND NVL(PMX.PROJECT_MEMBER_STATUS, 1) = 1
 		    ) 						AS roleName,
-		    
-		     (SELECT LISTAGG (R.ROLE_ID, ', ') WITHIN GROUP (ORDER BY R.ROLE_NAME)
-				FROM ROLES R
-		        JOIN PROJECT_MEMBERS PMX ON R.ROLE_ID = PMX.ROLE_ID
-		        WHERE   PMX.PROJECT_ID = P.PROJECT_ID AND PMX.EMPLOYEE_ID = E.EMPLOYEE_ID
-		    ) 						AS tempRoleId,
 		    D.DIVISION_NAME 		AS divisionName,
 		    E.EMAIL					AS email,
 		    E.CONTACT_NUMBER 		AS contactNumber,
@@ -225,9 +220,9 @@
 	</select>
 	
 	<insert id="insertMember" parameterClass="prime.user.project.ProjectBean">
-		INSERT INTO PROJECT_MEMBERS(PROJECT_MEMBER_ID, PROJECT_ID, ROLE_ID, EMPLOYEE_ID)
+		INSERT INTO PROJECT_MEMBERS(PROJECT_MEMBER_ID, PROJECT_ID, ROLE_ID, EMPLOYEE_ID, PROJECT_MEMBER_STATUS)
 		VALUES
-		(#projectMemberId#,#projectId#,#roleBean.roleId#,#employeeId#)
+		(#projectMemberId#,#projectId#,#roleBean.roleId#,#employeeId#, #projectMemberStatus#)
 	</insert>
 	
 	<select id="getProjectNamebyProjectId" parameterClass="java.lang.Integer" resultClass="prime.user.project.ProjectBean">
@@ -236,5 +231,34 @@
 		FROM PROJECTS
 		WHERE PROJECT_ID=#projectId#
 	</select>
+	
+	<select id="getRoleByProjectMember" resultClass="prime.user.project.RoleOption" parameterClass="java.util.Map" >
+		SELECT 
+			ROLE.ROLE_ID 							AS roleId, 
+			ROLE.ROLE_NAME							AS roleName, 
+			NVL(PROJ_MBR.PROJECT_MEMBER_ID,0)		AS projectMemberId, 
+			NVL(PROJ_MBR.PROJECT_MEMBER_STATUS, 1)  AS projectMemberStatus
+		FROM ROLES ROLE
+		LEFT JOIN (
+		    SELECT PROJECT_MEMBER_ID, ROLE_ID, PROJECT_MEMBER_STATUS FROM PROJECT_MEMBERS
+		    WHERE EMPLOYEE_ID = #employeeId# AND PROJECT_ID=#projectId#
+		) PROJ_MBR ON PROJ_MBR.ROLE_ID = ROLE.ROLE_ID
+		ORDER BY ROLE_NAME ASC
+	</select>
+	
+	<update id="updateStatusProjectMemberRole" parameterClass="java.util.Map">
+		UPDATE   PROJECT_MEMBERS
+  		SET   PROJECT_MEMBER_STATUS = #projectMemberStatus#
+ 		WHERE   PROJECT_MEMBER_ID = #projectMemberId#
+	</update>
+	
+	<select id="getStatusRoleMember" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT PROJECT_MEMBER_ID
+ 		FROM   PROJECT_MEMBERS
+ 		WHERE  PROJECT_MEMBER_ID = #projectMemberId# 
+ 		AND ROLE_ID = #roleId# 
+ 		AND PROJECT_MEMBER_STATUS = #projectMemberStatus#
+	</select>
+	
 	
 </sqlMap> 

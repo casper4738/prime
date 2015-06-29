@@ -85,6 +85,13 @@
 		    
 		}
 		
+		function fChange(){
+			document.getElementById('headName').value="";
+			document.getElementById('chooseDivision').style.display="inline";
+			document.getElementById('divisionId').selectedIndex="0";
+			document.getElementById('isDivision').style.display="none";
+		}
+		
 		function openModalHandler(){
 			//##0.Preparing Parameter For Modal Showing
 			var tmpDataPosition=$('#positionId').val();
@@ -99,7 +106,6 @@
 
 </head>
 <body class="skin-blue sidebar-mini">
-
 	<section class="content-header">
 		<h1>Manage Employee</h1>
 		<ol class="breadcrumb">
@@ -108,7 +114,6 @@
 			<li class="active">Add Employee</li>
 		</ol>
 	</section>
-	
 	<section class="content">
 	<div class="row">
 		<div class="col-xs-12"><div class="box" align="center">
@@ -119,6 +124,7 @@
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
 			               		<html:hidden name="EmployeeAdminForm" property="managerId"/>
+			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.treeId"/>
 			               		<html:hidden name="EmployeeAdminForm" property="result" styleId="result"/>
 			               		<table class="form-input" style="width: 500px;">
 			             			<tr>
@@ -166,7 +172,7 @@
 			               				<td>Position</td>
 			               				<td>:</td>
 			               				<td>
-				               				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control" styleId="positionId">
+				               				<html:select name="EmployeeAdminForm" property="employeeBean.positionId" styleClass="form-control" styleId="positionId" onchange="fChange()">
 				               					<html:options collection="listPosition" property="positionId" labelProperty="positionName" />
 				               				</html:select>
 										</td>
@@ -186,7 +192,6 @@
 			               				<td>:</td>
 				               			<td>
 				               				<div id="isDivision" style="display: none">
-							               		<html:hidden name="EmployeeAdminForm" property="divisionId" />
 				               					<html:text name="EmployeeAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true" styleId="divisionName"/>
 											</div>
 											<div id="chooseDivision" style="display:inline">

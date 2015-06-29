@@ -75,7 +75,7 @@
 	    	          url	  : "<%=Constants.PAGES_LIST[Constants.Page.LOGIN]%>",  // Send the login info to this page
 	    	          data	  : str,
 	    	          success : function(msg){
-	    	        	  var param = msg.split(';');
+	    	        	  var param = msg.split('#');
 	    	        	  if(param[0] == "0"){ //0 == False
 	    	        		  //Set Fail Login Warning
 	    	        		  $('#login-fail').html(param[1]);
