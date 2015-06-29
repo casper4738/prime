@@ -169,6 +169,9 @@
 		<!-- Notif Template -->
 		<action path="/NotifTemplate" name="NotifTemplateForm" type="prime.admin.notiftemplate.NotifTemplateAction" scope="request">
 			<forward name="success" 		path="/admin/notiftemplate/NotifTemplateHome.jsp">					</forward>
+			<forward name="forward" 		path="/admin/notiftemplate/Forward.jsp">							</forward>
+			<forward name="add" 			path="/admin/notiftemplate/NotifTemplateAdd.jsp">					</forward>
+			<forward name="edit" 			path="/admin/notiftemplate/NotifTemplateEdit.jsp">					</forward>
 		</action>	
 	</action-mappings>
 	<message-resources parameter="application" />
