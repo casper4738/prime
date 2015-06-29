@@ -36,11 +36,11 @@
 	    } );
 		
 		<!-- Method Specified For Modal Handling-->
-		function modalFlyToPage(pColumSearch) {
+		function modalFlyToPage(pColumnSearch) {
 			var tmpForm = document.getElementById("idForm");
 			
-			if(pColumSearch=="All"){
-				tmpForm.columnSearch.value = pColumSearch;
+			if(pColumnSearch=="All"){
+				tmpForm.columnSearch.value = pColumnSearch;
 			}
 			modalLoadHandler(serialize(tmpForm));
 		}
@@ -62,7 +62,6 @@
 		}
 		
 		function modalSelectHandler(retValue,retForm){
-			alert(retValue+"--"+retForm)
 			modalSubmitReturnValue(retValue,retForm);
 		}
 	</script>
@@ -71,12 +70,6 @@
 <body class="skin-blue sidebar-mini">
 	<section class="content">
 		<div class="row">
-		    <!-- Temporary Form -->
-		    
-		      
-		    
-		    <!-- End Of Temporary Form -->
-		    
 			<div class="col-xs-12"><div class="box">
 				<div class="box-header"><h1 class="box-title"><b>${modalListName}</b></h1><br/><br/></div>
 				<!-- Search Handler Tag -->
@@ -85,7 +78,7 @@
 					<html:select property="showInPage" name="ModalForm" onchange="modalChange(this.value)">
 						<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 					</html:select>
-					<%-- <input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('<%=Constants.Task.DOSEARCH%>')" value='Refresh'/>--%>
+					<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('<%=Constants.Task.DOSEARCH%>')" value='Refresh'/>
 				</div>
 				<html:form action="/Modal" styleId="idForm">
 				<div class="search-table">

@@ -41,7 +41,6 @@ public class DashboardAction extends Action{
 		ActivityManager tmpManager = new ActivityManagerImpl();
 		ActionForward tmpAction = mapping.findForward("success");
 		Integer tmpEmployeeID = 101;
-		System.out.println("pForm.getTask() = " + pForm.getTask());
 		
 		//##1.Start Task Selection
 		if("chooseActivity".equals(pForm.getTask())) {
@@ -316,13 +315,11 @@ public class DashboardAction extends Action{
 		int yStart = c.get(Calendar.YEAR);
 		int mStart = c.get(Calendar.MONTH);
 		int dStart = c.get(Calendar.DATE);
-		System.out.println(e.getStartDate());
 
 		c.setTime(e.getEndDate());
 		int yEnd = c.get(Calendar.YEAR);
 		int mEnd = c.get(Calendar.MONTH);
 		int dEnd = c.get(Calendar.DATE)+1;
-		System.out.println(e.getEndDate());
 
 		String str = "{title: \"" + e.getDescriptionDayOff() + "\", "
 				+ "start: new Date(" + yStart + ", " + mStart + ", "+ dStart + "), " 

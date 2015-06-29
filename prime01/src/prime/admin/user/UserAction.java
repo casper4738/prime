@@ -1,5 +1,6 @@
 package prime.admin.user;
 
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.Date;
 import java.util.List;
@@ -13,6 +14,9 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import prime.constants.Constants;
+import prime.login.LoginManager;
+import prime.login.LoginManagerImpl;
+import prime.utility.ActiveDirectoryManager;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -29,7 +33,6 @@ public class UserAction extends Action {
 		Date compTime;
 		curnTime = new Date();
 		curnTime = PrimeUtil.parseDateStringToDate(PrimeUtil.setDateToDateString(curnTime));
-		System.out.println(" TASK : "+userForm.getTask());
 		
 		if(Constants.Task.GOTOADD.equals(userForm.getTask())){
 			userForm.getUserBean().setEmployeeId(tmpManager.getNewId());
@@ -77,7 +80,45 @@ public class UserAction extends Action {
 			//##.Update Data and Go to Forward
 			tmpManager.update(userForm.getUserBean());
 			return mapping.findForward("forward");
-		} 		
+		} else if(Constants.Task.DOVALIDATE.equals(userForm.getTask())){
+			response.setContentType("text/text;charset=utf-8");
+			response.setHeader("cache-control", "no-cache");
+			PrintWriter tmpOut = response.getWriter();
+			String tmpResponse = "";
+			
+			//Check Username to Database
+			LoginManager tmpLoginManager = new LoginManagerImpl();
+			int tmpResponseCode = 0;
+			//0 : Exists Database ; 1 : Empty Active Directory ; 2 : Empty Database
+			if(!tmpLoginManager.isUserExists(userForm.getUserBean().getUserName())){
+				ActiveDirectoryManager tmpADManager = new ActiveDirectoryManager();
+				if(tmpADManager.checkValidUser(userForm.getUserBean().getUserName(), 
+												Constants.ActiveDirectory.ADMIN_USERNAME, 
+												Constants.ActiveDirectory.ADMIN_PASSWORD)){
+					tmpResponseCode = 2; //Username Exists in Active Directory
+				} else {
+					tmpResponseCode = 1; //User Doesn't Exists in Active Directory
+				}
+			} else {
+				tmpResponseCode = 0;
+			}
+
+			switch(tmpResponseCode){
+				case 0 :
+					tmpResponse = "1#<div id=\"message\" style=\"color:red;font-size:8\">Username already exists</div>";
+					break;
+				case 1 :
+					tmpResponse = "1#<div id=\"message\" style=\"color:green;font-size:8\">Username can be used [not active directory]</div>";
+					break;
+				case 2 :
+					tmpResponse = "2#<div id=\"message\" style=\"color:green;font-size:8\">Username can be used [active directory]</div>";
+					break;
+			}
+			
+			tmpOut.print(tmpResponse);
+			tmpOut.flush();
+			return null;
+		}
 		
 		int countRows  = tmpManager.getCountByColumn(userForm.getColumnSearch(), userForm.getSearch());
 		
