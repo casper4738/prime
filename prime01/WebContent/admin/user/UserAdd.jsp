@@ -14,7 +14,8 @@
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
 	<!-- End of CSS -->
-	  
+	
+	<!-- JS -->
 	<script src="resources/prime.js"></script>
 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
@@ -52,7 +53,7 @@
 				 document.getElementById('validator').innerHTML="Name must be filled out";
 				 tmpValidated = false;
 			 }
-			
+			    
 			 if(userName != null || userName != ""){
 			 	 for (var i = 0; i < userName.length; i++) {
 		       	 	if (specialChars.indexOf(userName.charAt(i)) != -1) { 
