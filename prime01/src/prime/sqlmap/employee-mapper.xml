@@ -527,18 +527,18 @@
      WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow# 
  	</select>
  
-	 <select id="getCountByColumnEmployeeActive" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-	  SELECT COUNT(1) 
-	  FROM EMPLOYEES EMP 
-	  LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
-	  JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-	  LEFT JOIN (
-	      SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME FROM EMPLOYEES E
-	  ) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-	  LEFT JOIN ( 
-	      SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
-	  )RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
-	  WHERE RE.RESIGN_DATE IS NULL
+	<select id="getCountByColumnEmployeeActive" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		  SELECT COUNT(1) 
+		  FROM EMPLOYEES EMP 
+		  LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
+		  JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
+		  LEFT JOIN (
+		      SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME FROM EMPLOYEES E
+		  ) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
+		  LEFT JOIN ( 
+		      SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
+		  )RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
+		  WHERE RE.RESIGN_DATE IS NULL
 	     <dynamic prepend="AND">
 	         <isNotNull property="columnSearch">
 	          	<isEqual property="columnSearch" compareValue="ID">
@@ -567,11 +567,11 @@
 	 </select>
 	 
 	 <select id="getEmployeeResignDate" resultClass="java.sql.Date" parameterClass="java.lang.Integer">
-	  SELECT RE.RESIGN_DATE
-	  FROM EMPLOYEES EMP 
-	  LEFT JOIN ( 
-	      SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
-	  )RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
-	  WHERE EMP.EMPLOYEE_ID=#employeeId#
+		  SELECT RE.RESIGN_DATE
+		  FROM EMPLOYEES EMP 
+		  LEFT JOIN ( 
+		      SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
+		  )RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
+		  WHERE EMP.EMPLOYEE_ID=#employeeId#
 	 </select>
 </sqlMap>
