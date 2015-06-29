@@ -40,12 +40,10 @@ public class FilterSession implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest tmpServletRequest = (HttpServletRequest) request;
 	    HttpServletResponse tmpServletResponse = (HttpServletResponse) response;
-	    HttpSession session = tmpServletRequest.getSession();
+	    HttpSession tmpSession = tmpServletRequest.getSession();
 	    RequestDispatcher tmpRO;
 	    
-	    System.out.println("Always Called");
-	    
-	    if(session.getAttribute(Constants.Session.USERDATA) == null) {
+	    if(tmpSession.getAttribute(Constants.Session.USERDATA) == null) {
 			tmpRO = request.getRequestDispatcher(Constants.PAGES_LIST[Constants.Page.LOGIN]);
 			tmpRO.forward(tmpServletRequest, tmpServletResponse);
 	    } else {
