@@ -12,7 +12,7 @@
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
-    <link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <!-- <link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" /> -->
 	<!-- End CSS -->
 	
 	<!-- JS -->
@@ -20,28 +20,32 @@
 	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+	<!-- <script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script> -->
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		$('#table-1').dataTable( {
-			paging    : false,
-			searching : false,
-			info	  : false,
-	    } );
 		
+/* 	$('#table-1').dataTable( {
+		paging    : false,
+		searching : false,
+		info	  : false,
+    } ); */
+	
 		<!-- Method Specified For Body Onload-->
 		
 		$(document).ready(function(){
+			alert("tes");
 			var tmpStr = <%= request.getAttribute("flag")%>;
+			alert(tmpStr);
 			$('#message').html("");
 			if(tmpStr == false){
 				$('#message').html("<center>Password not match</center>");
 			} else if(tmpStr == true){
 				$('#message').html("<center>Password has been changed</center>");
 				document.getElementById("password").disabled =  true;
+				//$('#password:disabled');
 				document.getElementById("newPwd").disabled =  true;
 				document.getElementById("confirmPwd").disabled =  true;
 				document.getElementById("submit").style.visibility = "hidden";
@@ -49,10 +53,8 @@
 			
 		});
 		
-		<!-- Method Specified For Modal Handling-->
-		
+
 		function submitHandler(){
-			
 			var tmpPwd = document.getElementById('password');
 			var tmpNewPwd = document.getElementById('newPwd');
 			var tmpConfirmPwd = document.getElementById('confirmPwd');
@@ -71,6 +73,7 @@
 		}
 		
 		function validateForm(){
+			alert("tes2");
 			document.getElementById('validatorPassword').innerHTML="";
 			document.getElementById('validatorNewPwd').innerHTML="";
 			document.getElementById('validatorConfirmPwd').innerHTML="";
@@ -97,10 +100,10 @@
 			 
 			 if(newPassword != null || newPassword != ""){
 			 	 for (var i = 0; i < newPassword.length; i++) {
-			          if (specialChars.indexOf(newPassword.charAt(i)) != -1) { 
-			        document.getElementById("validatorNewPwd").innerHTML = "Characters are not allowed"; 
-			        tmpValidated = false;
-			       } 
+				       if (specialChars.indexOf(newPassword.charAt(i)) != -1) { 
+				        	document.getElementById("validatorNewPwd").innerHTML = "Characters are not allowed"; 
+				        	tmpValidated = false;
+				       } 
 			     }
 			 }
 			 
@@ -168,7 +171,7 @@
 				</table>
         	</div>
         	<center>
-	           <input id="submit" type="button" value="Submit" class="btn btn-sm  btn-danger" onclick="validateForm()"/>
+	           <input id="submit" type="button" value="Submit" class="btn btn-sm  btn-danger" onclick="validateForm();"/>
        		</center>
        	</div>
        	</html:form>
