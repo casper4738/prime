@@ -17,6 +17,7 @@
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+	<script src="resources/prime.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$('#table-1').dataTable( {
 			paging    : false,
@@ -33,12 +34,10 @@
 			tmpForm.employeeId.value = valueMember;
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
-		function flyToEdit(task, valueRole){
-			alert(valueRole);
+		function flyToEdit(task, employeeId){
 			var tmpForm = document.forms[0]; 
 			tmpForm.task.value = task;
-			tmpForm.tempRoleId.value = valueRole;
-			alert("wooy")
+			tmpForm.employeeId.value = employeeId;
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
@@ -59,19 +58,17 @@
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
-			<li class="active">Project</li>
+			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
+			<li class="active">Project Detail</li>
 		</ol>
 	</section>
 
 	<section class="content">	
-	
 	<div class="row">
-	
 		<div class="col-xs-12"><div class="box">
-		<html:button property="" value="Back" styleClass="btn btn-sm btn-primary" onclick="flyToPage('success')"/>
 			<div class="box-header"><h3 class="box-title-center">Data Project Member</h3></div>
 			<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-			<tr><td>Project Name : <bean:write name="ProjectUserForm" property="projectBean.projectName"/> </td>
+			<tr><td>Project Name : ${ProjectUserForm.projectBean.projectId} <bean:write name="ProjectUserForm" property="projectBean.projectName"/></td>
 				<td>Project Assigner : <bean:write name="ProjectUserForm" property="projectBean.projectAssignerName" /> </td>
 			</tr>
 			<tr><td>Start Date : <bean:write name="ProjectUserForm" property="projectBean.projectStartDate" format="dd MMMM yyyy"/> </td>
@@ -107,7 +104,6 @@
 				<html:form action="/ProjectUser" >
 					<html:hidden name="ProjectUserForm" property="task"/>
 					<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
-					<html:hidden name="ProjectUserForm" property="projectBean.tempRoleId"/>
 					<html:hidden name="ProjectUserForm" property="projectId"/>
 					<html:hidden name="ProjectUserForm" property="employeeId"/>
 					<html:hidden name="ProjectUserForm" property="goToPage"/>
@@ -135,53 +131,43 @@
 					<logic:iterate id="iter" name="listProjectMember">
 	                	<tr>
 	                		<td width="250px"><bean:write name="iter" property="employeeName"/></td>
-	                		<td><bean:write name="iter" property="roleName"/></td>
-	                		<td align="center" width="150px"><bean:write name="iter" property="divisionName" /></td>
+	                		<td>
 	                		
+	                		<logic:notEqual name="iter" property="roleName" value="">
+	                			<bean:write name="iter" property="roleName"/>
+	                		</logic:notEqual>
+	                		<logic:equal name="iter" property="roleName" value="">
+	                			<center><span class="label label-danger">Not Active</span></center>
+	                		</logic:equal>
+	                		</td>
+	                		<td align="center" width="150px"><bean:write name="iter" property="divisionName" /></td>
 	                		<td><bean:write name="iter" property="email"/></td>
 	                		<td><bean:write name="iter" property="contactNumber"/></td>
 	                		<td align="center">
-	                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.ACTIVITY.GOTOEDIT%>', '<bean:write name="iter" property="tempRoleId"/>')" src="resources/image/edit.png" />
-	                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.DODELETE%>', '<bean:write name="iter" property="projectMemberId"/>')" src="resources/image/remove.png" />
-                     	        		<input type="image" onclick="flyToChangeStatusAct()" src="resources/image/viewmore.png" />
-                     	        		<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail(
+	                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.PROJECT.GOTOEDITMEMBER%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
+                 	        	<input type="image" onclick="flyToChangeStatusAct()" src="resources/image/remove.png"/>
+                     	        <input type="image" value='Details' onclick="flyToTaskDetail(
                      	        				'<%=Constants.Task.PROJECT.GOTOTASKMEMBER%>', 
-                     	        				'<bean:write name="iter" property="employeeId"/>')">
+                     	        				'<bean:write name="iter" property="employeeId"/>')"
+     	        								src="resources/image/viewmore.png"
+                     	        				>
 	                        </td>	
 	                    </tr> 
                     </logic:iterate>
 					</logic:notEmpty>
                   </tbody>
             </table></div>
-			<ul class="pagination">
-				<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
-				<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
-				
-				<logic:iterate id="p" name="listPage">
-					<logic:equal name="p" value="${pageNow}">
-						<li><html:link styleClass="active" href="#">${p}</html:link> </li>
-					</logic:equal>
-					<logic:notEqual name="p" value="${pageNow}">
-						<li><html:link styleClass="paging" href="#" onclick="page(${p})">${p}</html:link> </li>
-					</logic:notEqual>
-				</logic:iterate>
-				<li><html:link styleClass="paging" href="#" onclick="page(${pageNext})" >>></html:link> </li>
-				<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
-				
-				<div class="paginate-3">
-					<html:text name="ProjectUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
-					<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
-				</div>
-			</ul>
+            
+            <!-- Paging -->
+            <jsp:include page="/content/Pagination.jsp">
+    			<jsp:param name="formName" value="ProjectUserForm" />
+    		</jsp:include>
+			<!-- End of Paging -->
 			
-			<div class="paginate-2">
-				Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
-			</div>
         </div>
         </div></div>
 	</section>
-	
-		<!-- /.content-wrapper -->
+	<!-- /.content-wrapper -->
 	
 </body>
 </html>

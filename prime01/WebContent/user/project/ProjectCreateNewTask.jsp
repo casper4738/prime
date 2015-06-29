@@ -35,7 +35,7 @@
 			<div class="box-header"><h3 class="box-title">Data Project</h3></div>
 			<div class="box-body">
                 	<html:form action="/ProjectUser">
-                		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.Project.DOCREATETASK%>"/>
+                		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.PROJECT.DOCREATETASK%>"/>
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.employeeId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.taskBean.taskStatus" value='<%=Constants.Status.CREATE+""%>'/>

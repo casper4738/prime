@@ -23,7 +23,8 @@
 				STATUS_USER		as statusUser,
 				LOGIN_SESSION	as loginSession,
 				EMPLOYEE_ID		as employeeId,
-				SYSTEM_LEVEL	as systemLevel
+				SYSTEM_LEVEL	as systemLevel,
+				ACTION_DATE		as actionDate
 		FROM USERS  
 		WHERE LOWER(USERNAME)=LOWER(#name#)
 	</select>

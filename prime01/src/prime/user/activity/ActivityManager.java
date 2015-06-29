@@ -9,6 +9,10 @@ public interface ActivityManager {
 	
 	public void insertDetail(ActivityBean e) throws SQLException;
 	
+	public void insertDetailBySelectTask(ActivityBean e) throws SQLException;
+	
+	public void insertDetailByTaskId(ActivityBean e) throws SQLException;
+	
 	public void update(ActivityBean e) throws SQLException;
 	
 	public ActivityBean getActivityById(Integer id) throws SQLException;

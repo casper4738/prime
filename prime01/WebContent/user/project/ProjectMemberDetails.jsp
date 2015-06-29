@@ -11,6 +11,7 @@
 	<!-- CSS -->
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+    <link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
 	<!-- End CSS -->
 	
 	<!-- JS -->
@@ -46,7 +47,11 @@
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
-			<li class="active">Project</li>
+			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
+			<li class="active"><a href="javascript:flyToBack(
+	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
+	                        		'<bean:write name="ProjectUserForm" property="projectId"/>')">Project Detail</a></li>
+			<li class="active">Project Member Detail</li>
 		</ol>
 	</section>
 
@@ -67,7 +72,7 @@
 				</tr>
 				</table>
 				
-				<p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
+				<p><span class="message"><bean:write name="ProjectUserForm" property="message" />asas</span></p>
 				<div class="form-action"><table align="center">
                   <tr><td style="padding:5px;">
                   		<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.PROJECT.GOTOCREATETASK%>')"/>

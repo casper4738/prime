@@ -36,6 +36,17 @@
 			tmpForm.projectId.value = value;
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
+		
+	
+		/* function dari indra */
+		/* $(document).ready(function () {
+			$('.btnCancel').on('click',function (){
+				var task= $('#hdTask').val();
+			     var assignTo = $(this).closest('tr').find('.assTo').val(); 
+				 alert(task);
+			});
+			
+	    }); */
 	</script>
 	<!-- End JS -->
 </head>
@@ -44,7 +55,7 @@
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
-			<li class="active">Project</li>
+			<li class="active">Manage Project</li>
 		</ol>
 	</section>
 
@@ -53,30 +64,32 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title">Projects</h3></div>
 			
-			<p><span class="button-add btn btn-app bg-olive" onclick="javascript:flyToPage('<%=Constants.Task.GOTOADD%>')">
-                   <i class="fa fa-edit"></i>Add
-                  </span>
-                  <p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
+			<p><span class="button-add btn btn-app bg-olive btnCancel" onclick="javascript:flyToPage('<%=Constants.Task.GOTOADD%>')">
+	               <i class="fa fa-edit"></i>Add
+	              </span>
+            <p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
+            
 			<!-- Search Handler Tag -->
-				<div class="show-in-page">
-					Show per page
-					<html:select property="showInPage" name="ProjectUserForm">
-						<html:optionsCollection name="listShowEntries" label="value" value="key"/>
+			<div class="show-in-page">
+				Show per page
+				<html:select property="showInPage" name="ProjectUserForm">
+					<html:optionsCollection name="listShowEntries" label="value" value="key"/>
+				</html:select> 
+			</div>
+			<div class="search-table">
+				<html:form action="<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>" method="post">
+					<html:hidden property="task" styleId="hdTask"/>
+					<html:hidden name="ProjectUserForm" property="projectId"/>
+					<html:select name="ProjectUserForm" property="columnSearch">
+						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
-				</div>
-				<div class="search-table">
-					<html:form action="<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>" method="post">
-						<html:hidden property="task"/>
-						<html:hidden name="ProjectUserForm" property="projectId"/>
-						<html:select name="ProjectUserForm" property="columnSearch">
-							<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
-						</html:select>
-						<html:text name="ProjectUserForm" property="search"/>
-						<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('search')" value='Search'/>
-						<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('search')" value='Show All'/>
-					</html:form>
-				</div>
+					<html:text name="ProjectUserForm" property="search"/>
+					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('search')" value='Search'/>
+					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('search')" value='Show All'/>
+				</html:form>
+			</div>
 			<!-- End Of Search Handler -->
+			
 			<div class="box-body"><table id="table-1" class="table table-bordered table-striped table-hover">
 				<thead><tr>
 					<th width="100px">Project Name</th>
@@ -101,40 +114,24 @@
                 	    			<jsp:param name="status" value="${iter.projectLastStatus}" />
                 	    		</jsp:include>
               	    			</td>
-	                        <td align="center">
-	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail(
-	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
-	                        		'<bean:write name="iter" property="projectId"/>')">
+	                        <td width="150px" align="center">
+	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' 
+		                        	onclick="flyToTaskDetail('<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', '<bean:write name="iter" property="projectId"/>')" >
+		                        <input type="submit" class="btn btn-primary btn-xs" value='Details As Head' 
+		                        	onclick="flyToTaskDetail('detailsAsHead', '<bean:write name="iter" property="projectId"/>')" >	
 	                        </td>
 	                    </tr>
                     </logic:iterate>
 					</logic:notEmpty>
                   </tbody>
             </table></div>
-			<ul class="pagination">
-				<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
-				<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
-				
-				<logic:iterate id="p" name="listPage">
-					<logic:equal name="p" value="${pageNow}">
-						<li><html:link styleClass="active" href="#">${p}</html:link> </li>
-					</logic:equal>
-					<logic:notEqual name="p" value="${pageNow}">
-						<li><html:link styleClass="paging" href="#" onclick="page(${p})">${p}</html:link> </li>
-					</logic:notEqual>
-				</logic:iterate>
-				<li><html:link styleClass="paging" href="#" onclick="page(${pageNext})" >>></html:link> </li>
-				<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
-				
-				<div class="paginate-3">
-					<html:text name="ProjectUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
-					<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
-				</div>
-			</ul>
 			
-			<div class="paginate-2">
-				Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
-			</div>
+			<!-- Paging -->
+            <jsp:include page="/content/Pagination.jsp">
+    			<jsp:param name="formName" value="ProjectUserForm" />
+    		</jsp:include>
+			<!-- End of Paging -->
+			
         </div>
 		</div></div>
 	</section>

@@ -36,9 +36,10 @@
 			var tmpTask ="modalTable";
 			var tmpTable ="employeeHead";
 			var tmpParam =document.forms[0].employeeId.value;
+			var tmpDiv =document.forms[0].divisionId.value;
 			
 			//##1.Accessing Prime Method For Modal Showing
-			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeResign&param4="+tmpParam , $('#result'));
+			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeResign&param4="+tmpParam+"&param5="+tmpDiv , $('#result'));
 		}
     </script>
     <!-- End Of JS -->
@@ -61,8 +62,10 @@
                  	<html:form action="/EmployeeAdmin">
                  		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DORESIGN%>"/>
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
+                 		<html:hidden name="EmployeeAdminForm" property="divisionId" />
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
                  		<html:hidden name="EmployeeAdminForm" property="employeeId" />
+                 		<html:hidden name="EmployeeAdminForm" property="employeeBean.treeId"/>
                  		<html:hidden name="EmployeeAdminForm" property="substituteHeadId" />
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.positionId" styleId="positionId"/>

@@ -7,7 +7,6 @@
 	request.setAttribute("taskId", request.getParameter("taskId")); 
 	request.setAttribute("activityId", request.getParameter("activityId")); 
 %>
-
 <div class="form-action"><table align="center" class="btn-status-activity">
    <tr>	
 	<logic:equal name="status" value='<%=Constants.Status.CREATE+""%>'>

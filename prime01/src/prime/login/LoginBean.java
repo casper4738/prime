@@ -1,5 +1,7 @@
 package prime.login;
 
+import java.util.Date;
+
 public class LoginBean {
 	private String  username;
 	private boolean isActiveDirectory;
@@ -7,6 +9,7 @@ public class LoginBean {
 	private String  loginSession;
 	private Integer employeeId;
 	private Integer systemLevel;
+	private Date 	actionDate;
 	
 	public String getUsername() {
 		return username;
@@ -43,5 +46,11 @@ public class LoginBean {
 	}
 	public void setStatusUser(Integer statusUser) {
 		this.statusUser = statusUser;
+	}
+	public Date getActionDate() {
+		return actionDate;
+	}
+	public void setActionDate(Date actionDate) {
+		this.actionDate = actionDate;
 	}
 }
