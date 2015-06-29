@@ -74,7 +74,7 @@
 				Show per page
 				<html:select property="showInPage" name="ProjectUserForm">
 					<html:optionsCollection name="listShowEntries" label="value" value="key"/>
-				</html:select>
+				</html:select> 
 			</div>
 			<div class="search-table">
 				<html:form action="<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>" method="post">
