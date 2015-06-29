@@ -227,30 +227,32 @@
 						                		<bean:define id="dateEnd" name="iter" property="endDate"  toScope="request"/>
 						                		<bean:define id="employeeId" name="EmployeeAdminForm" property="employeeBean.employeeId"  toScope="request"/>
 						                		<%
+						                			int idEmployee = (Integer) request.getAttribute("employeeId");
 						                			java.sql.Date endDate = (java.sql.Date) request.getAttribute("dateEnd");
 						                			java.sql.Date startDate = (java.sql.Date) request.getAttribute("dateStart");
 						                			long DAY = 24 * 3600 * 1000;
 						                			long diffDate = endDate.getTime() - startDate.getTime() + DAY;
 						                			
 						                			int days = (int) ( diffDate / DAY);
-						                			int totalDayOff;
+						                			int totalDayOff=0;
 						                			//out.print(days + " DAYS");
 						                			//total_dayOff = Math.abs(request.getAttribute("dateEnd").getTime() - request.getAttribute("dateStart"));
 						                			
 						                			EmployeeManagerImpl tmpEmployeeManager = new EmployeeManagerImpl();
-						                			try{
+						                			//try{
 						                				int countNationalHoliday=tmpEmployeeManager.getCountNationalHolidayByDayOff(startDate, endDate);
-						                				int countDayOff=tmpEmployeeManager.getCountWeekendByDayOff(startDate, endDate, pForm.);
-						                				out.print(tmpEmployeeManager.getCountNationalHolidayByDayOff(startDate, endDate));
+						                				out.println(tmpEmployeeManager.getCountNationalHolidayByDayOff(startDate, endDate) + "NATIONAL");
+						                				int countDayOff=tmpEmployeeManager.getCountWeekendByDayOff(startDate, endDate, idEmployee);
+						                				//out.println(tmpEmployeeManager.getCountWeekendByDayOff(startDate, endDate, idEmployee) + "WEEKEND");
 						                				totalDayOff=days-countNationalHoliday;
-						                			}catch(Exception e) {
+						                			/*} catch(Exception e) {
 						                				out.print("CAST : "+e.getMessage());
-						                			}
+						                			} */
 						                			
 						                		
 						                			//tmpEmployeeManager.getCountWeekendByDayOff(request.getAttribute("dateStart").toString(), request.getAttribute("dateEnd").toString(), 102);
 						                		%>
-						                		<td><%=totalDayOff%> </td>
+						                		<td align="center"><%=totalDayOff%> </td>
 						                		<td><bean:write name="iter" property="descriptionDayOff"/> </td>
 						                		<td>
 						                			<% 

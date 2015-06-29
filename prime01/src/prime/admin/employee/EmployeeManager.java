@@ -49,6 +49,13 @@ public interface EmployeeManager {
 	
 	public Integer getCountByColumnEmployeeHead(String columnSearch, String value, Integer positionLevel, String paramCondition, Integer employeeId, Integer divisionId) throws SQLException;
 	
+	public Integer getCountByColumnEmployeeActive(String columnSearch, String value) throws SQLException;
+	 
+	public List<EmployeeBean> getListByColumnEmployeeActive(String columnSearch, String value, Integer startRow, Integer endRow)
+	   throws SQLException;
+	 
+	public Date getEmployeeResignDate(Integer id) throws SQLException;
+	
 	/* NOT USE NOW
 	public List<EmployeeBean> getListByColumnAndDivision(String columnSearch, String value, Integer divisionId, Integer startRow, Integer endRow)
 			throws SQLException;

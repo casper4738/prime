@@ -332,4 +332,30 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		map.put("employeeId", employeeId);
 		return (Integer) mapper.queryForObject("employee.getListWeekendEmployee", map);
 	}
+
+	 @Override
+	 public List<EmployeeBean> getListByColumnEmployeeActive(
+	   String columnSearch, String value, Integer startRow, Integer endRow)
+	   throws SQLException {
+	  Map<String, Object> map = new HashMap<String, Object>();
+	  map.put("columnSearch", columnSearch);
+	  map.put("value", value);   
+	  map.put("startRow", startRow);
+	  map.put("endRow", endRow);
+	  return mapper.queryForList("employee.getListByColumnEmployeeActive", map);
+	 }
+
+	 @Override
+	 public Integer getCountByColumnEmployeeActive(String columnSearch,
+	   String value) throws SQLException {
+	  Map<String, Object> map = new HashMap<String, Object>();
+	  map.put("columnSearch", columnSearch);
+	  map.put("value", value);
+	  return (Integer) mapper.queryForObject("employee.getCountByColumnEmployeeActive", map);
+	 }
+
+	 @Override
+	 public Date getEmployeeResignDate(Integer id) throws SQLException {
+	  return (Date) mapper.queryForObject("employee.getEmployeeResignDate", id);
+	 }
 }
