@@ -3,19 +3,23 @@ package prime.user.task;
 import java.sql.SQLException;
 import java.util.List;
 
+import prime.user.project.ProjectBean;
+
 public interface TaskManager {
 
 	public void insert(TaskBean e) throws SQLException;
 	
 	public void insertDetail(TaskBean e) throws SQLException;
+	
+	public void insertDetailBySelectTask(TaskBean e) throws SQLException;
 
 	public TaskBean getTaskById(Integer id) throws SQLException;
 
 	public Integer getNewId() throws SQLException;
 	
-	public Boolean isAlreadySubmit(Integer taskId) throws SQLException;
-	
 	public Boolean isCheckStatus(Integer taskId, Integer status) throws SQLException;
+	
+	public Boolean isCheckStatusDetail(Integer taskId, Integer status) throws SQLException;
 
 	/*Task Head*/
 	public List<TaskBean> getListByColumnHead(String columnSearch, String value, Integer startRow, Integer endRow,

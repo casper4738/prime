@@ -1,11 +1,7 @@
 package prime.modal;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -21,9 +17,9 @@ import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.position.PositionBean;
 import prime.admin.position.PositionManager;
 import prime.admin.position.PositionManagerImpl;
+import prime.admin.user.UserManager;
+import prime.admin.user.UserManagerImpl;
 import prime.constants.Constants;
-import prime.user.activity.ActivityBean;
-import prime.user.project.*;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -43,7 +39,7 @@ public class ModalAction extends Action {
 		
 		System.out.println(pForm.getTask() + " _ " + pForm.getParam1()+ " _ " + pForm.getParam2()+ " _ " + pForm.getParam3()+ " _ " + pForm.getParam4());
 		
-		System.out.println("Taskzz = " + pForm.getTask());
+		System.out.println("Taskzz1 = " + pForm.getTask());
 		
 
 		ArrayList<ArrayList<String>> tmpData = new ArrayList<ArrayList<String>>();
@@ -51,9 +47,21 @@ public class ModalAction extends Action {
 		String task = pForm.getTask();
 		
         switch (task) {
-        	case "changePwd" : 
-        		tmpTarget = "changePwd";
-        		break;
+        	case "changePwd" :
+        		UserManager tmpManager = new UserManagerImpl();
+        		 if("changePassword".equals(pForm.getParam1())) {
+        			 if(tmpManager.isUserValidated("mahmud21", pForm.getUserBean().getPassword())){
+        					tmpManager.changePassword(pForm.getUserBean());
+        					System.out.println("success");
+        					request.setAttribute("flag", "true");
+        			 } else {
+        				 //TO DO :: Not Validated, Force Return
+        				 request.setAttribute("flag", "false");
+        				 System.out.println("Fail");
+        			 }
+        		}
+        		 tmpTarget = "changePwd";
+        		 break;
 	        case "activityNote" :
         		tmpTarget = "activityNote";
         		request.setAttribute("activityId", pForm.getParam2());
@@ -62,6 +70,7 @@ public class ModalAction extends Action {
 	        case "taskNote" :
         		tmpTarget = "taskNote";
         		request.setAttribute("taskId"    , pForm.getParam2());
+        		request.setAttribute("task"    , pForm.getParam3());
 	        	break;
             case "modalTable":  
             	String table=pForm.getParam1();

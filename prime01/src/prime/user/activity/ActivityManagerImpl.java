@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import prime.constants.Constants;
 import prime.utility.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -34,6 +35,28 @@ public class ActivityManagerImpl implements ActivityManager {
 		try {
 			mapper.startTransaction();
 			mapper.insert("activity.insertDetail", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+	@Override
+	public void insertDetailBySelectTask(ActivityBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.insert("activity.insertDetailBySelectTask", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+	@Override
+	public void insertDetailByTaskId(ActivityBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.insert("activity.insertDetailByTaskId", e);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
@@ -133,13 +156,13 @@ public class ActivityManagerImpl implements ActivityManager {
 	}
 
 	@Override
-	public List<ActivityBean> getCurrentListActivity(Integer id,String currentDate)
+	public List<ActivityBean> getCurrentListActivity(Integer employeeId,String currentDate)
 			throws SQLException {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("id", id);
+		map.put("employeeId", employeeId);
 		map.put("currentDate", currentDate);
-		System.out.println("currentDate" + currentDate);
+		map.put("statusProgress", Constants.Status.PROGRESS);
 		return mapper.queryForList("activity.getCurrentListActivity", map);
 	}
 	
@@ -202,9 +225,19 @@ public class ActivityManagerImpl implements ActivityManager {
 	}
 	
 	@Override
-	public List<ActivityBean> getActivityRangeTime(Integer activityId)
+	public List<ActivityBean> getActivityRangeTime(Integer activityId, String currentDate)
 			throws SQLException {
 		// TODO Auto-generated method stub
-		return mapper.queryForList("activity.getRangeTimeByActivityId", activityId);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("activityId", activityId);
+		map.put("currentDate", currentDate);
+		return mapper.queryForList("activity.getRangeTimeByActivityId", map);
+	}
+
+	@Override
+	public Boolean isAllFinished(Integer taskId, Integer finish, Integer abort)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

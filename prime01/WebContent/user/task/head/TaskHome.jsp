@@ -29,10 +29,14 @@
 
 	</script>
 </head>
-
-
-
 <body class="skin-blue sidebar-mini">
+	<html:form action="/TaskHeadUser" >
+		<html:hidden name="TaskHeadUserForm" property="task"/>
+		<html:hidden name="TaskHeadUserForm" property="taskId"/>
+		<html:hidden name="TaskHeadUserForm" property="goToPage"/>
+		<html:hidden name="TaskHeadUserForm" property="showInPage"/>
+	</html:form>
+					
 	<section class="content-header">
 		<h1>Manage Tasks</h1>
 		<ol class="breadcrumb">
@@ -60,18 +64,12 @@
 				<input type="button" class="btn bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Refresh'/>
 			</div>
 			<div class="search-table">
-				<html:form action="/TaskHeadUser" >
-					<html:hidden name="TaskHeadUserForm" property="task"/>
-					<html:hidden name="TaskHeadUserForm" property="taskId"/>
-					<html:hidden name="TaskHeadUserForm" property="goToPage"/>
-					<html:hidden name="TaskHeadUserForm" property="showInPage"/>
-					<html:select name="TaskHeadUserForm" property="columnSearch" styleClass="columnSearch">
-						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
-					</html:select>
-					<html:text name="TaskHeadUserForm" property="search" styleClass="textSearch"/>
-					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('search')" value='Search'/>
-					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchAll('search')" value='Show All'/>
-				</html:form>
+				<html:select name="TaskHeadUserForm" property="columnSearch" styleClass="columnSearch">
+					<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
+				</html:select>
+				<html:text name="TaskHeadUserForm" property="search" styleClass="textSearch"/>
+				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('<bean:write name="TaskHeadUserForm" property="task" />')" value='Search'/>
+				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchAll('<bean:write name="TaskHeadUserForm" property="task" />')" value='Show All'/>
 			</div>
 			<!-- End Of Search Handler -->
 			
@@ -133,31 +131,11 @@
             <!-- End Of Table List -->
 			            
             <!-- Paging -->
-			<ul class="pagination">
-				<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
-				<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"> << </html:link> </li>
-				
-				<logic:iterate id="p" name="listPage">
-					<logic:equal name="p" value="${pageNow}">
-						<li><html:link styleClass="active" href="#">${p}</html:link> </li>
-					</logic:equal>
-					<logic:notEqual name="p" value="${pageNow}">
-						<li><html:link styleClass="paging" href="#" onclick="page(${p})">${p}</html:link> </li>
-					</logic:notEqual>
-				</logic:iterate>
-				<li><html:link styleClass="paging" href="#" onclick="page(${pageNext})" >>></html:link> </li>
-				<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
-				
-				<div class="paginate-3">
-					<html:text name="TaskHeadUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
-					<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
-				</div>
-			</ul>
-			
-			<div class="paginate-2">
-				Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
-			</div>
+            <jsp:include page="/content/Pagination.jsp">
+    			<jsp:param name="formName" value="TaskHeadUserForm" />
+    		</jsp:include>
 			<!-- End of Paging -->
+			
         </div></div>
         
         </div>

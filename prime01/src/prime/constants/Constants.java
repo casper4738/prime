@@ -41,13 +41,15 @@ public interface Constants {
 		static final String GOTOEDITPOSITION 	= "t36";
 		static final String DOEDITPOSITION 		= "t37";
 		
-		interface Project {
+		interface PROJECT {
 			final String GOTOPROJECTDETAIL	= "p01";
 			final String GOTOTASKMEMBER		= "p02";
 			final String GOTOCREATETASK		= "p03";
 			final String GOTOCREATEMEMBER	= "p04";
-			final String DOCREATETASK		= "p05";
-			final String DOCREATEMEMBER		= "p06";
+			final String GOTOEDITMEMBER		= "p05";
+			final String DOCREATETASK		= "p06";
+			final String DOCREATEMEMBER		= "p07";
+			final String DOEDITMEMBER		= "p08";
 		}
 		
 		interface TASK {
@@ -124,8 +126,6 @@ public interface Constants {
 				put("DESCRIPTION", "Task Description");
 				put("ASSIGNER", "Task Assigner");
 				put("RECEIVER", "Task Receiver");
-				put("START", "Start Date");
-				put("ESTIMATE", "Estimate Date");
 			}
 		});
 		

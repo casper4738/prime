@@ -2,19 +2,30 @@ package prime.modal;
 
 import org.apache.struts.action.ActionForm;
 
+import prime.admin.user.UserBean;
+
 public class ModalForm extends ActionForm {
-	private String  task;
-	
+	private String task;
+
 	private String param1;
 	private Integer param2;
 	private String param3;
 	private Integer param4;
 	private Integer param5;
-	
 	private String search = "";
-	private String  columnSearch = "";
-	private Integer goToPage   	= 1;
-	private Integer showInPage 	= 10;
+	private String columnSearch = "";
+	private Integer goToPage = 1;
+	private Integer showInPage = 10;
+
+	private UserBean userBean = new UserBean();
+
+	public UserBean getUserBean() {
+		return userBean;
+	}
+
+	public void setUserBean(UserBean userBean) {
+		this.userBean = userBean;
+	}
 
 	public String getTask() {
 		return task;

@@ -39,11 +39,7 @@ public class LogAction extends Action {
 		request.setAttribute("listShowEntries", Constants.PAGINGROWPAGE);
 		setPaging(request, pForm, countRows, pForm.getGoToPage(),
 				pForm.getShowInPage());
-		System.out.println("request"+request);
-		System.out.println("pform"+pForm);
-		System.out.println("countrows"+countRows);
-		System.out.println("gotopage"+pForm.getGoToPage());
-		System.out.println("showinpage"+pForm.getShowInPage());
+		
 		return mapping.findForward("success");
 	}
 

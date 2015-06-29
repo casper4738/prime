@@ -9,6 +9,10 @@ public interface ActivityManager {
 	
 	public void insertDetail(ActivityBean e) throws SQLException;
 	
+	public void insertDetailBySelectTask(ActivityBean e) throws SQLException;
+	
+	public void insertDetailByTaskId(ActivityBean e) throws SQLException;
+	
 	public void update(ActivityBean e) throws SQLException;
 	
 	public ActivityBean getActivityById(Integer id) throws SQLException;
@@ -25,18 +29,14 @@ public interface ActivityManager {
 
 	public Integer getNewId() throws SQLException;
 
-	public Boolean isAllFinished(Integer taskId) throws SQLException;
-	
-
-	
-	
+	public Boolean isAllFinished(Integer taskId, Integer finish, Integer abort) throws SQLException;
 	
 	
 	public List<ActivityBean> getToDoListById(Integer id) throws SQLException;
 	
-	public List<ActivityBean> getCurrentListActivity(Integer id,String currentDate) throws SQLException;
+	public List<ActivityBean> getCurrentListActivity(Integer employeeId,String currentDate) throws SQLException;
 	
-	public List<ActivityBean> getActivityRangeTime(Integer id) throws SQLException;
+	public List<ActivityBean> getActivityRangeTime(Integer activityId, String currentDate) throws SQLException;
 	
 	public void insertToDoList(Integer receiverId, Integer activityId) throws SQLException;
 	

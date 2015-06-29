@@ -8,42 +8,32 @@
 <head> 
 	<!-- CSS -->
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
-    <link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
-    <link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 	<!-- End CSS -->
 	
 	<!-- JS -->
-	<script src="resources/prime.js"></script>
-	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
-    <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
-	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
-	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
-	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script type="text/javascript">
-		$('#table-1').dataTable( {
-			paging    : false,
-			searching : false,
-			info	  : false
-	    } );
-		
 		$(document).ready(function () {
-            $('#start-date').datepicker({
-                format: "yyyy-mm-dd"
-            });  
-            $('#estimate-date').datepicker({
-                format: "yyyy-mm-dd"
-            });
-        });
+	        var data = $('#roleId').val();
+			var arr = data.split(', ');
+	        for(i=0;i<arr.length;i++){
+	        	var temp = "#" + arr[i].toString();
+	        	$(temp).attr("checked", true);
+	        }  
+	    });
+		
+		function dosubmit() {
+			var tmpForm = document.forms[0];
+			var tempRoleId = "";
+			for(var i=0; i < tmpForm.roleId.length; i++) {
+				if(tmpForm.roleId[i].checked) {
+					tempRoleId+=tmpForm.roleId[i].value+",";
+				}
+			}
+			tempRoleId = tempRoleId.substring(0, tempRoleId.length - 1);
+			alert(tempRoleId);
+			tmpForm.tempRoleId.value = tempRoleId; 
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
 	</script>
 	
 	<!-- End JS -->
@@ -52,11 +42,11 @@
 <body class="skin-blue sidebar-mini">
 	
 	<section class="content-header">
-		<h1>Project<small>management project</small>
-		</h1>
+		<h1>Project User</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Project</li>
+			<li><i class="fa fa-dashboard"></i> Home</li>
+			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
+			<li class="active">Project Detail</li>
 		</ol>
 	</section>
 
@@ -65,96 +55,55 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title">Edit Member Role</h3></div>
 			<div class="box-body">
-                	<html:form action="/ProjectUser">
-                		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
-                		<html:hidden name="ProjectUserForm" property="projectBean.projectName" />
-                		<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner" />
-                		<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver" />
-                		<table class="form-input" align="center">
-                			<tr >
-                				<td><html:checkbox property="projectBean.projectReceiver" value="Quality Assurance"></html:checkbox></td>
-                				<td>System Analyst</td>
-                				
-                			</tr>
-                			<tr >
-                				<td ><html:checkbox property="projectBean.projectReceiver" value="Quality Assurance"></html:checkbox></td>
-                				<td>Programmer</td>
-                				
-                			</tr>
-                			<tr >
-                				<td ><html:checkbox property="projectBean.projectReceiver" value="Quality Assurance"></html:checkbox></td>
-                				<td>Quality Assurance</td>
-                				
-                			</tr>
-                			<tr >
-                				<td ><html:checkbox property="projectBean.projectReceiver" value="Quality Assurance"></html:checkbox></td>
-                				<td>Quality Control</td>
-                				
-                			</tr>
-                			<tr >
-                				<td><html:checkbox property="projectBean.projectReceiver" value="Quality Assurance"></html:checkbox></td>
-                				<td>Database Adminiastrator</td>
-                				
-                			</tr>
-                			<tr>
-                				<td colspan="3" >
+                	<html:form action="/ProjectUser"  >
+                		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.PROJECT.DOEDITMEMBER%>"/>
+                		<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
+                		<html:hidden name="ProjectUserForm" property="projectBean.employeeId" />
+                		<html:hidden name="ProjectUserForm" property="tempRoleId" />
+                		<html:hidden name="ProjectUserForm" property="projectId" />
+                		<table class="form-input" align="center" style="width:60%">
+	                		<tr><td width="200px">Employee Name</td>
+                				<td>:</td>
+                				<td class="input-group">
+                				${ProjectUserForm.projectBean.projectId}
+                				${ProjectUserForm.projectBean.employeeId}
+                				${ProjectUserForm.projectBean.employeeName}
+                					<html:text name="ProjectUserForm" property="projectBean.employeeName" styleClass="form-control" styleId="employeeName" disabled="true"/>
+	               					<span class="input-group-btn">
+                    					<input type="button" class="btn btn-info" type="button" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
+						            </span>
+							</td></tr>
+                			<tr><td valign="top">Choose Member Role</td>
+                				<td valign="top">:</td>
+                				<td><logic:iterate id="iter" name="listRoles">
+                						 | ${iter.roleId};${iter.projectMemberId};${iter.projectMemberStatus} |
+                						<logic:equal name="iter" property="projectMemberId" value="0">
+                							<input type="checkbox" name="roleId" value="${iter.roleId};${iter.projectMemberId};${iter.projectMemberStatus}"/><bean:write name="iter" property="roleName" />
+                						</logic:equal>
+                						<logic:notEqual name="iter" property="projectMemberId" value="0">
+	                						<logic:equal name="iter" property="projectMemberStatus" value="1">
+    	            							<input type="checkbox" name="roleId" value="${iter.roleId};${iter.projectMemberId};${iter.projectMemberStatus}" checked="checked"/><bean:write name="iter" property="roleName" />
+	                						</logic:equal>
+	                						<logic:equal name="iter" property="projectMemberStatus" value="0">
+    	            							<input type="checkbox" name="roleId" value="${iter.roleId};${iter.projectMemberId};${iter.projectMemberStatus}"/><bean:write name="iter" property="roleName" />
+	                						</logic:equal>
+                						</logic:notEqual>
+                						<br/>
+	                  		  		</logic:iterate>
+                			</td></tr>
+                			<tr><td colspan="3" align="center">
                 					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="dosubmit()"/>
-                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+                					<input type="button" class="btn btn-default" value='Cancel' onclick="flyToBack(
+	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
+	                        		'<bean:write name="ProjectUserForm" property="projectBean.projectId"/>')">
                 				</td>
                 			</tr>
-                			
-                			
                 		</table>
                 	</html:form>
                   </div>
         	</div>
+        </div></div>
 	</section>
 	<!-- /.content-wrapper -->
-		
-	<!-- Modal -->
-	<div class="modal fade" id="search-modal" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title">Search Assigner</h4>
-	      </div>
-	      <div class="modal-body" id="search-modal-body">
-	      
-	      </div>
-	      <div class="modal-footer">
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<!--/. Modal  -->
-		
-		
-	<script type="text/javascript">
-		$(document).ready(function(){
-			$('#btn-searchassigner').click(function(){
-				//##0.Fetching Data
-		        $.ajax({ 
-	                type    : "POST",
-	                url     : "ProjectUser.do",  // Send the login info to this page
-	                data    : ("task=search-assigner"),
-	                success : function(msg){
-	               				$('#search-modal-body').html(msg);	 						
-	                 		  }
-		        });
-			});
-		});
-		
-		function helmyTest(id){
-	        $.ajax({ 
-                type   : "POST",
-                url    : "ProjectUser.do",  // Send the login info to this page
-                data   : ("task=search-assigner2"),
-                success : function(msg){
-               				$('#search-modal-body').html(msg);	 						
-                 		  }
-	        });
-		}
-	</script>
 </body>
 </html>

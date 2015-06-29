@@ -34,7 +34,6 @@ public class DashboardAction extends Action {
 		EmployeeManager empManager = new EmployeeManagerImpl();
 		
 		tmpManager.getListByYear(pForm.getYear());
-		System.out.println("asd" + pForm.getEmployeeId());
 		empManager.getListDayoffByEmployeeId(pForm.getEmployeeId());
 
 		List<String> list = new ArrayList<String>();
@@ -46,8 +45,6 @@ public class DashboardAction extends Action {
 			list.add(getHoliday(e)+  ", " );
 		}
 		
-		
-		//##. Set Day Off Data For Calendar
 		for (EmployeeBean e : empManager.getListDayoffByEmployeeId(pForm.getEmployeeId())) {
 			list.add(getEmployeeDayOff(e)+  ", " );
 		}

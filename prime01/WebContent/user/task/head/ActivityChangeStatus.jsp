@@ -25,12 +25,13 @@
 	    });
 		
 		function dosubmit(value) {
+			alert("1."+value);
 			document.forms[0].activityStatus.value = value;
+			alert("2."+value);
 			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
 		}
 		
 		function doSubmitX(activityId, taskId) {
-			alert(activityId+"|"+taskId);
 			modalLoadHandler("task=activityNote&param2=" + activityId + "&param3=" + taskId);
 		}
 	</script>
@@ -56,24 +57,9 @@
 					<td>Activity Name : <bean:write name="TaskHeadUserForm" property="activityBean.activityName" /> </td>
 				</tr>
 				<tr><td>Last Status : 
-					<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.CREATE+""%>'>
-	            		<span class="label label-warning">Receive</span>
-	          		</logic:equal>
-	          		<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.SUBMIT+""%>'>
-	          			<span class="label label-primary">Submit</span>
-	          		</logic:equal>
-	          		<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.PAUSE+""%>'>
-	          			<span class="label label-warning">Pause</span>
-	          		</logic:equal>
-	          		<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.FINISH+""%>'>
-	          			<span class="label label-primary">Finish</span>
-	          		</logic:equal>
-	          		<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.ABORT+""%>'>
-	          			<span class="label label-danger">Abort</span>
-	          		</logic:equal>
-	          		<logic:equal name="TaskHeadUserForm" property="activityBean.activityLastStatus" value='<%=Constants.Status.PROGRESS+""%>'>
-	          			<span class="label label-success">Progress</span>
-	          		</logic:equal>
+					<jsp:include page="/content/Status.jsp">
+       	    			<jsp:param name="status" value="${TaskHeadUserForm.activityBean.activityLastStatus}" />
+       	    		</jsp:include>
 				</td>
 					<td>Last Change Date : <bean:write name="TaskHeadUserForm" property="activityBean.activityChangeDate"  format="dd MMMM yyyy HH:mm:ss"/> </td>
 				</tr>
@@ -86,29 +72,22 @@
   	    			<jsp:param name="activityId" value="${TaskHeadUserForm.activityBean.activityId}" />
   	    			<jsp:param name="status" value="${TaskHeadUserForm.activityBean.activityLastStatus}" />
   	    		</jsp:include>
-				<br/>
-			
-				<div class="box-body">
-	               	<html:form action="/TaskHeadUser">
-	               		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOCHANGESTATUS%>"/>
-	               		<html:hidden name="TaskHeadUserForm" property="activityBean.activityId" />
-	               		<html:hidden name="TaskHeadUserForm" property="activityStatus" />
-	               		<html:hidden name="TaskHeadUserForm" property="activityBean.activityChangeNote" />
-	               		<html:hidden name="TaskHeadUserForm" property="taskId" />
-	               	</html:form>
-                	
-                	
+				
 				<div class="search-table">
 					<html:form action="/TaskHeadUser" >
-						<html:hidden name="TaskHeadUserForm" property="task"/>
+						<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOCHANGESTATUS%>"/>
 						<html:hidden name="TaskHeadUserForm" property="taskBean.taskId"/>
 						<html:hidden name="TaskHeadUserForm" property="taskId"/>
 						<html:hidden name="TaskHeadUserForm" property="activityId"/>
 						<html:hidden name="TaskHeadUserForm" property="activityChangeDate"/>
+	               		<html:hidden name="TaskHeadUserForm" property="activityBean.activityId" />
+	               		<html:hidden name="TaskHeadUserForm" property="activityStatus" />
+	               		<html:hidden name="TaskHeadUserForm" property="activityBean.activityChangeNote" />
 						<html:hidden name="TaskHeadUserForm" property="goToPage"/>
 						<html:hidden name="TaskHeadUserForm" property="showInPage"/>
 					</html:form>
 				</div>
+				<div class="box-body">
 					<table id="table-1" class="table table-bordered table-striped table-hover">
 					<thead><tr>
 						<th width="150px">Change Date</th>
@@ -121,24 +100,9 @@
 		                	<tr>
 		                		<td align="center"><bean:write name="iter" property="activityChangeDate" format="dd MMMM yyyy HH:mm:ss"/></td>
 		                		<td align="center">
-			                		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.CREATE+""%>'>
-					            		<span class="label label-warning">Receive</span>
-					          		</logic:equal>
-					          		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.SUBMIT+""%>'>
-					          			<span class="label label-primary">Submit</span>
-					          		</logic:equal>
-					          		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.PAUSE+""%>'>
-					          			<span class="label label-warning">Pause</span>
-					          		</logic:equal>
-					          		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.FINISH+""%>'>
-					          			<span class="label label-primary">Finish</span>
-					          		</logic:equal>
-					          		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.ABORT+""%>'>
-					          			<span class="label label-danger">Abort</span>
-					          		</logic:equal>
-					          		<logic:equal name="iter" property="activityStatus" value='<%=Constants.Status.PROGRESS+""%>'>
-					          			<span class="label label-success">Progress</span>
-					          		</logic:equal>
+			                		<jsp:include page="/content/Status.jsp">
+				       	    			<jsp:param name="status" value="${iter.activityStatus}" />
+				       	    		</jsp:include>
 		                		</td>
 		                		<td><bean:write name="iter" property="activityChangeNote"/></td>
 		                    </tr> 

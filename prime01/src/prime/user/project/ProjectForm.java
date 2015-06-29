@@ -14,6 +14,7 @@ public class ProjectForm extends ActionForm {
 	private String search;
 	private String columnSearch;
 	private String message;
+	private String tempRoleId;
 	private Integer radioChoose;
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
@@ -163,6 +164,14 @@ public class ProjectForm extends ActionForm {
 
 	public void setEmployeeId(Integer employeeId) {
 		this.employeeId = employeeId;
+	}
+
+	public String getTempRoleId() {
+		return tempRoleId;
+	}
+
+	public void setTempRoleId(String tempRoleId) {
+		this.tempRoleId = tempRoleId;
 	}
 
 }

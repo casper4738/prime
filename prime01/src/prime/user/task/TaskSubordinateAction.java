@@ -11,7 +11,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import prime.admin.employee.EmployeeBean;
 import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
 import prime.constants.Constants;
@@ -27,11 +26,16 @@ public class TaskSubordinateAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
 		int employeeId = 101;
+		request.setAttribute("employeeIdActive", employeeId);
+		
 		
 		TaskSubordinateForm pForm = (TaskSubordinateForm) form;
 		TaskManager manager = new TaskManagerImpl();
 		EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
 		ActivityManager tmpActivityManager = new ActivityManagerImpl();
+		
+		
+		System.out.println("task:"+pForm.getTask());
 
 		if (Constants.Task.TASK.GOTOSUBMIT.equals(pForm.getTask())) {
 			//##.Submit Data
@@ -48,7 +52,7 @@ public class TaskSubordinateAction extends Action {
 			request.setAttribute("listActivity", list);
 			request.setAttribute("listSearchColumn", Constants.Search.ACTIVITY_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
-			request.setAttribute("isAllFinished", tmpActivityManager.isAllFinished(pForm.getTaskId()));
+			request.setAttribute("isAllFinished", tmpActivityManager.isAllFinished(pForm.getTaskId(), Constants.Status.FINISH, Constants.Status.ABORT));
 			request.setAttribute("isAlreadySubmit", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.SUBMIT));
 			request.setAttribute("isAlreadyReject", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.REJECT));
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
@@ -65,8 +69,12 @@ public class TaskSubordinateAction extends Action {
 			return mapping.findForward("editActivity");
 		} else if (Constants.Task.ACTIVITY.GOTOCHANGESTATUS.equals(pForm.getTask())) {
 			//##.Change Data
+			
+			System.out.println("1. "+pForm.getActivityId());
+			System.out.println("2. "+pForm.getActivityChangeDate());
+			
 			pForm.setActivityBean(tmpActivityManager.getActivityDetailById(pForm.getActivityId(), pForm.getActivityChangeDate()));
-			pForm.getActivityBean().setActivityChangeNote(null);
+			pForm.getActivityBean().setActivityChangeNote("");
 			
 			int countRows = tmpActivityManager.getCountActivityDetail(pForm.getColumnSearch(), pForm.getSearch(), pForm.getActivityId());
 			List<ActivityBean> list = tmpActivityManager.getListActivityDetail(pForm.getColumnSearch(), pForm.getSearch(), 
@@ -80,6 +88,7 @@ public class TaskSubordinateAction extends Action {
 			return mapping.findForward("changeStatusActivity");
 		} else if (Constants.Task.TASK.DOSUBMIT.equals(pForm.getTask())) {
 			//##.Submit Task
+			pForm.getTaskBean().setTaskStatus(Constants.Status.SUBMIT);
 			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");
 		} else if (Constants.Task.ACTIVITY.DOADD.equals(pForm.getTask())) {
@@ -95,12 +104,14 @@ public class TaskSubordinateAction extends Action {
 			return mapping.findForward("forward");
 		} else if (Constants.Task.ACTIVITY.DOCHANGESTATUS.equals(pForm.getTask())) {
 			//##.Insert Task Data Detail
+			if(!manager.isCheckStatusDetail(pForm.getTaskId(), Constants.Status.PROGRESS)) {
 			if(pForm.getActivityStatus() == Constants.Status.PROGRESS) {
 				TaskBean bean = new TaskBean();
 				bean.setTaskId(pForm.getTaskId());
 				bean.setTaskStatus(Constants.Status.PROGRESS);
 				bean.setTaskChangeNote("");
 				manager.insertDetail(bean);
+			}
 			}
 			//##.Insert Activity Data Detail
 			pForm.getActivityBean().setActivityStatus(pForm.getActivityStatus());
@@ -114,6 +125,10 @@ public class TaskSubordinateAction extends Action {
 			return mapping.findForward("forward");
 		} else if (Constants.Task.TASK.DOABORT.equals(pForm.getTask())) {
 			//##.Abort Task
+			ActivityBean activityBean = new ActivityBean();
+			activityBean.setActivityChangeNote("Activity aborted by role in task abort");
+			activityBean.setTaskStatus(Constants.Status.ABORT);
+			activityBean.setTaskId(pForm.getTaskBean().getTaskId());
 			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");
 		} 

@@ -168,6 +168,48 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	}
 	*/
 
+	/*select employee by tree and division and level  */
+	public List<EmployeeBean> getListByTreeWithDivision(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
+			throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);			
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("employeeId", employeeId);
+		return mapper.queryForList("employee.getListByTreeWithDivision", map);
+	}
+
+	public Integer getCountListByTreeWithDivision(String columnSearch, String value, Integer employeeId)  throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);			
+		map.put("employeeId", employeeId);
+		return (Integer) mapper.queryForObject("employee.getCountListByTreeWithDivision", map);
+	}
+	/* end select employee by tree and division and level  */
+	
+	/*select employee by tree and level  */
+	public List<EmployeeBean> getListByTreeWithoutDivision(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
+			throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);			
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("employeeId", employeeId);
+		return mapper.queryForList("employee.getListByTreeWithoutDivision", map);
+	}
+
+	public Integer getCountListByTreeWithoutDivision(String columnSearch, String value, Integer employeeId)  throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);			
+		map.put("employeeId", employeeId);
+		return (Integer) mapper.queryForObject("employee.getCountListByTreeWithoutDivision", map);
+	}
+	/* end select employee by tree and level  */
+	
 	public Integer getNewId() throws SQLException {
 		return (Integer) mapper.queryForObject("employee.getNewId", null);
 	}

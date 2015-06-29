@@ -1,8 +1,5 @@
 package prime.user.task;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-
 import org.apache.struts.action.ActionForm;
 
 import prime.user.activity.ActivityBean;

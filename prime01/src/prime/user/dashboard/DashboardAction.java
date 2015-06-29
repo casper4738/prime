@@ -3,9 +3,8 @@ package prime.user.dashboard;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -17,6 +16,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.employee.EmployeeBean;
+import prime.admin.employee.EmployeeManager;
+import prime.admin.employee.EmployeeManagerImpl;
+import prime.admin.holiday.HolidayBean;
+import prime.admin.holiday.HolidayManager;
+import prime.admin.holiday.HolidayManagerImpl;
 import prime.constants.Constants;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
@@ -29,15 +34,18 @@ public class DashboardAction extends Action{
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {	
+		
+		
 		//##0.Temp Variable
 		DashboardForm pForm = (DashboardForm) form;
 		ActivityManager tmpManager = new ActivityManagerImpl();
 		ActionForward tmpAction = mapping.findForward("success");
-		Integer tmpEmployeeID = 100;
+		Integer tmpEmployeeID = 101;
+		System.out.println("pForm.getTask() = " + pForm.getTask());
 		
 		//##1.Start Task Selection
 		if("chooseActivity".equals(pForm.getTask())) {
-			//parameter pertama adalah session login employee id
+			//Parameter pertama adalah session login employee id
 			int countRows = tmpManager.getCountToDoListById(tmpEmployeeID,pForm.getColumnSearch(),pForm.getSearch());
 			List<ActivityBean> list = tmpManager.getListActivityById(tmpEmployeeID,pForm.getColumnSearch(), 
 																	 pForm.getSearch(), PrimeUtil.getStartRow(
@@ -49,32 +57,30 @@ public class DashboardAction extends Action{
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 			setPaging(request, pForm, countRows, pForm.getGoToPage(),
 					  pForm.getShowInPage());
-			refreshToDoList(request, pForm, tmpManager);
 			tmpAction = mapping.findForward("add");
 		}else if("addToDoList".equals(pForm.getTask())){
 			tmpManager.insertToDoList(tmpEmployeeID,pForm.getTmpId());
-			refreshToDoList(request, pForm, tmpManager);
 			tmpAction = mapping.findForward("success");
 		}else if("delete".equals(pForm.getTask())){
 			tmpManager.deleteToDoList(tmpEmployeeID,pForm.getTmpId());
-			refreshToDoList(request, pForm, tmpManager);
 			tmpAction = mapping.findForward("success");
 		}else if("addActivity".equals(pForm.getTask())){
 			tmpManager.insertActivityDetail(tmpEmployeeID,pForm.getTmpId(), pForm.getTmpValue(), "START");
-			refreshToDoList(request, pForm, tmpManager);
 			tmpAction = mapping.findForward("success");
 		}else if("pauseActivity".equals(pForm.getTask())){
 			tmpManager.insertActivityDetail(tmpEmployeeID,pForm.getTmpId(), pForm.getTmpValue(), "PAUSE");
-			refreshToDoList(request, pForm, tmpManager);
 			tmpAction = mapping.findForward("success");
 		}else if("finishActivity".equals(pForm.getTask())){
 			tmpManager.insertActivityDetail(tmpEmployeeID,pForm.getTmpId(), pForm.getTmpValue(), "FINISH");
-			refreshToDoList(request, pForm, tmpManager);
 			tmpAction = mapping.findForward("success");
 		}else if("refreshActivityProgress".equals(pForm.getTask())){
 			refreshActivityProgressList(request, response, pForm, tmpManager);
 			tmpAction = null;
 		}
+
+		//##.Basic Operation that must be repeated
+		refreshToDoList(request, pForm, tmpManager);
+		prepareCalendar(request, response);
 		
 		return tmpAction;
 	}
@@ -103,83 +109,96 @@ public class DashboardAction extends Action{
 	
 	private void refreshActivityProgressList(HttpServletRequest request, HttpServletResponse response, DashboardForm pForm, ActivityManager manager) throws SQLException, IOException {
 		//##0.Temp Variable
-		int tmpI, tmpJ;
+		int tmpI, tmpJ, tmpK;
+		Date curnTime, compTime;
 		ArrayList<Object> tmpActivityList;
-		List<ActivityBean> tmpActivityDetail;
-		boolean tmpLastStatus;
-		ArrayList<ArrayList<Object>> tmpData = new ArrayList<ArrayList<Object>>();
+		boolean tmpOverloop, tmpLastStatus;
+		List<ActivityBean> tmpCurnListActivity, tmpActivityDetail;
+		ArrayList<ArrayList<Object>> tmpData;
+		Date tmpDateRequest, tmpDateNow;
+		Calendar tmpCal;
+		boolean tmpIsProgressed;
+		int tmpIsToday;
 		
 		//---.Activities Progress on Specified Date
-		//---a.Get Activities List on Specified Date
-		DateFormat tmpDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-		Date tmpDate = new Date();
-		List<ActivityBean> currentListActivity = manager.getCurrentListActivity(101, tmpDateFormat.format(tmpDate));
-		request.setAttribute("currentListActivity", currentListActivity);
-	    
-		for(tmpI = 0 ; tmpI < currentListActivity.size() ; tmpI++){
-			tmpActivityList = new ArrayList<Object>();
+		//---a.Get Activities List on Specified Date and Date Comparison
+		tmpDateRequest = PrimeUtil.parseDateStringToDate(pForm.getCurrentDate() + " 00:00:00:00");
+		tmpDateNow	   = new Date();
+		
+		tmpCal = Calendar.getInstance();
+		tmpCal.set(Calendar.HOUR_OF_DAY, 0);
+		tmpCal.set(Calendar.MINUTE, 0);
+		tmpCal.set(Calendar.SECOND, 0);
+		tmpCal.set(Calendar.MILLISECOND, 0);
+		tmpIsToday = tmpDateRequest.compareTo(tmpCal.getTime());
+		
+		tmpData = new ArrayList<ArrayList<Object>>();
+		tmpCurnListActivity = manager.getCurrentListActivity(101, pForm.getCurrentDate());
+		for(tmpI = 0 ; tmpI < tmpCurnListActivity.size() ; tmpI++){
+			tmpIsProgressed = false;
 			
-			//tmpActivityDetails.add(currentListActivity.get(tmpI).getActivityId());
-			tmpActivityList.add(currentListActivity.get(tmpI).getActivityName());	
+			tmpActivityList = new ArrayList<Object>();
+			tmpActivityList.add(tmpCurnListActivity.get(tmpI).getActivityId());
+			tmpActivityList.add(tmpCurnListActivity.get(tmpI).getActivityName());	
+			tmpActivityList.add(tmpCurnListActivity.get(tmpI).getActivityLastStatus());
 			for(tmpJ = 0 ; tmpJ < Constants.DAILY_TIME.length ; tmpJ++){
 				tmpActivityList.add(false);
 			}
-			tmpActivityDetail = manager.getActivityRangeTime(currentListActivity.get(tmpI).getActivityId());
-			if(tmpActivityDetail.get(0).getActivityStatus() == Constants.Status.PAUSE  ||
-			   tmpActivityDetail.get(0).getActivityStatus() == Constants.Status.FINISH ||
-			   tmpActivityDetail.get(0).getActivityStatus() == Constants.Status.ABORT  ||
-			   tmpActivityDetail.get(0).getActivityStatus() == Constants.Status.SUBMIT) {
-			   tmpLastStatus  = true;
-			} else {
-				tmpLastStatus = false;
-			}
+			tmpK = Constants.DAILY_TIME.length - 1;
+			tmpActivityDetail = manager.getActivityRangeTime(tmpCurnListActivity.get(tmpI).getActivityId(), pForm.getCurrentDate());
 			
-			int tmpK = 0;
-			boolean tmpOverloop = false;
-			Date curnTime;
-			Date compTime;
 			for(tmpJ = 0 ; tmpJ < tmpActivityDetail.size() ; tmpJ++) {
+				if(tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.PAUSE  ||
+				   tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.FINISH ||
+				   tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.ABORT  ||
+				   tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.SUBMIT ||
+				   tmpActivityDetail.get(tmpJ).getActivityStatus()  == Constants.Status.CREATE) {
+				   tmpLastStatus  = false;
+				} else {
+				   tmpLastStatus  = true;
+				   tmpIsProgressed = true;
+				}
+				
 				tmpOverloop = false;
-				while(tmpK < Constants.DAILY_TIME.length){
-					curnTime = PrimeUtil.parseDateStringToTime(Constants.DAILY_TIME[tmpK]);
-					compTime = PrimeUtil.parseDateStringToTime(PrimeUtil.setDateToTimeString(tmpActivityDetail.get(tmpJ).getActivityChangeDate()));
-					tmpOverloop = compTime.after(curnTime);
-					
+				while(tmpK >= 0){
+					curnTime    = PrimeUtil.parseDateStringToDate(pForm.getCurrentDate().toString() + " " + Constants.DAILY_TIME[tmpK]);
+					compTime    = tmpActivityDetail.get(tmpJ).getActivityChangeDate();
+					tmpOverloop = compTime.before(curnTime);
+
 					if(tmpOverloop){
-						tmpActivityList.set(tmpK + 1, tmpLastStatus);
-						tmpK++;
+						switch(tmpIsToday){
+							case -1 :
+								 tmpActivityList.set(tmpK + 3, tmpLastStatus);
+								break;
+							case  0 :
+								 if(curnTime.before(tmpDateNow)){
+									 tmpActivityList.set(tmpK + 3, tmpLastStatus); 
+								 } else {
+									 tmpActivityList.set(tmpK + 3, false);
+								 }
+								break;
+						} 
+						tmpK--;
 					} else {
+						//For Small Time Difference Handling [< 30]
+						if(!tmpLastStatus){
+							tmpK++;
+						}
 						break;
 					}
 				}
-				if(tmpActivityDetail.get(tmpJ).getActivityStatus() == Constants.Status.PROGRESS){
-					tmpLastStatus = true;
-				}
-				else if(tmpActivityDetail.get(tmpJ).getActivityStatus() == Constants.Status.PAUSE  || 
-						tmpActivityDetail.get(tmpJ).getActivityStatus() == Constants.Status.FINISH ||
-						tmpActivityDetail.get(tmpJ).getActivityStatus() == Constants.Status.ABORT  ||
-						tmpActivityDetail.get(tmpJ).getActivityStatus() == Constants.Status.SUBMIT ||
-						tmpActivityDetail.get(tmpJ).getActivityStatus() == Constants.Status.CREATE) {
-					tmpLastStatus = false;
+				//Just break off for better performance
+				if(tmpK < 0){
+					break;
 				}
 			}
 			
-			//##.For Closing State [If Latest State is True]
-			curnTime = PrimeUtil.parseDateStringToTime(PrimeUtil.setDateToDateString(new Date()));
-			compTime = PrimeUtil.parseDateStringToTime(PrimeUtil.setDateToDateString(tmpDate));
-			tmpOverloop = compTime.before(curnTime);
-			if(tmpOverloop){ 
-				while(tmpK < Constants.DAILY_TIME.length){			
-					tmpActivityList.set(tmpK + 1, tmpLastStatus);
-					tmpK++;
-				}
+			if(tmpIsProgressed){
+				tmpData.add(tmpActivityList);	
 			}
-			tmpData.add(tmpActivityList);
 		}
 		
 		//---b.Get Activities
-		request.setAttribute("listActivities", tmpData);
-		
 		response.setContentType("text/text;charset=utf-8");
 		response.setHeader("cache-control", "no-cache");
 		PrintWriter tmpOut = response.getWriter();
@@ -196,11 +215,34 @@ public class DashboardAction extends Action{
 			tmpValueString += "<td>";
 			tmpValueString += tmpData.get(tmpJ).get(0); 
 			tmpValueString += "</td>";
-			for(int tmpK = 1 ; tmpK < tmpData.get(tmpJ).size() ; tmpK++){
+			tmpValueString += "<td>";
+			tmpValueString += tmpData.get(tmpJ).get(1); 
+			tmpValueString += "</td>";
+			tmpValueString += "<td>";
+			switch((int)tmpData.get(tmpJ).get(2)){
+				case Constants.Status.CREATE:
+					tmpValueString += "<span class=\"label label-warning\">Receive</span>";
+					break;
+				case Constants.Status.PROGRESS :
+					tmpValueString += "<span class=\"label label-success\">Progress</span>";
+					break;
+				case Constants.Status.PAUSE  :
+					tmpValueString += "<span class=\"label label-warning\">Pause</span>";
+					break;
+				case Constants.Status.FINISH :
+					tmpValueString += "<span class=\"label label-info\">Finish</span>";
+					break;
+				case Constants.Status.ABORT  :
+					tmpValueString += "<span class=\"label label-danger\">Abort</span>";
+					break;
+			}
+			tmpValueString += "</td>";
+			
+			for(tmpK = 3 ; tmpK < tmpData.get(tmpJ).size() ; tmpK++){
 				if((boolean)tmpData.get(tmpJ).get(tmpK)){	
-					tmpValueString += "<td bgcolor='green'>";
+					tmpValueString += "<td bgcolor='#339900'>";
 				} else {
-					tmpValueString += "<td >";
+					tmpValueString += "<td>";
 				}
 				tmpValueString += "</td>";
 			}
@@ -208,22 +250,85 @@ public class DashboardAction extends Action{
 		}
 
 		if(tmpData.size() <= 0){
-			tmpOut.print("<thead>" +
-								"<th></th>"   +
-						 "</thead>" +
-						 "<tbody>"  +
-						 		"<td><h5><center>No Activity Progress Can be Shown</center></h5></td>" +  
-						 "</tbody>");
+			tmpOut.print("<center><b>No Activity Progress can be Shown on this day.</center></b>");
 		} else {
-			tmpOut.print("<thead>" +
+			tmpOut.print("<table id=\"table-1\" class=\"display cell-border compact\" cellspacing=\"0\" width=\"100%\">" + 
+						 "<thead>" +
 								"<th>#</th>"   +
-								"<th>Activity</th>"   + 
+								"<th width=\"200px\">ID</th>"   + 
+								"<th width=\"200px\">Activity Name</th>"   + 
+								"<th width=\"200px\">Status</th>"   + 
 						 		tmpTimeString +
 						 "</thead>" +
 						 "<tbody>"  +
 						 		tmpValueString +  
-						 "</tbody>");
+						 "</tbody>" +
+					 	 "</table>");
 		}
 		tmpOut.flush();
+	}
+	
+	private void prepareCalendar(HttpServletRequest request, HttpServletResponse response) throws SQLException{
+		int tmpEmployeeId = 101;
+		
+		HolidayManager  tmpHolidayManager = new HolidayManagerImpl();
+		EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
+		List<String> list = new ArrayList<String>();
+		
+		//##. Set National Holiday Data and Day Off
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		List<HolidayBean> listHolidayBean = tmpHolidayManager.getListByYear(year);
+		for (HolidayBean e : listHolidayBean) {
+			list.add(getHoliday(e)+  ", " );
+		}
+		
+		for (EmployeeBean e : tmpEmployeeManager.getListDayoffByEmployeeId(tmpEmployeeId)) {
+			list.add(getEmployeeDayOff(e)+  ", " );
+		}
+		
+
+		request.setAttribute("calendar", list);
+	}
+	
+	private String getHoliday(HolidayBean e) {
+		String backgroundColor = "#f56954";
+		String borderColor = "#f56954";
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(e.getHolidayDate());
+		int y = c.get(Calendar.YEAR);
+		int m = c.get(Calendar.MONTH);
+		int d = c.get(Calendar.DATE);
+
+		String str = "{title: \"" + e.getHolidayDescription() + " \", "
+				+ "start: new Date("+ y + ", " + m + ", " + d + "), "
+				+ "backgroundColor: '" + backgroundColor + "', "
+				+ "borderColor: '" + borderColor + "' } ";
+		return str;
+	}
+	
+	private String getEmployeeDayOff(EmployeeBean e) {
+		String backgroundColor = "F7F707";
+		String borderColor = "#f56954";
+		
+		Calendar c = Calendar.getInstance();
+		c.setTime(e.getStartDate());
+		int yStart = c.get(Calendar.YEAR);
+		int mStart = c.get(Calendar.MONTH);
+		int dStart = c.get(Calendar.DATE);
+		System.out.println(e.getStartDate());
+
+		c.setTime(e.getEndDate());
+		int yEnd = c.get(Calendar.YEAR);
+		int mEnd = c.get(Calendar.MONTH);
+		int dEnd = c.get(Calendar.DATE)+1;
+		System.out.println(e.getEndDate());
+
+		String str = "{title: \"" + e.getDescriptionDayOff() + "\", "
+				+ "start: new Date(" + yStart + ", " + mStart + ", "+ dStart + "), " 
+				+ "end: new Date(" + yEnd + ", " + mEnd + ", " + dEnd + ")," 
+				+ "backgroundColor: '" + backgroundColor+ "', " 
+				+ "borderColor: '" + borderColor + "' } ";
+		return str;
 	}
 }

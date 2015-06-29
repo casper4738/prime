@@ -18,13 +18,19 @@
 	<html:hidden name="ProjectUserForm" property="employeeId"/>
 </html:form>
 
-<logic:equal name="ProjectUserForm" property="task" value="<%=Constants.Task.Project.DOCREATETASK%>">
-	<script>flyToForward('<%=Constants.Task.Project.GOTOTASKMEMBER%>', '<bean:message key="label.message.insert"/>')</script>
+<logic:equal name="ProjectUserForm" property="task" value="<%=Constants.Task.PROJECT.DOCREATETASK%>">
+	<script>flyToForward('<%=Constants.Task.PROJECT.GOTOTASKMEMBER%>', '<bean:message key="label.message.insert"/>')</script>
 </logic:equal>
 
-<logic:equal name="ProjectUserForm" property="task" value="<%=Constants.Task.Project.DOCREATEMEMBER%>">
-	<script>flyToForward('<%=Constants.Task.Project.GOTOPROJECTDETAIL%>', '<bean:message key="label.message.insert"/>')</script>
+<logic:equal name="ProjectUserForm" property="task" value="<%=Constants.Task.PROJECT.DOCREATEMEMBER%>">
+	<script>flyToForward('<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL%>', '<bean:message key="label.message.insert"/>')</script>
 </logic:equal>
+
+
+<logic:equal name="ProjectUserForm" property="task" value="<%=Constants.Task.PROJECT.DOEDITMEMBER%>">
+	<script>flyToForward('<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL%>', '<bean:message key="label.message.insert"/>')</script>
+</logic:equal>
+
 
 
 </body>

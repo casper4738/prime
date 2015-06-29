@@ -17,6 +17,7 @@
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+	<script src="resources/prime.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$('#table-1').dataTable( {
 			paging    : false,
@@ -33,6 +34,22 @@
 			tmpForm.employeeId.value = valueMember;
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
+		function flyToEdit(task, employeeId){
+			var tmpForm = document.forms[0]; 
+			tmpForm.task.value = task;
+			tmpForm.employeeId.value = employeeId;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+		
+		
+		function flyToSubmit(task) {
+		//	alert(valueProjectId);
+			var tmpForm = document.forms[0]; 
+			tmpForm.task.value = task;
+		//	tmpForm.projectId.value = valueProjectId;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+		
 	</script>
 	<!-- End JS -->
 </head>
@@ -41,16 +58,17 @@
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
-			<li class="active">Project</li>
+			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
+			<li class="active">Project Detail</li>
 		</ol>
 	</section>
 
-	<section class="content">
+	<section class="content">	
 	<div class="row">
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Data Project Member</h3></div>
 			<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-			<tr><td>Project Name : <bean:write name="ProjectUserForm" property="projectBean.projectName"/> </td>
+			<tr><td>Project Name : ${ProjectUserForm.projectBean.projectId} <bean:write name="ProjectUserForm" property="projectBean.projectName"/></td>
 				<td>Project Assigner : <bean:write name="ProjectUserForm" property="projectBean.projectAssignerName" /> </td>
 			</tr>
 			<tr><td>Start Date : <bean:write name="ProjectUserForm" property="projectBean.projectStartDate" format="dd MMMM yyyy"/> </td>
@@ -71,7 +89,7 @@
 				<table align="center"><tr>
 					<td style="padding:5px;">
 						<input type="button" value="Add New Project Member" class="btn btn-sm btn-primary" onclick="flyToPage('addmember')"/></td>
-					<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/></td>
+					<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToSubmit('<%=Constants.Task.TASK.GOTOSUBMIT%>', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
 				</tr></table>
             </div>
 			
@@ -90,6 +108,7 @@
 					<html:hidden name="ProjectUserForm" property="employeeId"/>
 					<html:hidden name="ProjectUserForm" property="goToPage"/>
 					<html:hidden name="ProjectUserForm" property="showInPage"/>
+					<html:hidden name="ProjectUserForm" property="tempRoleId"/>
 					<html:select name="ProjectUserForm" property="columnSearch" styleClass="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
@@ -118,12 +137,13 @@
 	                		<td><bean:write name="iter" property="email"/></td>
 	                		<td><bean:write name="iter" property="contactNumber"/></td>
 	                		<td align="center">
-	                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.GOTOEDIT%>', '<bean:write name="iter" property="projectMemberId"/>')" src="resources/image/edit.png" />
-	                        	<input type="image" onclick="flyToEditDeleteAct('<%=Constants.Task.ACTIVITY.DODELETE%>', '<bean:write name="iter" property="projectMemberId"/>')" src="resources/image/remove.png" />
-                     	        		<input type="image" onclick="flyToChangeStatusAct()" src="resources/image/viewmore.png" />
-                     	        		<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail(
-                     	        				'<%=Constants.Task.Project.GOTOTASKMEMBER%>', 
-                     	        				'<bean:write name="iter" property="employeeId"/>')">
+	                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.PROJECT.GOTOEDITMEMBER%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
+                 	        	<input type="image" onclick="flyToChangeStatusAct()" src="resources/image/remove.png"/>
+                     	        <input type="image" value='Details' onclick="flyToTaskDetail(
+                     	        				'<%=Constants.Task.PROJECT.GOTOTASKMEMBER%>', 
+                     	        				'<bean:write name="iter" property="employeeId"/>')"
+     	        								src="resources/image/viewmore.png"
+                     	        				>
 	                        </td>	
 	                    </tr> 
                     </logic:iterate>

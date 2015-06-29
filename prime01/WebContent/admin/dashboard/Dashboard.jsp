@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-
+  
 <!DOCTYPE html>
 <html>
 <head> 
@@ -11,50 +11,41 @@
     <title>AdminLTE 2 | Calendar</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 <!-- CSS -->
-
 	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+   <link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
     <link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-    <link href="resources/plugins/iCheck/flat/blue.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/morris/morris.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/jvectormap/jquery-jvectormap-1.2.2.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/daterangepicker/daterangepicker-bs3.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
-	
-	
-   
 </head>
 
 <body class="skin-blue sidebar-mini">
-		<section class="content">
-		<div class="row">
-			<section class="col-lg-5">
-			<div class="box box-primary">
-				<div class="box-header">
-                  <h3 class="box-title">Welcome, Alexander</h3>
-                  </div>
-                  <div class="box-tools">
-					<div class="box-body no-padding">
-						<center><img class="photo" src="image/resize-Lighthouse.jpg" /></center>
-					</div>
+	<section class="content">
+	<div class="row">
+		<section class="col-lg-5">
+		<div class="box box-primary">
+			<div class="box-header">
+                 <h3 class="box-title">Welcome, Alexander</h3>
+                 </div>
+                 <div class="box-tools">
+				<div class="box-body no-padding">
+					<center><img class="photo" src="image/resize-Lighthouse.jpg" /></center>
 				</div>
-			</section>
+			</div>
+			</div>
+		</section>
 
-            <div class="col-lg-7">
-              <div class="box box-primary">
-                <div class="box-body no-padding">
-                  <!-- THE CALENDAR -->
-                  <div id="calendar"></div>
-                </div><!-- /.box-body -->
-              </div><!-- /. box -->
-            </div><!-- /.col -->
-          </div><!-- /.row -->
-      </section>
+           <div class="col-lg-7">
+             <div class="box box-primary">
+               <div class="box-body no-padding">
+                 <!-- THE CALENDAR -->
+                 <div id="calendar"></div>
+               </div><!-- /.box-body -->
+             </div><!-- /. box -->
+           </div><!-- /.col -->
+         </div><!-- /.row -->
+     </section>
       
 		<div id="fullCalModal" class="modal fade">
 		    <div class="modal-dialog">
@@ -71,11 +62,6 @@
 		    </div>
 		</div>
     
-      <!-- Add the sidebar's background. This div must be placed
-           immediately after the control sidebar -->
-      <div class='control-sidebar-bg'></div>
-      
-       
     <script src="resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="resources/plugins/jQueryUI/jquery-ui-1.10.3" type="text/javascript"></script>
@@ -85,10 +71,6 @@
     <script src="resources/dist/js/demo.js" type="text/javascript"></script>
     <script src="resources/plugins/moment/moment.min.js" type="text/javascript"></script>
     <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
-    
-    <script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <!-- Page specific script -->
     <script type="text/javascript">
       $(function () {
@@ -209,9 +191,6 @@
           //Remove event from text input
           $("#new-event").val("");
         });
-        
-        
-        
       });
     </script>
 </body>
