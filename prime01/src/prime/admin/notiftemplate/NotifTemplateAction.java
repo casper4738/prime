@@ -43,8 +43,8 @@ public class NotifTemplateAction extends Action{
 		int countRows  = tmpManager.getCountByColumn();
 		
 		List<NotifTemplateBean> list = tmpManager.getListByColumn(
-														  PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(),0),  
-														  PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),0));
+														  PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(),countRows),  
+														  PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),countRows));
 		
 		//##1.Attribute For Table Paging
 		request.setAttribute("listNotifTemplate", list);
