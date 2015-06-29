@@ -6,7 +6,7 @@
 <%@page import="java.util.Date" %>  
 <%@page import="java.text.DateFormat" %>  
 <%@ page import="prime.admin.employee.EmployeeBean" %>
-
+<%@ page import="prime.admin.employee.EmployeeManagerImpl" %>
 <!DOCTYPE html>
 <html>
 <head> 
@@ -88,7 +88,6 @@
 			<div class="box-body">
                	<html:form action="/EmployeeAdmin">
                		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
-               		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
                		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
                		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
                		<html:hidden name="EmployeeAdminForm" property="tmpId" />
@@ -224,16 +223,42 @@
 						                	<tr>
 						                		<td><bean:write name="iter" property="startDate"/> </td>
 						                		<td><bean:write name="iter" property="endDate"/> </td>
-						                		<td><%=1%> </td>
+						                		<bean:define id="dateStart" name="iter" property="startDate"  toScope="request"/>
+						                		<bean:define id="dateEnd" name="iter" property="endDate"  toScope="request"/>
+						                		<bean:define id="employeeId" name="EmployeeAdminForm" property="employeeBean.employeeId"  toScope="request"/>
+						                		<%
+						                			java.sql.Date endDate = (java.sql.Date) request.getAttribute("dateEnd");
+						                			java.sql.Date startDate = (java.sql.Date) request.getAttribute("dateStart");
+						                			long DAY = 24 * 3600 * 1000;
+						                			long diffDate = endDate.getTime() - startDate.getTime() + DAY;
+						                			
+						                			int days = (int) ( diffDate / DAY);
+						                			int totalDayOff;
+						                			//out.print(days + " DAYS");
+						                			//total_dayOff = Math.abs(request.getAttribute("dateEnd").getTime() - request.getAttribute("dateStart"));
+						                			
+						                			EmployeeManagerImpl tmpEmployeeManager = new EmployeeManagerImpl();
+						                			try{
+						                				int countNationalHoliday=tmpEmployeeManager.getCountNationalHolidayByDayOff(startDate, endDate);
+						                				int countDayOff=tmpEmployeeManager.getCountWeekendByDayOff(startDate, endDate, pForm.);
+						                				out.print(tmpEmployeeManager.getCountNationalHolidayByDayOff(startDate, endDate));
+						                				totalDayOff=days-countNationalHoliday;
+						                			}catch(Exception e) {
+						                				out.print("CAST : "+e.getMessage());
+						                			}
+						                			
+						                		
+						                			//tmpEmployeeManager.getCountWeekendByDayOff(request.getAttribute("dateStart").toString(), request.getAttribute("dateEnd").toString(), 102);
+						                		%>
+						                		<td><%=totalDayOff%> </td>
 						                		<td><bean:write name="iter" property="descriptionDayOff"/> </td>
 						                		<td>
-						                			<bean:define id="datey" name="iter" property="startDate"  toScope="request"/>
 						                			<% 
 							                			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 						                			
 							                		try {
-							                				java.sql.Date startDate = (java.sql.Date) request.getAttribute("datey");
-							                				java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
+							                			//java.sql.Date startDate = (java.sql.Date) request.getAttribute("dateStart");
+						                				java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
 					                					if(date.compareTo(startDate) < 0) {
 					                				%>
 					                					<input type="button" value="Del" styleClass="btn btn-default" onclick="flyToDelete('<%=Constants.Task.DOEDITDAYOFF%>', <bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>, '<bean:write name="iter" property="startDate"/>','<%=Constants.Confirmation.DELETE %>')"/>
@@ -241,7 +266,6 @@
 					                					} 
 						                			} catch (Exception e) {
 						                				out.print("CAST : "+e.getMessage());
-						                				
 						                			}
 						                			%>
 						                		</td>

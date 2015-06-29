@@ -183,7 +183,7 @@ function modalSubmitReturnValue(retValue,retForm){
 			var res = retValue.split(',');
 			document.getElementById('employeeName').value=res[1];
 			document.forms[0].employeeId.value=res[0].replace('[','');
-		} else if(retForm=='projectMember'){
+		} else if(retForm=='project'){
 			var res = retValue.split(',');
 			document.getElementById('employeeName').value=res[1];
 			document.forms[0].employeeId.value=res[0].replace('[','');

@@ -1,6 +1,7 @@
 
 package prime.admin.employee;
 
+import java.sql.Date;
 import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
@@ -308,5 +309,27 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		} finally {
 			mapper.endTransaction();
 		}	
+	}
+
+	@Override
+	public Integer getCountNationalHolidayByDayOff(Date startDayOff,Date endDayOff) throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("startDayOff", startDayOff);
+		map.put("endDayOff", endDayOff);
+		return (Integer) mapper.queryForObject("employee.getListNationalHoliday", map);
+	}
+
+	@Override
+	public Integer getCountWeekendByDayOff(Date startDayOff,Date endDayOff, Integer employeeId) throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		System.out.println(startDayOff);
+		System.out.println(endDayOff);
+		System.out.println(employeeId);
+		map.put("startDayOff", startDayOff);
+		map.put("endDayOff", endDayOff);
+		map.put("employeeId", employeeId);
+		return (Integer) mapper.queryForObject("employee.getListWeekendEmployee", map);
 	}
 }

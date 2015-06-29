@@ -341,6 +341,9 @@
 	        <isEqual property="paramCondition" compareValue="employeeAdd">
 				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel#
 			</isEqual>
+			<isEqual property="paramCondition" compareValue="projectAssigner">
+				POS.POSITION_LEVEL <![CDATA[ <= ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId#  AND (EMP.DIVISION_ID = $divisionId$ OR EMP.DIVISION_ID IS NULL)
+			</isEqual>
 			<isEqual property="paramCondition" compareValue="employeeEditPosDiv">
 				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId# 
 			</isEqual>
@@ -392,57 +395,30 @@
 	<!-- SELECT COUNT NATIONAL HOLIDAY BETWEEN DAY OFF -->
 	<select id="getListNationalHoliday" resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(0) FROM NATIONAL_HOLIDAYS WHERE  HOLIDAY_DATE BETWEEN 
-                TO_DATE(#startDayOff#,'dd-mm-yyyy') 
-                AND TO_DATE(#endDayOff#,'dd-mm-yyyy')
+                #startDayOff# AND #endDayOff#
 	</select>
 	
-	
-	<!-- NOT USE NOW (FM CREATE) -->
-	<!-- <select id="getListByColumnAndDivision" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
-		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
-		(SELECT 
-        EMP.EMPLOYEE_ID AS employeeId, 
-        EMP.EMPLOYEE_NAME AS employeeName,
-        GENDER AS gender,
-        ADDRESS AS address,
-        BIRTHDATE AS birthdate,
-        CONTACT_NUMBER AS contactNumber,
-        EMAIL AS email,
-        DIVISION_NAME AS divisionName,
-        POSITION_NAME AS positionName,
-        EMPLOYEE_LEVEL AS employeeLevel,
-        MANAGER.EMPLOYEE_NAME AS managerName
-        FROM EMPLOYEES EMP 
-        INNER JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
-        INNER JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-        LEFT JOIN (SELECT EMPLOYEE_ID, EMPLOYEE_NAME FROM EMPLOYEES) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-		WHERE 1=1 AND  DIV.DIVISION_ID = #divisionId#  
-		<dynamic prepend="AND">
-	        <isNotNull property="columnSearch">
-		       	<isEqual property="columnSearch" compareValue="NAME">
-					UPPER(EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
-				</isEqual> 
-	        </isNotNull>
-	    </dynamic>
-	    ORDER BY EMP.EMPLOYEE_ID ASC) page 
-	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	<!-- SELECT COUNT WEEKEND EMPLOYEE BETWEEN DAY OFF -->
+	<select id="getListWeekendEmployee" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(0) FROM (
+	       SELECT EMPLOYEE_ID,start_from,regexp_substr(WEEKEND,'[^,]+', 1, level) AS  SPLIT_WEEKEND,(start_from +
+	       CASE WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Monday' THEN 0
+	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Tuesday' THEN 1
+	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Wednesday' THEN 2
+	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Thursday' THEN 3
+	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Friday' THEN 4
+	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Saturday' THEN 5
+	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Sunday' THEN 6
+	       END
+	       --ELSE 6 END
+	     )DATE_WEEKEND from WEEKEND_HOLIDAYS
+	     connect by regexp_substr(WEEKEND, '[^,]+', 1, level) is not null
+	  ) SETWEEKEND
+	  WHERE DATE_WEEKEND BETWEEN 
+	                TO_DATE('01-12-2015','dd-mm-yyyy') 
+	                AND TO_DATE('31-12-2015','dd-mm-yyyy') AND EMPLOYEE_ID=102
 	</select>
 	
-	<select id="getCountByColumnAndDivision" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT COUNT(1) 
-		FROM EMPLOYEES EMP 
-        INNER JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
-        INNER JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
-        LEFT JOIN (SELECT EMPLOYEE_ID, EMPLOYEE_NAME FROM EMPLOYEES) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
-        WHERE  1=1 AND DIV.DIVISION_ID = #divisionId# 
-	    <dynamic prepend="AND">
-	        <isNotNull property="columnSearch">
-		       	<isEqual property="columnSearch" compareValue="NAME">
-			         UPPER(EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
-				</isEqual> 
-	        </isNotNull>
-	    </dynamic>
-	</select> -->
 	
 	<!-- select employee by tree and division and level  -->
 	<select id="getListByTreeWithDivision" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">

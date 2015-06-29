@@ -69,7 +69,7 @@ public class ModalAction extends Action {
     			List<EmployeeBean> list;
     			PositionBean listPosition;
         		PositionManager pManager = new PositionManagerImpl();
-        		listPosition = pManager.getPositionById(pForm.getParam2());
+    			listPosition = pManager.getPositionById(pForm.getParam2());
         		EmployeeManager manager = new EmployeeManagerImpl();
         		ArrayList<String> tmpColHead = new ArrayList<String>();
         		
@@ -137,8 +137,8 @@ public class ModalAction extends Action {
                 			request.setAttribute("modalForm", "employeeResign");
                 		}else if(pForm.getParam3().equals("employeeUser")){
                 			request.setAttribute("modalForm", "employeeUser");
-                		}else if(pForm.getParam3().equals("projectMember")){
-                			request.setAttribute("modalForm", "projectMember");
+                		}else if(pForm.getParam3().equals("projectAssigner")){
+                			request.setAttribute("modalForm", "project");
                 		}
                 		
                 		//---b.Column Head
