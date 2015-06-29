@@ -53,7 +53,7 @@
 				 document.getElementById('validator').innerHTML="Name must be filled out";
 				 tmpValidated = false;
 			 }
-			    
+			
 			 if(userName != null || userName != ""){
 			 	 for (var i = 0; i < userName.length; i++) {
 		       	 	if (specialChars.indexOf(userName.charAt(i)) != -1) { 
