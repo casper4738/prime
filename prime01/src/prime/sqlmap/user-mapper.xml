@@ -5,8 +5,8 @@
 		INSERT INTO USERS
 		(USERNAME, PASSWORD, SYSTEM_LEVEL, LAST_ACTIVE, EMPLOYEE_ID, STATUS_USER, ACTION_DATE, IS_ACTIVE_DIR, UPDATED_BY) 
 		VALUES 
-		(#userName#, dbms_crypto.hash(to_clob(#password#), 2), #sysLevel#, SYSDATE-(1/(24*60)), #employeeId#, '1', SYSDATE-(1/(24*60)), '1', #updateBy#)
-		</insert>
+		(#userName#, dbms_crypto.hash(to_clob(#password#), 2), #sysLevel#, SYSDATE-(1/(24*60)), #employeeId#, '1', SYSDATE-(1/(24*60)), #isActiveDirectory#, #updateBy#)
+	</insert>
 	
 	<select id="get" resultClass="prime.admin.user.UserBean" parameterClass="java.lang.String">
 		SELECT 

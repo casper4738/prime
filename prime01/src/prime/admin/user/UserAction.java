@@ -46,6 +46,14 @@ public class UserAction extends Action {
 		} else if (Constants.Task.DOADD.equals(userForm.getTask())) {
 			userForm.getUserBean().setEmployeeId(userForm.getEmployeeId());
 			userForm.getUserBean().setUpdateBy("dedy");
+			
+			if(userForm.getUserBean().getPassword().length() <= 0){
+				userForm.getUserBean().setIsActiveDirectory(true);
+				userForm.getUserBean().setPassword("empty");
+			} else {
+				userForm.getUserBean().setIsActiveDirectory(false);
+			}
+			
 			tmpManager.insert(userForm.getUserBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOLOCK.equals(userForm.getTask())) {
