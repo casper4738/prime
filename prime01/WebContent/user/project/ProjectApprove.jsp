@@ -41,6 +41,13 @@
 			//##1.Accessing Prime Method For Modal Showing
 			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=projectMember", $('#result'));
 		}
+		
+		function flyToBack(task, value) {
+			var tmpForm = document.forms[0]; 
+			tmpForm.task.value = task;
+			tmpForm.projectId.value = value;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
 	</script>
 	
 	<!-- End JS -->
@@ -49,25 +56,27 @@
 <body class="skin-blue sidebar-mini">
 	
 	<section class="content-header">
-		<h1>Project<small>management project</small>
-		</h1>
+		<h1>Project User</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Project</li>
+			<li><i class="fa fa-dashboard"></i> Home</li>
+			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
+			<li class="active"><a href="javascript:flyToBack(
+	                        		'detailsAsHead', 
+	                        		'<bean:write name="ProjectUserForm" property="projectId"/>')">Project Detail</a></li>
+			<li class="active">Project Approval Form</li>
 		</ol>
 	</section>
 
 	<section class="content">
 	<div class="row">
 		<div class="col-xs-12"><div class="box">
-			<div class="box-header"><h3 class="box-title">Data Project</h3></div>
+			<div class="box-header"><h3 class="box-title">Project Approval Form</h3></div>
 			<div class="box-body">
                 	<html:form action="/ProjectUser">
-                		<html:hidden name="ProjectUserForm" property="task" value="doSubmit"/>
+                		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectName" />
              			<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
-             			<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver"/>
-						<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner"/>
+             			<html:hidden name="ProjectUserForm" property="projectId"/>
                 		<table class="form-input" align="center">
                 		
                 			<tr>
@@ -87,7 +96,7 @@
                 			<tr>
                 				<td colspan="3" align="center">
                 					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="dosubmit()"/>
-                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+                					<input type="button" property="" value="Cancel" class="btn btn-default" onclick="flyToBack('detailsAsHead','<bean:write name="ProjectUserForm" property="projectId"/>')"/>
                 				</td>
                 			</tr>
                 		</table>

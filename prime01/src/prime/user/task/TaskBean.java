@@ -10,7 +10,7 @@ public class TaskBean {
 	private Integer projectMemberId = 0;
 	private Integer taskStatus;
 	private Integer taskLastStatus;
-	private Double percentage;
+	private Integer percentage;
 	private Date taskStartDate;
 	private Date taskEstimateDate;
 	private Date taskChangeDate;
@@ -25,11 +25,11 @@ public class TaskBean {
 		setTaskEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
 	}
 	
-	public Double getPercentage() {
+	public Integer getPercentage() {
 		return percentage;
 	}
 
-	public void setPercentage(Double percentage) {
+	public void setPercentage(Integer percentage) {
 		this.percentage = percentage;
 	}
 

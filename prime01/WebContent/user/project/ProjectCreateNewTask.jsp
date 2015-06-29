@@ -42,7 +42,7 @@
                 		<html:hidden name="ProjectUserForm" property="projectBean.taskBean.taskChangeNote" value=""/>
                 		<table class="form-input" align="center">
                 			<tr>
-                				<td  width="100px">Task Name</td>
+                				<td  width="200px">Task Name</td>
                 				<td>:</td>
                 				<td><html:text name="ProjectUserForm" property="projectBean.taskBean.taskName" styleClass="form-control"/></td>
                 			</tr>

@@ -137,9 +137,14 @@
 			<forward name="detailsAsHead"	path="/user/project/ProjectDetailsAsHead.jsp"></forward>
 			<forward name="editMemberRole" 	path="/user/project/ProjectEditMemberRole.jsp"></forward>
 			<forward name="detailMember" 	path="/user/project/ProjectMemberDetails.jsp"></forward>
+			<forward name="detailMemberAsHead" 	path="/user/project/ProjectMemberDetailsAsHead.jsp"></forward>
 			<forward name="createTask" 		path="/user/project/ProjectCreateNewTask.jsp"></forward>
 			<forward name="forward" 		path="/user/project/Forward.jsp"></forward>
 			<forward name="taskDetail" 		path="/user/project/ProjectTaskDetail.jsp"></forward>
+			<forward name="approve" 		path="/user/project/ProjectApprove.jsp"></forward>
+			<forward name="reject" 	  		path="/user/project/ProjectReject.jsp"></forward>
+			<forward name="changePM" 		path="/user/project/ProjectChangePM.jsp"></forward>
+			<forward name="submit" 			path="/user/project/ProjectSubmit.jsp"></forward>
 		</action>
 		
 		<!-- Login -->

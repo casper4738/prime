@@ -3,7 +3,7 @@
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 
-<% request.setAttribute("status", request.getParameter("status")); %>
+<bean:define id="status" value="${param.status}" toScope="request" />
 
 <logic:equal name="status" value='<%=Constants.Status.CREATE+""%>'>
 	<span class="label label-warning">Receive</span>

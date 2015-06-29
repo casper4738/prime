@@ -42,8 +42,8 @@ public class TaskHeadAction extends Action {
 		if (Constants.Task.TASK.GOTOTASKTYPE.equals(pForm.getTask())) {
 			pForm.getTaskBean().setTaskId(manager.getNewId());
 			
-			int countRows  = tmpEmployeeManager.getCountListByTreeWithoutDivision(pForm.getColumnSearch(), pForm.getSearch(), employeeId);
-			List<EmployeeBean> list = tmpEmployeeManager.getListByTreeWithoutDivision(pForm.getColumnSearch(), pForm.getSearch(),
+			int countRows  = tmpEmployeeManager.getCountListByTree(pForm.getColumnSearch(), pForm.getSearch(), employeeId);
+			List<EmployeeBean> list = tmpEmployeeManager.getListByTree(pForm.getColumnSearch(), pForm.getSearch(),
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					employeeId
