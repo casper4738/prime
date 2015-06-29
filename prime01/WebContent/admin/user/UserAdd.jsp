@@ -27,7 +27,7 @@
 	<script type="text/javascript">
 		$(document).ready(function(){
 			lockPasswordColumn();
-			$('#ajax-validating').hide();
+			$('#username-validating').hide();
 		});
 		
 		function validateForm(){
@@ -92,7 +92,31 @@
 			 }
 			 
 			 if(tmpValidated){
-			     flyTo(); 
+				 //Do Database Checking, if Success Fly To
+				  $('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Validating employee data");
+				  $('#btn-save').hide();
+				  $('#btn-cancel').hide();
+				  $.ajax({ 
+			          type	  : "POST",
+			          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_USER]%>',  
+			          data	  : 'task=<%=Constants.Task.DOVALIDATE2%>&employeeId=' + $('#employeeId').val(),
+			          success : function(msg){
+							 param = msg.split('#');
+							 
+							 if(param[0] == "0"){ //Success
+				        	  	 flyTo(); 
+							 } else {			   //Failed
+								 $('#employee-validating').html(param[1]);
+							 	 $('#btn-save').show();
+								 $('#btn-cancel').show();
+							 }
+			          },
+			          
+			          error: function(){
+							alert("ERROR");
+			        	  	//TO DO :: Add Error Handling
+			          }
+			     });
 			 }
 		}		
 	
@@ -115,8 +139,8 @@
 			  }
 			
 			  //##1.Set Loading and Disable Button
-			  $('#ajax-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Checking username");
-			  $('#ajax-validating').show();
+			  $('#username-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Checking username");
+			  $('#username-validating').show();
 			  $('#btn-save').attr("disabled", true);
 			  $('#validatorEmployee').html("");
 			  $('#validatorUsername').html("");
@@ -125,10 +149,10 @@
 			  $.ajax({ 
 		          type	  : "POST",
 		          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_USER]%>',  
-		          data	  : 'task=<%=Constants.Task.DOVALIDATE%>&userBean.userName=' + $('#username').val(),
+		          data	  : 'task=<%=Constants.Task.DOVALIDATE1%>&userBean.userName=' + $('#username').val(),
 		          success : function(msg){
 		        	  var param = msg.split('#');
-	        		  $('#ajax-validating').html(param[1]);
+	        		  $('#username-validating').html(param[1]);
 		        	  if(param[0] == "1"){ 		  //Success [Normal]
 		        		  unlockPasswordColumn();
 		        	  } else if(param[0] == "2"){ //Success [Active Directory]
@@ -189,7 +213,7 @@
 					<div class="box-body">
 	                	<html:form action="/UserAdmin" styleId= "userForm">
 	                		<html:hidden name="UserAdminForm" property="task"/>
-	                		<html:hidden name="UserAdminForm" property="employeeId" />
+	                		<html:hidden name="UserAdminForm" property="employeeId" styleId="employeeId"/>
 	                		<table class="form-input" style="width: 500px" id="table-input">
 	                			<tr>
 	                				<td width="150px">Employee Name</td>
@@ -217,7 +241,7 @@
 	                				<td></td>
 	                				<td></td>
 	                				<td>	
-							            <div id="ajax-validating"></div>           
+							            <div id="username-validating"></div>           
 	                					<i><span id="validatorUsername" style="color: red;font-size: 8"></span></i>
 	                				</td>
 	                			</tr>
@@ -252,6 +276,11 @@
 			               				</html:select>
 			               			</td>
 	                			</tr> 
+	                  			<tr>
+	                  				<td></td>
+									<td></td>
+	                  				<td><div id="employee-validating"></div></td>
+	                  			</tr>
 	                			<tr>
 	                  				<td colspan="3" align="center">
 	                  					<html:button property="" value="Save" styleClass="btn btn-primary" styleId="btn-save" onclick="validateForm()" />

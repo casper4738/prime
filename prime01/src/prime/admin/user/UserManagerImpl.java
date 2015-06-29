@@ -72,10 +72,14 @@ public class UserManagerImpl implements UserManager {
 		
 	}
 	
-	public void changePassword(UserBean e) throws SQLException {
+	public void changePassword(String username, String newPassword) throws SQLException {
 		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("username", username);
+			map.put("newPassword", newPassword);			
+			
 			mapper.startTransaction();
-			mapper.update("user.changePassword", e);
+			mapper.update("user.changePassword", map);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();

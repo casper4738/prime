@@ -28,10 +28,10 @@
 			  PASSWORD=dbms_crypto.hash(to_clob(#password#), 2)
 	</select>
 	
-	<update id="changePassword" parameterClass="prime.admin.user.UserBean">
+	<update id="changePassword" parameterClass="java.util.HashMap">
 		 UPDATE USERS SET
 		 PASSWORD = dbms_crypto.hash(to_clob(#newPassword#), 2)
-		 WHERE USERNAME = #userName#
+		 WHERE USERNAME = #username#
 	</update>
 	
 	<select id = "getNewId" resultClass = "java.lang.Integer">
