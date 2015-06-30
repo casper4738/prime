@@ -71,7 +71,7 @@
 		    (SELECT LISTAGG (R.ROLE_NAME, ', ') WITHIN GROUP (ORDER BY R.ROLE_NAME)
 				FROM ROLES R
 		        JOIN PROJECT_MEMBERS PMX ON R.ROLE_ID = PMX.ROLE_ID
-		        WHERE   PMX.PROJECT_ID = P.PROJECT_ID  AND PMX.EMPLOYEE_ID = E.EMPLOYEE_ID AND PMX.ROLE_ID!=0
+		        WHERE   PMX.PROJECT_ID = P.PROJECT_ID  AND PMX.EMPLOYEE_ID = E.EMPLOYEE_ID AND PMX.ROLE_ID!=1
 		        AND NVL(PMX.PROJECT_MEMBER_STATUS, 1) = 1
 		    ) 						AS roleName,
 		    D.DIVISION_NAME 		AS divisionName,
@@ -83,7 +83,7 @@
 		JOIN PROJECT_MEMBERS PM ON E.EMPLOYEE_ID = PM.EMPLOYEE_ID
 		JOIN PROJECTS P ON P.PROJECT_ID = PM.PROJECT_ID
 		JOIN ROLES R ON PM.ROLE_ID = R.ROLE_ID
-		WHERE P.PROJECT_ID = #projectId# AND PM.ROLE_ID !=0
+		WHERE P.PROJECT_ID = #projectId# AND PM.ROLE_ID !=1
 		<dynamic prepend="AND">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
@@ -254,7 +254,7 @@
 		    SELECT PROJECT_MEMBER_ID, ROLE_ID, PROJECT_MEMBER_STATUS FROM PROJECT_MEMBERS
 		    WHERE EMPLOYEE_ID = #employeeId# AND PROJECT_ID=#projectId#
 		) PROJ_MBR ON PROJ_MBR.ROLE_ID = ROLE.ROLE_ID
-		WHERE ROLE.ROLE_ID !=0
+		WHERE ROLE.ROLE_ID !=1
 		ORDER BY ROLE_NAME ASC
 	</select>
 	
@@ -298,7 +298,8 @@
         WHERE PM.PROJECT_ID=#projectId# 
         AND P.PROJECT_RECEIVER=#projectReceiver# 
         AND E.EMPLOYEE_ID=#employeeReceiver#
-        AND R.ROLE_ID=0
+        AND R.ROLE_ID=1
+        AND PM.PROJECT_MEMBER_STATUS=1
 	</select>
 	
 	<update id="updateProjectReceiver" parameterClass="java.util.Map">

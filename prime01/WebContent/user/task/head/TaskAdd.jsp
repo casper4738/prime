@@ -29,6 +29,26 @@
 			tmpForm.task.value = "success";
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
+		
+		function checkDays(){
+			alert($('#start-date').val());
+			alert($('#estimate-date').val());
+			
+		 	$('#mainDays').html("<i class=\"fa fa-refresh fa-spin\"></i> Checking ");
+		  	$('#mainDays').show();
+			$.ajax({ 
+		          type	  : "POST",
+		          url	  : '<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>',  
+		          data	  : 'task=<%=Constants.Task.DOVALIDATE1%>&taskBean.taskStartDate='+ $('#start-date').val()+'&taskBean.taskEstimateDate='+ $('#estimate-date').val(),
+		          success : function(msg){
+	        		  $('#mainDays').html(msg);
+		          },
+		          
+		          error: function(){
+		        	  //TO DO :: Add Error Handling
+		          }
+		       });
+		}
     </script>
 </head>
 <body class="skin-blue sidebar-mini">
@@ -55,49 +75,46 @@
                 			<tr>
                 				<td width="150px">Task Name</td>
                 				<td>:</td>
-                				<td>
                 				<td><html:text name="TaskHeadUserForm" property="taskBean.taskName" styleClass="form-control"/></td>
                 			</tr>
                 			<tr>
                 				<td>Task Assigner</td>
                 				<td>:</td>
-                				<td>
                 				<td><html:text name="TaskHeadUserForm"  property="taskBean.taskAssignerName" styleClass="form-control" disabled="true"/></td>
                 			</tr>
                 				<tr>
                 				<td>Task Receiver</td>
                 				<td>:</td>
-                				<td>
                 				<td><html:text name="TaskHeadUserForm" property="taskBean.taskReceiverName" styleClass="form-control" disabled="true" /></td>
                 			</tr>
                 				<tr>
                 				<td>Start Date</td>
                 				<td>:</td>
-                				<td>
                 				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                				  	<html:text name="TaskHeadUserForm" property="taskBean.taskStartDate" styleClass="form-control pull-right" styleId="start-date" />
+                				  	<html:text name="TaskHeadUserForm" property="taskBean.taskStartDate" styleClass="form-control pull-right" styleId="start-date" onchange="checkDays()"/>
                 				  	</div>
                 				</td>
                 			</tr>
                 			<tr>
                 				<td>Estimate Date</td>
                 				<td>:</td>
-                				<td>
                 				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                				  	<html:text name="TaskHeadUserForm" property="taskBean.taskEstimateDate" styleClass="form-control pull-right" styleId="estimate-date"/>
+                				  	<html:text name="TaskHeadUserForm" property="taskBean.taskEstimateDate" styleClass="form-control pull-right" styleId="estimate-date" onchange="checkDays()"/>
                 				  	</div>
                 				</td>
-					
-						
+                			</tr>
+                			<tr>
+                				<td></td>
+                				<td></td>
+                				<td><i><span id="mainDays" style="color: red;font-size: 8"></span></i></td>
                 			</tr>
                 			<tr>
                 				<td>Description</td>
                 				<td>:</td>
-                				<td>
                 				<td><html:textarea name="TaskHeadUserForm" property="taskBean.taskDescription" styleClass="form-control" rows="5"/></td>
                 			</tr>
                 			<tr>
-                				<td colspan="6" align="center">
+                				<td colspan="3" align="center">
                 					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()"/>
                 					<html:button property="" value="Batal" styleClass="btn btn-default" onclick="doback()"/>
                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="docancel()"/>

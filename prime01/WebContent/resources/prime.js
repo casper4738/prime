@@ -206,8 +206,3 @@ function modalSubmitReturnValue(retValue,retForm){
 function doSignOut(){
 	window.location.href = 'Login.do';
 }
-
-//TO DO :: Go To View Notif All
-function doViewAllNotif(){
-	window.location.href = 'NotificationForm.do';
-}

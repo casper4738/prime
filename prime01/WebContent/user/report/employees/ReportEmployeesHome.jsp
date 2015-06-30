@@ -33,6 +33,7 @@
 			var tmpForm = document.forms[0];
 			tmpForm.task.value = task;
 			tmpForm.employeeId.value = value;
+			alert(value)
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 	</script>
@@ -65,6 +66,7 @@
 					<html:hidden name="ReportUserEmployeesForm" property="tmpId"/>
 					<html:hidden name="ReportUserEmployeesForm" property="goToPage"/>
 					<html:hidden name="ReportUserEmployeesForm" property="showInPage"/>
+					<html:hidden name="ReportUserEmployeesForm" property="employeeId"/>
 				
 					<html:select name="ReportUserEmployeesForm" property="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>

@@ -1,7 +1,9 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
 <sqlMap namespace="reportemployees">
-<select id="getListByColumn" resultClass="prime.user.report.employees.ReportEmployeesBean" parameterClass="java.util.Map">
+
+	<select id="getListByColumn" resultClass="prime.user.report.employees.ReportEmployeesBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT 
 		    EMP.EMPLOYEE_ID AS employeeId, 
@@ -91,5 +93,39 @@
 	        </isNotNull>
 	    </dynamic>
 	</select>
+	
+	<select id="get"  resultClass="prime.user.report.employees.ReportEmployeesBean" parameterClass="java.lang.Integer">
+		SELECT 
+	        EMP.EMPLOYEE_ID AS employeeId, 
+	        EMP.EMPLOYEE_NAME AS employeeName,
+	        GENDER AS gender,
+	        ADDRESS AS address,
+	        BIRTHDATE AS birthdate,
+	        HIRE_DATE AS hireDate,
+	        CONTACT_NUMBER AS contactNumber,
+	        EMAIL AS email,
+	        DIV.DIVISION_ID AS divisionId,
+	        DIV.DIVISION_NAME AS divisionName,
+	        POS.POSITION_ID AS positionId,
+	        POS.POSITION_NAME AS positionName,
+	        MANAGER.EMPLOYEE_ID AS managerId,
+	        MANAGER.EMPLOYEE_NAME AS managerName,
+	        MANAGER.DIVISION_ID AS managerDivisionId, 
+	        MANAGER.TREE_ID AS managerTreeId,
+	        RE.RESIGN_DATE AS resignDate,
+	        RE.RESIGN_NOTE AS resignNote,
+	        EMP.TREE_ID AS treeId 
+        FROM EMPLOYEES EMP 
+        LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
+        JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
+        LEFT JOIN (
+        	SELECT EMPLOYEE_ID, EMPLOYEE_NAME,DIVISION_ID,TREE_ID FROM EMPLOYEES
+        ) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
+        LEFT JOIN (
+		    SELECT EMPLOYEE_ID, RESIGN_DATE, RESIGN_NOTE FROM RESIGN_EMPLOYEES
+		)RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
+        WHERE EMP.EMPLOYEE_ID=#id#
+	</select>
+	
 
 </sqlMap>
