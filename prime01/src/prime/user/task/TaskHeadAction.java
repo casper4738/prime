@@ -1,5 +1,6 @@
 package prime.user.task;
 
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -15,9 +16,12 @@ import prime.admin.employee.EmployeeBean;
 import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
 import prime.constants.Constants;
+import prime.login.LoginManager;
+import prime.login.LoginManagerImpl;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
+import prime.utility.ActiveDirectoryManager;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -38,6 +42,20 @@ public class TaskHeadAction extends Action {
 		
 		System.out.println("A. "+pForm.getTask());
 		System.out.println("B. "+Constants.Task.TASK.DOSUBMIT);
+		
+		if(Constants.Task.DOVALIDATE1.equals(pForm.getTask())){
+				response.setContentType("text/text;charset=utf-8");
+				response.setHeader("cache-control", "no-cache");
+				PrintWriter tmpOut = response.getWriter();
+				String tmpResponse = "";
+				
+				
+				tmpResponse  = "TESTING OK";
+				
+				tmpOut.print(tmpResponse);
+				tmpOut.flush();
+				return null;
+		 }
 		
 		if (Constants.Task.TASK.GOTOTASKTYPE.equals(pForm.getTask())) {
 			pForm.getTaskBean().setTaskId(manager.getNewId());

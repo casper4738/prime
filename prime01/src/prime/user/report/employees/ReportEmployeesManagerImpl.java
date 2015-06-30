@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import prime.admin.employee.EmployeeBean;
 import prime.utility.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -32,5 +33,9 @@ public class ReportEmployeesManagerImpl implements ReportEmployeesManager{
 		map.put("columnSearch", columnSearch+"");
 		map.put("value", value+"");
 		return  (Integer) mapper.queryForObject("reportemployees.getCountByColumn", map);
+	}
+	
+	public ReportEmployeesBean getEmployeeById(Integer id) throws SQLException {
+		return (ReportEmployeesBean) mapper.queryForObject("reportemployees.get", id);
 	}
 }

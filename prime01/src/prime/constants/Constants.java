@@ -76,7 +76,7 @@ public interface Constants {
 		}
 		
 		interface REPORT {
-			final String GOTOTDETAILEMPLOYEE		= "t15";
+			final String GOTOTDETAILEMPLOYEE		= "r1";
 		}
 	}
 
