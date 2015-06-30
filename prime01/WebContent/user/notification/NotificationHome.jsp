@@ -86,11 +86,11 @@
 					<table id="table-1" class="table table-bordered table-striped table-hover">
 						<thead>
 							<tr>
-								<th>Notification Id</th>
-								<th>Notification Note</th>
-								<th>Notification Send Date</th>
-								<th>Notification Type</th>
-								<th>Notification Status</th>
+								<th>ID</th>
+								<th>Description</th>
+								<th>Received Date</th>
+								<th>Type</th>
+								<th>Status</th>
 								<th>Sender</th>
 			                </tr>
 			            </thead>
