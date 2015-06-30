@@ -308,7 +308,7 @@ public interface Constants {
 															"ProjectUser.do",		 //13
 															"TaskHeadUser.do",		 //14
 															"TaskSubordinateUser.do",//15
-															"ActivityUser.do",		 //16
+															"ReportEmployees.do",	 //16
 															"Notification.do", 	 	 //17
 															"Modal.do"				 //18
 												};
@@ -330,7 +330,7 @@ public interface Constants {
 		static int USER_PROJECT			= 13;
 		static int USER_TASK_HEAD		= 14;
 		static int USER_TASK_SUBORDINATE= 15;
-		static int USER_REPORT			= 16;
+		static int USER_REPORT_EMPLOYEES= 16;
 		static int USER_VIEWNOTIF		= 17;
 		
 		static int MODAL				= 18;

@@ -7,6 +7,95 @@
 <!DOCTYPE html>
 <html>
 <head> 
+<<<<<<< HEAD
+ <meta charset="UTF-8">
+    <title>AdminLTE 2 | Calendar</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<!-- CSS -->
+	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+   <link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+    <link href="resources/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
+    <link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    
+<!-- Plugins -->
+	<script src="resources/prime.js"></script>
+	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+	<script src="resources/bootstrap/js/bootstrap.min.js"
+		type="text/javascript"></script>
+	<script src="resources/plugins/datepicker/bootstrap-datepicker.js"
+		type="text/javascript"></script>
+	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js"
+		type="text/javascript"></script>
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js"
+		type="text/javascript"></script>
+	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js"
+		type="text/javascript"></script>
+	<script src="resources/plugins/serialize/serialize-0.2.min.js"
+		type="text/javascript"></script>
+	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
+	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
+	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+<!-- End Plugins -->
+</head>
+
+<body class="skin-blue sidebar-mini">
+	<section class="content">
+	
+	<div class="row">
+		<section class="col-lg-5">
+		<div class="box box-primary">
+			<div class="box-header">
+                 <h3 class="box-title">Welcome, Alexander</h3>
+                 </div>
+                 <div class="box-tools">
+				<div class="box-body no-padding">
+					<center><img class="photo" src="image/resize-Lighthouse.jpg" /></center>
+				</div>
+			</div>
+			</div>
+		</section>
+
+           <div class="col-lg-7">
+             <div class="box box-primary">
+               <div class="box-body no-padding">
+                 <!-- THE CALENDAR -->
+                 <div id="calendar"></div>
+               </div><!-- /.box-body -->
+             </div><!-- /. box -->
+           </div><!-- /.col -->
+         </div><!-- /.row -->
+     </section>
+      
+		<div id="fullCalModal" class="modal fade">
+		    <div class="modal-dialog">
+		        <div class="modal-content">
+		            <div class="modal-header">
+		                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+		                <h4 id="modalTitle" class="modal-title"></h4>
+		            </div>
+		            <div id="modalBody" class="modal-body"></div>
+		            <div class="modal-footer">
+		                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+		            </div>
+		        </div>
+		    </div>
+		</div>
+    
+    <script src="resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/jQueryUI/jquery-ui-1.10.3" type="text/javascript"></script>
+    <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src='resources/plugins/fastclick/fastclick.min.js'></script>
+    <script src="resources/dist/js/app.min.js" type="text/javascript"></script>
+    <script src="resources/dist/js/demo.js" type="text/javascript"></script>
+    <script src="resources/plugins/moment/moment.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+    <!-- Page specific script -->
+=======
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
     <script type="text/javascript">
       $(function () {
         /* initialize the external events
