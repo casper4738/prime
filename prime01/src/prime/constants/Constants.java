@@ -74,6 +74,10 @@ public interface Constants {
 			final String GOTOEDIT 			= "t21";
 			final String GOTOCHANGESTATUS 	= "t22";
 		}
+		
+		interface REPORT {
+			final String GOTOTDETAILEMPLOYEE		= "t15";
+		}
 	}
 
 	//##B.Search Handling
