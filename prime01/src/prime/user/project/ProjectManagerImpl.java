@@ -157,6 +157,24 @@ public class ProjectManagerImpl implements ProjectManager {
 		}
 	}
 
+	
+	
+	@Override
+	public void updateProjectReceiver(Integer projectId, Integer projectReceiver)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("projectId", projectId);
+			map.put("projectReceiver", projectReceiver);
+			mapper.startTransaction();
+			mapper.update("project.updateProjectReceiver", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+
 	@Override
 	public void insertDetail(ProjectBean e) throws SQLException {
 		try {
@@ -198,6 +216,18 @@ public class ProjectManagerImpl implements ProjectManager {
 		map.put("roleId", roleId);
 		map.put("projectMemberStatus", projectMemberStatus);
 		return (Integer) mapper.queryForObject("project.getStatusRoleMember", map);
+	}
+
+	@Override
+	public Integer getProjectMemberIDbyRole(Integer projectId,
+			Integer projectReceiver) throws SQLException {
+		// TODO Auto-generated method stub
+		System.out.println("masuk "+projectId +"-"+ projectReceiver );
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectId", projectId);
+		map.put("projectReceiver", projectReceiver);
+		
+		return (Integer) mapper.queryForObject("project.getProjectMemberIDbyRole", map);
 	}
 
 	

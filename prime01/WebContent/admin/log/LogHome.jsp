@@ -41,15 +41,19 @@
             	$('#date_start').css('display', 'block') ;
             	$('#date_line').css('display', 'block') ;
             	$('#date_until').css('display', 'block') ;
-            	$('#table-log').css('display', 'none') ;
+            	$('.tableLog').css('display', 'none') ;
             } else if(value == "TABLE") {
-            	$('.table-log').css('display', 'block') ;
+            	$('.tableLog').css('display', 'block') ;
+            	$('#textSearch').css('display', 'none') ;
+            	$('#date_start').css('display', 'none') ;
+            	$('#date_line').css('display', 'none') ;
+            	$('#date_until').css('display', 'none') ;
             } else  {
             	$('#textSearch').css('display', 'block') ;
             	$('#date_start').css('display', 'none') ;
             	$('#date_line').css('display', 'none') ;
             	$('#date_until').css('display', 'none') ;
-            	$('#table-log').css('display', 'none') ;
+            	$('.tableLog').css('display', 'none') ;
             }
 		}
 	</script>
@@ -92,7 +96,7 @@
 									<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 								</html:select>
 							</td>
-							<td style="padding-left:5px"><html:select name="LogAdminForm" property="columnSearch" styleClass="form-control columnSearch table-log">
+							<td style="padding-left:5px"><html:select name="LogAdminForm" property="searchTableLog" styleClass="form-control tableLog">
 									<html:optionsCollection name="listTableLog" label="value" value="key"/>
 								</html:select>
 							</td>
@@ -141,7 +145,7 @@
 				                		<td align="center"><bean:write name="iter" property="auditTrailId"/> </td>
 				                		<td align="center"><bean:write name="iter" property="username"/> </td>
 				                		<td>
-				                		<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.EMPLOYEES+""%>'>
+				                			<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.EMPLOYEES+""%>'>
 												EMPLOYEES
 											</logic:equal>
 											<logic:equal  name="iter" property="auditTrailTable" value='<%=Constants.LogTable.USERS+""%>'>
@@ -199,11 +203,6 @@
 						             </tr>
 					             </logic:iterate>
 							 </logic:notEmpty>
-								 <logic:empty name="listLog">
-								   <tr>
-										<td align="center" colspan="11"><bean:message key="label.table.notfound" /></td>
-								   </tr>
-								 </logic:empty>
 			                  </tbody>
 				            </table>
 			            </div>

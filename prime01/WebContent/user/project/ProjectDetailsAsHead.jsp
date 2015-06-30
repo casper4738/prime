@@ -116,12 +116,14 @@
 					<html:hidden name="ProjectUserForm" property="goToPage"/>
 					<html:hidden name="ProjectUserForm" property="showInPage"/>
 					<html:hidden name="ProjectUserForm" property="tempRoleId"/>
+					<html:hidden name="ProjectUserForm" property="employeeIdReceiver"/>
 					<html:select name="ProjectUserForm" property="columnSearch" styleClass="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
 					<html:text name="ProjectUserForm" property="search" styleClass="textSearch"/>
 					<input type="submit" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOEDIT%>')" class="buttonSearch myButton" value='Search'>
 				</html:form>
+				dfs<bean:write name="ProjectUserForm" property="employeeIdReceiver"/>
 			</div>
 			<div class="box-body">
 				<table id="table-1" class="table table-bordered table-striped table-hover">

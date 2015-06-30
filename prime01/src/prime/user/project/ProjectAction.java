@@ -9,6 +9,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.ha.util.IDynamicProperty;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -134,6 +135,7 @@ public class ProjectAction extends Action {
 			System.out.println("changePM");
 			return mapping.findForward("changePM");
 		}
+		
 		else if(Constants.Task.PROJECT.GOTOTASKMEMBER.equals(pForm.getTask())){
 			//##. Get Data
 			pForm.setEmployeeBean(tmpEmployeeManager.getEmployeeById(pForm.getEmployeeId()));
@@ -282,6 +284,30 @@ public class ProjectAction extends Action {
 			
 		}
 		
+		else if("doChangePM".equals(pForm.getTask())){
+			System.out.println("PROJECT ID "+pForm.getProjectBean().getProjectId());
+			System.out.println("PROJECT RECEIVER "+pForm.getProjectBean().getProjectReceiver());
+			System.out.println("EMPLOYEE "+pForm.getEmployeeId());
+			//pForm.getProjectBean().setProjectStatus(6);
+			System.out.println("EMPLOYEE id "+pForm.getProjectBean().getEmployeeIdReceiver() );
+			int idPM=tmpProjectManager.getProjectMemberIDbyRole(pForm.getProjectBean().getProjectId(), pForm.getProjectBean().getProjectReceiver());
+			System.out.println("idpm "+idPM);
+			//tmpProjectManager.updateStatusProjectMemberRole(idPM, 0);
+			
+			
+			pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
+			pForm.getProjectBean().setProjectId(pForm.getProjectBean().getProjectId());
+			pForm.getProjectBean().getRoleBean().setRoleId(0);
+			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeId());
+			pForm.getProjectBean().setProjectMemberStatus(1);
+			pForm.getProjectBean().setProjectReceiver(pForm.getEmployeeId());
+			System.out.println("status "+pForm.getProjectBean().getProjectLastStatus());
+			//tmpProjectManager.updateProjectReceiver(pForm.getProjectBean().getProjectId(),pForm.getEmployeeId() );
+			pForm.getProjectBean().setProjectStatus(pForm.getProjectBean().getProjectLastStatus());
+			//tmpProjectManager.insertDetail(pForm.getProjectBean());
+			
+		}
+		
 		else if(Constants.Task.PROJECT.GOTOEDITMEMBER.equals(pForm.getTask())){
 			EmployeeBean tmpEmployeeBean = tmpEmployeeManager.getEmployeeById(pForm.getEmployeeId());
 			pForm.getProjectBean().setEmployeeId(tmpEmployeeBean.getEmployeeId());
@@ -333,9 +359,14 @@ public class ProjectAction extends Action {
 			listInsert.removeAll(listTemp);
 			for (String string : listInsert) {
 				String [] split = string.split(";");
-				int roleId 				= Integer.parseInt(split[0]);
-				int projectMemberId 	= Integer.parseInt(split[1]);
-				int projectMemberStatus = Integer.parseInt(split[2]);
+				int roleId 					= 0;
+				int projectMemberId			= 0;
+				int projectMemberStatus 	= 0;
+				if(!split[0].isEmpty()){
+					roleId					= Integer.parseInt(split[0]);
+					projectMemberId			= Integer.parseInt(split[1]);
+					projectMemberStatus		= Integer.parseInt(split[2]);
+				}
 				System.out.println("sisa : "+string);
 				
 				if(projectMemberId == 0) {

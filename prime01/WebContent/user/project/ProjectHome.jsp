@@ -37,6 +37,14 @@
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
+		function flyToTaskDetailAsHead(task, value, valueId) {
+			
+			var tmpForm = document.forms[0]; 
+			tmpForm.task.value = task;
+			tmpForm.projectId.value = value;
+			tmpForm.employeeIdReceiver=valueId;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
 	
 		/* function dari indra */
 		/* $(document).ready(function () {
@@ -71,6 +79,7 @@
             
 			<!-- Search Handler Tag -->
 			<div class="show-in-page">
+				
 				Show per page
 				<html:select property="showInPage" name="ProjectUserForm">
 					<html:optionsCollection name="listShowEntries" label="value" value="key"/>
@@ -81,6 +90,8 @@
 					<html:hidden property="task" styleId="hdTask"/>
 					<html:hidden name="ProjectUserForm" property="projectId"/>
 					<html:hidden name="ProjectUserForm" property="projectBean.projectLastStatus"/>
+					<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver"/>
+					<html:hidden name="ProjectUserForm" property="employeeIdReceiver"/>
 					<html:select name="ProjectUserForm" property="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
@@ -104,6 +115,7 @@
                 <tbody>
                 <logic:notEmpty name="listProject">
 					<logic:iterate id="iter" name="listProject">
+						
 	                	<tr>
 	                	    <td><bean:write name="iter" property="projectName"/></td>
 	                	    <td><bean:write name="iter" property="projectDescription"/></td>
@@ -120,7 +132,7 @@
 	                        <td width="150px" align="center">
 	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', '<bean:write name="iter" property="projectId"/>')" >
 		                        <input type="submit" class="btn btn-primary btn-xs" value='Details As Head' 
-		                        	onclick="flyToTaskDetail('detailsAsHead', '<bean:write name="iter" property="projectId"/>')" >	
+		                        	onclick="flyToTaskDetailAsHead('detailsAsHead', '<bean:write name="iter" property="projectId"/>',  '<bean:write name="iter" property="employeeIdReceiver"/>')" >	
 	                        </td>
 	                    </tr>
                     </logic:iterate>

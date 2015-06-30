@@ -13,15 +13,16 @@
 	<!-- JS -->
 	<script type="text/javascript">
 		
-		function openModalHandler(){
-			//##0.Preparing Parameter For Modal Showing
-			var tmpDataPosition=2;
-			var tmpTask ="modalTable";
-			var tmpTable ="employeeHead";
-			
-			//##1.Accessing Prime Method For Modal Showing
-			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=projectMember", $('#result'));
-		}
+	function openModalHandler(){
+		//##0.Preparing Parameter For Modal Showing
+		var tmpDataPosition=2;
+		var tmpTask ="modalTable";
+		var tmpTable ="employeeHead";
+		
+		//##1.Accessing Prime Method For Modal Showing
+		modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=projectAssigner", $('#result'));
+	}
+	
 		
 			
 		function flyToBack(task, value) {
@@ -53,12 +54,18 @@
 			<div class="box-header"><h3 class="box-title-center">Change Project Manager</h3></div>
 			<div class="box-body">
                 	<html:form action="/ProjectUser">
-                		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.PROJECT.DOCREATEMEMBER%>"/>
+                		<html:hidden name="ProjectUserForm" property="task" value="doChangePM"/>
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectName" />
                 	    <html:hidden name="ProjectUserForm" property="employeeId" />
+                	    <html:hidden name="ProjectUserForm" property="projectBean.employeeId" />
                 	    <html:hidden name="ProjectUserForm" property="tempRoleId" />
                 	    <html:hidden name="ProjectUserForm" property="projectId" />
+                	    <html:hidden name="ProjectUserForm" property="projectBean.projectReceiver"/>
+                	    <html:hidden name="ProjectUserForm" property="projectBean.projectAssigner"/>
+                	    <html:hidden name="ProjectUserForm" property="employeeIdReceiver"/>
+                	    
+                	    <html:hidden name="ProjectUserForm" property="projectBean.projectLastStatus"/>
                 		<table class="form-input" align="center" style="width:60%" >
                 			<tr><td width="200px">ID Project</td>
                 				<td>:</td>
@@ -75,7 +82,7 @@
                 				<td class="input-group">
                 					<html:text name="ProjectUserForm" property="projectBean.projectReceiverName" styleClass="form-control"  disabled="true"/>
 							</td></tr>
-                			<tr><td width="200px">New Project Manager</td>
+                			<tr><td width="200px">Employee Name</td>
                 				<td>:</td>
                 				<td class="input-group">
                 					<html:text name="ProjectUserForm" property="projectBean.employeeName" styleClass="form-control" styleId="employeeName" disabled="true"/>
@@ -86,12 +93,12 @@
                 			<tr>
                 				<td>Project Description</td>
                 				<td>:</td>
-                				<td><html:textarea name="ProjectUserForm" property="projectBean.projectDescription" styleClass="form-control"></html:textarea></td>
+                				<td><html:textarea name="ProjectUserForm" property="projectBean.projectChangeNote" styleClass="form-control"></html:textarea></td>
                 				
                 			</tr>
                 			
                 			<tr><td colspan="3" align="center">
-                					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="doSetRole()"/>
+                					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="dosubmit()"/>
                 					<input type="button" class="btn btn-default" value='Cancel' onclick="flyToBack(
 	                        		'detailsAsHead', 
 	                        		'<bean:write name="ProjectUserForm" property="projectBean.projectId"/>')">

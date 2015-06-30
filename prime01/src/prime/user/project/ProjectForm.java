@@ -27,6 +27,7 @@ public class ProjectForm extends ActionForm {
 	private Integer taskId;
 	private Integer divisionId;
 	private Integer positionId;
+	private Integer employeeIdReceiver;
 
 	public TaskBean getTaskBean() {
 		return taskBean;
@@ -190,6 +191,14 @@ public class ProjectForm extends ActionForm {
 
 	public void setPositionId(Integer positionId) {
 		this.positionId = positionId;
+	}
+
+	public Integer getEmployeeIdReceiver() {
+		return employeeIdReceiver;
+	}
+
+	public void setEmployeeIdReceiver(Integer employeeIdReceiver) {
+		this.employeeIdReceiver = employeeIdReceiver;
 	}
 
 }
