@@ -33,6 +33,7 @@
                 format: "yyyy-mm-dd"
             });
     		$("#input-image").change(function (e) {
+    			return;
     		    if(this.disabled) 
     		    	return alert('File upload not supported!');
     		    var F = this.files;
@@ -393,7 +394,7 @@
 			               				<td>Profile Picture [Max. <%=Constants.MAX_IMAGE_FILESIZE %> KB]</td>
 			               				<td>:</td>
 			               				<td>
-			               				  <html:file styleId="input-image" accept="image/*" name="EmployeeAdminForm" property="profpic"/>
+			               				  <html:file name="EmployeeAdminForm" property="profpic" styleId="input-image" />
 										</td>
 			               			</tr>
 			               			<tr>
