@@ -42,6 +42,7 @@
 
 <!-- JS -->
 <script src="resources/prime.js"></script>
+<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 <script src="resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 <script src="resources/plugins/jQueryUI/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
 <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
