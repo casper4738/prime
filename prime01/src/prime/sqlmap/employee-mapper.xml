@@ -30,6 +30,11 @@
 		 )
 	</insert>
 	
+	<insert id="insertBlob" parameterClass="java.lang.Object">
+		INSERT INTO EMPLOYEES (PROFILE_PICTURE)
+		VALUES (#param#)
+	</insert>
+	
 	<insert id="insertResign" parameterClass="prime.admin.employee.EmployeeBean">
 		INSERT INTO RESIGN_EMPLOYEES
 		(EMPLOYEE_ID , RESIGN_DATE, RESIGN_NOTE) VALUES 

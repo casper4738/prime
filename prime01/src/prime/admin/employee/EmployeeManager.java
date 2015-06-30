@@ -73,4 +73,8 @@ public interface EmployeeManager {
 	public Integer getNewId() throws SQLException;
 	
 	public String getTreeIdByEmployeeId(Integer employeeId) throws SQLException;
+	
+	public void insertToBlob(byte[] param) throws SQLException;
+	
+	public Object selectBlob() throws SQLException;
 }  

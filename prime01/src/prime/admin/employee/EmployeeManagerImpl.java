@@ -327,4 +327,22 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		// TODO Auto-generated method stub
 		return (String) mapper.queryForObject("employee.getDayWeekByEndDate", endDate);
 	}
+	
+	@Override
+	public void insertToBlob(byte[] param) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			mapper.startTransaction();
+			mapper.insert("employee.insertBlob", param);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+		
+	}
+	
+	@Override
+	public Object selectBlob() throws SQLException {
+		return (Object) mapper.queryForObject("employee.selectBlob", null);
+	}
 }

@@ -159,6 +159,14 @@
 		    var reader = new FileReader();
 		    var image  = new Image();
 		  
+		    $.ajax({
+		        url: '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',
+		        type: "POST",
+		        data: {task : "asd", profpic : file},
+		        processData: false
+		    });
+		    return
+		    
 		    reader.readAsDataURL(file);  
 		    reader.onload = function(_file) {
 		        image.src    = _file.target.result;              // url.createObjectURL(file);

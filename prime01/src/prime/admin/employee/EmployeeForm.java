@@ -1,6 +1,7 @@
 package prime.admin.employee;
 
 import org.apache.struts.action.ActionForm;
+import org.apache.struts.upload.FormFile;
 
 public class EmployeeForm extends ActionForm {
 
@@ -22,6 +23,7 @@ public class EmployeeForm extends ActionForm {
 	private String weekEnd;
 	private String weekEnds;
 	private Object path;
+	private FormFile profpic;
 	
 	public EmployeeBean getEmployeeBean() {
 		return employeeBean;
@@ -130,5 +132,11 @@ public class EmployeeForm extends ActionForm {
 	}
 	public void setPath(Object path) {
 		this.path = path;
+	}
+	public FormFile getProfpic() {
+		return profpic;
+	}
+	public void setProfpic(FormFile profpic) {
+		this.profpic = profpic;
 	}
 }

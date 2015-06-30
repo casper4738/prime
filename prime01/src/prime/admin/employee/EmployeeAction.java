@@ -26,12 +26,12 @@ import prime.constants.Constants;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
-import java.awt.image.BufferedImage;
+/*import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import javax.imageio.ImageIO;
+import javax.imageio.ImageIO;*/
 
 public class EmployeeAction extends Action {
-	public byte[] convertImageToByte(BufferedImage image) {
+	/*public byte[] convertImageToByte(BufferedImage image) {
 	  try {
 	   ByteArrayOutputStream baos = new ByteArrayOutputStream();
 	   ImageIO.write(image, "JPG", baos);
@@ -40,7 +40,7 @@ public class EmployeeAction extends Action {
 	  } catch (Exception ex) {
 	  }
 	  return null;
-    }
+    }*/
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -50,8 +50,6 @@ public class EmployeeAction extends Action {
 		PositionManager tmpPositionManager = new PositionManagerImpl();
 		
 		System.out.println("Task = " + pForm.getTask());
-		
-		//request.setAttribute("picpic", manager.selectBlob());
 		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
@@ -106,6 +104,7 @@ public class EmployeeAction extends Action {
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			pForm.getEmployeeBean().setEmployeeId(manager.getNewId());
 		
+			System.out.println("MASUK SINI");	
 			if(pForm.getManagerId()!=0){
 				pForm.getEmployeeBean().setDivisionId((manager.getEmployeeById(pForm.getManagerId()).getDivisionId()==null)?0:manager.getEmployeeById(pForm.getManagerId()).getDivisionId());
 			}else{
@@ -115,6 +114,12 @@ public class EmployeeAction extends Action {
 			pForm.getEmployeeBean().setManagerId(pForm.getManagerId());
 			pForm.getEmployeeBean().setTreeId(manager.getTreeIdByEmployeeId(pForm.getManagerId())+pForm.getEmployeeBean().getEmployeeId());
 			manager.insert(pForm.getEmployeeBean());
+			
+			System.out.println("Profpic = " + pForm.getProfpic().getFileName() + " _ " + pForm.getProfpic().getFileSize() + " _ " + pForm.getProfpic().getFileData());
+			//manager.insertToBlob(pForm.getProfpic().getFileData());
+			//System.out.println("LALA = " + manager.selectBlob());
+			//request.setAttribute("picpic", manager.selectBlob());
+			
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DORESIGN.equals(pForm.getTask())) {
 			manager.insertResign(pForm.getEmployeeBean());
