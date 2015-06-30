@@ -60,6 +60,7 @@ public class FilterSession implements Filter {
 	    	chain.doFilter(request, response);
 	    }
 	    */
+    	chain.doFilter(request, response);
 	}
 
 	/**
