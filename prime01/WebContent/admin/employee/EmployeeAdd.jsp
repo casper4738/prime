@@ -138,8 +138,11 @@
 			          success : function(msg){
 							 param = msg.split('#');
 							 
+							 alert(param[0]);
+							 
 							 if(param[0] == "0"){ //Success
-				        	  	 dosubmit(); 
+								 alert("TROLLED");
+								dosubmit(); 
 							 } else {			   //Failed
 								 $('#employee-validating').html(param[1]);
 							 	 $('#btn-save').show();
@@ -158,14 +161,6 @@
 		function readImage(file) {
 		    var reader = new FileReader();
 		    var image  = new Image();
-		  
-		    $.ajax({
-		        url: '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',
-		        type: "POST",
-		        data: {task : "asd", profpic : file},
-		        processData: false
-		    });
-		    return
 		    
 		    reader.readAsDataURL(file);  
 		    reader.onload = function(_file) {
@@ -238,7 +233,7 @@
 		<div class="col-xs-12"><div class="box" align="center">
 				<div class="box-header"><h1 class="box-title"><br/><br/><b>Add New Employee</b></h2><br/><br/></div>
 					<div class="box-body">
-			               	<html:form action="/EmployeeAdmin" enctype="multipart/form-data">
+			               	<html:form action="/EmployeeAdmin" method="post" enctype="multipart/form-data">
 			               		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId"/>
@@ -398,7 +393,7 @@
 			               				<td>Profile Picture [Max. <%=Constants.MAX_IMAGE_FILESIZE %> KB]</td>
 			               				<td>:</td>
 			               				<td>
-			               				  <html:file styleId="input-image" accept="image/*" name="EmployeeAdminForm" property="employeeBean.filePic"/>
+			               				  <html:file styleId="input-image" accept="image/*" name="EmployeeAdminForm" property="profpic"/>
 										</td>
 			               			</tr>
 			               			<tr>
