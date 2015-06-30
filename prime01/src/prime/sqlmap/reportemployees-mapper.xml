@@ -1,6 +1,6 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
-<sqlMap namespace="report">
+<sqlMap namespace="reportemployees">
 <select id="getListByColumn" resultClass="prime.user.report.employees.ReportEmployeesBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT 

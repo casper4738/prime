@@ -37,7 +37,7 @@ public class ReportEmployeesAction extends Action {
 								countRows));
 		
 		// ##1.Attribute for Table Show
-		request.setAttribute("listReport", list);
+		request.setAttribute("listReportEmployees", list);
 		request.setAttribute("listSearchColumn",
 				Constants.Search.NOTIFICATION_SEARCHCOLUMNS);
 		request.setAttribute("listShowEntries", Constants.PAGINGROWPAGE);

@@ -56,15 +56,15 @@ public interface EmployeeManager {
 	 
 	public Date getEmployeeResignDate(Integer id) throws SQLException;
 
+	public List<EmployeeBean> getMaxStartFromByStartDate (String startDate, Integer employeeId) throws SQLException;
+	
+	public String getDayWeekByEndDate(String endDate) throws SQLException;
+	
+	//GET COUNT NATIONAL HOLIDAY FOR COUNTING DAYOFF EXCLUDE NATIONAL HOLIDAY
+	public Integer getCountNationalHolidayByDayOff(Date startDayOff, Date endDayOff) throws SQLException;
+		
 	/*select employee by tree */
 	public List<EmployeeBean> getListByTree(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) throws SQLException;
-	
-	//GET COUNT NATIONAL HOLDIDAY FOR COUNTING DAYOFF EXCLUDE NATIONAL HOLIDAY
-	public Integer getCountNationalHolidayByDayOff(Date startDayOff, Date endDayOff) throws SQLException;
-	
-	//GET COUNT WEEKEND EMPLOYEE FOR COUNTING DAYOFF EXCLUDE WEEKEND
-	public Integer getCountWeekendByDayOff(Date startDayOff, Date endDayOff, Integer employeeId) throws SQLException;
-
 	public Integer getCountListByTree(String columnSearch, String value, Integer employeeId)  throws SQLException;
 	/* end of select employee by tree */
 	
@@ -73,4 +73,8 @@ public interface EmployeeManager {
 	public Integer getNewId() throws SQLException;
 	
 	public String getTreeIdByEmployeeId(Integer employeeId) throws SQLException;
+	
+	public void insertToBlob(byte[] param) throws SQLException;
+	
+	public Object selectBlob() throws SQLException;
 }  

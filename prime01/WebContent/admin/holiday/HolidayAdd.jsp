@@ -7,7 +7,6 @@
 <html>
 <head> 
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-	
 	<!-- JS -->
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script type="text/javascript">

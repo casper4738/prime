@@ -1,5 +1,6 @@
 package prime.admin.employee;
 
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
@@ -25,8 +26,21 @@ import prime.constants.Constants;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
-public class EmployeeAction extends Action {
+/*import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import javax.imageio.ImageIO;*/
 
+public class EmployeeAction extends Action {
+	/*public byte[] convertImageToByte(BufferedImage image) {
+	  try {
+	   ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	   ImageIO.write(image, "JPG", baos);
+	   baos.flush();
+	   return baos.toByteArray();
+	  } catch (Exception ex) {
+	  }
+	  return null;
+    }*/
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -90,6 +104,7 @@ public class EmployeeAction extends Action {
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			pForm.getEmployeeBean().setEmployeeId(manager.getNewId());
 		
+			System.out.println("MASUK SINI");	
 			if(pForm.getManagerId()!=0){
 				pForm.getEmployeeBean().setDivisionId((manager.getEmployeeById(pForm.getManagerId()).getDivisionId()==null)?0:manager.getEmployeeById(pForm.getManagerId()).getDivisionId());
 			}else{
@@ -99,6 +114,12 @@ public class EmployeeAction extends Action {
 			pForm.getEmployeeBean().setManagerId(pForm.getManagerId());
 			pForm.getEmployeeBean().setTreeId(manager.getTreeIdByEmployeeId(pForm.getManagerId())+pForm.getEmployeeBean().getEmployeeId());
 			manager.insert(pForm.getEmployeeBean());
+			
+			System.out.println("Profpic = " + pForm.getProfpic().getFileName() + " _ " + pForm.getProfpic().getFileSize() + " _ " + pForm.getProfpic().getFileData());
+			//manager.insertToBlob(pForm.getProfpic().getFileData());
+			//System.out.println("LALA = " + manager.selectBlob());
+			//request.setAttribute("picpic", manager.selectBlob());
+			
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DORESIGN.equals(pForm.getTask())) {
 			manager.insertResign(pForm.getEmployeeBean());
@@ -187,7 +208,32 @@ public class EmployeeAction extends Action {
 			manager.updateHead(pForm.getEmployeeBean().getEmployeeId(),pForm.getSubstituteHeadId());
 			
 			return mapping.findForward("forward");
-		} 
+		} else if(Constants.Task.DOVALIDATE1.equals(pForm.getTask())){
+			response.setContentType("text/text;charset=utf-8");
+			response.setHeader("cache-control", "no-cache");
+			PrintWriter tmpOut = response.getWriter();
+			String tmpResponse = "";
+			
+			int tmpResponseCode;
+			//0 : Exists Database ; 1 : Empty Database
+			if(manager.getEmployeeResignDate(pForm.getManagerId()) != null){
+				tmpResponseCode = 1;	//Employee Already Resign
+			} else {
+				tmpResponseCode = 0;	//Success
+			}
+
+			System.out.println(tmpResponseCode + " tmpResponseCode");
+			if(tmpResponseCode == 1){
+				tmpResponse = "1#<div id=\"message\" style=\"color:red;font-size:8\">Employee already resign, please select other.</div>";
+			} else {
+				tmpResponse = "0#";
+			}
+			
+			System.out.println(tmpResponse + " tmpResponse");
+			tmpOut.print(tmpResponse);
+			tmpOut.flush();
+			return null;
+		}
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		

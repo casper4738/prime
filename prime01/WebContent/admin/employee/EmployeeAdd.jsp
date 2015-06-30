@@ -37,6 +37,9 @@
     		    	return alert('File upload not supported!');
     		    var F = this.files;
     		    if(F && F[0]) {
+    		    	var pathFile = document.getElementById("input-image").value;
+					var tmppath = URL.createObjectURL(event.target.files[0]);
+					document.forms[0].path.value = tmppath;
     		    	for(var i=0; i<F.length; i++){
     		    		readImage( F[i] );
     		    	}
@@ -44,10 +47,126 @@
     		});
     	});
 		
+		function validateForm(){
+			var specialChars 	= "/*!@#$%^&*()\"{}[]|\\?/<>,";
+			var numexp = /^[0-9]+$/;
+			var employeeName 	= $('#employeeName').val();
+			var employeeAddress = $('#employeeAddress').val();
+			var birthDate 		= $('#datepicker_birthdate').val();
+			var contactNumber 	= $('#contactNumber').val();
+			var email 		= $('#email').val();
+			var position 	= $('#positionId').val();
+			var employeeHead 	= $('#headName').val();
+			var division 	= $('#divisionId').val();
+			var hireDate 	= $('#datepicker_hiredate').val();
+			var birthDateFormat = new Date(birthDate);
+			
+			var today = new Date();
+			var tmpValidated 	= true;
+			
+			$('#validatorName').html("");
+			$('#validatorAddress').html("");
+			$('#validatorBirthDate').html("");
+			$('#validatorContactNumber').html("");
+			$('#validatorEmail').html("");
+			$('#validatorGender').html("");
+			$('#validatorPosition').html("");
+			$('#validatorHead').html("");
+			$('#validatorDivision').html("");
+			$('#validatorHireDate').html("");
+			
+			if(employeeName == null || employeeName == "") {
+				$('#validatorName').html("Employee must be filled out");
+				tmpValidated = false;
+			}
+			
+			if(employeeAddress == null || employeeAddress == "") {
+				 $('#validatorAddress').html("Address must be filled out");
+				 tmpValidated = false;
+			}
+			
+			if(birthDate == null || birthDate == "") {
+				 $('#validatorBirthDate').html("Birth Date must be filled out");
+				 tmpValidated = false;
+			}
+			
+		    if (birthDateFormat > today){
+		    	$('#validatorBirthDate').html("Birth Date is not valid");
+		    	tmpValidated = false;
+		    }
+		    
+			if(contactNumber == null || contactNumber == "") {
+				 $('#validatorContactNumber').html("Contact Number must be filled out");
+				 tmpValidated = false;
+			}
+			
+			if(contactNumber != null || contactNumber != ""){
+			 	if(!contactNumber.match(numexp)){
+			 		$("#validatorContactNumber").html("Alphabet are not allowed"); 
+		        	tmpValidated = false;
+		       	}
+			}
+			
+			if(email == null || email == "") {
+				 $('#validatorEmail').html("Email must be filled out");
+				 tmpValidated = false;
+			}else {
+				 var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+			    if (!filter.test(email)) {
+		  		  $('#validatorEmail').html("Email is not valid");
+		  		  tmpValidated = false;
+			    }
+			}
+			
+			if(hireDate == null || hireDate == "") {
+				 $('#validatorHireDate').html("Hire Date must be filled out");
+				 tmpValidated = false;
+			}
+			
+			alert(tmpValidated);
+			
+			if(tmpValidated){
+				 //Do Database Checking, if Success Fly To
+				  $('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Validating employee data");
+				  $('#btn-save').hide();
+				  $('#btn-cancel').hide();
+				  $.ajax({ 
+			          type	  : "POST",
+			          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',  
+			          data	  : 'task=<%=Constants.Task.DOVALIDATE1%>&managerId=' + $('#managerId').val(),
+			          success : function(msg){
+							 param = msg.split('#');
+							 
+							 if(param[0] == "0"){ //Success
+				        	  	 dosubmit(); 
+							 } else {			   //Failed
+								 $('#employee-validating').html(param[1]);
+							 	 $('#btn-save').show();
+								 $('#btn-cancel').show();
+							 }
+			          },
+			          
+			          error: function(){
+							alert("ERROR");
+			        	  	//TO DO :: Add Error Handling
+			          }
+			     });
+			}
+		}	
+		
 		function readImage(file) {
 		    var reader = new FileReader();
 		    var image  = new Image();
 		  
+		    $.ajax({
+		        url: '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',
+		        type: "POST",
+		        data: {task : "asd", profpic : file},
+		        processData: false
+		    });
+		    return
+		    
 		    reader.readAsDataURL(file);  
 		    reader.onload = function(_file) {
 		        image.src    = _file.target.result;              // url.createObjectURL(file);
@@ -122,21 +241,36 @@
 			               	<html:form action="/EmployeeAdmin" enctype="multipart/form-data">
 			               		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
-			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
-			               		<html:hidden name="EmployeeAdminForm" property="managerId"/>
+			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId"/>
+			               		<html:hidden name="EmployeeAdminForm" property="managerId" styleId="managerId"/>
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.treeId"/>
 			               		<html:hidden name="EmployeeAdminForm" property="result" styleId="result"/>
+			               		<html:hidden name="EmployeeAdminForm" property="path"/>
 			               		<table class="form-input" style="width: 500px;">
 			             			<tr>
 			               				<td width="200px">Name</td>
 			               				<td>:</td>
-			               				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control"/></td>
+			               				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control" styleId="employeeName"/></td>
 			               			</tr>
+			               			<tr>
+		                				<td></td>
+		                				<td></td>
+		                				<td>	    
+		                					<i><span id="validatorName" style="color: red;font-size: 8"></span></i>
+		                				</td>
+		                			</tr>
 			               			<tr>
 			               				<td>Address</td>
 			               				<td>:</td>
-			               				<td><html:text name="EmployeeAdminForm" property="employeeBean.address" styleClass="form-control"/></td>
+			               				<td><html:text name="EmployeeAdminForm" property="employeeBean.address" styleClass="form-control" styleId="employeeAddress"/></td>
 			               			</tr>
+			               			<tr>
+		                				<td></td>
+		                				<td></td>
+		                				<td>	    
+		                					<i><span id="validatorAddress" style="color: red;font-size: 8"></span></i>
+		                				</td>
+		                			</tr>
 			               			<tr>
 			               				<td>Birth Date</td>
 			               				<td>:</td>
@@ -147,19 +281,40 @@
 										</td>
 			               			</tr>
 			               			<tr>
+		                				<td></td>
+		                				<td></td>
+		                				<td>	    
+		                					<i><span id="validatorBirthDate" style="color: red;font-size: 8"></span></i>
+		                				</td>
+		                			</tr>
+			               			<tr>
 			               				<td>Contact Number</td>
 			               				<td>:</td>
 			               				<td>
-			               					<html:text name="EmployeeAdminForm" property="employeeBean.contactNumber" styleClass="form-control"/>
+			               					<html:text name="EmployeeAdminForm" property="employeeBean.contactNumber" styleClass="form-control" styleId="contactNumber"/>
 										</td>
 			               			</tr>
+			               			<tr>
+		                				<td></td>
+		                				<td></td>
+		                				<td>	    
+		                					<i><span id="validatorContactNumber" style="color: red;font-size: 8"></span></i>
+		                				</td>
+		                			</tr>
 			               			<tr>
 			               				<td>Email</td>
 			               				<td>:</td>
 			               				<td>
-			               					<html:text name="EmployeeAdminForm" property="employeeBean.email" styleClass="form-control"/>
+			               					<html:text name="EmployeeAdminForm" property="employeeBean.email" styleClass="form-control" styleId="email"/>
 										</td>
 			               			</tr>
+			               			<tr>
+		                				<td></td>
+		                				<td></td>
+		                				<td>	    
+		                					<i><span id="validatorEmail" style="color: red;font-size: 8"></span></i>
+		                				</td>
+		                			</tr>
 			               			<tr>
 			               				<td>Gender</td>
 			               				<td>:</td>
@@ -178,6 +333,13 @@
 										</td>
 			               			</tr>
 			               			<tr>
+		                				<td></td>
+		                				<td></td>
+		                				<td>	    
+		                					<i><span id="validatorPosition" style="color: red;font-size: 8"></span></i>
+		                				</td>
+		                			</tr>
+			               			<tr>
 			               				<td>Head</td>
 			               				<td>:</td>
 			               				<td class="input-group">
@@ -188,6 +350,13 @@
 										</td>
 			               			</tr>
 			               			<tr>
+		                				<td></td>
+		                				<td></td>
+		                				<td>	    
+		                					<i><span id="validatorHead" style="color: red;font-size: 8"></span></i>
+		                				</td>
+		                			</tr>
+		                			<tr>
 			               				<td>Division</td>
 			               				<td>:</td>
 				               			<td>
@@ -203,6 +372,13 @@
 										</td>
 			               			</tr>
 			               			<tr>
+		                				<td></td>
+		                				<td></td>
+		                				<td>	    
+		                					<i><span id="validatorDivision" style="color: red;font-size: 8"></span></i>
+		                				</td>
+		                			</tr>
+			               			<tr>
 			               				<td>Hire Date</td>
 			               				<td>:</td>
 			               				<td>
@@ -211,6 +387,13 @@
 			               				  	</div>
 										</td>
 			               			</tr>
+			               			<tr>
+		                				<td></td>
+		                				<td></td>
+		                				<td>	    
+		                					<i><span id="validatorHireDate" style="color: red;font-size: 8"></span></i>
+		                				</td>
+		                			</tr>
 			               			<tr>
 			               				<td>Profile Picture [Max. <%=Constants.MAX_IMAGE_FILESIZE %> KB]</td>
 			               				<td>:</td>
@@ -226,8 +409,13 @@
 			               				</td>
 			               			</tr>
 			               			<tr>
+		                  				<td></td>
+										<td></td>
+		                  				<td><div id="employee-validating"></div></td>
+		                  			</tr>
+			               			<tr>
 			               				<td colspan="3" align="center">
-			               					<input type="button" value="Save" class="btn btn-primary"  onclick="dosubmit()"/> 
+			               					<input type="button" value="Save" class="btn btn-primary"  onclick="validateForm()"/> 
 			               					<input type="button" value="Cancel" class="btn btn-default" onclick="flyToPage('<%=Constants.Task.BACKTOMAIN%>')"/>					
 			               				</td>
 			               			</tr>
