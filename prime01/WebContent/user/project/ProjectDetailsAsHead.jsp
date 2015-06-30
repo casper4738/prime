@@ -153,12 +153,13 @@
 	                		<td><bean:write name="iter" property="email"/></td>
 	                		<td><bean:write name="iter" property="contactNumber"/></td>
 	                		<td align="center">
-	                        	
+	                        	<logic:notEqual name="iter" property="roleName" value="">
                      	        <input type="image" value='Details' onclick="flyToTaskDetail(
                      	        				'detailMemberAsHead', 
                      	        				'<bean:write name="iter" property="employeeId"/>')"
      	        								src="resources/image/viewmore.png"
-                     	        				>
+                     	       			/>
+                     	       	 </logic:notEqual>	
 	                        </td>	
 	                    </tr> 
                     </logic:iterate>

@@ -34,7 +34,7 @@
 		<h1>Manage Position</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li>Manage Position</li>
+			<li><html:link href="#" onclick="flyToBack('home')" >Manage Position</html:link></li>
 			<li class="active">Add Position</li>
 		</ol>
 	</section>

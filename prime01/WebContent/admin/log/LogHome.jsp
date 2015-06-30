@@ -185,7 +185,7 @@
 												NOTIFICATIONS
 											</logic:equal>				                			
 				                		 </td>
-				                		<td><bean:write name="iter" property="auditTrailTime" format="dd-MM-yyyy HH:mm:SS"/> </td>
+				                		<td align="center"><bean:write name="iter" property="auditTrailTime" format="dd MMMM yyyy HH:mm:ss"/> </td>
 						                <td>
 						                	<logic:equal name="iter" property="auditTrailAction" value='<%=Constants.LogAction.INSERT+""%>'>
 												INSERT
@@ -209,28 +209,9 @@
 			            <!-- End Of Table List -->
 			            
 			            <!-- Paging -->
-						<ul class="pagination">
-							<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
-							<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
-							<logic:iterate id="p" name="listPage">
-								<logic:equal name="p" value="${pageNow}">
-									<li><html:link styleClass="active" href="#">${p}</html:link> </li>
-								</logic:equal>
-								<logic:notEqual name="p" value="${pageNow}">
-									<li><html:link styleClass="paging" href="#" onclick="page(${p})">${p}</html:link> </li>
-								</logic:notEqual>
-							</logic:iterate>
-							<li><html:link styleClass="paging" href="#" onclick="page(${pageNext})" >>></html:link> </li>
-							<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
-							
-							
-							<html:text name="LogAdminForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
-							<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
-							
-						</ul>
-						<div class="paginate-2">
-							Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
-						</div>
+				        <jsp:include page="/content/Pagination.jsp">
+				   			<jsp:param name="formName" value="LogAdminForm" />
+				   		</jsp:include>
 						<!-- End of Paging -->
 	        </div></div>
 	        </div>

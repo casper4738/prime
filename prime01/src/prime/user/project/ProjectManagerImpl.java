@@ -28,7 +28,8 @@ public class ProjectManagerImpl implements ProjectManager {
 	}
 
 	@Override
-	public List<ProjectBean> getListProjectMemberDetails(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
+	public List<ProjectBean> getListProjectMemberDetails(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId,
+			Integer projectId) 
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
@@ -36,6 +37,7 @@ public class ProjectManagerImpl implements ProjectManager {
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		map.put("employeeId", employeeId);
+		map.put("projectId", projectId);
 		return mapper.queryForList("project.getListProjectMemberDetails", map);
 	}
 	

@@ -6,10 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head> 
-<<<<<<< HEAD
-=======
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
+	<!-- JS -->
 	<script type="text/javascript">
 	function validateForm() {
 		document.getElementById('validator').innerHTML="";
@@ -31,30 +29,17 @@
 	    
 	}
 	</script>
+	<!-- End of JS -->
 </head>
-<<<<<<< HEAD
 	<body class="skin-blue sidebar-mini">
 		<section class="content-header">
-			<h1>Manage Division<small>management system</small>
-			</h1>
+			<h1>Manage Division</h1>
 			<ol class="breadcrumb">
 				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-				<li class="active">Manage Division</li>
+				<li><html:link href="#" onclick="flyToBack('home')"> Manage Division</html:link></li>
+				<li class="active">Edit Division</li>
 			</ol>
 		</section>
-=======
-<body class="skin-blue sidebar-mini">
-	<section class="content-header">
-		<h1>Manage Division<small>management system</small>
-		</h1>
-		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Manage Division</li>
-		</ol>
-	</section>
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
-
-<<<<<<< HEAD
 		<section class="content">
 		<div class="row">
 			<div class="col-xs-12"><div class="box">
@@ -64,20 +49,15 @@
                  		<html:hidden name="DivisionAdminForm" property="task" value="<%=Constants.Task.DOEDIT%>"/>
                  		<html:hidden name="DivisionAdminForm" property="divisionBean.divisionId" />
                  		<table class="form-input" align="center">
-                 			<tr>
-                 				<td>Division Name</td>
+                 			<tr><td>Division Name</td>
                  				<td>:</td>
                  				<td><html:text name="DivisionAdminForm" property="divisionBean.divisionName" styleClass="form-control" styleId="nameValidator" maxlength="50"/></td>
                  			</tr>
-                 			<tr>
-                 			<td>
-                 			</td>
-                 			<td>
-                 			</td>
-                 			<td> <span  id="validator" style="color: red"> </span> </td>
+                 			<tr><td></td>
+                 				<td></td>
+                 				<td><span id="validator" style="color: red"></span></td>
                  			</tr>
-                 			<tr>
-                 				<td colspan="3" align="center">
+                 			<tr><td colspan="3" align="center">
                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
                  					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                  				</td>
@@ -89,37 +69,4 @@
 	        </div>
 		</section>
 	</body>
-=======
-	<section class="content">
-		<div class="row"><div class="col-xs-12"><div class="box">
-			<div class="box-header"><h3 class="box-title">Data Division</h3></div>
-				<div class="box-body">
-                	<html:form action="/DivisionAdmin">
-	               		<html:hidden name="DivisionAdminForm" property="task" value="<%=Constants.Task.DOEDIT%>"/>
-	               		<html:hidden name="DivisionAdminForm" property="divisionBean.divisionId" />
-	               		<table class="form-input" align="center">
-	               			<tr>
-	               				<td>Division Name</td>
-	               				<td>:</td>
-	               				<td><html:text name="DivisionAdminForm" property="divisionBean.divisionName" styleClass="form-control" styleId="nameValidator" maxlength="50"/></td>
-	               			</tr>
-	               			<tr>
-	               				<td></td>
-	               				<td></td>
-		               			<td><span id="validator" style="color: red"> </span> </td>
-	               			</tr>
-	               			<tr>
-	               				<td colspan="3" align="center">
-	               					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
-	               					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
-	               				</td>
-	               			</tr>
-	               		</table>
-               		</html:form>
-        		</div>
-       	</div></div></div>
-	</section>
-
-</body>
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 </html>

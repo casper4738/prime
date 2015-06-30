@@ -143,12 +143,13 @@ public class ProjectAction extends Action {
 			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
 			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeBean().getEmployeeId());
 			pForm.getProjectBean().setEmployeeName(pForm.getEmployeeBean().getEmployeeName());
+			System.out.println("PID "+pForm.getProjectId());
 			
 			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
-					pForm.getEmployeeId());
+					pForm.getEmployeeId(), pForm.getProjectId());
 			
 			//##. Set Attribute
 			request.setAttribute("listProjectMemberDetails", list);
@@ -206,7 +207,7 @@ public class ProjectAction extends Action {
 			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
-					pForm.getEmployeeId());
+					pForm.getEmployeeId(), pForm.getProjectId());
 			
 			//##. Set Attribute
 			request.setAttribute("listProjectMemberDetails", list);

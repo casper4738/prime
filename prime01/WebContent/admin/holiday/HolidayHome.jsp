@@ -11,7 +11,13 @@
 <!DOCTYPE html>
 <html>
 <head> 
+	<!-- CSS -->
+	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	<!-- End of CSS -->
+	
 	<!-- JS -->
+	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$('#table-1').dataTable( {
 		   paging    : false,
@@ -54,7 +60,7 @@
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage Holiday<small>management system</small></h1>
+		<h1>Manage Holiday</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
 			<li class="active">Manage Holiday</li>
@@ -66,7 +72,7 @@
 			<div class="col-xs-12"><div class="box">
 				<div class="box-header"><h3 class="box-title">Data Manage Holiday</h3></div>
 				
-				<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
+				<p><span class="button-add btn btn-app bg-olive historyAPI" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
                    		<i class="fa fa-edit"></i>Add
                    </span>
 	            <span class="message"><bean:write name="HolidayAdminForm" property="message" /></span></p>
