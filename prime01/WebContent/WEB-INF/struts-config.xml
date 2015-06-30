@@ -35,6 +35,13 @@
 		<!--Notification -->
 		<form-bean name="NotificationForm"			type="prime.user.notification.NotificationForm"></form-bean>
 		
+		<!-- User Menu -->
+		<form-bean name="UserMenuForm"				type="prime.admin.usermenu.UserMenuForm"></form-bean>
+		
+		<!-- User Role -->
+		<form-bean name="UserRoleForm"				type="prime.admin.userrole.UserRoleForm"></form-bean>
+		
+		
 		
 	</form-beans>
 	
@@ -185,6 +192,20 @@
 			<forward name="add" 			path="/admin/notiftemplate/NotifTemplateAdd.jsp">					</forward>
 			<forward name="edit" 			path="/admin/notiftemplate/NotifTemplateEdit.jsp">					</forward>
 		</action>	
+		
+		<!-- User Menu -->
+		<action path="/UserMenu" name="UserMenuForm" type="prime.admin.usermenu.UserMenuAction" scope="request">
+			<forward name="success" 		path="/admin/usermenu/UserMenuHome.jsp">					</forward>
+		</action>
+		
+		<!-- User Role -->
+		<action path="/UserRole" name="UserRoleForm" type="prime.admin.userrole.UserRoleAction" scope="request">
+			<forward name="success" 		path="/admin/userrole/UserRoleHome.jsp">					</forward>
+			<forward name="forward" 		path="/admin/userrole/Forward.jsp">							</forward>
+			<forward name="add" 			path="/admin/userrole/UserRoleAdd.jsp">						</forward>
+			<forward name="edit" 			path="/admin/userrole/UserRoleEdit.jsp">					</forward>
+		</action>
+		
 	</action-mappings>
 	<message-resources parameter="application" />
 	

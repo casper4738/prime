@@ -51,4 +51,20 @@
 	        </isNotNull>
 	    </dynamic>
 	</select>
+	
+	<select id="getListNotifNoRead" resultClass="prime.user.notification.NotificationBean" parameterClass="java.lang.Integer">
+		SELECT NOTIFICATION_NOTE AS notificationNote
+	    FROM NOTIFICATIONS NOTIF
+        JOIN EMPLOYEES E ON E.EMPLOYEE_ID = NOTIF.SENDER
+        JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = NOTIF.RECEIVER
+        WHERE NOTIFICATION_STATUS = '1' AND RECEIVER = #employeeId# AND ROWNUM <![CDATA[ <= ]]> 5
+	</select>
+	
+	<select id="getCountListNotifNoRead" resultClass="java.lang.Integer" parameterClass="java.lang.Integer">
+		SELECT COUNT(1) 
+	    FROM NOTIFICATIONS NOTIF
+        JOIN EMPLOYEES E ON E.EMPLOYEE_ID = NOTIF.SENDER
+        JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = NOTIF.RECEIVER
+        WHERE NOTIFICATION_STATUS = '1' AND RECEIVER = #employeeId# 
+	</select>
 </sqlMap>
