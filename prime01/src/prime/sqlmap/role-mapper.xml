@@ -62,7 +62,7 @@
 		    ROLE_ID		AS roleId,
 		    ROLE_NAME	AS roleName
 		FROM ROLES
-		WHERE ROLE_ID !=0
+		WHERE ROLE_ID !=1
 	</select>
 	
 	<select id="getRolesByEmployeeIdAndProjectId" resultClass="prime.admin.role.RoleBean" parameterClass="java.util.Map">
@@ -77,7 +77,7 @@
 			PROJ_MBR.EMPLOYEE_ID = #employeeId#
 		AND
 			PROJ_MBR.PROJECT_ID  = #projectId#  
-		AND ROLE.ROLE_ID!=0
+			
 	</select>
 	
 </sqlMap>

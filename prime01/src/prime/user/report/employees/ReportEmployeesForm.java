@@ -2,13 +2,17 @@ package prime.user.report.employees;
 
 import org.apache.struts.action.ActionForm;
 
+import prime.admin.division.DivisionBean;
 import prime.admin.employee.EmployeeBean;
+import prime.admin.position.PositionBean;
 import prime.user.task.TaskBean;
 
 public class ReportEmployeesForm extends ActionForm {
 	private ReportEmployeesBean reportEmployeesBean = new ReportEmployeesBean();
 	private TaskBean taskBean = new TaskBean();
 	private EmployeeBean employeeBean = new EmployeeBean();
+	private DivisionBean divisionBean = new DivisionBean();
+	private PositionBean positionBean = new PositionBean();
 	private String task;
 	private String search;
 	private String columnSearch;
@@ -17,6 +21,19 @@ public class ReportEmployeesForm extends ActionForm {
 	private Integer showInPage = 10;
 	private Integer tmpId;
 	private Integer employeeId;
+	
+	public DivisionBean getDivisionBean() {
+		return divisionBean;
+	}
+	public void setDivisionBean(DivisionBean divisionBean) {
+		this.divisionBean = divisionBean;
+	}
+	public PositionBean getPositionBean() {
+		return positionBean;
+	}
+	public void setPositionBean(PositionBean positionBean) {
+		this.positionBean = positionBean;
+	}
 	public ReportEmployeesBean getReportEmployeesBean() {
 		return reportEmployeesBean;
 	}
