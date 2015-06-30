@@ -3,6 +3,11 @@
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 
+<%
+	//Invalidate Session When We Come Back to this Screen
+	request.getSession().invalidate();
+%>
+
 <!DOCTYPE html>
 <html>
   <head>

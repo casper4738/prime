@@ -1,7 +1,7 @@
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-
+<%@ page import="prime.user.notification.NotificationManagerImpl" %>
 <script type="text/javascript">
 function openModalHandler(task){
 	//##0.Accessing Prime Method For Modal Showing
@@ -15,18 +15,31 @@ function openModalHandler(task){
 		<a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"> 
 			<span class="sr-only">Toggle navigation</span>
 		</a>
+		<% 
+			NotificationManagerImpl tmpManager = new NotificationManagerImpl();
+			int countNotif = tmpManager.getCountListNotifNoRead(100);
+		%>
 		<div class="navbar-custom-menu">
 			<ul class="nav navbar-nav">
 				<li class="dropdown notifications-menu"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown"> <i
-						class="fa fa-bell-o"></i> <span class="label label-warning">10</span>
+						class="fa fa-bell-o"></i> <span class="label label-warning"><%=countNotif%></span>
 				</a>
 					<ul class="dropdown-menu">
-						<li class="header">You have 10 notifications</li>
+						<li class="header">You have <%=countNotif%> notifications</li>
 						<li>
 							<!-- inner menu: contains the actual data -->
 							<ul class="menu">
-								<li><a href="#"> <i class="fa fa-users text-aqua"></i>
+								<%
+									for(int i=0;i<tmpManager.getListNotifNoRead(100).size();i++){
+								%>
+										<li><a href="#"> <i class="fa fa-warning text-yellow"></i>
+											<%=tmpManager.getListNotifNoRead(100).get(i).getNotificationNote()%>
+										</a></li>
+								<%		
+									}
+								%>
+								<!-- <li><a href="#"> <i class="fa fa-users text-aqua"></i>
 										5 new members joined today
 								</a></li>
 								<li><a href="#"> <i class="fa fa-warning text-yellow"></i>
@@ -42,10 +55,10 @@ function openModalHandler(task){
 								</a></li>
 								<li><a href="#"> <i class="fa fa-user text-red"></i>
 										You changed your username
-								</a></li>
+								</a></li> -->
 							</ul>
 						</li>
-						<li class="footer"><a href="#">View all</a></li>
+						<li class="footer"><html:link styleClass="paging" href="#" onclick="doViewAllNotif()">View all</html:link></li>
 					</ul></li>
 
 				<li class="dropdown user user-menu"><a href="#"
@@ -65,7 +78,7 @@ function openModalHandler(task){
 								<input type="button" class="btn btn-block btn-default"  onclick="openModalHandler('changePwd')" value="Change Password"/>
 							</div>
 							<div class="pull-right">
-								<input type="button" class="btn btn-block btn-default"  onclick="" value="Sign Out"/>
+								<input type="button" class="btn btn-block btn-default"  onclick="doSignOut()" value="Sign Out"/>
 							</div>
 						</li>
 					</ul></li>

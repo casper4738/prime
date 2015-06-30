@@ -33,4 +33,12 @@ public class NotificationManagerImpl implements NotificationManager{
 		map.put("value", value+"");
 		return  (Integer) mapper.queryForObject("notification.getCountListByCol", map);
 	}
+	
+	public List<NotificationBean> getListNotifNoRead(Integer employeeId) throws SQLException {
+		return mapper.queryForList("notification.getListNotifNoRead", employeeId);
+	}
+	
+	public Integer getCountListNotifNoRead(Integer employeeId) throws SQLException {
+		return  (Integer) mapper.queryForObject("notification.getCountListNotifNoRead", employeeId);
+	}
 }

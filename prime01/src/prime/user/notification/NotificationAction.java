@@ -24,6 +24,17 @@ public class NotificationAction extends Action {
 		NotificationForm pForm = (NotificationForm) form;
 		NotificationManager tmpManager = new NotificationManagerImpl();
 
+		//if("VIEWNOTIF".equals(pForm.getTask())){
+			
+			//Notifikasi apa aja yang belum ke read [maximal 5]
+			System.out.println(tmpManager.getListNotifNoRead(100).get(0).getNotificationNote());
+			System.out.println(pForm.getNotificationBean().getNotificationNote()+ " NOTIF NOTE");
+			
+			//Total Notifikasi
+			System.out.println(tmpManager.getCountListNotifNoRead(100));
+			
+		//	return null;
+		//}
 		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),
 				pForm.getSearch());
 		List<NotificationBean> list = tmpManager.getListByColumn(
