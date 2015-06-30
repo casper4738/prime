@@ -42,7 +42,7 @@ public class MenuAction extends Action {
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]			, "Manage Task As Head");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK_SUBORDINATE]	, "Manage Task As Subordinate");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_PROJECT]				, "Manage Project");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_REPORT]				, "View Report");
+				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_REPORT_EMPLOYEES]	, "View Report Employees");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_VIEWNOTIF]			, "View Notification");
 		//		break;
 		//	case Constants.SystemLevel.OPERATOR_MONITOR :

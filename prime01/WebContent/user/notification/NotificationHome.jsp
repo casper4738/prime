@@ -26,14 +26,14 @@
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
     
-		<script type="text/javascript">
+	
+
+	
+	<script type="text/javascript">
 		$('#table-1').dataTable( {
 			paging    : false,
 			searching : false,
-			info	  : false,
-			language  : {
-		          "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
-		    }
+			info	  : false
 	    } );
 	</script>
 	<!-- End JS -->
@@ -86,11 +86,11 @@
 					<table id="table-1" class="table table-bordered table-striped table-hover">
 						<thead>
 							<tr>
-								<th>Notification Id</th>
-								<th>Notification Note</th>
-								<th>Notification Send Date</th>
-								<th>Notification Type</th>
-								<th>Notification Status</th>
+								<th>ID</th>
+								<th>Description</th>
+								<th>Received Date</th>
+								<th>Type</th>
+								<th>Status</th>
 								<th>Sender</th>
 			                </tr>
 			            </thead>

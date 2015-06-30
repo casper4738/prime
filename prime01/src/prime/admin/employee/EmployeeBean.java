@@ -27,6 +27,7 @@ public class EmployeeBean extends HolidayBean {
 	private Date startDate;
 	private Date endDate;
 	private Date startFrom;
+	private Date maxStartFrom;
 	private String descriptionDayOff;
 	private String descriptionWeekEnd;
 	private String weekEnd;
@@ -233,5 +234,13 @@ public class EmployeeBean extends HolidayBean {
 
 	public void setManagerDivisionId(Integer managerDivisionId) {
 		this.managerDivisionId = managerDivisionId;
+	}
+
+	public Date getMaxStartFrom() {
+		return maxStartFrom;
+	}
+
+	public void setMaxStartFrom(Date maxStartFrom) {
+		this.maxStartFrom = maxStartFrom;
 	}
 }

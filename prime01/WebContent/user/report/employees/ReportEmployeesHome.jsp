@@ -9,6 +9,9 @@
 	<!-- End CSS -->
 	
 	<!-- JS -->
+	<script src="resources/prime.js"></script>
+	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
@@ -29,42 +32,36 @@
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage Employee</h1>
+		<h1>Employee Report</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
-			<li class="active">Manage Employees</li>
+			<li class="active">Employee Report</li>
 		</ol>
 	</section>
 
 	<section class="content">
 		<div class="row">
 			<div class="col-xs-12"><div class="box">
-				<div class="box-header"><h3 class="box-title">Data Manage Employee</h3></div>
-				<p>
-					<span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
-		          		<i class="fa fa-edit"></i>Add
-		         	</span>
-		         	<span class="message"><bean:write name="EmployeeAdminForm" property="message" /></span>
-		         </p>
+				<div class="box-header"><h3 class="box-title">Data Employee Report</h3></div>
 	                
 				<!-- Search Handler Tag -->
 				<div class="show-in-page">
 					Show per page
-					<html:select property="showInPage" name="EmployeeAdminForm" onchange="change(this.value)" styleClass="columnSearch">
+					<html:select property="showInPage" name="ReportUserEmployeesForm" onchange="change(this.value)" styleClass="columnSearch">
 						<html:optionsCollection name="listMaxDataPerPage" label="value" value="key"/>
 					</html:select>
 				</div>
 				<div class="search-table">
-				<html:form action="/EmployeeAdmin">
-					<html:hidden name="EmployeeAdminForm" property="task"/>
-					<html:hidden name="EmployeeAdminForm" property="tmpId"/>
-					<html:hidden name="EmployeeAdminForm" property="goToPage"/>
-					<html:hidden name="EmployeeAdminForm" property="showInPage"/>
+				<html:form action="/ReportEmployees">
+					<html:hidden name="ReportUserEmployeesForm" property="task"/>
+					<html:hidden name="ReportUserEmployeesForm" property="tmpId"/>
+					<html:hidden name="ReportUserEmployeesForm" property="goToPage"/>
+					<html:hidden name="ReportUserEmployeesForm" property="showInPage"/>
 				
-					<html:select name="EmployeeAdminForm" property="columnSearch">
+					<html:select name="ReportUserEmployeesForm" property="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
-					<html:text name="EmployeeAdminForm" property="search"/>
+					<html:text name="ReportUserEmployeesForm" property="search"/>
 					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
 					<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
 				</html:form>
@@ -106,12 +103,10 @@
 			                		<td><bean:write name="iter" property="managerName"/> </td>
 			                        <td align="center">
 				                        <logic:empty name="iter" property="resignDate">
-				                        	<span class="label label-success">Active</span>
-				                        	<%-- <html:image src="resources/image/check-true.png" />  --%>
+				                        	<html:image src="resources/image/check-true.png" /> 
 				                        </logic:empty>
 				                        <logic:notEmpty name="iter" property="resignDate">
-				                        	<span class="label label-danger">Resign</span>
-				                        	<%-- <html:image src="resources/image/check-false.png" />  --%>
+				                        	<html:image src="resources/image/check-false.png" /> 
 				                        </logic:notEmpty>
 			                        </td>
 			                        <td align="center">

@@ -1,6 +1,7 @@
 package prime.filter;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -40,18 +41,27 @@ public class FilterSession implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
 		HttpServletRequest tmpServletRequest = (HttpServletRequest) request;
-		HttpServletResponse tmpServletResponse = (HttpServletResponse) response;
-		HttpSession tmpSession = tmpServletRequest.getSession();
-		RequestDispatcher tmpRO;
-
-//		if (tmpSession.getAttribute(Constants.Session.USERDATA) == null) {
-//			tmpRO = request.getRequestDispatcher(Constants.PAGES_LIST[Constants.Page.LOGIN]);
-//			tmpRO.forward(tmpServletRequest, tmpServletResponse);
-//		} else {
-//			chain.doFilter(request, response);
-//		}
-		
-		chain.doFilter(request, response);
+	    HttpServletResponse tmpServletResponse = (HttpServletResponse) response;
+	    HttpSession tmpSession = tmpServletRequest.getSession();
+	    RequestDispatcher tmpRO;
+	    
+	    /*
+	    if(tmpSession.getAttribute(Constants.Session.USERDATA) == null) {
+	    	
+	    	if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+			     PrintWriter out = response.getWriter();
+			     out.println("<script type=\"text/javascript\">");
+			     out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.LOGIN] + "';");
+			     out.println("</script>");
+		    } else {
+				tmpRO = request.getRequestDispatcher(Constants.PAGES_LIST[Constants.Page.LOGIN]);
+				tmpRO.forward(tmpServletRequest, tmpServletResponse);
+		    }
+	    } else {
+	    	chain.doFilter(request, response);
+	    }
+	    */
+    	chain.doFilter(request, response);
 	}
 
 	/**
