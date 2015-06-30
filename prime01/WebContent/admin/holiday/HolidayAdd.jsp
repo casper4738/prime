@@ -25,7 +25,7 @@
 	    var holidayDate =  new Date(document.getElementById('datepicker').value);
 	    var today = new Date();
 	    var validate = true;
-	    
+	  
 	    if (holidayDescription == null || holidayDescription == "") {
 	        document.getElementById('validatorDescription').innerHTML="Description must be filled out";
 	        validate = false;

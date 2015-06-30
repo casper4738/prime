@@ -122,16 +122,9 @@
 		}		
 	
 		function flyTo(){
-			//Confirm Password
-			var tmpPassword = $('#password');
-			var tmpConfirmPassword = $('#confirmPassword');
-			if (tmpPassword.value  == tmpConfirmPassword.value) {
-				var tmpForm = document.forms[0]; 
-				tmpForm.task.value = "<%=Constants.Task.DOADD%>";
-				menuLoadHandler(tmpForm.action, serialize(tmpForm));
-			}else{
-				alert("Password does not match");
-			}
+			var tmpForm = document.forms[0]; 
+			tmpForm.task.value = "<%=Constants.Task.DOADD%>";
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
 		function checkActiveDirectory(){

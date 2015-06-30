@@ -287,19 +287,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		return (Integer) mapper.queryForObject("employee.getListNationalHoliday", map);
 	}
 
-	@Override
-	public Integer getCountWeekendByDayOff(Date startDayOff,Date endDayOff, Integer employeeId) throws SQLException {
-		// TODO Auto-generated method stub
-		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println(startDayOff);
-		System.out.println(endDayOff);
-		System.out.println(employeeId);
-		map.put("startDayOff", startDayOff);
-		map.put("endDayOff", endDayOff);
-		map.put("employeeId", employeeId);
-		return (Integer) mapper.queryForObject("employee.getListWeekendEmployee", map);
-	}
-
 	 @Override
 	 public List<EmployeeBean> getListByColumnEmployeeActive(
 	   String columnSearch, String value, Integer startRow, Integer endRow)
@@ -325,4 +312,19 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	 public Date getEmployeeResignDate(Integer id) throws SQLException {
 	  return (Date) mapper.queryForObject("employee.getEmployeeResignDate", id);
 	 }
+
+	@Override
+	public List<EmployeeBean> getMaxStartFromByStartDate(String startDate, Integer employeeId) throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("startDate", startDate);
+		map.put("employeeId", employeeId);
+		return mapper.queryForList("employee.getMaxStartFromByStartDate", map);
+	}
+
+	@Override
+	public String getDayWeekByEndDate(String endDate) throws SQLException {
+		// TODO Auto-generated method stub
+		return (String) mapper.queryForObject("employee.getDayWeekByEndDate", endDate);
+	}
 }

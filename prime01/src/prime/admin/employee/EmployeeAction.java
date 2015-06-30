@@ -1,5 +1,6 @@
 package prime.admin.employee;
 
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
@@ -25,8 +26,21 @@ import prime.constants.Constants;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
-public class EmployeeAction extends Action {
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayOutputStream;
+import javax.imageio.ImageIO;
 
+public class EmployeeAction extends Action {
+	public byte[] convertImageToByte(BufferedImage image) {
+	  try {
+	   ByteArrayOutputStream baos = new ByteArrayOutputStream();
+	   ImageIO.write(image, "JPG", baos);
+	   baos.flush();
+	   return baos.toByteArray();
+	  } catch (Exception ex) {
+	  }
+	  return null;
+    }
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
@@ -36,6 +50,8 @@ public class EmployeeAction extends Action {
 		PositionManager tmpPositionManager = new PositionManagerImpl();
 		
 		System.out.println("Task = " + pForm.getTask());
+		
+		//request.setAttribute("picpic", manager.selectBlob());
 		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
@@ -187,7 +203,32 @@ public class EmployeeAction extends Action {
 			manager.updateHead(pForm.getEmployeeBean().getEmployeeId(),pForm.getSubstituteHeadId());
 			
 			return mapping.findForward("forward");
-		} 
+		} else if(Constants.Task.DOVALIDATE1.equals(pForm.getTask())){
+			response.setContentType("text/text;charset=utf-8");
+			response.setHeader("cache-control", "no-cache");
+			PrintWriter tmpOut = response.getWriter();
+			String tmpResponse = "";
+			
+			int tmpResponseCode;
+			//0 : Exists Database ; 1 : Empty Database
+			if(manager.getEmployeeResignDate(pForm.getManagerId()) != null){
+				tmpResponseCode = 1;	//Employee Already Resign
+			} else {
+				tmpResponseCode = 0;	//Success
+			}
+
+			System.out.println(tmpResponseCode + " tmpResponseCode");
+			if(tmpResponseCode == 1){
+				tmpResponse = "1#<div id=\"message\" style=\"color:red;font-size:8\">Employee already resign, please select other.</div>";
+			} else {
+				tmpResponse = "0#";
+			}
+			
+			System.out.println(tmpResponse + " tmpResponse");
+			tmpOut.print(tmpResponse);
+			tmpOut.flush();
+			return null;
+		}
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		

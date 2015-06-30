@@ -449,29 +449,6 @@
 		WHERE EMP.TREE_ID LIKE  EMPX.TREE_ID||'%'
 	</select>
 	<!-- end of select employee by tree -->
-
-	<!-- SELECT COUNT WEEKEND EMPLOYEE BETWEEN DAY OFF -->
-	<select id="getListWeekendEmployee" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT COUNT(0) FROM (
-	       SELECT EMPLOYEE_ID,start_from,regexp_substr(WEEKEND,'[^,]+', 1, level) AS  SPLIT_WEEKEND,(start_from +
-	       CASE WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Monday' THEN 0
-	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Tuesday' THEN 1
-	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Wednesday' THEN 2
-	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Thursday' THEN 3
-	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Friday' THEN 4
-	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Saturday' THEN 5
-	       WHEN regexp_substr(WEEKEND,'[^,]+', 1, level) = 'Sunday' THEN 6
-	       END
-	       --ELSE 6 END
-	     )DATE_WEEKEND from WEEKEND_HOLIDAYS
-	     connect by regexp_substr(WEEKEND, '[^,]+', 1, level) is not null
-	  ) SETWEEKEND
-	  WHERE DATE_WEEKEND BETWEEN 
-	                #startDayOff# 
-	                AND #endDayOff# AND EMPLOYEE_ID=#employeeId#
-	</select>
-	
-	
 	
 	<select id="getListByColumnEmployeeActive" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
@@ -573,5 +550,14 @@
 		      SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
 		  )RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
 		  WHERE EMP.EMPLOYEE_ID=#employeeId#
+	 </select>
+	 
+	 <select id="getMaxStartFromByStartDate" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
+	 	SELECT START_FROM AS maxStartFrom, WEEKEND as weekEnd FROM WEEKEND_HOLIDAYS 
+	 	WHERE START_FROM <![CDATA[ <= ]]> TO_DATE(#startDate#,'yyyy-mm-dd') AND EMPLOYEE_ID = #employeeId# ORDER BY START_FROM DESC
+	 </select>
+	 
+	 <select id="getDayWeekByEndDate" resultClass="java.lang.String" parameterClass="java.lang.String">
+	 	SELECT TO_CHAR(TO_DATE(#endDate#,'yyyy-mm-dd'), 'DAY') FROM WEEKEND_HOLIDAYS WHERE ROWNUM = 1
 	 </select>
 </sqlMap>
