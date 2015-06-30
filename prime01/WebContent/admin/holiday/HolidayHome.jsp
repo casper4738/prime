@@ -18,7 +18,14 @@
 	<!-- JS -->
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+<<<<<<< HEAD
+	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
+	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
+	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
+=======
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 	<script type="text/javascript">
 		$('#table-1').dataTable( {
 		   paging    : false,

@@ -101,6 +101,8 @@ function menuLoadHandler(targettedMenu, targettedData){
 		//---.Show Some Respect For Error Status
 		if(status == "error"){
 			$('#content-main').html(PAGE_LOAD_ERROR);
+		} else {
+			$('#content-main').css("z-index", -1);
 		}
 	});
 	
