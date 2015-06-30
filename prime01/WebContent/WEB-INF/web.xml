@@ -28,6 +28,6 @@
   </filter>
   <filter-mapping>
     <filter-name>FilterSession</filter-name>
-    <url-pattern>/FilterSession</url-pattern>
+    <url-pattern>*.do</url-pattern>
   </filter-mapping>
 </web-app>

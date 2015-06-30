@@ -11,14 +11,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-	<!-- CSS -->
-	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
-	<!-- End of CSS -->
-	
 	<!-- JS -->
-	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$('#table-1').dataTable( {
 		   paging    : false,

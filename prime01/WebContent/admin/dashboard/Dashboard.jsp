@@ -7,6 +7,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
+<<<<<<< HEAD
  <meta charset="UTF-8">
     <title>AdminLTE 2 | Calendar</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -93,6 +94,8 @@
     <script src="resources/plugins/moment/moment.min.js" type="text/javascript"></script>
     <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
     <!-- Page specific script -->
+=======
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
     <script type="text/javascript">
       $(function () {
         /* initialize the external events
@@ -214,5 +217,50 @@
         });
       });
     </script>
+    <!-- End Of JS -->
+    
+</head>
+
+<body class="skin-blue sidebar-mini">
+	<section class="content">
+	<div class="row">
+		<section class="col-lg-5">
+		<div class="box box-primary">
+			<div class="box-header">
+                 <h3 class="box-title">Welcome, Alexander</h3>
+                 </div>
+                 <div class="box-tools">
+				<div class="box-body no-padding">
+					<center><img class="photo" src="image/resize-Lighthouse.jpg" /></center>
+				</div>
+			</div>
+			</div>
+		</section>
+
+           <div class="col-lg-7">
+             <div class="box box-primary">
+               <div class="box-body no-padding">
+                 <!-- THE CALENDAR -->
+                 <div id="calendar"></div>
+               </div><!-- /.box-body -->
+             </div><!-- /. box -->
+           </div><!-- /.col -->
+         </div><!-- /.row -->
+     </section>
+      
+	<div id="fullCalModal" class="modal fade">
+	    <div class="modal-dialog">
+	        <div class="modal-content">
+	            <div class="modal-header">
+	                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
+	                <h4 id="modalTitle" class="modal-title"></h4>
+	            </div>
+	            <div id="modalBody" class="modal-body"></div>
+	            <div class="modal-footer">
+	                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+	            </div>
+	        </div>
+	    </div>
+	</div>
 </body>
 </html>
