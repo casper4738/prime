@@ -19,7 +19,10 @@
 			          UPPER(USERNAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 				<isEqual property="columnSearch" compareValue="TABLE">
-			          UPPER(AUDIT_TRAIL_TABLE) LIKE UPPER('%'||#value#||'%')
+			          UPPER(AUDIT_TRAIL_TABLE) = #value#
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="DATE">
+			          AUDIT_TRAIL_TIME BETWEEN TO_DATE(#startActivity#, 'yyyy-mm-dd') AND TO_DATE(#untilActivity#, 'yyyy-mm-dd')
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>

@@ -47,10 +47,8 @@ public class HolidayAction extends Action {
 		String search = "";
 		if("DATE".equals(pForm.getColumnSearch())) {
 			search = pForm.getStartHoliday()+";"+pForm.getUntilHoliday();
-			request.setAttribute("checkSearch", "date");
 		} else {
 			search = pForm.getSearch();
-			request.setAttribute("checkSearch", "text");
 		}
 		
 		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearch(), search);
