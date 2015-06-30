@@ -17,28 +17,32 @@ import prime.utility.PrimeUtil;
 
 public class LogAction extends Action {
 	@Override
-	public ActionForward execute(ActionMapping mapping, ActionForm form,
-			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
-		LogForm pForm = (LogForm) form;
-		LogManager tmpManager = new LogManagerImpl();		
+	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		LogForm pForm 			 = (LogForm) form;
+		LogManager tmpLogManager = new LogManagerImpl();
+		
+		String search = "";
+		if("DATE".equals(pForm.getColumnSearch())) {
+			search = pForm.getStartHoliday()+";"+pForm.getUntilHoliday();
+		} else if("TABLE".equals(pForm.getColumnSearch())) {
+			search = pForm.getSearchTableLog();
+		} else {
+			search = pForm.getSearch();
+		}
+		
+		System.out.println(pForm.getColumnSearch()+" | "+search);
 
-		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),
-				pForm.getSearch());
-		List<LogBean> list = tmpManager.getListByColumn(
-				pForm.getColumnSearch(), pForm.getSearch(), PrimeUtil
-						.getStartRow(pForm.getGoToPage(),
-								pForm.getShowInPage(), countRows), PrimeUtil
-						.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
-								countRows));
+		int countRows = tmpLogManager.getCountByColumn(pForm.getColumnSearch(), search);
+		List<LogBean> list = tmpLogManager.getListByColumn(pForm.getColumnSearch(), search, 
+				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), 
+				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 		
 		// ##1.Attribute for Table Show
 		request.setAttribute("listLog", list);
-		request.setAttribute("listSearchColumn",
-				Constants.Search.LOG_SEARCHCOLUMNS);
+		request.setAttribute("listSearchColumn", Constants.Search.LOG_SEARCHCOLUMNS);
 		request.setAttribute("listShowEntries", Constants.PAGINGROWPAGE);
-		setPaging(request, pForm, countRows, pForm.getGoToPage(),
-				pForm.getShowInPage());
+		request.setAttribute("listTableLog", Constants.Search.TABLELOG_SEARCHCOLUMNS);
+		setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		
 		return mapping.findForward("success");
 	}

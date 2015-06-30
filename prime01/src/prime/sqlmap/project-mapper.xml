@@ -26,7 +26,8 @@
             PROJ.PROJECT_DESCRIPTION    AS projectDescription,
             PROJ.PROJECT_LAST_STATUS    AS projectLastStatus,
             EMP_ASSIGN.EMPLOYEE_NAME    AS projectAssignerName,
-            EMP_RECEIVE.EMPLOYEE_NAME   AS projectReceiverName
+            EMP_RECEIVE.EMPLOYEE_NAME   AS projectReceiverName,
+			EMP_RECEIVE.EMPLOYEE_ID     AS employeeIdReceiver
         FROM PROJECTS PROJ
         JOIN PROJECT_DETAILS PD ON PROJ.PROJECT_ID = PD.PROJECT_ID
         JOIN EMPLOYEES EMP_ASSIGN ON PROJ.PROJECT_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
@@ -53,7 +54,8 @@
 			PROJECT_LAST_STATUS 		AS projectLastStatus,
 			PROJECT_DESCRIPTION 		AS projectDescription,
 			EMP_ASSIGN.EMPLOYEE_NAME 	AS projectAssignerName,
-			EMP_RECEIVE.EMPLOYEE_NAME 	AS projectReceiverName
+			EMP_RECEIVE.EMPLOYEE_NAME 	AS projectReceiverName,
+			EMP_RECEIVE.EMPLOYEE_ID     AS employeeIdReceiver
 		FROM PROJECTS PRO
 		JOIN EMPLOYEES EMP_ASSIGN  ON PRO.PROJECT_ASSIGNER = EMP_ASSIGN.EMPLOYEE_ID
 		JOIN EMPLOYEES EMP_RECEIVE ON PRO.PROJECT_RECEIVER = EMP_RECEIVE.EMPLOYEE_ID
@@ -69,20 +71,19 @@
 		    (SELECT LISTAGG (R.ROLE_NAME, ', ') WITHIN GROUP (ORDER BY R.ROLE_NAME)
 				FROM ROLES R
 		        JOIN PROJECT_MEMBERS PMX ON R.ROLE_ID = PMX.ROLE_ID
-		        WHERE   PMX.PROJECT_ID = P.PROJECT_ID AND PMX.EMPLOYEE_ID = E.EMPLOYEE_ID
+		        WHERE   PMX.PROJECT_ID = P.PROJECT_ID  AND PMX.EMPLOYEE_ID = E.EMPLOYEE_ID AND PMX.ROLE_ID!=0
 		        AND NVL(PMX.PROJECT_MEMBER_STATUS, 1) = 1
 		    ) 						AS roleName,
 		    D.DIVISION_NAME 		AS divisionName,
 		    E.EMAIL					AS email,
 		    E.CONTACT_NUMBER 		AS contactNumber,
-		    PD.PROJECT_STATUS 		AS projectStatus,
 		    P.PROJECT_ID 			AS projectId
 		FROM EMPLOYEES E
 		JOIN DIVISIONS D ON D.DIVISION_ID = E.DIVISION_ID
 		JOIN PROJECT_MEMBERS PM ON E.EMPLOYEE_ID = PM.EMPLOYEE_ID
 		JOIN PROJECTS P ON P.PROJECT_ID = PM.PROJECT_ID
-		JOIN PROJECT_DETAILS PD ON P.PROJECT_ID = PD.PROJECT_ID         
-		WHERE P.PROJECT_ID = #projectId#
+		JOIN ROLES R ON PM.ROLE_ID = R.ROLE_ID
+		WHERE P.PROJECT_ID = #projectId# AND PM.ROLE_ID !=0
 		<dynamic prepend="AND">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
@@ -195,7 +196,10 @@
 		JOIN PROJECT_MEMBERS PROJ_MBR ON PROJ_MBR.PROJECT_MEMBER_ID = TASK.PROJECT_MEMBER_ID
 		JOIN ROLES ROLE ON PROJ_MBR.ROLE_ID = ROLE.ROLE_ID
 		WHERE PROJ_MBR.EMPLOYEE_ID = #employeeId#
-   	</select>
+   	
+	
+	</select>
+	
 	
 	<select id="getDataProjectMemberByProjectMemberId" resultClass="prime.user.project.ProjectBean" parameterClass="java.lang.Integer">
 		SELECT DISTINCT 
@@ -248,6 +252,7 @@
 		    SELECT PROJECT_MEMBER_ID, ROLE_ID, PROJECT_MEMBER_STATUS FROM PROJECT_MEMBERS
 		    WHERE EMPLOYEE_ID = #employeeId# AND PROJECT_ID=#projectId#
 		) PROJ_MBR ON PROJ_MBR.ROLE_ID = ROLE.ROLE_ID
+		WHERE ROLE.ROLE_ID !=0
 		ORDER BY ROLE_NAME ASC
 	</select>
 	
@@ -265,6 +270,39 @@
  		AND PROJECT_MEMBER_STATUS = #projectMemberStatus#
 	</select>
 	
+	<select id="getPercentStatusProject" parameterClass="java.lang.Integer" resultClass="java.lang.Double">
+		SELECT (
+       SELECT COUNT (T.TASK_ID)
+       FROM PROJECTS P
+       JOIN PROJECT_MEMBERS PM ON P.PROJECT_ID=PM.PROJECT_ID
+       JOIN TASKS T ON T.PROJECT_MEMBER_ID=PM.PROJECT_MEMBER_ID  
+       WHERE P.PROJECT_ID=#projectId# AND T.TASK_LAST_STATUS=7)
+       /
+       (
+       SELECT CASE WHEN COUNT(T.TASK_ID) = 0 THEN 1 ELSE COUNT(T.TASK_ID) END
+       FROM PROJECTS P
+       JOIN PROJECT_MEMBERS PM ON P.PROJECT_ID=PM.PROJECT_ID
+       JOIN TASKS T ON T.PROJECT_MEMBER_ID=PM.PROJECT_MEMBER_ID  
+       WHERE P.PROJECT_ID=#projectId#
+       )*100 AS percentStatus FROM DUAL
+	</select>
 	
+	<select id="getProjectMemberIDbyRole" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT DISTINCT PM.PROJECT_MEMBER_ID
+        FROM EMPLOYEES E
+        JOIN PROJECT_MEMBERS PM ON E.EMPLOYEE_ID=PM.EMPLOYEE_ID
+        JOIN PROJECTS P ON P.PROJECT_ID = PM.PROJECT_ID
+        JOIN ROLES R ON R.ROLE_ID=PM.ROLE_ID
+        WHERE PM.PROJECT_ID=#projectId# 
+        AND P.PROJECT_RECEIVER=#projectReceiver# 
+        AND E.EMPLOYEE_ID=#employeeReceiver#
+        AND R.ROLE_ID=0
+	</select>
+	
+	<update id="updateProjectReceiver" parameterClass="java.util.Map">
+		UPDATE   PROJECTS
+  		SET   	PROJECT_RECEIVER = #projectReceiver#, PROJECT_LAST_STATUS=1
+ 		WHERE   PROJECT_ID = #projectId#
+	</update>
 	
 </sqlMap> 

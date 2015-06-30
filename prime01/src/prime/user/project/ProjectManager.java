@@ -17,6 +17,8 @@ public interface ProjectManager {
 	
 	public void updateStatusProjectMemberRole(Integer projectMemberId, Integer projectMemberStatus) throws SQLException;
 	 
+	public void updateProjectReceiver(Integer projectId, Integer projectReceiver) throws SQLException;
+	
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 	
 	public Integer getNewId() throws SQLException;
@@ -45,7 +47,12 @@ public interface ProjectManager {
 
 	public Integer getProjectMemberIdByAll(ProjectBean e) throws SQLException;
 	
+	public Double getPercentStatusProject (Integer projectId) throws SQLException;
+	
 	public List<RoleOption> getRoleByProjectMember(Integer employeeId, Integer projectId) throws SQLException;
+	
+	public Integer getProjectMemberIDbyRole (Integer projectMemberId, Integer projectReceiver, Integer employeeReceiver) throws SQLException;
+	
 	
 
 }

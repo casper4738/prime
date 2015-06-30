@@ -90,10 +90,10 @@
 					<td style="padding:5px;">
 						<input type="button" value="Add New Project Member" class="btn btn-sm btn-primary" onclick="flyToPage('addmember')"/></td>
 					
-					<logic:equal name="ProjectUserForm" property="projectBean.ProjectLastStatus" value="">
-	                			<center><span class="label label-danger">Not Active</span></center>
+					<logic:equal name="ProjectUserForm" property="projectBean.percentStatus" value="100">
+               			<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToSubmit('<%=Constants.Task.TASK.GOTOSUBMIT%>', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
                		</logic:equal>
-					<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToSubmit('<%=Constants.Task.TASK.GOTOSUBMIT%>', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
+					
 				</tr></table>
             </div>
 			

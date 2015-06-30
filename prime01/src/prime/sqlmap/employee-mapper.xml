@@ -348,7 +348,7 @@
 				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel#
 			</isEqual>
 			<isEqual property="paramCondition" compareValue="projectAssigner">
-				POS.POSITION_LEVEL <![CDATA[ <= ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId#  AND (EMP.DIVISION_ID = $divisionId$ OR EMP.DIVISION_ID IS NULL)
+				POS.POSITION_LEVEL <![CDATA[ <= ]]> #positionLevel# AND (EMP.DIVISION_ID = 1 OR EMP.DIVISION_ID IS NULL)
 			</isEqual>
 			<isEqual property="paramCondition" compareValue="employeeEditPosDiv">
 				POS.POSITION_LEVEL <![CDATA[ < ]]> #positionLevel# AND EMP.EMPLOYEE_ID != #employeeId# 

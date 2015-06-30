@@ -80,7 +80,7 @@
                 			<tr>
                 				<td>Note </td>
                 				<td>:</td>
-                				<td><html:textarea name="ProjectUserForm" property="projectBean.projectDescription" styleClass="form-control"></html:textarea></td>
+                				<td><html:textarea name="ProjectUserForm" property="projectBean.projectChangeNote" styleClass="form-control"></html:textarea></td>
                 				
                 			</tr>
                 			

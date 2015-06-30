@@ -118,7 +118,8 @@ public interface Constants {
 		
 		final Map<String, String> HOLIDAY_SEARCHCOLUMNS = Collections.unmodifiableMap(
 			new LinkedHashMap<String, String>() {{
-				put("DESCRIPTION", "DECRIPTION HOLIDAY");
+				put("DATE", "Holiday Date");
+				put("DESCRIPTION", "Holiday Description");
 			}
 		});
 		
@@ -138,7 +139,7 @@ public interface Constants {
 			}
 		});
 		
-		static final Map<String, String>PROJECT_SEARCHCOLUMNS = Collections.unmodifiableMap(
+		final Map<String, String>PROJECT_SEARCHCOLUMNS = Collections.unmodifiableMap(
 			new LinkedHashMap<String, String>() {{
 				put("NAME", "Project Name");
 				put("DESCRIPTION", "Project Description");
@@ -146,20 +147,38 @@ public interface Constants {
 		});
 		
 		final Map<String, String> LOG_SEARCHCOLUMNS = Collections.unmodifiableMap(
-				new LinkedHashMap<String, String>() {{
-					put("ID", "Audit Trail Id");
-					put("USERNAME", "Username");
-					put("TABLE", "Audit Trail Table");
-				}
-			});
+			new LinkedHashMap<String, String>() {{
+				put("ID", "Audit Trail Id");
+				put("USERNAME", "Username");
+				put("TABLE", "Audit Trail Table");
+				put("DATE", "Activity Time");
+			}
+		});
 		
 		final Map<String, String> NOTIFICATION_SEARCHCOLUMNS = Collections.unmodifiableMap(
-				new LinkedHashMap<String, String>() {{
-					put("ID", "Notification Id");
-					put("SENDER", "Sender");
-					put("RECEIVER", "Receiver");
-				}
-			});
+			new LinkedHashMap<String, String>() {{
+				put("ID", "Notification Id");
+				put("SENDER", "Sender");
+				put("RECEIVER", "Receiver");
+			}
+		});
+		
+		final Map<Integer, String> TABLELOG_SEARCHCOLUMNS = Collections.unmodifiableMap(
+			new LinkedHashMap<Integer, String>() {{
+				put(LogTable.EMPLOYEES, "Employees");
+				put(LogTable.USERS, "Users");
+				put(LogTable.DIVISIONS, "Divisions");
+				put(LogTable.POSITIONS, "Positions");
+				put(LogTable.ROLES, "Roles");
+				put(LogTable.RESIGN_EMPLOYEES, "Resign Employees");
+				put(LogTable.DAY_OFFS, "Day Off");
+				put(LogTable.NATIONAL_HOLIDAYS, "National Holidays");
+				put(LogTable.WEEKEND_HOLIDAYS, "Weekend");
+				put(LogTable.TASKS, "Tasks");
+				put(LogTable.PROJECTS, "Projects");
+				put(LogTable.NOTIFICATIONS, "Notifications");
+			}
+		});
 	}
 
 	//##C.Page Handling

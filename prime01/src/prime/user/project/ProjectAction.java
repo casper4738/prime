@@ -1,11 +1,15 @@
 package prime.user.project;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.catalina.ha.util.IDynamicProperty;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -50,17 +54,26 @@ public class ProjectAction extends Action {
 			//pForm.getProjectBean().setProjectAssigner(tmpTaskAssign.getEmployeeId());
 			//pForm.getProjectBean().setProjectReceiver(tmpTaskAssign.getEmployeeId());
 			
+			pForm.setEmployeeBean(tmpEmployeeManager.getEmployeeById(101));
+			System.out.println("div "+pForm.getEmployeeBean().getDivisionId());
+			pForm.setDivisionId(pForm.getEmployeeBean().getDivisionId());
+			pForm.setPositionId(pForm.getEmployeeBean().getPositionId());
 			return mapping.findForward("add");
 		} else if (Constants.Task.DOADD.equals(pForm.getTask())){
 			//##.Insert Data Task
 			pForm.getProjectBean().setProjectId(tmpProjectManager.getNewId());
 			pForm.getProjectBean().setProjectReceiver(101);
 			pForm.getProjectBean().setProjectLastStatus(1);
-			pForm.getProjectBean().setProjectStatus(1);
+			pForm.getProjectBean().setProjectStatus(0);
 			pForm.getProjectBean().setProjectAssigner(pForm.getEmployeeId());
 			pForm.getProjectBean().setProjectChangeNote("First Time");
 			tmpProjectManager.insert(pForm.getProjectBean());
 			tmpProjectManager.insertDetail(pForm.getProjectBean());
+			pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
+			pForm.getProjectBean().getRoleBean().setRoleId(0);
+			pForm.getProjectBean().setEmployeeId(101);
+			pForm.getProjectBean().setProjectMemberStatus(1);
+			tmpProjectManager.insertMember(pForm.getProjectBean());
 
 			
 			int countRows  = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
@@ -76,14 +89,23 @@ public class ProjectAction extends Action {
 			//##.View Detail Project
 			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
 			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+			
+			
 			List<ProjectBean> list = tmpProjectManager.getListProjectMember(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getProjectId());
+			System.out.println("ID "+pForm.getProjectId());
+			double percentStatus = tmpProjectManager.getPercentStatusProject(pForm.getProjectId());
+			pForm.getProjectBean().setPercentStatus(percentStatus);
+			
 			request.setAttribute("listProjectMember", list);
 			request.setAttribute("listSearchColumn", Constants.Search.PROJECT_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+		//	double percentStatus=tmpProjectManager.getStatus
+			//System.out.println("masuk "+pForm.getProjectId());
+			
 			return mapping.findForward("details");
 		}
 		else if ("detailsAsHead".equals(pForm.getTask())){
@@ -110,9 +132,11 @@ public class ProjectAction extends Action {
 			return mapping.findForward("reject");
 		}
 		else if ("changePM".equals(pForm.getTask())){
-			System.out.println("changePM");
+			System.out.println("changePM "+pForm.getEmployeeIdReceiver());
+			
 			return mapping.findForward("changePM");
 		}
+		
 		else if(Constants.Task.PROJECT.GOTOTASKMEMBER.equals(pForm.getTask())){
 			//##. Get Data
 			pForm.setEmployeeBean(tmpEmployeeManager.getEmployeeById(pForm.getEmployeeId()));
@@ -241,6 +265,50 @@ public class ProjectAction extends Action {
 			
 		}
 		
+		else if("doApprove".equals(pForm.getTask())){
+			System.out.println("PROJECT ID "+pForm.getProjectBean().getProjectId());
+			System.out.println("PROJECT RECEIVER "+pForm.getProjectBean().getProjectReceiver());
+			System.out.println("PROJECT ASSIGNER "+pForm.getProjectBean().getProjectAssigner());
+			pForm.getProjectBean().setProjectStatus(7);
+			
+			tmpProjectManager.insertDetail(pForm.getProjectBean());
+			
+		}
+		
+		else if("doReject".equals(pForm.getTask())){
+			System.out.println("PROJECT ID "+pForm.getProjectBean().getProjectId());
+			System.out.println("PROJECT RECEIVER "+pForm.getProjectBean().getProjectReceiver());
+			System.out.println("PROJECT ASSIGNER "+pForm.getProjectBean().getProjectAssigner());
+			pForm.getProjectBean().setProjectStatus(6);
+			
+			tmpProjectManager.insertDetail(pForm.getProjectBean());
+			
+		}
+		
+		else if("doChangePM".equals(pForm.getTask())){
+			System.out.println("PROJECT ID "+pForm.getProjectBean().getProjectId());
+			System.out.println("PROJECT RECEIVER "+pForm.getProjectBean().getProjectReceiver());
+			System.out.println("EMPLOYEE "+pForm.getEmployeeId());
+			//pForm.getProjectBean().setProjectStatus(6);
+			System.out.println("EMPLOYEE id "+pForm.getProjectBean().getEmployeeIdReceiver() );
+			int idPM=tmpProjectManager.getProjectMemberIDbyRole(pForm.getProjectBean().getProjectId(), pForm.getProjectBean().getProjectReceiver(), pForm.getProjectBean().getEmployeeIdReceiver());
+			System.out.println("idpm "+idPM);
+			tmpProjectManager.updateStatusProjectMemberRole(idPM, 0);
+			
+			
+			pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
+			pForm.getProjectBean().setProjectId(pForm.getProjectBean().getProjectId());
+			pForm.getProjectBean().getRoleBean().setRoleId(0);
+			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeId());
+			pForm.getProjectBean().setProjectMemberStatus(1);
+			pForm.getProjectBean().setProjectReceiver(pForm.getEmployeeId());
+			System.out.println("status "+pForm.getProjectBean().getProjectLastStatus());
+			tmpProjectManager.updateProjectReceiver(pForm.getProjectBean().getProjectId(),pForm.getEmployeeId() );
+			pForm.getProjectBean().setProjectStatus(pForm.getProjectBean().getProjectLastStatus());
+			tmpProjectManager.insertDetail(pForm.getProjectBean());
+			
+		}
+		
 		else if(Constants.Task.PROJECT.GOTOEDITMEMBER.equals(pForm.getTask())){
 			EmployeeBean tmpEmployeeBean = tmpEmployeeManager.getEmployeeById(pForm.getEmployeeId());
 			pForm.getProjectBean().setEmployeeId(tmpEmployeeBean.getEmployeeId());
@@ -292,9 +360,14 @@ public class ProjectAction extends Action {
 			listInsert.removeAll(listTemp);
 			for (String string : listInsert) {
 				String [] split = string.split(";");
-				int roleId 				= Integer.parseInt(split[0]);
-				int projectMemberId 	= Integer.parseInt(split[1]);
-				int projectMemberStatus = Integer.parseInt(split[2]);
+				int roleId 					= 0;
+				int projectMemberId			= 0;
+				int projectMemberStatus 	= 0;
+				if(!split[0].isEmpty()){
+					roleId					= Integer.parseInt(split[0]);
+					projectMemberId			= Integer.parseInt(split[1]);
+					projectMemberStatus		= Integer.parseInt(split[2]);
+				}
 				System.out.println("sisa : "+string);
 				
 				if(projectMemberId == 0) {

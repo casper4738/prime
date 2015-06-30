@@ -41,12 +41,13 @@
 		
 		function openModalHandler(){
 			//##0.Preparing Parameter For Modal Showing
-			var tmpDataPosition=2;
+			
+			var tmpDataPosition=document.forms[0].positionId.value;
 			var tmpTask ="modalTable";
 			var tmpTable ="employeeHead";
-			
+			var tmpDiv =document.forms[0].divisionId.value;
 			//##1.Accessing Prime Method For Modal Showing
-			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=projectAssigner", $('#result'));
+			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=projectAssigner"+"&param5="+tmpDiv, $('#result'));
 		}
 	</script>
 	
@@ -75,12 +76,16 @@
                 		<html:hidden name="ProjectUserForm" property="employeeId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver" />
+                		<html:hidden name="ProjectUserForm" property="divisionId" />
+                		<html:hidden name="ProjectUserForm" property="positionId"/>
+                		
                 		<table class="form-input" align="center">
                 			<tr>
                 				<td width="200px">Project Name</td>
                 				<td>:</td>
                 				<td><html:text name="ProjectUserForm" property="projectBean.projectName" styleClass="form-control"/></td>
                 			</tr>
+                			
                 			<tr>
                 				<td>Start Date</td>
                 				<td>:</td>

@@ -99,6 +99,19 @@ public class ProjectManagerImpl implements ProjectManager {
 		return (Integer) mapper.queryForObject("project.getCountListByCol", map);
 	}
 
+	
+	
+	@Override
+	public Double getPercentStatusProject(Integer projectId)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return (Double) mapper.queryForObject("project.getPercentStatusProject", projectId);
+	}
+
+	
+	
+	
+
 	@Override
 	public ProjectBean getProjectById(Integer id) throws SQLException {
 		// TODO Auto-generated method stub
@@ -138,6 +151,24 @@ public class ProjectManagerImpl implements ProjectManager {
 			map.put("projectMemberStatus", projectMemberStatus);
 			mapper.startTransaction();
 			mapper.update("project.updateStatusProjectMemberRole", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+
+	
+	
+	@Override
+	public void updateProjectReceiver(Integer projectId, Integer projectReceiver)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("projectId", projectId);
+			map.put("projectReceiver", projectReceiver);
+			mapper.startTransaction();
+			mapper.update("project.updateProjectReceiver", map);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
@@ -185,6 +216,19 @@ public class ProjectManagerImpl implements ProjectManager {
 		map.put("roleId", roleId);
 		map.put("projectMemberStatus", projectMemberStatus);
 		return (Integer) mapper.queryForObject("project.getStatusRoleMember", map);
+	}
+
+	@Override
+	public Integer getProjectMemberIDbyRole(Integer projectId,
+			Integer projectReceiver, Integer employeeReceiver) throws SQLException {
+		// TODO Auto-generated method stub
+		System.out.println("masuk "+projectId +"-"+ projectReceiver );
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("projectId", projectId);
+		map.put("projectReceiver", projectReceiver);
+		map.put("employeeReceiver", employeeReceiver);
+		
+		return (Integer) mapper.queryForObject("project.getProjectMemberIDbyRole", map);
 	}
 
 	
