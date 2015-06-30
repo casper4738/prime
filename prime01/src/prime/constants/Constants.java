@@ -252,8 +252,8 @@ public interface Constants {
 	
 	static interface NotificationStatus{
 	//---6.Standard Notifications Status Conversion
-		final int SENT = 1;
-		final int RECEIVED = 2;
+		final int RECEIVED = 1;
+		final int READ = 2;
 	}
 		
 	//##E.Response

@@ -2,10 +2,15 @@
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 <%@ page import="prime.user.notification.NotificationManagerImpl" %>
+<%@ page import="prime.constants.Constants" %>
 <script type="text/javascript">
 function openModalHandler(task){
 	//##0.Accessing Prime Method For Modal Showing
 	modalLoadHandler("task=" + task);
+}
+
+function doViewAllNotif(){
+	menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.USER_VIEWNOTIF]%>');
 }
 </script>
 

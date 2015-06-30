@@ -23,39 +23,26 @@ public class NotificationAction extends Action {
 		
 		NotificationForm pForm = (NotificationForm) form;
 		NotificationManager tmpManager = new NotificationManagerImpl();
-
-		//if("VIEWNOTIF".equals(pForm.getTask())){
-			
-			//Notifikasi apa aja yang belum ke read [maximal 5]
-			System.out.println(tmpManager.getListNotifNoRead(100).get(0).getNotificationNote());
-			System.out.println(pForm.getNotificationBean().getNotificationNote()+ " NOTIF NOTE");
-			
-			//Total Notifikasi
-			System.out.println(tmpManager.getCountListNotifNoRead(100));
-			
-		//	return null;
-		//}
-		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),
-				pForm.getSearch());
+		
+		//100 dari session login
+		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),pForm.getSearch(),100);
+		
+		System.out.println(pForm.getColumnSearch() +"--"+ pForm.getSearch());
 		List<NotificationBean> list = tmpManager.getListByColumn(
-				pForm.getColumnSearch(), pForm.getSearch(), PrimeUtil
-						.getStartRow(pForm.getGoToPage(),
-								pForm.getShowInPage(), countRows), PrimeUtil
-						.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
-								countRows));
+				pForm.getColumnSearch(), pForm.getSearch(), PrimeUtil.getStartRow(pForm.getGoToPage(),
+						pForm.getShowInPage(), countRows), PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
+						countRows),100);
 		
 		// ##1.Attribute for Table Show
 		request.setAttribute("listNotification", list);
-		request.setAttribute("listSearchColumn",
-				Constants.Search.NOTIFICATION_SEARCHCOLUMNS);
-		request.setAttribute("listShowEntries", Constants.PAGINGROWPAGE);
-		setPaging(request, pForm, countRows, pForm.getGoToPage(),
-				pForm.getShowInPage());
+		request.setAttribute("listSearchColumn",Constants.Search.NOTIFICATION_SEARCHCOLUMNS);
+		//request.setAttribute("listShowEntries", Constants.PAGINGROWPAGE);
+		setPaging(request, countRows, pForm.getGoToPage(),pForm.getShowInPage());
 		
 		return mapping.findForward("success");
 	}
 	
-	private void setPaging(HttpServletRequest request, NotificationForm pForm,
+	private void setPaging(HttpServletRequest request,
 			int countRows, int page, int view) throws SQLException {
 		// ##2.Paging Handling
 		PaginationUtility pageUtil = new PaginationUtility();
@@ -70,8 +57,6 @@ public class NotificationAction extends Action {
 		request.setAttribute("pagePrev", pageUtil.getPagePrev());
 		request.setAttribute("pageNext", pageUtil.getPageNext());
 		request.setAttribute("listMaxDataPerPage", Constants.PAGINGROWPAGE);
-
-		pForm.setGoToPage(pageUtil.getPage());
 	}
 
 }
