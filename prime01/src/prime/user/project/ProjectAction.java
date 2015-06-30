@@ -132,7 +132,8 @@ public class ProjectAction extends Action {
 			return mapping.findForward("reject");
 		}
 		else if ("changePM".equals(pForm.getTask())){
-			System.out.println("changePM");
+			System.out.println("changePM "+pForm.getEmployeeIdReceiver());
+			
 			return mapping.findForward("changePM");
 		}
 		
@@ -290,9 +291,9 @@ public class ProjectAction extends Action {
 			System.out.println("EMPLOYEE "+pForm.getEmployeeId());
 			//pForm.getProjectBean().setProjectStatus(6);
 			System.out.println("EMPLOYEE id "+pForm.getProjectBean().getEmployeeIdReceiver() );
-			int idPM=tmpProjectManager.getProjectMemberIDbyRole(pForm.getProjectBean().getProjectId(), pForm.getProjectBean().getProjectReceiver());
+			int idPM=tmpProjectManager.getProjectMemberIDbyRole(pForm.getProjectBean().getProjectId(), pForm.getProjectBean().getProjectReceiver(), pForm.getProjectBean().getEmployeeIdReceiver());
 			System.out.println("idpm "+idPM);
-			//tmpProjectManager.updateStatusProjectMemberRole(idPM, 0);
+			tmpProjectManager.updateStatusProjectMemberRole(idPM, 0);
 			
 			
 			pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
@@ -302,9 +303,9 @@ public class ProjectAction extends Action {
 			pForm.getProjectBean().setProjectMemberStatus(1);
 			pForm.getProjectBean().setProjectReceiver(pForm.getEmployeeId());
 			System.out.println("status "+pForm.getProjectBean().getProjectLastStatus());
-			//tmpProjectManager.updateProjectReceiver(pForm.getProjectBean().getProjectId(),pForm.getEmployeeId() );
+			tmpProjectManager.updateProjectReceiver(pForm.getProjectBean().getProjectId(),pForm.getEmployeeId() );
 			pForm.getProjectBean().setProjectStatus(pForm.getProjectBean().getProjectLastStatus());
-			//tmpProjectManager.insertDetail(pForm.getProjectBean());
+			tmpProjectManager.insertDetail(pForm.getProjectBean());
 			
 		}
 		

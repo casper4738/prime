@@ -51,7 +51,7 @@ public interface ProjectManager {
 	
 	public List<RoleOption> getRoleByProjectMember(Integer employeeId, Integer projectId) throws SQLException;
 	
-	public Integer getProjectMemberIDbyRole (Integer projectMemberId, Integer projectReceiver) throws SQLException;
+	public Integer getProjectMemberIDbyRole (Integer projectMemberId, Integer projectReceiver, Integer employeeReceiver) throws SQLException;
 	
 	
 

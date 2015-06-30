@@ -220,12 +220,13 @@ public class ProjectManagerImpl implements ProjectManager {
 
 	@Override
 	public Integer getProjectMemberIDbyRole(Integer projectId,
-			Integer projectReceiver) throws SQLException {
+			Integer projectReceiver, Integer employeeReceiver) throws SQLException {
 		// TODO Auto-generated method stub
 		System.out.println("masuk "+projectId +"-"+ projectReceiver );
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("projectId", projectId);
 		map.put("projectReceiver", projectReceiver);
+		map.put("employeeReceiver", employeeReceiver);
 		
 		return (Integer) mapper.queryForObject("project.getProjectMemberIDbyRole", map);
 	}

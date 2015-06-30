@@ -63,7 +63,7 @@
                 	    <html:hidden name="ProjectUserForm" property="projectId" />
                 	    <html:hidden name="ProjectUserForm" property="projectBean.projectReceiver"/>
                 	    <html:hidden name="ProjectUserForm" property="projectBean.projectAssigner"/>
-                	    <html:hidden name="ProjectUserForm" property="employeeIdReceiver"/>
+                	    <html:hidden name="ProjectUserForm" property="projectBean.employeeIdReceiver"/>
                 	    
                 	    <html:hidden name="ProjectUserForm" property="projectBean.projectLastStatus"/>
                 		<table class="form-input" align="center" style="width:60%" >

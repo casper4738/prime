@@ -293,7 +293,10 @@
         JOIN PROJECT_MEMBERS PM ON E.EMPLOYEE_ID=PM.EMPLOYEE_ID
         JOIN PROJECTS P ON P.PROJECT_ID = PM.PROJECT_ID
         JOIN ROLES R ON R.ROLE_ID=PM.ROLE_ID
-        WHERE PM.PROJECT_ID=#projectId# AND P.PROJECT_RECEIVER=#projectReceiver# AND R.ROLE_ID=0
+        WHERE PM.PROJECT_ID=#projectId# 
+        AND P.PROJECT_RECEIVER=#projectReceiver# 
+        AND E.EMPLOYEE_ID=#employeeReceiver#
+        AND R.ROLE_ID=0
 	</select>
 	
 	<update id="updateProjectReceiver" parameterClass="java.util.Map">
