@@ -1,0 +1,95 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="report">
+<select id="getListByColumn" resultClass="prime.user.report.employees.ReportEmployeesBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT 
+		    EMP.EMPLOYEE_ID AS employeeId, 
+		    EMP.EMPLOYEE_NAME AS employeeName,
+		    GENDER AS gender,
+		    ADDRESS AS address,
+		    BIRTHDATE AS birthdate,
+		    HIRE_DATE AS hireDate,
+		    CONTACT_NUMBER AS contactNumber,
+		    EMAIL AS email,
+		    DIVISION_NAME AS divisionName,
+		    POSITION_NAME AS positionName,
+		    MANAGER.EMPLOYEE_NAME AS managerName,
+		    RE.RESIGN_DATE AS resignDate
+		FROM EMPLOYEES EMP 
+		LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
+		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
+		LEFT JOIN (
+		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME FROM EMPLOYEES E
+		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
+		LEFT JOIN (
+		    SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
+		)RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+	        	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(EMP.EMPLOYEE_ID) LIKE UPPER(#value#)
+				</isEqual>
+		       	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="GENDER">
+			          UPPER(EMP.GENDER) LIKE #value#
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="EMAIL">
+			          UPPER(EMP.EMAIL) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="DIVISION">
+			          UPPER(DIVISION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="POSITION">
+			          UPPER(POSITION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="MANAGER">
+			          UPPER(MANAGER.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	    ORDER BY EMP.EMPLOYEE_ID ASC) page 
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
+	
+	<select id="getCountByColumn" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1) 
+		FROM EMPLOYEES EMP 
+		LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
+		JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
+		LEFT JOIN (
+		    SELECT E.EMPLOYEE_ID, E.EMPLOYEE_NAME FROM EMPLOYEES E
+		) MANAGER ON MANAGER.EMPLOYEE_ID = EMP.HEAD_ID
+		LEFT JOIN (	
+		    SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
+		)RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+		       	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(EMP.EMPLOYEE_ID) LIKE UPPER(#value#)
+				</isEqual>
+		       	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="GENDER">
+			          UPPER(GENDER) LIKE UPPER(#value#)
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="EMAIL">
+			          UPPER(EMAIL) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="DIVISION">
+			          UPPER(DIVISION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="POSITION">
+			          UPPER(POSITION_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="MANAGER">
+			          UPPER(MANAGER.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+	        </isNotNull>
+	    </dynamic>
+	</select>
+
+</sqlMap>
