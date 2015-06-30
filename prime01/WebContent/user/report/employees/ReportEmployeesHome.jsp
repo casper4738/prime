@@ -47,21 +47,21 @@
 				<!-- Search Handler Tag -->
 				<div class="show-in-page">
 					Show per page
-					<html:select property="showInPage" name="ReportUserForm" onchange="change(this.value)" styleClass="columnSearch">
+					<html:select property="showInPage" name="ReportUserEmployeesForm" onchange="change(this.value)" styleClass="columnSearch">
 						<html:optionsCollection name="listMaxDataPerPage" label="value" value="key"/>
 					</html:select>
 				</div>
 				<div class="search-table">
-				<html:form action="/Report">
-					<html:hidden name="EmployeeAdminForm" property="task"/>
-					<html:hidden name="EmployeeAdminForm" property="tmpId"/>
-					<html:hidden name="EmployeeAdminForm" property="goToPage"/>
-					<html:hidden name="EmployeeAdminForm" property="showInPage"/>
+				<html:form action="/ReportEmployees">
+					<html:hidden name="ReportUserEmployeesForm" property="task"/>
+					<html:hidden name="ReportUserEmployeesForm" property="tmpId"/>
+					<html:hidden name="ReportUserEmployeesForm" property="goToPage"/>
+					<html:hidden name="ReportUserEmployeesForm" property="showInPage"/>
 				
-					<html:select name="EmployeeAdminForm" property="columnSearch">
+					<html:select name="ReportUserEmployeesForm" property="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
-					<html:text name="EmployeeAdminForm" property="search"/>
+					<html:text name="ReportUserEmployeesForm" property="search"/>
 					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
 					<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
 				</html:form>
