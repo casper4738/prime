@@ -3,7 +3,10 @@
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 <%@ page import="prime.user.notification.NotificationManagerImpl" %>
 <%@ page import="prime.constants.Constants" %>
+<<<<<<< HEAD
 <%@ page import="prime.login.LoginData" %>
+=======
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 <script type="text/javascript">
 function openModalHandler(task){
 	//##0.Accessing Prime Method For Modal Showing
@@ -12,6 +15,10 @@ function openModalHandler(task){
 
 function doSignOut(){
 	menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.LOGIN]%>', "task=<%=Constants.Task.DOLOGOUT%>");
+}
+
+function doViewAllNotif(){
+	menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.USER_VIEWNOTIF]%>');
 }
 </script>
 

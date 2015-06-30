@@ -11,10 +11,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import prime.admin.employee.EmployeeManager;
-import prime.admin.employee.EmployeeManagerImpl;
 import prime.constants.Constants;
-import prime.user.project.ProjectBean;
+import prime.user.task.TaskBean;
 import prime.user.task.TaskManager;
 import prime.user.task.TaskManagerImpl;
 import prime.utility.PaginationUtility;
@@ -31,33 +29,23 @@ public class ReportEmployeesAction extends Action {
 		
 		ReportEmployeesForm pForm = (ReportEmployeesForm) form;
 		ReportEmployeesManager tmpManager = new ReportEmployeesManagerImpl();
-		EmployeeManager tmpEmployeeManager 	= new EmployeeManagerImpl();
 		TaskManager 	tmpTaskManager 		= new TaskManagerImpl();
 		
 		if(Constants.Task.REPORT.GOTOTDETAILEMPLOYEE.equals(pForm.getTask())){
 			//##. Get Data
-			pForm.setEmployeeBean(tmpEmployeeManager.getEmployeeById(pForm.getEmployeeId()));
-			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
-			pForm.setTaskBean(tmpTaskManager.getTaskById());
-			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeBean().getEmployeeId());
-			pForm.getProjectBean().setEmployeeName(pForm.getEmployeeBean().getEmployeeName());
-			
-			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearch(), pForm.getSearch(), 
-					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
-					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
+			pForm.setReportEmployeesBean(tmpManager.getEmployeeById(pForm.getEmployeeId()));
+			int countRows  = tmpTaskManager.getCountByColumnSubordinate(pForm.getColumnSearch(), pForm.getSearch(), pForm.getEmployeeId());
+			List<TaskBean> list = tmpTaskManager.getListByColumnSubordinate(pForm.getColumnSearch(), pForm.getSearch(),
+					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
+					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), 
 					pForm.getEmployeeId());
 			
-			//##. Set Attribute
-			request.setAttribute("listProjectMemberDetails", list);
-			request.setAttribute("listSearchColumn", Constants.Search.PROJECT_SEARCHCOLUMNS);
+			System.out.println(list);
+			request.setAttribute("listTask", list);
+			request.setAttribute("listSearchColumn", Constants.Search.TASK_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
-			request.setAttribute("isAddTaskActive" , tmpRoleManager.getRolesByEmployeeIdAndProjectId(pForm.getProjectBean().getEmployeeId(),  pForm.getProjectBean().getProjectId()).size());
-			
-			
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());			
-			
-			return mapping.findForward("detailMember");
+			return mapping.findForward("detailEmployee");
 		}
 
 		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),

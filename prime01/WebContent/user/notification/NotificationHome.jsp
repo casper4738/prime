@@ -16,9 +16,6 @@
 	<!-- End CSS -->
 	
 	<!-- JS -->
-	<script src="resources/prime.js"></script>
-	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
@@ -33,7 +30,10 @@
 		$('#table-1').dataTable( {
 			paging    : false,
 			searching : false,
-			info	  : false
+			info	  : false,
+			language  : {
+		          "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
+		    }
 	    } );
 	</script>
 	<!-- End JS -->
@@ -103,8 +103,8 @@
 				                		<td><bean:write name="iter" property="notificationSendDate" format="dd-MM-yyyy"/> </td>
 				                		<td><bean:write name="iter" property="notificationNameType"/> </td>
 				                		<td align="center">
-				                			<logic:equal  name="iter" property="notificationStatus" value='<%=Constants.NotificationStatus.SENT+""%>'>
-												<span class="label label-info">SENT</span>
+				                			<logic:equal  name="iter" property="notificationStatus" value='<%=Constants.NotificationStatus.READ+""%>'>
+												<span class="label label-info">READ</span>
 											</logic:equal>
 											<logic:equal  name="iter" property="notificationStatus" value='<%=Constants.NotificationStatus.RECEIVED+""%>'>
 												<span class="label label-warning">RECEIVED</span>
@@ -113,13 +113,8 @@
 				                		<td><bean:write name="iter" property="senderName"/> </td>
 						             </tr>
 					             </logic:iterate>
-							 </logic:notEmpty>
-								 <logic:empty name="listNotification">
-								   <tr>
-										<td align="center" colspan="11"><bean:message key="label.table.notfound" /></td>
-								   </tr>
-								 </logic:empty>
-			                  </tbody>
+							  </logic:notEmpty>
+							  </tbody>
 				            </table>
 			            </div>
 			            <!-- End Of Table List -->

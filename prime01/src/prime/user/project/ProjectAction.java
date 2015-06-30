@@ -70,7 +70,7 @@ public class ProjectAction extends Action {
 			tmpProjectManager.insert(pForm.getProjectBean());
 			tmpProjectManager.insertDetail(pForm.getProjectBean());
 			pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
-			pForm.getProjectBean().getRoleBean().setRoleId(0);
+			pForm.getProjectBean().getRoleBean().setRoleId(1);
 			pForm.getProjectBean().setEmployeeId(101);
 			pForm.getProjectBean().setProjectMemberStatus(1);
 			tmpProjectManager.insertMember(pForm.getProjectBean());
@@ -165,7 +165,7 @@ public class ProjectAction extends Action {
 			request.setAttribute("listRoles", tmpRoleManager.getRolesByEmployeeIdAndProjectId(pForm.getProjectBean().getEmployeeId(),  pForm.getProjectBean().getProjectId()));
 			return mapping.findForward("createTask");
 		} else if(Constants.Task.PROJECT.DOCREATETASK.equals(pForm.getTask())){
-			
+			System.out.println("masu do create task");
 			pForm.getProjectBean().getTaskBean().setTaskId(tmpTaskManager.getNewId());
 			pForm.getProjectBean().getTaskBean().setTaskAssigner(tmpEmployeeId);
 			pForm.getProjectBean().getTaskBean().setTaskReceiver(pForm.getProjectBean().getEmployeeId());
@@ -295,11 +295,17 @@ public class ProjectAction extends Action {
 			int idPM=tmpProjectManager.getProjectMemberIDbyRole(pForm.getProjectBean().getProjectId(), pForm.getProjectBean().getProjectReceiver(), pForm.getProjectBean().getEmployeeIdReceiver());
 			System.out.println("idpm "+idPM);
 			tmpProjectManager.updateStatusProjectMemberRole(idPM, 0);
+			pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
+			//pForm.getProjectBean().setProjectId(projectId);
+			pForm.getProjectBean().getRoleBean().setRoleId(1);
+			pForm.getProjectBean().setProjectMemberStatus(1);
+			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeId());
+			tmpProjectManager.insertMember(pForm.getProjectBean());
 			
 			
 			pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
 			pForm.getProjectBean().setProjectId(pForm.getProjectBean().getProjectId());
-			pForm.getProjectBean().getRoleBean().setRoleId(0);
+			pForm.getProjectBean().getRoleBean().setRoleId(1);
 			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeId());
 			pForm.getProjectBean().setProjectMemberStatus(1);
 			pForm.getProjectBean().setProjectReceiver(pForm.getEmployeeId());

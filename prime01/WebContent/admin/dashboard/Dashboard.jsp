@@ -10,7 +10,15 @@
 <!DOCTYPE html>
 <html>
 <head> 
+<<<<<<< HEAD
 	<!-- CSS -->
+=======
+ <meta charset="UTF-8">
+    <title>AdminLTE 2 | Calendar</title>
+    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<!-- CSS -->
+	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
@@ -19,13 +27,24 @@
     <link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
     <!-- End Of CSS -->
     
+<<<<<<< HEAD
 	<!-- JS -->
+=======
+<!-- Plugins -->
+    <script src="resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+    <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/jQueryUI/jquery-ui-1.10.3" type="text/javascript"></script>
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
     <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <script src='resources/plugins/fastclick/fastclick.min.js'></script>
     <script src="resources/dist/js/app.min.js" type="text/javascript"></script>
     <script src="resources/dist/js/demo.js" type="text/javascript"></script>
     <script src="resources/plugins/moment/moment.min.js" type="text/javascript"></script>
     <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
+<<<<<<< HEAD
+=======
+    <!-- Page specific script -->
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
     <script type="text/javascript">
       $(document).ready(function(){
     	  var tmpImage = '<%=LoginData.getEmployeeData().getConvertedFilePic()%>';

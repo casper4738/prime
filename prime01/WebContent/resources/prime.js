@@ -201,8 +201,3 @@ function modalSubmitReturnValue(retValue,retForm){
 	//##1.Hide Modal
     $("[data-dismiss=modal]").trigger({ type: "click" });
 }
-
-//TO DO :: Go To View Notif All
-function doViewAllNotif(){
-	window.location.href = 'NotificationForm.do';
-}
