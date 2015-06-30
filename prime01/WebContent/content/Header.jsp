@@ -2,10 +2,16 @@
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 <%@ page import="prime.user.notification.NotificationManagerImpl" %>
+<%@ page import="prime.constants.Constants" %>
+<%@ page import="prime.login.LoginData" %>
 <script type="text/javascript">
 function openModalHandler(task){
 	//##0.Accessing Prime Method For Modal Showing
 	modalLoadHandler("task=" + task);
+}
+
+function doSignOut(){
+	menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.LOGIN]%>', "task=<%=Constants.Task.DOLOGOUT%>");
 }
 </script>
 
@@ -17,7 +23,7 @@ function openModalHandler(task){
 		</a>
 		<% 
 			NotificationManagerImpl tmpManager = new NotificationManagerImpl();
-			int countNotif = tmpManager.getCountListNotifNoRead(100);
+			int countNotif = tmpManager.getCountListNotifNoRead(LoginData.getEmployeeData().getEmployeeId());
 		%>
 		<div class="navbar-custom-menu">
 			<ul class="nav navbar-nav">
@@ -31,10 +37,10 @@ function openModalHandler(task){
 							<!-- inner menu: contains the actual data -->
 							<ul class="menu">
 								<%
-									for(int i=0;i<tmpManager.getListNotifNoRead(100).size();i++){
+									for(int i=0;i<tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).size();i++){
 								%>
 										<li><a href="#"> <i class="fa fa-warning text-yellow"></i>
-											<%=tmpManager.getListNotifNoRead(100).get(i).getNotificationNote()%>
+											<%=tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).get(i).getNotificationNote()%>
 										</a></li>
 								<%		
 									}
@@ -63,15 +69,15 @@ function openModalHandler(task){
 
 				<li class="dropdown user user-menu"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown"> <img
-						src="image/resize-Lighthouse.jpg" class="user-image"
-						alt="User Image" /> <span class="hidden-xs">Alexander</span>
+						id="profpic1" class="user-image"
+						alt="User Image" /> <span class="hidden-xs"><%=LoginData.getEmployeeData().getEmployeeName()%></span>
 				</a>
 					<ul class="dropdown-menu">
 						<li class="user-header"><img
-							src="image/resize-Lighthouse.jpg" class="img-circle"
+							id="profpic2" class="img-circle"
 							alt="User Image" />
 							<p>
-								Alexander<small>Administrator</small>
+								<%=LoginData.getEmployeeData().getEmployeeName()%><small><%=LoginData.getUserData().getSysLevel()%></small>
 							</p></li>
 						<li class="user-footer">
 							<div class="pull-left">

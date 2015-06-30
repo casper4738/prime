@@ -42,6 +42,7 @@ public interface Constants {
 		static final String DOEDITPOSITION 		= "t37";
 		static final String DOVALIDATE1			= "t38";
 		static final String DOVALIDATE2			= "t39";
+		static final String DOLOGOUT			= "t40";
 		
 		interface PROJECT {
 			final String GOTOPROJECTDETAIL	= "p01";
@@ -270,14 +271,20 @@ public interface Constants {
 		String FAILLOGIN_SOMEFAILURE		= "Some failure is happening, please contact your administrator for further info !";
 		String FAILLOGIN_EMPTYDATA			= "Please insert your username and password before proceed !";
 		String FAILLOGIN_ERROR				= "Something wrong with the system, please contact your administrator for further info !";
+		String FAILLOGIN_SESSIONEXPIRED		= "Your Session has expired, please login again";
+		String FAILLOGIN_SESSIONKICKED		= "Looks like there's someone already logged in with this account";
+		
 		String FAILLOAD_CONTENT				= "Fail to load content, something must be wrong at here...";
 		String TABLE_EMPTY					= "No Data to be Shown";
 		String TABLE_HEAD_EMPTY				= "Employee Head Not Found. Please Select Another Position  !";
 	}
 	
-	//##F.Session Attribute
+	//##F.Request and Session Attribute
+	static interface Request {
+		static String LOGIN_STATUS = "f1";
+	}
 	static interface Session{
-		static String USERDATA = "t1";
+		static String ID				= "t1";
 	}
 	
 	//##G.Active Directory

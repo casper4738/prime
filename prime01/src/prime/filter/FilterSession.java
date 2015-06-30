@@ -2,6 +2,7 @@ package prime.filter;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -15,6 +16,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import prime.constants.Constants;
+import prime.login.LoginData;
+import prime.login.LoginManager;
+import prime.login.LoginManagerImpl;
 
 /**
  * Servlet Filter implementation class FilterSession
@@ -42,26 +46,61 @@ public class FilterSession implements Filter {
 			ServletException {
 		HttpServletRequest tmpServletRequest = (HttpServletRequest) request;
 	    HttpServletResponse tmpServletResponse = (HttpServletResponse) response;
-	    HttpSession tmpSession = tmpServletRequest.getSession();
-	    RequestDispatcher tmpRO;
+	    HttpSession tmpSession = tmpServletRequest.getSession(true);
+	    boolean tmpIsRedirectNeed = true;
 	    
-	    /*
-	    if(tmpSession.getAttribute(Constants.Session.USERDATA) == null) {
-	    	
-	    	if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
-			     PrintWriter out = response.getWriter();
-			     out.println("<script type=\"text/javascript\">");
-			     out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.LOGIN] + "';");
-			     out.println("</script>");
+		if(!tmpServletRequest.getServletPath().equals("/" + Constants.PAGES_LIST[Constants.Page.LOGIN])){
+		    //##a.Check Session State
+		    if(tmpSession.getAttribute(Constants.Session.ID) != null) {
+		    	//##b.Check From DB, Session Value
+		    	LoginManager tmpLoginManager = new LoginManagerImpl();
+		    	
+		    	if(LoginData.isDataExists()){
+			    	String tmpDBSession = "";
+					try {
+						tmpDBSession = tmpLoginManager.getLoginSession(LoginData.getUserData().getUserName());
+					} catch (SQLException e) {
+						//Nothing need to be done at here
+						e.printStackTrace();
+					}
+			    	String tmpCurnSession = LoginData.getUserData().getloginSession() ;
+			    	if(tmpDBSession.equals(tmpCurnSession)){
+			    		tmpIsRedirectNeed = false;
+			    	} else {
+			    		LoginData.clear();
+			    		tmpSession.invalidate();
+			    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONKICKED);
+			    	}
+		    	} else {
+		    		LoginData.clear();
+		    		tmpSession.invalidate();
+		    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONKICKED);
+		    	}
 		    } else {
-				tmpRO = request.getRequestDispatcher(Constants.PAGES_LIST[Constants.Page.LOGIN]);
-				tmpRO.forward(tmpServletRequest, tmpServletResponse);
-		    }
-	    } else {
+		    	if(LoginData.isDataExists()){
+		    		LoginData.clear();
+		    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONEXPIRED);
+		    	}
+		    }	
+
+		    //##.For Page-Changing Handler
+		    if(!tmpIsRedirectNeed){
+		    	chain.doFilter(request, response);
+		    } else {
+		    	if("XMLHttpRequest".equals(tmpServletRequest.getHeader("X-Requested-With"))) {
+				     PrintWriter out = response.getWriter();
+				     out.println("<script type=\"text/javascript\">");
+				     out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.LOGIN] + "';");
+				     out.println("</script>");
+			    } else {  
+			    	tmpServletResponse.sendRedirect(Constants.PAGES_LIST[Constants.Page.LOGIN]);
+			    }
+		    }		
+		} else {
+    		LoginData.clear();
+    		tmpSession.invalidate();
 	    	chain.doFilter(request, response);
-	    }
-	    */
-    	chain.doFilter(request, response);
+		}
 	}
 
 	/**
@@ -70,5 +109,4 @@ public class FilterSession implements Filter {
 	public void init(FilterConfig fConfig) throws ServletException {
 		// TODO Auto-generated method stub
 	}
-
 }
