@@ -79,11 +79,11 @@
 					<table id="table-1" class="table table-bordered table-striped table-hover">
 						<thead>
 							<tr>
-								<th>NotifTemplate ID</th>
+								<th width="120px">Notif Template ID</th>
 								<th>Notif Name</th>
 								<th>Notif Value</th>
 								<th>Notif Description</th>
-			                    <th width="90px">Actions</th>
+			                    <th width="55px">Actions</th>
 			                </tr>
 			            </thead>
 			              <tbody>

@@ -152,11 +152,13 @@
 	                		<td><bean:write name="iter" property="contactNumber"/></td>
 	                		<td align="center">
 	                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.PROJECT.GOTOEDITMEMBER%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
+                     	        <logic:notEqual name="iter" property="roleName" value="">
                      	        <input type="image" value='Details' onclick="flyToTaskDetail(
                      	        				'<%=Constants.Task.PROJECT.GOTOTASKMEMBER%>', 
                      	        				'<bean:write name="iter" property="employeeId"/>')"
      	        								src="resources/image/viewmore.png"
-                     	        				>
+                     	        				/>
+                     	        </logic:notEqual>
 	                        </td>	
 	                    </tr> 
                     </logic:iterate>

@@ -6,7 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<meta
+	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+	name='viewport'>
 <title>PRIMEprogram</title>
 
 <!-- CSS -->
@@ -14,13 +16,10 @@
 <link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 <link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 <link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
 <link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
-	
+<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 .info-modal .modal {
 	position: relative;
@@ -37,7 +36,6 @@
 }
 </style>
 <!-- End CSS -->
-
 </head>
 <body class="skin-blue sidebar-mini">
 	<div class="wrapper">

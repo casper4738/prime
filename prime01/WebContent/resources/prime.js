@@ -1,3 +1,9 @@
+function flyToBack(task) {
+	var tmpForm = document.forms[0];
+	tmpForm.task.value = task;
+	menuLoadHandler(tmpForm.action, serialize(tmpForm));
+}
+
 function flyToPage(task) {
 	var tmpForm = document.forms[0];
 	tmpForm.task.value = task;

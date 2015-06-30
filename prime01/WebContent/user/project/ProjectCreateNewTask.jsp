@@ -40,6 +40,14 @@
                 		<html:hidden name="ProjectUserForm" property="projectBean.employeeId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.taskBean.taskStatus" value='<%=Constants.Status.CREATE+""%>'/>
                 		<html:hidden name="ProjectUserForm" property="projectBean.taskBean.taskChangeNote" value=""/>
+                		<html:hidden name="ProjectUserForm" property="task"/>
+						<html:hidden name="ProjectUserForm" property="taskId"/>
+						<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
+						<html:hidden name="ProjectUserForm" property="projectBean.employeeId"/>
+						<html:hidden name="ProjectUserForm" property="projectBean.employeeName"/>
+						<html:hidden name="ProjectUserForm" property="goToPage"/>
+						<html:hidden name="ProjectUserForm" property="showInPage"/>
+						<html:hidden name="ProjectUserForm" property="projectId"/>
                 		<table class="form-input" align="center">
                 			<tr>
                 				<td  width="200px">Task Name</td>

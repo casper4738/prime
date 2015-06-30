@@ -121,7 +121,7 @@
                 	    		</jsp:include>
 	                		</td>
 	                        <td align="center">
-	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.GOTOVIEW %>', '<bean:write name="iter" property="taskId"/>')">
+	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.GOTOVIEW %>', '<bean:write name="iter" property="employeeId"/>')">
 	                        </td>
 	                    </tr>
                     </logic:iterate>

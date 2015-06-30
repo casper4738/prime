@@ -50,6 +50,9 @@ public class EmployeeAction extends Action {
 		PositionManager tmpPositionManager = new PositionManagerImpl();
 		
 		System.out.println("Task = " + pForm.getTask());
+
+		System.out.println("MASUK SINI " + pForm.getProfpic() + "AA");	
+		System.out.println("TROLOLOL");
 		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
@@ -102,9 +105,10 @@ public class EmployeeAction extends Action {
 			request.setAttribute("listMonthYear", monthsList);
 			return mapping.findForward("weekend");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
+			System.out.println("DO ADDD");
+			
 			pForm.getEmployeeBean().setEmployeeId(manager.getNewId());
 		
-			System.out.println("MASUK SINI");	
 			if(pForm.getManagerId()!=0){
 				pForm.getEmployeeBean().setDivisionId((manager.getEmployeeById(pForm.getManagerId()).getDivisionId()==null)?0:manager.getEmployeeById(pForm.getManagerId()).getDivisionId());
 			}else{
@@ -113,9 +117,12 @@ public class EmployeeAction extends Action {
 			
 			pForm.getEmployeeBean().setManagerId(pForm.getManagerId());
 			pForm.getEmployeeBean().setTreeId(manager.getTreeIdByEmployeeId(pForm.getManagerId())+pForm.getEmployeeBean().getEmployeeId());
-			manager.insert(pForm.getEmployeeBean());
+			//manager.insert(pForm.getEmployeeBean());
 			
-			System.out.println("Profpic = " + pForm.getProfpic().getFileName() + " _ " + pForm.getProfpic().getFileSize() + " _ " + pForm.getProfpic().getFileData());
+			System.out.println("MASUK SINI " + pForm.getProfpic() + "AA");	
+			System.out.println("Profpic = " + pForm.getProfpic().getFileName());
+			System.out.println(" _ " + pForm.getProfpic().getFileSize());
+			System.out.println(" _ " + pForm.getProfpic().getFileData());
 			//manager.insertToBlob(pForm.getProfpic().getFileData());
 			//System.out.println("LALA = " + manager.selectBlob());
 			//request.setAttribute("picpic", manager.selectBlob());

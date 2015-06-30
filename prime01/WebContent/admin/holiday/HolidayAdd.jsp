@@ -47,11 +47,10 @@
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage Holiday<small>management system</small>
-		</h1>
+		<h1>Manage Holiday</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li>Manage Holiday</li>
+			<li><html:link href="#" onclick="flyToBack('home')" >Manage Holiday</html:link></li>
 			<li class="active">Add Holiday</li>
 		</ol>
 	</section>

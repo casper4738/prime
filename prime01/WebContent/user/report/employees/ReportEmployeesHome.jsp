@@ -27,6 +27,14 @@
 		          "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
 		    }
 	    } );
+		
+		
+		function flyToEmployeeTaskDetail(task, value) {
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = task;
+			tmpForm.employeeId.value = value;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
 	</script>
 	<!-- End JS -->
 </head>
@@ -80,13 +88,12 @@
 								<th>Division</th>
 								<th>Position</th>
 								<th>Manager</th>
-			                    <th width="60px">Status</th>
 			                    <th width="90px">Actions</th>
 			                </tr>
 			            </thead>
 			              <tbody>
-			               <logic:notEmpty name="listEmployee">
-							<logic:iterate id="iter" name="listEmployee">
+			               <logic:notEmpty name="listReportEmployees">
+							<logic:iterate id="iter" name="listReportEmployees">
 			                	<tr>
 			                		<td><bean:write name="iter" property="employeeId"/> </td>
 			                		<td><bean:write name="iter" property="employeeName"/> </td>
@@ -102,20 +109,7 @@
 			                		<td><bean:write name="iter" property="positionName"/> </td>
 			                		<td><bean:write name="iter" property="managerName"/> </td>
 			                        <td align="center">
-				                        <logic:empty name="iter" property="resignDate">
-				                        	<html:image src="resources/image/check-true.png" /> 
-				                        </logic:empty>
-				                        <logic:notEmpty name="iter" property="resignDate">
-				                        	<html:image src="resources/image/check-false.png" /> 
-				                        </logic:notEmpty>
-			                        </td>
-			                        <td align="center">
-			                        	<logic:empty name="iter" property="resignDate">
-				                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
-				                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDITPOSITION%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/editposdiv.png" width="18"/>
-				                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTORESIGN%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/resign.png" /> 
-			                        	</logic:empty>
-			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOVIEW%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/viewmore.png" />
+			                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToEmployeeTaskDetail('<%=Constants.Task.REPORT.GOTOTDETAILEMPLOYEE %>', '<bean:write name="iter" property="employeeId"/>')">
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>
@@ -140,7 +134,7 @@
 							<li><html:link styleClass="paging" href="#" onclick="page(${pageNext})" >>></html:link> </li>
 							<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 							
-							<html:text name="EmployeeAdminForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+							<html:text name="ReportUserEmployeesForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 							<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
 						</ul>
 						<div class="paginate-2">

@@ -21,12 +21,12 @@ import prime.constants.Constants;
  */
 public class FilterSession implements Filter {
 
-    /**
-     * Default constructor. 
-     */
-    public FilterSession() {
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * Default constructor.
+	 */
+	public FilterSession() {
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see Filter#destroy()
@@ -38,7 +38,8 @@ public class FilterSession implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
+			ServletException {
 		HttpServletRequest tmpServletRequest = (HttpServletRequest) request;
 	    HttpServletResponse tmpServletResponse = (HttpServletResponse) response;
 	    HttpSession tmpSession = tmpServletRequest.getSession();
