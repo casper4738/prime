@@ -20,12 +20,12 @@ import prime.constants.Constants;
  */
 public class FilterSession implements Filter {
 
-    /**
-     * Default constructor. 
-     */
-    public FilterSession() {
-        // TODO Auto-generated constructor stub
-    }
+	/**
+	 * Default constructor.
+	 */
+	public FilterSession() {
+		// TODO Auto-generated constructor stub
+	}
 
 	/**
 	 * @see Filter#destroy()
@@ -37,18 +37,21 @@ public class FilterSession implements Filter {
 	/**
 	 * @see Filter#doFilter(ServletRequest, ServletResponse, FilterChain)
 	 */
-	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
+			ServletException {
 		HttpServletRequest tmpServletRequest = (HttpServletRequest) request;
-	    HttpServletResponse tmpServletResponse = (HttpServletResponse) response;
-	    HttpSession tmpSession = tmpServletRequest.getSession();
-	    RequestDispatcher tmpRO;
-	    
-	    if(tmpSession.getAttribute(Constants.Session.USERDATA) == null) {
-			tmpRO = request.getRequestDispatcher(Constants.PAGES_LIST[Constants.Page.LOGIN]);
-			tmpRO.forward(tmpServletRequest, tmpServletResponse);
-	    } else {
-	    	chain.doFilter(request, response);
-	    }
+		HttpServletResponse tmpServletResponse = (HttpServletResponse) response;
+		HttpSession tmpSession = tmpServletRequest.getSession();
+		RequestDispatcher tmpRO;
+
+//		if (tmpSession.getAttribute(Constants.Session.USERDATA) == null) {
+//			tmpRO = request.getRequestDispatcher(Constants.PAGES_LIST[Constants.Page.LOGIN]);
+//			tmpRO.forward(tmpServletRequest, tmpServletResponse);
+//		} else {
+//			chain.doFilter(request, response);
+//		}
+		
+		chain.doFilter(request, response);
 	}
 
 	/**

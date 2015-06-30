@@ -48,7 +48,7 @@
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
 			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
-			<li class="active"><a href="javascript:flyToBack(
+			<li><a href="javascript:flyToBack(
 	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
 	                        		'<bean:write name="ProjectUserForm" property="projectId"/>')">Project Detail</a></li>
 			<li class="active">Project Member Detail</li>
@@ -102,6 +102,7 @@
 						<input type="submit" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOEDIT%>')" class="buttonSearch myButton" value='Search'>
 					</html:form>
 				</div>
+				
 				<div class="box-body">
 					<table class="table table-bordered table-striped table-hover">
 					<thead><tr>

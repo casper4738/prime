@@ -18,14 +18,7 @@
 	<!-- JS -->
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
-<<<<<<< HEAD
-	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
-	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
-	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
-=======
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 	<script type="text/javascript">
 		$('#table-1').dataTable( {
 		   paging    : false,
@@ -68,7 +61,7 @@
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage Holiday<small>management system</small></h1>
+		<h1>Manage Holiday</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
 			<li class="active">Manage Holiday</li>
@@ -80,7 +73,7 @@
 			<div class="col-xs-12"><div class="box">
 				<div class="box-header"><h3 class="box-title">Data Manage Holiday</h3></div>
 				
-				<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
+				<p><span class="button-add btn btn-app bg-olive historyAPI" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
                    		<i class="fa fa-edit"></i>Add
                    </span>
 	            <span class="message"><bean:write name="HolidayAdminForm" property="message" /></span></p>

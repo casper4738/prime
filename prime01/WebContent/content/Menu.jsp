@@ -6,7 +6,9 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
+<meta
+	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
+	name='viewport'>
 <title>PRIMEprogram</title>
 
 <!-- CSS -->
@@ -14,13 +16,10 @@
 <link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 <link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 <link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 <link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 <link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
 <link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
-	
+<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 <style type="text/css">
 .info-modal .modal {
 	position: relative;
@@ -38,23 +37,25 @@
 </style>
 <!-- End CSS -->
 
-<!-- JS -->
+<!-- Plugins -->
 <script src="resources/prime.js"></script>
-<script src="resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
-<script src="resources/plugins/jQueryUI/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
-<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
-<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
-<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
-<script src="resources/plugins/moment/moment.min.js" type="text/javascript"></script>
-<script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
-<script src="resources/plugins/serialize/serialize-0.2.min.js" type="text/javascript"></script>
+<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
+<script src="resources/bootstrap/js/bootstrap.min.js"
+	type="text/javascript"></script>
+<script src="resources/plugins/datepicker/bootstrap-datepicker.js"
+	type="text/javascript"></script>
+<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js"
+	type="text/javascript"></script>
+<script src="resources/plugins/datatables/jquery.dataTables.min.js"
+	type="text/javascript"></script>
+<script src="resources/plugins/datatables/dataTables.bootstrap.min.js"
+	type="text/javascript"></script>
+<script src="resources/plugins/serialize/serialize-0.2.min.js"
+	type="text/javascript"></script>
 <script src="resources/plugins/fastclick/fastclick.min.js"></script>
 <script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 <script src="resources/dist/js/demo.js" type="text/javascript"></script>
-<!-- End JS -->
-
+<!-- End Plugins -->
 </head>
 <body class="skin-blue sidebar-mini">
 	<div class="wrapper">
