@@ -227,24 +227,92 @@
 						                		<bean:define id="dateEnd" name="iter" property="endDate"  toScope="request"/>
 						                		<bean:define id="employeeId" name="EmployeeAdminForm" property="employeeBean.employeeId"  toScope="request"/>
 						                		<%
-						                			int idEmployee = (Integer) request.getAttribute("employeeId");
+						                			Integer idEmployee = (Integer) request.getAttribute("employeeId");
 						                			java.sql.Date endDate = (java.sql.Date) request.getAttribute("dateEnd");
 						                			java.sql.Date startDate = (java.sql.Date) request.getAttribute("dateStart");
 						                			long DAY = 24 * 3600 * 1000;
 						                			long diffDate = endDate.getTime() - startDate.getTime() + DAY;
+						                			long tempEndLastWeek=0;
+						                			long totalWeek;
 						                			
-						                			int days = (int) ( diffDate / DAY);
+						                			int days = (int) (diffDate / DAY);
 						                			int totalDayOff=0;
-						                			//out.print(days + " DAYS");
-						                			//total_dayOff = Math.abs(request.getAttribute("dateEnd").getTime() - request.getAttribute("dateStart"));
 						                			
 						                			EmployeeManagerImpl tmpEmployeeManager = new EmployeeManagerImpl();
 						                			//try{
 						                				int countNationalHoliday=tmpEmployeeManager.getCountNationalHolidayByDayOff(startDate, endDate);
-						                				out.println(tmpEmployeeManager.getCountNationalHolidayByDayOff(startDate, endDate) + "NATIONAL");
-						                				int countDayOff=tmpEmployeeManager.getCountWeekendByDayOff(startDate, endDate, idEmployee);
-						                				//out.println(tmpEmployeeManager.getCountWeekendByDayOff(startDate, endDate, idEmployee) + "WEEKEND");
-						                				totalDayOff=days-countNationalHoliday;
+						                				int countWeekEnd=0;
+						                				int countInOneWeek=2;
+						                				int countWeek=0;
+						                				
+						                				Date endLastWeek=null;
+						                				//GET DAY WEEK FROM END DATE DAY OFF
+						                				String endDayWeek = tmpEmployeeManager.getDayWeekByEndDate(endDate.toString());
+						                				out.println(endDayWeek+ "DAYWEEKS");
+						                				if(endDayWeek.equals("MONDAY")){
+						                					// GET DATE LAST MONDAY FROM END DATE
+						                					endLastWeek = endDate;
+						                				}else if(endDayWeek.equals("TUESDAY")){
+						                					tempEndLastWeek= endDate.getTime() - DAY;
+						                					// GET DATE LAST MONDAY FROM END DATE
+						                					endLastWeek = new Date(tempEndLastWeek * 1000);
+						                				}else if(endDayWeek.equals("WEDNESDAY")){
+						                					tempEndLastWeek= endDate.getTime() - (DAY*2);
+						                					// GET DATE LAST MONDAY FROM END DATE
+						                					endLastWeek = new Date(tempEndLastWeek * 1000);
+						                				}else if(endDayWeek.equals("THURSDAY")){
+						                					tempEndLastWeek= endDate.getTime() - (DAY*3);
+						                					// GET DATE LAST MONDAY FROM END DATE
+						                					endLastWeek = new Date(tempEndLastWeek * 1000);
+						                				}else if(endDayWeek.equals("FRIDAY")){
+						                					tempEndLastWeek= endDate.getTime() - (DAY*4);
+						                					// GET DATE LAST MONDAY FROM END DATE
+						                					endLastWeek = new Date(tempEndLastWeek * 1000);
+						                				}else if(endDayWeek.equals("SATURDAY")){
+						                					tempEndLastWeek= endDate.getTime() - (DAY*5);
+						                					// GET DATE LAST MONDAY FROM END DATE
+						                					endLastWeek = new Date(tempEndLastWeek * 1000);
+						                				}else if(endDayWeek.equals("SUNDAY")){
+						                					tempEndLastWeek= endDate.getTime() - (DAY*6);
+						                					// GET DATE LAST MONDAY FROM END DATE
+						                					endLastWeek = new Date(tempEndLastWeek * 1000);
+						                				}
+						                				out.println(tempEndLastWeek+ " tempEndLastWeek");
+						                				out.println(endLastWeek+ " endLastWeek");
+						                				if(tmpEmployeeManager.getMaxStartFromByStartDate(startDate.toString(),idEmployee).size()>0){
+							                				//GET WEEKEND FOR LAST SETTING
+							                				String weekEnd = tmpEmployeeManager.getMaxStartFromByStartDate(startDate.toString(),idEmployee).get(0).getWeekEnd();
+							                				out.println(weekEnd+ " WeekEnd");
+							                				
+							                				//GET START DATE FOR LAST SETTING
+							                				Date startLastWeek = tmpEmployeeManager.getMaxStartFromByStartDate(startDate.toString(),idEmployee).get(0).getMaxStartFrom(); 
+							                				out.println(startLastWeek+ " startLastWeek");
+							                				
+							                				//GET ENDWEEKEND FOR LAST SETTING
+							                				String endWeekEnd = tmpEmployeeManager.getMaxStartFromByStartDate(endDate.toString(),idEmployee).get(0).getWeekEnd();
+							                				out.println(endWeekEnd+ " endWeekEnd");
+							                				
+							                				//GET LAST DATE FOR LAST SETTING 
+							                				Date endLastWeekSetting = tmpEmployeeManager.getMaxStartFromByStartDate(endDate.toString(),idEmployee).get(0).getMaxStartFrom(); 
+							                				out.println(endLastWeekSetting+ " endLastWeekSetting");
+							                				
+							                				//GET HOW MANY WEEKEND IN ONCE WEEK
+							                				String [] weekEndSplit  = weekEnd.split(",");
+							                				countInOneWeek=weekEndSplit.length;
+							                				out.println(countInOneWeek+ " countInOneWeek");
+							                				
+							                				//GET COUNTWEEK (HOW MANY WEEK IN RANGE START WEEKEND LAST SETTING -- weekEnd AND END LAST WEEK -- endLastWeek)
+							                				//totalWeek = (startLastWeek.getTime() - endLastWeek.getTime()) / (DAY*7);
+							                				//out.println(totalWeek+ " totalWeek");
+							                				//countWeek = (int) totalWeek;
+							                				//countWeekEnd = countInOneWeek  * countWeek;
+						                				}else{
+						                					countWeekEnd = 0;
+						                					out.println(" else");
+						                				}
+						                				//int countWeekEndInOneWeek = tmpEmployeeManager.getTotalWeekend(dateMaxSetWeekend, idEmployee);
+						                				
+						                				totalDayOff=days-countNationalHoliday-countWeekEnd;
 						                			/*} catch(Exception e) {
 						                				out.print("CAST : "+e.getMessage());
 						                			} */

@@ -106,10 +106,12 @@
 			                		<td><bean:write name="iter" property="managerName"/> </td>
 			                        <td align="center">
 				                        <logic:empty name="iter" property="resignDate">
-				                        	<html:image src="resources/image/check-true.png" /> 
+				                        	<span class="label label-success">Active</span>
+				                        	<%-- <html:image src="resources/image/check-true.png" />  --%>
 				                        </logic:empty>
 				                        <logic:notEmpty name="iter" property="resignDate">
-				                        	<html:image src="resources/image/check-false.png" /> 
+				                        	<span class="label label-danger">Resign</span>
+				                        	<%-- <html:image src="resources/image/check-false.png" />  --%>
 				                        </logic:notEmpty>
 			                        </td>
 			                        <td align="center">
