@@ -1,4 +1,46 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="usermenu">
+	<select id="getListByCol" resultClass="prime.admin.usermenu.UserMenuBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT USER_MENU_ID AS userMenuId, 
+		USER_MENU_NAME AS userMenuName,
+		USER_MENU_ACTION AS userMenuAction
+		FROM USER_MENUS
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+	        	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(USER_MENU_ID) LIKE UPPER(#value#)
+				</isEqual>
+		       	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(USER_MENU_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	    ORDER BY USER_MENU_ID ASC) page 
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
+	
+	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1) 
+		FROM USER_MENUS 
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+	        	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(USER_MENU_ID) LIKE UPPER(#value#)
+				</isEqual>
+		      	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(USER_MENU_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	</select>
+	
+	<select id="selectAll" resultClass="prime.admin.usermenu.UserMenuBean">
+		SELECT USER_MENU_ID AS userMenuId, 
+		USER_MENU_NAME AS userMenuName,
+		USER_MENU_ACTION AS userMenuAction
+		FROM USER_MENUS
+	    ORDER BY USER_MENU_ID ASC
+	</select>
 </sqlMap>

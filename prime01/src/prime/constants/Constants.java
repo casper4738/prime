@@ -167,6 +167,21 @@ public interface Constants {
 			}
 		});
 		
+		final Map<String, String> USERMENU_SEARCHCOLUMNS = Collections.unmodifiableMap(
+				new LinkedHashMap<String, String>() {{
+					put("ID", "User Menu ID");
+					put("NAME", "User Menu Name");
+				}
+			});
+		
+		final Map<String, String> USERROLE_SEARCHCOLUMNS = Collections.unmodifiableMap(
+				new LinkedHashMap<String, String>() {{
+					put("ID", "User Role ID");
+					put("NAME", "User Role Name");
+				}
+			});
+		
+		
 		final Map<Integer, String> TABLELOG_SEARCHCOLUMNS = Collections.unmodifiableMap(
 			new LinkedHashMap<Integer, String>() {{
 				put(LogTable.EMPLOYEES, "Employees");
@@ -241,6 +256,7 @@ public interface Constants {
 		final int TASKS 				= 11;
 		final int PROJECTS 				= 12;
 		final int NOTIFICATIONS 		= 13;
+		
 	}
 	static interface LogAction{
 	//---5.Standard Audit Trails / Log Audit Trail Action Conversion		
@@ -307,14 +323,16 @@ public interface Constants {
 															"LogAdmin.do",			 //9
 															"SettingAdmin.do",		 //10
 															"NotifTemplate.do",		 //11
+															"UserMenu.do",			 //12
+															"UserRole.do",			 //13
 															
-															"DashboardUser.do",		 //12
-															"ProjectUser.do",		 //13
-															"TaskHeadUser.do",		 //14
-															"TaskSubordinateUser.do",//15
-															"ReportEmployees.do",	 //16
-															"Notification.do", 	 	 //17
-															"Modal.do"				 //18
+															"DashboardUser.do",		 //14
+															"ProjectUser.do",		 //15
+															"TaskHeadUser.do",		 //16
+															"TaskSubordinateUser.do",//17
+															"ReportEmployees.do",	 //18
+															"Notification.do", 	 	 //19
+															"Modal.do"				 //20
 												};
 	static interface Page {
 		static int LOGIN				= 0;
@@ -329,15 +347,17 @@ public interface Constants {
 		static int ADMIN_LOG			= 9;
 		static int ADMIN_SETTING		= 10;
 		static int ADMIN_NOTIFTEMPLATE	= 11;
+		static int ADMIN_USERMENU 		= 12;
+		static int ADMIN_USERROLE 		= 13;
 		
-		static int USER_DASHBOARD		= 12;
-		static int USER_PROJECT			= 13;
-		static int USER_TASK_HEAD		= 14;
-		static int USER_TASK_SUBORDINATE= 15;
-		static int USER_REPORT_EMPLOYEES= 16;
-		static int USER_VIEWNOTIF		= 17;
+		static int USER_DASHBOARD		= 14;
+		static int USER_PROJECT			= 15;
+		static int USER_TASK_HEAD		= 16;
+		static int USER_TASK_SUBORDINATE= 17;
+		static int USER_REPORT_EMPLOYEES= 18;
+		static int USER_VIEWNOTIF		= 19;
 		
-		static int MODAL				= 18;
+		static int MODAL				= 20;
 	}
 	
 	//##K.Daily Time Constants

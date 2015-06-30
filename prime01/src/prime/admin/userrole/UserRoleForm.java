@@ -1,5 +1,67 @@
 package prime.admin.userrole;
 
-public class UserRoleForm {
+import org.apache.struts.action.ActionForm;
 
+import prime.admin.usermenu.UserMenuBean;
+
+public class UserRoleForm extends ActionForm{
+	private	UserRoleBean userRoleBean = new UserRoleBean();
+	private String task;
+	private String search;
+	private String columnSearch;
+	private String message;
+	private Integer goToPage = 1;
+	private Integer showInPage = 100;
+	private Integer tmpId;
+	
+	public UserRoleBean getUserRoleBean() {
+		return userRoleBean;
+	}
+	public void setUserRoleBean(UserRoleBean userRoleBean) {
+		this.userRoleBean = userRoleBean;
+	}
+	public String getTask() {
+		return task;
+	}
+	public void setTask(String task) {
+		this.task = task;
+	}
+	public String getSearch() {
+		return search;
+	}
+	public void setSearch(String search) {
+		this.search = search;
+	}
+	public String getColumnSearch() {
+		return columnSearch;
+	}
+	public void setColumnSearch(String columnSearch) {
+		this.columnSearch = columnSearch;
+	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	public Integer getGoToPage() {
+		return goToPage;
+	}
+	public void setGoToPage(Integer goToPage) {
+		this.goToPage = goToPage;
+	}
+	public Integer getShowInPage() {
+		return showInPage;
+	}
+	public void setShowInPage(Integer showInPage) {
+		this.showInPage = showInPage;
+	}
+	public Integer getTmpId() {
+		return tmpId;
+	}
+	public void setTmpId(Integer tmpId) {
+		this.tmpId = tmpId;
+	}
+	
+	
 }

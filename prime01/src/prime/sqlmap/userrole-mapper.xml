@@ -1,4 +1,84 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="userrole">
+	<insert id="insert" parameterClass="prime.admin.userrole.UserRoleBean">
+		INSERT INTO USER_ROLES
+		(USER_ROLE_ID , USER_ROLE_NAME, USER_ROLE_DESCRIPTION) VALUES 
+		(#userRoleId#, #userRoleName#,#userRoleDescription#)
+	</insert>
+	
+	<update id="update" parameterClass="prime.admin.userrole.UserRoleBean">
+		UPDATE USER_ROLES SET
+		USER_ROLE_NAME=#userRoleName#,
+		USER_ROLE_DESCRIPTION=#userRoleDescription#
+		WHERE USER_ROLE_ID=#userRoleId# 
+	</update>
+	
+	<select id="getNewId" resultClass="java.lang.Integer">
+		SELECT NVL(MAX(USER_ROLE_ID)+1, 1) FROM USER_ROLES
+	</select>
+	
+	<select id="get" resultClass="prime.admin.userrole.UserRoleBean" parameterClass="java.lang.Integer">
+		SELECT USER_ROLE_ID AS userRoleId, 
+		USER_ROLE_NAME AS userRoleName,
+		USER_ROLE_DESCRIPTION AS userRoleDescription
+		FROM USER_ROLES
+		WHERE USER_ROLE_ID=#id#
+	</select>
+	
+	<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1) 
+		FROM USER_ROLES 
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+	        	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(USER_ROLE_ID) LIKE UPPER(#value#)
+				</isEqual>
+		      	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(USER_ROLE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	</select>
+	
+	<select id="getListByCol" resultClass="prime.admin.userrole.UserRoleBean" parameterClass="java.util.Map">
+		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
+		(SELECT USER_ROLE_ID AS userRoleId, 
+		USER_ROLE_NAME AS userRoleName,
+		USER_ROLE_DESCRIPTION AS userRoleDescription
+		FROM USER_ROLES
+	    <dynamic prepend="WHERE">
+	        <isNotNull property="columnSearch">
+	        	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(USER_ROLE_ID) LIKE UPPER(#value#)
+				</isEqual>
+		       	<isEqual property="columnSearch" compareValue="NAME">
+			          UPPER(USER_ROLE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+	        </isNotNull>
+	    </dynamic>
+	    ORDER BY USER_ROLE_ID ASC) page 
+	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
+	
+	<select id="selectAll" resultClass="prime.admin.userrole.UserRoleBean">
+		SELECT USER_ROLE_ID AS userRoleId, 
+		USER_ROLE_NAME AS userRoleName,
+		USER_ROLE_DESCRIPTION AS userRoleDescription
+		FROM USER_ROLES
+	    ORDER BY USER_ROLE_ID ASC
+	</select>
+	
+	<select id="getMenu"  resultClass="prime.admin.usermenu.UserMenuBean" parameterClass="java.lang.Integer">
+		SELECT UM.USER_MENU_NAME AS userMenuName,
+		UM.USER_MENU_ID AS userMenuId,
+		CASE WHEN NVL(X.USER_ROLE_ID, 0) = 0 THEN 0
+		     ELSE 1
+		END AS isCheck
+		FROM USER_MENUS UM
+		LEFT JOIN  (
+		    SELECT URM.USER_ROLE_ID,URM.USER_MENU_ID FROM USER_ROLE_MENUS URM 
+		    WHERE URM.USER_ROLE_ID = #id#
+		) X ON UM.USER_MENU_ID = X.USER_MENU_ID
+	</select>
 </sqlMap>

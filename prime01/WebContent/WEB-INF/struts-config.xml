@@ -204,6 +204,7 @@
 			<forward name="forward" 		path="/admin/userrole/Forward.jsp">							</forward>
 			<forward name="add" 			path="/admin/userrole/UserRoleAdd.jsp">						</forward>
 			<forward name="edit" 			path="/admin/userrole/UserRoleEdit.jsp">					</forward>
+			<forward name="view" 			path="/admin/userrole/UserRoleView.jsp">					</forward>
 		</action>
 		
 	</action-mappings>
