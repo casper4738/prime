@@ -99,8 +99,12 @@
 									<span class="handle"> 
 										<i class="fa fa-ellipsis-v"></i> <i class="fa fa-ellipsis-v"></i>
 									</span>	
-		                			<span class="text"><bean:write name="iter" property="activityName"/> | <bean:write name="iter" property="taskName"/> </span>
-		                   
+		                			<span class="text">
+		                				<bean:write name="iter" property="activityName"/> | <bean:write name="iter" property="taskName"/> 
+		                			</span>
+		                   			<span>
+		                   				
+		                   			</span>
 				                    <!-- General tools such as play or pause or finish or delete-->
 				                    <div class="tools">
 										<logic:notEqual name="iter" property="activityStatus" value="1">
