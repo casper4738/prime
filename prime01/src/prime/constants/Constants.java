@@ -114,8 +114,9 @@ public interface Constants {
 		
 		final Map<String, String> USER_SEARCHCOLUMNS = Collections.unmodifiableMap(
 		        new LinkedHashMap<String, String>() {{
-		        	put("NAME", "USERNAME");
+		        	put("USERNAME", "USERNAME");
 		        	put("ID", "EMPLOYEE ID");
+		        	put("EMPNAME", "EMPLOYEE NAME");
 		        }
 		    });
 		
