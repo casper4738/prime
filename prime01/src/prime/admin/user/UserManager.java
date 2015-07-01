@@ -6,6 +6,7 @@ import java.util.List;
 import prime.admin.user.UserBean;
 
 public interface UserManager {
+	
 	public void insert(UserBean e) throws SQLException;
 	
 	public void update(UserBean e) throws SQLException;
