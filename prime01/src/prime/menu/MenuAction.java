@@ -13,6 +13,9 @@ import org.apache.struts.action.ActionMapping;
 
 import prime.constants.Constants;
 import prime.login.LoginBean;
+import prime.login.LoginData;
+import prime.user.project.ProjectManager;
+import prime.user.project.ProjectManagerImpl;
 
 public class MenuAction extends Action {
 	@Override
@@ -21,7 +24,7 @@ public class MenuAction extends Action {
 		//HttpSession tmpSession = request.getSession();
 		//LoginBean tmpUserData = (LoginBean)tmpSession.getAttribute(Constants.Session.USERDATA);
 		LinkedHashMap<String, String> tmpObject = new LinkedHashMap<String, String>();
-		
+		ProjectManager tmpProjectManager=new ProjectManagerImpl();
 		//##1.Preparing Menu
 		//---Hard Code Menu [Will think for better implementation later]
 		//switch(tmpUserData.getSystemLevel()){
@@ -36,13 +39,27 @@ public class MenuAction extends Action {
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_LOG]				, "View Log");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_SETTING]			, "General Settings");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_NOTIFTEMPLATE]		, "Manage Notif Template");
+				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_USERMENU]			, "View User Menu");
+				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_USERROLE]			, "Manage User Role");
 		//		break;
 		//	case Constants.SystemLevel.OPERATOR:
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]			, "Dashboard");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]			, "Manage Task As Head");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK_SUBORDINATE]	, "Manage Task As Subordinate");
+				
+				System.out.println ("id login menu "+LoginData.getEmployeeData().getEmployeeId());
+				
+				if(tmpProjectManager.getCountProjectReceiver(LoginData.getEmployeeData().getEmployeeId())>0)
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_PROJECT]				, "Manage Project");
+				
+			
+				if(tmpProjectManager.getCountProjectAssigner(LoginData.getEmployeeData().getEmployeeId())>0)
+				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_PROJECT_HEAD]		, "Manage Project As Head");
+				
+				
+				
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_REPORT_EMPLOYEES]	, "View Report Employees");
+				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_REPORT_PROJECT]		, "View Report Project");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_VIEWNOTIF]			, "View Notification");
 		//		break;
 		//	case Constants.SystemLevel.OPERATOR_MONITOR :

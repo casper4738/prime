@@ -144,3 +144,7 @@ td .badge {
 .status {
 	font-size: 98pt;
 }
+
+.error-validator {
+	color: red;
+}

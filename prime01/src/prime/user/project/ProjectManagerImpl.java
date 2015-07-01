@@ -21,15 +21,22 @@ public class ProjectManagerImpl implements ProjectManager {
 	public List<ProjectBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
-		map.put("value", value);
+		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
+			String[] string = value.split(";");
+			map.put("startDate", string[0]);
+			map.put("untilDate", string[1]);
+		} else {
+			map.put("value", value);
+		}
+		
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		return mapper.queryForList("project.getListByColumn", map);
 	}
 
 	@Override
-	public List<ProjectBean> getListProjectMemberDetails(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId,
-			Integer projectId) 
+	public List<ProjectBean> getListProjectMemberDetails(String columnSearch, String value, Integer startRow, 
+			Integer endRow, Integer employeeId, Integer projectId) 
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
@@ -42,7 +49,8 @@ public class ProjectManagerImpl implements ProjectManager {
 	}
 	
 	@Override
-	public List<ProjectBean> getListProjectMember(String columnSearch, String value, Integer startRow, Integer endRow, Integer projectId)
+	public List<ProjectBean> getListProjectMember(String columnSearch, String value, Integer startRow, Integer endRow, 
+			Integer projectId)
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
@@ -64,27 +72,24 @@ public class ProjectManagerImpl implements ProjectManager {
 	
 	
 	@Override
-	public List<ProjectBean> getProjectNamebyProjectId(Integer projectId)
-			throws SQLException {
-		// TODO Auto-generated method stub
+	public List<ProjectBean> getProjectNamebyProjectId(Integer projectId) throws SQLException {
+		 
 		return mapper.queryForList("project.getProjectNamebyProjectId", projectId);
 	}
 
 	@Override
 	public Integer getNewId() throws SQLException {
-		// TODO Auto-generated method stub
 		return (Integer) mapper.queryForObject("project.getNewId", null);
 	}
 	
 	@Override
 	public Integer getNewMemberId() throws SQLException {
-		// TODO Auto-generated method stub
 		return (Integer) mapper.queryForObject("project.getNewMemberId", null);
 	}
 
 	@Override
 	public Integer getCountByColumn(String columnSearch, String value) 	throws SQLException {
-		// TODO Auto-generated method stub
+		 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
@@ -94,7 +99,7 @@ public class ProjectManagerImpl implements ProjectManager {
 
 	@Override
 	public Integer getCountByColumnEmployeeAll(String columnSearch, String value) throws SQLException {
-		// TODO Auto-generated method stub
+		 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
@@ -106,17 +111,25 @@ public class ProjectManagerImpl implements ProjectManager {
 	@Override
 	public Double getPercentStatusProject(Integer projectId)
 			throws SQLException {
-		// TODO Auto-generated method stub
+		 
 		return (Double) mapper.queryForObject("project.getPercentStatusProject", projectId);
 	}
 
 	
 	
-	
+	@Override
+	public Integer getCountProjectAssigner(Integer projectAssigner) throws SQLException {
+		return (Integer) mapper.queryForObject("project.getCountProjectAssigner", projectAssigner);
+	}
+
+	@Override
+	public Integer getCountProjectReceiver(Integer projectReceiver) throws SQLException {
+		return (Integer) mapper.queryForObject("project.getCountProjectReceiver", projectReceiver);
+	}
 
 	@Override
 	public ProjectBean getProjectById(Integer id) throws SQLException {
-		// TODO Auto-generated method stub
+		 
 		return (ProjectBean) mapper.queryForObject("project.get", id);
 	}
 
@@ -132,7 +145,7 @@ public class ProjectManagerImpl implements ProjectManager {
 	
 	@Override
 	public void insert(ProjectBean e) throws SQLException {
-		// TODO Auto-generated method stub
+		 
 		System.out.println("masuk insert");
 		try {
 			mapper.startTransaction();
@@ -164,7 +177,7 @@ public class ProjectManagerImpl implements ProjectManager {
 	@Override
 	public void updateProjectReceiver(Integer projectId, Integer projectReceiver)
 			throws SQLException {
-		// TODO Auto-generated method stub
+		 
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("projectId", projectId);
@@ -190,7 +203,7 @@ public class ProjectManagerImpl implements ProjectManager {
 	
 	@Override
 	public void insertMember(ProjectBean e) throws SQLException {
-		// TODO Auto-generated method stub
+		 
 		try {
 			mapper.startTransaction();
 			mapper.insert("project.insertMember", e);
@@ -212,7 +225,7 @@ public class ProjectManagerImpl implements ProjectManager {
 	@Override
 	public Integer getStatusRoleMember(Integer projectMemberId, Integer roleId,
 			Integer projectMemberStatus) throws SQLException {
-		// TODO Auto-generated method stub
+		 
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("projectMemberId", projectMemberId);
 		map.put("roleId", roleId);
@@ -223,7 +236,7 @@ public class ProjectManagerImpl implements ProjectManager {
 	@Override
 	public Integer getProjectMemberIDbyRole(Integer projectId,
 			Integer projectReceiver, Integer employeeReceiver) throws SQLException {
-		// TODO Auto-generated method stub
+		 
 		System.out.println("masuk "+projectId +"-"+ projectReceiver );
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("projectId", projectId);

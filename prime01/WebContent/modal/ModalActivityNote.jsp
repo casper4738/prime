@@ -35,7 +35,8 @@
 		    }
 	    } );
 		
-		<!-- Method Specified For Modal Handling-->
+		/* Method Specified For Modal Handling */
+		
 		function modalFlyToPage(task) {
 			var tmpForm = document.forms[0];
 			tmpForm.task.value = task;

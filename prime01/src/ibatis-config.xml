@@ -47,6 +47,7 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 	<sqlMap resource="prime/sqlmap/notiftemplate-mapper.xml" />
 	<sqlMap resource="prime/sqlmap/notification-mapper.xml" />
 	<sqlMap resource="prime/sqlmap/reportemployees-mapper.xml" />
+	<sqlMap resource="prime/sqlmap/reportproject-mapper.xml" />
 	<sqlMap resource="prime/sqlmap/userrole-mapper.xml" />
 	<sqlMap resource="prime/sqlmap/usermenu-mapper.xml" />
 </sqlMapConfig>

@@ -9,22 +9,13 @@
 	<!-- JS -->
 	<script type="text/javascript">
 		function validateForm() {
-			document.getElementById('validator').innerHTML="";
-			var specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,."; // specify special characters 
-			var positionName =  document.getElementById('nameValidator').value;
-			if (positionName == null || positionName == "") {
-				document.getElementById('validator').innerHTML="Name must be filled out";
-			    return false;
-			} else {
-		    	for (var i = 0; i < positionName.length; i++) {
-		    	    if (specialChars.indexOf(positionName.charAt(i)) != -1) { 
-		    			document.getElementById("validator").innerHTML = "Characters are not allowed"; 
-		    			return false; 
-		    		}
-		    	}
+			var positionName = checkNull($('#positionName'), $('#err-positionName'), "Position Name");
+		    var positionNameChar = checkSpecialChars($('#positionName'), $('#err-positionName'));
+		    if (divisionName || positionNameChar) {
+		    } else {
 		    	dosubmit();
 		    }
-			    
+		    
 		}
 	</script>
 	<!-- End of JS -->
@@ -50,12 +41,12 @@
 	                	<table class="form-input" align="center">
 	                		<tr><td>Position Name</td>
 	                			<td>:</td>
-	                			<td><html:text name="PositionAdminForm" property="positionBean.positionName" styleClass="form-control" styleId="nameValidator" maxlength="50"/></td>
+	                			<td><html:text name="PositionAdminForm" property="positionBean.positionName" styleClass="form-control" styleId="positionName" maxlength="50"/></td>
 	                		</tr>
 	                		<tr><td></td>
-	                			<td></td>
-	                			<td> <span  id="validator" style="color: red"> </span> </td>
-	                		</tr>
+                 				<td></td>
+                 				<td><span id="err-positionName" class="error-validator"></span></td>
+                 			</tr>
 	                		<tr><td>Position Level</td>
 	                			<td>:</td>
 	                			<td><html:select name="PositionAdminForm" property="positionBean.positionLevel" styleClass="form-control" styleId="levelValidator">

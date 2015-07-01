@@ -33,7 +33,7 @@
                 format: "yyyy-mm-dd"
             });
             
-//             <img alt="Embedded Image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIA..." />
+//          <img alt="Embedded Image" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIA..." />
             
 			var pathFile = document.getElementById("input-image").value;
 			//document.forms[0].path.value = pathFile;

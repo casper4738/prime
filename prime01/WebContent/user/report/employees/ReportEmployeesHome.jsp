@@ -33,7 +33,6 @@
 			var tmpForm = document.forms[0];
 			tmpForm.task.value = task;
 			tmpForm.employeeId.value = value;
-			alert(value)
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 	</script>
@@ -51,8 +50,12 @@
 	<section class="content">
 		<div class="row">
 			<div class="col-xs-12"><div class="box">
-				<div class="box-header"><h3 class="box-title">Data Employee Report</h3></div>
-	                
+				<div class="box-header"><h3 class="box-title">Employee Report Data</h3></div>
+	            <p><span class="button-add btn btn-app bg-olive btnCancel" onclick="">
+	               <i class="fa fa-save"></i>Export
+	              </span>
+	              </p>
+            <p><span class="message"><bean:write name="ReportUserEmployeesForm" property="message" /></span></p>    
 				<!-- Search Handler Tag -->
 				<div class="show-in-page">
 					Show per page
@@ -111,7 +114,7 @@
 			                		<td><bean:write name="iter" property="positionName"/> </td>
 			                		<td><bean:write name="iter" property="managerName"/> </td>
 			                        <td align="center">
-			                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToEmployeeTaskDetail('<%=Constants.Task.REPORT.GOTOTDETAILEMPLOYEE %>', '<bean:write name="iter" property="employeeId"/>')">
+			                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToEmployeeTaskDetail('<%=Constants.Task.REPORT.GOTODETAILEMPLOYEE %>', '<bean:write name="iter" property="employeeId"/>')">
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>

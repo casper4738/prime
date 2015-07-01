@@ -1,0 +1,66 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+
+<sqlMap namespace="reportproject">
+<select id="getCountListByCol" resultClass="java.lang.Integer"
+		parameterClass="java.util.Map">
+		SELECT COUNT(1)
+		FROM PROJECTS
+		<dynamic prepend="WHERE">
+			<isNotNull property="columnSearch">
+				<isEqual property="columnSearch" compareValue="NAME">
+					UPPER(PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+			</isNotNull>
+		</dynamic>
+	</select>
+	
+	<select id="getListByColumn" resultClass="prime.user.report.project.ReportProjectBean" parameterClass="java.util.Map">
+		SELECT  * FROM (SELECT page.*, ROWNUM rnum FROM
+		(SELECT  DISTINCT
+            PROJ.PROJECT_ID           	AS projectId,
+            PROJ.PROJECT_NAME           AS projectName,
+            PROJ.PROJECT_RECEIVER       AS projectReceiver,
+            PROJ.PROJECT_ASSIGNER       AS projectAssigner,
+            PROJ.PROJECT_START_DATE     AS projectStartDate,
+            PROJ.PROJECT_ESTIMATE_DATE 	AS projectEstimateDate,
+            PROJ.PROJECT_DESCRIPTION    AS projectDescription,
+            PROJ.PROJECT_LAST_STATUS    AS projectLastStatus,
+            EMP_ASSIGN.EMPLOYEE_NAME    AS projectAssignerName,
+            EMP_RECEIVE.EMPLOYEE_NAME   AS projectReceiverName,
+			EMP_RECEIVE.EMPLOYEE_ID     AS employeeIdReceiver
+        FROM PROJECTS PROJ
+        JOIN PROJECT_DETAILS PD ON PROJ.PROJECT_ID = PD.PROJECT_ID
+        JOIN EMPLOYEES EMP_ASSIGN ON PROJ.PROJECT_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
+        JOIN EMPLOYEES EMP_RECEIVE ON PROJ.PROJECT_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
+		<dynamic prepend="WHERE">
+			<isNotNull property="columnSearch">
+				<isEqual property="columnSearch" compareValue="NAME">
+					UPPER(PROJ.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+			</isNotNull>
+		</dynamic>
+		ORDER BY PROJ.PROJECT_ID ASC) page
+		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
+	
+	<select id="get" resultClass="prime.user.report.project.ReportProjectBean" parameterClass="java.lang.Integer">
+		SELECT 
+			PROJECT_ID 					AS projectId,
+			PROJECT_NAME 				AS projectName,
+			PROJECT_RECEIVER 			AS projectReceiver,
+			PROJECT_ASSIGNER 			AS projectAssigner,
+			PROJECT_START_DATE 			AS projectStartDate,
+			PROJECT_ESTIMATE_DATE 		AS projectEstimateDate,
+			PROJECT_LAST_STATUS 		AS projectLastStatus,
+			PROJECT_DESCRIPTION 		AS projectDescription,
+			EMP_ASSIGN.EMPLOYEE_NAME 	AS projectAssignerName,
+			EMP_RECEIVE.EMPLOYEE_NAME 	AS projectReceiverName,
+			EMP_RECEIVE.EMPLOYEE_ID     AS employeeIdReceiver
+		FROM PROJECTS PRO
+		JOIN EMPLOYEES EMP_ASSIGN  ON PRO.PROJECT_ASSIGNER = EMP_ASSIGN.EMPLOYEE_ID
+		JOIN EMPLOYEES EMP_RECEIVE ON PRO.PROJECT_RECEIVER = EMP_RECEIVE.EMPLOYEE_ID
+		WHERE 
+			PROJECT_ID=#id#
+	</select>
+</sqlMap>

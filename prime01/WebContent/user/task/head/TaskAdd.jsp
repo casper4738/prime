@@ -31,15 +31,12 @@
 		}
 		
 		function checkDays(){
-			alert($('#start-date').val());
-			alert($('#estimate-date').val());
-			
 		 	$('#mainDays').html("<i class=\"fa fa-refresh fa-spin\"></i> Checking ");
 		  	$('#mainDays').show();
 			$.ajax({ 
 		          type	  : "POST",
 		          url	  : '<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>',  
-		          data	  : 'task=<%=Constants.Task.DOVALIDATE1%>&taskBean.taskStartDate='+ $('#start-date').val()+'&taskBean.taskEstimateDate='+ $('#estimate-date').val(),
+		          data	  : 'task=<%=Constants.Task.DOVALIDATE1%>&taskBean.taskReceiver='+$('#taskReceiver').val()+'&taskBean.taskStartDate='+ $('#start-date').val()+'&taskBean.taskEstimateDate='+ $('#estimate-date').val(),
 		          success : function(msg){
 	        		  $('#mainDays').html(msg);
 		          },
@@ -48,6 +45,22 @@
 		        	  //TO DO :: Add Error Handling
 		          }
 		       });
+		}
+		
+		function validateForm() {
+			var taskName 		= checkNull($('#taskName'), $('#err-taskName'), "Task Name");
+			var taskAssigner 	= checkNull($('#taskAssigner'), $('#err-taskAssigner'), "Task Assigner");
+			var taskReceiver	= checkNull($('#taskReceiver'), $('#err-taskReceiver'), "Task Receiver");
+			
+			
+			
+			
+			if(taskName || taskAssigner || taskReceiver ) {
+				//alert("error lho");
+			} else {
+				dosubmit();
+			}
+			
 		}
     </script>
 </head>
@@ -70,24 +83,36 @@
                 	<html:form action="/TaskHeadUser">
                 		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
                 		<html:hidden name="TaskHeadUserForm" property="taskBean.taskAssigner" />
-                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskReceiver" />
+                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskReceiver" styleId="taskReceiver" />
                 		<table class="form-input" align="center" style="width:60%">
                 			<tr>
                 				<td width="150px">Task Name</td>
                 				<td>:</td>
-                				<td><html:text name="TaskHeadUserForm" property="taskBean.taskName" styleClass="form-control"/></td>
+                				<td><html:text name="TaskHeadUserForm" property="taskBean.taskName" styleClass="form-control" styleId="taskName"/></td>
+                			</tr>
+                			<tr><td></td>
+                				<td></td>
+                				<td><span id="err-taskName" class="error-validator"></span></td>
                 			</tr>
                 			<tr>
                 				<td>Task Assigner</td>
                 				<td>:</td>
-                				<td><html:text name="TaskHeadUserForm"  property="taskBean.taskAssignerName" styleClass="form-control" disabled="true"/></td>
+                				<td><html:text name="TaskHeadUserForm"  property="taskBean.taskAssignerName" styleClass="form-control" styleId="taskAssigner" disabled="true"/></td>
                 			</tr>
-                				<tr>
+                			<tr><td></td>
+                				<td></td>
+                				<td><span id="err-taskAssigner" class="error-validator"></span></td>
+                			</tr>
+               				<tr>
                 				<td>Task Receiver</td>
                 				<td>:</td>
-                				<td><html:text name="TaskHeadUserForm" property="taskBean.taskReceiverName" styleClass="form-control" disabled="true" /></td>
+                				<td><html:text name="TaskHeadUserForm" property="taskBean.taskReceiverName" styleClass="form-control" styleId="taskReceiver" disabled="true" /></td>
                 			</tr>
-                				<tr>
+                			<tr><td></td>
+                				<td></td>
+                				<td><span id="err-taskReceiver" class="error-validator"></span></td>
+                			</tr>
+               				<tr>
                 				<td>Start Date</td>
                 				<td>:</td>
                 				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
@@ -106,7 +131,7 @@
                 			<tr>
                 				<td></td>
                 				<td></td>
-                				<td><i><span id="mainDays" style="color: red;font-size: 8"></span></i></td>
+                				<td><span id="mainDays" style="color: blue;font-size: 8;font-style: normal;"></span></td>
                 			</tr>
                 			<tr>
                 				<td>Description</td>
@@ -115,8 +140,7 @@
                 			</tr>
                 			<tr>
                 				<td colspan="3" align="center">
-                					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()"/>
-                					<html:button property="" value="Batal" styleClass="btn btn-default" onclick="doback()"/>
+                					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()"/>
                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="docancel()"/>
                 				</td>
                 			</tr>

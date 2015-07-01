@@ -2,6 +2,8 @@ package prime.login;
 
 import java.util.Date;
 
+import org.apache.tomcat.util.codec.binary.Base64;
+
 public class LoginBean {
 	private String  username;
 	private boolean isActiveDirectory;
@@ -10,6 +12,7 @@ public class LoginBean {
 	private Integer employeeId;
 	private Integer systemLevel;
 	private Date 	actionDate;
+	private byte[] 	profilePicture;
 	
 	public String getUsername() {
 		return username;
@@ -52,5 +55,11 @@ public class LoginBean {
 	}
 	public void setActionDate(Date actionDate) {
 		this.actionDate = actionDate;
+	}
+	public byte[] getProfilePicture() {
+		return profilePicture;
+	}
+	public void setProfilePicture(byte[] profilePicture) {
+		this.profilePicture = profilePicture;
 	}
 }

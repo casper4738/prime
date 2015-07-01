@@ -42,9 +42,9 @@
 	<section class="content">
 	<div class="row">
 		<div class="col-xs-12"><div class="box">
-			<div class="box-header"><h3 class="box-title">Employee Report</h3></div>
+			<div class="box-header"><h3 class="box-title-center">Employee Report</h3></div>
 			<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-			<tr><td>Employee Id : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.employeeId"/></td>
+			<tr><td width="50%">Employee Id : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.employeeId"/></td>
 				<td>Employee Name : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.employeeName" /> </td>
 			</tr>
 			<tr><td>Gender : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.gender"/> </td>
@@ -53,8 +53,14 @@
 				</td><td>Position : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.positionName" /> 
 				</td>
 			</tr>
-			<tr><td colspan="2">Manager : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.managerName" /> </td></tr>
+			<tr>
+			<td colspan="2">Manager : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.managerName" /></td>
+			</tr>
 			</table>
+			 <p><span class="button-add btn btn-app bg-olive btnCancel" onclick="">
+	               <i class="fa fa-save"></i>Export
+	              </span>
+	              </p>
             <!-- Search Handler Tag -->
 			<div class="show-in-page">
 				Show per page

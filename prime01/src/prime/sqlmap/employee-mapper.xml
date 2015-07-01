@@ -3,10 +3,10 @@
 <sqlMap namespace="employee">
 	<insert id="insert" parameterClass="prime.admin.employee.EmployeeBean">
 		INSERT INTO EMPLOYEES
-		(EMPLOYEE_ID , EMPLOYEE_NAME, ADDRESS, CONTACT_NUMBER, EMAIL,
+		(PROFILE_PICTURE, EMPLOYEE_ID , EMPLOYEE_NAME, ADDRESS, CONTACT_NUMBER, EMAIL,
 		 BIRTHDATE, GENDER, HIRE_DATE, DIVISION_ID, POSITION_ID,
 		 HEAD_ID,TREE_ID) VALUES 
-		(#employeeId#, #employeeName#, #address#, #contactNumber#, #email#, #birthdate#, 
+		(#filePic#, #employeeId#, #employeeName#, #address#, #contactNumber#, #email#, #birthdate#, 
 		 #gender#, #hireDate#, 
 		<isEqual property="divisionId" compareValue="0">
 			null
@@ -127,6 +127,7 @@
 	        HIRE_DATE AS hireDate,
 	        CONTACT_NUMBER AS contactNumber,
 	        EMAIL AS email,
+	        PROFILE_PICTURE AS filePic, 
 	        DIV.DIVISION_ID AS divisionId,
 	        DIV.DIVISION_NAME AS divisionName,
 	        POS.POSITION_ID AS positionId,
@@ -226,6 +227,12 @@
 				</isEqual> 
 				<isEqual property="columnSearch" compareValue="MANAGER">
 			          UPPER(MANAGER.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="STATUS">
+			           (CASE 
+				            WHEN NVL(TO_CHAR(RE.RESIGN_DATE, 'yyyy-mm-dd'), '0') = '0' THEN 0
+				            ELSE 1
+				        END) = #value#
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>

@@ -19,6 +19,19 @@
 			tmpForm.task.value = "success";
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
+		
+		function validateForm() {
+			var activityName = checkNull($('#activityName'), $('#err-activityName'), "Activity Name");
+			
+			
+			
+			if(activityName) {
+				//alert("error lho");
+			} else {
+				dosubmit();
+			}
+			
+		}
     </script>
 </head>
 <body class="skin-blue sidebar-mini">
@@ -50,7 +63,7 @@
                 				<td width="150px">Activity Name</td>
                 				<td>: </td>
                 				<td>
-                				<td><html:text name="TaskHeadUserForm" property="activityBean.activityName" styleClass="form-control"/></td>
+                				<td><html:text name="TaskHeadUserForm" property="activityBean.activityName" styleClass="form-control" styleId="activityName"/></td>
                 			</tr>
                 			
                 			<tr>
@@ -61,7 +74,7 @@
                 			</tr>
                 			<tr>
                 				<td colspan="6" align="center">
-                					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
+                					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
                 					<html:button property="" value="Batal" styleClass="btn btn-default" onclick="doback()"/>
                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="docancel()"/>
                 				</td>

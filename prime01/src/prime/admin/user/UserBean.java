@@ -13,7 +13,7 @@ public class UserBean extends EmployeeBean {
 	private Integer employeeId;
 	private String 	employeeName;
 	private String 	newPassword;
-	private String 	logionSession;
+	private String 	loginSession;
 	private Date 	lastActive;
 	private String 	updateBy;
 
@@ -89,12 +89,12 @@ public class UserBean extends EmployeeBean {
 		this.newPassword = newPassword;
 	}
 
-	public String getLogionSession() {
-		return logionSession;
+	public String getloginSession() {
+		return loginSession;
 	}
 
-	public void setLogionSession(String logionSession) {
-		this.logionSession = logionSession;
+	public void setLoginSession(String loginSession) {
+		this.loginSession = loginSession;
 	}
 
 	public Date getLastActive() {

@@ -1,3 +1,55 @@
+//validator
+function isNull(value) {
+	if (value == null || value == "") {
+		return true;
+	}
+	return false;
+}
+
+function checkSpecialChars(var1, err_var1) {
+	var specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,.";
+	for (var i = 0; i < var1.val().length; i++) {
+ 	    if (specialChars.indexOf(var1.val().charAt(i)) != -1) { 
+ 	    	err_var1.html("Characters are not allowed");
+ 			return true; 
+ 		}
+ 	}
+	return false; 
+}
+
+function getDateToday() {
+	d = new Date();
+	return d.today();
+}
+
+Date.prototype.today = function() {
+   var yyyy = this.getFullYear().toString();
+   var mm = (this.getMonth()+1).toString();
+   var dd  = this.getDate().toString();
+   return yyyy +"-"+(mm[1]?mm:"0"+mm[0]) +"-"+ (dd[1]?dd:"0"+dd[0]); 
+};
+
+
+function checkNull(var1, err_var1, title) {
+	err_var1.html("");				
+	if( isNull(var1.val()) ) {
+		err_var1.html(title+" must be filled out");
+		return true;
+	}
+	return false;
+}
+
+function checkForDate(var1, var2, err_var1, err_var2, title1, title2) {
+	if (new Date(var1.val()) < new Date(getDateToday())){
+		err_var1.html(title1+" must not least than today");			
+    } else if ( new Date(var1.val()) > new Date(var2.val()) ) {
+    	err_var2.html(title1+" must not least than "+title2);			
+    }
+}
+
+
+//end of validator
+		
 function flyToBack(task) {
 	var tmpForm = document.forms[0];
 	tmpForm.task.value = task;
@@ -200,9 +252,4 @@ function modalSubmitReturnValue(retValue,retForm){
 	
 	//##1.Hide Modal
     $("[data-dismiss=modal]").trigger({ type: "click" });
-}
-
-//TO DO :: Add Session Invalidate
-function doSignOut(){
-	window.location.href = 'Login.do';
 }
