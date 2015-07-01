@@ -32,6 +32,23 @@
                 format: "yyyy-mm-dd"
             });
         });
+		
+		function checkDays(){
+		 	$('#totalDay').html("<i class=\"fa fa-refresh fa-spin\"></i> Checking ");
+		  	$('#totalDay').show();
+			$.ajax({ 
+		          type	  : "POST",
+		          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',  
+		          data	  : 'task=<%=Constants.Task.DOVALIDATE2%>&employeeBean.employeeId='+$('#employeeId').val()+'&employeeBean.startDate='+ $('#datepicker_startdate').val()+'&employeeBean.endDate='+ $('#datepicker_enddate').val(),
+		          success : function(msg){
+	        		  $('#totalDay').html(msg);
+		          },
+		          
+		          error: function(){
+		        	  //TO DO :: Add Error Handling
+		          }
+		       });
+		}
     </script>
     <!-- End Of JS -->
 </head>
@@ -58,7 +75,7 @@
                  				<td>Employee Id</td>
                  				<td>:</td>
                  				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.employeeId" styleClass="form-control" disabled="true"/>
+                 				<html:text name="EmployeeAdminForm" property="employeeBean.employeeId" styleClass="form-control" disabled="true" styleId="employeeId"/>
 							</td>
                  			</tr>
                				<tr>
@@ -71,7 +88,7 @@
                  				<td>:</td>
                  				<td>
                  					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                 				  		<html:text name="EmployeeAdminForm" property="employeeBean.startDate" styleClass="form-control pull-right" styleId="datepicker_startdate"/>
+                 				  		<html:text name="EmployeeAdminForm" property="employeeBean.startDate" styleClass="form-control pull-right" styleId="datepicker_startdate" onchange="checkDays()"/>
                  				  	</div>
 								</td>
                  			</tr>
@@ -80,17 +97,15 @@
                  				<td>:</td>
                  				<td>
                  					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                 				  		<html:text name="EmployeeAdminForm" property="employeeBean.endDate" styleClass="form-control pull-right" styleId="datepicker_enddate"/>
+                 				  		<html:text name="EmployeeAdminForm" property="employeeBean.endDate" styleClass="form-control pull-right" styleId="datepicker_enddate" onchange="checkDays()"/>
                  				  	</div>
 								</td>
                  			</tr>
                  			<tr>
-                 				<td>Total Days</td>
-                 				<td>:</td>
-                 				<td>
-                 					<html:text name="EmployeeAdminForm" property="employeeBean.totalDay" styleClass="form-control" disabled="true"/>
-								</td>
-                 			</tr>
+                				<td></td>
+                				<td></td>
+                				<td><span id="totalDay" style="color: blue;font-size: 8;font-style: normal;"></span></td>
+                			</tr>
                  			<tr>
                  				<td>Description</td>
                  				<td>:</td>

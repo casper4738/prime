@@ -249,10 +249,6 @@
 						                				//GET DAY WEEK FROM END DATE DAY OFF
 						                				String endDayWeek = tmpEmployeeManager.getDayWeekByEndDate(endDate.toString()).trim();
 						                				
-						                				out.println(endDayWeek+ "DAYWEEKS");
-						                				out.println(endDate+ "endDate");
-						                				out.println(endDate.getTime()+ "endDateGETTIME");
-						                				out.println(new java.sql.Date(endDate.getTime()) + " endDateConvert");
 						                				if(endDayWeek.equals("MONDAY")){
 						                					// GET DATE LAST MONDAY FROM END DATE
 						                					endLastWeek = endDate;
@@ -291,11 +287,9 @@
 						                				if(tmpEmployeeManager.getMaxStartFromByStartDate(startDate.toString(),idEmployee).size()>0){
 							                				//GET WEEKEND FOR LAST SETTING
 							                				String weekEnd = tmpEmployeeManager.getMaxStartFromByStartDate(startDate.toString(),idEmployee).get(0).getWeekEnd();
-							                				out.println(weekEnd+ " WeekEnd");
 							                				
 							                				//GET START DATE FOR LAST SETTING
 							                				Date startLastWeek = tmpEmployeeManager.getMaxStartFromByStartDate(startDate.toString(),idEmployee).get(0).getMaxStartFrom(); 
-							                				out.println(startLastWeek+ " startLastWeek");
 							                				
 							                				//GET ENDWEEKEND FOR LAST SETTING
 							                				String endWeekEnd = tmpEmployeeManager.getMaxStartFromByStartDate(endDate.toString(),idEmployee).get(0).getWeekEnd();
