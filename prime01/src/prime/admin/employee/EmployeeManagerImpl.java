@@ -278,15 +278,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		}	
 	}
 
-	@Override
-	public Integer getCountNationalHolidayByDayOff(Date startDayOff,Date endDayOff) throws SQLException {
-		// TODO Auto-generated method stub
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("startDayOff", startDayOff);
-		map.put("endDayOff", endDayOff);
-		return (Integer) mapper.queryForObject("employee.getListNationalHoliday", map);
-	}
-
 	 @Override
 	 public List<EmployeeBean> getListByColumnEmployeeActive(
 	   String columnSearch, String value, Integer startRow, Integer endRow)
@@ -312,21 +303,6 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	 public Date getEmployeeResignDate(Integer id) throws SQLException {
 	  return (Date) mapper.queryForObject("employee.getEmployeeResignDate", id);
 	 }
-
-	@Override
-	public List<EmployeeBean> getMaxStartFromByStartDate(String startDate, Integer employeeId) throws SQLException {
-		// TODO Auto-generated method stub
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("startDate", startDate);
-		map.put("employeeId", employeeId);
-		return mapper.queryForList("employee.getMaxStartFromByStartDate", map);
-	}
-
-	@Override
-	public String getDayWeekByEndDate(String endDate) throws SQLException {
-		// TODO Auto-generated method stub
-		return (String) mapper.queryForObject("employee.getDayWeekByEndDate", endDate);
-	}
 	
 	@Override
 	public void insertToBlob(byte[] param) throws SQLException {
@@ -344,5 +320,23 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	@Override
 	public Object selectBlob() throws SQLException {
 		return (Object) mapper.queryForObject("employee.selectBlob", null);
+	}
+
+	@Override
+	public void updateChangePic(Integer id, byte[] filePic) throws SQLException {
+		// TODO Auto-generated method stub
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			System.out.println(id+ " id");
+			System.out.println(filePic+ " filePic");
+			System.out.println("ID = " + id);
+			map.put("id", id);
+			map.put("filePic", filePic);
+			mapper.startTransaction();
+			mapper.update("employee.updateChangePic", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}	
 	}
 }

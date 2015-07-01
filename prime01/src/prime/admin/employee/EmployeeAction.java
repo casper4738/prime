@@ -83,6 +83,7 @@ public class EmployeeAction extends Action {
 			pForm.setEmployeeBean(manager.getEmployeeById(pForm.getTmpId()));
 			List<EmployeeBean> listWeekendByEmployeeId = manager.getListWeekendByEmployeeId(pForm.getTmpId());
 			List<EmployeeBean> listDayoffByEmployeeId = manager.getListDayoffByEmployeeId(pForm.getTmpId());
+			request.setAttribute("empBean", pForm.getEmployeeBean());	
 			request.setAttribute("listWeekendByEmployeeId", listWeekendByEmployeeId);	
 			request.setAttribute("listDayoffByEmployeeId", listDayoffByEmployeeId);
 			return mapping.findForward("view");
@@ -246,7 +247,7 @@ public class EmployeeAction extends Action {
 			tmpOut.print(tmpResponse);
 			tmpOut.flush();
 			return null;
-		} else if(Constants.Task.DOVALIDATE2.equals(pForm.getTask())){
+		} else if(Constants.Task.DOCOUNTDAYOFF.equals(pForm.getTask())){
 			response.setContentType("text/text;charset=utf-8");
 			response.setHeader("cache-control", "no-cache");
 			PrintWriter tmpOut = response.getWriter();
@@ -265,7 +266,11 @@ public class EmployeeAction extends Action {
 			tmpOut.print(tmpResponse);
 			tmpOut.flush();
 			return null;
-		} 
+		} else if(Constants.Task.DOCHANGEPIC.equals(pForm.getTask())){
+			pForm.getEmployeeBean().setFilePic(pForm.getProfpic().getFileData());
+			manager.updateChangePic(pForm.getEmployeeBean().getEmployeeId(),pForm.getEmployeeBean().getFilePic());
+			return mapping.findForward("forward");
+		}
 		
 		String search = "";
 		if("GENDER".equals(pForm.getColumnSearch())) {
@@ -316,7 +321,7 @@ public class EmployeeAction extends Action {
 		return map;
 	}
 
-	private Integer getSumHoliday(List<HolidayBean> listDate, java.sql.Date date1, java.sql.Date date2) {
+	public static Integer getSumHoliday(List<HolidayBean> listDate, java.sql.Date date1, java.sql.Date date2) {
 		Calendar start = Calendar.getInstance();
 		start.setTime(date1);	
 
@@ -351,8 +356,6 @@ public class EmployeeAction extends Action {
 		Calendar end = Calendar.getInstance();
 		end.setTime(date2);
 
-		System.out.println(start+"--start");
-		System.out.println(end+"--end");
 		int sum = 0;
 		while (!start.after(end)) {
 			boolean isGet = false;
@@ -360,7 +363,7 @@ public class EmployeeAction extends Action {
 			for (EmployeeBean e : listDate) {
 				Calendar c = Calendar.getInstance();
 				c.setTime(e.getStartFrom());
-				System.out.println(c+"--c");
+			
 				if(start.after(c)) {
 					week = e;
 					isGet = true;
@@ -372,11 +375,8 @@ public class EmployeeAction extends Action {
 				}
 			}
 			
-			System.out.println(week.getWeekEnd()+"--week.getWeekEnd()");
 			String[] split = week.getWeekEnd().split(",");
 			for (String s : split) {
-				System.out.println(start.get(Calendar.DAY_OF_WEEK)+"--start.get(Calendar.DAY_OF_WEEK)");
-				System.out.println(PrimeUtil.getDay(s.trim())+"--PrimeUtil.getDay(s.trim())");
 				if(start.get(Calendar.DAY_OF_WEEK) == PrimeUtil.getDay(s.trim())) {
 					sum ++;
 				}

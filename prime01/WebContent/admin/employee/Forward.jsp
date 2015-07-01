@@ -53,5 +53,9 @@
 <logic:equal name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOEDITPOSITION%>">
 	<script>flyToForward('success', '<bean:message key="label.message.update"/>')</script>
 </logic:equal>
+
+<logic:equal name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOCHANGEPIC%>">
+	<script>flyToForward("<%=Constants.Task.GOTOVIEW%>", '<bean:message key="label.message.changePic"/>')</script>
+</logic:equal>
 </body>
 </html>
