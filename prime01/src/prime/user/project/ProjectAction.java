@@ -87,8 +87,8 @@ public class ProjectAction extends Action {
 			//##.View Detail Project
 			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
 			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-			
-			
+			System.out.println("PM :" + tmpProjectManager.getRoleIdbyEmployeeLoginAndProjectId(tmpEmployeeId, pForm.getProjectId()));
+			pForm.getProjectBean().setIsPM(tmpProjectManager.getRoleIdbyEmployeeLoginAndProjectId(tmpEmployeeId, pForm.getProjectId()));	
 			List<ProjectBean> list = tmpProjectManager.getListProjectMember(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
@@ -107,6 +107,7 @@ public class ProjectAction extends Action {
 			return mapping.findForward("details");
 		}
 		else if ("detailsAsHead".equals(pForm.getTask())){
+			System.out.println("masuk detail head");
 			//##.View Detail Project
 			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
 			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
@@ -391,15 +392,30 @@ public class ProjectAction extends Action {
 			search = pForm.getSearch();
 		}
 		
+		List<ProjectBean> list = new ArrayList<ProjectBean>();
 		int countRows  = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), search);
-		List<ProjectBean> list = tmpProjectManager.getListByColumnAsMember(pForm.getColumnSearch(), search,
-				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
-				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), tmpEmployeeId);
+		if(tmpProjectManager.getCountProjectAssigner(tmpEmployeeId)>0){
+			System.out.println("masuk assigner");
+			pForm.getProjectBean().setIsAssigner(tmpProjectManager.getCountProjectAssigner(tmpEmployeeId));
+			list = tmpProjectManager.getListByColumnAsHead(pForm.getColumnSearch(), search,
+					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
+					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), tmpEmployeeId);
+		}
+		else{
+			pForm.getProjectBean().setIsAssigner(0);
+			list = tmpProjectManager.getListByColumnAsMember(pForm.getColumnSearch(), search,
+					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
+					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), tmpEmployeeId);
+		}
+		
+		
+		 
 		
 		request.setAttribute("listProject", list);
 		request.setAttribute("listSearchColumn", Constants.Search.PROJECT_SEARCHCOLUMNS);
 		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 		setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+		//if(true)
 		return mapping.findForward("success");
 	}
 

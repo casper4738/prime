@@ -58,12 +58,13 @@
 					<html:hidden name="PositionAdminForm" property="tmpId"/>
 					<html:hidden name="PositionAdminForm" property="goToPage"/>
 					<html:hidden name="PositionAdminForm" property="showInPage"/>
+					<html:hidden name="PositionAdminForm" property="isShowAll"/>
 					<html:select name="PositionAdminForm" property="columnSearch">
 			      		<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 			     	</html:select>
 			     	<html:text name="PositionAdminForm" property="search"/>
-			     	<input type="button" class="btn bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
+					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="PositionAdminForm" property="task" />', 'false')" value='Search'/>
+					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="PositionAdminForm" property="task" />', 'true')" value='Show All'/>					
 		     	</html:form>
 			    </div>
 			    <!-- End Of Search Handler -->

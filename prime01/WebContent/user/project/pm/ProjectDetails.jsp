@@ -108,6 +108,7 @@
        	    			<jsp:param name="status" value="${ProjectUserForm.projectBean.projectLastStatus}" />
        	    		</jsp:include>
 				</td>
+				
 			</tr>
 			<tr><td colspan="2">Description : <bean:write name="ProjectUserForm" property="projectBean.projectDescription" /> </td>
 			</tr></table>
@@ -117,8 +118,9 @@
             <div class="form-action">
 				<table align="center"><tr>
 					<td style="padding:5px;">
+					<logic:equal name="ProjectUserForm" property="projectBean.isPM" value="1">	
 						<input type="button" value="Add New Project Member" class="btn btn-sm btn-primary" onclick="flyToPage('addmember')"/></td>
-					
+					</logic:equal>
 					<logic:equal name="ProjectUserForm" property="projectBean.percentStatus" value="100">
                			<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToSubmit('<%=Constants.Task.TASK.GOTOSUBMIT%>', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
                		</logic:equal>
@@ -160,7 +162,10 @@
 					<th>Division</th>
 					<th>Email</th>
 					<th>Phone Number</th>
-                    <th width="90px">Actions</th>
+					<logic:equal name="ProjectUserForm" property="projectBean.isPM" value="1">
+						<th width="90px">Actions</th>
+					</logic:equal>
+                    
                 </tr></thead>
                 <tbody>
                 <logic:notEmpty name="listProjectMember">
@@ -179,6 +184,7 @@
 	                		<td align="center" width="150px"><bean:write name="iter" property="divisionName" /></td>
 	                		<td><bean:write name="iter" property="email"/></td>
 	                		<td><bean:write name="iter" property="contactNumber"/></td>
+	                		<logic:equal name="ProjectUserForm" property="projectBean.isPM" value="1">
 	                		<td align="center">
 	                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.PROJECT.GOTOEDITMEMBER%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
                      	        <logic:notEqual name="iter" property="roleName" value="">
@@ -188,7 +194,8 @@
      	        								src="resources/image/viewmore.png"
                      	        				/>
                      	        </logic:notEqual>
-	                        </td>	
+	                        </td>
+	                        </logic:equal>	
 	                    </tr> 
                     </logic:iterate>
 					</logic:notEmpty>

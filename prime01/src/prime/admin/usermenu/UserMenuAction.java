@@ -25,8 +25,8 @@ public class UserMenuAction extends Action{
 		UserMenuForm pForm = (UserMenuForm) form;
 		UserMenuManager tmpManager = new UserMenuManagerImpl();
 		
-		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-		List<UserMenuBean> list = tmpManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());
+		List<UserMenuBean> list = tmpManager.getListByColumn(pForm.getColumnSearchReal(), pForm.getSearch(),
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 		

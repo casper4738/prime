@@ -28,7 +28,6 @@ public class TaskSubordinateAction extends Action {
 		int employeeId = 101;
 		request.setAttribute("employeeIdActive", employeeId);
 		
-		
 		TaskSubordinateForm pForm = (TaskSubordinateForm) form;
 		TaskManager manager = new TaskManagerImpl();
 		EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
@@ -44,8 +43,8 @@ public class TaskSubordinateAction extends Action {
 		} else if (Constants.Task.GOTOVIEW.equals(pForm.getTask())) {
 			//##.View Detail Task
 			pForm.setTaskBean(manager.getTaskById(pForm.getTaskId()));
-			int countRows = tmpActivityManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch(), pForm.getTaskId());
-			List<ActivityBean> list = tmpActivityManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(), 
+			int countRows = tmpActivityManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), pForm.getTaskId());
+			List<ActivityBean> list = tmpActivityManager.getListByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getTaskId());
@@ -76,8 +75,8 @@ public class TaskSubordinateAction extends Action {
 			pForm.setActivityBean(tmpActivityManager.getActivityDetailById(pForm.getActivityId(), pForm.getActivityChangeDate()));
 			pForm.getActivityBean().setActivityChangeNote("");
 			
-			int countRows = tmpActivityManager.getCountActivityDetail(pForm.getColumnSearch(), pForm.getSearch(), pForm.getActivityId());
-			List<ActivityBean> list = tmpActivityManager.getListActivityDetail(pForm.getColumnSearch(), pForm.getSearch(), 
+			int countRows = tmpActivityManager.getCountActivityDetail(pForm.getColumnSearchReal(), pForm.getSearch(), pForm.getActivityId());
+			List<ActivityBean> list = tmpActivityManager.getListActivityDetail(pForm.getColumnSearchReal(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getActivityId());
@@ -133,8 +132,8 @@ public class TaskSubordinateAction extends Action {
 			return mapping.findForward("forward");
 		} 
 		
-		int countRows  = manager.getCountByColumnSubordinate(pForm.getColumnSearch(), pForm.getSearch(), employeeId);
-		List<TaskBean> list = manager.getListByColumnSubordinate(pForm.getColumnSearch(), pForm.getSearch(),
+		int countRows  = manager.getCountByColumnSubordinate(pForm.getColumnSearchReal(), pForm.getSearch(), employeeId);
+		List<TaskBean> list = manager.getListByColumnSubordinate(pForm.getColumnSearchReal(), pForm.getSearch(),
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), 
 				employeeId);

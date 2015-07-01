@@ -50,7 +50,7 @@
 	        	<isEqual property="columnSearch" compareValue="ID">
 			          UPPER(USER_ROLE_ID) LIKE UPPER(#value#)
 				</isEqual>
-		      	<isEqual property="columnSearch" compareValue="NAME">
+		       	<isEqual property="columnSearch" compareValue="NAME">
 			          UPPER(USER_ROLE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual> 
 	        </isNotNull>

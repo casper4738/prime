@@ -44,9 +44,6 @@ public class TaskHeadAction extends Action {
 		ActivityManager tmpActivityManager = new ActivityManagerImpl();
 		HolidayManager tmpHolidayManager  = new HolidayManagerImpl();
 		
-		System.out.println("A. "+pForm.getTask());
-		System.out.println("B. "+Constants.Task.TASK.DOSUBMIT);
-		
 		if(Constants.Task.DOVALIDATE1.equals(pForm.getTask())){
 				response.setContentType("text/text;charset=utf-8");
 				response.setHeader("cache-control", "no-cache");
@@ -71,8 +68,8 @@ public class TaskHeadAction extends Action {
 		if (Constants.Task.TASK.GOTOTASKTYPE.equals(pForm.getTask())) {
 			pForm.getTaskBean().setTaskId(manager.getNewId());
 			
-			int countRows  = tmpEmployeeManager.getCountListByTree(pForm.getColumnSearch(), pForm.getSearch(), employeeId);
-			List<EmployeeBean> list = tmpEmployeeManager.getListByTree(pForm.getColumnSearch(), pForm.getSearch(),
+			int countRows  = tmpEmployeeManager.getCountListByTree(pForm.getColumnSearchReal(), pForm.getSearch(), employeeId);
+			List<EmployeeBean> list = tmpEmployeeManager.getListByTree(pForm.getColumnSearchReal(), pForm.getSearch(),
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					employeeId
@@ -103,8 +100,8 @@ public class TaskHeadAction extends Action {
 		} else if (Constants.Task.GOTOVIEW.equals(pForm.getTask())) {
 			//##.View Detail Task
 			pForm.setTaskBean(manager.getTaskById(pForm.getTaskId()));
-			int countRows = tmpActivityManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch(), pForm.getTaskId());
-			List<ActivityBean> list = tmpActivityManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(), 
+			int countRows = tmpActivityManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), pForm.getTaskId());
+			List<ActivityBean> list = tmpActivityManager.getListByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getTaskId());
@@ -129,8 +126,8 @@ public class TaskHeadAction extends Action {
 		} else if (Constants.Task.ACTIVITY.GOTOCHANGESTATUS.equals(pForm.getTask())) {
 			//##.Change Data
 			pForm.setActivityBean(tmpActivityManager.getActivityDetailById(pForm.getActivityId(), pForm.getActivityChangeDate()));
-			int countRows = tmpActivityManager.getCountActivityDetail(pForm.getColumnSearch(), pForm.getSearch(), pForm.getActivityId());
-			List<ActivityBean> list = tmpActivityManager.getListActivityDetail(pForm.getColumnSearch(), pForm.getSearch(), 
+			int countRows = tmpActivityManager.getCountActivityDetail(pForm.getColumnSearchReal(), pForm.getSearch(), pForm.getActivityId());
+			List<ActivityBean> list = tmpActivityManager.getListActivityDetail(pForm.getColumnSearchReal(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getActivityId());
@@ -222,8 +219,8 @@ public class TaskHeadAction extends Action {
 			return mapping.findForward("forward");
 		} 
 		
-		int countRows  = manager.getCountByColumnHead(pForm.getColumnSearch(), pForm.getSearch(), employeeId);
-		List<TaskBean> list = manager.getListByColumnHead(pForm.getColumnSearch(), pForm.getSearch(),
+		int countRows  = manager.getCountByColumnHead(pForm.getColumnSearchReal(), pForm.getSearch(), employeeId);
+		List<TaskBean> list = manager.getListByColumnHead(pForm.getColumnSearchReal(), pForm.getSearch(),
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), 
 				employeeId);

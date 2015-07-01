@@ -16,10 +16,27 @@ public class LogForm extends ActionForm {
 	private Integer tmpId;
 	private java.sql.Date startHoliday;
 	private java.sql.Date untilHoliday;
+	private Boolean isShowAll = true;
 
 	public LogForm() {
 		setStartHoliday(new Date(new java.util.Date().getTime()));
 		setUntilHoliday(new Date(new java.util.Date().getTime()));
+	}
+
+	public Boolean getIsShowAll() {
+		return isShowAll;
+	}
+
+	public void setIsShowAll(Boolean isShowAll) {
+		this.isShowAll = isShowAll;
+	}
+
+	public String getColumnSearchReal() {
+		if (isShowAll) {
+			return "SHOW ALL";
+		} else {
+			return columnSearch;
+		}
 	}
 
 	public String getSearchTableLog() {

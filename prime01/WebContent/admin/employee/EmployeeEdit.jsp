@@ -41,6 +41,7 @@
 			</h1>
 			<ol class="breadcrumb">
 				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li><html:link href="#" onclick="flyToBack('home')" >Manage Employee</html:link></li>
 				<li class="active">Manage Employee</li>
 			</ol>
 		</section>

@@ -16,10 +16,27 @@ public class HolidayForm extends ActionForm {
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
 	private Date tmpId = new Date(new java.util.Date().getTime());
-	
+	private Boolean isShowAll = true;
+
 	public HolidayForm() {
 		setStartHoliday(new Date(new java.util.Date().getTime()));
 		setUntilHoliday(new Date(new java.util.Date().getTime()));
+	}
+
+	public Boolean getIsShowAll() {
+		return isShowAll;
+	}
+
+	public void setIsShowAll(Boolean isShowAll) {
+		this.isShowAll = isShowAll;
+	}
+
+	public String getColumnSearchReal() {
+		if (isShowAll) {
+			return "SHOW ALL";
+		} else {
+			return columnSearch;
+		}
 	}
 
 	public java.sql.Date getStartHoliday() {

@@ -26,9 +26,9 @@ public class UserRoleAction extends Action{
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		UserRoleForm pForm = (UserRoleForm) form;
-		UserRoleManager tmpManager = new UserRoleManagerImpl();
-		UserMenuManager tmpMenuManager = new UserMenuManagerImpl();
+		UserRoleForm pForm			 	= (UserRoleForm) form;
+		UserRoleManager tmpManager 		= new UserRoleManagerImpl();
+		UserMenuManager tmpMenuManager 	= new UserMenuManagerImpl();
 		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
@@ -73,8 +73,8 @@ public class UserRoleAction extends Action{
 			return mapping.findForward("view");
 		}
 		
-		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-		List<UserRoleBean> list = tmpManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());
+		List<UserRoleBean> list = tmpManager.getListByColumn(pForm.getColumnSearchReal(), pForm.getSearch(),
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 		
@@ -104,5 +104,5 @@ public class UserRoleAction extends Action{
 
 		pForm.setGoToPage(pageUtil.getPage());
 	}
-
+	
 }

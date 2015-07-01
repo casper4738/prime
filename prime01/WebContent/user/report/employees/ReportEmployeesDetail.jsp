@@ -20,6 +20,12 @@
 		    }
 	    });
 
+		 function generateReport(){
+			 alert("adw");
+				document.forms[0].target = "_blank";
+				document.forms[0].task.value = "<%=Constants.Task.REPORT.GENERATEREPORTEMPLOYEETASK%>";
+				document.forms[0].submit();
+			 }
 
 	</script>
 </head>
@@ -29,6 +35,7 @@
 		<html:hidden name="ReportUserEmployeesForm" property="tmpId"/>
 		<html:hidden name="ReportUserEmployeesForm" property="goToPage"/>
 		<html:hidden name="ReportUserEmployeesForm" property="showInPage"/>
+		<html:hidden name="ReportUserEmployeesForm" property="isShowAll"/>
 	</html:form>
 					
 	<section class="content-header">
@@ -57,7 +64,7 @@
 			<td colspan="2">Manager : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.managerName" /></td>
 			</tr>
 			</table>
-			 <p><span class="button-add btn btn-app bg-olive btnCancel" onclick="">
+			 <p><span class="button-add btn btn-app bg-olive btnCancel" onclick="generateReport()">
 	               <i class="fa fa-save"></i>Export
 	              </span>
 	              </p>
@@ -74,8 +81,8 @@
 					<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 				</html:select>
 				<html:text name="ReportUserEmployeesForm" property="search" styleClass="textSearch"/>
-				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('<bean:write name="ReportUserEmployeesForm" property="task" />')" value='Search'/>
-				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchAll('<bean:write name="ReportUserEmployeesForm" property="task" />')" value='Show All'/>
+				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ReportUserEmployeesForm" property="task" />', 'false')" value='Search'/>
+				<input type="button" class="btn btn-sm bg-olive" style="height:32px" o0nclick="searchBy('<bean:write name="ReportUserEmployeesForm" property="task" />', 'true')" value='Show All'/>					
 			</div>
 			<!-- End Of Search Handler -->
 			

@@ -194,7 +194,7 @@
 		<h1>Manage User</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Manage User</li>
+			<li><html:link href="#" onclick="flyToBack('home')" >Manage User</html:link></li>
 			<li class="active">Add User</li>
 		</ol>
 	</section>

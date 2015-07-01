@@ -28,6 +28,8 @@ public class ProjectBean extends EmployeeBean {
 	private String roleName;
 	private Double percentStatus;
 	private Integer employeeIdReceiver;
+	private Integer isPM;
+	private Integer isAssigner;
 	public ProjectBean() {
 		roleBean = new RoleBean();
 		taskBean = new TaskBean();
@@ -196,4 +198,21 @@ public class ProjectBean extends EmployeeBean {
 		this.employeeIdReceiver = employeeIdReceiver;
 	}
 
+	public Integer getIsPM() {
+		return isPM;
+	}
+
+	public void setIsPM(Integer isPM) {
+		this.isPM = isPM;
+	}
+
+	public Integer getIsAssigner() {
+		return isAssigner;
+	}
+
+	public void setIsAssigner(Integer isAssigner) {
+		this.isAssigner = isAssigner;
+	}
+
+	
 }

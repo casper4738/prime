@@ -43,12 +43,13 @@
 				<html:hidden name="UserMenuForm" property="tmpId"/>
 				<html:hidden name="UserMenuForm" property="goToPage"/>
 				<html:hidden name="UserMenuForm" property="showInPage"/>
+				<html:hidden name="UserMenuForm" property="isShowAll"/>
 				<html:select name="UserMenuForm" property="columnSearch" styleClass="columnSearch">
 					<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 				</html:select>
 				<html:text name="UserMenuForm" property="search" styleClass="textSearch"/>
-				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('<bean:write name="UserMenuForm" property="task" />')" value='Search'/>
-				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchAll('<bean:write name="UserMenuForm" property="task" />')" value='Show All'/>
+				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="UserMenuForm" property="task" />', 'false')" value='Search'/>
+				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="UserMenuForm" property="task" />', 'true')" value='Show All'/>
 			</html:form>
 			
 		</div>

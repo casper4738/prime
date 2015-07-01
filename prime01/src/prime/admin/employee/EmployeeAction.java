@@ -268,17 +268,17 @@ public class EmployeeAction extends Action {
 		} 
 		
 		String search = "";
-		if("GENDER".equals(pForm.getColumnSearch())) {
+		if("GENDER".equals(pForm.getColumnSearchReal())) {
 			search = pForm.getGenderSearch();
-		} else if("STATUS".equals(pForm.getColumnSearch())) {
+		} else if("STATUS".equals(pForm.getColumnSearchReal())) {
 			search = pForm.getStatusSearch();
 		} else {
 			search = pForm.getSearch();			
 		}
 		
-		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), search);
+		int countRows  = manager.getCountByColumn(pForm.getColumnSearchReal(), search);
 		
-		List<EmployeeBean> list = manager.getListByColumn(pForm.getColumnSearch(), search,
+		List<EmployeeBean> list = manager.getListByColumn(pForm.getColumnSearchReal(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 

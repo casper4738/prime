@@ -85,6 +85,7 @@
 	               		<html:hidden name="TaskSubordinateUserForm" property="activityStatus" />
 						<html:hidden name="TaskSubordinateUserForm" property="goToPage"/>
 						<html:hidden name="TaskSubordinateUserForm" property="showInPage"/>
+						<html:hidden name="TaskSubordinateUserForm" property="isShowAll"/>
 					</html:form>
 				</div>
 				<div class="box-body">
