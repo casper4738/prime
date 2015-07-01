@@ -174,8 +174,8 @@
 		<action path="/ReportProject" name="ReportUserProjectForm" type="prime.user.report.project.ReportProjectAction" scope="request">
 			<forward name="success" 				path="/user/report/project/ReportProjectHome.jsp"></forward>
 			<forward name="detailProject" 			path="/user/report/project/ReportProjectDetail.jsp"></forward>
-			<forward name="showReportProject" 		path="/user/report/employees/ReportProjectShow.jsp"></forward>
-			<forward name="showReportProjectTask" 	path="/user/report/employees/ReportProjectTaskShow.jsp"></forward>
+			<forward name="showReportProject" 		path="/user/report/project/ReportProjectShow.jsp"></forward>
+			<forward name="showReportProjectTask" 	path="/user/report/project/ReportProjectTaskShow.jsp"></forward>
 		</action>
 		
 		<!-- Login -->

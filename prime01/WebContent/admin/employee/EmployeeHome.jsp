@@ -102,8 +102,8 @@
 						</html:select>
 					</td>
 					<td style="padding-left:5px">
-						<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="PositionAdminForm" property="task" />', 'false')" value='Search'/>
-						<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="PositionAdminForm" property="task" />', 'true')" value='Show All'/>					
+						<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="EmployeeAdminForm" property="task" />', 'false')" value='Search'/>
+						<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="EmployeeAdminForm" property="task" />', 'true')" value='Show All'/>					
 					</td>
 				</tr>
 			</table>
