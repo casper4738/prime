@@ -334,62 +334,65 @@ public interface Constants {
 	
 	//##J.Menu Handling
 	public static final  String[] PAGES_LIST = new String[]{
-															"Login.do",				 //0
-															"Menu.do",				 //1
-															"DashboardAdmin.do",	 //2
-															"UserAdmin.do",			 //3
-															"EmployeeAdmin.do",		 //4
-															"DivisionAdmin.do",		 //5
-															"PositionAdmin.do",		 //6
-															"RoleAdmin.do",			 //7
-															"HolidayAdmin.do",		 //8
-															"LogAdmin.do",			 //9
-															"SettingAdmin.do",		 //10
-															"NotifTemplate.do",		 //11
-															"UserMenu.do",			 //12
-															"UserRole.do",			 //13
+															"Menu.do",				 //0
+															
+															"DashboardAdmin.do",	 //1
+															"UserAdmin.do",			 //2
+															"EmployeeAdmin.do",		 //3
+															"DivisionAdmin.do",		 //4
+															"PositionAdmin.do",		 //5
+															"RoleAdmin.do",			 //6
+															"HolidayAdmin.do",		 //7
+															"UserMenu.do",			 //8
+															"UserRole.do",			 //9
+															"NotifTemplate.do",		 //10
+															"LogAdmin.do",			 //11
+															"SettingAdmin.do",		 //12
 															
 
-															"DashboardUser.do",		 //14
-															"ProjectUser.do",		 //15
+															"DashboardUser.do",		 //13
+															"TaskHeadUser.do",		 //14
+															"TaskSubordinateUser.do",//15
 															"ProjectUserAsHead.do",	 //16
-															"TaskHeadUser.do",		 //17
-															"TaskSubordinateUser.do",//18
-															"ReportEmployees.do",	 //19
+															"ProjectUser.do",		 //17
+															"ReportEmployees.do",	 //18
+															"ReportProject.do",		 //19
 															"Notification.do", 	 	 //20
-															"Modal.do",				 //21
 
-															"ReportProject.do"		 //22
+															
+															"Login.do",				 //21
+															"Modal.do"				 //22
 
 												};
 	static interface Page {
-		static int LOGIN				= 0;
-		static int MENU					= 1;
-		static int ADMIN_DASHBOARD		= 2;
-		static int ADMIN_USER			= 3;
-		static int ADMIN_EMPLOYEE		= 4;
-		static int ADMIN_DIVISION		= 5;
-		static int ADMIN_POSITION 		= 6;
-		static int ADMIN_ROLE			= 7;
-		static int ADMIN_HOLIDAY		= 8;
-		static int ADMIN_LOG			= 9;
-		static int ADMIN_SETTING		= 10;
-		static int ADMIN_NOTIFTEMPLATE	= 11;
-		static int ADMIN_USERMENU 		= 12;
-		static int ADMIN_USERROLE 		= 13;
+		static int MENU					= 0;
 		
-		static int USER_DASHBOARD		= 14;
-		static int USER_PROJECT			= 15;
+		static int ADMIN_DASHBOARD		= 1;
+		static int ADMIN_USER			= 2;
+		static int ADMIN_EMPLOYEE		= 3;
+		static int ADMIN_DIVISION		= 4;
+		static int ADMIN_POSITION 		= 5;
+		static int ADMIN_ROLE			= 6;
+		static int ADMIN_HOLIDAY		= 7;
+		static int ADMIN_USERMENU 		= 8;
+		static int ADMIN_USERROLE 		= 9;
+		static int ADMIN_NOTIFTEMPLATE	= 10;
+		static int ADMIN_LOG			= 11;
+		static int ADMIN_SETTING		= 12;
+		
+		static int USER_DASHBOARD		= 13;
+		static int USER_TASK_HEAD		= 14;
+		static int USER_TASK_SUBORDINATE= 15;
 		static int USER_PROJECT_HEAD	= 16;
-		
-		static int USER_TASK_HEAD		= 17;
-		static int USER_TASK_SUBORDINATE= 18;
-		static int USER_REPORT_EMPLOYEES= 19;
-
+		static int USER_PROJECT			= 17;
+	
+		static int USER_REPORT_EMPLOYEES= 18;
+		static int USER_REPORT_PROJECT	= 19;
 		static int USER_VIEWNOTIF		= 20;
-		static int MODAL				= 21;
 		
-		static int USER_REPORT_PROJECT	= 22;
+		static int LOGIN				= 21;
+		static int MODAL				= 22;
+		
 	}
 	
 	//##K.Daily Time Constants

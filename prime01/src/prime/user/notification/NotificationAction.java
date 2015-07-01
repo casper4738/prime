@@ -22,8 +22,12 @@ public class NotificationAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 		
+		
 		NotificationForm pForm = (NotificationForm) form;
 		NotificationManager tmpManager = new NotificationManagerImpl();
+		
+
+		System.out.println(pForm.getTask());
 		
 		//##0.Only two tipe of Notification Action Task
 		//----a.Show Notification Page [Usually Null or Forward or Success]

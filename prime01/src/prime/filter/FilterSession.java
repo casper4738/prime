@@ -49,6 +49,8 @@ public class FilterSession implements Filter {
 	    HttpSession tmpSession = tmpServletRequest.getSession(true);
 	    boolean tmpIsRedirectNeed = true;
 	    
+	    System.out.println(Constants.PAGES_LIST[Constants.Page.LOGIN]);
+	    System.out.println(tmpServletRequest.getServletPath());
 		if(!tmpServletRequest.getServletPath().equals("/" + Constants.PAGES_LIST[Constants.Page.LOGIN])){
 			//##a.Check Session State
 		    if(tmpSession.getAttribute(Constants.Session.ID) != null) {
@@ -65,19 +67,24 @@ public class FilterSession implements Filter {
 					}
 			    	String tmpCurnSession = LoginData.getUserData().getloginSession() ;
 			    	if(tmpDBSession.equals(tmpCurnSession)){
+
+					
 			    		tmpIsRedirectNeed = false;
 			    	} else {
+						
 			    		LoginData.clear();
 			    		tmpSession.invalidate();
 			    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONKICKED);
 			    	}
 		    	} else {
+					
 		    		LoginData.clear();
 		    		tmpSession.invalidate();
 		    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONKICKED);
 		    	}
 		    } else {
 		    	if(LoginData.isDataExists()){
+					
 		    		LoginData.clear();
 		    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONEXPIRED);
 		    	}
@@ -85,18 +92,22 @@ public class FilterSession implements Filter {
 
 		    //##.For Page-Changing Handler
 		    if(!tmpIsRedirectNeed){
+	
 		    	chain.doFilter(request, response);
 		    } else {
 		    	if("XMLHttpRequest".equals(tmpServletRequest.getHeader("X-Requested-With"))) {
+			
 				     PrintWriter out = response.getWriter();
 				     out.println("<script type=\"text/javascript\">");
 				     out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.LOGIN] + "';");
 				     out.println("</script>");
 			    } else {  
+					
 			    	tmpServletResponse.sendRedirect(Constants.PAGES_LIST[Constants.Page.LOGIN]);
 			    }
 		    }		
 		} else {
+		
     		LoginData.clear();
     		tmpSession.invalidate();
 	    	chain.doFilter(request, response);

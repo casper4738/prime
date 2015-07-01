@@ -46,8 +46,9 @@
 	
 	<select id="getMenu"  resultClass="prime.admin.usermenu.UserMenuBean" parameterClass="java.lang.Integer">
 		SELECT 
-			UM.USER_MENU_NAME 	AS userMenuName,
-			UM.USER_MENU_ID 	AS userMenuId,
+			UM.USER_MENU_NAME 			AS userMenuName,
+			UM.USER_MENU_ID 			AS userMenuId,
+			X.USER_ROLE_MENU_ACTION 	AS userMenuAction,
 			CASE WHEN NVL(X.USER_ROLE_MENU_ACTION, '0') = '0' THEN 0
 	             ELSE 1
 	        END 				AS isCheck

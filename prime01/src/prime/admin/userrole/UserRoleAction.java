@@ -26,6 +26,7 @@ public class UserRoleAction extends Action{
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
+		
 		UserRoleForm pForm = (UserRoleForm) form;
 		UserRoleManager tmpManager = new UserRoleManagerImpl();
 		UserMenuManager tmpMenuManager = new UserMenuManagerImpl();
