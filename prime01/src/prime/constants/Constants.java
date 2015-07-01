@@ -354,7 +354,7 @@ public interface Constants {
 		static int USER_REPORT_PROJECT	= 18;
 		static int USER_VIEWNOTIF		= 19;
 		
-		static int MODAL				= 18;
+		static int MODAL				= 20;
 	}
 	
 	//##K.Daily Time Constants
