@@ -7,6 +7,15 @@
 <%@page import="java.text.DateFormat" %>  
 <%@ page import="prime.admin.employee.EmployeeBean" %>
 <%@ page import="prime.admin.employee.EmployeeManagerImpl" %>
+<%@ page import="prime.admin.employee.EmployeeManager" %>
+<%@ page import="prime.admin.holiday.HolidayManagerImpl" %>
+<%@ page import="prime.admin.holiday.HolidayManager" %>
+<%@ page import="prime.admin.holiday.HolidayBean" %>
+<%@ page import="prime.admin.employee.EmployeeAction" %>
+<%@ page import="prime.utility.PrimeUtil" %>
+<%@ page import="java.util.Calendar" %>
+<%@ page import="java.util.List" %>
+
 <!DOCTYPE html>
 <html>
 <head> 
@@ -35,8 +44,68 @@
             $('#datepicker_hiredate').datepicker({
                 format: "yyyy-mm-dd"
             });
-        });
+            
+            var tmpImage = '<%=((EmployeeBean)request.getAttribute("empBean")).getConvertedFilePic()%>';
+      	  	if(tmpImage == "null"){
+          		$("#profpic").attr("src","resources/image/user-photo.png");
+	      	} else {
+	         	$("#profpic").attr("src","data:image/;base64," + tmpImage);  
+	      	} 
+      	  
+	      	$("#input-image").change(function (e) {
+			    if(this.disabled) 
+			    	return alert('File upload not supported!');
+			    var F = this.files;
+			    if(F && F[0]) {
+			    	var pathFile = document.getElementById("input-image").value;
+					var tmppath = URL.createObjectURL(event.target.files[0]);
+			    	for(var i=0; i<F.length; i++){
+			    		readImage( F[i] );
+			    	}
+			    }
+			});
+	    });
 		
+		function readImage(file) {
+		    var reader = new FileReader();
+		    var image  = new Image();
+		    
+		    reader.readAsDataURL(file);  
+		    reader.onload = function(_file) {
+		        image.src    = _file.target.result;              // url.createObjectURL(file);
+		        image.onload = function() {
+		            var w = this.width;
+		            var h = this.height;
+		            var t = file.type;                           // ext only: // file.type.split('/')[1],
+		            var n = file.name;
+		            var s = file.size/1024;
+		            	
+	            	if(s <= <%=Constants.MAX_IMAGE_FILESIZE%>){
+		            	$('#upload-preview').html('<img src="'+ this.src +'" style="width:64px;height:64px"> <br/><b>' + w +'x' +h+ ' <br/>'+s +'KB <br/>'+t+' <br>'+n+'<br/></b>');
+	            	} else {
+			            alert("File size too big !!");
+			            
+			            //Reset and Readd Event [Will think for better solution than double hardcode]
+	            		$("#input-image").replaceWith($("#input-image").clone());
+	            		$("#input-image").change(function (e) {
+	            		    if(this.disabled) 
+	            		    	return alert('File upload not supported!');
+	            		    var F = this.files;
+	            		    if(F && F[0]) {
+	            		    	for(var i=0; i<F.length; i++){
+	            		    		readImage( F[i] );
+	            		    	}
+	            		    }
+	            		});
+	            	}
+		        };
+		        image.onerror= function() {
+            		$("#input-image").replaceWith($("#input-image").clone());
+		            alert("Invalid file type ! Only input images files type");
+		        };      
+		    };
+		    
+		}
 		function doGoToEdit() {
 			var tmpForm = document.forms[0];
 			tmpForm.task.value = "<%=Constants.Task.GOTOEDIT%>";
@@ -68,6 +137,41 @@
 			tmpForm.tmpString.value = valueString;
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
+		
+		function changePic(){
+			$('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Upload Picture");
+		 	$('#btn-save').hide();
+		 	$('#btn-edit').hide();
+		 	$('#btn-resign').hide();
+		 	$('#btn-cancel').hide();
+		 	$('#btn-setDayOff').hide();
+		 	$('#btn-setWeekEnd').hide();
+		 	$('#btn-delete-DayOff').hide();
+		 	$('#btn-delete-WeekEnd').hide();
+
+			var formData = new FormData(document.forms[0]);
+			$.ajax({ 
+	   	          type	  		: "POST",
+	   	          url	  		: "<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>",  // Send the login info to this page
+	   	          data	  		: formData,
+	   	       	  contentType 	: false,
+		          processData 	: false,
+	   	          success : function(msg){
+	   	        	 menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>', "task=&message=Change Picture Successful");
+	   	          },
+	   	          
+	   	          error: function(){
+					  //TO DO :: Do Some Error Handling at Here
+	   	        	  alert("<%=Constants.Response.FAIL_DO%>");
+	   	          }
+	   	    });
+		}
+		
+		function fShowBtn(){
+			if(document.getElementById('input-image').value!=""){
+				document.getElementById('changePic').style.display="inline"
+			}
+		}
     </script>
     <!-- End Of JS -->
 </head>
@@ -83,16 +187,17 @@
 
 	<section class="content">
 	<div class="row">
-		<div class="col-xs-12"><div class="box">
-			<div class="box-header"><h3 class="box-title">Data Manage Employee</h3></div>
+		<div class="col-xs-12"><div class="box"><div class="box" align="center">
+			<div class="box-header"><h1 class="box-title"><br/><br/><b>Data Manage Employee</b><br/><br/></h1></div>
 			<div class="box-body">
-               	<html:form action="/EmployeeAdmin">
-               		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
+               	<html:form action="/EmployeeAdmin" method="post" enctype="multipart/form-data" styleId="formViewEmp">
+               		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOCHANGEPIC%>"/>
                		<html:hidden name="EmployeeAdminForm" property="employeeBean.divisionId" />
                		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId" />
+               		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
                		<html:hidden name="EmployeeAdminForm" property="tmpId" />
                		<html:hidden name="EmployeeAdminForm" property="tmpString" />
-               		<table class="form-input" align="center" style="width: 500px;">
+               		<table class="form-input" style="width: 500px;">
                			<tr>
               				<td>Employee ID</td>
               				<td>:</td>
@@ -191,8 +296,34 @@
                				<td>Photo</td>
                				<td>:</td>
                				<td>
-               				<%-- <html:image src="resources/image/photodummy.png" /> --%>
+               					<img class="photo" id="profpic" width="100px" height="100px"/>
 							</td>
+               			</tr>
+               			<tr>
+               				<td>Change Picture [Max. <%=Constants.MAX_IMAGE_FILESIZE %> KB]</td>
+               				<td>:</td>
+               				<td>
+               				  <html:file name="EmployeeAdminForm" property="profpic" styleId="input-image"  onchange="fShowBtn()"/>
+							</td>
+               			</tr>
+               			<tr>
+               				<td></td>
+               				<td></td>
+               				<td>
+							  <div id="upload-preview"></div>
+               				</td>
+               			</tr>
+               			<tr>
+                  			<td></td>
+							<td></td>
+                  			<td><div id="employee-validating"></div></td>
+                  		</tr>
+               			<tr>
+               				<td colspan="3" align="center">
+               					<div id="changePic" style="display:none">
+               						<input type="button" value="Change Pic" class="btn btn-primary"  id="btn-save" onclick="changePic()"/> 				
+               					</div>
+               				</td>
                			</tr>
                			<tr>
                				<td colspan="3">
@@ -201,8 +332,8 @@
 			             			<tr>
 			               				<td width="150px">
 			               					<logic:equal name="EmployeeAdminForm" property="employeeBean.resignDate" value="">
-				               					<input type="button" property="" value="Set DayOff" styleClass="btn btn-default" 
-				               					onclick="flyToEditDelete('<%=Constants.Task.GOTODAYOFF%>', '<bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>')"/>
+				               					<input type="button" property="" value="Set DayOff" class="btn btn-primary" 
+				               					onclick="flyToEditDelete('<%=Constants.Task.GOTODAYOFF%>', '<bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>')" id="btn-setDayOff"/>
 			               					</logic:equal>
 			               				</td>
 			               			</tr>
@@ -227,108 +358,30 @@
 						                		<bean:define id="dateEnd" name="iter" property="endDate"  toScope="request"/>
 						                		<bean:define id="employeeId" name="EmployeeAdminForm" property="employeeBean.employeeId"  toScope="request"/>
 						                		<%
-						                			Integer idEmployee = (Integer) request.getAttribute("employeeId");
 						                			java.sql.Date endDate = (java.sql.Date) request.getAttribute("dateEnd");
 						                			java.sql.Date startDate = (java.sql.Date) request.getAttribute("dateStart");
-						                			long DAY = 24 * 3600 * 1000;
-						                			long diffDate = endDate.getTime() - startDate.getTime() + DAY;
-						                			long tempEndLastWeek=0;
-						                			long totalWeek;
 						                			
-						                			int days = (int) (diffDate / DAY);
-						                			int totalDayOff=0;
-						                			
-						                			EmployeeManagerImpl tmpEmployeeManager = new EmployeeManagerImpl();
-						                			//try{
-						                				int countNationalHoliday=tmpEmployeeManager.getCountNationalHolidayByDayOff(startDate, endDate);
-						                				int countWeekEnd=0;
-						                				int countInOneWeek=2;
-						                				int countWeek=0;
-						                				
-						                				Date endLastWeek=null;
-						                				//GET DAY WEEK FROM END DATE DAY OFF
-						                				String endDayWeek = tmpEmployeeManager.getDayWeekByEndDate(endDate.toString()).trim();
-						                				
-						                				if(endDayWeek.equals("MONDAY")){
-						                					// GET DATE LAST MONDAY FROM END DATE
-						                					endLastWeek = endDate;
-						                				}else if(endDayWeek.equals("TUESDAY")){
-						                					tempEndLastWeek= endDate.getTime() - DAY;
-						                					// GET DATE LAST MONDAY FROM END DATE
-						                					endLastWeek = new Date(tempEndLastWeek);
-						                				}else if(endDayWeek.equals("WEDNESDAY")){
-						                					tempEndLastWeek= endDate.getTime() - (DAY*2);
-						                					// GET DATE LAST MONDAY FROM END DATE
-						                					endLastWeek = new Date(tempEndLastWeek);
-						                				}else if(endDayWeek.equals("THURSDAY")){
-						                					tempEndLastWeek= endDate.getTime() - (DAY*3);
-						                					// GET DATE LAST MONDAY FROM END DATE
-						                					endLastWeek = new Date(tempEndLastWeek);
-						                				}else if(endDayWeek.equals("FRIDAY")){
-						                					tempEndLastWeek= endDate.getTime() - (DAY*4);
-						                					// GET DATE LAST MONDAY FROM END DATE
-						                					endLastWeek = new Date(tempEndLastWeek);
-						                				}else if(endDayWeek.equals("SATURDAY")){
-						                					tempEndLastWeek= endDate.getTime() - (DAY*5);
-						                					// GET DATE LAST MONDAY FROM END DATE
-						                					endLastWeek = new Date(tempEndLastWeek);
-						                				}else if(endDayWeek.equals("SUNDAY")){
-						                					tempEndLastWeek= endDate.getTime() - (DAY*6);
-						                					// GET DATE LAST MONDAY FROM END DATE
-						                					endLastWeek = new Date(tempEndLastWeek);
- 						                					/* SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
- 						                					String fr = sdf.format(endLastWeek);
- 						                					
- 						                					java.sql.Date date = new Date */
- 						                					
-						                				}
-						                				
-						                				if(tmpEmployeeManager.getMaxStartFromByStartDate(startDate.toString(),idEmployee).size()>0){
-							                				//GET WEEKEND FOR LAST SETTING
-							                				String weekEnd = tmpEmployeeManager.getMaxStartFromByStartDate(startDate.toString(),idEmployee).get(0).getWeekEnd();
-							                				
-							                				//GET START DATE FOR LAST SETTING
-							                				Date startLastWeek = tmpEmployeeManager.getMaxStartFromByStartDate(startDate.toString(),idEmployee).get(0).getMaxStartFrom(); 
-							                				
-							                				//GET ENDWEEKEND FOR LAST SETTING
-							                				String endWeekEnd = tmpEmployeeManager.getMaxStartFromByStartDate(endDate.toString(),idEmployee).get(0).getWeekEnd();
-							                				
-							                				//GET LAST DATE FOR LAST SETTING 
-							                				Date endLastWeekSetting = tmpEmployeeManager.getMaxStartFromByStartDate(endDate.toString(),idEmployee).get(0).getMaxStartFrom(); 
-							                				
-							                				//GET HOW MANY WEEKEND IN ONCE WEEK
-							                				String [] weekEndSplit  = weekEnd.split(",");
-							                				countInOneWeek=weekEndSplit.length;
-							                				
-							                				//GET COUNTWEEK (HOW MANY WEEK IN RANGE START WEEKEND LAST SETTING -- weekEnd AND END LAST WEEK -- endLastWeek)
-							                				totalWeek = (startLastWeek.getTime() - endLastWeek.getTime()) / (DAY*7);
-							                				//countWeek = (int) totalWeek;
-							                				//countWeekEnd = countInOneWeek  * countWeek;
-						                				}else{
-						                					countWeekEnd = 0;
-						                				}
-						                				//int countWeekEndInOneWeek = tmpEmployeeManager.getTotalWeekend(dateMaxSetWeekend, idEmployee);
-						                				
-						                				totalDayOff=days-countNationalHoliday-countWeekEnd;
-						                			/*} catch(Exception e) {
-						                				out.print("CAST : "+e.getMessage());
-						                			} */
-						                			
-						                		
-						                			//tmpEmployeeManager.getCountWeekendByDayOff(request.getAttribute("dateStart").toString(), request.getAttribute("dateEnd").toString(), 102);
+						                			EmployeeManager manager = new EmployeeManagerImpl();
+						                			HolidayManager tmpHolidayManager  = new HolidayManagerImpl();
+						                			EmployeeAction empAction = new EmployeeAction();
+						                			Calendar cal = Calendar.getInstance();
+						                			List<HolidayBean> listHoliday = tmpHolidayManager.getListByYear(cal.get(Calendar.YEAR));
+						                			List<EmployeeBean> listWeekend = manager.getListWeekendByEmployeeId((Integer)request.getAttribute("employeeId"));
+						                			Integer sumOFHoliday = empAction.getSumHoliday(listHoliday, startDate, endDate);
+							            			Integer sumOFWeekend = empAction.getSumWeekEnd(listWeekend, startDate, endDate);
+							            			Integer totalDayOff = PrimeUtil.getDayBetweenDate(startDate, endDate) - sumOFHoliday - sumOFWeekend;
 						                		%>
-						                		<td align="center"><%=totalDayOff%> </td>
+						                		<td align="center"><%=totalDayOff%></td>
 						                		<td><bean:write name="iter" property="descriptionDayOff"/> </td>
 						                		<td>
 						                			<% 
-							                			DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 						                			
 							                		try {
 							                			//java.sql.Date startDate = (java.sql.Date) request.getAttribute("dateStart");
 						                				java.sql.Date date = new java.sql.Date(new java.util.Date().getTime());
 					                					if(date.compareTo(startDate) < 0) {
 					                				%>
-					                					<input type="button" value="Del" styleClass="btn btn-default" onclick="flyToDelete('<%=Constants.Task.DOEDITDAYOFF%>', <bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>, '<bean:write name="iter" property="startDate"/>','<%=Constants.Confirmation.DELETE %>')"/>
+					                					<input type="button" value="Del" styleClass="btn btn-default" onclick="flyToDelete('<%=Constants.Task.DOEDITDAYOFF%>', <bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>, '<bean:write name="iter" property="startDate"/>','<%=Constants.Confirmation.DELETE %>')" id="btn-delete-DayOff"/>
 					                				<%
 					                					} 
 						                			} catch (Exception e) {
@@ -354,7 +407,7 @@
 			             			<tr>
 			               				<td width="150px">
 			               					<logic:equal name="EmployeeAdminForm" property="employeeBean.resignDate" value="">
-			               						<input type="button"  value="Set WeekEnd" styleClass="btn btn-default" onclick="flyToEditDelete('<%=Constants.Task.GOTOWEEKEND%>', '<bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>')"/>
+			               						<input type="button"  value="Set WeekEnd" class="btn btn-primary" onclick="flyToEditDelete('<%=Constants.Task.GOTOWEEKEND%>', '<bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>')" id="btn-setWeekEnd"/>
 			               					</logic:equal>
 			               				</td>
 			               			</tr>
@@ -383,7 +436,7 @@
 					                					if(date.compareTo(startForm) < 0) {
 					                				%>
 					                					<%-- <input type="button" value="Edit" styleClass="btn btn-default" onclick="flyToEditWeekend('<%=Constants.Task.GOTOEDITWEEKEND%>', <bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>, '<bean:write name="iter" property="startFrom"/>')"/> --%>
-					                					<input type="button" value="Del" styleClass="btn btn-default" onclick="flyToDelete('<%=Constants.Task.DOEDITWEEKEND%>', <bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>, '<bean:write name="iter" property="startFrom"/>','<%=Constants.Confirmation.DELETE %>')"/>
+					                					<input type="button" value="Del" styleClass="btn btn-default" onclick="flyToDelete('<%=Constants.Task.DOEDITWEEKEND%>', <bean:write name="EmployeeAdminForm" property="employeeBean.employeeId"/>, '<bean:write name="iter" property="startFrom"/>','<%=Constants.Confirmation.DELETE %>')" id="btn-delete-WeekEnd"/>
 					                				<%
 					                					} 
 						                			} catch (Exception e) {
@@ -407,17 +460,16 @@
                			<tr>
                				<td colspan="3" align="center">
                					<logic:equal name="EmployeeAdminForm" property="employeeBean.resignDate" value="">
-               						<%-- <html:button value="Edit" styleClass="btn btn-primary" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '${EmployeeAdminForm.employeeBean.employeeId}'))" property=""/>
-               						<html:button property="" value="Resign" styleClass="btn btn-default" onclick="flyToEditDelete('<%=Constants.Task.GOTORESIGN%>', '${EmployeeAdminForm.employeeBean.employeeId}')"/> --%>
-               						<html:button property="" value="Edit" styleClass="btn btn-primary" onclick="doGoToEdit()"/>
-               						<html:button property="" value="Resign" styleClass="btn btn-primary" onclick="doGoToResign()"/>
+               						<html:button property="" value="Edit" styleClass="btn btn-primary" onclick="doGoToEdit()" styleId="btn-edit"/>
+               						<html:button property="" value="Resign" styleClass="btn btn-primary" onclick="doGoToResign()" styleId="btn-resign"/>
                					</logic:equal>
-               					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+               					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')" styleId="btn-cancel"/>
                				</td>
                			</tr>
 					</table>
                  </html:form>
               </div>
+        	</div>
         	</div>
         </div>
         </div>

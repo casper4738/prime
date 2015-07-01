@@ -39,7 +39,7 @@
 			$.ajax({ 
 		          type	  : "POST",
 		          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',  
-		          data	  : 'task=<%=Constants.Task.DOVALIDATE2%>&employeeBean.employeeId='+$('#employeeId').val()+'&employeeBean.startDate='+ $('#datepicker_startdate').val()+'&employeeBean.endDate='+ $('#datepicker_enddate').val(),
+		          data	  : 'task=<%=Constants.Task.DOCOUNTDAYOFF%>&employeeBean.employeeId='+$('#employeeId').val()+'&employeeBean.startDate='+ $('#datepicker_startdate').val()+'&employeeBean.endDate='+ $('#datepicker_enddate').val(),
 		          success : function(msg){
 	        		  $('#totalDay').html(msg);
 		          },

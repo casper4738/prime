@@ -46,6 +46,9 @@ public interface Constants {
 		static final String DOVALIDATE2			= "t39";
 		static final String DOLOGOUT			= "t40";
 		
+		static final String DOCOUNTDAYOFF       = "t41";
+		static final String DOCHANGEPIC       	= "t42";
+		
 		interface PROJECT {
 			final String GOTOPROJECTDETAIL	= "p01";
 			final String GOTOTASKMEMBER		= "p02";
