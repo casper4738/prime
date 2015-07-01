@@ -4,15 +4,15 @@ import org.apache.struts.action.ActionForm;
 
 public class SettingForm extends ActionForm {
 
-	private SettingBean settingBean = new SettingBean();
+	private GeneralSettingBean settingBean = new GeneralSettingBean();
 	private String task;
 	private String message;
 
-	public SettingBean getSettingBean() {
+	public GeneralSettingBean getSettingBean() {
 		return settingBean;
 	}
 
-	public void setSettingBean(SettingBean settingBean) {
+	public void setSettingBean(GeneralSettingBean settingBean) {
 		this.settingBean = settingBean;
 	}
 

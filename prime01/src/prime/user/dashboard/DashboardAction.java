@@ -23,6 +23,7 @@ import prime.admin.holiday.HolidayBean;
 import prime.admin.holiday.HolidayManager;
 import prime.admin.holiday.HolidayManagerImpl;
 import prime.constants.Constants;
+import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
@@ -40,7 +41,7 @@ public class DashboardAction extends Action{
 		DashboardForm pForm = (DashboardForm) form;
 		ActivityManager tmpManager = new ActivityManagerImpl();
 		ActionForward tmpAction = mapping.findForward("success");
-		Integer tmpEmployeeID = 101;
+		Integer tmpEmployeeID = LoginData.getEmployeeData().getEmployeeId();
 		
 		//##1.Start Task Selection
 		if("chooseActivity".equals(pForm.getTask())) {

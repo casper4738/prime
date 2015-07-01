@@ -46,18 +46,13 @@ public class MenuAction extends Action {
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]			, "Dashboard");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]			, "Manage Task As Head");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK_SUBORDINATE]	, "Manage Task As Subordinate");
-				
-				System.out.println ("id login menu "+LoginData.getEmployeeData().getEmployeeId());
-				
-				if(tmpProjectManager.getCountProjectReceiver(LoginData.getEmployeeData().getEmployeeId())>0)
+				//checkingEmployeeAsPM
+				if(tmpProjectManager.getCountProjectReceiver(LoginData.getEmployeeData().getEmployeeId())>0 ||
+						tmpProjectManager.getCountProjectMember(LoginData.getEmployeeData().getEmployeeId())>0)
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_PROJECT]				, "Manage Project");
-				
-			
+				//checkingEmployeeAsHead
 				if(tmpProjectManager.getCountProjectAssigner(LoginData.getEmployeeData().getEmployeeId())>0)
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_PROJECT_HEAD]		, "Manage Project As Head");
-				
-				
-				
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_REPORT_EMPLOYEES]	, "View Report Employees");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_REPORT_PROJECT]		, "View Report Project");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_VIEWNOTIF]			, "View Notification");

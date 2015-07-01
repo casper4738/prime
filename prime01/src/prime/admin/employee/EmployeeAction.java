@@ -1,6 +1,7 @@
 package prime.admin.employee;
 
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
 import java.text.DateFormat;
 import java.text.DateFormatSymbols;
@@ -21,6 +22,9 @@ import org.apache.struts.action.ActionMapping;
 
 import prime.admin.division.DivisionManager;
 import prime.admin.division.DivisionManagerImpl;
+import prime.admin.holiday.HolidayBean;
+import prime.admin.holiday.HolidayManager;
+import prime.admin.holiday.HolidayManagerImpl;
 import prime.admin.position.PositionManager;
 import prime.admin.position.PositionManagerImpl;
 import prime.constants.Constants;
@@ -49,6 +53,7 @@ public class EmployeeAction extends Action {
 		EmployeeManager manager = new EmployeeManagerImpl();
 		DivisionManager tmpDivisionManager = new DivisionManagerImpl();
 		PositionManager tmpPositionManager = new PositionManagerImpl();
+		HolidayManager tmpHolidayManager  = new HolidayManagerImpl();
 		
 		System.out.println("Task = " + pForm.getTask());
 		
@@ -241,6 +246,25 @@ public class EmployeeAction extends Action {
 			tmpOut.print(tmpResponse);
 			tmpOut.flush();
 			return null;
+		} else if(Constants.Task.DOVALIDATE2.equals(pForm.getTask())){
+			response.setContentType("text/text;charset=utf-8");
+			response.setHeader("cache-control", "no-cache");
+			PrintWriter tmpOut = response.getWriter();
+			String tmpResponse = "";
+
+			Calendar cal = Calendar.getInstance();
+			List<HolidayBean> listHoliday = tmpHolidayManager.getListByYear(cal.get(Calendar.YEAR));
+			List<EmployeeBean> listWeekend = manager.getListWeekendByEmployeeId(pForm.getEmployeeBean().getEmployeeId());
+			Integer sumOFHoliday = getSumHoliday(listHoliday, pForm.getEmployeeBean().getStartDate(), pForm.getEmployeeBean().getEndDate());
+			Integer sumOFWeekend = getSumWeekEnd(listWeekend, pForm.getEmployeeBean().getStartDate(), pForm.getEmployeeBean().getEndDate());
+			Integer totalDayOff = PrimeUtil.getDayBetweenDate(pForm.getEmployeeBean().getStartDate(), pForm.getEmployeeBean().getEndDate()) - sumOFHoliday - sumOFWeekend;				
+			tmpResponse  = "Sum Of Holiday : "+sumOFHoliday+"<br>"
+							+"Sum Of Weekend : "+sumOFWeekend+"<br>"
+							+"Total Day Off : "+totalDayOff;
+			
+			tmpOut.print(tmpResponse);
+			tmpOut.flush();
+			return null;
 		} 
 		
 		String search = "";
@@ -292,4 +316,67 @@ public class EmployeeAction extends Action {
 		return map;
 	}
 
+	private Integer getSumHoliday(List<HolidayBean> listDate, java.sql.Date date1, java.sql.Date date2) {
+		Calendar start = Calendar.getInstance();
+		start.setTime(date1);	
+
+		Calendar end = Calendar.getInstance();
+		end.setTime(date2);
+
+		int sum = 0;
+		while (!start.after(end)) {
+			for (int i = 0; i < listDate.size(); i++) {
+				HolidayBean e = listDate.get(i);
+				
+				Calendar c = Calendar.getInstance();
+				c.setTime(e.getHolidayDate());
+				if(PrimeUtil.getCompareTo(start.getTimeInMillis(), e.getHolidayDate().getTime())== 0) {
+					sum ++;
+					break;
+				}
+			}
+			start.add(Calendar.DATE, 1);
+		}
+		return sum;
+	}
+	
+
+	public static Integer getSumWeekEnd(List<EmployeeBean> listDate, Date date1, Date date2) {
+		if(listDate.size() == 0) 
+			return 0;
+		
+		Calendar start = Calendar.getInstance();
+		start.setTime(date1);
+
+		Calendar end = Calendar.getInstance();
+		end.setTime(date2);
+
+		int sum = 0;
+		while (!start.after(end)) {
+			boolean isGet = false;
+			EmployeeBean week = new EmployeeBean();
+			for (EmployeeBean e : listDate) {
+				Calendar c = Calendar.getInstance();
+				c.setTime(e.getStartFrom());
+				if(start.after(c)) {
+					week = e;
+					isGet = true;
+				} else {
+					if(!isGet) {
+						week = e;
+					}
+					break;
+				}
+			}
+			
+			String[] split = week.getWeekEnd().split(",");
+			for (String s : split) {
+				if(start.get(Calendar.DAY_OF_WEEK) == PrimeUtil.getDay(s.trim())) {
+					sum ++;
+				}
+			}
+			start.add(Calendar.DATE, 1);
+		}
+		return sum;
+	}
 }

@@ -13,6 +13,7 @@
 
 	<!-- CSS -->
 
+
  <meta charset="UTF-8">
     <title>AdminLTE 2 | Calendar</title>
     <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
@@ -28,12 +29,16 @@
     <!-- End Of CSS -->
     
 
+
+
 	<!-- JS -->
+
 
 <!-- Plugins -->
     <script src="resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
     <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="resources/plugins/jQueryUI/jquery-ui-1.10.3" type="text/javascript"></script>
+
 
     <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <script src='resources/plugins/fastclick/fastclick.min.js'></script>
@@ -44,6 +49,7 @@
 
 
     <!-- Page specific script -->
+
 
     <script type="text/javascript">
       $(document).ready(function(){
