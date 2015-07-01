@@ -417,4 +417,17 @@ public interface Constants {
 														"21:00", "21:30",
 														"22:00", "22:30",
 														"23:00", "23:30"};
+	
+	//##L.Notification Type [Follow DB Identified Code]
+	static interface NotificationType{
+		static int TASK_SUBMITAPPROVAL 	   = 1;
+		static int TASK_SELFASSIGNAPPROVAL = 2;
+		static int TASK_ABORTBYHEAD		   = 3;
+		static int PROJECT_CREATEAPPROVAL  = 4;
+		static int PROJECT_SUBMITAPPROVAL  = 5;
+		static int PROJECT_ABORT		   = 6;
+		static int PROJECT_NEWPMDELEGATED  = 7;
+		static int PROJECT_ASSIGNEDASROLE  = 8;
+		static int PROJECT_REMOVEDFROMROLE = 9;
+	}
 }

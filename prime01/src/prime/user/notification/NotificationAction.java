@@ -1,6 +1,7 @@
 package prime.user.notification;
 
 import java.sql.SQLException;
+import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.notiftemplate.NotifTemplateBean;
+import prime.admin.notiftemplate.NotifTemplateManager;
+import prime.admin.notiftemplate.NotifTemplateManagerImpl;
 import prime.constants.Constants;
 import prime.login.LoginData;
 import prime.utility.PaginationUtility;
@@ -29,7 +33,31 @@ public class NotificationAction extends Action {
 		//----a.Show Notification Page [Usually Null or Forward or Success]
 		//----b.Send Notification to Other User Silently ["sendNotification"] --> Not Using Constants ? Will think about it later :)
 		if(("sendNotification").equals(pForm.getTask())){
+			NotifTemplateManager tmpNotifTempManager = new NotifTemplateManagerImpl();
+			NotifTemplateBean tmpNotifTempBean = tmpNotifTempManager.getNotifTemplateById(pForm.getNotifType());
 			
+			//---.Three main variable needed : From [ID | Name], To[ID | Name], Link [Direct Getter Link]
+			//	 . Logic : Convert The Fetched Param to String and Insert it To Map
+			//   .         Replace Notif Template String with the Map
+			int tmpI;
+			HashMap tmpMap  = new HashMap<>();
+			String tmpTemplate  = tmpNotifTempBean.getNotifTemplateValue();
+			String tmpReceived  = pForm.getNotifParam();
+			String[] tmpParam1  = tmpReceived.split(";");
+			String[] tmpParam2;
+			
+			for(tmpI = 0 ; tmpI < tmpParam1.length ; tmpI++){
+				tmpParam2 = tmpParam1[tmpI].split("=");
+				tmpMap.put(tmpParam2[0], tmpParam2[1]);
+				System.out.println(tmpParam2[0] + " _ " + tmpParam2[1]);
+				tmpTemplate.replace("&" + tmpParam2[0] + "&", tmpParam2[1]);
+			}
+			System.out.println(tmpTemplate);
+		
+			//---.Send Email with Mail Util
+			
+			
+			//---.Send Notification to specified ID with specified Param
 		} else {
 			//---.Get Count Rows
 			int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),pForm.getSearch(), LoginData.getEmployeeData().getEmployeeId());

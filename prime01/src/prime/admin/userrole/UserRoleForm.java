@@ -2,9 +2,8 @@ package prime.admin.userrole;
 
 import org.apache.struts.action.ActionForm;
 
-import prime.admin.usermenu.UserMenuBean;
-
 public class UserRoleForm extends ActionForm {
+
 	private UserRoleBean userRoleBean = new UserRoleBean();
 	private String task;
 	private String search;
@@ -12,15 +11,16 @@ public class UserRoleForm extends ActionForm {
 	private String message;
 	private String checkboxTes;
 	private Integer goToPage = 1;
-	private Integer showInPage = 100;
+	private Integer showInPage = 10;
 	private Integer tmpId;
+	private Boolean isShowAll = true;
 
-	public String getCheckboxTes() {
-		return checkboxTes;
+	public Boolean getIsShowAll() {
+		return isShowAll;
 	}
 
-	public void setCheckboxTes(String checkboxTes) {
-		this.checkboxTes = checkboxTes;
+	public void setIsShowAll(Boolean isShowAll) {
+		this.isShowAll = isShowAll;
 	}
 
 	public UserRoleBean getUserRoleBean() {
@@ -50,6 +50,14 @@ public class UserRoleForm extends ActionForm {
 	public String getColumnSearch() {
 		return columnSearch;
 	}
+	
+	public String getColumnSearchReal() {
+		if(isShowAll) {
+			return "SHOW ALL";
+		} else {
+			return columnSearch;
+		}
+	}
 
 	public void setColumnSearch(String columnSearch) {
 		this.columnSearch = columnSearch;
@@ -61,6 +69,14 @@ public class UserRoleForm extends ActionForm {
 
 	public void setMessage(String message) {
 		this.message = message;
+	}
+
+	public String getCheckboxTes() {
+		return checkboxTes;
+	}
+
+	public void setCheckboxTes(String checkboxTes) {
+		this.checkboxTes = checkboxTes;
 	}
 
 	public Integer getGoToPage() {

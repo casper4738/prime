@@ -51,8 +51,8 @@ public class HolidayAction extends Action {
 			search = pForm.getSearch();
 		}
 		
-		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearch(), search);
-		List<HolidayBean> list = tmpManager.getListByColumn(pForm.getColumnSearch(), search,
+		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearchReal(), search);
+		List<HolidayBean> list = tmpManager.getListByColumn(pForm.getColumnSearchReal(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 		

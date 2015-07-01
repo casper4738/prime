@@ -13,6 +13,7 @@ public class NotificationForm extends ActionForm {
 	private Integer showInPage = 10;
 	private Integer tmpId;
 	private String notifParam = "";
+	private Integer notifType = 0;
 	
 	public NotificationBean getNotificationBean() {
 		return notificationBean;
@@ -67,6 +68,12 @@ public class NotificationForm extends ActionForm {
 	}
 	public void setNotifParam(String notifParam) {
 		this.notifParam = notifParam;
+	}
+	public Integer getNotifType() {
+		return notifType;
+	}
+	public void setNotifType(Integer notifType) {
+		this.notifType = notifType;
 	}
 	
 	

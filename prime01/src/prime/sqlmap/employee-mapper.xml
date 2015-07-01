@@ -220,7 +220,7 @@
 			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual> 
 				<isEqual property="columnSearch" compareValue="GENDER">
-			          UPPER(EMP.GENDER) LIKE #value#
+			          UPPER(EMP.GENDER) = #value#
 				</isEqual> 
 				<isEqual property="columnSearch" compareValue="EMAIL">
 			          UPPER(EMP.EMAIL) LIKE UPPER('%'||#value#||'%')
@@ -266,7 +266,7 @@
 			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 				<isEqual property="columnSearch" compareValue="GENDER">
-			          UPPER(GENDER) LIKE UPPER(#value#)
+			          UPPER(GENDER) = #value#
 				</isEqual> 
 				<isEqual property="columnSearch" compareValue="EMAIL">
 			          UPPER(EMAIL) LIKE UPPER('%'||#value#||'%')
@@ -280,6 +280,12 @@
 				<isEqual property="columnSearch" compareValue="MANAGER">
 			          UPPER(MANAGER.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
+				<isEqual property="columnSearch" compareValue="STATUS">
+			           (CASE 
+				            WHEN NVL(TO_CHAR(RE.RESIGN_DATE, 'yyyy-mm-dd'), '0') = '0' THEN 0
+				            ELSE 1
+				        END) = #value#
+				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
 	</select>
@@ -502,7 +508,7 @@
 			             UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 			    </isEqual> 
 			    <isEqual property="columnSearch" compareValue="GENDER">
-			             UPPER(EMP.GENDER) LIKE #value#
+			             UPPER(EMP.GENDER) = #value#
 			    </isEqual> 
 			    <isEqual property="columnSearch" compareValue="EMAIL">
 			             UPPER(EMP.EMAIL) LIKE UPPER('%'||#value#||'%')
@@ -516,6 +522,12 @@
 			    <isEqual property="columnSearch" compareValue="MANAGER">
 			             UPPER(MANAGER.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 			    </isEqual> 
+			    <isEqual property="columnSearch" compareValue="STATUS">
+			           (CASE 
+				            WHEN NVL(TO_CHAR(RE.RESIGN_DATE, 'yyyy-mm-dd'), '0') = '0' THEN 0
+				            ELSE 1
+				        END) = #value#
+				</isEqual> 
 	         </isNotNull>
      </dynamic>
      ORDER BY EMP.EMPLOYEE_ID ASC) page 
@@ -543,7 +555,7 @@
 			             UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 			    </isEqual>
 			    <isEqual property="columnSearch" compareValue="GENDER">
-			             UPPER(GENDER) LIKE UPPER(#value#)
+			             UPPER(GENDER) = #value#
 			    </isEqual> 
 			    <isEqual property="columnSearch" compareValue="EMAIL">
 			             UPPER(EMAIL) LIKE UPPER('%'||#value#||'%')
@@ -557,6 +569,12 @@
 			    <isEqual property="columnSearch" compareValue="MANAGER">
 			             UPPER(MANAGER.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 			    </isEqual>
+			    <isEqual property="columnSearch" compareValue="STATUS">
+			           (CASE 
+				            WHEN NVL(TO_CHAR(RE.RESIGN_DATE, 'yyyy-mm-dd'), '0') = '0' THEN 0
+				            ELSE 1
+				        END) = #value#
+				</isEqual> 
 	         </isNotNull>
 	     </dynamic>
 	 </select>

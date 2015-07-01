@@ -35,6 +35,13 @@
 			tmpForm.projectId.value = value;
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
+		
+		 function generateReport(){
+			 alert("adw");
+				document.forms[0].target = "_blank";
+				document.forms[0].task.value = "<%=Constants.Task.REPORT.GENERATEREPORTPROJECT%>";
+				document.forms[0].submit();
+			 }
 	</script>
 	<!-- End JS -->
 </head>
@@ -51,7 +58,7 @@
 		<div class="row">
 			<div class="col-xs-12"><div class="box">
 				<div class="box-header"><h3 class="box-title">Project Report Data</h3></div>
-	            <p><span class="button-add btn btn-app bg-olive btnCancel" onclick="">
+	            <p><span class="button-add btn btn-app bg-olive btnCancel" onclick="generateReport()">
 	               <i class="fa fa-save"></i>Export
 	              </span>
 	              </p>

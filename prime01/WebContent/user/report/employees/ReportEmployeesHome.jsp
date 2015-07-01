@@ -35,6 +35,37 @@
 			tmpForm.employeeId.value = value;
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
+		
+		 function generateReport(){
+			 alert("adw");
+				document.forms[0].target = "_blank";
+				document.forms[0].task.value = "<%=Constants.Task.REPORT.GENERATEREPORTEMPLOYEE%>";
+				document.forms[0].submit();
+			 }
+		 
+		 $(document).ready(function () {
+	          	$('.columnSearch').on('change',function(){
+	            	onselect($(this).val());
+	            });
+	            
+	            onselect($('.columnSearch').val());
+	        });
+			
+			function onselect(value) {
+				if(value == "GENDER") {
+	            	$('#textSearch').css('display', 'none') ;
+	            	$('#genderSearch').css('display', 'block') ;
+	            	$('#statusSearch').css('display', 'none') ;
+	            } else if(value == "STATUS") {
+	            	$('#textSearch').css('display', 'none') ;
+	            	$('#genderSearch').css('display', 'none') ;
+	            	$('#statusSearch').css('display', 'block') ;
+	            } else {
+	            	$('#textSearch').css('display', 'block') ;
+	            	$('#genderSearch').css('display', 'none') ;
+	            	$('#statusSearch').css('display', 'none') ;
+	            }
+			}
 	</script>
 	<!-- End JS -->
 </head>
@@ -51,7 +82,7 @@
 		<div class="row">
 			<div class="col-xs-12"><div class="box">
 				<div class="box-header"><h3 class="box-title">Employee Report Data</h3></div>
-	            <p><span class="button-add btn btn-app bg-olive btnCancel" onclick="">
+	            <p><span class="button-add btn btn-app bg-olive btnCancel" onclick="generateReport()">
 	               <i class="fa fa-save"></i>Export
 	              </span>
 	              </p>
@@ -70,13 +101,33 @@
 					<html:hidden name="ReportUserEmployeesForm" property="goToPage"/>
 					<html:hidden name="ReportUserEmployeesForm" property="showInPage"/>
 					<html:hidden name="ReportUserEmployeesForm" property="employeeId"/>
-				
-					<html:select name="ReportUserEmployeesForm" property="columnSearch">
-						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
-					</html:select>
-					<html:text name="ReportUserEmployeesForm" property="search"/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
+					<html:hidden name="ReportUserEmployeesForm" property="isShowAll"/>
+			<table>
+				<tr>
+					<td style="padding-left:5px">
+						<html:select name="ReportUserEmployeesForm" property="columnSearch" styleClass="columnSearch">
+							<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
+						</html:select>
+					</td>
+					<td style="padding-left:5px"><html:text name="ReportUserEmployeesForm" property="search" styleId="textSearch"/></td>
+					<td style="padding-left:5px">
+						<html:select name="ReportUserEmployeesForm" property="genderSearch" styleId="genderSearch" style="width:150px">
+							<html:option value="0">Male</html:option>
+							<html:option value="1">Female</html:option>
+						</html:select>
+					</td>
+					<td style="padding-left:5px">
+						<html:select name="ReportUserEmployeesForm" property="statusSearch" styleId="statusSearch" style="width:150px">
+							<html:option value="0">Active</html:option>
+							<html:option value="1">Resign</html:option>
+						</html:select>
+					</td>
+					<td style="padding-left:5px">
+					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ReportUserEmployeesForm" property="task" />', 'false')" value='Search'/>
+					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ReportUserEmployeesForm" property="task" />', 'true')" value='Show All'/>					
+					</td>
+				</tr>
+			</table>
 				</html:form>
 				</div>
 				<!-- End Of Search Handler -->
@@ -93,6 +144,7 @@
 								<th>Division</th>
 								<th>Position</th>
 								<th>Manager</th>
+								<th width="60px">Status</th>
 			                    <th width="90px">Actions</th>
 			                </tr>
 			            </thead>
@@ -113,6 +165,16 @@
 			                		<td align="center"><bean:write name="iter" property="divisionName"/> </td>
 			                		<td><bean:write name="iter" property="positionName"/> </td>
 			                		<td><bean:write name="iter" property="managerName"/> </td>
+			                		<td align="center">
+				                        <logic:empty name="iter" property="resignDate">
+				                        	<span class="label label-success">Active</span>
+				                        	<%-- <html:image src="resources/image/check-true.png" />  --%>
+				                        </logic:empty>
+				                        <logic:notEmpty name="iter" property="resignDate">
+				                        	<span class="label label-danger">Resign</span>
+				                        	<%-- <html:image src="resources/image/check-false.png" />  --%>
+				                        </logic:notEmpty>
+			                        </td>
 			                        <td align="center">
 			                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToEmployeeTaskDetail('<%=Constants.Task.REPORT.GOTODETAILEMPLOYEE %>', '<bean:write name="iter" property="employeeId"/>')">
 			                        </td>

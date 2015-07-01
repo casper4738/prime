@@ -20,6 +20,23 @@ public class TaskHeadForm extends ActionForm {
 	private Integer taskId;
 	private Integer activityId;
 	private Integer taskReceiver;
+	private Boolean isShowAll = true;
+
+	public Boolean getIsShowAll() {
+		return isShowAll;
+	}
+
+	public void setIsShowAll(Boolean isShowAll) {
+		this.isShowAll = isShowAll;
+	}
+
+	public String getColumnSearchReal() {
+		if (isShowAll) {
+			return "SHOW ALL";
+		} else {
+			return columnSearch;
+		}
+	}
 
 	public TaskBean getTaskBean() {
 		return taskBean;

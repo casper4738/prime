@@ -60,12 +60,13 @@
 					<html:hidden name="TaskSubordinateUserForm" property="taskId"/>
 					<html:hidden name="TaskSubordinateUserForm" property="goToPage"/>
 					<html:hidden name="TaskSubordinateUserForm" property="showInPage"/>
+					<html:hidden name="TaskSubordinateUserForm" property="isShowAll"/>
 					<html:select name="TaskSubordinateUserForm" property="columnSearch" styleClass="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
 					<html:text name="TaskSubordinateUserForm" property="search" styleClass="textSearch"/>
-					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('<bean:write name="TaskSubordinateUserForm" property="task" />')" value='Search'/>
-					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchAll('<bean:write name="TaskSubordinateUserForm" property="task" />')" value='Show All'/>
+					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="TaskSubordinateUserForm" property="task" />', 'false')" value='Search'/>
+					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="TaskSubordinateUserForm" property="task" />', 'true')" value='Show All'/>					
 				</html:form>
 			</div>
 			<!-- End Of Search Handler -->

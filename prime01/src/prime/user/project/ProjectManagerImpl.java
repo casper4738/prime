@@ -48,9 +48,30 @@ public class ProjectManagerImpl implements ProjectManager {
 		map.put("employeeId", employeeId);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
-		return mapper.queryForList("project.getListByColumn", map);
+		return mapper.queryForList("project.getListByColumnAsMember", map);
 	}
 	
+	
+	
+	@Override
+	public List<ProjectBean> getListByColumnAsHead(String columnSearch,
+			String value, Integer startRow, Integer endRow, Integer employeeId)
+			throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
+			String[] string = value.split(";");
+			map.put("startDate", string[0]);
+			map.put("untilDate", string[1]);
+		} else {
+			map.put("value", value);
+		}
+		map.put("employeeId", employeeId);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		return mapper.queryForList("project.getListByColumnAsHead", map);
+	}
+
 	@Override
 	public List<ProjectBean> getListProjectMemberDetails(String columnSearch, String value, Integer startRow, 
 			Integer endRow, Integer employeeId, Integer projectId) 
@@ -148,6 +169,16 @@ public class ProjectManagerImpl implements ProjectManager {
 	@Override
 	public Integer getCountProjectMember(Integer projectMember) throws SQLException {
 		return (Integer) mapper.queryForObject("project.getCountProjectMember", projectMember);
+	}
+
+	
+	
+	@Override
+	public Integer getRoleIdbyEmployeeLoginAndProjectId(Integer employeeId,Integer projectId) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("employeeId", employeeId);
+		map.put("projectId", projectId);
+		return (Integer) mapper.queryForObject("project.getRoleIdbyEmployeeLoginAndProjectId", map);
 	}
 
 	@Override

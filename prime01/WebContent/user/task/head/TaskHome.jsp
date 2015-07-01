@@ -10,6 +10,7 @@
 	<link href="resources/dist/css/skins/_all-skins.min.css"" rel="stylesheet" type="text/css" />
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
+    <script src="resources/prime.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$('#table-1').dataTable( {
 			paging    : false,
@@ -30,13 +31,6 @@
 	</script>
 </head>
 <body class="skin-blue sidebar-mini">
-	<html:form action="/TaskHeadUser" >
-		<html:hidden name="TaskHeadUserForm" property="task"/>
-		<html:hidden name="TaskHeadUserForm" property="taskId"/>
-		<html:hidden name="TaskHeadUserForm" property="goToPage"/>
-		<html:hidden name="TaskHeadUserForm" property="showInPage"/>
-	</html:form>
-					
 	<section class="content-header">
 		<h1>Manage Tasks</h1>
 		<ol class="breadcrumb">
@@ -64,12 +58,19 @@
 				<input type="button" class="btn bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Refresh'/>
 			</div>
 			<div class="search-table">
+			<html:form action="/TaskHeadUser" >
+				<html:hidden name="TaskHeadUserForm" property="task"/>
+				<html:hidden name="TaskHeadUserForm" property="taskId"/>
+				<html:hidden name="TaskHeadUserForm" property="goToPage"/>
+				<html:hidden name="TaskHeadUserForm" property="showInPage"/>
+				<html:hidden name="TaskHeadUserForm" property="isShowAll"/>
 				<html:select name="TaskHeadUserForm" property="columnSearch" styleClass="columnSearch">
 					<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 				</html:select>
 				<html:text name="TaskHeadUserForm" property="search" styleClass="textSearch"/>
-				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('<bean:write name="TaskHeadUserForm" property="task" />')" value='Search'/>
-				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchAll('<bean:write name="TaskHeadUserForm" property="task" />')" value='Show All'/>
+				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="TaskHeadUserForm" property="task" />', 'false')" value='Search'/>
+				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="TaskHeadUserForm" property="task" />', 'true')" value='Show All'/>					
+			</html:form>
 			</div>
 			<!-- End Of Search Handler -->
 			

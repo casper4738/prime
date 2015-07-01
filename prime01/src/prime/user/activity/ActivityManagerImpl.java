@@ -9,7 +9,7 @@ import prime.constants.Constants;
 import prime.utility.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
-
+ 
 public class ActivityManagerImpl implements ActivityManager {
 
 	private SqlMapClient mapper;

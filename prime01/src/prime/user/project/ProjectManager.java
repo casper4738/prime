@@ -37,6 +37,8 @@ public interface ProjectManager {
 	
 	public Integer getCountProjectMember(Integer projectMember) throws SQLException;
 	
+	public Integer getRoleIdbyEmployeeLoginAndProjectId(Integer employeeId, Integer projectId) throws SQLException;
+	
 	public ProjectBean getProjectById(Integer id) throws SQLException;
 	
 	public ProjectBean getDataProjectMemberByProjectMemberId(Integer projectMemberId) throws SQLException;
@@ -46,6 +48,9 @@ public interface ProjectManager {
 	public List<ProjectBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow) throws SQLException;
 	
 	public List<ProjectBean> getListByColumnAsMember(String columnSearch, String value, Integer startRow, Integer endRow, 
+			Integer employeeId) throws SQLException;
+	
+	public List<ProjectBean> getListByColumnAsHead(String columnSearch, String value, Integer startRow, Integer endRow, 
 			Integer employeeId) throws SQLException;
 	
 	public List<ProjectBean> getListProjectMember(String columnSearch, String value, Integer startRow, Integer endRow, Integer taskId)

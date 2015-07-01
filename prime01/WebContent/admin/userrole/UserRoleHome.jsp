@@ -12,6 +12,7 @@
 	<!-- End CSS -->
 	
 	<!-- JS -->
+	<script src="resources/prime.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
@@ -28,7 +29,7 @@
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage User Role<small>management system</small></h1>
+		<h1>Manage User Role</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li class="active">Manage User Role</li>
@@ -57,12 +58,14 @@
 				<html:hidden name="UserRoleForm" property="tmpId"/>
 				<html:hidden name="UserRoleForm" property="goToPage"/>
 				<html:hidden name="UserRoleForm" property="showInPage"/>
+				<html:hidden name="UserRoleForm" property="isShowAll"/>
 				<html:select name="UserRoleForm" property="columnSearch" styleClass="columnSearch">
 					<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 				</html:select>
+				
 				<html:text name="UserRoleForm" property="search" styleClass="textSearch"/>
-				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('<bean:write name="UserRoleForm" property="task" />')" value='Search'/>
-				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchAll('<bean:write name="UserRoleForm" property="task" />')" value='Show All'/>
+				<input type="button" class="btn bg-olive" style="height:32px" onclick="searchBy('<%=Constants.Task.DOSEARCH%>', 'false')" value='Search'/>
+				<input type="button" class="btn bg-olive" style="height:32px" onclick="searchBy('<%=Constants.Task.DOSEARCH%>', 'true')" value='Show All'/>
 			</html:form>
 		</div>
 		<!-- End Of Search Handler -->
@@ -71,7 +74,7 @@
 		<div class="box-body"><table class="table table-bordered table-striped table-hover" id="table-1">
 			   <thead>
 					<tr>
-						<th>User Role ID</th>
+						<th>User Role ID ${UserRoleForm.columnSearch}</th>
 						<th>User Role Name</th>
 						<th>User Role Description</th>  
 						<th width="55px">Actions</th> 
@@ -93,13 +96,13 @@
 			</logic:notEmpty>
 			</tbody>
 		</table></div>
-           <!-- End Of Table List -->
+         <!-- End Of Table List -->
             
-			<!-- Paging -->
-	        <jsp:include page="/content/Pagination.jsp">
-	   			<jsp:param name="formName" value="UserRoleForm" />
-	   		</jsp:include>
-			<!-- End of Paging -->
+		<!-- Paging -->
+        <jsp:include page="/content/Pagination.jsp">
+   			<jsp:param name="formName" value="UserRoleForm" />
+   		</jsp:include>
+		<!-- End of Paging -->
         </div></div></div>
 	</section>
 </body>

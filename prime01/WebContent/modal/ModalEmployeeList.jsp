@@ -64,6 +64,30 @@
 		function modalSelectHandler(retValue,retForm){
 			modalSubmitReturnValue(retValue,retForm);
 		}
+		
+		$(document).ready(function () {
+          	$('.columnSearch').on('change',function(){
+            	onselect($(this).val());
+            });
+            
+            onselect($('.columnSearch').val());
+        });
+		
+		function onselect(value) {
+			if(value == "GENDER") {
+            	$('#textSearch').css('display', 'none') ;
+            	$('#genderSearch').css('display', 'block') ;
+            	$('#statusSearch').css('display', 'none') ;
+            } else if(value == "STATUS") {
+            	$('#textSearch').css('display', 'none') ;
+            	$('#genderSearch').css('display', 'none') ;
+            	$('#statusSearch').css('display', 'block') ;
+            } else {
+            	$('#textSearch').css('display', 'block') ;
+            	$('#genderSearch').css('display', 'none') ;
+            	$('#statusSearch').css('display', 'none') ;
+            }
+		}
 	</script>
 	<!-- End JS -->
 </head>
@@ -89,12 +113,32 @@
 				    <html:hidden name="ModalForm" property="param4"/>
 				    <html:hidden name="ModalForm" property="param5"/>
 				    <html:hidden name="ModalForm" property="showInPage"/>
-					<html:select name="ModalForm" property="columnSearch">
-						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
-					</html:select>
-					<html:text name="ModalForm" property="search"/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage()" value='Search'/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('All')" value='Show All'/>
+					<table>
+						<tr>
+							<td style="padding-left:5px">
+								<html:select name="ModalForm" property="columnSearch" styleClass="columnSearch">
+									<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
+								</html:select>
+							</td>
+							<td style="padding-left:5px"><html:text name="ModalForm" property="search" styleId="textSearch"/></td>
+							<td style="padding-left:5px">
+								<html:select name="ModalForm" property="genderSearch" styleId="genderSearch" style="width:150px">
+									<html:option value="0">Male</html:option>
+									<html:option value="1">Female</html:option>
+								</html:select>
+							</td>
+							<td style="padding-left:5px">
+								<html:select name="ModalForm" property="statusSearch" styleId="statusSearch" style="width:150px">
+									<html:option value="0">Active</html:option>
+									<html:option value="1">Resign</html:option>
+								</html:select>
+							</td>
+							<td style="padding-left:5px">
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage()" value='Search'/>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('All')" value='Show All'/>
+							</td>
+						</tr>
+					</table>
 				</div>
 				<!-- End Of Search Handler -->
 		
@@ -129,27 +173,9 @@
 			    <!-- End Of Table List -->
 			            
 	            <!-- Paging Number Handler Tag -->
-				<ul class="pagination">
-					<li tabindex="0"><html:link styleClass="paging" href="#" onclick="modalPage(${pageFirst})">First</html:link></li>
-					<li tabindex="1"><html:link styleClass="paging" href="#" onclick="modalPage(${pagePrev})"><<</html:link> </li>
-					
-					<logic:iterate id="p" name="listPage">
-						<logic:equal name="p" value="${pageNow}">
-							<li><html:link styleClass="active" href="#">${p}</html:link> </li>
-						</logic:equal>
-						<logic:notEqual name="p" value="${pageNow}">
-							<li><html:link styleClass="paging" href="#" onclick="modalPage(${p})">${p}</html:link> </li>
-						</logic:notEqual>
-					</logic:iterate>
-					<li><html:link styleClass="paging" href="#" onclick="modalPage(${pageNext})" >>></html:link> </li>
-					<li><html:link styleClass="paging" href="#" onclick="modalPage(${pageLast})" >Last</html:link></li>
-					
-					<html:text name="ModalForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
-					<html:button property="" onclick="modalPage(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
-				</ul>
-				<div class="paginate-2">
-					Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
-				</div>
+				<jsp:include page="/content/Pagination.jsp">
+		   			<jsp:param name="formName" value="ModalForm" />
+		   		</jsp:include>
 				<!-- End Of Paging Number Handler Tag -->
 				</html:form>
         	</div>

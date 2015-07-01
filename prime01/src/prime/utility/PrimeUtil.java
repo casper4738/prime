@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PrimeUtil {
 
 	public static Integer getStartRow(int page, int view, int countRows) {
+		if(page == 0) page = 1;
 		if (view == -1)
 			return 1;
 
@@ -23,6 +24,7 @@ public class PrimeUtil {
 	}
 
 	public static Integer getEndRow(int page, int view, int countRows) {
+		if(page == 0) page = 1;
 		if (view == -1)
 			return countRows;
 		return ((page - 1) * view) + view;

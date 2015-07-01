@@ -8,7 +8,7 @@
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html>
 <head> 
 	<!-- CSS -->
@@ -99,7 +99,7 @@
 	<section class="content">
 	<div class="row">
 		<div class="col-xs-12"><div class="box">
-			<div class="box-header"><h3 class="box-title">Projects</h3></div>
+			<div class="box-header"><h3 class="box-title">Projects Member</h3></div>
 			
 			<p><span class="button-add btn btn-app bg-olive btnCancel" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
 	               <i class="fa fa-edit"></i>Add
@@ -183,9 +183,13 @@
                 	    		</jsp:include>
            	    			</td>
 	                        <td width="150px" align="center">
-	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', '<bean:write name="iter" property="projectId"/>')" >
-		                        <input type="submit" class="btn btn-primary btn-xs" value='Details As Head' 
-		                        	onclick="flyToTaskDetailAsHead('detailsAsHead', '<bean:write name="iter" property="projectId"/>',  '<bean:write name="iter" property="employeeIdReceiver"/>')" >	
+	                        	<logic:equal name="ProjectUserForm" property="projectBean.isAssigner"  value="0">
+	                        		<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', '<bean:write name="iter" property="projectId"/>')" >
+	                        	</logic:equal>
+	                        		
+	                        	<logic:greaterThan name="ProjectUserForm" property="projectBean.isAssigner"  value="0">
+	                        		<input type="submit" class="btn btn-primary btn-xs" value='Details As Head' onclick="flyToTaskDetailAsHead('detailsAsHead', '<bean:write name="iter" property="projectId"/>',  '<bean:write name="iter" property="employeeIdReceiver"/>')" >	
+	                        	</logic:greaterThan>
 	                        </td>
 	                    </tr>
                     </logic:iterate>

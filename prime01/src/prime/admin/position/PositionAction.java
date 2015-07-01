@@ -49,8 +49,8 @@ public class PositionAction extends Action {
 			return mapping.findForward("forward");
 		}
 		
-		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-		List<PositionBean> list = tmpManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());
+		List<PositionBean> list = tmpManager.getListByColumn(pForm.getColumnSearchReal(), pForm.getSearch(),
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 		

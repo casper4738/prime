@@ -13,10 +13,29 @@ public class ModalForm extends ActionForm {
 	private Integer param4;
 	private Integer param5;
 	private String param6 = "";
-	private String search = "";
-	private String columnSearch = "";
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
+
+	private String search = "";
+	private String columnSearch = "";
+	private String statusSearch;
+	private String genderSearch;
+
+	public String getStatusSearch() {
+		return statusSearch;
+	}
+
+	public void setStatusSearch(String statusSearch) {
+		this.statusSearch = statusSearch;
+	}
+
+	public String getGenderSearch() {
+		return genderSearch;
+	}
+
+	public void setGenderSearch(String genderSearch) {
+		this.genderSearch = genderSearch;
+	}
 
 	private UserBean userBean = new UserBean();
 
