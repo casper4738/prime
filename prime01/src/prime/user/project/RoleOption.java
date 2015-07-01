@@ -1,5 +1,5 @@
 package prime.user.project;
-
+ 
 public class RoleOption {
 
 	private Integer roleId;

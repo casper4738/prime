@@ -79,8 +79,12 @@ public interface Constants {
 		}
 		
 		interface REPORT {
-			final String GOTODETAILEMPLOYEE		= "r1";
-			final String GOTODETAILPROJECT		= "r2";
+			final String GOTODETAILEMPLOYEE			= "r1";
+			final String GOTODETAILPROJECT			= "r2";
+			final String GENERATEREPORTEMPLOYEE		= "r3";
+			final String GENERATEREPORTEMPLOYEETASK	= "r4";
+			final String GENERATEREPORTPROJECT		= "r5";
+			final String GENERATEREPORTPROJECTTASK	= "r6";
 		}
 	}
 

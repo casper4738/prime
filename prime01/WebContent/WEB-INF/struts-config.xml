@@ -42,6 +42,9 @@
 		<!-- User Role -->
 		<form-bean name="UserRoleForm"				type="prime.admin.userrole.UserRoleForm"></form-bean>
 		
+		<!-- Report -->
+		<form-bean name="ReportForm" 			    type="prime.report.ReportForm"></form-bean>
+		
 		
 		
 	</form-beans>
@@ -158,8 +161,9 @@
 		
 		<!-- Report Employees -->
 		<action path="/ReportEmployees" name="ReportUserEmployeesForm" type="prime.user.report.employees.ReportEmployeesAction" scope="request">
-			<forward name="success" 		path="/user/report/employees/ReportEmployeesHome.jsp"></forward>
-			<forward name="detailEmployee" 	path="/user/report/employees/ReportEmployeesDetail.jsp"></forward>
+			<forward name="success" 			path="/user/report/employees/ReportEmployeesHome.jsp"></forward>
+			<forward name="detailEmployee"	 	path="/user/report/employees/ReportEmployeesDetail.jsp"></forward>
+			<forward name="showReportEmployee" 	path="/user/report/employees/ReportEmployeesShow.jsp"></forward>
 		</action>
 		
 		<!-- Report Project -->

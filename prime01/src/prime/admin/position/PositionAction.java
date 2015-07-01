@@ -11,7 +11,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import prime.admin.setting.GeneralSettingBean;
+import prime.admin.setting.GeneralSettingManager;
+import prime.admin.setting.GeneralSettingManagerImpl;
 import prime.constants.Constants;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
@@ -22,17 +23,17 @@ public class PositionAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		PositionForm pForm = (PositionForm) form;
 		PositionManager tmpManager = new PositionManagerImpl();
-		GeneralSettingBean tmpSettingManager = new GeneralSettingBean(request);
+		GeneralSettingManager tmpSettingManager = new GeneralSettingManagerImpl();
 		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
 			pForm.getPositionBean().setPositionId(tmpManager.getNewId());
-			request.setAttribute("listPositionLevel", PrimeUtil.getListPositionLevel(tmpSettingManager.getSetting().getLevel()));
+			request.setAttribute("listPositionLevel", PrimeUtil.getListPositionLevel(tmpSettingManager.getGeneralSetting().getGeneralSettingLevel()));
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
 			//##. Edit Data
 			pForm.setPositionBean(tmpManager.getPositionById(pForm.getTmpId()));
-			request.setAttribute("listPositionLevel", PrimeUtil.getListPositionLevel(tmpSettingManager.getSetting().getLevel()));
+			request.setAttribute("listPositionLevel", PrimeUtil.getListPositionLevel(tmpSettingManager.getGeneralSetting().getGeneralSettingLevel()));
 			return mapping.findForward("edit");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			//##.Insert Data and Go to Forward

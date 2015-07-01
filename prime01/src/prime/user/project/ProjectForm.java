@@ -1,7 +1,5 @@
 package prime.user.project;
 
-import java.sql.Date;
-
 import org.apache.struts.action.ActionForm;
 
 import prime.admin.employee.EmployeeBean;

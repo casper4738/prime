@@ -2,24 +2,42 @@ package prime.admin.setting;
 
 public class GeneralSettingBean {
 
-	private Integer level;
-	private Integer timeOut;
-	private Integer minLevelApproval;
+	private Integer generalSettingLevel = 0;
+	private Integer generalSettingTimeOut = 0;
+	private Integer minLevelApproval = 0;
+	private String smtpUsername;
+	private String smtpPassword;
 
-	public Integer getLevel() {
-		return level;
+	public String getSmtpUsername() {
+		return smtpUsername;
 	}
 
-	public void setLevel(Integer level) {
-		this.level = level;
+	public void setSmtpUsername(String smtpUsername) {
+		this.smtpUsername = smtpUsername;
 	}
 
-	public Integer getTimeOut() {
-		return timeOut;
+	public String getSmtpPassword() {
+		return smtpPassword;
 	}
 
-	public void setTimeOut(Integer timeOut) {
-		this.timeOut = timeOut;
+	public void setSmtpPassword(String smtpPassword) {
+		this.smtpPassword = smtpPassword;
+	}
+
+	public Integer getGeneralSettingLevel() {
+		return generalSettingLevel;
+	}
+
+	public void setGeneralSettingLevel(Integer generalSettingLevel) {
+		this.generalSettingLevel = generalSettingLevel;
+	}
+
+	public Integer getGeneralSettingTimeOut() {
+		return generalSettingTimeOut;
+	}
+
+	public void setGeneralSettingTimeOut(Integer generalSettingTimeOut) {
+		this.generalSettingTimeOut = generalSettingTimeOut;
 	}
 
 	public Integer getMinLevelApproval() {

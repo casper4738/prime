@@ -1,15 +1,11 @@
 package prime.user.project;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.catalina.ha.util.IDynamicProperty;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -34,7 +30,7 @@ import prime.utility.PrimeUtil;
 public class ProjectAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		int tmpEmployeeId = 100;
+		Integer tmpEmployeeId = Integer.valueOf(LoginData.getEmployeeData().getEmployeeId());
 		
 		ProjectForm 	pForm 				= (ProjectForm) form;
 		ProjectManager 	tmpProjectManager 	= new ProjectManagerImpl();
@@ -396,9 +392,9 @@ public class ProjectAction extends Action {
 		}
 		
 		int countRows  = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), search);
-		List<ProjectBean> list = tmpProjectManager.getListByColumn(pForm.getColumnSearch(), search,
+		List<ProjectBean> list = tmpProjectManager.getListByColumnAsMember(pForm.getColumnSearch(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
-				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
+				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), tmpEmployeeId);
 		
 		request.setAttribute("listProject", list);
 		request.setAttribute("listSearchColumn", Constants.Search.PROJECT_SEARCHCOLUMNS);

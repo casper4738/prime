@@ -1,3 +1,4 @@
+<%@page import="prime.constants.Constants"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
@@ -16,7 +17,7 @@
 	<html:hidden name="SettingAdminForm" property="message"/>
 </html:form>
 
-<logic:equal name="SettingAdminForm" property="task" value="update">
+<logic:equal name="SettingAdminForm" property="task" value="<%=Constants.Task.DOEDIT %>">
 	<script>flyToForward('success', '<bean:message key="label.message.update"/>')</script>
 </logic:equal>
 
