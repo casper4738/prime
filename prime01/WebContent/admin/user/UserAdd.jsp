@@ -263,11 +263,20 @@
 	                				<td>Sys Level</td>
 	                				<td>:</td>
 	                				<td>
-	                					<html:select name="UserAdminForm" property="userBean.sysLevel" styleClass="form-control" styleId="sysLevel">
+	                					<%-- <html:select name="UserAdminForm" property="userBean.sysLevel" styleClass="form-control" styleId="sysLevel">
 			               					<html:option value='<%=Constants.SystemLevel.ADMIN+""%>'>0 - Admin</html:option>
 			               					<html:option value='<%=Constants.SystemLevel.OPERATOR+""%>'>1 - Operator</html:option>
 			               					<html:option value='<%=Constants.SystemLevel.OPERATOR_MONITOR+""%>'>2 - Operator + Monitor</html:option>
-			               				</html:select>
+			               				</html:select> --%>
+			               					<%-- <div id="isRole" style="display: none">
+				               					<html:text name="UserAdminForm" property="employeeBean.divisionName" styleClass="form-control" disabled="true" styleId="divisionName"/>
+											</div>
+											<div id="chooseDivision" style="display:inline">
+				               					<html:select name="UserAdminForm" property="divisionId" styleClass="form-control" styleId="divisionId">
+					               					<html:option value="NULL">--All--</html:option>
+					               					<html:options collection="listDivision" property="divisionId" labelProperty="divisionName" />
+					               				</html:select>
+					               			</div> --%>
 			               			</td>
 	                			</tr> 
 	                  			<tr>
