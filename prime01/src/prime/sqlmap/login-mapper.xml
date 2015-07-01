@@ -34,11 +34,11 @@
 		SET 
 			LOGIN_SESSION = dbms_crypto.hash(to_clob(SYSDATE), 2),
 			LAST_ACTIVE   = SYSDATE 
-		WHERE USERNAME=#username#
+		WHERE LOWER(USERNAME)=LOWER(#username#)
 	</update>
 	
 	<select id="getLoginSession" resultClass="java.lang.String"  parameterClass="java.lang.String">
-		SELECT LOGIN_SESSION FROM USERS WHERE USERNAME=#username#
+		SELECT LOGIN_SESSION FROM USERS WHERE LOWER(USERNAME)=LOWER(#username#)
 	</select>
 	
 </sqlMap>

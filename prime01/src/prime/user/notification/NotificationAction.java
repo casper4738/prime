@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import prime.constants.Constants;
+import prime.login.LoginData;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -24,20 +25,26 @@ public class NotificationAction extends Action {
 		NotificationForm pForm = (NotificationForm) form;
 		NotificationManager tmpManager = new NotificationManagerImpl();
 		
-		//100 dari session login
-		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),pForm.getSearch(),100);
-		
-		System.out.println(pForm.getColumnSearch() +"--"+ pForm.getSearch());
-		List<NotificationBean> list = tmpManager.getListByColumn(
-				pForm.getColumnSearch(), pForm.getSearch(), PrimeUtil.getStartRow(pForm.getGoToPage(),
-						pForm.getShowInPage(), countRows), PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
-						countRows),100);
-		
-		// ##1.Attribute for Table Show
-		request.setAttribute("listNotification", list);
-		request.setAttribute("listSearchColumn",Constants.Search.NOTIFICATION_SEARCHCOLUMNS);
-		//request.setAttribute("listShowEntries", Constants.PAGINGROWPAGE);
-		setPaging(request, countRows, pForm.getGoToPage(),pForm.getShowInPage());
+		//##0.Only two tipe of Notification Action Task
+		//----a.Show Notification Page [Usually Null or Forward or Success]
+		//----b.Send Notification to Other User Silently ["sendNotification"] --> Not Using Constants ? Will think about it later :)
+		if(("sendNotification").equals(pForm.getTask())){
+			
+		} else {
+			//---.Get Count Rows
+			int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),pForm.getSearch(), LoginData.getEmployeeData().getEmployeeId());
+
+			//---.Set Paging
+			List<NotificationBean> list = tmpManager.getListByColumn(
+					pForm.getColumnSearch(), pForm.getSearch(), PrimeUtil.getStartRow(pForm.getGoToPage(),
+							pForm.getShowInPage(), countRows), PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
+							countRows),100);
+			
+			//---.Attribute for Table Show
+			request.setAttribute("listNotification", list);
+			request.setAttribute("listSearchColumn",Constants.Search.NOTIFICATION_SEARCHCOLUMNS);
+			setPaging(request, countRows, pForm.getGoToPage(),pForm.getShowInPage());
+		}
 		
 		return mapping.findForward("success");
 	}
