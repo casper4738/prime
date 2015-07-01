@@ -9,8 +9,6 @@
 <html>
 <head> 
 	<!-- CSS -->
-	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
@@ -23,9 +21,6 @@
 	<!-- End of CSS -->
 	
 	<!-- JS -->
-	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-	<script src="resources/plugins/jQueryUI/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
-    <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <script src='resources/plugins/fastclick/fastclick.min.js'></script>
     <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
@@ -67,13 +62,6 @@
 				}
 			});
 		}
-		
-    	function activityDetail(task,activityId,status){
-    		document.forms[0].task.value = task;
-    		document.forms[0].tmpId.value = activityId;
-    		document.forms[0].tmpValue.value = status;
-    		document.forms[0].submit();
-    	}
 		
 		//##.Activity Progress
 		function loadActivityProgress(isToday){
