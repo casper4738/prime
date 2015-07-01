@@ -269,7 +269,7 @@ public class EmployeeAction extends Action {
 		} else if(Constants.Task.DOCHANGEPIC.equals(pForm.getTask())){
 			pForm.getEmployeeBean().setFilePic(pForm.getProfpic().getFileData());
 			manager.updateChangePic(pForm.getEmployeeBean().getEmployeeId(),pForm.getEmployeeBean().getFilePic());
-			return mapping.findForward("forward");
+			return null;
 		}
 		
 		String search = "";

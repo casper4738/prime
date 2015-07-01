@@ -59,6 +59,7 @@
 			var division 	= $('#divisionId').val();
 			var hireDate 	= $('#datepicker_hiredate').val();
 			var birthDateFormat = new Date(birthDate);
+			var hireDateFormat = new Date(hireDate);
 			
 			var today = new Date();
 			var tmpValidated 	= true;
@@ -90,7 +91,7 @@
 			}
 			
 		    if (birthDateFormat > today){
-		    	$('#validatorBirthDate').html("Birth Date is not valid");
+		    	$('#validatorBirthDate').html("Birth Date is not greater than today");
 		    	tmpValidated = false;
 		    }
 		    
@@ -123,6 +124,13 @@
 				 tmpValidated = false;
 			}
 			
+			alert (hireDateFormat)
+			alert(today)
+			 if (hireDateFormat > today){
+				$('#validatorHireDate').html("Hire Date is not greater than today");
+		    	tmpValidated = false;
+		    }
+			 
 			if(tmpValidated){
 				 //Do Database Checking, if Success Fly To
 				  $('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Validating employee data");

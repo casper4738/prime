@@ -108,13 +108,13 @@
 		}
 		function doGoToEdit() {
 			var tmpForm = document.forms[0];
-			tmpForm.task.value = "<%=Constants.Task.GOTOEDIT%>";
+			tmpForm.task.value = '<%=Constants.Task.GOTOEDIT%>';
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
 		function doGoToResign() {
 			var tmpForm = document.forms[0];
-			tmpForm.task.value = "<%=Constants.Task.GOTORESIGN%>";
+			tmpForm.task.value = '<%=Constants.Task.GOTORESIGN%>';
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
@@ -157,7 +157,16 @@
 	   	       	  contentType 	: false,
 		          processData 	: false,
 	   	          success : function(msg){
-	   	        	 menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>', "task=&message=Change Picture Successful");
+	   	        	$('#message').html("Change Picture Succesful");
+	   	        	
+	   	        	$('#employee-validating').html("");
+	   			 	$('#btn-edit').show();
+	   			 	$('#btn-resign').show();
+	   			 	$('#btn-cancel').show();
+	   			 	$('#btn-setDayOff').show();
+	   			 	$('#btn-setWeekEnd').show();
+	   			 	$('#btn-delete-DayOff').show();
+	   			 	$('#btn-delete-WeekEnd').show();
 	   	          },
 	   	          
 	   	          error: function(){
@@ -327,7 +336,7 @@
                			</tr>
                			<tr>
                				<td colspan="3">
-               					<span class="message"><bean:write name="EmployeeAdminForm" property="message" /></span>
+               					<span class="message" id="message"><bean:write name="EmployeeAdminForm" property="message" /></span>
                					<table class="form-input" align="center" style="width: 500px;">
 			             			<tr>
 			               				<td width="150px">
