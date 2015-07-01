@@ -86,6 +86,5 @@
 		FROM USER_ROLES
 	    ORDER BY USER_ROLE_ID ASC
 	</select>
-	
-	
+
 </sqlMap>

@@ -23,5 +23,5 @@ public interface UserRoleManager {
 			throws SQLException;
 	
 	public List<UserRoleBean> getListAll() throws SQLException;
-	
+		
 }

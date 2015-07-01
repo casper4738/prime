@@ -11,6 +11,7 @@ function openModalHandler(task){
 }
 
 function doSignOut(){
+	<%-- alert('task=<%=Constants.Task.DOLOGOUT%>'); --%>
 	menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.LOGIN]%>', "task=<%=Constants.Task.DOLOGOUT%>");
 }
 

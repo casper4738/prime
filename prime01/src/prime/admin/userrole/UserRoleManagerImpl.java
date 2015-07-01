@@ -89,4 +89,5 @@ public class UserRoleManagerImpl implements UserRoleManager{
 		return mapper.queryForList("userrole.selectAll", null);
 	}
 	
+	
 }
