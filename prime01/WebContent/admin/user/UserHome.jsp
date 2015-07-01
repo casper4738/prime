@@ -71,12 +71,14 @@
 					<html:hidden name="UserAdminForm" property="goToPage"/>
 					<html:hidden name="UserAdminForm" property="tmpValue"/>
 					<html:hidden name="UserAdminForm" property="showInPage"/>
+					<html:hidden name="UserAdminForm" property="isShowAll"/>
+					
 					<html:select name="UserAdminForm" property="columnSearch" styleClass="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
 					<html:text name="UserAdminForm" property="search" styleClass="textSearch"/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
+					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="UserAdminForm" property="task" />', 'false')" value='Search'/>
+					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="UserAdminForm" property="task" />', 'true')" value='Show All'/>					
 				</html:form>
 			</div>
 			<div class="box-body"><table class="table table-bordered table-striped table-hover" id = "table-1">

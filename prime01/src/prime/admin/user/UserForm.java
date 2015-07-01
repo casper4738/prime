@@ -15,6 +15,24 @@ public class UserForm extends ActionForm {
 	private Integer showInPage = 10;
 	private Integer employeeId;
 	private Integer userRoleId;
+	private Boolean isShowAll = true;
+
+	public Boolean getIsShowAll() {
+		return isShowAll;
+	}
+
+	public void setIsShowAll(Boolean isShowAll) {
+		this.isShowAll = isShowAll;
+	}
+
+	public String getColumnSearchReal() {
+		if (isShowAll) {
+			return "SHOW ALL";
+		} else {
+			return columnSearch;
+		}
+	}
+	
 	public UserBean getUserBean() {
 		return userBean;
 	}
