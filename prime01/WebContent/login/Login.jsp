@@ -67,7 +67,6 @@
 			  $('#btn-submit').click(function(){ 
 	    		  $('#btn-submit').hide();
 	    		  $('#ajax-validating').show();  
-	    		  
 	    		  //Do Login Data checking
 				  document.forms[0].task.value = "<%=Constants.Task.DOLOGIN%>";
 	    		  var str = $('#form-login').serialize();
