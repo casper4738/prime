@@ -37,6 +37,7 @@
     		    	return alert('File upload not supported!');
     		    var F = this.files;
     		    if(F && F[0]) {
+    		    	var pathFile = document.getElementById("input-image").value;
 					var tmppath = URL.createObjectURL(event.target.files[0]);
     		    	for(var i=0; i<F.length; i++){
     		    		readImage( F[i] );
