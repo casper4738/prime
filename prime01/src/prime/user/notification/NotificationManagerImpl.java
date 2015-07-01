@@ -17,20 +17,22 @@ public class NotificationManagerImpl implements NotificationManager{
 		mapper = IbatisHelper.getSqlMapInstance();
 	}
 	
-	public List<NotificationBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow) 
+	public List<NotificationBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId) 
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);			
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
+		map.put("employeeId", employeeId);
 		return mapper.queryForList("notification.getListByCol", map);
 	}
 	
-	public Integer getCountByColumn(String columnSearch, String value) throws SQLException {
+	public Integer getCountByColumn(String columnSearch, String value, Integer employeeId) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("columnSearch", columnSearch+"");
-		map.put("value", value+"");
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);
+		map.put("employeeId", employeeId);
 		return  (Integer) mapper.queryForObject("notification.getCountListByCol", map);
 	}
 	

@@ -3,11 +3,6 @@
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 
-<%
-	//Invalidate Session When We Come Back to this Screen
-	request.getSession().invalidate();
-%>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -38,7 +33,7 @@
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
           </div>
           <div class="form-group has-feedback">
-          	<font color=RED face="Calibri" size="2" id="login-fail"/><i>Fail to do Login...</i></font>
+          	<font color=RED face="Calibri" size="2" id="login-fail"/><i></i></font>
           </div>    
           <div class="row">
             <div class="col-xs-5">
@@ -58,13 +53,13 @@
     <script src="resources/prime.js"></script>
     <script>
       $(document).ready(function(){
-	      	  $('input').iCheck({
-		         checkboxClass: 'icheckbox_square-blue',
-		         radioClass: 'iradio_square-blue',
-		         increaseArea: '20%' // optional
-		      });
-
-	      	  $('#login-fail').hide();
+    	  	  var tmpIsLoginFail = <%=request.getAttribute(Constants.Request.LOGIN_STATUS)%>;
+    	  	  if(tmpIsLoginFail == null){
+  	  		  	  $('#login-fail').hide();
+    	  	  } else {
+    	  		  $('#login-fail').html('<%=request.getAttribute(Constants.Request.LOGIN_STATUS)%>');
+    	  	  }
+    	      
 		      $('#ajax-validating').hide();
 		  	  $('#textbox-username').attr("placeholder","Username");
 		  	  $('#textbox-password').attr("placeholder","Password");
@@ -88,7 +83,7 @@
 	    	        		  $('#btn-submit').show();
 	    		    		  $('#ajax-validating').hide(); 
 	    	        	  } else {
-	    	        		  window.location = "<%=Constants.PAGES_LIST[Constants.Page.MENU]%>";
+	    	        		  window.location.href = "<%=Constants.PAGES_LIST[Constants.Page.MENU]%>";
 	    	        	  }
 	    	          },
 	    	          

@@ -2,7 +2,8 @@ package prime.admin.employee;
 
 import java.sql.Date;
 
-import org.apache.struts.upload.FormFile;
+import org.apache.tomcat.util.codec.binary.Base64;
+import org.apache.tomcat.util.codec.binary.StringUtils;
 
 import prime.admin.holiday.HolidayBean;
 
@@ -35,9 +36,10 @@ public class EmployeeBean extends HolidayBean {
 	private String weekEnd;
 	private String monthYear;
 	private Date mondayDate;
-	private FormFile filePic;
+	private byte[] filePic;
 	private String substituteHead;
 	private String treeId;
+	private String filePicConverted;
 		
 	public EmployeeBean() {
 		setHireDate(new java.sql.Date(new java.util.Date().getTime()));
@@ -206,8 +208,6 @@ public class EmployeeBean extends HolidayBean {
 		this.weekEnd = weekEnd;
 	}
 
-	
-
 	public String getSubstituteHead() {
 		return substituteHead;
 	}
@@ -240,11 +240,19 @@ public class EmployeeBean extends HolidayBean {
 		this.maxStartFrom = maxStartFrom;
 	}
 
-	public FormFile getFilePic() {
+	public byte[] getFilePic() {
 		return filePic;
 	}
 
-	public void setFilePic(FormFile filePic) {
+	public void setFilePic(byte[] filePic) {
 		this.filePic = filePic;
+		
+		StringBuilder tmpSb = new StringBuilder();
+		tmpSb.append(StringUtils.newStringUtf8(Base64.encodeBase64(filePic, false)));
+		this.filePicConverted = tmpSb.toString();
+	}
+	
+	public String getConvertedFilePic(){
+		return this.filePicConverted;
 	}
 }

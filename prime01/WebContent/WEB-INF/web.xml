@@ -7,6 +7,9 @@
 	<welcome-file-list>
 		<welcome-file>Login.do</welcome-file>
 	</welcome-file-list>
+	<session-config>
+  		<session-timeout>5</session-timeout>
+ 	</session-config>
 	<servlet>
 		<servlet-name>action</servlet-name>
 		<servlet-class>org.apache.struts.action.ActionServlet</servlet-class>
