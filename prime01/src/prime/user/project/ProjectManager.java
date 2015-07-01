@@ -31,6 +31,12 @@ public interface ProjectManager {
 	
 	public Double getPercentStatusProject (Integer projectId) throws SQLException;
 	
+	public Integer getProjectMemberIdByAll(ProjectBean e) throws SQLException;
+	
+	public Integer getCountProjectAssigner(Integer projectAssigner) throws SQLException;
+	
+	public Integer getCountProjectReceiver(Integer projectReceiver) throws SQLException;
+	
 	public ProjectBean getProjectById(Integer id) throws SQLException;
 	
 	public ProjectBean getDataProjectMemberByProjectMemberId(Integer projectMemberId) throws SQLException;
@@ -47,7 +53,6 @@ public interface ProjectManager {
 	
 	public List<ProjectBean> getProjectNamebyProjectId(Integer projectId) throws SQLException;
 
-	public Integer getProjectMemberIdByAll(ProjectBean e) throws SQLException;
 	
 	public List<RoleOption> getRoleByProjectMember(Integer employeeId, Integer projectId) throws SQLException;
 	
