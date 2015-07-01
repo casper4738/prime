@@ -18,6 +18,8 @@ import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.holiday.HolidayBean;
 import prime.admin.holiday.HolidayManager;
 import prime.admin.holiday.HolidayManagerImpl;
+import prime.constants.Constants;
+import prime.login.LoginData;
 
 public class DashboardAction extends Action {
 
@@ -28,8 +30,8 @@ public class DashboardAction extends Action {
 
 		DashboardForm pForm = (DashboardForm) form;
 
-		pForm.setEmployeeId(100);
-
+		pForm.setEmployeeId(LoginData.getUserData().getEmployeeId());
+		
 		HolidayManager tmpManager = new HolidayManagerImpl();
 		EmployeeManager empManager = new EmployeeManagerImpl();
 		

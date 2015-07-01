@@ -1,4 +1,5 @@
 <%@page import="prime.constants.Constants"%>
+<%@page import="prime.login.LoginData"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
@@ -48,11 +49,11 @@
 				<div class="user-panel">
 					<div class="pull-left image">
 
-						<img src="image/resize-Lighthouse.jpg" class="img-circle"
+						<img id="profpic3" class="img-circle"
 							alt="User Image" />
 					</div>
 					<div class="pull-left info">
-						<p>Alexander</p>
+						<p><%=LoginData.getEmployeeData().getEmployeeName()%></p>
 						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
 				</div>
@@ -109,7 +110,7 @@
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
-	<script type="text/javascript">
+    <script type="text/javascript">
    	$(document).ready(function(){
    		//##0.Disable AJAX Caching
    		$.ajaxSetup ({
@@ -118,6 +119,17 @@
 		});
    		
    		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>");
+   		
+   		var tmpImage = '<%=LoginData.getEmployeeData().getConvertedFilePic()%>';
+  	  	if(tmpImage == "null"){
+      		  $("#profpic1").attr("src","resources/image/user-photo.png");
+      		  $("#profpic2").attr("src","resources/image/user-photo.png");
+      		  $("#profpic3").attr("src","resources/image/user-photo.png");
+  	  	} else {
+  	  		  $("#profpic1").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
+      		  $("#profpic2").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
+      		  $("#profpic3").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
+  	  	}
 	});
 </script>
 <!-- End JS -->

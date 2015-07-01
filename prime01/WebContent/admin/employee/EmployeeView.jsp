@@ -1,9 +1,9 @@
+<%@page import="java.sql.Date"%>
 <%@page import="prime.constants.Constants"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
-<%@page import="java.text.SimpleDateFormat" %>  
-<%@page import="java.util.Date" %>  
+<%@page import="java.text.SimpleDateFormat" %>
 <%@page import="java.text.DateFormat" %>  
 <%@ page import="prime.admin.employee.EmployeeBean" %>
 <%@ page import="prime.admin.employee.EmployeeManagerImpl" %>
@@ -247,35 +247,44 @@
 						                				
 						                				Date endLastWeek=null;
 						                				//GET DAY WEEK FROM END DATE DAY OFF
-						                				String endDayWeek = tmpEmployeeManager.getDayWeekByEndDate(endDate.toString());
+						                				String endDayWeek = tmpEmployeeManager.getDayWeekByEndDate(endDate.toString()).trim();
+						                				
 						                				out.println(endDayWeek+ "DAYWEEKS");
+						                				out.println(endDate+ "endDate");
+						                				out.println(endDate.getTime()+ "endDateGETTIME");
+						                				out.println(new java.sql.Date(endDate.getTime()) + " endDateConvert");
 						                				if(endDayWeek.equals("MONDAY")){
 						                					// GET DATE LAST MONDAY FROM END DATE
 						                					endLastWeek = endDate;
 						                				}else if(endDayWeek.equals("TUESDAY")){
 						                					tempEndLastWeek= endDate.getTime() - DAY;
 						                					// GET DATE LAST MONDAY FROM END DATE
-						                					endLastWeek = new Date(tempEndLastWeek * 1000);
+						                					endLastWeek = new Date(tempEndLastWeek);
 						                				}else if(endDayWeek.equals("WEDNESDAY")){
 						                					tempEndLastWeek= endDate.getTime() - (DAY*2);
 						                					// GET DATE LAST MONDAY FROM END DATE
-						                					endLastWeek = new Date(tempEndLastWeek * 1000);
+						                					endLastWeek = new Date(tempEndLastWeek);
 						                				}else if(endDayWeek.equals("THURSDAY")){
 						                					tempEndLastWeek= endDate.getTime() - (DAY*3);
 						                					// GET DATE LAST MONDAY FROM END DATE
-						                					endLastWeek = new Date(tempEndLastWeek * 1000);
+						                					endLastWeek = new Date(tempEndLastWeek);
 						                				}else if(endDayWeek.equals("FRIDAY")){
 						                					tempEndLastWeek= endDate.getTime() - (DAY*4);
 						                					// GET DATE LAST MONDAY FROM END DATE
-						                					endLastWeek = new Date(tempEndLastWeek * 1000);
+						                					endLastWeek = new Date(tempEndLastWeek);
 						                				}else if(endDayWeek.equals("SATURDAY")){
 						                					tempEndLastWeek= endDate.getTime() - (DAY*5);
 						                					// GET DATE LAST MONDAY FROM END DATE
-						                					endLastWeek = new Date(tempEndLastWeek * 1000);
+						                					endLastWeek = new Date(tempEndLastWeek);
 						                				}else if(endDayWeek.equals("SUNDAY")){
 						                					tempEndLastWeek= endDate.getTime() - (DAY*6);
 						                					// GET DATE LAST MONDAY FROM END DATE
-						                					endLastWeek = new Date(tempEndLastWeek * 1000);
+						                					endLastWeek = new Date(tempEndLastWeek);
+ 						                					/* SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+ 						                					String fr = sdf.format(endLastWeek);
+ 						                					
+ 						                					java.sql.Date date = new Date */
+ 						                					
 						                				}
 						                				out.println(tempEndLastWeek+ " tempEndLastWeek");
 						                				out.println(endLastWeek+ " endLastWeek");
@@ -302,8 +311,8 @@
 							                				out.println(countInOneWeek+ " countInOneWeek");
 							                				
 							                				//GET COUNTWEEK (HOW MANY WEEK IN RANGE START WEEKEND LAST SETTING -- weekEnd AND END LAST WEEK -- endLastWeek)
-							                				//totalWeek = (startLastWeek.getTime() - endLastWeek.getTime()) / (DAY*7);
-							                				//out.println(totalWeek+ " totalWeek");
+							                				totalWeek = (startLastWeek.getTime() - endLastWeek.getTime()) / (DAY*7);
+							                				out.println(totalWeek+ " totalWeek");
 							                				//countWeek = (int) totalWeek;
 							                				//countWeekEnd = countInOneWeek  * countWeek;
 						                				}else{

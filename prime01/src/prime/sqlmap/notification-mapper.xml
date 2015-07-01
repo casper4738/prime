@@ -15,7 +15,8 @@
         JOIN EMPLOYEES E ON E.EMPLOYEE_ID = NOTIF.SENDER
         JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = NOTIF.RECEIVER
         JOIN NOTIFICATION_TEMPLATES NOTIF_TEMPLATE ON NOTIF_TEMPLATE.NOTIFICATION_TEMPLATE_ID = NOTIF.NOTIFICATION_TEMPLATE_ID
-	    <dynamic prepend="WHERE">
+        WHERE RECEIVER=#employeeId#
+	    <dynamic prepend="AND">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="ID">
 			          UPPER(NOTIF.NOTIFICATION_ID) LIKE UPPER('%'||#value#||'%')
@@ -37,7 +38,8 @@
 	    FROM NOTIFICATIONS NOTIF
         JOIN EMPLOYEES E ON E.EMPLOYEE_ID = NOTIF.SENDER
         JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = NOTIF.RECEIVER
-	    <dynamic prepend="WHERE">
+        WHERE RECEIVER=#employeeId#
+	    <dynamic prepend="AND">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="ID">
 			          UPPER(NOTIF.NOTIFICATION_ID) LIKE UPPER('%'||#value#||'%')

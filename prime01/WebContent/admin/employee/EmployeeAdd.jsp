@@ -33,7 +33,6 @@
                 format: "yyyy-mm-dd"
             });
     		$("#input-image").change(function (e) {
-    			return;
     		    if(this.disabled) 
     		    	return alert('File upload not supported!');
     		    var F = this.files;
@@ -125,8 +124,6 @@
 				 tmpValidated = false;
 			}
 			
-			alert(tmpValidated);
-			
 			if(tmpValidated){
 				 //Do Database Checking, if Success Fly To
 				  $('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Validating employee data");
@@ -139,11 +136,21 @@
 			          success : function(msg){
 							 param = msg.split('#');
 							 
-							 alert(param[0]);
-							 
 							 if(param[0] == "0"){ //Success
-								 alert("TROLLED");
-								dosubmit(); 
+								$('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Uploading employee data");
+							 	var formData = new FormData(document.forms[0]);
+							 	$.ajax({ 
+							          type	  	  : "POST",
+							          url	  	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',  
+							          data	  	  : formData,
+							          contentType : false,
+							          processData : false,
+							          success : function(){
+											menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>', "message=Insert Data Successful");
+							          }
+							 	});
+							 	
+<%-- 							menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>', ); --%>
 							 } else {			   //Failed
 								 $('#employee-validating').html(param[1]);
 							 	 $('#btn-save').show();
@@ -157,7 +164,7 @@
 			          }
 			     });
 			}
-		}	
+		}
 		
 		function readImage(file) {
 		    var reader = new FileReader();
@@ -234,7 +241,7 @@
 		<div class="col-xs-12"><div class="box" align="center">
 				<div class="box-header"><h1 class="box-title"><br/><br/><b>Add New Employee</b></h2><br/><br/></div>
 					<div class="box-body">
-			               	<html:form action="/EmployeeAdmin" method="post" enctype="multipart/form-data">
+			               	<html:form action="/EmployeeAdmin" method="post" styleId="formEmployee" enctype="multipart/form-data">
 			               		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.managerId"/>
@@ -411,8 +418,8 @@
 		                  			</tr>
 			               			<tr>
 			               				<td colspan="3" align="center">
-			               					<input type="button" value="Save" class="btn btn-primary"  onclick="validateForm()"/> 
-			               					<input type="button" value="Cancel" class="btn btn-default" onclick="flyToPage('<%=Constants.Task.BACKTOMAIN%>')"/>					
+			               					<input type="button" value="Save" class="btn btn-primary"  id="btn-save" onclick="validateForm()"/> 
+			               					<input type="button" value="Cancel" class="btn btn-default" id="btn-cancel" onclick="flyToPage('<%=Constants.Task.BACKTOMAIN%>')"/>					
 			               				</td>
 			               			</tr>
 							 </table>

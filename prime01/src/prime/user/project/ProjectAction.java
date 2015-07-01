@@ -21,6 +21,7 @@ import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.role.RoleManager;
 import prime.admin.role.RoleManagerImpl;
 import prime.constants.Constants;
+import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
@@ -42,6 +43,7 @@ public class ProjectAction extends Action {
 		ActivityManager tmpActivityManager	= new ActivityManagerImpl();
 		RoleManager 	tmpRoleManager 		= new RoleManagerImpl();
 		
+		System.out.println("login id "+LoginData.getEmployeeData().getEmployeeId());
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##.Get Data
 			//EmployeeBean tmpTaskAssign 	= tmpEmployeeManager.getEmployeeById(100);

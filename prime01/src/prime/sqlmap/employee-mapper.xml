@@ -3,10 +3,10 @@
 <sqlMap namespace="employee">
 	<insert id="insert" parameterClass="prime.admin.employee.EmployeeBean">
 		INSERT INTO EMPLOYEES
-		(EMPLOYEE_ID , EMPLOYEE_NAME, ADDRESS, CONTACT_NUMBER, EMAIL,
+		(PROFILE_PICTURE, EMPLOYEE_ID , EMPLOYEE_NAME, ADDRESS, CONTACT_NUMBER, EMAIL,
 		 BIRTHDATE, GENDER, HIRE_DATE, DIVISION_ID, POSITION_ID,
 		 HEAD_ID,TREE_ID) VALUES 
-		(#employeeId#, #employeeName#, #address#, #contactNumber#, #email#, #birthdate#, 
+		(#filePic#, #employeeId#, #employeeName#, #address#, #contactNumber#, #email#, #birthdate#, 
 		 #gender#, #hireDate#, 
 		<isEqual property="divisionId" compareValue="0">
 			null
@@ -127,6 +127,7 @@
 	        HIRE_DATE AS hireDate,
 	        CONTACT_NUMBER AS contactNumber,
 	        EMAIL AS email,
+	        PROFILE_PICTURE AS filePic, 
 	        DIV.DIVISION_ID AS divisionId,
 	        DIV.DIVISION_NAME AS divisionName,
 	        POS.POSITION_ID AS positionId,
@@ -183,16 +184,16 @@
 	<select id="getListByColumn" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT 
-		    EMP.EMPLOYEE_ID AS employeeId, 
-		    EMP.EMPLOYEE_NAME AS employeeName,
-		    GENDER AS gender,
-		    ADDRESS AS address,
-		    BIRTHDATE AS birthdate,
-		    HIRE_DATE AS hireDate,
-		    CONTACT_NUMBER AS contactNumber,
-		    EMAIL AS email,
-		    DIVISION_NAME AS divisionName,
-		    POSITION_NAME AS positionName,
+		    EMP.EMPLOYEE_ID 	AS employeeId, 
+		    EMP.EMPLOYEE_NAME 	AS employeeName,
+		    GENDER 				AS gender,
+		    ADDRESS 			AS address,
+		    BIRTHDATE 			AS birthdate,
+		    HIRE_DATE 			AS hireDate,
+		    CONTACT_NUMBER		AS contactNumber,
+		    EMAIL 				AS email,
+		    DIVISION_NAME 		AS divisionName,
+		    POSITION_NAME 		AS positionName,
 		    MANAGER.EMPLOYEE_NAME AS managerName,
 		    RE.RESIGN_DATE AS resignDate
 		FROM EMPLOYEES EMP 
@@ -226,6 +227,11 @@
 				</isEqual> 
 				<isEqual property="columnSearch" compareValue="MANAGER">
 			          UPPER(MANAGER.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="STATUS">
+			         (CASE WHEN NVL(TO_CHAR(RE.RESIGN_DATE, 'yyyy-mm-dd'), '0') = '0' THEN 0
+				           ELSE 1
+				     END) = #value#
 				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
@@ -458,18 +464,18 @@
 	<select id="getListByColumnEmployeeActive" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT 
-	      EMP.EMPLOYEE_ID AS employeeId, 
-	      EMP.EMPLOYEE_NAME AS employeeName,
-	      GENDER AS gender,
-	      ADDRESS AS address,
-	      BIRTHDATE AS birthdate,
-	      HIRE_DATE AS hireDate,
-	      CONTACT_NUMBER AS contactNumber,
-	      EMAIL AS email,
-	      DIVISION_NAME AS divisionName,
-	      POSITION_NAME AS positionName,
-	      MANAGER.EMPLOYEE_NAME AS managerName,
-	      RE.RESIGN_DATE AS resignDate
+			EMP.EMPLOYEE_ID 		AS employeeId, 
+	      	EMP.EMPLOYEE_NAME 		AS employeeName,
+	      	GENDER 					AS gender,
+	      	ADDRESS 				AS address,
+	      	BIRTHDATE 				AS birthdate,
+	      	HIRE_DATE 				AS hireDate,
+	      	CONTACT_NUMBER 			AS contactNumber,
+	      	EMAIL 					AS email,
+	      	DIVISION_NAME 			AS divisionName,
+	      	POSITION_NAME 			AS positionName,
+	      	MANAGER.EMPLOYEE_NAME 	AS managerName,
+	      	RE.RESIGN_DATE 			AS resignDate
 	  FROM EMPLOYEES EMP 
 	  LEFT JOIN DIVISIONS DIV ON DIV.DIVISION_ID = EMP.DIVISION_ID
 	  JOIN POSITIONS POS ON POS.POSITION_ID = EMP.POSITION_ID
@@ -489,7 +495,7 @@
 			             UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 			    </isEqual> 
 			    <isEqual property="columnSearch" compareValue="GENDER">
-			             UPPER(EMP.GENDER) LIKE #value#
+			             UPPER(EMP.GENDER) = #value#
 			    </isEqual> 
 			    <isEqual property="columnSearch" compareValue="EMAIL">
 			             UPPER(EMP.EMAIL) LIKE UPPER('%'||#value#||'%')
