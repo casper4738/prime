@@ -6,7 +6,7 @@
 <bean:define id="status" value="${param.status}" toScope="request" />
 
 <logic:equal name="status" value='<%=Constants.Status.CREATE+""%>'>
-	<span class="label label-warning">Receive</span>
+	<span class="label label-warning">Create</span>
 </logic:equal>
 
 <logic:equal name="status" value='<%=Constants.Status.PROGRESS+""%>'>

@@ -10,11 +10,15 @@
 	
 	<select id="get" resultClass="prime.admin.user.UserBean" parameterClass="java.lang.String">
 		SELECT 
-		USERNAME AS userName,
-		SYSTEM_LEVEL AS sysLevel,
-		STATUS_USER AS statusUser,
-		EMP.EMPLOYEE_NAME AS employeeName,
-		ACTION_DATE AS changeDate
+			USERNAME AS userName,
+			SYSTEM_LEVEL AS sysLevel,
+			STATUS_USER AS statusUser,
+			EMP.EMPLOYEE_NAME AS employeeName,
+			EMP.EMPLOYEE_ID AS employeeId,
+			ACTION_DATE AS changeDate,
+			IS_ACTIVE_DIR AS isActiveDirectory,
+			LOGIN_SESSION AS loginSession,
+			LAST_ACTIVE AS lastActive
 		FROM USERS US
 		JOIN EMPLOYEES EMP ON US.EMPLOYEE_ID = EMP.EMPLOYEE_ID
 		WHERE US.USERNAME=#username#

@@ -1,5 +1,7 @@
 package prime.user.project;
 
+import java.sql.Date;
+
 import org.apache.struts.action.ActionForm;
 
 import prime.admin.employee.EmployeeBean;
@@ -28,21 +30,20 @@ public class ProjectForm extends ActionForm {
 	private Integer divisionId;
 	private Integer positionId;
 	private Integer employeeIdReceiver;
-
-	public TaskBean getTaskBean() {
-		return taskBean;
+	private java.sql.Date startDate;
+	private java.sql.Date untilDate;
+	
+	public ProjectForm() {
+		setStartDate(new java.sql.Date(new java.util.Date().getTime()));
+		setUntilDate(new java.sql.Date(new java.util.Date().getTime()));
 	}
 
-	public void setTaskBean(TaskBean taskBean) {
-		this.taskBean = taskBean;
+	public ProjectBean getProjectBean() {
+		return projectBean;
 	}
 
-	public Integer getTaskId() {
-		return taskId;
-	}
-
-	public void setTaskId(Integer taskId) {
-		this.taskId = taskId;
+	public void setProjectBean(ProjectBean projectBean) {
+		this.projectBean = projectBean;
 	}
 
 	public EmployeeBean getEmployeeBean() {
@@ -53,8 +54,12 @@ public class ProjectForm extends ActionForm {
 		this.employeeBean = employeeBean;
 	}
 
-	public void setRoleId(Integer roleId) {
-		this.roleId = roleId;
+	public TaskBean getTaskBean() {
+		return taskBean;
+	}
+
+	public void setTaskBean(TaskBean taskBean) {
+		this.taskBean = taskBean;
 	}
 
 	public String getTask() {
@@ -89,6 +94,14 @@ public class ProjectForm extends ActionForm {
 		this.message = message;
 	}
 
+	public String getTempRoleId() {
+		return tempRoleId;
+	}
+
+	public void setTempRoleId(String tempRoleId) {
+		this.tempRoleId = tempRoleId;
+	}
+
 	public Integer getRadioChoose() {
 		return radioChoose;
 	}
@@ -121,14 +134,6 @@ public class ProjectForm extends ActionForm {
 		this.tmpId = tmpId;
 	}
 
-	public ProjectBean getProjectBean() {
-		return projectBean;
-	}
-
-	public void setProjectBean(ProjectBean projectBean) {
-		this.projectBean = projectBean;
-	}
-
 	public Integer getProjectId() {
 		return projectId;
 	}
@@ -157,7 +162,7 @@ public class ProjectForm extends ActionForm {
 		return roleId;
 	}
 
-	public void setRoleNumber(Integer roleId) {
+	public void setRoleId(Integer roleId) {
 		this.roleId = roleId;
 	}
 
@@ -169,12 +174,12 @@ public class ProjectForm extends ActionForm {
 		this.employeeId = employeeId;
 	}
 
-	public String getTempRoleId() {
-		return tempRoleId;
+	public Integer getTaskId() {
+		return taskId;
 	}
 
-	public void setTempRoleId(String tempRoleId) {
-		this.tempRoleId = tempRoleId;
+	public void setTaskId(Integer taskId) {
+		this.taskId = taskId;
 	}
 
 	public Integer getDivisionId() {
@@ -199,6 +204,22 @@ public class ProjectForm extends ActionForm {
 
 	public void setEmployeeIdReceiver(Integer employeeIdReceiver) {
 		this.employeeIdReceiver = employeeIdReceiver;
+	}
+
+	public java.sql.Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(java.sql.Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public java.sql.Date getUntilDate() {
+		return untilDate;
+	}
+
+	public void setUntilDate(java.sql.Date untilDate) {
+		this.untilDate = untilDate;
 	}
 
 }

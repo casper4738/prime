@@ -50,6 +50,35 @@
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
+		$(document).ready(function () {
+            $('#start').datepicker({
+                format: "yyyy-mm-dd"
+            });  
+            $('#until').datepicker({
+                format: "yyyy-mm-dd"
+            });  
+            
+            $('.columnSearch').on('change',function(){
+            	onselect($(this).val());
+            });
+            
+            onselect($('.columnSearch').val());
+        });
+		
+		function onselect(value) {
+			if(value == "STARTDATE" || value == "ESTIMATEDATE") {
+            	$('#textSearch').css('display', 'none') ;
+            	$('#date_start').css('display', 'block') ;
+            	$('#date_line').css('display', 'block') ;
+            	$('#date_until').css('display', 'block') ;
+            } else {
+            	$('#textSearch').css('display', 'block') ;
+            	$('#date_start').css('display', 'none') ;
+            	$('#date_line').css('display', 'none') ;
+            	$('#date_until').css('display', 'none') ;
+            }
+		}
+	
 	</script>
 	<!-- End JS -->
 </head>

@@ -1,5 +1,6 @@
 package prime.login;
 
+import java.sql.SQLException;
 import java.util.HashMap;
 
 import prime.utility.IbatisHelper;
@@ -14,22 +15,17 @@ public class LoginManagerImpl implements LoginManager {
 		mapper = IbatisHelper.getSqlMapInstance();
 	}
 
-	public boolean isUserExists(String username) {
+	public boolean isUserExists(String username) throws SQLException {
 		//##0.Temp Variable
 		boolean tmpUserExists = false;
 		
 		//##1.Ibatis Proccess
-		try {
-			tmpUserExists = ((Integer)mapper.queryForObject("login.isUserExists", username) <= 0) ? false : true;	
-		} catch (Exception e){
-			//TO DO :: Add Error Log, if can
-			e.printStackTrace();
-		}
+		tmpUserExists = ((Integer)mapper.queryForObject("login.isUserExists", username) <= 0) ? false : true;	
 		
 		return tmpUserExists;
 	}
 	
-	public boolean isUserValidated(String username, String password){
+	public boolean isUserValidated(String username, String password) throws SQLException {
 		//##0.Temp Variable
 		boolean tmpUserValidated = false;
 		HashMap<String, String> tmpParam = new HashMap<String, String>();
@@ -37,30 +33,34 @@ public class LoginManagerImpl implements LoginManager {
 		tmpParam.put("password", password);
 		
 		//##1.Ibatis Proccess
-		try {
-			tmpUserValidated = ((Integer)mapper.queryForObject("login.isUserValidated", tmpParam) <= 0) ? false : true;	
-		} catch (Exception e){
-			//TO DO :: Add Error Log, if can
-			e.printStackTrace();
-		}
+		tmpUserValidated = ((Integer)mapper.queryForObject("login.isUserValidated", tmpParam) <= 0) ? false : true;	
 		
-		return tmpUserValidated;
-		
+		return tmpUserValidated;	
 	}
 
-	public LoginBean getUserDetails(String username) {
+	public LoginBean getUserDetails(String username) throws SQLException {
 		//##0.Temp Variable
 		LoginBean tmpBean = null;
 		
 		//##1.Ibatis Proccess
-		try {
-			tmpBean = (LoginBean)mapper.queryForObject("login.getUserDetails", username);
-		} catch (Exception e){
-			//TO DO :: Add Error Log, if can
-			e.printStackTrace();
-		}
-		
+		tmpBean = (LoginBean)mapper.queryForObject("login.getUserDetails", username);
+
 		return tmpBean;
 	}
 	
+	public void setLoginSession(String username) throws SQLException{
+		mapper.startTransaction();
+		mapper.update("login.setLoginSession", username);
+		mapper.commitTransaction();	
+	}
+	
+	public String getLoginSession(String username) throws SQLException{
+		//##0.Temp Variable
+		String tmpBean = "";
+		
+		//##1.Ibatis Proccess
+		tmpBean = (String)mapper.queryForObject("login.getLoginSession", username);
+
+		return tmpBean;
+	}
 }

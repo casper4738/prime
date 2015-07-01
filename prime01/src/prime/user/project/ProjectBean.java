@@ -32,6 +32,9 @@ public class ProjectBean extends EmployeeBean {
 	public ProjectBean() {
 		roleBean = new RoleBean();
 		taskBean = new TaskBean();
+		
+		setProjectStartDate(new java.sql.Date(new java.util.Date().getTime()));
+		setProjectEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
 	}
 
 	public Integer getProjectId() {

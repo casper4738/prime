@@ -44,6 +44,7 @@ public interface Constants {
 		static final String DOEDITPOSITION 		= "t37";
 		static final String DOVALIDATE1			= "t38";
 		static final String DOVALIDATE2			= "t39";
+		static final String DOLOGOUT			= "t40";
 		
 		interface PROJECT {
 			final String GOTOPROJECTDETAIL	= "p01";
@@ -78,7 +79,8 @@ public interface Constants {
 		}
 		
 		interface REPORT {
-			final String GOTOTDETAILEMPLOYEE		= "r1";
+			final String GOTODETAILEMPLOYEE		= "r1";
+			final String GOTODETAILPROJECT		= "r2";
 		}
 	}
 
@@ -86,13 +88,14 @@ public interface Constants {
 	static interface Search {
 		final Map<String, String> EMPLOYEE_SEARCHCOLUMNS = Collections.unmodifiableMap(
 	        new LinkedHashMap<String, String>() {{
-	        	put("NAME", "EMPLOYEE NAME");
 	        	put("ID", "EMPLOYEE ID");	        	
-	        	put("GENDER", "GENDER (0=M; 1;F)");
+	        	put("NAME", "EMPLOYEE NAME");
+	        	put("GENDER", "GENDER");
 	        	put("EMAIL", "EMAIL");
 	        	put("DIVISION", "DIVISION");
 	        	put("POSITION", "POSITION");
 	        	put("MANAGER", "MANAGER");
+	        	put("STATUS", "STATUS");
 	        }
 	    });
 		
@@ -149,6 +152,10 @@ public interface Constants {
 			new LinkedHashMap<String, String>() {{
 				put("NAME", "Project Name");
 				put("DESCRIPTION", "Project Description");
+				put("PM", "Project Manager");
+				put("PROPOSED", "Proposed By");
+				put("STARTDATE", "Project Start Date");
+				put("ESTIMATEDATE", "Project Estimate Date");
 			}
 		});
 		
@@ -288,14 +295,20 @@ public interface Constants {
 		String FAILLOGIN_SOMEFAILURE		= "Some failure is happening, please contact your administrator for further info !";
 		String FAILLOGIN_EMPTYDATA			= "Please insert your username and password before proceed !";
 		String FAILLOGIN_ERROR				= "Something wrong with the system, please contact your administrator for further info !";
+		String FAILLOGIN_SESSIONEXPIRED		= "Your Session has expired, please login again";
+		String FAILLOGIN_SESSIONKICKED		= "Looks like there's someone already logged in with this account";
+		
 		String FAILLOAD_CONTENT				= "Fail to load content, something must be wrong at here...";
 		String TABLE_EMPTY					= "No Data to be Shown";
 		String TABLE_HEAD_EMPTY				= "Employee Head Not Found. Please Select Another Position  !";
 	}
 	
-	//##F.Session Attribute
+	//##F.Request and Session Attribute
+	static interface Request {
+		static String LOGIN_STATUS = "f1";
+	}
 	static interface Session{
-		static String USERDATA = "t1";
+		static String ID				= "t1";
 	}
 	
 	//##G.Active Directory
@@ -328,13 +341,18 @@ public interface Constants {
 															"UserMenu.do",			 //12
 															"UserRole.do",			 //13
 															
+
 															"DashboardUser.do",		 //14
 															"ProjectUser.do",		 //15
 															"TaskHeadUser.do",		 //16
 															"TaskSubordinateUser.do",//17
 															"ReportEmployees.do",	 //18
 															"Notification.do", 	 	 //19
-															"Modal.do"				 //20
+															"Modal.do",				 //20
+
+															"ProjectUserAsHead.do",	 //21
+															"ReportProject.do"		 //22
+
 												};
 	static interface Page {
 		static int LOGIN				= 0;
@@ -352,14 +370,19 @@ public interface Constants {
 		static int ADMIN_USERMENU 		= 12;
 		static int ADMIN_USERROLE 		= 13;
 		
+
 		static int USER_DASHBOARD		= 14;
 		static int USER_PROJECT			= 15;
 		static int USER_TASK_HEAD		= 16;
 		static int USER_TASK_SUBORDINATE= 17;
 		static int USER_REPORT_EMPLOYEES= 18;
-		static int USER_VIEWNOTIF		= 19;
+
 		
-		static int MODAL				= 20;
+		static int USER_PROJECT_HEAD	= 19;
+		static int USER_REPORT_PROJECT	= 20;
+		static int USER_VIEWNOTIF		= 21;
+		
+		static int MODAL				= 22;
 	}
 	
 	//##K.Daily Time Constants

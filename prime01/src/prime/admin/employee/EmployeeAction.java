@@ -13,6 +13,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -50,9 +51,6 @@ public class EmployeeAction extends Action {
 		PositionManager tmpPositionManager = new PositionManagerImpl();
 		
 		System.out.println("Task = " + pForm.getTask());
-
-		System.out.println("MASUK SINI " + pForm.getProfpic() + "AA");	
-		System.out.println("TROLOLOL");
 		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
@@ -105,8 +103,6 @@ public class EmployeeAction extends Action {
 			request.setAttribute("listMonthYear", monthsList);
 			return mapping.findForward("weekend");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
-			System.out.println("DO ADDD");
-			
 			pForm.getEmployeeBean().setEmployeeId(manager.getNewId());
 		
 			if(pForm.getManagerId()!=0){
@@ -117,12 +113,17 @@ public class EmployeeAction extends Action {
 			
 			pForm.getEmployeeBean().setManagerId(pForm.getManagerId());
 			pForm.getEmployeeBean().setTreeId(manager.getTreeIdByEmployeeId(pForm.getManagerId())+pForm.getEmployeeBean().getEmployeeId());
-			//manager.insert(pForm.getEmployeeBean());
+			pForm.getEmployeeBean().setFilePic(pForm.getProfpic().getFileData());
+			manager.insert(pForm.getEmployeeBean());
 			
 			System.out.println("MASUK SINI " + pForm.getProfpic() + "AA");	
 			System.out.println("Profpic = " + pForm.getProfpic().getFileName());
 			System.out.println(" _ " + pForm.getProfpic().getFileSize());
 			System.out.println(" _ " + pForm.getProfpic().getFileData());
+			System.out.println(" _ " + pForm.getProfpic().getContentType());
+	
+			//manager.insert(pForm.getEmployeeBean());
+			
 			//manager.insertToBlob(pForm.getProfpic().getFileData());
 			//System.out.println("LALA = " + manager.selectBlob());
 			//request.setAttribute("picpic", manager.selectBlob());
@@ -240,7 +241,7 @@ public class EmployeeAction extends Action {
 			tmpOut.print(tmpResponse);
 			tmpOut.flush();
 			return null;
-		}
+		} 
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
 		

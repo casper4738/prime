@@ -45,6 +45,35 @@
 			tmpForm.employeeIdReceiver=valueId;
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
+		
+		$(document).ready(function () {
+            $('#start').datepicker({
+                format: "yyyy-mm-dd"
+            });  
+            $('#until').datepicker({
+                format: "yyyy-mm-dd"
+            });  
+            
+            $('.columnSearch').on('change',function(){
+            	onselect($(this).val());
+            });
+            
+            onselect($('.columnSearch').val());
+        });
+		
+		function onselect(value) {
+			if(value == "STARTDATE" || value == "ESTIMATEDATE") {
+            	$('#textSearch').css('display', 'none') ;
+            	$('#date_start').css('display', 'block') ;
+            	$('#date_line').css('display', 'block') ;
+            	$('#date_until').css('display', 'block') ;
+            } else {
+            	$('#textSearch').css('display', 'block') ;
+            	$('#date_start').css('display', 'none') ;
+            	$('#date_line').css('display', 'none') ;
+            	$('#date_until').css('display', 'none') ;
+            }
+		}
 	
 		/* function dari indra */
 		/* $(document).ready(function () {
@@ -72,16 +101,15 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title">Projects</h3></div>
 			
-			<p><span class="button-add btn btn-app bg-olive btnCancel" onclick="javascript:flyToPage('<%=Constants.Task.GOTOADD%>')">
+			<p><span class="button-add btn btn-app bg-olive btnCancel" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
 	               <i class="fa fa-edit"></i>Add
-	              </span>
-            <p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
+           		</span>
+           	<p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
             
 			<!-- Search Handler Tag -->
 			<div class="show-in-page">
-				
 				Show per page
-				<html:select property="showInPage" name="ProjectUserForm">
+				<html:select property="showInPage" name="ProjectUserForm" onchange="change(this.value)">
 					<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 				</html:select> 
 			</div>
@@ -92,21 +120,47 @@
 					<html:hidden name="ProjectUserForm" property="projectBean.projectLastStatus"/>
 					<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver"/>
 					<html:hidden name="ProjectUserForm" property="employeeIdReceiver"/>
-					<html:select name="ProjectUserForm" property="columnSearch">
-						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
-					</html:select>
-					<html:text name="ProjectUserForm" property="search"/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('search')" value='Search'/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('search')" value='Show All'/>
+					<html:hidden name="ProjectUserForm" property="goToPage"/>
+					<html:hidden name="ProjectUserForm" property="showInPage"/>
+					<table>
+						<tr>
+							<td style="padding-left:5px"><html:select name="ProjectUserForm" property="columnSearch" styleClass="form-control columnSearch">
+									<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
+								</html:select>
+							</td>
+							<td style="padding-left:5px"><html:text name="ProjectUserForm" property="search" styleClass="form-control textSearch" styleId="textSearch"/></td>
+							<td style="padding-left:5px">
+								<div id="date_start">
+								<div class="input-group" style="width:140px"><div class="input-group-addon"><i class="fa fa-calendar" ></i></div>
+      				  					<html:text name="ProjectUserForm" property="startDate" styleClass="form-control pull-right" styleId="start"/>
+      				  				</div>
+      				  				</div>
+      				  			</td>
+							<td style="padding-left:5px"><div id="date_line">-</div></td>
+							<td style="padding-left:5px">
+								<div id="date_until">
+								<div class="input-group" style="width:140px"><div class="input-group-addon"><i class="fa fa-calendar" ></i></div>
+      				  					<html:text name="ProjectUserForm" property="untilDate" styleClass="form-control pull-right" styleId="until" />
+      				  				</div>
+      				  				</div>
+      				  			</td>
+							<td style="padding-left:5px">
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
+							</td>
+						</tr>
+					</table>
 				</html:form>
 			</div>
 			<!-- End Of Search Handler -->
 			
+			<!-- Table List -->
 			<div class="box-body"><table id="table-1" class="table table-bordered table-striped table-hover">
 				<thead><tr>
 					<th width="100px">Project Name</th>
 					<th>Description</th>
-					<th width="100px">Project Assigner</th>
+					<th width="100px">Project Manager</th>
+					<th width="100px">Proposed By</th>
 					<th width="65px">Start Date</th>
 					<th width="65px">Estimate Date</th>	
 					<th width="30px">Status</th>				
@@ -119,16 +173,15 @@
 	                	<tr>
 	                	    <td><bean:write name="iter" property="projectName"/></td>
 	                	    <td><bean:write name="iter" property="projectDescription"/></td>
-	                	    <td><bean:write name="iter" property="projectAssignerName"/> 
-	                	    	| <bean:write name="iter" property="projectReceiverName"/> 
-	                	    </td>
+	                	    <td><bean:write name="iter" property="projectReceiverName"/></td>
+	                	    <td><bean:write name="iter" property="projectAssignerName"/></td>
 	                	    <td align="center"><bean:write name="iter" property="projectStartDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center"><bean:write name="iter" property="projectEstimateDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center">
 		                	    <jsp:include page="/content/Status.jsp">
                 	    			<jsp:param name="status" value="${iter.projectLastStatus}" />
                 	    		</jsp:include>
-              	    			</td>
+           	    			</td>
 	                        <td width="150px" align="center">
 	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', '<bean:write name="iter" property="projectId"/>')" >
 		                        <input type="submit" class="btn btn-primary btn-xs" value='Details As Head' 
@@ -139,13 +192,13 @@
 					</logic:notEmpty>
                   </tbody>
             </table></div>
-			
+            <!-- End Of Table List -->
+		            
 			<!-- Paging -->
             <jsp:include page="/content/Pagination.jsp">
     			<jsp:param name="formName" value="ProjectUserForm" />
     		</jsp:include>
 			<!-- End of Paging -->
-			
         </div>
 		</div></div>
 	</section>

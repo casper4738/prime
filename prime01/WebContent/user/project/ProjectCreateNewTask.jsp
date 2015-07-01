@@ -8,6 +8,7 @@
 <head> 
 	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+	<script src="resources/prime.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
             $('#start-date').datepicker({
@@ -17,6 +18,22 @@
                 format: "yyyy-mm-dd"
             });
         });
+		
+		function validateForm() {
+			var taskName = checkNull($('#taskName'), $('#err-taskName'), "Task Name");
+			
+			var checkDate = checkForDate($('#start-date'), $('#estimate-date'), $('#err-startDate'), $('#err-estimateDate'), "Task Start Date", "Task Estimate Date");
+			var startDate = checkNull($('#start-date'), $('#err-startDate'), "Task Start Date");
+			var estimateDate = checkNull($('#estimate-date'), $('#err-estimateDate'), "Task Estimate Date");
+			
+			if(taskName || startDate || estimateDate) {
+				alert("error lho");
+			} else {
+				alert("masuk")
+				dosubmit();
+			}
+			
+		}
 	</script>
 </head>
 <body class="skin-blue sidebar-mini">
@@ -44,12 +61,16 @@
                 			<tr>
                 				<td  width="200px">Task Name</td>
                 				<td>:</td>
-                				<td><html:text name="ProjectUserForm" property="projectBean.taskBean.taskName" styleClass="form-control"/></td>
+                				<td><html:text name="ProjectUserForm" property="projectBean.taskBean.taskName" styleClass="form-control" styleId="taskName"/></td>
+                			</tr>
+                			<tr><td></td>
+                				<td></td>
+                				<td><span id="err-taskName" class="error-validator"></span></td>
                 			</tr>
                 			<tr>
                 				<td>Member Name</td>
                 				<td>:</td>
-                				<td><html:text name="ProjectUserForm" property="projectBean.employeeName" styleClass="form-control" disabled="true" /></td>
+                				<td><html:text name="ProjectUserForm" property="projectBean.employeeName" styleClass="form-control" disabled="true" styleId="employeeName" /></td>
                 			</tr>
                 			<tr>
                 				<td>Role</td>
@@ -67,25 +88,33 @@
                 					</div>
                					</td>
                 			</tr>
+                			<tr><td></td>
+                				<td></td>
+                				<td><span id="err-startDate" class="error-validator"></span></td>
+                			</tr>
                 			<tr>
                 				<td>Estimate Date</td>
                 				<td>:</td>
                 				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                 					<html:text name="ProjectUserForm" property="projectBean.taskBean.taskEstimateDate" styleClass="form-control" styleId="estimate-date"/>
-							</div>
-						</td>
+									</div>
+								</td>
+                			</tr>
+                			<tr><td></td>
+                				<td></td>
+                				<td><span id="err-estimateDate" class="error-validator"></span></td>
                 			</tr>
                 			
                 			
                 			<tr>
-                				<td>Project Description</td>
+                				<td>Task Note</td>
                 				<td>:</td>
                 				<td><html:textarea name="ProjectUserForm" property="projectBean.taskBean.taskDescription" styleClass="form-control"></html:textarea></td>
                 			</tr>
                 			
                 			<tr>
                 				<td colspan="3" align="center">
-                					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()"/>
+                					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()"/>
                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                 				</td>
                 			</tr>

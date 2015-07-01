@@ -76,4 +76,37 @@ public class PrimeUtil {
 	        return new Date(0);
 	    }
 	}
+
+	public static Integer getCompareTo(long time1, long time2) {
+		java.util.Date date1 = new java.util.Date(time1);
+		java.util.Date date2 = new java.util.Date(time2);
+		
+		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		 	java.util.Date xdate1 = sdf.parse(sdf.format(date1));
+		 	java.util.Date xdate2 = sdf.parse(sdf.format(date2));
+			return xdate1.compareTo(xdate2);
+		} catch (Exception e) {
+		}
+		return 0;
+	}
+	
+
+	public static Integer getDay(String weekend) {
+		if("SUNDAY".equals(weekend.toUpperCase())) return 1;
+		else if("MONDAY".equals(weekend.toUpperCase())) return 2;
+		else if("TUESDAY".equals(weekend.toUpperCase())) return 3;
+		else if("WEDNESDAY".equals(weekend.toUpperCase())) return 4;
+		else if("THURSDAY".equals(weekend.toUpperCase())) return 5;
+		else if("FRIDAY".equals(weekend.toUpperCase())) return 6;
+		else if("SATURDAY".equals(weekend.toUpperCase())) return 7;
+		return 0;
+	}
+	
+	public static Integer getDayBetweenDate(Date date1, Date date2) {
+		long time 		= Math.abs(date1.getTime() - date2.getTime());
+		long day 		= time / (24 * 60 * 60 * 1000);
+		return Integer.parseInt((day+1)+"");
+	}
+		
 }

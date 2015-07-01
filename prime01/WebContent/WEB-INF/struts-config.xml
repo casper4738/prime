@@ -19,6 +19,7 @@
 		<form-bean name="TaskSubordinateUserForm" 	type="prime.user.task.TaskSubordinateForm"></form-bean>		
 		<form-bean name="DashboardUserForm" 		type="prime.user.dashboard.DashboardForm"></form-bean>
 		<form-bean name="ReportUserEmployeesForm" 	type="prime.user.report.employees.ReportEmployeesForm"></form-bean>
+		<form-bean name="ReportUserProjectForm" 	type="prime.user.report.project.ReportProjectForm"></form-bean>
 		
 		<!-- Login -->
 		<form-bean name="LoginForm" 				type="prime.login.LoginForm"></form-bean>
@@ -159,6 +160,12 @@
 		<action path="/ReportEmployees" name="ReportUserEmployeesForm" type="prime.user.report.employees.ReportEmployeesAction" scope="request">
 			<forward name="success" 		path="/user/report/employees/ReportEmployeesHome.jsp"></forward>
 			<forward name="detailEmployee" 	path="/user/report/employees/ReportEmployeesDetail.jsp"></forward>
+		</action>
+		
+		<!-- Report Project -->
+		<action path="/ReportProject" name="ReportUserProjectForm" type="prime.user.report.project.ReportProjectAction" scope="request">
+			<forward name="success" 		path="/user/report/project/ReportProjectHome.jsp"></forward>
+			<forward name="detailProject" 	path="/user/report/project/ReportProjectDetail.jsp"></forward>
 		</action>
 		
 		<!-- Login -->

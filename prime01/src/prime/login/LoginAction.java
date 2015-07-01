@@ -1,13 +1,8 @@
 package prime.login;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.Date;
 
-import javax.servlet.RequestDispatcher;
-import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -17,6 +12,12 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.employee.EmployeeBean;
+import prime.admin.employee.EmployeeManager;
+import prime.admin.employee.EmployeeManagerImpl;
+import prime.admin.user.UserBean;
+import prime.admin.user.UserManager;
+import prime.admin.user.UserManagerImpl;
 import prime.constants.Constants;
 import prime.utility.ActiveDirectoryManager;
 
@@ -27,7 +28,6 @@ public class LoginAction extends Action {
 		//##0.Temp Variable
 		LoginForm tmpForm = (LoginForm) form;
 		LoginManager tmpManager = new LoginManagerImpl();
-		HttpSession tmpSession = request.getSession(true);
 		ActionForward tmpAction = null;
 		
 		//##1.Check Task
@@ -87,8 +87,21 @@ public class LoginAction extends Action {
 				case 2 :
 					tmpLoginResponse = "1#";
 					
+					//Set Login Session to DB and Update Last Active Time
+					tmpManager.setLoginSession(tmpUsername);
+					
+					//Refetch Data and Set Session
+					UserManager tmpUserData = new UserManagerImpl();
+					UserBean tmpUserBean = tmpUserData.getUserByUsername(tmpUsername);
+					
+					EmployeeManager tmpEmployeeData = new EmployeeManagerImpl();
+					EmployeeBean tmpEmployeeBean = tmpEmployeeData.getEmployeeById(tmpUserBean.getEmployeeId());
+
+					LoginData.setUserBean(tmpUserBean);
+					LoginData.setEmployeeBean(tmpEmployeeBean);
+					
 					//If Success, Prepare Session
-					request.getSession(true).setAttribute(Constants.Session.USERDATA, tmpUserDetails);
+					request.getSession(true).setAttribute(Constants.Session.ID, tmpUserBean.getloginSession());
 					break;
 				case 3 :
 					tmpLoginResponse = "0#" + Constants.Response.FAILLOGIN_USERLOCKED;
@@ -105,6 +118,18 @@ public class LoginAction extends Action {
 			tmpOut.print(tmpLoginResponse);
 			tmpOut.flush();
 			tmpAction = null;
+		} else if(Constants.Task.DOLOGOUT.equals(tmpForm.getTask())) {
+			request.getSession().invalidate();
+			LoginData.clear();
+
+	    	if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
+			     PrintWriter out = response.getWriter();
+			     out.println("<script type=\"text/javascript\">");
+			     out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.LOGIN] + "';");
+			     out.println("</script>");
+		    } else {  
+		    	response.sendRedirect(Constants.PAGES_LIST[Constants.Page.LOGIN]);
+		    }
 		} else {
 			//---.For First Time Loading
 			tmpAction = mapping.findForward("success");

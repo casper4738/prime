@@ -31,7 +31,7 @@ public class ReportEmployeesAction extends Action {
 		ReportEmployeesManager tmpManager = new ReportEmployeesManagerImpl();
 		TaskManager 	tmpTaskManager 		= new TaskManagerImpl();
 		
-		if(Constants.Task.REPORT.GOTOTDETAILEMPLOYEE.equals(pForm.getTask())){
+		if(Constants.Task.REPORT.GOTODETAILEMPLOYEE.equals(pForm.getTask())){
 			//##. Get Data
 			pForm.setReportEmployeesBean(tmpManager.getEmployeeById(pForm.getEmployeeId()));
 			int countRows  = tmpTaskManager.getCountByColumnSubordinate(pForm.getColumnSearch(), pForm.getSearch(), pForm.getEmployeeId());
@@ -40,7 +40,6 @@ public class ReportEmployeesAction extends Action {
 					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), 
 					pForm.getEmployeeId());
 			
-			System.out.println(list);
 			request.setAttribute("listTask", list);
 			request.setAttribute("listSearchColumn", Constants.Search.TASK_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
