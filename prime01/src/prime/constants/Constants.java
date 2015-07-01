@@ -273,6 +273,7 @@ public interface Constants {
 		String FAILLOAD_CONTENT				= "Fail to load content, something must be wrong at here...";
 		String TABLE_EMPTY					= "No Data to be Shown";
 		String TABLE_HEAD_EMPTY				= "Employee Head Not Found. Please Select Another Position  !";
+		String FAIL_DO						= "Fail to do latest action. Please contact developer for Further Information";
 	}
 	
 	//##F.Session Attribute

@@ -45,7 +45,7 @@ public class DashboardAction extends Action{
 		//##1.Start Task Selection
 		if("chooseActivity".equals(pForm.getTask())) {
 			//Parameter pertama adalah session login employee id
-			int countRows = tmpManager.getCountToDoListById(tmpEmployeeID,pForm.getColumnSearch(),pForm.getSearch());
+			int countRows = tmpManager.getCountListActivityById(tmpEmployeeID,pForm.getColumnSearch(),pForm.getSearch());
 			List<ActivityBean> list = tmpManager.getListActivityById(tmpEmployeeID,pForm.getColumnSearch(), 
 																	 pForm.getSearch(), PrimeUtil.getStartRow(
 																	 pForm.getGoToPage(), pForm.getShowInPage(), countRows),
@@ -54,7 +54,7 @@ public class DashboardAction extends Action{
 			request.setAttribute("listActivity", list);
 			request.setAttribute("listSearchColumn", Constants.Search.ACTIVITY_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
-			setPaging(request, pForm, countRows, pForm.getGoToPage(),
+			setPaging(request, countRows, pForm.getGoToPage(),
 					  pForm.getShowInPage());
 			tmpAction = mapping.findForward("add");
 		}else if("addToDoList".equals(pForm.getTask())){
@@ -62,48 +62,63 @@ public class DashboardAction extends Action{
 			tmpAction = mapping.findForward("success");
 		}else if("delete".equals(pForm.getTask())){
 			tmpManager.deleteToDoList(tmpEmployeeID,pForm.getTmpId());
-			tmpAction = mapping.findForward("success");
+			tmpAction = null;
+			
+			//tmpAction = mapping.findForward("success");
 		}else if("addActivity".equals(pForm.getTask())){
 			tmpManager.insertActivityDetail(tmpEmployeeID,pForm.getTmpId(), pForm.getTmpValue(), "START");
-			tmpAction = mapping.findForward("success");
+			tmpAction = null;
+			
+			//tmpAction = mapping.findForward("success");
 		}else if("pauseActivity".equals(pForm.getTask())){
 			tmpManager.insertActivityDetail(tmpEmployeeID,pForm.getTmpId(), pForm.getTmpValue(), "PAUSE");
-			tmpAction = mapping.findForward("success");
+			tmpAction = null;
+			
+			//tmpAction = mapping.findForward("success");
 		}else if("finishActivity".equals(pForm.getTask())){
 			tmpManager.insertActivityDetail(tmpEmployeeID,pForm.getTmpId(), pForm.getTmpValue(), "FINISH");
-			tmpAction = mapping.findForward("success");
+			tmpAction = null;
+			//tmpAction = mapping.findForward("success");
 		}else if("refreshActivityProgress".equals(pForm.getTask())){
 			refreshActivityProgressList(request, response, pForm, tmpManager);
 			tmpAction = null;
+		}else if("refreshToDoList".equals(pForm.getTask())){
+			refreshToDoList(request, pForm, tmpManager);
+			tmpAction = mapping.findForward("todolist");
 		}
 
 		//##.Basic Operation that must be repeated
-		refreshToDoList(request, pForm, tmpManager);
 		prepareCalendar(request, response);
 		
 		return tmpAction;
 	}
 	
-	private void setPaging(HttpServletRequest request, DashboardForm pForm,
+	private void setPaging(HttpServletRequest request,
 			int countRows, int page, int view) throws SQLException {
 		PaginationUtility pageUtil = new PaginationUtility();
 		pageUtil.setCountRows(countRows);
 		pageUtil.setView(view);
 
-		request.setAttribute("totalData", countRows);
 		request.setAttribute("listPage", pageUtil.getListPaging(page));
 		request.setAttribute("pageNow", pageUtil.getPage());
 		request.setAttribute("pageFirst", 1);
 		request.setAttribute("pageLast", pageUtil.getSumOfPage());
 		request.setAttribute("pagePrev", pageUtil.getPagePrev());
 		request.setAttribute("pageNext", pageUtil.getPageNext());
-
-		pForm.setGoToPage(pageUtil.getPage());
+		request.setAttribute("listMaxDataPerPage", Constants.PAGINGROWPAGE);
 	}
 	
 	private void refreshToDoList(HttpServletRequest request, DashboardForm pForm, ActivityManager manager) throws SQLException {
-		List<ActivityBean> list = manager.getToDoListById(101);
+		int countRows  = manager.getCountToDoListById(101);
+		
+		List<ActivityBean> list = manager.getToDoListById(PrimeUtil.getStartRow(
+				 pForm.getGoToPage(), pForm.getShowInPage(), countRows),
+				 PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
+				 countRows),101);
 		request.setAttribute("listActivity", list);
+		
+
+		setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 	}
 	
 	private void refreshActivityProgressList(HttpServletRequest request, HttpServletResponse response, DashboardForm pForm, ActivityManager manager) throws SQLException, IOException {

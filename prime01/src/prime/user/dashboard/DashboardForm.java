@@ -12,7 +12,7 @@ public class DashboardForm extends ActionForm {
 	private String columnSearch;
 	private String message;
 	private Integer goToPage = 1;
-	private Integer showInPage = 10;
+	private Integer showInPage = 6;
 	private Integer tmpId;
 	private Integer tmpValue;
 	private String currentDate;

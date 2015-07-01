@@ -21,9 +21,9 @@ import prime.admin.position.PositionManagerImpl;
 import prime.admin.user.UserManager;
 import prime.admin.user.UserManagerImpl;
 import prime.constants.Constants;
-import prime.login.LoginManager;
-import prime.login.LoginManagerImpl;
-import prime.utility.ActiveDirectoryManager;
+import prime.user.activity.ActivityBean;
+import prime.user.activity.ActivityManager;
+import prime.user.activity.ActivityManagerImpl;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -36,7 +36,7 @@ public class ModalAction extends Action {
 		//---.Normally Used Temp Variable
 		int tmpI, tmpJ;
 		String tmpTarget = "";
-		
+		Integer tmpEmployeeID=101;
 		//---.Depend on the object
 		ModalForm pForm = (ModalForm) form;
 
@@ -44,7 +44,12 @@ public class ModalAction extends Action {
 		int countRows = 0;
 		String task = pForm.getTask();
 		
+		
         switch (task) {
+	        case "insertEmployeeToDoList" :
+	    		ActivityManager tmpActivityManager = new ActivityManagerImpl();
+	    		tmpActivityManager.insertToDoList(tmpEmployeeID,pForm.getParam2());
+	    		return null;
         	case "changePwd" :
         		UserManager tmpManager = new UserManagerImpl();
      			response.setContentType("text/text;charset=utf-8");
@@ -192,6 +197,53 @@ public class ModalAction extends Action {
                 			tmpData.get(tmpI).add(list.get(tmpI).getDivisionName());
                 			tmpData.get(tmpI).add(list.get(tmpI).getPositionName());
                 			tmpData.get(tmpI).add(list.get(tmpI).getManagerName());;
+                		}
+                		break;
+            		case "activityList":  
+                		tmpTarget = "activityList";
+                		List<ActivityBean> listActivity;	
+                		ActivityManager managerActivity = new ActivityManagerImpl();
+                		
+	                    //##1.Fetch Data From DB
+                		countRows = managerActivity.getCountListActivityById(tmpEmployeeID,pForm.getColumnSearch(),pForm.getSearch());
+                		
+                		//---.Depend On The Object
+                		listActivity = managerActivity.getListActivityById(tmpEmployeeID,pForm.getColumnSearch(), 
+								 pForm.getSearch(), PrimeUtil.getStartRow(
+								 pForm.getGoToPage(), pForm.getShowInPage(), countRows),
+								 PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
+								 countRows));
+                	
+                		//##2.Prepare Data for Modal-Table Show
+                		//---a.Modal Title
+                		request.setAttribute("modalListName", "Activity List");
+                		System.out.println(Constants.Search.ACTIVITY_SEARCHCOLUMNS);
+                		request.setAttribute("listSearchColumnActivity", Constants.Search.ACTIVITY_SEARCHCOLUMNS);
+                		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+                		
+                		
+                		request.setAttribute("modalForm", "activityForm");
+                		
+                		
+                		//---b.Column Head
+                		//[P.S] : Just Hardcode Here, because it only 1 form
+                		tmpColHead.add("Activity ID");
+                		tmpColHead.add("Activity Name");
+                		tmpColHead.add("Activity Description");
+                		tmpColHead.add("Task Name");
+                		tmpColHead.add("Assigner");
+                		tmpColHead.add("Last Status");
+                		
+                		request.setAttribute("listColumnHead", tmpColHead);
+                		
+                		for(tmpI = 0 ; tmpI < listActivity.size() ; tmpI++){
+                			tmpData.add(new ArrayList<String>());
+                			tmpData.get(tmpI).add(listActivity.get(tmpI).getActivityId().toString());
+                			tmpData.get(tmpI).add(listActivity.get(tmpI).getActivityName());
+                			tmpData.get(tmpI).add(listActivity.get(tmpI).getActivityDescription());
+                			tmpData.get(tmpI).add(listActivity.get(tmpI).getTaskName());
+                			tmpData.get(tmpI).add(listActivity.get(tmpI).getTaskAssignerName());
+                			tmpData.get(tmpI).add(listActivity.get(tmpI).getActivityStatus().toString());
                 		}
                 		break;
             		default:

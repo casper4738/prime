@@ -31,8 +31,9 @@ public interface ActivityManager {
 
 	public Boolean isAllFinished(Integer taskId, Integer finish, Integer abort) throws SQLException;
 	
+	public Integer getCountToDoListById(Integer id) throws SQLException;
 	
-	public List<ActivityBean> getToDoListById(Integer id) throws SQLException;
+	public List<ActivityBean> getToDoListById(Integer startRow, Integer endRow, Integer id) throws SQLException;
 	
 	public List<ActivityBean> getCurrentListActivity(Integer employeeId,String currentDate) throws SQLException;
 	
@@ -47,7 +48,7 @@ public interface ActivityManager {
 	public List<ActivityBean> getListActivityById(Integer id, String columnSearch, String value, Integer startRow, Integer endRow) 
 			throws SQLException;
 	
-	public Integer getCountToDoListById(Integer receiverId, String columnSearch, String value) throws SQLException;
+	public Integer getCountListActivityById(Integer receiverId, String columnSearch, String value) throws SQLException;
 	
 	public Integer getCountActivityDetail(String columnSearch, String value, Integer activityId) throws SQLException;
 }
