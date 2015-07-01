@@ -71,12 +71,22 @@
 					<html:hidden name="UserAdminForm" property="tmpValue"/>
 					<html:hidden name="UserAdminForm" property="showInPage"/>
 					<html:hidden name="UserAdminForm" property="isShowAll"/>
-					<html:select name="UserAdminForm" property="columnSearch" styleClass="columnSearch">
-						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
-					</html:select>
-					<html:text name="UserAdminForm" property="search" styleClass="textSearch"/>
-					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="UserAdminForm" property="task" />', 'false')" value='Search'/>
-					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="UserAdminForm" property="task" />', 'true')" value='Show All'/>					
+					<table>
+						<tr>
+							<td style="padding-left:5px">
+								<html:select name="UserAdminForm" property="columnSearch" styleClass="form-control columnSearch">
+									<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
+								</html:select>
+							</td>
+							<td style="padding-left:5px">
+								<html:text name="UserAdminForm" property="search" styleClass="form-control textSearch" />
+							</td>
+							<td style="padding-left:5px">
+								<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="UserAdminForm" property="task" />', 'false')" value='Search'/>
+								<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="UserAdminForm" property="task" />', 'true')" value='Show All'/>					
+							</td>
+						</tr>
+					</table>
 				</html:form>
 			</div>
 			<div class="box-body"><table class="table table-bordered table-striped table-hover" id = "table-1">
