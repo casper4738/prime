@@ -14,21 +14,27 @@ public class SettingAction extends Action {
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		SettingForm pForm 			= (SettingForm) form;
-		GeneralSettingManager manager 	= new GeneralSettingManagerImpl();
+		SettingForm pForm 				 = (SettingForm) form;
+		GeneralSettingManager tmpManager = new GeneralSettingManagerImpl();
 
 		if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
 			//##. Edit Data
-			pForm.setSettingBean(manager.getGeneralSetting());
+			pForm.setSettingBean(tmpManager.getGeneralSetting());
 			return mapping.findForward("edit");
-		} else if("update".equals(pForm.getTask())) {
+		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
 			//##. Update Data
-			manager.save(pForm.getSettingBean());
+			System.out.println("cek 1");
+			if("".equals(pForm.getSmtpPassword())) {
+			} else {
+				pForm.getSettingBean().setSmtpPassword(pForm.getSmtpPassword());
+			}
+			System.out.println("cek 2"+pForm.getSettingBean().getSmtpPassword());
+			tmpManager.save(pForm.getSettingBean());				
+			System.out.println("cek 3");
 			return mapping.findForward("forward");
 		}
 
-		//##1.Attribute for Table Show
-		pForm.setSettingBean(manager.getGeneralSetting());
+		pForm.setSettingBean(tmpManager.getGeneralSetting());
 		return mapping.findForward("success");
 	}
 

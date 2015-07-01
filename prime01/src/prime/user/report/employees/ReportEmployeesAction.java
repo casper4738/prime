@@ -26,7 +26,7 @@ public class ReportEmployeesAction extends Action {
 		
 		//NotificationForm pForm = (NotificationForm) form;
 		//NotificationManager tmpManager = new NotificationManagerImpl();
-		
+		String tmpMapTarget="";
 		ReportEmployeesForm pForm = (ReportEmployeesForm) form;
 		ReportEmployeesManager tmpManager = new ReportEmployeesManagerImpl();
 		TaskManager 	tmpTaskManager 		= new TaskManagerImpl();
@@ -46,6 +46,10 @@ public class ReportEmployeesAction extends Action {
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());			
 			return mapping.findForward("detailEmployee");
 		}
+		else if(Constants.Task.REPORT.GENERATEREPORTEMPLOYEE.equals(pForm.getTask())){
+			request.getSession(true).setAttribute("searchQuery", " WHERE EMPLOYEE_ID LIKE ('%" + pForm.getColumnSearch() + "%')");
+			tmpMapTarget = "showReportEmployee";
+		} 
 
 		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),
 				pForm.getSearch());

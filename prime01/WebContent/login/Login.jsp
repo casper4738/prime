@@ -1,4 +1,5 @@
 <%@page import="prime.constants.Constants"%>
+<%@page import="prime.utility.MailUtil"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>

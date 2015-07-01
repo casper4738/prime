@@ -1,7 +1,6 @@
 package prime.user.project;
 
 import java.sql.Date;
-import java.text.DecimalFormat;
 
 import prime.admin.employee.EmployeeBean;
 import prime.admin.role.RoleBean;

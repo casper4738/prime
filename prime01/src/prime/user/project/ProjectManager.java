@@ -3,8 +3,6 @@ package prime.user.project;
 import java.sql.SQLException;
 import java.util.List;
 
-import prime.admin.employee.EmployeeBean;
-
 public interface ProjectManager {
 	
 	public void insert (ProjectBean e) throws SQLException;
@@ -46,6 +44,9 @@ public interface ProjectManager {
 	public ProjectBean getProjectMemberDetailById(Integer id) throws SQLException;
 	
 	public List<ProjectBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow) throws SQLException;
+	
+	public List<ProjectBean> getListByColumnAsMember(String columnSearch, String value, Integer startRow, Integer endRow, 
+			Integer employeeId) throws SQLException;
 	
 	public List<ProjectBean> getListProjectMember(String columnSearch, String value, Integer startRow, Integer endRow, Integer taskId)
 			throws SQLException;

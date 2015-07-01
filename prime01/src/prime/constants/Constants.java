@@ -82,8 +82,12 @@ public interface Constants {
 		}
 		
 		interface REPORT {
-			final String GOTODETAILEMPLOYEE		= "r1";
-			final String GOTODETAILPROJECT		= "r2";
+			final String GOTODETAILEMPLOYEE			= "r1";
+			final String GOTODETAILPROJECT			= "r2";
+			final String GENERATEREPORTEMPLOYEE		= "r3";
+			final String GENERATEREPORTEMPLOYEETASK	= "r4";
+			final String GENERATEREPORTPROJECT		= "r5";
+			final String GENERATEREPORTPROJECTTASK	= "r6";
 		}
 	}
 
@@ -348,13 +352,13 @@ public interface Constants {
 
 															"DashboardUser.do",		 //14
 															"ProjectUser.do",		 //15
-															"TaskHeadUser.do",		 //16
-															"TaskSubordinateUser.do",//17
-															"ReportEmployees.do",	 //18
-															"Notification.do", 	 	 //19
-															"Modal.do",				 //20
+															"ProjectUserAsHead.do",	 //16
+															"TaskHeadUser.do",		 //17
+															"TaskSubordinateUser.do",//18
+															"ReportEmployees.do",	 //19
+															"Notification.do", 	 	 //20
+															"Modal.do",				 //21
 
-															"ProjectUserAsHead.do",	 //21
 															"ReportProject.do"		 //22
 
 												};
@@ -374,19 +378,18 @@ public interface Constants {
 		static int ADMIN_USERMENU 		= 12;
 		static int ADMIN_USERROLE 		= 13;
 		
-
 		static int USER_DASHBOARD		= 14;
 		static int USER_PROJECT			= 15;
-		static int USER_TASK_HEAD		= 16;
-		static int USER_TASK_SUBORDINATE= 17;
-		static int USER_REPORT_EMPLOYEES= 18;
-
-		static int USER_PROJECT_HEAD	= 19;
-		static int USER_REPORT_PROJECT	= 20;
-		static int USER_VIEWNOTIF		= 21;
+		static int USER_PROJECT_HEAD	= 16;
 		
-		static int MODAL				= 22;
+		static int USER_TASK_HEAD		= 17;
+		static int USER_TASK_SUBORDINATE= 18;
+		static int USER_REPORT_EMPLOYEES= 19;
 
+		static int USER_VIEWNOTIF		= 20;
+		static int MODAL				= 21;
+		
+		static int USER_REPORT_PROJECT	= 22;
 	}
 	
 	//##K.Daily Time Constants

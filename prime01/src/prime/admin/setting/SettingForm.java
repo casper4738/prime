@@ -7,6 +7,15 @@ public class SettingForm extends ActionForm {
 	private GeneralSettingBean settingBean = new GeneralSettingBean();
 	private String task;
 	private String message;
+	private String smtpPassword;
+
+	public String getSmtpPassword() {
+		return smtpPassword;
+	}
+
+	public void setSmtpPassword(String smtpPassword) {
+		this.smtpPassword = smtpPassword;
+	}
 
 	public GeneralSettingBean getSettingBean() {
 		return settingBean;

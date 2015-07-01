@@ -25,7 +25,12 @@ public class GeneralSettingManagerImpl implements GeneralSettingManager {
 	}
 
 	public GeneralSettingBean getGeneralSetting() throws SQLException {
-		return (GeneralSettingBean) mapper.queryForObject("generalsetting.get", null);
+		GeneralSettingBean e = (GeneralSettingBean) mapper.queryForObject("generalsetting.get", null);
+		if(e == null) {
+			return new GeneralSettingBean();
+		} else {
+			return e;
+		}
 	}
 
 }

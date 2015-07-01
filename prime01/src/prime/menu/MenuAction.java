@@ -47,6 +47,7 @@ public class MenuAction extends Action {
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]			, "Manage Task As Head");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK_SUBORDINATE]	, "Manage Task As Subordinate");
 				//checkingEmployeeAsPM
+				System.out.println("jumlah "+tmpProjectManager.getCountProjectMember(LoginData.getEmployeeData().getEmployeeId()));
 				if(tmpProjectManager.getCountProjectReceiver(LoginData.getEmployeeData().getEmployeeId())>0 ||
 						tmpProjectManager.getCountProjectMember(LoginData.getEmployeeData().getEmployeeId())>0)
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_PROJECT]				, "Manage Project");

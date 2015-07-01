@@ -49,21 +49,13 @@ public class FilterSession implements Filter {
 	    HttpSession tmpSession = tmpServletRequest.getSession(true);
 	    boolean tmpIsRedirectNeed = true;
 	    
-	    System.out.println("Step A");
-	    
 		if(!tmpServletRequest.getServletPath().equals("/" + Constants.PAGES_LIST[Constants.Page.LOGIN])){
-			 System.out.println("Step B");
-			
 			//##a.Check Session State
 		    if(tmpSession.getAttribute(Constants.Session.ID) != null) {
-		    	System.out.println("Step C");
-		    	
 		    	//##b.Check From DB, Session Value
 		    	LoginManager tmpLoginManager = new LoginManagerImpl();
 		    	
 		    	if(LoginData.isDataExists()){
-		    		System.out.println("Step D");
-		    		
 			    	String tmpDBSession = "";
 					try {
 						tmpDBSession = tmpLoginManager.getLoginSession(LoginData.getUserData().getUserName());
@@ -73,24 +65,19 @@ public class FilterSession implements Filter {
 					}
 			    	String tmpCurnSession = LoginData.getUserData().getloginSession() ;
 			    	if(tmpDBSession.equals(tmpCurnSession)){
-			    		 System.out.println("Step E");
 			    		tmpIsRedirectNeed = false;
 			    	} else {
-			    		System.out.println("Step F");
 			    		LoginData.clear();
 			    		tmpSession.invalidate();
 			    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONKICKED);
 			    	}
 		    	} else {
-		    		System.out.println("Step G");
-		    		 
 		    		LoginData.clear();
 		    		tmpSession.invalidate();
 		    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONKICKED);
 		    	}
 		    } else {
 		    	if(LoginData.isDataExists()){
-		    		System.out.println("Step H");
 		    		LoginData.clear();
 		    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONEXPIRED);
 		    	}
