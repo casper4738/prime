@@ -187,7 +187,7 @@
         ) AD
         ON AC.ACTIVITY_ID = AD.ACTIVITY_ID 
         WHERE TASK_RECEIVER=#id# AND AC.ACTIVITY_ID NOT IN (SELECT ACTIVITY_ID FROM EMPLOYEE_TO_DO_LISTS)
-        AND ACTIVITY_STATUS != '4' <!-- AND ACTIVITY_STATUS != '5' --> <!-- 4 adalah status Finish ATAU 5 ABORT -->
+        AND ACTIVITY_STATUS != '4' AND ACTIVITY_STATUS != '5'  <!-- 4 adalah status Finish ATAU 5 ABORT -->
 	    <dynamic prepend="AND">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="NAME">
@@ -331,5 +331,4 @@
 			  ACTIVITY_CHANGE_DATE &lt;= TO_TIMESTAMP('$currentDate$ 23:59:59','dd-mm-yyyy hh24:mi:ss') 
 	    ORDER BY ACTIVITY_CHANGE_DATE DESC
 	</select>
-	
 </sqlMap>

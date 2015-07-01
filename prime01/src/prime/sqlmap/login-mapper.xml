@@ -32,7 +32,7 @@
 	<update id="setLoginSession" parameterClass="java.lang.String">
 		UPDATE USERS 
 		SET 
-			LOGIN_SESSION = dbms_crypto.hash(to_clob(SYSDATE || EMPLOYEE_ID || USERNAME), 2),
+			LOGIN_SESSION = dbms_crypto.hash(to_clob(SYSDATE), 2),
 			LAST_ACTIVE   = SYSDATE 
 		WHERE USERNAME=#username#
 	</update>

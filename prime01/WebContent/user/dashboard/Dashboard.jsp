@@ -132,7 +132,6 @@
 	              revert: true, // will cause the event to go back to its
 	              revertDuration: 0  //  original position after the drag
 	            });
-	
 	          });
 	        }
         	ini_events($('#external-events div.external-event'));

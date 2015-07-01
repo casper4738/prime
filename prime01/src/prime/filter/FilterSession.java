@@ -56,13 +56,13 @@ public class FilterSession implements Filter {
 			
 			//##a.Check Session State
 		    if(tmpSession.getAttribute(Constants.Session.ID) != null) {
-		    	 System.out.println("Step C");
+		    	System.out.println("Step C");
 		    	
 		    	//##b.Check From DB, Session Value
 		    	LoginManager tmpLoginManager = new LoginManagerImpl();
 		    	
 		    	if(LoginData.isDataExists()){
-		    		 System.out.println("Step D");
+		    		System.out.println("Step D");
 		    		
 			    	String tmpDBSession = "";
 					try {
