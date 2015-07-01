@@ -127,6 +127,12 @@ public class ProjectManagerImpl implements ProjectManager {
 		return (Integer) mapper.queryForObject("project.getCountProjectReceiver", projectReceiver);
 	}
 
+	
+	@Override
+	public Integer getCountProjectMember(Integer projectMember) throws SQLException {
+		return (Integer) mapper.queryForObject("project.getCountProjectMember", projectMember);
+	}
+
 	@Override
 	public ProjectBean getProjectById(Integer id) throws SQLException {
 		 

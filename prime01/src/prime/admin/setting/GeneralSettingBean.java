@@ -1,11 +1,10 @@
 package prime.admin.setting;
 
-public class SettingBean {
+public class GeneralSettingBean {
 
 	private Integer level;
 	private Integer timeOut;
 	private Integer minLevelApproval;
-	private String databaseParameter;
 
 	public Integer getLevel() {
 		return level;
@@ -29,14 +28,6 @@ public class SettingBean {
 
 	public void setMinLevelApproval(Integer minLevelApproval) {
 		this.minLevelApproval = minLevelApproval;
-	}
-
-	public String getDatabaseParameter() {
-		return databaseParameter;
-	}
-
-	public void setDatabaseParameter(String databaseParameter) {
-		this.databaseParameter = databaseParameter;
 	}
 
 }

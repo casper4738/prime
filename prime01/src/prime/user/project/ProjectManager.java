@@ -37,6 +37,8 @@ public interface ProjectManager {
 	
 	public Integer getCountProjectReceiver(Integer projectReceiver) throws SQLException;
 	
+	public Integer getCountProjectMember(Integer projectMember) throws SQLException;
+	
 	public ProjectBean getProjectById(Integer id) throws SQLException;
 	
 	public ProjectBean getDataProjectMemberByProjectMemberId(Integer projectMemberId) throws SQLException;

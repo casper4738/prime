@@ -8,24 +8,27 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.constants.Constants;
+
 public class SettingAction extends Action {
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		SettingForm pForm = (SettingForm) form;
-		GeneralSetting manager = new GeneralSetting(request);
-		//##. Edit Data
-		if("edit".equals(pForm.getTask())) {
-			pForm.setSettingBean(manager.getSetting());
+		SettingForm pForm 			= (SettingForm) form;
+		GeneralSettingManager manager 	= new GeneralSettingManagerImpl();
+
+		if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
+			//##. Edit Data
+			pForm.setSettingBean(manager.getGeneralSetting());
 			return mapping.findForward("edit");
-		} 
-		//##. Update Data
-		else if("update".equals(pForm.getTask())) {
+		} else if("update".equals(pForm.getTask())) {
+			//##. Update Data
 			manager.save(pForm.getSettingBean());
 			return mapping.findForward("forward");
 		}
+
 		//##1.Attribute for Table Show
-		pForm.setSettingBean(manager.getSetting());
+		pForm.setSettingBean(manager.getGeneralSetting());
 		return mapping.findForward("success");
 	}
 

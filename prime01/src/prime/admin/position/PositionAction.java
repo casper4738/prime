@@ -11,7 +11,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import prime.admin.setting.GeneralSetting;
+import prime.admin.setting.GeneralSettingBean;
 import prime.constants.Constants;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
@@ -22,7 +22,7 @@ public class PositionAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		PositionForm pForm = (PositionForm) form;
 		PositionManager tmpManager = new PositionManagerImpl();
-		GeneralSetting tmpSettingManager = new GeneralSetting(request);
+		GeneralSettingBean tmpSettingManager = new GeneralSettingBean(request);
 		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data

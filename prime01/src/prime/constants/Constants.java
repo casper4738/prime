@@ -79,6 +79,8 @@ public interface Constants {
 		interface REPORT {
 			final String GOTODETAILEMPLOYEE		= "r1";
 			final String GOTODETAILPROJECT		= "r2";
+			final String GENERATEREPORTEMPLOYEE = "r3";
+			final String GENERATEREPORTPROJECT 	= "r4";
 		}
 	}
 
@@ -320,7 +322,6 @@ public interface Constants {
 															"LogAdmin.do",			 //9
 															"SettingAdmin.do",		 //10
 															"NotifTemplate.do",		 //11
-															
 															"DashboardUser.do",		 //12
 															"ProjectUser.do",		 //13
 															"ProjectUserAsHead.do",	 //14
@@ -344,17 +345,15 @@ public interface Constants {
 		static int ADMIN_LOG			= 9;
 		static int ADMIN_SETTING		= 10;
 		static int ADMIN_NOTIFTEMPLATE	= 11;
-		
 		static int USER_DASHBOARD		= 12;
 		static int USER_PROJECT			= 13;
 		static int USER_PROJECT_HEAD	= 14;
 		static int USER_TASK_HEAD		= 15;
 		static int USER_TASK_SUBORDINATE= 16;
 		static int USER_REPORT_EMPLOYEES= 17;
-		static int USER_REPORT_PROJECT	= 18;
-		static int USER_VIEWNOTIF		= 19;
-		
-		static int MODAL				= 20;
+		static int USER_VIEWNOTIF		= 18;
+		static int MODAL				= 19;
+		static int USER_REPORT_PROJECT	= 20;
 	}
 	
 	//##K.Daily Time Constants
