@@ -15,6 +15,8 @@ import org.apache.struts.action.ActionMapping;
 
 import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
+import prime.admin.userrole.UserRoleManager;
+import prime.admin.userrole.UserRoleManagerImpl;
 import prime.constants.Constants;
 import prime.login.LoginManager;
 import prime.login.LoginManagerImpl;
@@ -30,6 +32,7 @@ public class UserAction extends Action {
 		
 		UserManager tmpManager = new UserManagerImpl();
 		UserForm userForm = (UserForm) form;
+		UserRoleManager tmpRoleManager = new UserRoleManagerImpl();
 		
 		Date curnTime;
 		Date compTime;
@@ -38,6 +41,7 @@ public class UserAction extends Action {
 		
 		if(Constants.Task.GOTOADD.equals(userForm.getTask())){
 			userForm.getUserBean().setEmployeeId(tmpManager.getNewId());
+			request.setAttribute("listUserRole", tmpRoleManager.getListAll());
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(userForm.getTask())) {
 			//##. Edit Data
@@ -46,6 +50,7 @@ public class UserAction extends Action {
 		} else if (Constants.Task.DOADD.equals(userForm.getTask())) {
 			userForm.getUserBean().setEmployeeId(userForm.getEmployeeId());
 			userForm.getUserBean().setUpdateBy("dedy");
+			userForm.getUserBean().setSysLevel(userForm.getUserRoleId());
 			
 			if(userForm.getUserBean().getPassword().length() <= 0){
 				userForm.getUserBean().setIsActiveDirectory(true);
