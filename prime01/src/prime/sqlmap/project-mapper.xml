@@ -37,6 +37,15 @@
 				<isEqual property="columnSearch" compareValue="NAME">
 					UPPER(PROJ.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
+				<isEqual property="columnSearch" compareValue="DESCRIPTION">
+					UPPER(PROJ.PROJECT_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="STARTDATE">
+			      	PROJ.PROJECT_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+			      	PROJ.PROJECT_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+				</isEqual> 
 			</isNotNull>
 		</dynamic>
 		ORDER BY PROJ.PROJECT_ID ASC) page

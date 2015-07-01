@@ -16,13 +16,11 @@
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
 	$('#table-1').dataTable( {
-		   paging    : false,
-		   searching : false,
-		   info   : false,
-		   language  : {
-		          "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
-		      }
-		     } );
+	   paging    : false,
+	   searching : false,
+	   info   	 : false,
+	   language  : { "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>" }
+	});
 	</script>
 	<!-- End of JS -->
 </head>

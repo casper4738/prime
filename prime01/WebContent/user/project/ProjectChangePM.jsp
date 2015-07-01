@@ -17,7 +17,7 @@
 		//##0.Preparing Parameter For Modal Showing
 		var tmpDataPosition=2;
 		var tmpTask ="modalTable";
-		var tmpTable ="employeeHead";
+		var tmpTable ="employeeList";
 		
 		//##1.Accessing Prime Method For Modal Showing
 		modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=projectAssigner", $('#result'));
@@ -31,6 +31,19 @@
 			tmpForm.projectId.value = value;
 		
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+		
+		function validateForm() {
+			var employeeName = checkNull($('#employeeName'), $('#err-employeeName'), "New Project Member");
+			
+			
+			
+			if(employeeName) {
+				//alert("error lho");
+			} else {
+				dosubmit();
+			}
+			
 		}
 	</script>
 	
@@ -66,23 +79,29 @@
                 	    <html:hidden name="ProjectUserForm" property="projectBean.employeeIdReceiver"/>
                 	    
                 	    <html:hidden name="ProjectUserForm" property="projectBean.projectLastStatus"/>
-                		<table class="form-input" align="center" style="width:60%" >
+                		<table class="form-input" align="center" style="width: 500px" >
                 			<tr><td width="200px">ID Project</td>
                 				<td>:</td>
                 				<td class="input-group">
+                				<span class="input-group-btn">
                 					<html:text name="ProjectUserForm" property="projectBean.projectId" styleClass="form-control"  disabled="true"/>
+								</span>
 							</td></tr>
                 			<tr><td width="200px">Project Name</td>
                 				<td>:</td>
                 				<td class="input-group">
+                				<span class="input-group-btn">
                 					<html:text name="ProjectUserForm" property="projectBean.projectName" styleClass="form-control"  disabled="true"/>
+								</span>
 							</td></tr>
 							<tr><td width="200px">Old Project Manager</td>
                 				<td>:</td>
                 				<td class="input-group">
+                				<span class="input-group-btn">
                 					<html:text name="ProjectUserForm" property="projectBean.projectReceiverName" styleClass="form-control"  disabled="true"/>
+								</span>
 							</td></tr>
-                			<tr><td width="200px">Employee Name</td>
+                			<tr><td width="200px">New Project Manager</td>
                 				<td>:</td>
                 				<td class="input-group">
                 					<html:text name="ProjectUserForm" property="projectBean.employeeName" styleClass="form-control" styleId="employeeName" disabled="true"/>
@@ -90,15 +109,19 @@
                     					<input type="button" class="btn btn-info" type="button" onclick="openModalHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
 						            </span>
 							</td></tr>
+							<tr><td></td>
+                				<td></td>
+                				<td><span id="err-employeeName" class="error-validator"></span></td>
+                			</tr>
                 			<tr>
-                				<td>Project Description</td>
+                				<td>Note Changing</td>
                 				<td>:</td>
                 				<td><html:textarea name="ProjectUserForm" property="projectBean.projectChangeNote" styleClass="form-control"></html:textarea></td>
                 				
                 			</tr>
                 			
                 			<tr><td colspan="3" align="center">
-                					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="dosubmit()"/>
+                					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="validateForm()"/>
                 					<input type="button" class="btn btn-default" value='Cancel' onclick="flyToBack(
 	                        		'detailsAsHead', 
 	                        		'<bean:write name="ProjectUserForm" property="projectBean.projectId"/>')">

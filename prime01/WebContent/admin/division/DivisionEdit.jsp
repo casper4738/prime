@@ -9,25 +9,14 @@
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 	<!-- JS -->
 	<script type="text/javascript">
-	function validateForm() {
-		document.getElementById('validator').innerHTML="";
-		var specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,."; // specify special characters 
-	    var divisionName =  document.getElementById('nameValidator').value;
-	    if (divisionName == null || divisionName == "") {
-	        document.getElementById('validator').innerHTML="Name must be filled out";
-	        return false;
-	    }
-	    else {
-	    	for (var i = 0; i < divisionName.length; i++) {
-	    	    if (specialChars.indexOf(divisionName.charAt(i)) != -1) { 
-	    			document.getElementById("validator").innerHTML = "Characters are not allowed"; 
-	    			return false; 
-	    		}
-	    	}
-	    	   dosubmit();
-	    }
-	    
-	}
+		function validateForm() {
+		    var divisionName = checkNull($('#divisionName'), $('#err-divisionName'), "Division Name");
+		    var divisionNameChar = checkSpecialChars($('#divisionName'), $('#err-divisionName'));
+		    if (divisionName || divisionNameChar) {
+		    } else {
+		    	dosubmit();
+		    }
+		}
 	</script>
 	<!-- End of JS -->
 </head>
@@ -51,11 +40,11 @@
                  		<table class="form-input" align="center">
                  			<tr><td>Division Name</td>
                  				<td>:</td>
-                 				<td><html:text name="DivisionAdminForm" property="divisionBean.divisionName" styleClass="form-control" styleId="nameValidator" maxlength="50"/></td>
+                 				<td><html:text name="DivisionAdminForm" property="divisionBean.divisionName" styleClass="form-control" styleId="divisionName" maxlength="50"/></td>
                  			</tr>
                  			<tr><td></td>
                  				<td></td>
-                 				<td><span id="validator" style="color: red"></span></td>
+                 				<td><span id="err-divisionName" class="error-validator"></span></td>
                  			</tr>
                  			<tr><td colspan="3" align="center">
                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />

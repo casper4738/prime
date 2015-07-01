@@ -1,7 +1,10 @@
 package prime.user.task;
 
 import java.io.PrintWriter;
+import java.sql.Date;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,13 +18,13 @@ import org.apache.struts.action.ActionMapping;
 import prime.admin.employee.EmployeeBean;
 import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
+import prime.admin.holiday.HolidayBean;
+import prime.admin.holiday.HolidayManager;
+import prime.admin.holiday.HolidayManagerImpl;
 import prime.constants.Constants;
-import prime.login.LoginManager;
-import prime.login.LoginManagerImpl;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
-import prime.utility.ActiveDirectoryManager;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -39,6 +42,7 @@ public class TaskHeadAction extends Action {
 		TaskManager manager = new TaskManagerImpl();
 		EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
 		ActivityManager tmpActivityManager = new ActivityManagerImpl();
+		HolidayManager tmpHolidayManager  = new HolidayManagerImpl();
 		
 		System.out.println("A. "+pForm.getTask());
 		System.out.println("B. "+Constants.Task.TASK.DOSUBMIT);
@@ -48,9 +52,16 @@ public class TaskHeadAction extends Action {
 				response.setHeader("cache-control", "no-cache");
 				PrintWriter tmpOut = response.getWriter();
 				String tmpResponse = "";
-				
-				
-				tmpResponse  = "TESTING OK";
+
+				Calendar cal = Calendar.getInstance();
+				List<HolidayBean> listHoliday = tmpHolidayManager.getListByYear(cal.get(Calendar.YEAR));
+				List<EmployeeBean> listWeekend = tmpEmployeeManager.getListWeekendByEmployeeId(pForm.getTaskBean().getTaskReceiver());
+				Integer sumOFHoliday = getSumHoliday(listHoliday, pForm.getTaskBean().getTaskStartDate(), pForm.getTaskBean().getTaskEstimateDate());
+				Integer sumOFWeekend = getSumWeekEnd(listWeekend, pForm.getTaskBean().getTaskStartDate(), pForm.getTaskBean().getTaskEstimateDate());
+				Integer mainDays = PrimeUtil.getDayBetweenDate(pForm.getTaskBean().getTaskStartDate(), pForm.getTaskBean().getTaskEstimateDate()) - sumOFHoliday - sumOFWeekend;				
+				tmpResponse  = "Sum Of Holiday : "+sumOFHoliday+"<br>"
+								+"Sum Of Weekend : "+sumOFWeekend+"<br>"
+								+"Main Days : "+mainDays;
 				
 				tmpOut.print(tmpResponse);
 				tmpOut.flush();
@@ -240,4 +251,75 @@ public class TaskHeadAction extends Action {
 		request.setAttribute("pageNext", pageUtil.getPageNext());
 		request.setAttribute("listMaxDataPerPage", Constants.PAGINGROWPAGE);
 	}
+
+	private Integer getSumHoliday(List<HolidayBean> listDate, java.sql.Date date1, java.sql.Date date2) {
+		Calendar start = Calendar.getInstance();
+		start.setTime(date1);	
+
+		Calendar end = Calendar.getInstance();
+		end.setTime(date2);
+
+		int sum = 0;
+		while (!start.after(end)) {
+			for (int i = 0; i < listDate.size(); i++) {
+				HolidayBean e = listDate.get(i);
+				
+				Calendar c = Calendar.getInstance();
+				c.setTime(e.getHolidayDate());
+				if(PrimeUtil.getCompareTo(start.getTimeInMillis(), e.getHolidayDate().getTime())== 0) {
+					sum ++;
+					break;
+				}
+			}
+			start.add(Calendar.DATE, 1);
+		}
+		return sum;
+	}
+	
+
+	public static Integer getSumWeekEnd(List<EmployeeBean> listDate, Date date1, Date date2) {
+		if(listDate.size() == 0) 
+			return 0;
+		
+		Calendar start = Calendar.getInstance();
+		start.setTime(date1);
+
+		Calendar end = Calendar.getInstance();
+		end.setTime(date2);
+
+		int sum = 0;
+		while (!start.after(end)) {
+			boolean isGet = false;
+			EmployeeBean week = new EmployeeBean();
+			for (EmployeeBean e : listDate) {
+				Calendar c = Calendar.getInstance();
+				c.setTime(e.getStartFrom());
+				if(start.after(c)) {
+					week = e;
+					isGet = true;
+				} else {
+					if(!isGet) {
+						week = e;
+					}
+					break;
+				}
+			}
+			
+			String[] split = week.getWeekEnd().split(",");
+			for (String s : split) {
+				if(start.get(Calendar.DAY_OF_WEEK) == PrimeUtil.getDay(s.trim())) {
+					sum ++;
+				}
+			}
+			start.add(Calendar.DATE, 1);
+		}
+		return sum;
+	}
+
+	public static java.sql.Date getDate(int y, int m, int d) {
+		Calendar c = Calendar.getInstance();
+		c.set(y, m, d);
+		return new java.sql.Date(c.getTimeInMillis());
+	}
+	
 }

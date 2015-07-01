@@ -11,6 +11,7 @@
 	<!-- End CSS -->
 	
 	<!-- JS -->
+	<script src="resources/prime.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		
 		function openModalHandler(){
@@ -43,6 +44,17 @@
 			tmpForm.projectId.value = value;
 		
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+		
+		function validateForm() {
+			var employeeName = checkNull($('#employeeName'), $('#err-employeeName'), "Employee Name");
+			
+			if(employeeName) {
+				alert("error lho");
+			} else {
+				doSetRole();
+			}
+			
 		}
 	</script>
 	
@@ -81,6 +93,10 @@
                     					<input type="button" class="btn btn-info" type="button" onclick="openModalHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
 						            </span>
 							</td></tr>
+							<tr><td></td>
+                				<td></td>
+                				<td><span id="err-employeeName" class="error-validator"></span></td>
+                			</tr>
                 			<tr><td valign="top">Choose Member Role</td>
                 				<td valign="top">:</td>
                 				<td><logic:notEmpty name="listAllRoles">
@@ -91,7 +107,7 @@
                 				</td>
                 			</tr>
                 			<tr><td colspan="3" align="center">
-                					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="doSetRole()"/>
+                					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="validateForm()"/>
                 					<input type="button" class="btn btn-default" value='Cancel' onclick="flyToBack(
 	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
 	                        		'<bean:write name="ProjectUserForm" property="projectId"/>')">

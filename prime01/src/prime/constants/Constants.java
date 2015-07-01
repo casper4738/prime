@@ -76,7 +76,8 @@ public interface Constants {
 		}
 		
 		interface REPORT {
-			final String GOTOTDETAILEMPLOYEE		= "r1";
+			final String GOTODETAILEMPLOYEE		= "r1";
+			final String GOTODETAILPROJECT		= "r2";
 		}
 	}
 
@@ -147,6 +148,10 @@ public interface Constants {
 			new LinkedHashMap<String, String>() {{
 				put("NAME", "Project Name");
 				put("DESCRIPTION", "Project Description");
+				put("PM", "Project Manager");
+				put("PROPOSED", "Proposed By");
+				put("STARTDATE", "Project Start Date");
+				put("ESTIMATEDATE", "Project Estimate Date");
 			}
 		});
 		
@@ -314,7 +319,8 @@ public interface Constants {
 															"TaskSubordinateUser.do",//15
 															"ReportEmployees.do",	 //16
 															"Notification.do", 	 	 //17
-															"Modal.do"				 //18
+															"Modal.do",				 //18
+															"ReportProject.do"		 //19
 												};
 	static interface Page {
 		static int LOGIN				= 0;
@@ -335,6 +341,7 @@ public interface Constants {
 		static int USER_TASK_HEAD		= 14;
 		static int USER_TASK_SUBORDINATE= 15;
 		static int USER_REPORT_EMPLOYEES= 16;
+		static int USER_REPORT_PROJECT	= 19;
 		static int USER_VIEWNOTIF		= 17;
 		
 		static int MODAL				= 18;

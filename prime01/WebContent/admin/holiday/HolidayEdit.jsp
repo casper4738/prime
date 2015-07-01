@@ -12,6 +12,7 @@
 	
 	<!-- JS -->
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+	<script src="resources/prime.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
             $('#datepicker').datepicker({
@@ -20,15 +21,11 @@
         });
 		
 		function validateForm() {
-			document.getElementById('validatorDescription').innerHTML = "";
-		    var holidayDescription =  document.getElementById('descriptionValidator').value;
-		    var validate = true;
-		    
-		    if (holidayDescription == null || holidayDescription == "") {
-		        document.getElementById('validatorDescription').innerHTML="Description must be filled out";
-		        validate = false;
-		    } 
-		    if(validate == true) dosubmit();
+			var holidayDescription = checkNull($('#holidayDescription'), $('#err-holidayDescription'), "Holiday Description");
+			if(holidayDescription) {
+			} else {
+				dosubmit();
+			}
 		}
 	</script>
 	<!-- End of JS -->
@@ -61,11 +58,11 @@
                 			</tr>
                 			<tr><td>Holiday Description</td>
                 				<td>: </td>
-                				<td><html:text name="HolidayAdminForm" property="holidayBean.holidayDescription" styleClass="form-control" styleId="descriptionValidator" maxlength="100"/></td>
+                				<td><html:text name="HolidayAdminForm" property="holidayBean.holidayDescription" styleClass="form-control" styleId="holidayDescription" maxlength="100"/></td>
                 			</tr>
                 			<tr><td></td>
                 				<td></td>
-                				<td><span  id="validatorDescription" style="color: red"></span></td>
+                				<td><span id="err-holidayDescription" class="error-validator"></span></span></td>
                 			</tr>
                 			<tr>
                 				<td colspan="3" align="center">
