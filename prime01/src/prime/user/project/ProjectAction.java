@@ -424,4 +424,9 @@ public class ProjectAction extends Action {
 		pForm.setGoToPage(pageUtil.getPage());
 	}
 	
+	private void setPaging(HttpServletRequest request, ProjectForm pForm) {
+		request.setAttribute("employeeActive", 100);
+		
+	}
+	
 }

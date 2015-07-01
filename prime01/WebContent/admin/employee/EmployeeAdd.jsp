@@ -37,9 +37,6 @@
     		    	return alert('File upload not supported!');
     		    var F = this.files;
     		    if(F && F[0]) {
-    		    	var pathFile = document.getElementById("input-image").value;
-					var tmppath = URL.createObjectURL(event.target.files[0]);
-					document.forms[0].path.value = tmppath;
     		    	for(var i=0; i<F.length; i++){
     		    		readImage( F[i] );
     		    	}
@@ -248,7 +245,6 @@
 			               		<html:hidden name="EmployeeAdminForm" property="managerId" styleId="managerId"/>
 			               		<html:hidden name="EmployeeAdminForm" property="employeeBean.treeId"/>
 			               		<html:hidden name="EmployeeAdminForm" property="result" styleId="result"/>
-			               		<html:hidden name="EmployeeAdminForm" property="path"/>
 			               		<table class="form-input" style="width: 500px;">
 			             			<tr>
 			               				<td width="200px">Name</td>

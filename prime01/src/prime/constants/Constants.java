@@ -323,12 +323,13 @@ public interface Constants {
 															
 															"DashboardUser.do",		 //12
 															"ProjectUser.do",		 //13
-															"TaskHeadUser.do",		 //14
-															"TaskSubordinateUser.do",//15
-															"ReportEmployees.do",	 //16
-															"Notification.do", 	 	 //17
-															"Modal.do",				 //18
-															"ReportProject.do"		 //19
+															"ProjectUserAsHead.do",	 //14
+															"TaskHeadUser.do",		 //15
+															"TaskSubordinateUser.do",//16
+															"ReportEmployees.do",	 //17
+															"Notification.do", 	 	 //18
+															"Modal.do",				 //19
+															"ReportProject.do"		 //20
 												};
 	static interface Page {
 		static int LOGIN				= 0;
@@ -346,11 +347,12 @@ public interface Constants {
 		
 		static int USER_DASHBOARD		= 12;
 		static int USER_PROJECT			= 13;
-		static int USER_TASK_HEAD		= 14;
-		static int USER_TASK_SUBORDINATE= 15;
-		static int USER_REPORT_EMPLOYEES= 16;
-		static int USER_REPORT_PROJECT	= 19;
-		static int USER_VIEWNOTIF		= 17;
+		static int USER_PROJECT_HEAD	= 14;
+		static int USER_TASK_HEAD		= 15;
+		static int USER_TASK_SUBORDINATE= 16;
+		static int USER_REPORT_EMPLOYEES= 17;
+		static int USER_REPORT_PROJECT	= 18;
+		static int USER_VIEWNOTIF		= 19;
 		
 		static int MODAL				= 18;
 	}
