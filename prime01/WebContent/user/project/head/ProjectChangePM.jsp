@@ -56,7 +56,7 @@
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
-			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
+			<li><a href="" >Manage Project</a></li>
 			<li class="active">Project Detail</li>
 		</ol>
 	</section>
@@ -66,45 +66,45 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Change Project Manager</h3></div>
 			<div class="box-body">
-                	<html:form action="/ProjectUser">
-                		<html:hidden name="ProjectUserForm" property="task" value="doChangePM"/>
-                		<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
-                		<html:hidden name="ProjectUserForm" property="projectBean.projectName" />
-                	    <html:hidden name="ProjectUserForm" property="employeeId" />
-                	    <html:hidden name="ProjectUserForm" property="projectBean.employeeId" />
-                	    <html:hidden name="ProjectUserForm" property="tempRoleId" />
-                	    <html:hidden name="ProjectUserForm" property="projectId" />
-                	    <html:hidden name="ProjectUserForm" property="projectBean.projectReceiver"/>
-                	    <html:hidden name="ProjectUserForm" property="projectBean.projectAssigner"/>
-                	    <html:hidden name="ProjectUserForm" property="projectBean.employeeIdReceiver"/>
+                	<html:form action="/ProjectUserAsHead">
+                		<html:hidden name="ProjectUserFormAsHead" property="task" value="doChangePM"/>
+                		<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectId" />
+                		<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectName" />
+                	    <html:hidden name="ProjectUserFormAsHead" property="employeeId" />
+                	    <html:hidden name="ProjectUserFormAsHead" property="projectBean.employeeId" />
+                	    <html:hidden name="ProjectUserFormAsHead" property="tempRoleId" />
+                	    <html:hidden name="ProjectUserFormAsHead" property="projectId" />
+                	    <html:hidden name="ProjectUserFormAsHead" property="projectBean.projectReceiver"/>
+                	    <html:hidden name="ProjectUserFormAsHead" property="projectBean.projectAssigner"/>
+                	    <html:hidden name="ProjectUserFormAsHead" property="projectBean.employeeIdReceiver"/>
                 	    
-                	    <html:hidden name="ProjectUserForm" property="projectBean.projectLastStatus"/>
+                	    <html:hidden name="ProjectUserFormAsHead" property="projectBean.projectLastStatus"/>
                 		<table class="form-input" align="center" style="width: 500px" >
                 			<tr><td width="200px">ID Project</td>
                 				<td>:</td>
                 				<td class="input-group">
                 				<span class="input-group-btn">
-                					<html:text name="ProjectUserForm" property="projectBean.projectId" styleClass="form-control"  disabled="true"/>
+                					<html:text name="ProjectUserFormAsHead" property="projectBean.projectId" styleClass="form-control"  disabled="true"/>
 								</span>
 							</td></tr>
                 			<tr><td width="200px">Project Name</td>
                 				<td>:</td>
                 				<td class="input-group">
                 				<span class="input-group-btn">
-                					<html:text name="ProjectUserForm" property="projectBean.projectName" styleClass="form-control"  disabled="true"/>
+                					<html:text name="ProjectUserFormAsHead" property="projectBean.projectName" styleClass="form-control"  disabled="true"/>
 								</span>
 							</td></tr>
 							<tr><td width="200px">Old Project Manager</td>
                 				<td>:</td>
                 				<td class="input-group">
                 				<span class="input-group-btn">
-                					<html:text name="ProjectUserForm" property="projectBean.projectReceiverName" styleClass="form-control"  disabled="true"/>
+                					<html:text name="ProjectUserFormAsHead" property="projectBean.projectReceiverName" styleClass="form-control"  disabled="true"/>
 								</span>
 							</td></tr>
                 			<tr><td width="200px">New Project Manager</td>
                 				<td>:</td>
                 				<td class="input-group">
-                					<html:text name="ProjectUserForm" property="projectBean.employeeName" styleClass="form-control" styleId="employeeName" disabled="true"/>
+                					<html:text name="ProjectUserFormAsHead" property="projectBean.employeeName" styleClass="form-control" styleId="employeeName" disabled="true"/>
 	               					<span class="input-group-btn">
                     					<input type="button" class="btn btn-info" type="button" onclick="openModalHandler()" style="background-image:url(resources/image/search.png); background-repeat: no-repeat; background-position:center"/>
 						            </span>
@@ -116,7 +116,7 @@
                 			<tr>
                 				<td>Note Changing</td>
                 				<td>:</td>
-                				<td><html:textarea name="ProjectUserForm" property="projectBean.projectChangeNote" styleClass="form-control"></html:textarea></td>
+                				<td><html:textarea name="ProjectUserFormAsHead" property="projectBean.projectChangeNote" styleClass="form-control"></html:textarea></td>
                 				
                 			</tr>
                 			
@@ -124,7 +124,7 @@
                 					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="validateForm()"/>
                 					<input type="button" class="btn btn-default" value='Cancel' onclick="flyToBack(
 	                        		'detailsAsHead', 
-	                        		'<bean:write name="ProjectUserForm" property="projectBean.projectId"/>')">
+	                        		'<bean:write name="ProjectUserFormAsHead" property="projectBean.projectId"/>')">
                 				</td>
                 			</tr>
                 		</table>

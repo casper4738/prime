@@ -21,6 +21,29 @@ public class TaskHeadForm extends ActionForm {
 	private Integer activityId;
 	private Integer taskReceiver;
 	private Boolean isShowAll = true;
+	private java.sql.Date startDate;
+	private java.sql.Date untilDate;
+	
+	public TaskHeadForm() {
+		setStartDate(new java.sql.Date(new java.util.Date().getTime()));
+		setUntilDate(new java.sql.Date(new java.util.Date().getTime()));
+	}
+
+	public java.sql.Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(java.sql.Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public java.sql.Date getUntilDate() {
+		return untilDate;
+	}
+
+	public void setUntilDate(java.sql.Date untilDate) {
+		this.untilDate = untilDate;
+	}
 
 	public Boolean getIsShowAll() {
 		return isShowAll;

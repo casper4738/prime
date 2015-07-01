@@ -71,6 +71,8 @@
   	    			<jsp:param name="taskId" value="${TaskHeadUserForm.taskId}" />
   	    			<jsp:param name="activityId" value="${TaskHeadUserForm.activityBean.activityId}" />
   	    			<jsp:param name="status" value="${TaskHeadUserForm.activityBean.activityLastStatus}" />
+  	    			<jsp:param name="taskAssigner" value="${TaskHeadUserForm.taskBean.taskAssigner}" />
+    				<jsp:param name="taskReceiver" value="${TaskHeadUserForm.taskBean.taskReceiver}" />
   	    		</jsp:include>
 				
 				<div class="search-table">

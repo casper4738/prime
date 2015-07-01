@@ -183,13 +183,9 @@
                 	    		</jsp:include>
            	    			</td>
 	                        <td width="150px" align="center">
-	                        	<logic:equal name="ProjectUserForm" property="projectBean.isAssigner"  value="0">
 	                        		<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', '<bean:write name="iter" property="projectId"/>')" >
-	                        	</logic:equal>
 	                        		
-	                        	<logic:greaterThan name="ProjectUserForm" property="projectBean.isAssigner"  value="0">
-	                        		<input type="submit" class="btn btn-primary btn-xs" value='Details As Head' onclick="flyToTaskDetailAsHead('detailsAsHead', '<bean:write name="iter" property="projectId"/>',  '<bean:write name="iter" property="employeeIdReceiver"/>')" >	
-	                        	</logic:greaterThan>
+	                        	
 	                        </td>
 	                    </tr>
                     </logic:iterate>

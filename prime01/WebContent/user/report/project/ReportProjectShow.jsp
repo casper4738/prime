@@ -18,7 +18,8 @@
 		try {
 			ReportClientDocument clientDoc = getClientDocument(reportName);
 			try {
-				//setDocParameter(0, (String)session.getAttribute("searchQuery"), clientDoc);
+				setDocParameter(0, (String)session.getAttribute("searchQuery"), clientDoc);
+				System.out.println(session.getAttribute("searchQuery"));
 				viewReport(clientDoc, request, response, session);
 			} finally {
 				clientDoc.close();

@@ -101,38 +101,36 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title">Projects Head</h3></div>
 			
-			<p><span class="button-add btn btn-app bg-olive btnCancel" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
-	               <i class="fa fa-edit"></i>Add
-           		</span>
-           	<p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
+			
+           	<p><span class="message"><bean:write name="ProjectUserFormAsHead" property="message" /></span></p>
             
 			<!-- Search Handler Tag -->
 			<div class="show-in-page">
 				Show per page
-				<html:select property="showInPage" name="ProjectUserForm" onchange="change(this.value)">
+				<html:select property="showInPage" name="ProjectUserFormAsHead" onchange="change(this.value)">
 					<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 				</html:select> 
 			</div>
 			<div class="search-table">
-				<html:form action="<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>" method="post">
+				<html:form action="<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT_HEAD]%>" method="post">
 					<html:hidden property="task" styleId="hdTask"/>
-					<html:hidden name="ProjectUserForm" property="projectId"/>
-					<html:hidden name="ProjectUserForm" property="projectBean.projectLastStatus"/>
-					<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver"/>
-					<html:hidden name="ProjectUserForm" property="employeeIdReceiver"/>
-					<html:hidden name="ProjectUserForm" property="goToPage"/>
-					<html:hidden name="ProjectUserForm" property="showInPage"/>
+					<html:hidden name="ProjectUserFormAsHead" property="projectId"/>
+					<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectLastStatus"/>
+					<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectReceiver"/>
+					<html:hidden name="ProjectUserFormAsHead" property="employeeIdReceiver"/>
+					<html:hidden name="ProjectUserFormAsHead" property="goToPage"/>
+					<html:hidden name="ProjectUserFormAsHead" property="showInPage"/>
 					<table>
 						<tr>
-							<td style="padding-left:5px"><html:select name="ProjectUserForm" property="columnSearch" styleClass="form-control columnSearch">
+							<td style="padding-left:5px"><html:select name="ProjectUserFormAsHead" property="columnSearch" styleClass="form-control columnSearch">
 									<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 								</html:select>
 							</td>
-							<td style="padding-left:5px"><html:text name="ProjectUserForm" property="search" styleClass="form-control textSearch" styleId="textSearch"/></td>
+							<td style="padding-left:5px"><html:text name="ProjectUserFormAsHead" property="search" styleClass="form-control textSearch" styleId="textSearch"/></td>
 							<td style="padding-left:5px">
 								<div id="date_start">
 								<div class="input-group" style="width:140px"><div class="input-group-addon"><i class="fa fa-calendar" ></i></div>
-      				  					<html:text name="ProjectUserForm" property="startDate" styleClass="form-control pull-right" styleId="start"/>
+      				  					<html:text name="ProjectUserFormAsHead" property="startDate" styleClass="form-control pull-right" styleId="start"/>
       				  				</div>
       				  				</div>
       				  			</td>
@@ -140,7 +138,7 @@
 							<td style="padding-left:5px">
 								<div id="date_until">
 								<div class="input-group" style="width:140px"><div class="input-group-addon"><i class="fa fa-calendar" ></i></div>
-      				  					<html:text name="ProjectUserForm" property="untilDate" styleClass="form-control pull-right" styleId="until" />
+      				  					<html:text name="ProjectUserFormAsHead" property="untilDate" styleClass="form-control pull-right" styleId="until" />
       				  				</div>
       				  				</div>
       				  			</td>
@@ -194,7 +192,7 @@
 		            
 			<!-- Paging -->
             <jsp:include page="/content/Pagination.jsp">
-    			<jsp:param name="formName" value="ProjectUserForm" />
+    			<jsp:param name="formName" value="ProjectUserFormAsHead" />
     		</jsp:include>
 			<!-- End of Paging -->
         </div>

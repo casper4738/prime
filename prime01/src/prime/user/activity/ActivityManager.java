@@ -25,12 +25,12 @@ public interface ActivityManager {
 	public List<ActivityBean> getListActivityDetail(String columnSearch, String value, Integer startRow, Integer endRow,
 			Integer activityId) throws SQLException;
 	
+	public Boolean isAllFinished(Integer taskId) throws SQLException;
+	
 	public Integer getCountByColumn(String columnSearch, String value, Integer taskId) throws SQLException;
 
 	public Integer getNewId() throws SQLException;
 
-	public Boolean isAllFinished(Integer taskId, Integer finish, Integer abort) throws SQLException;
-	
 	public Integer getCountToDoListById(Integer id) throws SQLException;
 	
 	public List<ActivityBean> getToDoListById(Integer startRow, Integer endRow, Integer id) throws SQLException;

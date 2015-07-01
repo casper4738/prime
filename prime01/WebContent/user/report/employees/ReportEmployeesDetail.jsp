@@ -21,7 +21,6 @@
 	    });
 
 		 function generateReport(){
-			 alert("adw");
 				document.forms[0].target = "_blank";
 				document.forms[0].task.value = "<%=Constants.Task.REPORT.GENERATEREPORTEMPLOYEETASK%>";
 				document.forms[0].submit();

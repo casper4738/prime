@@ -58,7 +58,7 @@
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
-			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
+			<li><a href="javascript:flyToSubmit('success')" >Manage Project</a></li>
 			<li class="active">Project Detail</li>
 		</ol>
 	</section>
@@ -68,59 +68,59 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Data Project Member</h3></div>
 			<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-			<tr><td>Project Name : ${ProjectUserForm.projectBean.projectId} <bean:write name="ProjectUserForm" property="projectBean.projectName"/></td>
-				<td>Project Assigner : <bean:write name="ProjectUserForm" property="projectBean.projectAssignerName" /> </td>
+			<tr><td>Project Name : ${ProjectUserFormAsHead.projectBean.projectId} <bean:write name="ProjectUserFormAsHead" property="projectBean.projectName"/></td>
+				<td>Project Assigner : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectAssignerName" /> </td>
 			</tr>
-			<tr><td>Start Date : <bean:write name="ProjectUserForm" property="projectBean.projectStartDate" format="dd MMMM yyyy"/> </td>
-				<td>Project Receiver : <bean:write name="ProjectUserForm" property="projectBean.projectReceiverName"/> </td>
-			</tr><tr><td>Estimated Date : <bean:write name="ProjectUserForm" property="projectBean.projectEstimateDate" format="dd MMMM yyyy" />
+			<tr><td>Start Date : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectStartDate" format="dd MMMM yyyy"/> </td>
+				<td>Project Receiver : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectReceiverName"/> </td>
+			</tr><tr><td>Estimated Date : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectEstimateDate" format="dd MMMM yyyy" />
 				</td><td>Status :  
 					<jsp:include page="/content/Status.jsp">
-       	    			<jsp:param name="status" value="${ProjectUserForm.projectBean.projectLastStatus}" />
+       	    			<jsp:param name="status" value="${ProjectUserFormAsHead.projectBean.projectLastStatus}" />
        	    		</jsp:include>
 				</td>
 			</tr>
-			<tr><td colspan="2">Description : <bean:write name="ProjectUserForm" property="projectBean.projectDescription" /> </td>
+			<tr><td colspan="2">Description : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectDescription" /> </td>
 			</tr></table>
 			
-			<p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
+			<p><span class="message"><bean:write name="ProjectUserFormAsHead" property="message" /></span></p>
                  
             <div class="form-action">
 				<table align="center"><tr>
-				<logic:equal name="ProjectUserForm" property="projectBean.projectLastStatus" value="3">
+				<logic:equal name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="3">
 					<td style="padding:5px;"><input type="button" value="Approve" class="btn btn-sm btn-primary" onclick="flyToPage('approve')"/></td>
-					<td style="padding:5px;"><input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="flyToPage('reject', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
+					<td style="padding:5px;"><input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="flyToPage('reject', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
 				</logic:equal>	
-					<td style="padding:5px;"><input type="button" value="Change PM" class="btn btn-sm  btn-primary" onclick="flyToPage('changePM', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
+					<td style="padding:5px;"><input type="button" value="Change PM" class="btn btn-sm  btn-primary" onclick="flyToPage('changePM', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
 				</tr></table>
             </div>
 			
 			<div class="show-in-page">
 				Show per page
-				<html:select name="ProjectUserForm" property="showInPage" onchange="change(this.value)" >
+				<html:select name="ProjectUserFormAsHead" property="showInPage" onchange="change(this.value)" >
 					<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 				</html:select>
 			</div>
 			
 			<div class="search-table">
-				<html:form action="/ProjectUser" >
-					<html:hidden name="ProjectUserForm" property="task"/>
-					<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
-					<html:hidden name="ProjectUserForm" property="projectBean.projectName"/>
-					<html:hidden name="ProjectUserForm" property="projectBean.projectReceiverName"/>
-					<html:hidden name="ProjectUserForm" property="projectBean.projectLastStatus"/>
-					<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver"/>
-					<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner"/>
-					<html:hidden name="ProjectUserForm" property="projectId"/>
-					<html:hidden name="ProjectUserForm" property="employeeId"/>
-					<html:hidden name="ProjectUserForm" property="goToPage"/>
-					<html:hidden name="ProjectUserForm" property="showInPage"/>
-					<html:hidden name="ProjectUserForm" property="tempRoleId"/>
-					<html:hidden name="ProjectUserForm" property="projectBean.employeeIdReceiver"/>
-					<html:select name="ProjectUserForm" property="columnSearch" styleClass="columnSearch">
+				<html:form action="/ProjectUserAsHead" >
+					<html:hidden name="ProjectUserFormAsHead" property="task"/>
+					<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectId"/>
+					<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectName"/>
+					<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectReceiverName"/>
+					<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectLastStatus"/>
+					<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectReceiver"/>
+					<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectAssigner"/>
+					<html:hidden name="ProjectUserFormAsHead" property="projectId"/>
+					<html:hidden name="ProjectUserFormAsHead" property="employeeId"/>
+					<html:hidden name="ProjectUserFormAsHead" property="goToPage"/>
+					<html:hidden name="ProjectUserFormAsHead" property="showInPage"/>
+					<html:hidden name="ProjectUserFormAsHead" property="tempRoleId"/>
+					<html:hidden name="ProjectUserFormAsHead" property="projectBean.employeeIdReceiver"/>
+					<html:select name="ProjectUserFormAsHead" property="columnSearch" styleClass="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
-					<html:text name="ProjectUserForm" property="search" styleClass="textSearch"/>
+					<html:text name="ProjectUserFormAsHead" property="search" styleClass="textSearch"/>
 					<input type="submit" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOEDIT%>')" class="buttonSearch myButton" value='Search'>
 				</html:form>
 				
@@ -169,7 +169,7 @@
             
             <!-- Paging -->
             <jsp:include page="/content/Pagination.jsp">
-    			<jsp:param name="formName" value="ProjectUserForm" />
+    			<jsp:param name="formName" value="ProjectUserFormAsHead" />
     		</jsp:include>
 			<!-- End of Paging -->
 			

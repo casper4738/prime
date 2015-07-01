@@ -15,6 +15,7 @@
 		
 		<!-- Operator & Monitor [User] -->
 		<form-bean name="ProjectUserForm" 		    type="prime.user.project.ProjectForm"></form-bean>
+		<form-bean name="ProjectUserFormAsHead" 	type="prime.user.project.ProjectFormAsHead"></form-bean>
 		<form-bean name="TaskHeadUserForm" 			type="prime.user.task.TaskHeadForm"></form-bean>		
 		<form-bean name="TaskSubordinateUserForm" 	type="prime.user.task.TaskSubordinateForm"></form-bean>		
 		<form-bean name="DashboardUserForm" 		type="prime.user.dashboard.DashboardForm"></form-bean>
@@ -152,14 +153,17 @@
 			<forward name="forward" 		path="/user/project/pm/Forward.jsp"></forward>
 			<forward name="taskDetail" 		path="/user/project/pm/ProjectTaskDetail.jsp"></forward>
 			<forward name="submit" 			path="/user/project/pm/ProjectSubmit.jsp"></forward>
+		</action>
+		
+		<action path="/ProjectUserAsHead" name="ProjectUserFormAsHead" type="prime.user.project.ProjectActionAsHead" scope="request">
+			<forward name="success" 		path="/user/project/head/ProjectHomeAsHead.jsp"></forward>
 			<forward name="detailsAsHead"	path="/user/project/head/ProjectDetailsAsHead.jsp"></forward>
 			<forward name="detailMemberAsHead" 	path="/user/project/head/ProjectMemberDetailsAsHead.jsp"></forward>
 			<forward name="changePM" 		path="/user/project/head/ProjectChangePM.jsp"></forward>
 			<forward name="reject" 	  		path="/user/project/head/ProjectReject.jsp"></forward>
 			<forward name="approve" 		path="/user/project/head/ProjectApprove.jsp"></forward>
-			<forward name="forwardAsHead" 	path="/user/project/head/Forward.jsp"></forward>
+			<forward name="forward" 		path="/user/project/head/Forward.jsp"></forward>
 		</action>
-		
 		
 		
 		<!-- Report Employees -->

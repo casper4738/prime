@@ -57,7 +57,7 @@
 		<h1>Manage Tasks</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li>Tasks & Activities</li>
+			<li><html:link href="#" onclick="flyToBack('home')">Tasks & Activities</html:link></li>
 			<li>As Head</li>
 			<li class="active">Task Detail</li>
 		</ol>
@@ -68,7 +68,7 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Data Task</h3></div>
 			<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-			<tr><td>Task Name : <bean:write name="TaskHeadUserForm" property="taskBean.taskName"/></td>
+			<tr><td width="50%">Task Name : ${TaskHeadUserForm.taskBean.taskId} <bean:write name="TaskHeadUserForm" property="taskBean.taskName"/></td>
 				<td>Task Assigner : <bean:write name="TaskHeadUserForm" property="taskBean.taskAssignerName" /> </td>
 			</tr>
 			<tr><td>Start Date : <bean:write name="TaskHeadUserForm" property="taskBean.taskStartDate" format="dd MMMM yyyy"/> </td>
@@ -80,9 +80,14 @@
 	  	    		</jsp:include>
 				</td>
 			</tr>
+			<tr><td>Actual Start Date: <bean:write name="TaskHeadUserForm" property="taskBean.actualStart" format="dd MMMM yyyy" /></td>
+				<td>Actual Start End : <bean:write name="TaskHeadUserForm" property="taskBean.actualEnd" format="dd MMMM yyyy"/></td>
+			</tr>
+			<tr><td>Main Days : <bean:write name="TaskHeadUserForm" property="taskBean.mainDays" /></td>
+				<td>Progress Percentage : <bean:write name="TaskHeadUserForm" property="taskBean.percentage"/></td>
+			</tr>
 			<tr><td colspan="2">Description : <bean:write name="TaskHeadUserForm" property="taskBean.taskDescription" /> </td></tr>
 			</table>
-			
 			
 			<p><span class="message"><bean:write name="TaskHeadUserForm" property="message" /></span></p>
 			<jsp:include page="/content/ButtonTaskStatus.jsp">
@@ -108,6 +113,8 @@
 					<html:hidden name="TaskHeadUserForm" property="goToPage"/>
 					<html:hidden name="TaskHeadUserForm" property="showInPage"/>
 					<html:hidden name="TaskHeadUserForm" property="isShowAll"/>
+					<html:hidden name="TaskHeadUserForm" property="taskBean.taskAssigner"/>
+					<html:hidden name="TaskHeadUserForm" property="taskBean.taskReceiver"/>
 					<html:select name="TaskHeadUserForm" property="columnSearch" styleClass="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>

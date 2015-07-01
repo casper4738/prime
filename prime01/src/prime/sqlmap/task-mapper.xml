@@ -1,3 +1,4 @@
+
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="task">
@@ -37,8 +38,26 @@
 			NVL(MAX(TASK_ID)+1, 1)
 		FROM TASKS
 	</select>
+	
+	<update id="updateActualStart" parameterClass="java.util.Map">
+		UPDATE TASKS SET 
+			ACTUAL_START = #actualStart#
+		WHERE TASK_ID = #taskId#
+	</update>
+	
+	<update id="updateActualEnd" parameterClass="java.util.Map">
+		UPDATE TASKS SET 
+			ACTUAL_END = #actualEnd#
+		WHERE TASK_ID = #taskId#
+	</update>
+	
+	<update id="updateActualMainDays" parameterClass="java.util.Map">
+		UPDATE TASKS SET 
+			MAIN_DAYS = #mainDays#
+		WHERE TASK_ID = #taskId#
+	</update>
 
-	<select id="get" resultClass="prime.user.task.TaskBean" parameterClass="java.lang.Integer">
+	<select id="get" resultClass="prime.user.task.TaskBean" parameterClass="java.util.Map">
 		SELECT TASK_ID 					AS taskId,
 			TASK_NAME 					AS taskName,
 			TASK_RECEIVER 				AS taskReceiver,
@@ -49,7 +68,13 @@
 			TASK_LAST_STATUS 			AS taskLastStatus,
 			PROJECT_MEMBER_ID 			AS projectMemberId,
 			EMP_ASSIGN.EMPLOYEE_NAME 	AS taskAssignerName,
-			EMP_RECEIVE.EMPLOYEE_NAME	AS taskReceiverName
+			EMP_RECEIVE.EMPLOYEE_NAME	AS taskReceiverName,
+			ACTUAL_START				AS actualStart,
+			ACTUAL_END					AS actualEnd,
+			MAIN_DAYS					AS mainDays,
+			NVL(((SELECT COUNT(ACTIVITY_ID) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS=#finish#) /
+			  (SELECT NULLIF(COUNT(ACTIVITY_ID),0) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS!=#abort#)
+			) * 100, 0) 				AS percentage
 		FROM TASKS TASK
 		JOIN EMPLOYEES EMP_ASSIGN ON TASK.TASK_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
 		JOIN EMPLOYEES EMP_RECEIVE ON TASK.TASK_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
@@ -77,20 +102,23 @@
 	<!-- TASK HEAD -->
 	<select id="getListByColumnHead" resultClass="prime.user.task.TaskBean" parameterClass="java.util.Map">
 		SELECT * FROM (SELECT page.*, ROWNUM rnum FROM
-		(SELECT TASK.TASK_ID AS taskId,
-			TASK_NAME AS taskName,
-			TASK_RECEIVER as taskReceiver,
-			TASK_ASSIGNER as taskAssigner,
-			TASK_START_DATE as taskStartDate,
-			TASK_ESTIMATE_DATE as taskEstimateDate,
-			TASK_DESCRIPTION as taskDescription,
-			PROJECT_MEMBER_ID as projectMemberId,
-			EMP_ASSIGN.EMPLOYEE_NAME as taskAssignerName,
-			EMP_RECEIVE.EMPLOYEE_NAME as taskReceiverName,
-			TASK.TASK_LAST_STATUS AS taskLastStatus,
+		(SELECT TASK.TASK_ID 		AS taskId,
+			TASK_NAME 				AS taskName,
+			TASK_RECEIVER 			AS taskReceiver,
+			TASK_ASSIGNER 			AS taskAssigner,
+			TASK_START_DATE 		AS taskStartDate,
+			TASK_ESTIMATE_DATE 		AS taskEstimateDate,
+			TASK_DESCRIPTION 		AS taskDescription,
+			PROJECT_MEMBER_ID 		AS projectMemberId,
+			EMP_ASSIGN.EMPLOYEE_NAME 	AS taskAssignerName,
+			EMP_RECEIVE.EMPLOYEE_NAME 	AS taskReceiverName,
+			TASK.TASK_LAST_STATUS 		AS taskLastStatus,
+			ACTUAL_START				AS actualStart,
+			ACTUAL_END					AS actualEnd,
+			MAIN_DAYS					AS mainDays,
 			NVL(((SELECT COUNT(ACTIVITY_ID) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS=#finish#) /
 			  (SELECT NULLIF(COUNT(ACTIVITY_ID),0) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS!=#abort#)
-			) * 100, 0) AS percentage
+			) * 100, 0) 				AS percentage
 		FROM TASKS TASK
 		JOIN EMPLOYEES EMP_ASSIGN ON TASK.TASK_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
 		JOIN EMPLOYEES EMP_RECEIVE ON TASK.TASK_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
@@ -99,11 +127,6 @@
 		    GROUP BY TD.TASK_ID
 		) TASK_DET ON TASK_DET.TASK_ID=TASK.TASK_ID
 		WHERE TASK_ASSIGNER=#taskAssigner#
-		OR TASK.TASK_ID  IN (
-		    SELECT X.TASK_ID FROM TASKS X
-		    JOIN EMPLOYEES Y ON Y.EMPLOYEE_ID= X.TASK_ASSIGNER AND Y.EMPLOYEE_ID = X.TASK_RECEIVER
-		    WHERE Y.HEAD_ID = #taskAssigner#
-		) 
 		<dynamic prepend="AND">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
@@ -118,14 +141,35 @@
 				<isEqual property="columnSearch" compareValue="RECEIVER">
 					UPPER(EMP_RECEIVE.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
-				<isEqual property="columnSearch" compareValue="START">
-					UPPER(START_DATE) LIKE UPPER('%'||#value#||'%')
+				<isEqual property="columnSearch" compareValue="STARTDATE">
+					TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
 				</isEqual>
-				<isEqual property="columnSearch" compareValue="ESTIMATE">
-					UPPER(ESTIMATE_DATE) LIKE UPPER('%'||#value#||'%')
+				<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+					TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
 				</isEqual>
 			</isNotNull>
 		</dynamic>
+		OR TASK.TASK_ID  IN (
+		    SELECT X.TASK_ID FROM TASKS X
+		    JOIN EMPLOYEES Y ON Y.EMPLOYEE_ID= X.TASK_ASSIGNER AND Y.EMPLOYEE_ID = X.TASK_RECEIVER
+		    WHERE Y.HEAD_ID = #taskAssigner#
+		    <dynamic prepend="AND">
+				<isNotNull property="columnSearch">
+					<isEqual property="columnSearch" compareValue="NAME">
+						UPPER(X.TASK_NAME) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="DESCRIPTION">
+						UPPER(X.TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="STARTDATE">
+						X.TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+						X.TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+				</isNotNull>
+			</dynamic>
+		) 
 		ORDER BY TASK_NAME ASC) page 
 		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
@@ -154,11 +198,11 @@
 				<isEqual property="columnSearch" compareValue="RECEIVER">
 					UPPER(EMP_RECEIVE.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
-				<isEqual property="columnSearch" compareValue="START">
-					UPPER(START_DATE) LIKE UPPER('%'||#value#||'%')
+				<isEqual property="columnSearch" compareValue="STARTDATE">
+					TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
 				</isEqual>
-				<isEqual property="columnSearch" compareValue="ESTIMATE">
-					UPPER(ESTIMATE_DATE) LIKE UPPER('%'||#value#||'%')
+				<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+					TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
 				</isEqual>
 			</isNotNull>
 		</dynamic>
@@ -179,6 +223,9 @@
 			EMP_ASSIGN.EMPLOYEE_NAME as taskAssignerName,
 			EMP_RECEIVE.EMPLOYEE_NAME as taskReceiverName,
 			TASK.TASK_LAST_STATUS AS taskLastStatus,
+			ACTUAL_START				AS actualStart,
+			ACTUAL_END					AS actualEnd,
+			MAIN_DAYS					AS mainDays,
 			NVL(((SELECT COUNT(ACTIVITY_ID) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS=#finish#) /
 			  (SELECT NULLIF(COUNT(ACTIVITY_ID),0) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS!=#abort#)
 			) * 100, 0) AS percentage
@@ -204,11 +251,11 @@
 				<isEqual property="columnSearch" compareValue="RECEIVER">
 					UPPER(TASK_RECEIVER) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
-				<isEqual property="columnSearch" compareValue="START">
-					UPPER(START_DATE) LIKE UPPER('%'||#value#||'%')
+				<isEqual property="columnSearch" compareValue="STARTDATE">
+					TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
 				</isEqual>
-				<isEqual property="columnSearch" compareValue="ESTIMATE">
-					UPPER(ESTIMATE_DATE) LIKE UPPER('%'||#value#||'%')
+				<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+					TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
 				</isEqual>
 			</isNotNull>
 		</dynamic>
@@ -240,11 +287,11 @@
 				<isEqual property="columnSearch" compareValue="RECEIVER">
 					UPPER(TASK_RECEIVER) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
-				<isEqual property="columnSearch" compareValue="START">
-					UPPER(START_DATE) LIKE UPPER('%'||#value#||'%')
+				<isEqual property="columnSearch" compareValue="STARTDATE">
+					TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
 				</isEqual>
-				<isEqual property="columnSearch" compareValue="ESTIMATE">
-					UPPER(ESTIMATE_DATE) LIKE UPPER('%'||#value#||'%')
+				<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+					TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
 				</isEqual>
 			</isNotNull>
 		</dynamic>

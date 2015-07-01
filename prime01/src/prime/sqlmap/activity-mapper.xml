@@ -13,7 +13,7 @@
 		INSERT INTO ACTIVITY_DETAILS 
 			(ACTIVITY_ID, ACTIVITY_CHANGE_DATE, ACTIVITY_STATUS, ACTIVITY_CHANGE_NOTE)  
 		VALUES 
-			(#activityId#, CURRENT_TIMESTAMP, #activityStatus#, #activityChangeNote#)
+			(#activityId#, SYSDATE, #activityStatus#, #activityChangeNote#)
 	</insert>
 	
 	<insert id="insertDetailBySelectTask" parameterClass="prime.user.activity.ActivityBean">
@@ -143,12 +143,13 @@
 	    </dynamic>
 	</select>
 	
-	<select id="isAllFinished" resultClass="java.lang.Boolean" parameterClass="java.lang.Integer">
+	<select id="isAllFinished" resultClass="java.lang.Boolean" parameterClass="java.util.Map">
 		SELECT 
 		    CASE WHEN COUNT(1) > 0 THEN 0
 		         ELSE 1
 		    END    
-		FROM ACTIVITIES WHERE TASK_ID= #taskId# AND NVL(ACTIVITY_LAST_STATUS, 0) != 4
+		FROM ACTIVITIES WHERE TASK_ID= #taskId# AND NVL(ACTIVITY_LAST_STATUS, 0) != #finish#
+		AND NVL(ACTIVITY_LAST_STATUS, 0) != #abort#
 	</select>
 	
 	<!-- show in select activity form (dashboard) -->

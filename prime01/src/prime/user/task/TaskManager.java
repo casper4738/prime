@@ -13,6 +13,12 @@ public interface TaskManager {
 	
 	public void insertDetailBySelectTask(TaskBean e) throws SQLException;
 
+	public void updateActualStart(Integer taskId, java.sql.Date actualStart) throws SQLException;
+
+	public void updateActualEnd(Integer taskId, java.sql.Date actualEnd) throws SQLException;
+
+	public void updateMainDays(Integer taskId, Integer mainDays) throws SQLException;
+	
 	public TaskBean getTaskById(Integer id) throws SQLException;
 
 	public Integer getNewId() throws SQLException;

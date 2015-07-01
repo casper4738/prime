@@ -6,12 +6,14 @@
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 
-<%  request.setAttribute("taskId", request.getParameter("taskId")); 
-	request.setAttribute("taskAssigner", request.getParameter("taskAssigner")); 
- 	request.setAttribute("taskReceiver", request.getParameter("taskReceiver")); 
-%>
+<bean:define id="taskId" value="${param.taskId}" toScope="request" />
+<bean:define id="taskAssigner" value="${param.taskAssigner}" toScope="request" />
+<bean:define id="taskReceiver" value="${param.taskReceiver}" toScope="request" />
 
-<center>${taskId} | ${TaskHeadUserForm.task } | ${isAlreadyApprove } </center>
+<center>${employeeIdActive} |${taskAssigner}  | ${taskReceiver} | ${taskId} 
+<br/>
+${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject}
+</center>
 
 <div class="form-action"><table align="center">
    <tr> <td style="padding:5px;">

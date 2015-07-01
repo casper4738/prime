@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionMapping;
 import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
 import prime.constants.Constants;
+import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
@@ -25,7 +26,8 @@ public class TaskSubordinateAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-		int employeeId = 101;
+//		int employeeId = LoginData.getUserData().getEmployeeId();
+		int employeeId = 200;
 		request.setAttribute("employeeIdActive", employeeId);
 		
 		TaskSubordinateForm pForm = (TaskSubordinateForm) form;
@@ -51,9 +53,11 @@ public class TaskSubordinateAction extends Action {
 			request.setAttribute("listActivity", list);
 			request.setAttribute("listSearchColumn", Constants.Search.ACTIVITY_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
-			request.setAttribute("isAllFinished", tmpActivityManager.isAllFinished(pForm.getTaskId(), Constants.Status.FINISH, Constants.Status.ABORT));
+			System.out.println("cek:"+pForm.getTaskId()+" - "+ tmpActivityManager.isAllFinished(pForm.getTaskId()));
+			request.setAttribute("isAllFinished", tmpActivityManager.isAllFinished(pForm.getTaskId()));
 			request.setAttribute("isAlreadySubmit", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.SUBMIT));
 			request.setAttribute("isAlreadyReject", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.REJECT));
+			request.setAttribute("isAlreadyApprove", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.APPROVAL));
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("taskDetail");
 		} else if (Constants.Task.ACTIVITY.GOTOADD.equals(pForm.getTask())) {
@@ -104,13 +108,14 @@ public class TaskSubordinateAction extends Action {
 		} else if (Constants.Task.ACTIVITY.DOCHANGESTATUS.equals(pForm.getTask())) {
 			//##.Insert Task Data Detail
 			if(!manager.isCheckStatusDetail(pForm.getTaskId(), Constants.Status.PROGRESS)) {
-			if(pForm.getActivityStatus() == Constants.Status.PROGRESS) {
+				System.out.println("1. ");
+				System.out.println("2. ");
 				TaskBean bean = new TaskBean();
 				bean.setTaskId(pForm.getTaskId());
 				bean.setTaskStatus(Constants.Status.PROGRESS);
 				bean.setTaskChangeNote("");
 				manager.insertDetail(bean);
-			}
+				manager.updateActualStart(pForm.getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
 			}
 			//##.Insert Activity Data Detail
 			pForm.getActivityBean().setActivityStatus(pForm.getActivityStatus());
@@ -120,6 +125,12 @@ public class TaskSubordinateAction extends Action {
 			//##.Approval Task
 			pForm.getTaskBean().setTaskStatus(Constants.Status.APPROVAL);
 			pForm.getTaskBean().setTaskChangeNote("");
+			
+			manager.updateActualEnd(pForm.getTaskBean().getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
+			TaskBean e = manager.getTaskById(pForm.getTaskBean().getTaskId());
+			int mainDays = PrimeUtil.getDayBetweenDate(e.getActualStart(), e.getActualEnd());
+			manager.updateMainDays(pForm.getTaskBean().getTaskId(), mainDays);
+			
 			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");
 		} else if (Constants.Task.TASK.DOABORT.equals(pForm.getTask())) {
@@ -128,6 +139,12 @@ public class TaskSubordinateAction extends Action {
 			activityBean.setActivityChangeNote("Activity aborted by role in task abort");
 			activityBean.setTaskStatus(Constants.Status.ABORT);
 			activityBean.setTaskId(pForm.getTaskBean().getTaskId());
+			
+			manager.updateActualEnd(pForm.getTaskBean().getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
+			TaskBean e = manager.getTaskById(pForm.getTaskBean().getTaskId());
+			int mainDays = PrimeUtil.getDayBetweenDate(e.getActualStart(), e.getActualEnd());
+			manager.updateMainDays(pForm.getTaskBean().getTaskId(), mainDays);
+			
 			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");
 		} 

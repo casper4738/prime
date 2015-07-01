@@ -75,9 +75,9 @@ public class ProjectAction extends Action {
 
 			
 			int countRows  = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-			List<ProjectBean> list = tmpProjectManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
+			List<ProjectBean> list = tmpProjectManager.getListByColumnAsMember(pForm.getColumnSearch(), pForm.getSearch(),
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
-					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
+					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),tmpEmployeeId);
 			request.setAttribute("listProject", list);
 			request.setAttribute("listSearchColumn", Constants.Search.PROJECT_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
@@ -392,21 +392,12 @@ public class ProjectAction extends Action {
 			search = pForm.getSearch();
 		}
 		
-		List<ProjectBean> list = new ArrayList<ProjectBean>();
 		int countRows  = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), search);
-		if(tmpProjectManager.getCountProjectAssigner(tmpEmployeeId)>0){
-			System.out.println("masuk assigner");
-			pForm.getProjectBean().setIsAssigner(tmpProjectManager.getCountProjectAssigner(tmpEmployeeId));
-			list = tmpProjectManager.getListByColumnAsHead(pForm.getColumnSearch(), search,
-					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
-					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), tmpEmployeeId);
-		}
-		else{
-			pForm.getProjectBean().setIsAssigner(0);
-			list = tmpProjectManager.getListByColumnAsMember(pForm.getColumnSearch(), search,
-					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
-					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), tmpEmployeeId);
-		}
+		//pForm.getProjectBean().setIsAssigner(0);
+		List<ProjectBean> list = tmpProjectManager.getListByColumnAsMember(pForm.getColumnSearch(), search,
+				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
+				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), tmpEmployeeId);
+		
 		
 		
 		 

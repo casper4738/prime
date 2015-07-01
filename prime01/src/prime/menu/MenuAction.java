@@ -52,11 +52,13 @@ public class MenuAction extends Action {
 				System.out.println("jumlah Receiver"+tmpProjectManager.getCountProjectReceiver(LoginData.getEmployeeData().getEmployeeId()));
 				if(tmpProjectManager.getCountProjectReceiver(LoginData.getEmployeeData().getEmployeeId())>0 ||
 						tmpProjectManager.getCountProjectMember(LoginData.getEmployeeData().getEmployeeId())>0)
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_PROJECT]				, "Manage Project");
-	
+				{
+					System.out.println("masuk");
+					tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_PROJECT]				, "Manage Project");
+				}
 				//checkingEmployeeAsHead
 				if(tmpProjectManager.getCountProjectAssigner(LoginData.getEmployeeData().getEmployeeId())>0)
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_PROJECT]		, "Manage Project As Head");
+				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_PROJECT_HEAD]		, "Manage Project As Head");
 				
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_REPORT_EMPLOYEES]	, "View Report Employees");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_REPORT_PROJECT]		, "View Report Project");

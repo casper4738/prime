@@ -10,10 +10,10 @@
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
-            $('#start-date').datepicker({
+            $('#startDate').datepicker({
                 format: "yyyy-mm-dd"
             });  
-            $('#estimate-date').datepicker({
+            $('#estimateDate').datepicker({
                 format: "yyyy-mm-dd"
             });
         });
@@ -36,7 +36,7 @@
 			$.ajax({ 
 		          type	  : "POST",
 		          url	  : '<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>',  
-		          data	  : 'task=<%=Constants.Task.DOVALIDATE1%>&taskBean.taskReceiver='+$('#taskReceiver').val()+'&taskBean.taskStartDate='+ $('#start-date').val()+'&taskBean.taskEstimateDate='+ $('#estimate-date').val(),
+		          data	  : 'task=<%=Constants.Task.DOVALIDATE1%>&taskBean.taskReceiver='+$('#taskReceiver').val()+'&taskBean.taskStartDate='+ $('#startDate').val()+'&taskBean.taskEstimateDate='+ $('#estimateDate').val(),
 		          success : function(msg){
 	        		  $('#mainDays').html(msg);
 		          },
@@ -51,11 +51,11 @@
 			var taskName 		= checkNull($('#taskName'), $('#err-taskName'), "Task Name");
 			var taskAssigner 	= checkNull($('#taskAssigner'), $('#err-taskAssigner'), "Task Assigner");
 			var taskReceiver	= checkNull($('#taskReceiver'), $('#err-taskReceiver'), "Task Receiver");
+			var startDate = checkNull($('#startDate'), $('#err-startDate'), "Project Start Date");
+			var estimateDate = checkNull($('#estimateDate'), $('#err-estimateDate'), "Project Estimate Date");
+			var checkDate = checkForDate($('#startDate'), $('#estimateDate'), $('#err-startDate'), $('#err-estimateDate'), "Project Start Date", "Project Estimate Date");
 			
-			
-			
-			
-			if(taskName || taskAssigner || taskReceiver ) {
+			if(taskName || taskAssigner || taskReceiver || startDate || estimateDate) {
 				//alert("error lho");
 			} else {
 				dosubmit();
@@ -116,17 +116,25 @@
                 				<td>Start Date</td>
                 				<td>:</td>
                 				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                				  	<html:text name="TaskHeadUserForm" property="taskBean.taskStartDate" styleClass="form-control pull-right" styleId="start-date" onchange="checkDays()"/>
+                				  	<html:text name="TaskHeadUserForm" property="taskBean.taskStartDate" styleClass="form-control pull-right" styleId="startDate" onchange="checkDays()"/>
                 				  	</div>
                 				</td>
+                			</tr>
+                			<tr><td></td>
+                				<td></td>
+                				<td><span id="err-startDate" class="error-validator"></span></td>
                 			</tr>
                 			<tr>
                 				<td>Estimate Date</td>
                 				<td>:</td>
                 				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                				  	<html:text name="TaskHeadUserForm" property="taskBean.taskEstimateDate" styleClass="form-control pull-right" styleId="estimate-date" onchange="checkDays()"/>
+                				  	<html:text name="TaskHeadUserForm" property="taskBean.taskEstimateDate" styleClass="form-control pull-right" styleId="estimateDate" onchange="checkDays()"/>
                 				  	</div>
                 				</td>
+                			</tr>
+                			<tr><td></td>
+                				<td></td>
+                				<td><span id="err-estimateDate" class="error-validator"></span></td>
                 			</tr>
                 			<tr>
                 				<td></td>

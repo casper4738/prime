@@ -53,8 +53,55 @@ public class TaskManagerImpl implements TaskManager {
 	}
 	
 	@Override
+	public void updateActualStart(Integer taskId, java.sql.Date actualStart) throws SQLException {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("taskId", taskId);
+			map.put("actualStart", actualStart);
+			
+			mapper.startTransaction();
+			mapper.insert("task.updateActualStart", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	@Override
+	public void updateActualEnd(Integer taskId, java.sql.Date actualEnd) throws SQLException {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("taskId", taskId);
+			map.put("actualEnd", actualEnd);
+			
+			mapper.startTransaction();
+			mapper.insert("task.updateActualEnds", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+	public void updateMainDays(Integer taskId, Integer mainDays) throws SQLException {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("taskId", taskId);
+			map.put("mainDays", mainDays);
+			
+			mapper.startTransaction();
+			mapper.insert("task.updateActualMainDays", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+	@Override
 	public TaskBean getTaskById(Integer id) throws SQLException {
-		return (TaskBean) mapper.queryForObject("task.get", id);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("id", id);
+		map.put("finish", Constants.Status.FINISH);
+		map.put("abort", Constants.Status.ABORT);
+		return (TaskBean) mapper.queryForObject("task.get", map);
 	}
 	
 	@Override
@@ -84,7 +131,13 @@ public class TaskManagerImpl implements TaskManager {
 			Integer taskAssigner) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
-		map.put("value", value);
+		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
+			String[] string = value.split(";");
+			map.put("startDate", string[0]);
+			map.put("untilDate", string[1]);
+		} else {
+			map.put("value", value);
+		}
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		map.put("taskAssigner", taskAssigner);

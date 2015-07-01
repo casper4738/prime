@@ -31,12 +31,12 @@ public class ReportEmployeesAction extends Action {
 		ReportEmployeesManager tmpManager = new ReportEmployeesManagerImpl();
 		TaskManager 	tmpTaskManager 		= new TaskManagerImpl();
 		
-		System.out.println(pForm.getTask());
 		
 		if(Constants.Task.REPORT.GOTODETAILEMPLOYEE.equals(pForm.getTask())){
 			//##. Get Data
 			pForm.setReportEmployeesBean(tmpManager.getEmployeeById(pForm.getEmployeeId()));
 			int countRows  = tmpTaskManager.getCountByColumnSubordinate(pForm.getColumnSearch(), pForm.getSearch(), pForm.getEmployeeId());
+			
 			List<TaskBean> list = tmpTaskManager.getListByColumnSubordinate(pForm.getColumnSearch(), pForm.getSearch(),
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), 
@@ -51,16 +51,14 @@ public class ReportEmployeesAction extends Action {
 		
 		else if(Constants.Task.REPORT.GENERATEREPORTEMPLOYEE.equals(pForm.getTask())){
 			
-			System.out.println(pForm.getColumnSearch());
 			if("ID".equals(pForm.getColumnSearch())) {
-				System.out.println(pForm.getSearch());
 				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.EMPLOYEE_ID LIKE ('%" + pForm.getSearch()+ "%')");				
 			} else if ("NAME".equals(pForm.getColumnSearch())) {
-				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.EMPLOYEE_NAME LIKE LOWER ('%" + pForm.getSearch()+ "%')");	
+				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER(EMP.EMPLOYEE_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");	
 			} else if ("GENDER".equals(pForm.getColumnSearch())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.GENDER LIKE ('%" + pForm.getSearch()+ "%')");
 			} else if ("EMAIL".equals(pForm.getColumnSearch())) {
-				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.EMAIL LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER(EMP.EMAIL) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
 			} else if ("DIVISION".equals(pForm.getColumnSearch())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE DIVISION_NAME LIKE LOWER ('%" + pForm.getSearch()+ "%')");
 			} else if ("POSITION".equals(pForm.getColumnSearch())) {

@@ -11,7 +11,7 @@
 		function validateForm() {
 			var positionName = checkNull($('#positionName'), $('#err-positionName'), "Position Name");
 		    var positionNameChar = checkSpecialChars($('#positionName'), $('#err-positionName'));
-		    if (divisionName || positionNameChar) {
+		    if (positionName || positionNameChar) {
 		    } else {
 		    	dosubmit();
 		    }

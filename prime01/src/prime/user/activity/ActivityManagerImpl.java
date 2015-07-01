@@ -143,7 +143,11 @@ public class ActivityManagerImpl implements ActivityManager {
 	
 	
 	public Boolean isAllFinished(Integer taskId) throws SQLException {
-		return (Boolean) mapper.queryForObject("activity.isAllFinished",taskId);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("taskId", taskId);
+		map.put("finish", Constants.Status.FINISH);
+		map.put("abort", Constants.Status.ABORT);
+		return (Boolean) mapper.queryForObject("activity.isAllFinished",map);
 	}
 
 	@Override
@@ -238,13 +242,6 @@ public class ActivityManagerImpl implements ActivityManager {
 		map.put("activityId", activityId);
 		map.put("currentDate", currentDate);
 		return mapper.queryForList("activity.getRangeTimeByActivityId", map);
-	}
-
-	@Override
-	public Boolean isAllFinished(Integer taskId, Integer finish, Integer abort)
-			throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
 	}
 
 	@Override

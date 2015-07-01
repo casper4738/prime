@@ -7,11 +7,12 @@
 <html>
 <head> 
 	<!-- JS -->
+	<script src="resources/prime.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		function validateForm() {
 			var positionName = checkNull($('#positionName'), $('#err-positionName'), "Position Name");
 		    var positionNameChar = checkSpecialChars($('#positionName'), $('#err-positionName'));
-		    if (divisionName || positionNameChar) {
+		    if (positionName || positionNameChar) {
 		    } else {
 		    	dosubmit();
 		    }

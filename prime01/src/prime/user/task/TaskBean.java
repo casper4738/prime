@@ -11,20 +11,49 @@ public class TaskBean {
 	private Integer taskStatus;
 	private Integer taskLastStatus;
 	private Integer percentage;
+	private Integer mainDays;
 	private Date taskStartDate;
 	private Date taskEstimateDate;
 	private Date taskChangeDate;
+	private Date actualStart;
+	private Date actualEnd;
 	private String taskName;
 	private String taskDescription;
 	private String taskAssignerName;
 	private String taskReceiverName;
 	private String taskChangeNote;
-	
+
 	public TaskBean() {
 		setTaskStartDate(new java.sql.Date(new java.util.Date().getTime()));
 		setTaskEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
+		setActualStart(new java.sql.Date(new java.util.Date().getTime()));
+		setTaskEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
 	}
-	
+
+	public Integer getMainDays() {
+		return mainDays;
+	}
+
+	public void setMainDays(Integer mainDays) {
+		this.mainDays = mainDays;
+	}
+
+	public Date getActualStart() {
+		return actualStart;
+	}
+
+	public void setActualStart(Date actualStart) {
+		this.actualStart = actualStart;
+	}
+
+	public Date getActualEnd() {
+		return actualEnd;
+	}
+
+	public void setActualEnd(Date actualEnd) {
+		this.actualEnd = actualEnd;
+	}
+
 	public Integer getPercentage() {
 		return percentage;
 	}

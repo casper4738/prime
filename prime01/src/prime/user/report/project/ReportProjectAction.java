@@ -1,5 +1,5 @@
 package prime.user.report.project;
-
+ 
 import java.sql.SQLException;
 import java.util.List;
 
@@ -18,7 +18,7 @@ import prime.user.task.TaskManagerImpl;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
-public class ReportProjectAction extends Action {
+public class ReportProjectAction extends Action { 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
@@ -30,6 +30,7 @@ public class ReportProjectAction extends Action {
 		
 		ReportProjectForm pForm = (ReportProjectForm) form;
 		ReportProjectManager tmpManager = new ReportProjectManagerImpl();
+		System.out.println(pForm.getTask());
 		
 		if(Constants.Task.REPORT.GOTODETAILPROJECT.equals(pForm.getTask())){
 			//##. Get Data
@@ -46,7 +47,11 @@ public class ReportProjectAction extends Action {
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());			
 			return mapping.findForward("detailProject");
 		} else if (Constants.Task.REPORT.GENERATEREPORTPROJECT.equals(pForm.getTask())) {
-			
+			System.out.println(pForm.getColumnSearch());
+			if ("NAME".equals(pForm.getColumnSearch())) {
+				System.out.println(pForm.getSearch());
+				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER (PROJECT_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+			}
 			return mapping.findForward("showReportProject");
 		} else if (Constants.Task.REPORT.GENERATEREPORTPROJECTTASK.equals(pForm.getTask())) {
 			

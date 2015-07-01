@@ -47,10 +47,10 @@
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
-			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
+			<li><a href="javascript:flyToPage('success')" >Manage Project</a></li>
 			<li class="active"><a href="javascript:flyToBack(
 	                        		'detailsAsHead', 
-	                        		'<bean:write name="ProjectUserForm" property="projectId"/>')">Project Detail</a></li>
+	                        		'<bean:write name="ProjectUserFormAsHead" property="projectId"/>')">Project Detail</a></li>
 			<li class="active">Project Member Detail</li>
 		</ol>
 	</section>
@@ -60,16 +60,16 @@
 			<div class="col-xs-12"><div class="box">
 				<div class="box-header"><h3 class="box-title-center">Data Project Member</h3></div>
 				<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-				<tr><td>Member Name : <bean:write name="ProjectUserForm" property="employeeBean.employeeName"/> </td>
-					<td>Position : <bean:write name="ProjectUserForm" property="employeeBean.positionName" /> </td>
+				<tr><td>Member Name : <bean:write name="ProjectUserFormAsHead" property="employeeBean.employeeName"/> </td>
+					<td>Position : <bean:write name="ProjectUserFormAsHead" property="employeeBean.positionName" /> </td>
 				</tr>
-				<tr><td>Phone Number : <bean:write name="ProjectUserForm" property="employeeBean.contactNumber"/> </td>
-					<td>Division : <bean:write name="ProjectUserForm" property="employeeBean.divisionName" /> </td>
-				<tr><td>Email : <bean:write name="ProjectUserForm" property="employeeBean.email"/> </td>
+				<tr><td>Phone Number : <bean:write name="ProjectUserFormAsHead" property="employeeBean.contactNumber"/> </td>
+					<td>Division : <bean:write name="ProjectUserFormAsHead" property="employeeBean.divisionName" /> </td>
+				<tr><td>Email : <bean:write name="ProjectUserFormAsHead" property="employeeBean.email"/> </td>
 				</tr>
 				</table>
 				
-				<p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
+				<p><span class="message"><bean:write name="ProjectUserFormAsHead" property="message" /></span></p>
 				<logic:notEqual name="isAddTaskActive" value="0">
 					<div class="form-action"><table align="center">
 	                  <tr><td style="padding:5px;">
@@ -80,25 +80,25 @@
 				
 				<div class="show-in-page">
 					Show per page
-					<html:select name="ProjectUserForm" property="showInPage" onchange="change(this.value)" >
+					<html:select name="ProjectUserFormAsHead" property="showInPage" onchange="change(this.value)" >
 						<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 					</html:select>	
 				</div>
 				
 				<div class="search-table">
-					<html:form action="/ProjectUser" >
-						<html:hidden name="ProjectUserForm" property="task"/>
-						<html:hidden name="ProjectUserForm" property="taskId"/>
-						<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
-						<html:hidden name="ProjectUserForm" property="projectBean.employeeId"/>
-						<html:hidden name="ProjectUserForm" property="projectBean.employeeName"/>
-						<html:hidden name="ProjectUserForm" property="goToPage"/>
-						<html:hidden name="ProjectUserForm" property="showInPage"/>
-						<html:hidden name="ProjectUserForm" property="projectId"/>
-						<html:select name="ProjectUserForm" property="columnSearch" styleClass="columnSearch">
+					<html:form action="/ProjectUserAsHead" >
+						<html:hidden name="ProjectUserFormAsHead" property="task"/>
+						<html:hidden name="ProjectUserFormAsHead" property="taskId"/>
+						<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectId"/>
+						<html:hidden name="ProjectUserFormAsHead" property="projectBean.employeeId"/>
+						<html:hidden name="ProjectUserFormAsHead" property="projectBean.employeeName"/>
+						<html:hidden name="ProjectUserFormAsHead" property="goToPage"/>
+						<html:hidden name="ProjectUserFormAsHead" property="showInPage"/>
+						<html:hidden name="ProjectUserFormAsHead" property="projectId"/>
+						<html:select name="ProjectUserFormAsHead" property="columnSearch" styleClass="columnSearch">
 							<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 						</html:select>
-						<html:text name="ProjectUserForm" property="search" styleClass="textSearch"/>
+						<html:text name="ProjectUserFormAsHead" property="search" styleClass="textSearch"/>
 						<input type="submit" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOEDIT%>')" class="buttonSearch myButton" value='Search'>
 					</html:form>
 				</div>
@@ -150,7 +150,7 @@
 					<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
 					
 					<div class="paginate-3">
-						<html:text name="ProjectUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+						<html:text name="ProjectUserFormAsHead" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 						<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
 					</div>
 				</ul>

@@ -80,6 +80,12 @@
 		  	    		</jsp:include>
 				</td>
 			</tr>
+			<tr><td>Actual Start Date: <bean:write name="TaskSubordinateUserForm" property="taskBean.actualStart" format="dd MMMM yyyy" /></td>
+				<td>Actual Start End : <bean:write name="TaskSubordinateUserForm" property="taskBean.actualEnd" format="dd MMMM yyyy"/></td>
+			</tr>
+			<tr><td>Main Days : <bean:write name="TaskSubordinateUserForm" property="taskBean.mainDays" /></td>
+				<td>Progress Percentage : <bean:write name="TaskSubordinateUserForm" property="taskBean.percentage"/></td>
+			</tr>
 			<tr><td colspan="2">Description : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskDescription" /> </td></tr>
 			</table>
 			
@@ -89,9 +95,6 @@
 				<jsp:param name="taskId" value="${TaskSubordinateUserForm.taskId}" />
     			<jsp:param name="taskAssigner" value="${TaskSubordinateUserForm.taskBean.taskAssigner}" />
     			<jsp:param name="taskReceiver" value="${TaskSubordinateUserForm.taskBean.taskReceiver}" />
-    			<jsp:param name="isAllFinished" value="${isAllFinished}" />
-    			<jsp:param name="isAlreadySubmit" value="${isAlreadySubmit}" />
-    			<jsp:param name="isAlreadyReject" value="${isAlreadyReject}" />
     		</jsp:include>
 			
 			<div class="show-in-page">
@@ -111,6 +114,8 @@
 					<html:hidden name="TaskSubordinateUserForm" property="goToPage"/>
 					<html:hidden name="TaskSubordinateUserForm" property="showInPage"/>
 					<html:hidden name="TaskSubordinateUserForm" property="isShowAll"/>
+					<html:hidden name="TaskSubordinateUserForm" property="taskBean.taskAssigner"/>
+					<html:hidden name="TaskSubordinateUserForm" property="taskBean.taskReceiver"/>
 					<html:select name="TaskSubordinateUserForm" property="columnSearch" styleClass="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
@@ -155,30 +160,12 @@
 					</logic:notEmpty>
                   </tbody>
             </table></div>
-			<ul class="pagination">
-				<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
-				<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
-				
-				<logic:iterate id="p" name="listPage">
-					<logic:equal name="p" value="${pageNow}">
-						<li><html:link styleClass="active" href="#">${p}</html:link> </li>
-					</logic:equal>
-					<logic:notEqual name="p" value="${pageNow}">
-						<li><html:link styleClass="paging" href="#" onclick="page(${p})">${p}</html:link> </li>
-					</logic:notEqual>
-				</logic:iterate>
-				<li><html:link styleClass="paging" href="#" onclick="page(${pageNext})" >>></html:link> </li>
-				<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
-				
-				<div class="paginate-3">
-					<html:text name="TaskSubordinateUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
-					<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
-				</div>
-			</ul>
 			
-			<div class="paginate-2">
-				Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
-			</div>
+			<!-- Paging -->
+            <jsp:include page="/content/Pagination.jsp">
+    			<jsp:param name="formName" value="TaskSubordinateUserForm" />
+    		</jsp:include>
+			<!-- End of Paging -->
         </div></div>
         
         </div>

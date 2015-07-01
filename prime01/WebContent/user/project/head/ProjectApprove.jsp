@@ -62,7 +62,7 @@
 			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
 			<li class="active"><a href="javascript:flyToBack(
 	                        		'detailsAsHead', 
-	                        		'<bean:write name="ProjectUserForm" property="projectId"/>')">Project Detail</a></li>
+	                        		'<bean:write name="ProjectUserFormAsHead" property="projectId"/>')">Project Detail</a></li>
 			<li class="active">Project Approval Form</li>
 		</ol>
 	</section>
@@ -73,32 +73,32 @@
 			<div class="box-header"><h3 class="box-title">Project Approval Form</h3></div>
 			<div class="box-body">
                 	<html:form action="/ProjectUser">
-                		<html:hidden name="ProjectUserForm" property="task" value="doApprove"/>
+                		<html:hidden name="ProjectUserFormAsHead" property="task" value="doApprove"/>
                 		
-             			<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
-             			<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver"/>
-						<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner"/>
-             			<html:hidden name="ProjectUserForm" property="projectId"/>
+             			<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectId" />
+             			<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectReceiver"/>
+						<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectAssigner"/>
+             			<html:hidden name="ProjectUserFormAsHead" property="projectId"/>
                 		<table class="form-input" align="center">
                 		
                 			<tr>
                 				<td>Project Name</td>
                 				<td>:</td>
-                				<td><html:text name="ProjectUserForm" property="projectBean.projectName" styleClass="form-control" disabled="true"/></td>
+                				<td><html:text name="ProjectUserFormAsHead" property="projectBean.projectName" styleClass="form-control" disabled="true"/></td>
                 			</tr>
                 		
                 		
                 			<tr>
                 				<td>Note </td>
                 				<td>:</td>
-                				<td><html:textarea name="ProjectUserForm" property="projectBean.projectChangeNote" styleClass="form-control"></html:textarea></td>
+                				<td><html:textarea name="ProjectUserFormAsHead" property="projectBean.projectChangeNote" styleClass="form-control"></html:textarea></td>
                 				
                 			</tr>
                 			
                 			<tr>
                 				<td colspan="3" align="center">
                 					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="dosubmit()"/>
-                					<input type="button" property="" value="Cancel" class="btn btn-default" onclick="flyToBack('detailsAsHead','<bean:write name="ProjectUserForm" property="projectId"/>')"/>
+                					<input type="button" property="" value="Cancel" class="btn btn-default" onclick="flyToBack('detailsAsHead','<bean:write name="ProjectUserFormAsHead" property="projectId"/>')"/>
                 				</td>
                 			</tr>
                 		</table>
