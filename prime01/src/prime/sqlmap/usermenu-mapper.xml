@@ -43,4 +43,19 @@
 		FROM USER_MENUS
 	    ORDER BY USER_MENU_ID ASC
 	</select>
+	
+	<select id="getMenu"  resultClass="prime.admin.usermenu.UserMenuBean" parameterClass="java.lang.Integer">
+		SELECT 
+			UM.USER_MENU_NAME 	AS userMenuName,
+			UM.USER_MENU_ID 	AS userMenuId,
+			CASE WHEN NVL(X.USER_ROLE_MENU_ACTION, '0') = '0' THEN 0
+	             ELSE 1
+	        END 				AS isCheck
+		FROM USER_MENUS UM
+		LEFT JOIN  (
+		    SELECT URM.USER_ROLE_ID, URM.USER_MENU_ID, URM.USER_ROLE_MENU_ACTION FROM USER_ROLE_MENUS URM 
+		    WHERE URM.USER_ROLE_ID = #id#
+		) X ON UM.USER_MENU_ID = X.USER_MENU_ID
+		ORDER BY UM.USER_MENU_ID
+	</select>
 </sqlMap>

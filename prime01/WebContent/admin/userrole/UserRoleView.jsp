@@ -21,6 +21,18 @@
 	<!-- JS -->
 	
 	<script type="text/javascript">
+	
+	function dosubmit() {
+		var tmpForm = document.forms[0];
+		var tmpVal = "";
+		for(var i=0; i < tmpForm.menu.length; i++) {
+			tmpVal += tmpForm.menu[i].value+"-"+tmpForm.menu[i].checked+", ";
+		}
+		tmpVal = tmpVal.substring(0, tmpVal.length - 1);
+		//alert(tmpVal);
+		tmpForm.checkboxTes.value = tmpVal; 
+		menuLoadHandler(tmpForm.action, serialize(tmpForm));
+	}
 
 	</script>
 	
@@ -42,8 +54,10 @@
 					<div class="box-header"><h3 class="box-title">Data User Role</h3></div>
 					<div class="box-body">
                   	<html:form action="/UserRole"	>
-                  		<html:hidden name="UserRoleForm" property="task"/>
+                  		<html:hidden name="UserRoleForm" property="task" value="<%=Constants.Task.DOCHECK%>"/>
+                  		<html:hidden name="UserRoleForm" property="checkboxTes"/>
                   		<html:hidden name="UserRoleForm" property="userRoleBean.userRoleId" />
+                  		<html:hidden name="UserRoleForm" property="userRoleBean.userMenuAction" />
                   		<table class="form-input" align="center">
                   			 <thead>
 								<tr>
@@ -55,15 +69,24 @@
 			               <logic:notEmpty name="listUserMenu">
 							<logic:iterate id="iter" name="listUserMenu">
 			                	<tr>
-			                        <td><bean:write name="iter" property="userMenuName"/></td>
-			                        <td><html:checkbox name="iter" property="isCheck" value="1"></html:checkbox></td>
+			                        <td>
+			                        ${iter.userMenuId} | 
+			                        <bean:write name="iter" property="userMenuName"/></td>
+			                        <td>
+			                        <logic:equal name="iter" property="isCheck" value="true">
+			                        	<input type="checkbox" name="menu" value="${iter.userMenuId}"  checked="checked">
+			                        </logic:equal>
+			                        <logic:equal name="iter" property="isCheck" value="false">
+			                        	<input type="checkbox" name="menu" value="${iter.userMenuId}" > 
+			                        </logic:equal>
+			                        </td>
 			                    </tr> 
 			                   </logic:iterate>
 						</logic:notEmpty>
 						</tbody>
                   			<tr>
                   				<td colspan="3" align="center">
-                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
+                  					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
                   					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                   				</td>
                   			</tr>

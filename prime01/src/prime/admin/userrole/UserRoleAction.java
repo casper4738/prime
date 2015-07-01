@@ -13,7 +13,10 @@ import org.apache.struts.action.ActionMapping;
 
 import prime.admin.division.DivisionForm;
 import prime.admin.employee.EmployeeBean;
+import prime.admin.role.RoleBean;
 import prime.admin.usermenu.UserMenuBean;
+import prime.admin.usermenu.UserMenuManager;
+import prime.admin.usermenu.UserMenuManagerImpl;
 import prime.constants.Constants;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
@@ -25,6 +28,7 @@ public class UserRoleAction extends Action{
 			throws Exception {
 		UserRoleForm pForm = (UserRoleForm) form;
 		UserRoleManager tmpManager = new UserRoleManagerImpl();
+		UserMenuManager tmpMenuManager = new UserMenuManagerImpl();
 		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
@@ -42,11 +46,29 @@ public class UserRoleAction extends Action{
 			//##.Update Data and Go to Forward
 			tmpManager.update(pForm.getUserRoleBean());
 			return mapping.findForward("forward");
-		}else if(Constants.Task.GOTOVIEW.equals(pForm.getTask())) {
+		} else if(Constants.Task.DOCHECK.equals(pForm.getTask())) {
+			//##.Update Data and Go to Forward
+			tmpManager.delete(pForm.getUserRoleBean().getUserRoleId());
+			String[] split = pForm.getCheckboxTes().split(",");
+			for (String string : split) {
+				pForm.getUserRoleBean().setUserMenuId(Integer.parseInt(string.split("-")[0].trim()));
+				if(Boolean.parseBoolean(string.split("-")[1].trim())) {
+					pForm.getUserRoleBean().setUserMenuAction("V");					
+				} else {
+					pForm.getUserRoleBean().setUserMenuAction("");										
+				}
+				UserRoleBean bean = new UserRoleBean();
+				bean.setUserRoleId(pForm.getUserRoleBean().getUserRoleId());
+				bean.setUserMenuAction(pForm.getUserRoleBean().getUserMenuAction());
+				bean.setUserMenuId(pForm.getUserRoleBean().getUserMenuId());
+				
+				//System.out.println(bean.getUserMenuId()+"-"+bean.getUserMenuAction());
+				tmpManager.insertUserRoleMenu(bean);				
+			}
+			return mapping.findForward("forward");
+		} else if(Constants.Task.GOTOVIEW.equals(pForm.getTask())) {
 			pForm.setUserRoleBean(tmpManager.getUserRoleById(pForm.getTmpId()));
-			/*List<EmployeeBean> listWeekendByEmployeeId = tmpManager.getListWeekendByEmployeeId(pForm.getTmpId());
-			request.setAttribute("listWeekendByEmployeeId", listWeekendByEmployeeId);	*/
-			List<UserMenuBean> listUserMenu = tmpManager.getListUserMenuByUserRoleId(pForm.getTmpId());
+			List<UserMenuBean> listUserMenu = tmpMenuManager.getListUserMenuByUserRoleId(pForm.getTmpId());
 			request.setAttribute("listUserMenu", listUserMenu);
 			return mapping.findForward("view");
 		}

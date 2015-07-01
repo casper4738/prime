@@ -26,5 +26,9 @@
 	<script>flyToForward('success', '<bean:message key="label.message.update"/>')</script>
 </logic:equal>
 
+<logic:equal name="UserRoleForm" property="task" value="<%=Constants.Task.DOCHECK%>">
+	<script>flyToForward('success', '<bean:message key="label.message.update"/>')</script>
+</logic:equal>
+
 </body>
 </html>

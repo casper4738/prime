@@ -37,6 +37,8 @@ public class UserMenuManagerImpl implements UserMenuManager{
 		return mapper.queryForList("usermenu.getListByCol", map);
 	}
 	
-	
+	public List<UserMenuBean> getListUserMenuByUserRoleId(Integer id) throws SQLException {
+		return mapper.queryForList("usermenu.getMenu", id);
+	}
 
 }

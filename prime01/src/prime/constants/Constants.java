@@ -38,6 +38,8 @@ public interface Constants {
 		static final String DOEDITDAYOFF		= "t32";
 		static final String DORESET 			= "t33";
 		static final String DOLOCK 				= "t34";
+		static final String DOCHECK				= "t35";
+		
 		static final String GOTOEDITPOSITION 	= "t36";
 		static final String DOEDITPOSITION 		= "t37";
 		static final String DOVALIDATE1			= "t38";

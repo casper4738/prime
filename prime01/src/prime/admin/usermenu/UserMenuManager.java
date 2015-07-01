@@ -11,4 +11,6 @@ public interface UserMenuManager {
 	
 	public List<UserMenuBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow)
 			throws SQLException;
+	
+	public List<UserMenuBean> getListUserMenuByUserRoleId(Integer id) throws SQLException;
 }

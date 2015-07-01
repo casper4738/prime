@@ -29,10 +29,31 @@ public class UserRoleManagerImpl implements UserRoleManager{
 		}
 	}
 
+	public void insertUserRoleMenu(UserRoleBean e) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.insert("userrole.insertUserRoleMenu", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+
 	public void update(UserRoleBean e) throws SQLException {
 		try {
 			mapper.startTransaction();
 			mapper.update("userrole.update", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+
+	public void delete(Integer id) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.delete("userrole.deleteUserRoleMenu", id);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
@@ -66,10 +87,6 @@ public class UserRoleManagerImpl implements UserRoleManager{
 
 	public List<UserRoleBean> getListAll() throws SQLException {
 		return mapper.queryForList("userrole.selectAll", null);
-	}
-	
-	public List<UserMenuBean> getListUserMenuByUserRoleId(Integer id) throws SQLException {
-		return mapper.queryForList("userrole.getMenu", id);
 	}
 	
 }
