@@ -265,7 +265,7 @@ function sendNotification(notifType, notifParam){
 	$.ajax({ 
       type	  : "POST",
       url	  : "Notification.do", //Hardcoded No Other Way :(  
-      data	  : "task=sendNotification&notifParam=" + notifParam,
+      data	  : "task=sendNotification&notifType=" + notifType + "notifParam=" + notifParam,
       success : function(msg){
     	  alert("Notification Sent !");
       },
