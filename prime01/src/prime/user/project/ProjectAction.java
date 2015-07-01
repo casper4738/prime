@@ -56,7 +56,7 @@ public class ProjectAction extends Action {
 			//pForm.getProjectBean().setProjectAssigner(tmpTaskAssign.getEmployeeId());
 			//pForm.getProjectBean().setProjectReceiver(tmpTaskAssign.getEmployeeId());
 			
-			pForm.setEmployeeBean(tmpEmployeeManager.getEmployeeById(101));
+			pForm.setEmployeeBean(tmpEmployeeManager.getEmployeeById(tmpEmployeeId));
 			System.out.println("div "+pForm.getEmployeeBean().getDivisionId());
 			pForm.setDivisionId(pForm.getEmployeeBean().getDivisionId());
 			pForm.setPositionId(pForm.getEmployeeBean().getPositionId());
@@ -64,7 +64,7 @@ public class ProjectAction extends Action {
 		} else if (Constants.Task.DOADD.equals(pForm.getTask())){
 			//##.Insert Data Task
 			pForm.getProjectBean().setProjectId(tmpProjectManager.getNewId());
-			pForm.getProjectBean().setProjectReceiver(101);
+			pForm.getProjectBean().setProjectReceiver(tmpEmployeeId);
 			pForm.getProjectBean().setProjectLastStatus(1);
 			pForm.getProjectBean().setProjectStatus(0);
 			pForm.getProjectBean().setProjectAssigner(pForm.getEmployeeId());
@@ -73,7 +73,7 @@ public class ProjectAction extends Action {
 			tmpProjectManager.insertDetail(pForm.getProjectBean());
 			pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
 			pForm.getProjectBean().getRoleBean().setRoleId(1);
-			pForm.getProjectBean().setEmployeeId(101);
+			pForm.getProjectBean().setEmployeeId(tmpEmployeeId);
 			pForm.getProjectBean().setProjectMemberStatus(1);
 			tmpProjectManager.insertMember(pForm.getProjectBean());
 

@@ -115,6 +115,18 @@ public class ProjectManagerImpl implements ProjectManager {
 		return (Double) mapper.queryForObject("project.getPercentStatusProject", projectId);
 	}
 
+	
+	
+	@Override
+	public Integer getCountProjectAssigner(Integer projectAssigner) throws SQLException {
+		return (Integer) mapper.queryForObject("project.getCountProjectAssigner", projectAssigner);
+	}
+
+	@Override
+	public Integer getCountProjectReceiver(Integer projectReceiver) throws SQLException {
+		return (Integer) mapper.queryForObject("project.getCountProjectReceiver", projectReceiver);
+	}
+
 	@Override
 	public ProjectBean getProjectById(Integer id) throws SQLException {
 		 

@@ -377,12 +377,12 @@ public interface Constants {
 		static int USER_TASK_SUBORDINATE= 17;
 		static int USER_REPORT_EMPLOYEES= 18;
 
-		
 		static int USER_PROJECT_HEAD	= 19;
 		static int USER_REPORT_PROJECT	= 20;
 		static int USER_VIEWNOTIF		= 21;
 		
 		static int MODAL				= 22;
+
 	}
 	
 	//##K.Daily Time Constants

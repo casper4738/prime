@@ -243,11 +243,20 @@ public class EmployeeAction extends Action {
 			return null;
 		} 
 		
-		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+		String search = "";
+		if("GENDER".equals(pForm.getColumnSearch())) {
+			search = pForm.getGenderSearch();
+		} else if("STATUS".equals(pForm.getColumnSearch())) {
+			search = pForm.getStatusSearch();
+		} else {
+			search = pForm.getSearch();			
+		}
 		
-		List<EmployeeBean> list = manager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(),
-														  PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
-														  PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
+		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), search);
+		
+		List<EmployeeBean> list = manager.getListByColumn(pForm.getColumnSearch(), search,
+				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
+				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 
 		//##1.Attribute For Table Paging
 		request.setAttribute("listEmployee", list);
