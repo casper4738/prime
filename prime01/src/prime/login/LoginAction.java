@@ -5,7 +5,6 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -20,6 +19,7 @@ import prime.admin.user.UserManager;
 import prime.admin.user.UserManagerImpl;
 import prime.constants.Constants;
 import prime.utility.ActiveDirectoryManager;
+import prime.utility.MailUtil;
 
 public class LoginAction extends Action {
 

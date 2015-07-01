@@ -48,7 +48,6 @@
 			<section class="sidebar">
 				<div class="user-panel">
 					<div class="pull-left image">
-
 						<img id="profpic3" class="img-circle"
 							alt="User Image" />
 					</div>

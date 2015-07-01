@@ -46,6 +46,9 @@ public interface Constants {
 		static final String DOVALIDATE2			= "t39";
 		static final String DOLOGOUT			= "t40";
 		
+		static final String DOCOUNTDAYOFF       = "t41";
+		static final String DOCHANGEPIC       	= "t42";
+		
 		interface PROJECT {
 			final String GOTOPROJECTDETAIL	= "p01";
 			final String GOTOTASKMEMBER		= "p02";
@@ -349,15 +352,14 @@ public interface Constants {
 
 															"DashboardUser.do",		 //14
 															"ProjectUser.do",		 //15
-															"TaskHeadUser.do",		 //16
-															"TaskSubordinateUser.do",//17
-															
-															"ReportEmployees.do",	 //18
-															"ProjectUserAsHead.do",	 //19
-															"ReportProject.do",		 //20
-															"Notification.do", 	 	 //21
-															"Modal.do",				 //22
-															
+															"ProjectUserAsHead.do",	 //16
+															"TaskHeadUser.do",		 //17
+															"TaskSubordinateUser.do",//18
+															"ReportEmployees.do",	 //19
+															"Notification.do", 	 	 //20
+															"Modal.do",				 //21
+
+															"ReportProject.do"		 //22
 
 												};
 	static interface Page {
@@ -376,19 +378,18 @@ public interface Constants {
 		static int ADMIN_USERMENU 		= 12;
 		static int ADMIN_USERROLE 		= 13;
 		
-
 		static int USER_DASHBOARD		= 14;
 		static int USER_PROJECT			= 15;
-		static int USER_TASK_HEAD		= 16;
-		static int USER_TASK_SUBORDINATE= 17;
-		static int USER_REPORT_EMPLOYEES= 18;
-
-		static int USER_PROJECT_HEAD	= 19;
-		static int USER_REPORT_PROJECT	= 20;
-		static int USER_VIEWNOTIF		= 21;
+		static int USER_PROJECT_HEAD	= 16;
 		
-		static int MODAL				= 22;
+		static int USER_TASK_HEAD		= 17;
+		static int USER_TASK_SUBORDINATE= 18;
+		static int USER_REPORT_EMPLOYEES= 19;
 
+		static int USER_VIEWNOTIF		= 20;
+		static int MODAL				= 21;
+		
+		static int USER_REPORT_PROJECT	= 22;
 	}
 	
 	//##K.Daily Time Constants
@@ -416,4 +417,17 @@ public interface Constants {
 														"21:00", "21:30",
 														"22:00", "22:30",
 														"23:00", "23:30"};
+	
+	//##L.Notification Type [Follow DB Identified Code]
+	static interface NotificationType{
+		static int TASK_SUBMITAPPROVAL 	   = 1;
+		static int TASK_SELFASSIGNAPPROVAL = 2;
+		static int TASK_ABORTBYHEAD		   = 3;
+		static int PROJECT_CREATEAPPROVAL  = 4;
+		static int PROJECT_SUBMITAPPROVAL  = 5;
+		static int PROJECT_ABORT		   = 6;
+		static int PROJECT_NEWPMDELEGATED  = 7;
+		static int PROJECT_ASSIGNEDASROLE  = 8;
+		static int PROJECT_REMOVEDFROMROLE = 9;
+	}
 }

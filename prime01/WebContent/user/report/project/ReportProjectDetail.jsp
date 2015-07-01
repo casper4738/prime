@@ -20,6 +20,12 @@
 		    }
 	    });
 
+		 function generateReport(){
+			 alert("adw");
+				document.forms[0].target = "_blank";
+				document.forms[0].task.value = "<%=Constants.Task.REPORT.GENERATEREPORTPROJECTTASK%>";
+				document.forms[0].submit();
+			 }
 
 	</script>
 </head>
@@ -58,7 +64,7 @@
 			</tr>
 			<tr><td colspan="2">Description : <bean:write name="ReportUserProjectForm" property="reportProjectBean.projectDescription" /> </td>
 			</tr></table>
-			 <p><span class="button-add btn btn-app bg-olive btnCancel" onclick="">
+			 <p><span class="button-add btn btn-app bg-olive btnCancel" onclick="generateReport()">
 	               <i class="fa fa-save"></i>Export
 	              </span>
 	              </p>

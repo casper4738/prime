@@ -2,4 +2,4 @@
 <%
 	ReportPrintControl printControl = new ReportPrintControl();
 	printControl.processHttpRequest(request, response, getServletContext(), null);
-%>
+%> 

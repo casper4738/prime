@@ -141,13 +141,6 @@
 							</td>
                  			</tr>
                  			<tr>
-                 				<td>Profile Picture</td>
-                 				<td>:</td>
-                 				<td>
-                 				  <input type="file" id="exampleInputFile">
-							</td>
-                 			</tr>
-                 			<tr>
                  				<td colspan="3" align="center">
                  					<html:button value="Save" styleClass="btn btn-primary" onclick="dosubmit()" property=""/>
                  					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>

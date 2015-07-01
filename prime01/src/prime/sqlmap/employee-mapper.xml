@@ -88,6 +88,12 @@
 		WHERE EMPLOYEE_ID=#employeeId#
 	</update>
 	
+	<update id="updateChangePic" parameterClass="java.util.Map">
+		UPDATE EMPLOYEES SET
+		PROFILE_PICTURE=#filePic#
+		WHERE EMPLOYEE_ID=#id#
+	</update>
+	
 	<update id="updatePositionDivision" parameterClass="prime.admin.employee.EmployeeBean">
 		UPDATE EMPLOYEES SET
 		<isEqual property="divisionId" compareValue="0">
@@ -580,14 +586,5 @@
 		      SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
 		  )RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
 		  WHERE EMP.EMPLOYEE_ID=#employeeId#
-	 </select>
-	 
-	 <select id="getMaxStartFromByStartDate" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
-	 	SELECT START_FROM AS maxStartFrom, WEEKEND as weekEnd FROM WEEKEND_HOLIDAYS 
-	 	WHERE START_FROM <![CDATA[ <= ]]> TO_DATE(#startDate#,'yyyy-mm-dd') AND EMPLOYEE_ID = #employeeId# ORDER BY START_FROM DESC
-	 </select>
-	 
-	 <select id="getDayWeekByEndDate" resultClass="java.lang.String" parameterClass="java.lang.String">
-	 	SELECT TO_CHAR(TO_DATE(#endDate#,'yyyy-mm-dd'), 'DAY') FROM WEEKEND_HOLIDAYS WHERE ROWNUM = 1
 	 </select>
 </sqlMap>

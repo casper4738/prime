@@ -174,7 +174,7 @@ function modalLoadHandler(targettedData, targettedObject){
 	$('#content-modal-body').html(PAGE_LOADING);
 	
 	//##1.Load Specified Data For The Modal
-	$('#content-modal-body').load("Modal.do", targettedData, function( response, status, xhr ) {
+	$('#content-modal-body').load("Modal.do", targettedData, function( response, status, xhr ) { //Hardcoded No Other Way :(
 								//---.Show Some Respect For Error Status
 								if(status == "error"){
 									$('#content-modal-body').html(PAGE_LOAD_ERROR);
@@ -252,4 +252,26 @@ function modalSubmitReturnValue(retValue,retForm){
 	
 	//##1.Hide Modal
     $("[data-dismiss=modal]").trigger({ type: "click" });
+}
+
+
+/**
+ * Send Notification Handler
+ * Notif Type  = Type of Notif, Hardcoded via Constants, Balanced via DB [Will think other way better]
+ * Notif Param = Parameter , Consists of Array List that will inserted to the template [a, b, c]
+ */
+function sendNotification(notifType, notifParam){	
+	//##1.Do Sending Email with Asynchronous Process
+	$.ajax({ 
+      type	  : "POST",
+      url	  : "Notification.do", //Hardcoded No Other Way :(  
+      data	  : "task=sendNotification&notifParam=" + notifParam,
+      success : function(msg){
+    	  alert("Notification Sent !");
+      },
+      
+      error: function(){
+    	  alert("Something Wrong is Happening when Sending Notification !");
+      }
+   });
 }

@@ -26,7 +26,7 @@
 	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {
-            $('#datepicker_birthdate').datepicker({
+			$('#datepicker_birthdate').datepicker({
                 format: "yyyy-mm-dd"
             }); 
             $('#datepicker_hiredate').datepicker({
@@ -147,9 +147,7 @@
 							          success : function(){
 											menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>', "message=Insert Data Successful");
 							          }
-							 	});
-							 	
-<%-- 							menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>', ); --%>
+							 	});							 	
 							 } else {			   //Failed
 								 $('#employee-validating').html(param[1]);
 							 	 $('#btn-save').show();
@@ -238,7 +236,7 @@
 	<section class="content">
 	<div class="row">
 		<div class="col-xs-12"><div class="box" align="center">
-				<div class="box-header"><h1 class="box-title"><br/><br/><b>Add New Employee</b></h2><br/><br/></div>
+				<div class="box-header"><h1 class="box-title"><br/><br/><b>Add New Employee</b></h1><br/><br/></div>
 					<div class="box-body">
 			               	<html:form action="/EmployeeAdmin" method="post" styleId="formEmployee" enctype="multipart/form-data">
 			               		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DOADD%>"/>

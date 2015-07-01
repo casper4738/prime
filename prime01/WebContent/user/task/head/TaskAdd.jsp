@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 
 <!DOCTYPE html>
-<html>
+<html> 
 <head> 
 	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>

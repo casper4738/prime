@@ -44,21 +44,7 @@ public class DashboardAction extends Action{
 		Integer tmpEmployeeID = LoginData.getEmployeeData().getEmployeeId();
 		
 		//##1.Start Task Selection
-		if("chooseActivity".equals(pForm.getTask())) {
-			//Parameter pertama adalah session login employee id
-			int countRows = tmpManager.getCountListActivityById(tmpEmployeeID,pForm.getColumnSearch(),pForm.getSearch());
-			List<ActivityBean> list = tmpManager.getListActivityById(tmpEmployeeID,pForm.getColumnSearch(), 
-																	 pForm.getSearch(), PrimeUtil.getStartRow(
-																	 pForm.getGoToPage(), pForm.getShowInPage(), countRows),
-																	 PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
-																	 countRows));
-			request.setAttribute("listActivity", list);
-			request.setAttribute("listSearchColumn", Constants.Search.ACTIVITY_SEARCHCOLUMNS);
-			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
-			setPaging(request, countRows, pForm.getGoToPage(),
-					  pForm.getShowInPage());
-			tmpAction = mapping.findForward("add");
-		}else if("addToDoList".equals(pForm.getTask())){
+		if("addToDoList".equals(pForm.getTask())){
 			tmpManager.insertToDoList(tmpEmployeeID,pForm.getTmpId());
 			tmpAction = mapping.findForward("success");
 		}else if("delete".equals(pForm.getTask())){
