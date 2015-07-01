@@ -7,7 +7,7 @@ import org.apache.tomcat.util.codec.binary.StringUtils;
 
 import prime.admin.holiday.HolidayBean;
 
-public class EmployeeBean extends HolidayBean {
+public class EmployeeBean {//extends HolidayBean 
 	private Integer employeeId;
 	private Integer gender = 0;
 	private Integer divisionId = 0;

@@ -351,6 +351,8 @@ public class EmployeeAction extends Action {
 		Calendar end = Calendar.getInstance();
 		end.setTime(date2);
 
+		System.out.println(start+"--start");
+		System.out.println(end+"--end");
 		int sum = 0;
 		while (!start.after(end)) {
 			boolean isGet = false;
@@ -358,6 +360,7 @@ public class EmployeeAction extends Action {
 			for (EmployeeBean e : listDate) {
 				Calendar c = Calendar.getInstance();
 				c.setTime(e.getStartFrom());
+				System.out.println(c+"--c");
 				if(start.after(c)) {
 					week = e;
 					isGet = true;
@@ -369,8 +372,11 @@ public class EmployeeAction extends Action {
 				}
 			}
 			
+			System.out.println(week.getWeekEnd()+"--week.getWeekEnd()");
 			String[] split = week.getWeekEnd().split(",");
 			for (String s : split) {
+				System.out.println(start.get(Calendar.DAY_OF_WEEK)+"--start.get(Calendar.DAY_OF_WEEK)");
+				System.out.println(PrimeUtil.getDay(s.trim())+"--PrimeUtil.getDay(s.trim())");
 				if(start.get(Calendar.DAY_OF_WEEK) == PrimeUtil.getDay(s.trim())) {
 					sum ++;
 				}

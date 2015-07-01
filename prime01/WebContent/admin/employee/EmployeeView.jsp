@@ -282,8 +282,7 @@
  						                					java.sql.Date date = new Date */
  						                					
 						                				}
-						                				out.println(tempEndLastWeek+ " tempEndLastWeek");
-						                				out.println(endLastWeek+ " endLastWeek");
+						                				
 						                				if(tmpEmployeeManager.getMaxStartFromByStartDate(startDate.toString(),idEmployee).size()>0){
 							                				//GET WEEKEND FOR LAST SETTING
 							                				String weekEnd = tmpEmployeeManager.getMaxStartFromByStartDate(startDate.toString(),idEmployee).get(0).getWeekEnd();
@@ -293,25 +292,20 @@
 							                				
 							                				//GET ENDWEEKEND FOR LAST SETTING
 							                				String endWeekEnd = tmpEmployeeManager.getMaxStartFromByStartDate(endDate.toString(),idEmployee).get(0).getWeekEnd();
-							                				out.println(endWeekEnd+ " endWeekEnd");
 							                				
 							                				//GET LAST DATE FOR LAST SETTING 
 							                				Date endLastWeekSetting = tmpEmployeeManager.getMaxStartFromByStartDate(endDate.toString(),idEmployee).get(0).getMaxStartFrom(); 
-							                				out.println(endLastWeekSetting+ " endLastWeekSetting");
 							                				
 							                				//GET HOW MANY WEEKEND IN ONCE WEEK
 							                				String [] weekEndSplit  = weekEnd.split(",");
 							                				countInOneWeek=weekEndSplit.length;
-							                				out.println(countInOneWeek+ " countInOneWeek");
 							                				
 							                				//GET COUNTWEEK (HOW MANY WEEK IN RANGE START WEEKEND LAST SETTING -- weekEnd AND END LAST WEEK -- endLastWeek)
 							                				totalWeek = (startLastWeek.getTime() - endLastWeek.getTime()) / (DAY*7);
-							                				out.println(totalWeek+ " totalWeek");
 							                				//countWeek = (int) totalWeek;
 							                				//countWeekEnd = countInOneWeek  * countWeek;
 						                				}else{
 						                					countWeekEnd = 0;
-						                					out.println(" else");
 						                				}
 						                				//int countWeekEndInOneWeek = tmpEmployeeManager.getTotalWeekend(dateMaxSetWeekend, idEmployee);
 						                				
