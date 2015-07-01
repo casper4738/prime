@@ -1,0 +1,21 @@
+<!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
+"http://ibatis.apache.org/dtd/sql-map-2.dtd">
+<sqlMap namespace="generalsetting">
+
+	<update id="save" parameterClass="prime.admin.setting.GeneralSettingBean">
+		UPDATE GENERAL_SETTINGS SET 
+			GENERAL_SETTING_LEVEL 	= #level#, 
+			GENERAL_SETTING_TIMEOUT	= #timeOut#, 
+			MINIMUM_LEVEL_APPROVAL	= #minLevelApproval#
+	</update>
+
+	<select id="get" resultClass="prime.admin.setting.GeneralSettingBean">
+		SELECT
+			GENERAL_SETTING_LEVEL 	AS level, 
+			GENERAL_SETTING_TIMEOUT	AS timeOut, 
+			MINIMUM_LEVEL_APPROVAL	AS minLevelApproval
+		FROM 
+			GENERAL_SETTINGS
+	</select>
+	
+</sqlMap>

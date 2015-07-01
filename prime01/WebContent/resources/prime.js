@@ -180,7 +180,7 @@ function modalLoadHandler(targettedData, targettedObject){
 									$('#content-modal-body').html(PAGE_LOAD_ERROR);
 								}
 	});
-	
+
 	//##1.Register Targetted Object For Value Receiver
 	if(targettedObject != null){
 		modalTargettedObject = targettedObject;

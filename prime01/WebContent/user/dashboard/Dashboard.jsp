@@ -9,8 +9,6 @@
 <html>
 <head> 
 	<!-- CSS -->
-	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
@@ -23,9 +21,6 @@
 	<!-- End of CSS -->
 	
 	<!-- JS -->
-	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-	<script src="resources/plugins/jQueryUI/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
-    <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
     <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <script src='resources/plugins/fastclick/fastclick.min.js'></script>
     <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
@@ -40,17 +35,33 @@
                format	: "yyyy-mm-dd"
            });
 	 	    
+           //Load Activity To Do List
+           loadActivityToDoList();
+           
   		   //Load Activity Progress Timetable
   		   loadActivityProgress(true);
+  		   
 		});
     	
+		function openModalHandler(tmpTask){
+			var tmpTable ="activityList";
+			
+			//##1.Accessing Prime Method For Modal Showing
+			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable, $('#result'));
+		}
+		
 		//##.Activity Detail
-    	function activityDetail(task,activityId,status){
-    		document.forms[0].task.value = task;
-    		document.forms[0].tmpId.value = activityId;
-    		document.forms[0].tmpValue.value = status;
-    		document.forms[0].submit();
-    	}
+		function loadActivityToDoList(){
+	  		$('#board-todolist').html(PAGE_LOADING);
+			$('#board-todolist').load("<%=Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]%>", "task=refreshToDoList", function( response, status, xhr ) {
+				//---.Show Some Respect For Error Status
+				if(status == "error"){
+					$('#board-todolist').html(PAGE_LOAD_ERROR);
+				} else {
+					//Do Nothing, Success
+				}
+			});
+		}
 		
 		//##.Activity Progress
 		function loadActivityProgress(isToday){
@@ -205,73 +216,8 @@
 		</section>
 		<section class="content">
 			<div class="row">
-					<section class="col-lg-7 connectedSortable">
-						<div class="box box-primary">
-							<div class="box-header">
-								<i class="ion ion-clipboard"></i>
-								<h3 class="box-title">To Do List Activity</h3>
-								<div class="box-tools pull-right">
-									<ul class="pagination pagination-sm inline">
-										<li><a href="#">&laquo;</a></li>
-										<li><a href="#">1</a></li>
-										<li><a href="#">2</a></li>
-										<li><a href="#">3</a></li>
-										<li><a href="#">&raquo;</a></li>
-									</ul>
-								</div>
-							</div>
-							<!-- /.box-header -->
-							<div class="box-body">
-								<ul class="todo-list">
-										<!-- todo text -->
-										<!-- <span class="text">Design a nice theme</span>  -->
-										<!-- Emphasis label -->
-										<!-- <small class="label label-success">
-											<i class="fa fa-clock-o"></i> 2 mins
-										</small>  -->
-										<!-- todolist -->
-										<logic:notEmpty name="listActivity">
-											<logic:iterate id="iter" name="listActivity">
-												<li>
-													<span class="handle"> 
-														<i class="fa fa-ellipsis-v"></i> <i class="fa fa-ellipsis-v"></i>
-													</span>	
-						                			<span class="text"><bean:write name="iter" property="activityName"/> | <bean:write name="iter" property="taskName"/> </span>
-						                   
-								                    <!-- General tools such as play or pause or finish or delete-->
-								                    <div class="tools">
-														<logic:notEqual name="iter" property="activityStatus" value="1">
-															<i class="fa fa-play" onclick="activityDetail('addActivity','<bean:write name="iter" property="activityId"/>','1')"></i>
-														</logic:notEqual>
-														<logic:equal name="iter" property="activityStatus" value="1">
-															<i class="fa fa-pause" onclick="activityDetail('pauseActivity','<bean:write name="iter" property="activityId"/>','2')"></i> 
-														</logic:equal>
-														<logic:equal name="iter" property="activityStatus" value="1">
-															<i class="fa fa-check" onclick="activityDetail('finishActivity','<bean:write name="iter" property="activityId"/>','4')"></i>
-														</logic:equal>
-														<logic:notEqual name="iter" property="activityStatus" value="1">	
-															<i class="fa fa-trash-o" onclick="flyToEditDelete('delete','<bean:write name="iter" property="activityId"/>')"></i>
-														</logic:notEqual>
-													</div>
-												</li>
-											 </logic:iterate>
-										</logic:notEmpty>
-										<logic:empty name="listActivity">
-											<span class="handle"> 
-												<i class="fa fa-ellipsis-v"></i> <i class="fa fa-ellipsis-v"></i>
-											</span>	
-											<span class="text">No List Activity</span>
-										</logic:empty>
-									
-								</ul>
-							</div>
-							<!-- /.box-body -->
-							<div class="box-footer clearfix no-border">
-								<button class="btn btn-default pull-right" onClick="flyToPage('chooseActivity')">
-									<i class="fa fa-plus"></i> Add item
-								</button>
-							</div>
-						</div>
+					<section class="col-lg-7 connectedSortable" id="board-todolist">
+						<!-- To Load DashboardToDoList.jsp -->
 					</section>
 					<section class="col-lg-5 connectedSortable">
 						<div class="box box-primary">
@@ -314,21 +260,6 @@
             </div>
 	        <!-- End of Activity Progress -->
        </section>
-      
-		<div id="fullCalModal" class="modal fade">
-		    <div class="modal-dialog">
-		        <div class="modal-content">
-		            <div class="modal-header">
-		                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span> <span class="sr-only">close</span></button>
-		                <h4 id="modalTitle" class="modal-title"></h4>
-		            </div>
-		            <div id="modalBody" class="modal-body"></div>
-		            <div class="modal-footer">
-		                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		            </div>
-		        </div>
-		    </div>
-		</div>
 	</html:form>	
 </body>
 </html>

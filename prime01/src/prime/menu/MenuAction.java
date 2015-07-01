@@ -39,6 +39,8 @@ public class MenuAction extends Action {
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_LOG]				, "View Log");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_SETTING]			, "General Settings");
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_NOTIFTEMPLATE]		, "Manage Notif Template");
+				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_USERMENU]			, "View User Menu");
+				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_USERROLE]			, "Manage User Role");
 		//		break;
 		//	case Constants.SystemLevel.OPERATOR:
 				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]			, "Dashboard");

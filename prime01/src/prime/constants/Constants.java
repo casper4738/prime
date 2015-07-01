@@ -38,6 +38,8 @@ public interface Constants {
 		static final String DOEDITDAYOFF		= "t32";
 		static final String DORESET 			= "t33";
 		static final String DOLOCK 				= "t34";
+		static final String DOCHECK				= "t35";
+		
 		static final String GOTOEDITPOSITION 	= "t36";
 		static final String DOEDITPOSITION 		= "t37";
 		static final String DOVALIDATE1			= "t38";
@@ -79,8 +81,6 @@ public interface Constants {
 		interface REPORT {
 			final String GOTODETAILEMPLOYEE		= "r1";
 			final String GOTODETAILPROJECT		= "r2";
-			final String GENERATEREPORTEMPLOYEE = "r3";
-			final String GENERATEREPORTPROJECT 	= "r4";
 		}
 	}
 
@@ -176,6 +176,21 @@ public interface Constants {
 			}
 		});
 		
+		final Map<String, String> USERMENU_SEARCHCOLUMNS = Collections.unmodifiableMap(
+				new LinkedHashMap<String, String>() {{
+					put("ID", "User Menu ID");
+					put("NAME", "User Menu Name");
+				}
+			});
+		
+		final Map<String, String> USERROLE_SEARCHCOLUMNS = Collections.unmodifiableMap(
+				new LinkedHashMap<String, String>() {{
+					put("ID", "User Role ID");
+					put("NAME", "User Role Name");
+				}
+			});
+		
+		
 		final Map<Integer, String> TABLELOG_SEARCHCOLUMNS = Collections.unmodifiableMap(
 			new LinkedHashMap<Integer, String>() {{
 				put(LogTable.EMPLOYEES, "Employees");
@@ -250,6 +265,7 @@ public interface Constants {
 		final int TASKS 				= 11;
 		final int PROJECTS 				= 12;
 		final int NOTIFICATIONS 		= 13;
+		
 	}
 	static interface LogAction{
 	//---5.Standard Audit Trails / Log Audit Trail Action Conversion		
@@ -285,6 +301,7 @@ public interface Constants {
 		String FAILLOAD_CONTENT				= "Fail to load content, something must be wrong at here...";
 		String TABLE_EMPTY					= "No Data to be Shown";
 		String TABLE_HEAD_EMPTY				= "Employee Head Not Found. Please Select Another Position  !";
+		String FAIL_DO						= "Fail to do latest action. Please contact developer for Further Information";
 	}
 	
 	//##F.Request and Session Attribute
@@ -322,15 +339,21 @@ public interface Constants {
 															"LogAdmin.do",			 //9
 															"SettingAdmin.do",		 //10
 															"NotifTemplate.do",		 //11
-															"DashboardUser.do",		 //12
-															"ProjectUser.do",		 //13
-															"ProjectUserAsHead.do",	 //14
-															"TaskHeadUser.do",		 //15
-															"TaskSubordinateUser.do",//16
-															"ReportEmployees.do",	 //17
-															"Notification.do", 	 	 //18
-															"Modal.do",				 //19
-															"ReportProject.do"		 //20
+															"UserMenu.do",			 //12
+															"UserRole.do",			 //13
+															
+
+															"DashboardUser.do",		 //14
+															"ProjectUser.do",		 //15
+															"TaskHeadUser.do",		 //16
+															"TaskSubordinateUser.do",//17
+															"ReportEmployees.do",	 //18
+															"Notification.do", 	 	 //19
+															"Modal.do",				 //20
+
+															"ProjectUserAsHead.do",	 //21
+															"ReportProject.do"		 //22
+
 												};
 	static interface Page {
 		static int LOGIN				= 0;
@@ -345,15 +368,22 @@ public interface Constants {
 		static int ADMIN_LOG			= 9;
 		static int ADMIN_SETTING		= 10;
 		static int ADMIN_NOTIFTEMPLATE	= 11;
-		static int USER_DASHBOARD		= 12;
-		static int USER_PROJECT			= 13;
-		static int USER_PROJECT_HEAD	= 14;
-		static int USER_TASK_HEAD		= 15;
-		static int USER_TASK_SUBORDINATE= 16;
-		static int USER_REPORT_EMPLOYEES= 17;
-		static int USER_VIEWNOTIF		= 18;
-		static int MODAL				= 19;
+		static int ADMIN_USERMENU 		= 12;
+		static int ADMIN_USERROLE 		= 13;
+		
+
+		static int USER_DASHBOARD		= 14;
+		static int USER_PROJECT			= 15;
+		static int USER_TASK_HEAD		= 16;
+		static int USER_TASK_SUBORDINATE= 17;
+		static int USER_REPORT_EMPLOYEES= 18;
+
+		static int USER_PROJECT_HEAD	= 19;
 		static int USER_REPORT_PROJECT	= 20;
+		static int USER_VIEWNOTIF		= 21;
+		
+		static int MODAL				= 22;
+
 	}
 	
 	//##K.Daily Time Constants

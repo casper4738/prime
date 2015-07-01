@@ -106,7 +106,7 @@
 		<!-- Operator & Monitor [User] -->
 		<action path="/DashboardUser" 		name="DashboardUserForm" type="prime.user.dashboard.DashboardAction" scope="request">
 			<forward name="success" 		path="/user/dashboard/Dashboard.jsp">						</forward>
-			<forward name="add" 			path="/user/dashboard/DashboardSelectEmployee.jsp">			</forward>
+			<forward name="todolist" 		path="/user/dashboard/DashboardToDoList.jsp">				</forward>
 		</action>
 		
 		<action path="/TaskHeadUser" 		name="TaskHeadUserForm" type="prime.user.task.TaskHeadAction" scope="request">
@@ -185,6 +185,7 @@
 			<forward name="activityNote" 	path="/modal/ModalActivityNote.jsp">						</forward>
 			<forward name="taskNote" 		path="/modal/ModalTaskNote.jsp">							</forward>
 			<forward name="changePwd" 	    path="/modal/ModalChangePassword.jsp">						</forward>
+			<forward name="activityList" 	path="/modal/ModalActivity.jsp">							</forward>
 		</action>
 		
 		<!-- Notification -->
@@ -211,6 +212,7 @@
 			<forward name="forward" 		path="/admin/userrole/Forward.jsp">							</forward>
 			<forward name="add" 			path="/admin/userrole/UserRoleAdd.jsp">						</forward>
 			<forward name="edit" 			path="/admin/userrole/UserRoleEdit.jsp">					</forward>
+			<forward name="view" 			path="/admin/userrole/UserRoleView.jsp">					</forward>
 		</action>
 		
 	</action-mappings>

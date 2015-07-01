@@ -35,7 +35,8 @@
 		    }
 	    } );
 		
-		<!-- Method Specified For Modal Handling-->
+		/* Method Specified For Modal Handling */
+		
 		function submitHandler(){
 			var tmpForm = document.getElementById("currentForm");
 			var tmpRetData = serialize(tmpForm);

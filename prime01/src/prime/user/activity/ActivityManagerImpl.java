@@ -74,8 +74,13 @@ public class ActivityManagerImpl implements ActivityManager {
 		}
 	}
 
-	public List<ActivityBean> getToDoListById(Integer id) throws SQLException {
-		return mapper.queryForList("activity.getToDoListById", id);
+	public List<ActivityBean> getToDoListById(Integer startRow, Integer endRow,Integer id) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("id", id);
+		
+		return mapper.queryForList("activity.getToDoListById", map);
 	}
 
 
@@ -147,6 +152,7 @@ public class ActivityManagerImpl implements ActivityManager {
 			throws SQLException {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
+
 		map.put("id", id);
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
@@ -182,14 +188,14 @@ public class ActivityManagerImpl implements ActivityManager {
 	}
 
 	@Override
-	public Integer getCountToDoListById(Integer receiverId, String columnSearch, String value)
+	public Integer getCountListActivityById(Integer receiverId, String columnSearch, String value)
 			throws SQLException {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("receiverId", receiverId);
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
-		return (Integer) mapper.queryForObject("activity.getCountToDoListById",map);
+		return (Integer) mapper.queryForObject("activity.getCountListActivityById",map);
 	}
 
 	public void deleteToDoList(Integer receiverId, Integer activityId) throws SQLException {
@@ -239,5 +245,10 @@ public class ActivityManagerImpl implements ActivityManager {
 			throws SQLException {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public Integer getCountToDoListById(Integer id) throws SQLException {
+		return (Integer) mapper.queryForObject("activity.getCountToDoListById",id);
 	}
 }

@@ -30,28 +30,30 @@
 	<script type="text/javascript">
 
 	function validateForm() {
-		document.getElementById('nameValidator').innerHTML="";
-		document.getElementById('valueValidator').innerHTML="";
-		document.getElementById('descValidator').innerHTML="";
+		
+		$('#nameValidator').html('');
+		$('#valueValidator').html('');
+		$('#descValidator').html('');
+		
 		var specialChars = "/*!@#$%^&*()\"{}_[]|\\?/<>,"; 
-	    var notifTemplateName =  document.getElementById('notifTemplateName').value;
-	    var notifTemplateValue =  document.getElementById('notifTemplateValue').value;
-	    var notifTemplateDesc =  document.getElementById('notifTemplateDesc').value;
+	    var notifTemplateName =  $('#notifTemplateName').val();
+		var notifTemplateValue =  $('#notifTemplateValue').val();
+		var notifTemplateDesc = $('#notifTemplateDesc').val();
 	    var tmpValidated = true;
 	    
 	    if (notifTemplateName == null || notifTemplateName == "") {
-	        document.getElementById('nameValidator').innerHTML="Notif template name must be filled out";
+	        $('#nameValidator').html('Notif template name must be filled out');
 	        tmpValidated = false;
 	    }
 	    else {
 	    	if (notifTemplateName.length > 300){
-	    		 document.getElementById('nameValidator').innerHTML="Maximum character allowed is 300!";
+	    		 $('#nameValidator').html('Maximum character allowed is 300');
 	    		 tmpValidated = false;
 	    	}
 	    	else{
 		    	for (var i = 0; i < notifTemplateName.length; i++) {
 		    	    if (specialChars.indexOf(notifTemplateName.charAt(i)) != -1) { 
-		    			document.getElementById('nameValidator').innerHTML = "Characters are not allowed"; 
+		    			$('#nameValidator').html('Characters are not allowed');
 		    			tmpValidated = false; 
 		    		}
 		    	}
@@ -59,23 +61,23 @@
 	    }
 	    
 	    if (notifTemplateValue == null || notifTemplateValue == "") {
-	        document.getElementById('valueValidator').innerHTML="Notif template value must be filled out";
+	        $('#valueValidator').html('Notif template value must be filled out');
 	        tmpValidated = false;
 	    }
 	    else {
 	    	if (notifTemplateValue.length > 500){
-	    		 document.getElementById('valueValidator').innerHTML="Maximum character allowed is 500!";
+	    		 $('#valueValidator').html('Maximum character allowed is 500');
 	    		 tmpValidated = false; 
 	    	}
 	    }
 	    
 	    if (notifTemplateDesc == null || notifTemplateDesc == "") {
-	        document.getElementById('descValidator').innerHTML="Notif template desc must be filled out";
+	        $('#descValidator').html('Notif template desc must be filled out');
 	        tmpValidated = false;
 	    }
 	    else {
 	    	if (notifTemplateDesc.length > 500){
-	    		 document.getElementById('descValidator').innerHTML="Maximum character allowed is 500!";
+	    		 $('#descValidator').html('Maximum character allowed is 500!');
 	    		 tmpValidated = false;
 	    	}
 	    }
