@@ -51,13 +51,14 @@
 						<html:hidden name="DivisionAdminForm" property="tmpId"/>
 						<html:hidden name="DivisionAdminForm" property="goToPage"/>
 						<html:hidden name="DivisionAdminForm" property="showInPage"/>
+						<html:hidden name="DivisionAdminForm" property="isShowAll"/>
 						
 						<html:select name="DivisionAdminForm" property="columnSearch" styleClass="columnSearch">
 							<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 						</html:select>
 						<html:text name="DivisionAdminForm" property="search" styleClass="textSearch"/>
-						<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
-						<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
+						<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="DivisionAdminForm" property="task" />', 'false')" value='Search'/>
+						<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="DivisionAdminForm" property="task" />', 'true')" value='Show All'/>					
 					</html:form>
 				</div>
 				<!-- End Of Search Handler -->

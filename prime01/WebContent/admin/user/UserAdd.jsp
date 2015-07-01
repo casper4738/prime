@@ -4,7 +4,7 @@
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 
 <!DOCTYPE html>
-<html>
+<html> 
 <head> 
 	<!-- CSS -->
 	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
@@ -194,7 +194,7 @@
 		<h1>Manage User</h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Manage User</li>
+			<li><html:link href="#" onclick="flyToBack('home')" >Manage User</html:link></li>
 			<li class="active">Add User</li>
 		</ol>
 	</section>

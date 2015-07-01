@@ -269,21 +269,21 @@ public class EmployeeAction extends Action {
 		} else if(Constants.Task.DOCHANGEPIC.equals(pForm.getTask())){
 			pForm.getEmployeeBean().setFilePic(pForm.getProfpic().getFileData());
 			manager.updateChangePic(pForm.getEmployeeBean().getEmployeeId(),pForm.getEmployeeBean().getFilePic());
-			return mapping.findForward("forward");
+			return null;
 		}
 		
 		String search = "";
-		if("GENDER".equals(pForm.getColumnSearch())) {
+		if("GENDER".equals(pForm.getColumnSearchReal())) {
 			search = pForm.getGenderSearch();
-		} else if("STATUS".equals(pForm.getColumnSearch())) {
+		} else if("STATUS".equals(pForm.getColumnSearchReal())) {
 			search = pForm.getStatusSearch();
 		} else {
 			search = pForm.getSearch();			
 		}
 		
-		int countRows  = manager.getCountByColumn(pForm.getColumnSearch(), search);
+		int countRows  = manager.getCountByColumn(pForm.getColumnSearchReal(), search);
 		
-		List<EmployeeBean> list = manager.getListByColumn(pForm.getColumnSearch(), search,
+		List<EmployeeBean> list = manager.getListByColumn(pForm.getColumnSearchReal(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 
@@ -347,6 +347,7 @@ public class EmployeeAction extends Action {
 	
 
 	public static Integer getSumWeekEnd(List<EmployeeBean> listDate, Date date1, Date date2) {
+		System.out.println("-----------------------------------");
 		if(listDate.size() == 0) 
 			return 0;
 		
@@ -358,13 +359,16 @@ public class EmployeeAction extends Action {
 
 		int sum = 0;
 		while (!start.after(end)) {
+			System.out.println("----");
+			System.out.println("  1. "+new  java.sql.Date(start.getTimeInMillis()));
 			boolean isGet = false;
 			EmployeeBean week = new EmployeeBean();
 			for (EmployeeBean e : listDate) {
 				Calendar c = Calendar.getInstance();
 				c.setTime(e.getStartFrom());
 			
-				if(start.after(c)) {
+				if(PrimeUtil.getCompareTo(start.getTimeInMillis(), c.getTimeInMillis())>=0) {
+//				if(start.after(c)) {
 					week = e;
 					isGet = true;
 				} else {
@@ -377,6 +381,8 @@ public class EmployeeAction extends Action {
 			
 			String[] split = week.getWeekEnd().split(",");
 			for (String s : split) {
+				System.out.println("  		2. "+s+"+"+start.get(Calendar.DAY_OF_WEEK)+"-"+PrimeUtil.getDay(s.trim())+"  - "+s);
+				System.out.println("  		3. "+(start.get(Calendar.DAY_OF_WEEK) == PrimeUtil.getDay(s.trim())) );
 				if(start.get(Calendar.DAY_OF_WEEK) == PrimeUtil.getDay(s.trim())) {
 					sum ++;
 				}

@@ -31,6 +31,8 @@ public class ReportEmployeesAction extends Action {
 		ReportEmployeesManager tmpManager = new ReportEmployeesManagerImpl();
 		TaskManager 	tmpTaskManager 		= new TaskManagerImpl();
 		
+		System.out.println(pForm.getTask());
+		
 		if(Constants.Task.REPORT.GOTODETAILEMPLOYEE.equals(pForm.getTask())){
 			//##. Get Data
 			pForm.setReportEmployeesBean(tmpManager.getEmployeeById(pForm.getEmployeeId()));
@@ -46,15 +48,39 @@ public class ReportEmployeesAction extends Action {
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());			
 			return mapping.findForward("detailEmployee");
 		}
+		
 		else if(Constants.Task.REPORT.GENERATEREPORTEMPLOYEE.equals(pForm.getTask())){
-			request.getSession(true).setAttribute("searchQuery", " WHERE EMPLOYEE_ID LIKE ('%" + pForm.getColumnSearch() + "%')");
-			tmpMapTarget = "showReportEmployee";
-		} 
+			
+			System.out.println(pForm.getColumnSearch());
+			if("ID".equals(pForm.getColumnSearch())) {
+				System.out.println(pForm.getSearch());
+				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.EMPLOYEE_ID LIKE ('%" + pForm.getSearch()+ "%')");				
+			} else if ("NAME".equals(pForm.getColumnSearch())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.EMPLOYEE_NAME LIKE LOWER ('%" + pForm.getSearch()+ "%')");	
+			} else if ("GENDER".equals(pForm.getColumnSearch())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.GENDER LIKE ('%" + pForm.getSearch()+ "%')");
+			} else if ("EMAIL".equals(pForm.getColumnSearch())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.EMAIL LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+			} else if ("DIVISION".equals(pForm.getColumnSearch())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE DIVISION_NAME LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+			} else if ("POSITION".equals(pForm.getColumnSearch())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE POSITION_NAME LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+			} else if ("MANAGER".equals(pForm.getColumnSearch())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE EMPLOYEE_NAME LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+			} else if ("STATUS".equals(pForm.getColumnSearch())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE RESIGN_DATE LIKE ('%" + pForm.getSearch()+ "%')");
+			}
+			
+			return mapping.findForward("showReportEmployee");
+		} else if (Constants.Task.REPORT.GENERATEREPORTEMPLOYEETASK.equals(pForm.getTask())) {
+			
+			return mapping.findForward("showReportEmployeeTask");
+		}
 
-		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),
+		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearchReal(),
 				pForm.getSearch());
 		List<ReportEmployeesBean> list = tmpManager.getListByColumn(
-				pForm.getColumnSearch(), pForm.getSearch(), PrimeUtil
+				pForm.getColumnSearchReal(), pForm.getSearch(), PrimeUtil
 						.getStartRow(pForm.getGoToPage(),
 								pForm.getShowInPage(), countRows), PrimeUtil
 						.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
@@ -62,6 +88,7 @@ public class ReportEmployeesAction extends Action {
 		
 		// ##1.Attribute for Table Show
 		request.setAttribute("listReportEmployees", list);
+		request.setAttribute("listSearchColumnEmployeeTask", Constants.Search.TASK_SEARCHCOLUMNS);
 		request.setAttribute("listSearchColumn",
 				Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
 		request.setAttribute("listShowEntries", Constants.PAGINGROWPAGE);

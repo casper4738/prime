@@ -14,43 +14,7 @@
 		</dynamic>
 	</select>
 	
-	<select id="getListByColumn" resultClass="prime.user.project.ProjectBean" parameterClass="java.util.Map">
-		SELECT  * FROM (SELECT page.*, ROWNUM rnum FROM
-		(SELECT  DISTINCT
-            PROJ.PROJECT_ID           	AS projectId,
-            PROJ.PROJECT_NAME           AS projectName,
-            PROJ.PROJECT_RECEIVER       AS projectReceiver,
-            PROJ.PROJECT_ASSIGNER       AS projectAssigner,
-            PROJ.PROJECT_START_DATE     AS projectStartDate,
-            PROJ.PROJECT_ESTIMATE_DATE 	AS projectEstimateDate,
-            PROJ.PROJECT_DESCRIPTION    AS projectDescription,
-            PROJ.PROJECT_LAST_STATUS    AS projectLastStatus,
-            EMP_ASSIGN.EMPLOYEE_NAME    AS projectAssignerName,
-            EMP_RECEIVE.EMPLOYEE_NAME   AS projectReceiverName,
-			EMP_RECEIVE.EMPLOYEE_ID     AS employeeIdReceiver
-        FROM PROJECTS PROJ
-        JOIN PROJECT_DETAILS PD ON PROJ.PROJECT_ID = PD.PROJECT_ID
-        JOIN EMPLOYEES EMP_ASSIGN ON PROJ.PROJECT_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
-        JOIN EMPLOYEES EMP_RECEIVE ON PROJ.PROJECT_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
-		<dynamic prepend="WHERE">
-			<isNotNull property="columnSearch">
-				<isEqual property="columnSearch" compareValue="NAME">
-					UPPER(PROJ.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
-				</isEqual>
-				<isEqual property="columnSearch" compareValue="DESCRIPTION">
-					UPPER(PROJ.PROJECT_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
-				</isEqual>
-				<isEqual property="columnSearch" compareValue="STARTDATE">
-			      	PROJ.PROJECT_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
-				</isEqual> 
-				<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
-			      	PROJ.PROJECT_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
-				</isEqual> 
-			</isNotNull>
-		</dynamic>
-		ORDER BY PROJ.PROJECT_ID ASC) page
-		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
-	</select>
+	
 	
 	<select id="getListByColumnAsMember" resultClass="prime.user.project.ProjectBean" parameterClass="java.util.Map">
 		SELECT  * FROM (SELECT page.*, ROWNUM rnum FROM
@@ -93,6 +57,46 @@
 		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 	
+	<select id="getListByColumnAsHead" resultClass="prime.user.project.ProjectBean" parameterClass="java.util.Map">
+		SELECT  * FROM (SELECT page.*, ROWNUM rnum FROM
+		(SELECT  DISTINCT
+            PROJ.PROJECT_ID           	AS projectId,
+            PROJ.PROJECT_NAME           AS projectName,
+            PROJ.PROJECT_RECEIVER       AS projectReceiver,
+            PROJ.PROJECT_ASSIGNER       AS projectAssigner,
+            PROJ.PROJECT_START_DATE     AS projectStartDate,
+            PROJ.PROJECT_ESTIMATE_DATE 	AS projectEstimateDate,
+            PROJ.PROJECT_DESCRIPTION    AS projectDescription,
+            PROJ.PROJECT_LAST_STATUS    AS projectLastStatus,
+            EMP_ASSIGN.EMPLOYEE_NAME    AS projectAssignerName,
+            EMP_RECEIVE.EMPLOYEE_NAME   AS projectReceiverName,
+			EMP_RECEIVE.EMPLOYEE_ID     AS employeeIdReceiver
+        FROM PROJECTS PROJ
+        JOIN PROJECT_DETAILS PD ON PROJ.PROJECT_ID = PD.PROJECT_ID
+        JOIN EMPLOYEES EMP_ASSIGN ON PROJ.PROJECT_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
+        JOIN EMPLOYEES EMP_RECEIVE ON PROJ.PROJECT_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
+        JOIN PROJECT_MEMBERS PM ON PROJ.PROJECT_ID = PM.PROJECT_ID
+        JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = PM.EMPLOYEE_ID
+        WHERE PROJ.PROJECT_ASSIGNER=#employeeId#
+		<dynamic prepend="WHERE">
+			<isNotNull property="columnSearch">
+				<isEqual property="columnSearch" compareValue="NAME">
+					UPPER(PROJ.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="DESCRIPTION">
+					UPPER(PROJ.PROJECT_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="STARTDATE">
+			      	PROJ.PROJECT_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+			      	PROJ.PROJECT_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+				</isEqual> 
+			</isNotNull>
+		</dynamic>
+		ORDER BY PROJ.PROJECT_ID ASC) page
+		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
+	</select>
 	
 	<select id="get" resultClass="prime.user.project.ProjectBean" parameterClass="java.lang.Integer">
 		SELECT 
@@ -134,7 +138,7 @@
 		JOIN PROJECT_MEMBERS PM ON E.EMPLOYEE_ID = PM.EMPLOYEE_ID
 		JOIN PROJECTS P ON P.PROJECT_ID = PM.PROJECT_ID
 		JOIN ROLES R ON PM.ROLE_ID = R.ROLE_ID
-		WHERE P.PROJECT_ID = #projectId# AND PM.ROLE_ID !=1
+		WHERE P.PROJECT_ID = #projectId#
 		<dynamic prepend="AND">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
@@ -376,5 +380,15 @@
 		FROM PROJECT_MEMBERS
 		WHERE EMPLOYEE_ID=#projectMember#
 		AND PROJECT_MEMBER_STATUS=1
+	</select>
+	
+	<select id="getRoleIdbyEmployeeLoginAndProjectId" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT PM.ROLE_ID
+        FROM PROJECTS PRO
+        JOIN PROJECT_MEMBERS PM ON PRO.PROJECT_ID=PM.PROJECT_ID
+        JOIN EMPLOYEES E ON E.EMPLOYEE_ID=PM.EMPLOYEE_ID
+        WHERE PM.EMPLOYEE_ID=#employeeId#
+        AND PRO.PROJECT_ID=#projectId#
+        AND PM.ROLE_ID=1
 	</select>
 </sqlMap> 

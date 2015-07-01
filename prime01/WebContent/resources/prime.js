@@ -67,9 +67,9 @@ function dosubmit() {
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));
 }
 
-function searchAll(task) {
+function searchBy(task, isShow) {
 	var tmpForm = document.forms[0];
-	tmpForm.columnSearch.value = "ALL";
+	tmpForm.isShowAll.value = isShow;
 	tmpForm.task.value = task;
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));
 }
@@ -265,7 +265,7 @@ function sendNotification(notifType, notifParam){
 	$.ajax({ 
       type	  : "POST",
       url	  : "Notification.do", //Hardcoded No Other Way :(  
-      data	  : "task=sendNotification&notifParam=" + notifParam,
+      data	  : "task=sendNotification&notifType=" + notifType + "notifParam=" + notifParam,
       success : function(msg){
     	  alert("Notification Sent !");
       },

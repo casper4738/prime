@@ -79,6 +79,7 @@
 				<html:hidden name="EmployeeAdminForm" property="tmpId"/>
 				<html:hidden name="EmployeeAdminForm" property="goToPage"/>
 				<html:hidden name="EmployeeAdminForm" property="showInPage"/>
+				<html:hidden name="EmployeeAdminForm" property="isShowAll"/>
 			
 			<table>
 				<tr>
@@ -101,8 +102,8 @@
 						</html:select>
 					</td>
 					<td style="padding-left:5px">
-						<input type="button" class="btn bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
-						<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
+						<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="EmployeeAdminForm" property="task" />', 'false')" value='Search'/>
+						<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="EmployeeAdminForm" property="task" />', 'true')" value='Show All'/>					
 					</td>
 				</tr>
 			</table>

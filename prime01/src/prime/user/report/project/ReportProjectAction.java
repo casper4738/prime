@@ -45,6 +45,12 @@ public class ReportProjectAction extends Action {
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());			
 			return mapping.findForward("detailProject");
+		} else if (Constants.Task.REPORT.GENERATEREPORTPROJECT.equals(pForm.getTask())) {
+			
+			return mapping.findForward("showReportProject");
+		} else if (Constants.Task.REPORT.GENERATEREPORTPROJECTTASK.equals(pForm.getTask())) {
+			
+			return mapping.findForward("showReportProjectTask");
 		}
 
 		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),

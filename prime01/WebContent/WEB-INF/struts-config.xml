@@ -140,36 +140,42 @@
 			<forward name="changeStatusActivity" path="/user/task/subordinate/ActivityChangeStatus.jsp"></forward>
 		</action>
 		
+		<!-- Project As Member -->
 		<action path="/ProjectUser" name="ProjectUserForm" type="prime.user.project.ProjectAction" scope="request">
-			<!-- Project -->
-			<forward name="success" 		path="/user/project/ProjectHome.jsp"></forward>
-			<forward name="add" 			path="/user/project/ProjectAdd.jsp"></forward>
-			<forward name="addMember" 		path="/user/project/ProjectAddMember.jsp"></forward>
-			<forward name="details"		 	path="/user/project/ProjectDetails.jsp"></forward>
-			<forward name="detailsAsHead"	path="/user/project/ProjectDetailsAsHead.jsp"></forward>
-			<forward name="editMemberRole" 	path="/user/project/ProjectEditMemberRole.jsp"></forward>
-			<forward name="detailMember" 	path="/user/project/ProjectMemberDetails.jsp"></forward>
-			<forward name="detailMemberAsHead" 	path="/user/project/ProjectMemberDetailsAsHead.jsp"></forward>
-			<forward name="createTask" 		path="/user/project/ProjectCreateNewTask.jsp"></forward>
-			<forward name="forward" 		path="/user/project/Forward.jsp"></forward>
-			<forward name="taskDetail" 		path="/user/project/ProjectTaskDetail.jsp"></forward>
-			<forward name="approve" 		path="/user/project/ProjectApprove.jsp"></forward>
-			<forward name="reject" 	  		path="/user/project/ProjectReject.jsp"></forward>
-			<forward name="changePM" 		path="/user/project/ProjectChangePM.jsp"></forward>
-			<forward name="submit" 			path="/user/project/ProjectSubmit.jsp"></forward>
+			<forward name="success" 		path="/user/project/pm/ProjectHome.jsp"></forward>
+			<forward name="add" 			path="/user/project/pm/ProjectAdd.jsp"></forward>
+			<forward name="addMember" 		path="/user/project/pm/ProjectAddMember.jsp"></forward>
+			<forward name="details"		 	path="/user/project/pm/ProjectDetails.jsp"></forward>
+			<forward name="editMemberRole" 	path="/user/project/pm/ProjectEditMemberRole.jsp"></forward>
+			<forward name="detailMember" 	path="/user/project/pm/ProjectMemberDetails.jsp"></forward>
+			<forward name="createTask" 		path="/user/project/pm/ProjectCreateNewTask.jsp"></forward>
+			<forward name="forward" 		path="/user/project/pm/Forward.jsp"></forward>
+			<forward name="taskDetail" 		path="/user/project/pm/ProjectTaskDetail.jsp"></forward>
+			<forward name="submit" 			path="/user/project/pm/ProjectSubmit.jsp"></forward>
+			<forward name="detailsAsHead"	path="/user/project/head/ProjectDetailsAsHead.jsp"></forward>
+			<forward name="detailMemberAsHead" 	path="/user/project/head/ProjectMemberDetailsAsHead.jsp"></forward>
+			<forward name="changePM" 		path="/user/project/head/ProjectChangePM.jsp"></forward>
+			<forward name="reject" 	  		path="/user/project/head/ProjectReject.jsp"></forward>
+			<forward name="approve" 		path="/user/project/head/ProjectApprove.jsp"></forward>
+			<forward name="forwardAsHead" 	path="/user/project/head/Forward.jsp"></forward>
 		</action>
+		
+		
 		
 		<!-- Report Employees -->
 		<action path="/ReportEmployees" name="ReportUserEmployeesForm" type="prime.user.report.employees.ReportEmployeesAction" scope="request">
-			<forward name="success" 			path="/user/report/employees/ReportEmployeesHome.jsp"></forward>
-			<forward name="detailEmployee"	 	path="/user/report/employees/ReportEmployeesDetail.jsp"></forward>
-			<forward name="showReportEmployee" 	path="/user/report/employees/ReportEmployeesShow.jsp"></forward>
+			<forward name="success" 				path="/user/report/employees/ReportEmployeesHome.jsp"></forward>
+			<forward name="detailEmployee"	 		path="/user/report/employees/ReportEmployeesDetail.jsp"></forward>
+			<forward name="showReportEmployee" 		path="/user/report/employees/ReportEmployeesShow.jsp"></forward>
+			<forward name="showReportEmployeeTask" 	path="/user/report/employees/ReportEmployeesTaskShow.jsp"></forward>
 		</action>
 		
 		<!-- Report Project -->
 		<action path="/ReportProject" name="ReportUserProjectForm" type="prime.user.report.project.ReportProjectAction" scope="request">
-			<forward name="success" 		path="/user/report/project/ReportProjectHome.jsp"></forward>
-			<forward name="detailProject" 	path="/user/report/project/ReportProjectDetail.jsp"></forward>
+			<forward name="success" 				path="/user/report/project/ReportProjectHome.jsp"></forward>
+			<forward name="detailProject" 			path="/user/report/project/ReportProjectDetail.jsp"></forward>
+			<forward name="showReportProject" 		path="/user/report/project/ReportProjectShow.jsp"></forward>
+			<forward name="showReportProjectTask" 	path="/user/report/project/ReportProjectTaskShow.jsp"></forward>
 		</action>
 		
 		<!-- Login -->

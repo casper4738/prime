@@ -25,6 +25,23 @@ public class EmployeeForm extends ActionForm {
 	private String statusSearch;
 	private String genderSearch;
 	private FormFile profpic;
+	private Boolean isShowAll = true;
+	
+	public Boolean getIsShowAll() {
+		return isShowAll;
+	}
+
+	public void setIsShowAll(Boolean isShowAll) {
+		this.isShowAll = isShowAll;
+	}
+
+	public String getColumnSearchReal() {
+		if (isShowAll) {
+			return "SHOW ALL";
+		} else {
+			return columnSearch;
+		}
+	}
 
 	public String getStatusSearch() {
 		return statusSearch;

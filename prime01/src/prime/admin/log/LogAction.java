@@ -32,8 +32,8 @@ public class LogAction extends Action {
 		
 		System.out.println(pForm.getColumnSearch()+" | "+search);
 
-		int countRows = tmpLogManager.getCountByColumn(pForm.getColumnSearch(), search);
-		List<LogBean> list = tmpLogManager.getListByColumn(pForm.getColumnSearch(), search, 
+		int countRows = tmpLogManager.getCountByColumn(pForm.getColumnSearchReal(), search);
+		List<LogBean> list = tmpLogManager.getListByColumn(pForm.getColumnSearchReal(), search, 
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), 
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
 		
