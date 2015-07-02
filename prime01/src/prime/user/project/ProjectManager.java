@@ -5,6 +5,12 @@ import java.util.List;
 
 public interface ProjectManager {
 	
+	public void updateActualStart(Integer projectId, java.sql.Date actualStart) throws SQLException;
+
+	public void updateActualEnd(Integer projectId, java.sql.Date actualEnd) throws SQLException;
+
+	public void updateMainDays(Integer projectId, Integer mainDays) throws SQLException;
+	
 	public void insert (ProjectBean e) throws SQLException;
 	
 	public void insertDetail(ProjectBean e) throws SQLException;

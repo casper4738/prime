@@ -60,7 +60,7 @@ public class TaskManagerImpl implements TaskManager {
 			map.put("actualStart", actualStart);
 			
 			mapper.startTransaction();
-			mapper.insert("task.updateActualStart", map);
+			mapper.update("task.updateActualStart", map);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
@@ -74,7 +74,7 @@ public class TaskManagerImpl implements TaskManager {
 			map.put("actualEnd", actualEnd);
 			
 			mapper.startTransaction();
-			mapper.insert("task.updateActualEnds", map);
+			mapper.update("task.updateActualEnds", map);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
@@ -88,7 +88,7 @@ public class TaskManagerImpl implements TaskManager {
 			map.put("mainDays", mainDays);
 			
 			mapper.startTransaction();
-			mapper.insert("task.updateActualMainDays", map);
+			mapper.update("task.updateActualMainDays", map);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();

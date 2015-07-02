@@ -28,6 +28,7 @@ public class TaskBean {
 		setTaskStartDate(new java.sql.Date(new java.util.Date().getTime()));
 		setTaskEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
 		setActualStart(new java.sql.Date(new java.util.Date().getTime()));
+		setActualEnd(new java.sql.Date(new java.util.Date().getTime()));
 		setTaskEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
 	}
 

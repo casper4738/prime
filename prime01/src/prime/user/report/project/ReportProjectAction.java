@@ -52,6 +52,15 @@ public class ReportProjectAction extends Action {
 				System.out.println(pForm.getSearch());
 				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER (PROJECT_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
 			}
+			else if ("DESCRIPTION".equals(pForm.getColumnSearch())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER (PROJECT_DESCRIPTION) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+			}
+			else if ("PROPOSED".equals(pForm.getColumnSearch())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER (EMPAPRO.EMPLOYEE_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+			}
+			else if ("PM".equals(pForm.getColumnSearch())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER (EMPRPRO.EMPLOYEE_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+			}
 			return mapping.findForward("showReportProject");
 		} else if (Constants.Task.REPORT.GENERATEREPORTPROJECTTASK.equals(pForm.getTask())) {
 			
@@ -70,7 +79,7 @@ public class ReportProjectAction extends Action {
 		// ##1.Attribute for Table Show
 		request.setAttribute("listReportProject", list);
 		request.setAttribute("listSearchColumn",
-				Constants.Search.PROJECT_SEARCHCOLUMNS);
+				Constants.Search.REPORTPROJECT_SEARCHCOLUMNS);
 		request.setAttribute("listShowEntries", Constants.PAGINGROWPAGE);
 		setPaging(request, pForm, countRows, pForm.getGoToPage(),
 				pForm.getShowInPage());

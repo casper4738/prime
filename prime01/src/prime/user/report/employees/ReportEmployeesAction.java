@@ -54,8 +54,6 @@ public class ReportEmployeesAction extends Action {
 				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.EMPLOYEE_ID LIKE ('%" + pForm.getSearch()+ "%')");				
 			} else if ("NAME".equals(pForm.getColumnSearch())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER(EMP.EMPLOYEE_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");	
-			} else if ("GENDER".equals(pForm.getColumnSearch())) {
-				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.GENDER LIKE ('%" + pForm.getSearch()+ "%')");
 			} else if ("EMAIL".equals(pForm.getColumnSearch())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER(EMP.EMAIL) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
 			} else if ("DIVISION".equals(pForm.getColumnSearch())) {
@@ -64,9 +62,7 @@ public class ReportEmployeesAction extends Action {
 				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER (POS.POSITION_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
 			} else if ("MANAGER".equals(pForm.getColumnSearch())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER (EMPMGR.EMPLOYEE_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
-			} else if ("STATUS".equals(pForm.getColumnSearch())) {
-				request.getSession(true).setAttribute("searchQuery", " WHERE RESIGN_DATE LIKE ('%" + pForm.getSearch()+ "%')");
-			}
+			} 
 			
 			return mapping.findForward("showReportEmployee");
 		} else if (Constants.Task.REPORT.GENERATEREPORTEMPLOYEETASK.equals(pForm.getTask())) {

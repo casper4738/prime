@@ -17,6 +17,49 @@ public class ProjectManagerImpl implements ProjectManager {
 	}
 
 	@Override
+	public void updateActualStart(Integer projectId, java.sql.Date actualStart) throws SQLException {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("projectId", projectId);
+			map.put("actualStart", actualStart);
+			
+			mapper.startTransaction();
+			mapper.update("project.updateActualStart", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	@Override
+	public void updateActualEnd(Integer projectId, java.sql.Date actualEnd) throws SQLException {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("projectId", projectId);
+			map.put("actualEnd", actualEnd);
+			
+			mapper.startTransaction();
+			mapper.update("project.updateActualEnds", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+	public void updateMainDays(Integer projectId, Integer mainDays) throws SQLException {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("projectId", projectId);
+			map.put("mainDays", mainDays);
+			
+			mapper.startTransaction();
+			mapper.update("project.updateActualMainDays", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+
+	@Override
 	public List<ProjectBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
@@ -137,6 +180,8 @@ public class ProjectManagerImpl implements ProjectManager {
 	@Override
 	public Integer getCountListByColAsHead(String columnSearch, String value, Integer employeeId) 	throws SQLException {
 		 
+		System.out.println("masuk "+columnSearch+" value:"+value+" employeeId:"+employeeId);
+		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);

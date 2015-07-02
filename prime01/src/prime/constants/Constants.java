@@ -224,13 +224,21 @@ public interface Constants {
 		        new LinkedHashMap<String, String>() {{
 		        	put("ID", "EMPLOYEE ID");	        	
 		        	put("NAME", "EMPLOYEE NAME");
-		        	put("GENDER", "GENDER");
 		        	put("EMAIL", "EMAIL");
 		        	put("DIVISION", "DIVISION");
 		        	put("POSITION", "POSITION");
 		        	put("MANAGER", "MANAGER");
 		        }
 		    });
+		
+		final Map<String, String>REPORTPROJECT_SEARCHCOLUMNS = Collections.unmodifiableMap(
+				new LinkedHashMap<String, String>() {{
+					put("NAME", "Project Name");
+					put("DESCRIPTION", "Project Description");
+					put("PM", "Project Manager");
+					put("PROPOSED", "Proposed By");
+				}
+			});
 	}
 
 	//##C.Page Handling

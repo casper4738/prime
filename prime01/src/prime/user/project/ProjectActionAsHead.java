@@ -230,6 +230,11 @@ public class ProjectActionAsHead extends Action {
 			
 			tmpProjectManager.insertDetail(pForm.getProjectBean());
 			
+			ProjectBean e = tmpProjectManager.getProjectById(pForm.getProjectBean().getProjectId());
+			tmpProjectManager.updateActualEnd(pForm.getProjectBean().getProjectId(), new java.sql.Date(new java.util.Date().getTime()));
+			int mainDays = PrimeUtil.getDayBetweenDate(e.getActualStart(), e.getActualEnd());
+			tmpProjectManager.updateMainDays(pForm.getProjectBean().getProjectId(), mainDays);
+			
 		}
 		
 		else if("doReject".equals(pForm.getTask())){
@@ -339,16 +344,17 @@ public class ProjectActionAsHead extends Action {
 			return mapping.findForward("forward");
 		}
 		
-		String search = "";
+		String search = null;
 		if("STARTDATE".equals(pForm.getColumnSearch()) || "ESTIMATEDATE".equals(pForm.getColumnSearch())) {
 			search = pForm.getStartDate()+";"+pForm.getUntilDate();
 		} else {
+			System.out.println("masuk search");
 			search = pForm.getSearch();
 		}
+		pForm.getProjectBean().setIsAssigner(tmpProjectManager.getCountProjectAssigner(tmpEmployeeId));
 		
 		List<ProjectBean> list = new ArrayList<ProjectBean>();
 		int countRows  = tmpProjectManager.getCountListByColAsHead(pForm.getColumnSearch(), search, tmpEmployeeId);
-		pForm.getProjectBean().setIsAssigner(tmpProjectManager.getCountProjectAssigner(tmpEmployeeId));
 		list = tmpProjectManager.getListByColumnAsHead(pForm.getColumnSearch(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), tmpEmployeeId);

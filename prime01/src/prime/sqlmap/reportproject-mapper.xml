@@ -11,6 +11,15 @@
 				<isEqual property="columnSearch" compareValue="NAME">
 					UPPER(PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
+				<isEqual property="columnSearch" compareValue="DESCRIPTION">
+					UPPER(PROJECT_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="PM">
+					UPPER(PROJECT_RECEIVER ) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="PROPOSED">
+					UPPER(PROJECT_ASSIGNER ) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
 			</isNotNull>
 		</dynamic>
 	</select>
@@ -37,6 +46,15 @@
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
 					UPPER(PROJ.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="DESCRIPTION">
+					UPPER(PROJ.PROJECT_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="PM">
+					UPPER(PROJ.PROJECT_RECEIVER ) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="PROPOSED">
+					UPPER(PROJ.PROJECT_ASSIGNER ) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 			</isNotNull>
 		</dynamic>

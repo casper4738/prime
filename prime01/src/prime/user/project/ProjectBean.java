@@ -23,6 +23,8 @@ public class ProjectBean extends EmployeeBean {
 	private String projectReceiverName;
 	private Date projectStartDate;
 	private Date projectEstimateDate;
+	private Date actualStart;
+	private Date actualEnd;
 	private TaskBean taskBean;
 	private RoleBean roleBean;
 	private String roleName;
@@ -30,13 +32,38 @@ public class ProjectBean extends EmployeeBean {
 	private Integer employeeIdReceiver;
 	private Integer isPM;
 	private Integer isAssigner;
+	
 	public ProjectBean() {
 		roleBean = new RoleBean();
 		taskBean = new TaskBean();
 		
 		setProjectStartDate(new java.sql.Date(new java.util.Date().getTime()));
 		setProjectEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
+		
+		setActualStart(new java.sql.Date(new java.util.Date().getTime()));
+		setActualEnd(new java.sql.Date(new java.util.Date().getTime()));
 	}
+
+	
+	public Date getActualStart() {
+		return actualStart;
+	}
+
+
+	public void setActualStart(Date actualStart) {
+		this.actualStart = actualStart;
+	}
+
+
+	public Date getActualEnd() {
+		return actualEnd;
+	}
+
+
+	public void setActualEnd(Date actualEnd) {
+		this.actualEnd = actualEnd;
+	}
+
 
 	public Integer getProjectId() {
 		return projectId;

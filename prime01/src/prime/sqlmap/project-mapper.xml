@@ -1,8 +1,26 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="project">
-	<select id="getCountListByCol" resultClass="java.lang.Integer"
-		parameterClass="java.util.Map">
+	
+	<update id="updateActualStart" parameterClass="java.util.Map">
+		UPDATE PROJECTS SET 
+			ACTUAL_START = #actualStart#
+		WHERE PROJECT_ID = #projectId#
+	</update>
+	
+	<update id="updateActualEnd" parameterClass="java.util.Map">
+		UPDATE PROJECTS SET 
+			ACTUAL_END = #actualEnd#
+		WHERE PROJECT_ID = #projectId#
+	</update>
+	
+	<update id="updateActualMainDays" parameterClass="java.util.Map">
+		UPDATE PROJECTS SET 
+			MAIN_DAYS = #mainDays#
+		WHERE PROJECT_ID = #projectId#
+	</update>
+
+	<select id="getCountListByCol" resultClass="java.lang.Integer" 	parameterClass="java.util.Map">
 		SELECT COUNT(1)
 		FROM PROJECTS
 		<dynamic prepend="WHERE">
@@ -15,14 +33,28 @@
 	</select>
 	
 	<select id="getCountListByColAsHead" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT COUNT(1)
-		FROM PROJECTS
-		WHERE PROJECT_ASSIGNER=#employeeId#
+		SELECT  COUNT(DISTINCT (PROJ.PROJECT_ID))
+        FROM PROJECTS PROJ
+        JOIN PROJECT_DETAILS PD ON PROJ.PROJECT_ID = PD.PROJECT_ID
+        JOIN EMPLOYEES EMP_ASSIGN ON PROJ.PROJECT_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
+        JOIN EMPLOYEES EMP_RECEIVE ON PROJ.PROJECT_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
+        JOIN PROJECT_MEMBERS PM ON PROJ.PROJECT_ID = PM.PROJECT_ID
+        JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = PM.EMPLOYEE_ID
+        WHERE PROJ.PROJECT_ASSIGNER=#employeeId#
 		<dynamic prepend="WHERE">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
-					UPPER(PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
+					UPPER(PROJ.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
+				<isEqual property="columnSearch" compareValue="DESCRIPTION">
+					UPPER(PROJ.PROJECT_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="STARTDATE">
+			      	PROJ.PROJECT_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+				</isEqual> 
+				<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+			      	PROJ.PROJECT_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+				</isEqual> 
 			</isNotNull>
 		</dynamic>
 	</select>
