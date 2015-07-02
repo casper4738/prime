@@ -57,7 +57,7 @@ public class FilterSession implements Filter {
 		    	
 		    	String tmpDBSession = "";
 				try {
-					tmpDBSession = tmpLoginManager.getLoginSession(LoginData.getUserData().getUserName());
+					tmpDBSession = tmpLoginManager.getLoginSession((String)tmpSession.getAttribute(Constants.Session.Username));
 				} catch (SQLException e) {
 					//Nothing need to be done at here
 					e.printStackTrace();

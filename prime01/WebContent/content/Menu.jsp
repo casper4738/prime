@@ -121,9 +121,9 @@
    		
    		var tmpImage = '<%=LoginData.getEmployeeData().getConvertedFilePic()%>';
   	  	if(tmpImage == "null"){
-      		  $("#profpic1").attr("src","resources/image/user-photo.png");
-      		  $("#profpic2").attr("src","resources/image/user-photo.png");
-      		  $("#profpic3").attr("src","resources/image/user-photo.png");
+      		  $("#profpic1").attr("src", "<%=Constants.PATH_USERNOIMAGE%>");
+      		  $("#profpic2").attr("src", "<%=Constants.PATH_USERNOIMAGE%>");
+      		  $("#profpic3").attr("src", "<%=Constants.PATH_USERNOIMAGE%>");
   	  	} else {
   	  		  $("#profpic1").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
       		  $("#profpic2").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
