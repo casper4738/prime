@@ -28,42 +28,6 @@
 		    }
 	    });
 		
-		$(document).ready(function(){
-			loadProjectProgress();
-		});
-		
-		//##.Activity Progress
-		function loadProjectProgress(){
-	  		//Do Login Data checking
-	  		$('#table-wrapper').html(PAGE_LOADING);
-	  		$('#table-wrapper').load("<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT_HEAD]%>", "task=refreshProjectProgress", function( response, status, xhr ) {
-								//---.Show Some Respect For Error Status
-								if(status == "error"){
-									$('#table-wrapper').html(PAGE_LOAD_ERROR);
-								} else {
-					  	    	    var table = $('#table-1').dataTable({
-					  										 			ordering 		: false,
-					  										 			paging    		: false,
-					  										 			searching 		: false,
-					  										 			info	  		: false,
-					  										 			scrollY	  		: "250px",
-					  										 		    scrollX	  		: "100%",
-					  										 		    scrollCollapse	: true,
-					  										 		 	columnDefs: [
-							  										 		            { width: '1%' , targets: 0 },
-							  										 		            { width: '3%' , targets: 1 },
-							  										 		            { width: '15%', targets: 2 },
-							  										 		            { width: '3%' , targets: 3 }
-							  										 		        ],
-					  													language  		: {"emptyTable":  "<center><%=Constants.Response.TABLE_HEAD_EMPTY %></center>"}
-					  										 	    });
-						  		  	$('#table-wrapper').css('min-height','200');
-						  		    new $.fn.dataTable.FixedColumns(table, {leftColumns: 4});
-								}
-	  		});
-		}
-		
-		
 		function flyToTaskDetail(task, valueMember) {
 			var tmpForm = document.forms[0]; 
 			tmpForm.task.value = task;
@@ -105,10 +69,10 @@
 			<div class="box-header"><h3 class="box-title-center">Data Project Member</h3></div>
 			<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
 			<tr><td>Project Name : ${ProjectUserFormAsHead.projectBean.projectId} <bean:write name="ProjectUserFormAsHead" property="projectBean.projectName"/></td>
-				<td>Project Assigner : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectAssigner" /> - <bean:write name="ProjectUserFormAsHead" property="projectBean.projectAssignerName" /> </td>
+				<td>Project Assigner : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectAssignerName" /> </td>
 			</tr>
 			<tr><td>Start Date : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectStartDate" format="dd MMMM yyyy"/> </td>
-				<td>Project Receiver : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectReceiver"/> - <bean:write name="ProjectUserFormAsHead" property="projectBean.projectReceiverName"/> </td>
+				<td>Project Receiver : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectReceiverName"/> </td>
 			</tr><tr><td>Estimated Date : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectEstimateDate" format="dd MMMM yyyy" />
 				</td><td>Status :  
 					<jsp:include page="/content/Status.jsp">
@@ -173,7 +137,6 @@
 			<div class="box-body">
 				<table id="table-1" class="table table-bordered table-striped table-hover">
 				<thead><tr>
-					<th>Employee Id</th>
 					<th>Employee Name</th>
 					<th>Role</th>
 					<th>Division</th>
@@ -185,7 +148,6 @@
                 <logic:notEmpty name="listProjectMember">
 					<logic:iterate id="iter" name="listProjectMember">
 	                	<tr>
-	                		<td width="30px"><bean:write name="iter" property="employeeId"/></td>
 	                		<td width="250px"><bean:write name="iter" property="employeeName"/></td>
 	                		<td>
 	                		
@@ -222,37 +184,6 @@
 			
         </div>
         </div></div>
-        
-        
-<!--        	 Activity Progress -->
-<!--             <div class="box"> -->
-<!--                <div class="box-header"> -->
-<!-- 				<i class="ion ion-clipboard"></i> -->
-<!--                  	<h3 class="box-title">Project Progress</h3> -->
-<!--                  	<br><br>Search by Date : <br><br> -->
-<!--                  	<table width="370px"> -->
-<!--                  		<tr> -->
-<!--                  			<td> -->
-<!--                   			<div class="input-group" style="width:220px; height:20px; background-color:yellow;"> -->
-<!-- 		                 		<div class="input-group-addon"> -->
-<!-- 			           				<i class="fa fa-calendar"></i> -->
-<!-- 			           			</div> -->
-<!-- 							</div> -->
-<!--                  			</td> -->
-<!--                  			<td> -->
-<!--                  				<input type="button" class="btn bg-olive" style="height:32px" onclick="loadProjectProgress()" value='Search'/> -->
-<!-- 							<input type="button" class="btn bg-olive" style="height:32px" onclick="loadProjectProgress()" value='Today'/> -->
-<!--                  			</td>			 -->
-<!--                  		</tr> -->
-<!--                  	</table> -->
-<!-- 				<div class="box-body no-padding"> -->
-<!--                  	  <center><h3 id="date_activitydate"></h3></center> -->
-<!--                   	<div id="table-wrapper"> -->
-<!--                   	</div> -->
-<!--                 </div>/.box-body -->
-<!--             </div> -->
-<!--            </div> -->
-<!--         End of Activity Progress -->
 	</section>
 	<!-- /.content-wrapper -->
 	

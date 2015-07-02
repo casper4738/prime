@@ -45,14 +45,6 @@ public class ProjectForm extends ActionForm {
 		setUntilDate(new java.sql.Date(new java.util.Date().getTime()));
 	}
 
-	public String getColumnSearchReal() {
-		if (isShowAll) {
-			return "SHOW ALL";
-		} else {
-			return columnSearch;
-		}
-	}
-
 	public ProjectBean getProjectBean() {
 		return projectBean;
 	}

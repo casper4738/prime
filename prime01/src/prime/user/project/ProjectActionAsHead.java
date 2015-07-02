@@ -1,11 +1,6 @@
 package prime.user.project;
 
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,7 +21,6 @@ import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
-import prime.user.dashboard.DashboardForm;
 import prime.user.task.TaskBean;
 import prime.user.task.TaskManager;
 import prime.user.task.TaskManagerImpl;
@@ -69,8 +63,8 @@ public class ProjectActionAsHead extends Action {
 			System.out.println("masuk detail head action");
 			//##.View Detail Project
 			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
-			int countRows = tmpProjectManager.getCountListMember(pForm.getProjectId());
-			List<ProjectBean> list = tmpProjectManager.getListProjectMember(pForm.getColumnSearchReal(), pForm.getSearch(), 
+			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+			List<ProjectBean> list = tmpProjectManager.getListProjectMember(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getProjectId());
@@ -112,8 +106,8 @@ public class ProjectActionAsHead extends Action {
 			pForm.getProjectBean().setEmployeeName(pForm.getEmployeeBean().getEmployeeName());
 			System.out.println("PID "+pForm.getProjectId());
 			
-			int countRows = tmpProjectManager.getCountListTaskMember(pForm.getEmployeeId(), pForm.getProjectId());
-			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearchReal(), pForm.getSearch(), 
+			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getEmployeeId(), pForm.getProjectId());
@@ -150,8 +144,8 @@ public class ProjectActionAsHead extends Action {
 		} else if(Constants.Task.TASK.GOTODETAIL.equals(pForm.getTask())){
 			//##.View Detail Task
 			pForm.setTaskBean(tmpTaskManager.getTaskById(pForm.getTaskId()));
-			int countRows = tmpActivityManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), pForm.getTaskId());
-			List<ActivityBean> list = tmpActivityManager.getListByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), 
+			int countRows = tmpActivityManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch(), pForm.getTaskId());
+			List<ActivityBean> list = tmpActivityManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getTaskId());
@@ -173,8 +167,8 @@ public class ProjectActionAsHead extends Action {
 			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeBean().getEmployeeId());
 			pForm.getProjectBean().setEmployeeName(pForm.getEmployeeBean().getEmployeeName());
 			
-			int countRows = tmpProjectManager.getCountListTaskMember(pForm.getEmployeeId(), pForm.getProjectId());
-			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearchReal(), pForm.getSearch(), 
+			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getEmployeeId(), pForm.getProjectId());
@@ -354,14 +348,10 @@ public class ProjectActionAsHead extends Action {
 			
 			
 			return mapping.findForward("forward");
-		} else if(("refreshProjectProgress").equals(pForm.getTask())){
-			System.out.println("REFRESH PROJECT PROGRESS");
-			refreshProjectProgressList(request, response, pForm, tmpProjectManager);
-			return null;
 		}
 		
 		String search = null;
-		if("STARTDATE".equals(pForm.getColumnSearchReal()) || "ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
+		if("STARTDATE".equals(pForm.getColumnSearch()) || "ESTIMATEDATE".equals(pForm.getColumnSearch())) {
 			search = pForm.getStartDate()+";"+pForm.getUntilDate();
 		} else {
 			System.out.println("masuk search");
@@ -370,9 +360,9 @@ public class ProjectActionAsHead extends Action {
 		pForm.getProjectBean().setIsAssigner(tmpProjectManager.getCountProjectAssigner(tmpEmployeeId));
 		
 		List<ProjectBean> list = new ArrayList<ProjectBean>();
-		System.out.println("colom "+pForm.getColumnSearchReal());
-		int countRows  = tmpProjectManager.getCountListByColAsHead(pForm.getColumnSearchReal(), search, tmpEmployeeId);
-		list = tmpProjectManager.getListByColumnAsHead(pForm.getColumnSearchReal(), search,
+		System.out.println("colom "+pForm.getColumnSearch());
+		int countRows  = tmpProjectManager.getCountListByColAsHead(pForm.getColumnSearch(), search, tmpEmployeeId);
+		list = tmpProjectManager.getListByColumnAsHead(pForm.getColumnSearch(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), tmpEmployeeId);
 		
@@ -401,99 +391,9 @@ public class ProjectActionAsHead extends Action {
 		pForm.setGoToPage(pageUtil.getPage());
 	}
 	
-	private void refreshProjectProgressList(HttpServletRequest request, HttpServletResponse response, ProjectFormAsHead pForm, ProjectManager manager) throws SQLException, IOException {
-		//##0.Temp Variable
-		int tmpI, tmpJ, tmpK;
-		Date curnTime, compTime;
-		boolean tmpOverloop, tmpLastStatus;
-		List tmpCurnMember, tmpPerMemberProgressedTask;
-		ArrayList<ArrayList<Object>> tmpData;
-		Date tmpDateRequest, tmpDateNow;
-		Calendar tmpCal;
-		boolean tmpIsProgressed;
-		int tmpIsToday;
+	private void setPaging(HttpServletRequest request, ProjectForm pForm) {
+		request.setAttribute("employeeActive", 100);
 		
-		List tmpCalendarList = PrimeUtil.getListStringDate(PrimeUtil.parseDateStringToDate("03/06/2015 00:00:00"), new Date());
-		
-		
-		//---.Project Progress on Ranged Date
-		//---a.Get Task List on Specified Date and Date Comparison
-		tmpData = new ArrayList<ArrayList<Object>>();
-		tmpCurnMember = manager.getListEmployeeIDInProject(pForm.getProjectId());
-		for(tmpI = 0 ; tmpI < tmpCurnMember.size() ; tmpI++){
-//			tmpPerMemberProgressedTask = manager.getMemberProgressedTask(tmpCurnMember.get(tmpI), pForm.getProjectId(),
-//																		 PrimeUtil.parseDateStringToDate("03/06/2015 00:00:00"),
-//																		 new Date()
-//										 								);	
-		}
-		
-		//---b.Get Activities
-		response.setContentType("text/text;charset=utf-8");
-		response.setHeader("cache-control", "no-cache");
-		PrintWriter tmpOut = response.getWriter();
-		String tmpTimeString = "";
-		for(tmpI = 0 ; tmpI < tmpCalendarList.size() ; tmpI++){
-			tmpTimeString += "<th>";
-			tmpTimeString += tmpCalendarList.get(tmpI);
-			tmpTimeString += "</th>";
-		}
-		String tmpValueString = "";
-		for(tmpJ = 0 ; tmpJ < tmpData.size() ; tmpJ++){
-			tmpValueString += "<tr>"; 
-			tmpValueString += "<td width=\"5px\" >" + (tmpJ + 1) + "</td>";
-			tmpValueString += "<td>";
-			tmpValueString += tmpData.get(tmpJ).get(0); 
-			tmpValueString += "</td>";
-			tmpValueString += "<td>";
-			tmpValueString += tmpData.get(tmpJ).get(1); 
-			tmpValueString += "</td>";
-			tmpValueString += "<td>";
-			switch((int)tmpData.get(tmpJ).get(2)){
-				case Constants.Status.CREATE:
-					tmpValueString += "<span class=\"label label-warning\">Receive</span>";
-					break;
-				case Constants.Status.PROGRESS :
-					tmpValueString += "<span class=\"label label-success\">Progress</span>";
-					break;
-				case Constants.Status.PAUSE  :
-					tmpValueString += "<span class=\"label label-warning\">Pause</span>";
-					break;
-				case Constants.Status.FINISH :
-					tmpValueString += "<span class=\"label label-info\">Finish</span>";
-					break;
-				case Constants.Status.ABORT  :
-					tmpValueString += "<span class=\"label label-danger\">Abort</span>";
-					break;
-			}
-			tmpValueString += "</td>";
-			
-			for(tmpK = 3 ; tmpK < tmpData.get(tmpJ).size() ; tmpK++){
-				if((boolean)tmpData.get(tmpJ).get(tmpK)){	
-					tmpValueString += "<td bgcolor='#339900'>";
-				} else {
-					tmpValueString += "<td>";
-				}
-				tmpValueString += "</td>";
-			}
-			tmpValueString += "</tr>";
-		}
-
-		if(tmpData.size() <= 0){
-			tmpOut.print("<center><b>No Activity Progress can be Shown on this day.</center></b>");
-		} else {
-			tmpOut.print("<table id=\"table-1\" class=\"display cell-border compact\" cellspacing=\"0\" width=\"100%\">" + 
-						 "<thead>" +
-								"<th>#</th>"   +
-								"<th width=\"200px\">ID</th>"   + 
-								"<th width=\"200px\">Activity Name</th>"   + 
-								"<th width=\"200px\">Status</th>"   + 
-						 		tmpTimeString +
-						 "</thead>" +
-						 "<tbody>"  +
-						 		tmpValueString +  
-						 "</tbody>" +
-					 	 "</table>");
-		}
-		tmpOut.flush();
 	}
+	
 }
