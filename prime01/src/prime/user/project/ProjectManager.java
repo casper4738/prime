@@ -25,9 +25,13 @@ public interface ProjectManager {
 	
 	public Integer getCountListByColAsHead(String columnSearch, String value, Integer employeeId) 	throws SQLException;
 	
+	public Integer getCountListByColAsMember(String columnSearch, String value, Integer employeeId) 	throws SQLException;
+	
 	public Integer getNewId() throws SQLException;
 	
 	public Integer getNewMemberId() throws SQLException;
+	
+	public ProjectBean getProjectByTaskId(Integer id) throws SQLException;
 	
 	public Integer getStatusRoleMember(Integer projectMemberId, Integer roleId, Integer projectMemberStatus) throws SQLException;
 	

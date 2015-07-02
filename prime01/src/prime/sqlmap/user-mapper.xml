@@ -84,7 +84,13 @@
 		JOIN EMPLOYEES EMP ON US.EMPLOYEE_ID = EMP.EMPLOYEE_ID
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
-		       	<isEqual property="columnSearch" compareValue="NAME">
+		       	<isEqual property="columnSearch" compareValue="USERNAME">
+			          UPPER(US.USERNAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+		       	<isEqual property="columnSearch" compareValue="ID">
+			          UPPER(EMP.EMPLOYEE_ID) LIKE UPPER('%'||#value#||'%')
+				</isEqual> 
+		       	<isEqual property="columnSearch" compareValue="EMPNAME">
 			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual> 
 			</isNotNull>

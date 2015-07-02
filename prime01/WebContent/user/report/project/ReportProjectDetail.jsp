@@ -7,7 +7,6 @@
 <html>
 <head>
 	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/skins/_all-skins.min.css"" rel="stylesheet" type="text/css" />
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
@@ -24,18 +23,41 @@
 				document.forms[0].target = "_blank";
 				document.forms[0].task.value = "<%=Constants.Task.REPORT.GENERATEREPORTPROJECTTASK%>";
 				document.forms[0].submit();
-			 }
+		}
 
+		 
+		 $(document).ready(function () {
+	            $('#start').datepicker({
+	                format: "yyyy-mm-dd"
+	            });  
+	            $('#until').datepicker({
+	                format: "yyyy-mm-dd"
+	            });  
+	            
+	            $('.columnSearch').on('change',function(){
+	            	onselect($(this).val());
+	            });
+	           
+	            onselect($('.columnSearch').val());
+	        });
+			
+			function onselect(value) {
+				
+				if(value == "STARTDATE" || value == "ESTIMATEDATE") {
+	            	$('#textSearch').css('display', 'none') ;
+	            	$('#date_start').css('display', 'block') ;
+	            	$('#date_line').css('display', 'block') ;
+	            	$('#date_until').css('display', 'block') ;
+	            } else {
+	            	$('#textSearch').css('display', 'block') ;
+	            	$('#date_start').css('display', 'none') ;
+	            	$('#date_line').css('display', 'none') ;
+	            	$('#date_until').css('display', 'none') ;
+	            }
+			}
 	</script>
 </head>
 <body class="skin-blue sidebar-mini">
-	<html:form action="/ReportProject" >
-		<html:hidden name="ReportUserProjectForm" property="task"/>
-		<html:hidden name="ReportUserProjectForm" property="tmpId"/>
-		<html:hidden name="ReportUserProjectForm" property="goToPage"/>
-		<html:hidden name="ReportUserProjectForm" property="showInPage"/>
-	</html:form>
-					
 	<section class="content-header">
 		<h1>Project's Tasks</h1>
 		<ol class="breadcrumb">
@@ -73,17 +95,46 @@
 				<html:select name="ReportUserProjectForm" property="showInPage" onchange="change(this.value)" >
 					<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 				</html:select>
-				<input type="button" class="btn bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Refresh'/>
 			</div>
 			<div class="search-table">
-				<html:select name="ReportUserProjectForm" property="columnSearch" styleClass="columnSearch">
-					<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
-				</html:select>
-				<html:text name="ReportUserProjectForm" property="search" styleClass="textSearch"/>
-				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="flyToPage('<bean:write name="ReportUserProjectForm" property="task" />')" value='Search'/>
-				<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchAll('<bean:write name="ReportUserProjectForm" property="task" />')" value='Show All'/>
+				<html:form action="/ReportProject" >
+					<html:hidden name="ReportUserProjectForm" property="task"/>
+					<html:hidden name="ReportUserProjectForm" property="goToPage"/>
+					<html:hidden name="ReportUserProjectForm" property="showInPage"/>
+					<html:hidden name="ReportUserProjectForm" property="isShowAll"/>
+					<html:hidden name="ReportUserProjectForm" property="projectId"/>
+					<table>
+						<tr>
+							<td style="padding-left:5px"><html:select name="ReportUserProjectForm" property="columnSearch" styleClass="form-control columnSearch">
+									<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
+								</html:select>
+							</td>
+							<td style="padding-left:5px"><html:text name="ReportUserProjectForm" property="search" styleClass="form-control textSearch" styleId="textSearch"/></td>
+							<td style="padding-left:5px">
+								<div id="date_start">
+								<div class="input-group" style="width:140px"><div class="input-group-addon"><i class="fa fa-calendar" ></i></div>
+	     				  					<html:text name="ReportUserProjectForm" property="startDate" styleClass="form-control pull-right" styleId="start"/>
+	     				  				</div>
+	     				  				</div>
+	     				  			</td>
+							<td style="padding-left:5px"><div id="date_line">-</div></td>
+							<td style="padding-left:5px">
+								<div id="date_until">
+								<div class="input-group" style="width:140px"><div class="input-group-addon"><i class="fa fa-calendar" ></i></div>
+	     				  					<html:text name="ReportUserProjectForm" property="untilDate" styleClass="form-control pull-right" styleId="until" />
+	     				  				</div>
+	     				  				</div>
+   				  			</td>
+							<td style="padding-left:5px">
+								<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ReportUserProjectForm" property="task" />', 'false')" value='Search'/>
+								<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ReportUserProjectForm" property="task" />', 'true')" value='Show All'/>					
+							</td>
+						</tr>
+					</table>
+				</html:form>
 			</div>
 			<!-- End Of Search Handler -->
+
 			
 			<!-- Table List -->
 			<div class="box-body">

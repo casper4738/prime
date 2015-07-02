@@ -114,7 +114,7 @@
 				</html:select> 
 			</div>
 			<div class="search-table">
-				<html:form action="<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>" method="post">
+				<html:form action="/ProjectUser" method="post">
 					<html:hidden property="task" styleId="hdTask"/>
 					<html:hidden name="ProjectUserForm" property="projectId"/>
 					<html:hidden name="ProjectUserForm" property="projectBean.projectLastStatus"/>

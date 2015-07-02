@@ -90,13 +90,13 @@
 					</td>
 					<td style="padding-left:5px"><html:text name="EmployeeAdminForm" property="search" styleId="textSearch" styleClass="form-control textSearch"/></td>
 					<td style="padding-left:5px">
-						<html:select name="EmployeeAdminForm" property="genderSearch" styleId="genderSearch" style="width:150px">
+						<html:select name="EmployeeAdminForm" property="genderSearch" styleClass="form-control" styleId="genderSearch" style="width:150px">
 							<html:option value="0">Male</html:option>
 							<html:option value="1">Female</html:option>
 						</html:select>
 					</td>
 					<td style="padding-left:5px">
-						<html:select name="EmployeeAdminForm" property="statusSearch" styleId="statusSearch" style="width:150px">
+						<html:select name="EmployeeAdminForm" property="statusSearch" styleClass="form-control" styleId="statusSearch" style="width:150px">
 							<html:option value="0">Active</html:option>
 							<html:option value="1">Resign</html:option>
 						</html:select>

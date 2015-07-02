@@ -24,49 +24,42 @@
 			var tempTask = document.forms[0].task.value;
 			document.forms[0].target = "_blank";
 			document.forms[0].task.value = "<%=Constants.Task.REPORT.GENERATEREPORTEMPLOYEETASK%>";
-			document.forms[0].task.value = tempTask;
 			document.forms[0].submit();
+			document.forms[0].task.value = tempTask;
 		}
 		 
 		 $(document).ready(function () {
-	            $('#start').datepicker({
-	                format: "yyyy-mm-dd"
-	            });  
-	            $('#until').datepicker({
-	                format: "yyyy-mm-dd"
-	            });  
-	            
-	            $('.columnSearch').on('change',function(){
-	            	onselect($(this).val());
-	            });
-	            
-	            onselect($('.columnSearch').val());
-	        });
+            $('#start').datepicker({
+                format: "yyyy-mm-dd"
+            });  
+            $('#until').datepicker({
+                format: "yyyy-mm-dd"
+            });  
+            
+            $('.columnSearch').on('change',function(){
+            	onselect($(this).val());
+            });
+           
+            onselect($('.columnSearch').val());
+        });
+		
+		function onselect(value) {
 			
-			function onselect(value) {
-				if(value == "STARTDATE" || value == "ESTIMATEDATE") {
-	            	$('#textSearch').css('display', 'none') ;
-	            	$('#date_start').css('display', 'block') ;
-	            	$('#date_line').css('display', 'block') ;
-	            	$('#date_until').css('display', 'block') ;
-	            } else {
-	            	$('#textSearch').css('display', 'block') ;
-	            	$('#date_start').css('display', 'none') ;
-	            	$('#date_line').css('display', 'none') ;
-	            	$('#date_until').css('display', 'none') ;
-	            }
-			}
+			if(value == "STARTDATE" || value == "ESTIMATEDATE") {
+            	$('#textSearch').css('display', 'none') ;
+            	$('#date_start').css('display', 'block') ;
+            	$('#date_line').css('display', 'block') ;
+            	$('#date_until').css('display', 'block') ;
+            } else {
+            	$('#textSearch').css('display', 'block') ;
+            	$('#date_start').css('display', 'none') ;
+            	$('#date_line').css('display', 'none') ;
+            	$('#date_until').css('display', 'none') ;
+            }
+		}
 	</script>
 </head>
 <body class="skin-blue sidebar-mini">
-	<html:form action="/ReportEmployees" >
-		<html:hidden name="ReportUserEmployeesForm" property="task"/>
-		<html:hidden name="ReportUserEmployeesForm" property="tmpId"/>
-		<html:hidden name="ReportUserEmployeesForm" property="goToPage"/>
-		<html:hidden name="ReportUserEmployeesForm" property="showInPage"/>
-		<html:hidden name="ReportUserEmployeesForm" property="isShowAll"/>
-	</html:form>
-					
 	<section class="content-header">
 		<h1>Employee Tasks</h1>
 		<ol class="breadcrumb">
@@ -105,12 +98,12 @@
 				</html:select>
 			</div>
 			<div class="search-table">
-				<html:form action="/TaskSubordinateUser" >
+				<html:form action="/ReportEmployees" >
 					<html:hidden name="ReportUserEmployeesForm" property="task"/>
-					<html:hidden name="ReportUserEmployeesForm" property="taskId"/>
 					<html:hidden name="ReportUserEmployeesForm" property="goToPage"/>
 					<html:hidden name="ReportUserEmployeesForm" property="showInPage"/>
 					<html:hidden name="ReportUserEmployeesForm" property="isShowAll"/>
+					<html:hidden name="ReportUserEmployeesForm" property="employeeId"/>
 					<table>
 						<tr>
 							<td style="padding-left:5px"><html:select name="ReportUserEmployeesForm" property="columnSearch" styleClass="form-control columnSearch">

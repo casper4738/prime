@@ -18,6 +18,9 @@ import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
+import prime.user.project.ProjectBean;
+import prime.user.project.ProjectManager;
+import prime.user.project.ProjectManagerImpl;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -116,6 +119,10 @@ public class TaskSubordinateAction extends Action {
 				bean.setTaskChangeNote("");
 				manager.insertDetail(bean);
 				manager.updateActualStart(pForm.getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
+				
+				ProjectManager tmpProjectManager = new ProjectManagerImpl();
+				ProjectBean e = tmpProjectManager.getProjectByTaskId(pForm.getTaskId());
+				tmpProjectManager.updateActualStart(e.getProjectId(), new java.sql.Date(new java.util.Date().getTime()));
 			}
 			//##.Insert Activity Data Detail
 			pForm.getActivityBean().setActivityStatus(pForm.getActivityStatus());

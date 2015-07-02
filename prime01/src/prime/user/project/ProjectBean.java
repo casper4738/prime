@@ -15,6 +15,7 @@ public class ProjectBean extends EmployeeBean {
 	private Integer projectMemberStatus;
 	private Integer projectStatus;
 	private Integer projectLastStatus;
+	private Integer mainDays;
 	private Double percentage;
 	private String projectDescription;
 	private String projectName;
@@ -32,38 +33,41 @@ public class ProjectBean extends EmployeeBean {
 	private Integer employeeIdReceiver;
 	private Integer isPM;
 	private Integer isAssigner;
-	
+
 	public ProjectBean() {
 		roleBean = new RoleBean();
 		taskBean = new TaskBean();
-		
+
 		setProjectStartDate(new java.sql.Date(new java.util.Date().getTime()));
 		setProjectEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
-		
+
 		setActualStart(new java.sql.Date(new java.util.Date().getTime()));
 		setActualEnd(new java.sql.Date(new java.util.Date().getTime()));
 	}
 
-	
+	public Integer getMainDays() {
+		return mainDays;
+	}
+
+	public void setMainDays(Integer mainDays) {
+		this.mainDays = mainDays;
+	}
+
 	public Date getActualStart() {
 		return actualStart;
 	}
-
 
 	public void setActualStart(Date actualStart) {
 		this.actualStart = actualStart;
 	}
 
-
 	public Date getActualEnd() {
 		return actualEnd;
 	}
 
-
 	public void setActualEnd(Date actualEnd) {
 		this.actualEnd = actualEnd;
 	}
-
 
 	public Integer getProjectId() {
 		return projectId;
@@ -124,7 +128,7 @@ public class ProjectBean extends EmployeeBean {
 	public Double getPercentage() {
 		return percentage;
 	}
-	
+
 	public void setPercentage(Double percentage) {
 		this.percentage = percentage;
 	}
@@ -241,5 +245,4 @@ public class ProjectBean extends EmployeeBean {
 		this.isAssigner = isAssigner;
 	}
 
-	
 }

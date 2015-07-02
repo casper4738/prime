@@ -89,6 +89,14 @@ public class ProjectActionAsHead extends Action {
 			
 			return mapping.findForward("changePM");
 		}
+		else if ("abort".equals(pForm.getTask())){
+			pForm.getProjectBean().setProjectStatus(Constants.Status.ABORT);
+			System.out.println("PROJECT ID "+pForm.getProjectBean().getProjectId());
+			System.out.println("PROJECT RECEIVER "+pForm.getProjectBean().getProjectReceiver());
+			System.out.println("PROJECT ASSIGNER "+pForm.getProjectBean().getProjectAssigner());
+			pForm.getProjectBean().setProjectChangeNote("abort project");
+			tmpProjectManager.insertDetail(pForm.getProjectBean());
+		}
 		
 		else if(Constants.Task.PROJECT.GOTOTASKMEMBER.equals(pForm.getTask())){
 			//##. Get Data
@@ -217,7 +225,6 @@ public class ProjectActionAsHead extends Action {
 			System.out.println("PROJECT RECEIVER "+pForm.getProjectBean().getProjectReceiver());
 			System.out.println("PROJECT ASSIGNER "+pForm.getProjectBean().getProjectAssigner());
 			pForm.getProjectBean().setProjectStatus(3);
-			
 			tmpProjectManager.insertDetail(pForm.getProjectBean());
 			
 		}
@@ -242,7 +249,6 @@ public class ProjectActionAsHead extends Action {
 			System.out.println("PROJECT RECEIVER "+pForm.getProjectBean().getProjectReceiver());
 			System.out.println("PROJECT ASSIGNER "+pForm.getProjectBean().getProjectAssigner());
 			pForm.getProjectBean().setProjectStatus(6);
-			
 			tmpProjectManager.insertDetail(pForm.getProjectBean());
 			
 		}
@@ -354,6 +360,7 @@ public class ProjectActionAsHead extends Action {
 		pForm.getProjectBean().setIsAssigner(tmpProjectManager.getCountProjectAssigner(tmpEmployeeId));
 		
 		List<ProjectBean> list = new ArrayList<ProjectBean>();
+		System.out.println("colom "+pForm.getColumnSearch());
 		int countRows  = tmpProjectManager.getCountListByColAsHead(pForm.getColumnSearch(), search, tmpEmployeeId);
 		list = tmpProjectManager.getListByColumnAsHead(pForm.getColumnSearch(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  

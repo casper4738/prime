@@ -25,6 +25,9 @@ import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
+import prime.user.project.ProjectBean;
+import prime.user.project.ProjectManager;
+import prime.user.project.ProjectManagerImpl;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -191,6 +194,10 @@ public class TaskHeadAction extends Action {
 				bean.setTaskChangeNote("");
 				manager.insertDetail(bean);
 				manager.updateActualStart(pForm.getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
+				
+				ProjectManager tmpProjectManager = new ProjectManagerImpl();
+				ProjectBean e = tmpProjectManager.getProjectByTaskId(pForm.getTaskId());
+				tmpProjectManager.updateActualStart(e.getProjectId(), new java.sql.Date(new java.util.Date().getTime()));
 			}
 			//##.Insert Activity Data Detail
 			pForm.getActivityBean().setActivityStatus(pForm.getActivityStatus());
@@ -248,10 +255,6 @@ public class TaskHeadAction extends Action {
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), 
 				employeeId);
-		
-		System.out.println("cek 1 : "+pForm.getColumnSearchReal());
-		System.out.println("cek 2 : "+pForm.getSearch());
-		System.out.println("cek 3 : "+list.size());
 		
 		request.setAttribute("listTask", list);
 		request.setAttribute("listSearchColumn", Constants.Search.TASK_SEARCHCOLUMNS);
