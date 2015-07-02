@@ -6,9 +6,11 @@
 <head> 
 	<!-- CSS -->
 	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 	<!-- End of CSS -->
 	
 	<!-- JS -->
+	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>

@@ -20,7 +20,7 @@
     <div class="login-box">
       <div class="login-box-body">
 	    <div class="login-logo">
-	       <b>Prime</b> v.0.1   <i class="fa fa-refresh fa-spin"></i>	
+	       <b>Prime</b> v.0.1
 	    </div><!-- /.login-logo -->
         <p class="login-box-msg">Sign in to start your session</p>
         <html:form action="/Login" method="post" styleId="form-login">

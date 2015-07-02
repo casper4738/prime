@@ -37,12 +37,9 @@
 	    } );
 		
 		//Method Specified For Modal Handling
-		function modalFlyToPage(pColumSearch) {
+		function modalFlyToPage(isBool) {
 			var tmpForm = document.getElementById("idForm");
-			
-			if(pColumnSearch=="All"){
-				tmpForm.columnSearch.value = pColumnSearch;
-			}
+			tmpForm.isShowAll.value = isBool;
 			modalLoadHandler(serialize(tmpForm));
 		}
 		
@@ -89,13 +86,14 @@
 				    <html:hidden name="ModalForm" property="param3"/>
 				    <html:hidden name="ModalForm" property="param4"/>
 				    <html:hidden name="ModalForm" property="param5"/>
+				    <html:hidden name="ModalForm" property="isShowAll"/>
 				    <html:hidden name="ModalForm" property="showInPage"/>
 					<html:select name="ModalForm" property="columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
 					<html:text name="ModalForm" property="search"/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage()" value='Search'/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('All')" value='Show All'/>
+					<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('false')" value='Search'/>
+					<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('true')" value='Show All'/>
 				</div>
 				<!-- End Of Search Handler -->
 		

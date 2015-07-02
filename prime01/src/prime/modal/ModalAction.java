@@ -104,11 +104,20 @@ public class ModalAction extends Action {
             		case "employeeList"  :
                 		tmpTarget = "employeeList";
                 		
+                		String search = "";
+                		if("GENDER".equals(pForm.getColumnSearchReal())) {
+                			search = pForm.getGenderSearch();
+                		} else if("STATUS".equals(pForm.getColumnSearchReal())) {
+                			search = pForm.getStatusSearch();
+                		} else {
+                			search = pForm.getSearch();			
+                		}
+                		
                     	//##1.Fetch Data From DB
-                		countRows  = manager.getCountByColumnEmployeeActive(pForm.getColumnSearch(), pForm.getSearch());
+                		countRows  = manager.getCountByColumnEmployeeActive(pForm.getColumnSearchReal(), search);
                 		
                 		//---.Depend On The Object
-                		list = manager.getListByColumnEmployeeActive(pForm.getColumnSearch(), pForm.getSearch(),
+                		list = manager.getListByColumnEmployeeActive(pForm.getColumnSearchReal(), search,
                 									   				 PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
                 									   				 PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows));
 
@@ -153,11 +162,20 @@ public class ModalAction extends Action {
                 					);
                 		}else{
                 			
+                			search = "";
+                    		if("GENDER".equals(pForm.getColumnSearchReal())) {
+                    			search = pForm.getGenderSearch();
+                    		} else if("STATUS".equals(pForm.getColumnSearchReal())) {
+                    			search = pForm.getStatusSearch();
+                    		} else {
+                    			search = pForm.getSearch();			
+                    		}
+                			
 	                    	//##1.Fetch Data From DB
-	                		countRows  = manager.getCountByColumnEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(), pForm.getParam3(), pForm.getParam4(), pForm.getParam5());
+	                		countRows  = manager.getCountByColumnEmployeeHead(pForm.getColumnSearchReal(), search, listPosition.getPositionLevel(), pForm.getParam3(), pForm.getParam4(), pForm.getParam5());
 	                		
 	                		//---.Depend On The Object
-	                		list = manager.getListEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(),
+	                		list = manager.getListEmployeeHead(pForm.getColumnSearchReal(),search, listPosition.getPositionLevel(),
 	                										   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
 	                										   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows), pForm.getParam3(), pForm.getParam4(), pForm.getParam5());
                 		}
