@@ -9,13 +9,6 @@
 	<!-- End CSS -->
 	
 	<!-- JS -->
-	<script src="resources/prime.js"></script>
-	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
-	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
-	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
@@ -44,29 +37,6 @@
 			document.forms[0].task.value = tempTask;
 		 }
 		 
-		 $(document).ready(function () {
-	          	$('.columnSearch').on('change',function(){
-	            	onselect($(this).val());
-	            });
-	            
-	            onselect($('.columnSearch').val());
-	        });
-			
-			function onselect(value) {
-				if(value == "GENDER") {
-	            	$('#textSearch').css('display', 'none') ;
-	            	$('#genderSearch').css('display', 'block') ;
-	            	$('#statusSearch').css('display', 'none') ;
-	            } else if(value == "STATUS") {
-	            	$('#textSearch').css('display', 'none') ;
-	            	$('#genderSearch').css('display', 'none') ;
-	            	$('#statusSearch').css('display', 'block') ;
-	            } else {
-	            	$('#textSearch').css('display', 'block') ;
-	            	$('#genderSearch').css('display', 'none') ;
-	            	$('#statusSearch').css('display', 'none') ;
-	            }
-			}
 	</script>
 	<!-- End JS -->
 </head>
@@ -112,18 +82,6 @@
 						</html:select>
 					</td>
 					<td style="padding-left:5px"><html:text name="ReportUserEmployeesForm" property="search" styleId="textSearch"/></td>
-					<td style="padding-left:5px">
-						<html:select name="ReportUserEmployeesForm" property="genderSearch" styleId="genderSearch" style="width:150px">
-							<html:option value="0">Male</html:option>
-							<html:option value="1">Female</html:option>
-						</html:select>
-					</td>
-					<td style="padding-left:5px">
-						<html:select name="ReportUserEmployeesForm" property="statusSearch" styleId="statusSearch" style="width:150px">
-							<html:option value="0">Active</html:option>
-							<html:option value="1">Resign</html:option>
-						</html:select>
-					</td>
 					<td style="padding-left:5px">
 					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ReportUserEmployeesForm" property="task" />', 'false')" value='Search'/>
 					<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ReportUserEmployeesForm" property="task" />', 'true')" value='Show All'/>					

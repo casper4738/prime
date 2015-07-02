@@ -34,10 +34,18 @@ public class ReportEmployeesAction extends Action {
 		
 		if(Constants.Task.REPORT.GOTODETAILEMPLOYEE.equals(pForm.getTask())){
 			//##. Get Data
-			pForm.setReportEmployeesBean(tmpManager.getEmployeeById(pForm.getEmployeeId()));
-			int countRows  = tmpTaskManager.getCountByColumnSubordinate(pForm.getColumnSearch(), pForm.getSearch(), pForm.getEmployeeId());
 			
-			List<TaskBean> list = tmpTaskManager.getListByColumnSubordinate(pForm.getColumnSearch(), pForm.getSearch(),
+			String search = "";
+			if("STARTDATE".equals(pForm.getColumnSearch()) || "ESTIMATEDATE".equals(pForm.getColumnSearch())) {
+				search = pForm.getStartDate()+";"+pForm.getUntilDate();
+			} else {
+				search = pForm.getSearch();
+			}
+			
+			pForm.setReportEmployeesBean(tmpManager.getEmployeeById(pForm.getEmployeeId()));
+			int countRows  = tmpTaskManager.getCountByColumnSubordinate(pForm.getColumnSearchReal(), search, pForm.getEmployeeId());
+			
+			List<TaskBean> list = tmpTaskManager.getListByColumnSubordinate(pForm.getColumnSearchReal(), search,
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), 
 					pForm.getEmployeeId());

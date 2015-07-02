@@ -2,23 +2,26 @@
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 
 <sqlMap namespace="reportproject">
-<select id="getCountListByCol" resultClass="java.lang.Integer"
-		parameterClass="java.util.Map">
-		SELECT COUNT(1)
-		FROM PROJECTS
+<select id="getCountListByCol" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT  DISTINCT
+            COUNT(1)
+        FROM PROJECTS PROJ
+        JOIN PROJECT_DETAILS PD ON PROJ.PROJECT_ID = PD.PROJECT_ID
+        JOIN EMPLOYEES EMP_ASSIGN ON PROJ.PROJECT_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
+        JOIN EMPLOYEES EMP_RECEIVE ON PROJ.PROJECT_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
 		<dynamic prepend="WHERE">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
-					UPPER(PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
+					UPPER(PROJ.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 				<isEqual property="columnSearch" compareValue="DESCRIPTION">
-					UPPER(PROJECT_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+					UPPER(PROJ.PROJECT_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 				<isEqual property="columnSearch" compareValue="PM">
-					UPPER(PROJECT_RECEIVER ) LIKE UPPER('%'||#value#||'%')
+					UPPER(EMP_RECEIVE.EMPLOYEE_NAME ) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 				<isEqual property="columnSearch" compareValue="PROPOSED">
-					UPPER(PROJECT_ASSIGNER ) LIKE UPPER('%'||#value#||'%')
+					UPPER(EMP_ASSIGN.EMPLOYEE_NAME ) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 			</isNotNull>
 		</dynamic>
@@ -51,10 +54,10 @@
 					UPPER(PROJ.PROJECT_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 				<isEqual property="columnSearch" compareValue="PM">
-					UPPER(PROJ.PROJECT_RECEIVER ) LIKE UPPER('%'||#value#||'%')
+					UPPER(EMP_RECEIVE.EMPLOYEE_NAME ) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 				<isEqual property="columnSearch" compareValue="PROPOSED">
-					UPPER(PROJ.PROJECT_ASSIGNER ) LIKE UPPER('%'||#value#||'%')
+					UPPER(EMP_ASSIGN.EMPLOYEE_NAME ) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 			</isNotNull>
 		</dynamic>

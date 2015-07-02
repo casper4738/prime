@@ -24,6 +24,31 @@ public class ReportEmployeesForm extends ActionForm {
 	private String statusSearch;
 	private String genderSearch;
 	private String tempTask;
+	private java.sql.Date startDate;
+	private java.sql.Date untilDate;
+	
+	public ReportEmployeesForm() {
+		setStartDate(new java.sql.Date(new java.util.Date().getTime()));
+		setUntilDate(new java.sql.Date(new java.util.Date().getTime()));
+	}
+	
+	public java.sql.Date getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(java.sql.Date startDate) {
+		this.startDate = startDate;
+	}
+
+	public java.sql.Date getUntilDate() {
+		return untilDate;
+	}
+
+	public void setUntilDate(java.sql.Date untilDate) {
+		this.untilDate = untilDate;
+	}
+
+
 
 	private Boolean isShowAll = true;
 

@@ -34,12 +34,21 @@ public class ReportProjectAction extends Action {
 		
 		if(Constants.Task.REPORT.GOTODETAILPROJECT.equals(pForm.getTask())){
 			//##. Get Data
+			String search = "";
+			if("STARTDATE".equals(pForm.getColumnSearch()) || "ESTIMATEDATE".equals(pForm.getColumnSearch())) {
+				search = pForm.getStartDate()+";"+pForm.getUntilDate();
+			} else {
+				search = pForm.getSearch();
+			}
+			
 			pForm.setReportProjectBean(tmpManager.getProjectById(pForm.getProjectId()));
-			int countRows  = tmpTaskManager.getCountByColumnSubordinate(pForm.getColumnSearch(), pForm.getSearch(), pForm.getProjectId());
-			List<TaskBean> list = tmpTaskManager.getListByColumnSubordinate(pForm.getColumnSearch(), pForm.getSearch(),
+			int countRows  = tmpTaskManager.getCountListByProjectId(pForm.getColumnSearchReal(), search, pForm.getProjectId());
+			List<TaskBean> list = tmpTaskManager.getListByProjectId(pForm.getColumnSearchReal(), search,
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), 
 					pForm.getProjectId());
+
+			
 			
 			request.setAttribute("listTask", list);
 			request.setAttribute("listSearchColumn", Constants.Search.TASK_SEARCHCOLUMNS);

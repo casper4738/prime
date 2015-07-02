@@ -26,6 +26,11 @@ public interface TaskManager {
 	public Boolean isCheckStatus(Integer taskId, Integer status) throws SQLException;
 	
 	public Boolean isCheckStatusDetail(Integer taskId, Integer status) throws SQLException;
+	
+	public List<TaskBean> getListByProjectId(String columnSearch, String value, Integer startRow, Integer endRow, 
+			Integer projectId) throws SQLException;
+	
+	public Integer getCountListByProjectId(String columnSearch, String value, Integer projectId) throws SQLException;
 
 	/*Task Head*/
 	public List<TaskBean> getListByColumnHead(String columnSearch, String value, Integer startRow, Integer endRow,
