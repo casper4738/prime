@@ -72,8 +72,8 @@
                 			</tr>
                 			<tr>
                 				<td colspan="6" align="center">
-                					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
-                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="docancel()"/>
+                					<input type="button" value="Save"  class="btn btn-primary" onclick="validateForm()" />
+                					<input type="button" value="Cancel" class="btn btn-default" onclick="flyToBack('<%=Constants.Task.GOTOVIEW%>')"/>
                 				</td>
                 			</tr>
                 		</table>

@@ -118,10 +118,14 @@ public class TaskSubordinateAction extends Action {
 				bean.setTaskChangeNote("");
 				manager.insertDetail(bean);
 				manager.updateActualStart(pForm.getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
-				
-				ProjectManager tmpProjectManager = new ProjectManagerImpl();
-				ProjectBean e = tmpProjectManager.getProjectByTaskId(pForm.getTaskId());
-				tmpProjectManager.updateActualStart(e.getProjectId(), new java.sql.Date(new java.util.Date().getTime()));
+				try {
+					ProjectManager tmpProjectManager = new ProjectManagerImpl();
+					ProjectBean e = tmpProjectManager.getProjectByTaskId(pForm.getTaskId());
+					tmpProjectManager.updateActualStart(e.getProjectId(), new java.sql.Date(new java.util.Date().getTime()));
+				} catch(Exception e) {
+					System.out.println("Actual Start - Task Id . "+pForm.getTaskId());
+					System.out.println("Terjadi kesalahan : "+e.getMessage());					
+				}
 			}
 			//##.Insert Activity Data Detail
 			pForm.getActivityBean().setActivityStatus(pForm.getActivityStatus());
@@ -132,10 +136,15 @@ public class TaskSubordinateAction extends Action {
 			pForm.getTaskBean().setTaskStatus(Constants.Status.APPROVAL);
 			pForm.getTaskBean().setTaskChangeNote("");
 			
-			manager.updateActualEnd(pForm.getTaskBean().getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
-			TaskBean e = manager.getTaskById(pForm.getTaskBean().getTaskId());
-			int mainDays = PrimeUtil.getDayBetweenDate(e.getActualStart(), e.getActualEnd());
-			manager.updateMainDays(pForm.getTaskBean().getTaskId(), mainDays);
+			try {
+				manager.updateActualEnd(pForm.getTaskBean().getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
+				TaskBean e = manager.getTaskById(pForm.getTaskBean().getTaskId());
+				int mainDays = PrimeUtil.getDayBetweenDate(e.getActualStart(), e.getActualEnd());
+				manager.updateMainDays(pForm.getTaskBean().getTaskId(), mainDays);
+			} catch(Exception e) {
+				System.out.println("Actual End - Task Id . "+pForm.getTaskId());
+				System.out.println("Terjadi kesalahan : "+e.getMessage());					
+			}
 			
 			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");
@@ -146,10 +155,15 @@ public class TaskSubordinateAction extends Action {
 			activityBean.setTaskStatus(Constants.Status.ABORT);
 			activityBean.setTaskId(pForm.getTaskBean().getTaskId());
 			
-			manager.updateActualEnd(pForm.getTaskBean().getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
-			TaskBean e = manager.getTaskById(pForm.getTaskBean().getTaskId());
-			int mainDays = PrimeUtil.getDayBetweenDate(e.getActualStart(), e.getActualEnd());
-			manager.updateMainDays(pForm.getTaskBean().getTaskId(), mainDays);
+			try {
+				manager.updateActualEnd(pForm.getTaskBean().getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
+				TaskBean e = manager.getTaskById(pForm.getTaskBean().getTaskId());
+				int mainDays = PrimeUtil.getDayBetweenDate(e.getActualStart(), e.getActualEnd());
+				manager.updateMainDays(pForm.getTaskBean().getTaskId(), mainDays);
+			} catch(Exception e) {
+				System.out.println("Actual End - Task Id . "+pForm.getTaskId());
+				System.out.println("Terjadi kesalahan : "+e.getMessage());					
+			}
 			
 			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");

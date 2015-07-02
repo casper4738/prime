@@ -33,7 +33,6 @@
 		}
 		
 		function flyToChangeStatusAct(task, activityId, activityChangeDate) {
-			alert(activityId+" | "+activityChangeDate) ;
 			var tmpForm = document.forms[0];
 			tmpForm.task.value = task;
 			tmpForm.activityId.value = activityId;
