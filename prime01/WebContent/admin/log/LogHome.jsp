@@ -90,7 +90,7 @@
 					<html:hidden name="LogAdminForm" property="tmpId"/>
 					<html:hidden name="LogAdminForm" property="goToPage"/>
 					<html:hidden name="LogAdminForm" property="showInPage"/>
-					<html:hidden name="HolidayAdminForm" property="isShowAll"/>
+					<html:hidden name="LogAdminForm" property="isShowAll"/>
 					<table>
 						<tr>
 							<td style="padding-left:5px"><html:select name="LogAdminForm" property="columnSearch" styleClass="form-control columnSearch">
