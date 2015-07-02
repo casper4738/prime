@@ -54,6 +54,8 @@ public interface EmployeeManager {
 	public Integer getCountByColumnEmployeeActive(String columnSearch, String value) throws SQLException;
 	
 	public Integer getValidateDayOff(Date startDate, Date endDate, Integer empId) throws SQLException;
+	
+	public Integer getValidateWeekEnd(String startFrom, Integer empId) throws SQLException;
 	 
 	public List<EmployeeBean> getListByColumnEmployeeActive(String columnSearch, String value, Integer startRow, Integer endRow)
 	   throws SQLException;

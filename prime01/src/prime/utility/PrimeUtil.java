@@ -2,9 +2,11 @@ package prime.utility;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -109,6 +111,24 @@ public class PrimeUtil {
 		long time 		= Math.abs(date1.getTime() - date2.getTime());
 		long day 		= time / (24 * 60 * 60 * 1000);
 		return Integer.parseInt((day+1)+"");
+	}
+	
+
+	public static List<String> getListStringDate(Date startDate, Date endDate) {
+		Calendar start = Calendar.getInstance();
+		start.setTime(startDate);
+
+		Calendar end = Calendar.getInstance();
+		end.setTime(endDate);
+
+		List<String> list = new ArrayList<String>();
+		
+		while (!start.after(end)) {
+			list.add(new java.sql.Date(start.getTimeInMillis()) + "");
+			start.add(Calendar.DATE, 1);
+		}
+		
+		return list;
 	}
 		
 }

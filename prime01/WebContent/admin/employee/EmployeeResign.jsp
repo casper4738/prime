@@ -70,22 +70,24 @@
 		    	tmpValidated = false;
 		    }
 		    
-			
-			 
 			if(tmpValidated){
-				 //Do Database Checking, if Success Fly To
+				  //Do Database Checking, if Success Fly To
 				  $('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Validating employee data");
 				  $('#btn-save').hide();
 				  $('#btn-cancel').hide();
 				  $.ajax({ 
 			          type	  : "POST",
 			          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',  
-			          data	  : 'task=<%=Constants.Task.DOVALIDATE1%>&managerId=' + $('#managerId').val(),
+			          data	  : 'task=<%=Constants.Task.DOVALIDATE1%>&managerId=' + $('#managerId').val()+'&employeeBean.employeeId=' + $('#employeeId').val()+'&employeeBean.substituteHead=' + $('#substituteHead').val(),
 			          success : function(msg){
 							 param = msg.split('#');
 							 
 							 if(param[0] == "0"){ //Success
-								$('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Uploading employee data");
+							 	var confirmMessage = "IF YOU RESIGN THIS EMPLOYEE, ALL OF TASK AND STATUS MEMBER IN PROJECT WILL BE ABORT/INACTIVE?";
+								if(confirmMessage != null){
+									if(!confirm(confirmMessage))	
+										return;
+								} 
 							 	var formData = new FormData(document.forms[0]);
 							 	$.ajax({ 
 							          type	  	  : "POST",
@@ -94,9 +96,9 @@
 							          contentType : false,
 							          processData : false,
 							          success : function(){
-											menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>', "message=Resign Successful");
+							        	 menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>', "message=Resign Successful");
 							          }
-							 	});							 	
+							 	});		
 							 } else {			   //Failed
 								 $('#employee-validating').html(param[1]);
 							 	 $('#btn-save').show();
@@ -137,7 +139,7 @@
                  		<html:hidden name="EmployeeAdminForm" property="employeeId" />
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.treeId"/>
                  		<html:hidden name="EmployeeAdminForm" property="substituteHeadId" />
-                 		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" />
+                 		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId" styleId="employeeId"/>
                  		<html:hidden name="EmployeeAdminForm" property="employeeBean.positionId" styleId="positionId"/>
                  		<table class="form-input" align="center" style="width: 500px;">
                  			<tr>
@@ -199,8 +201,8 @@
                   			</tr>
                  			<tr>
                  				<td colspan="3" align="center">
-                 					<html:button value="Save" styleClass="btn btn-primary" onclick="validateForm()" property="" id="btn-save"/>
-                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')" id="btn-cancel"/>
+                 					<html:button value="Save" styleClass="btn btn-primary" onclick="validateForm()" property="" styleId="btn-save"/>
+                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')" styleId="btn-cancel"/>
                  				</td>
                  			</tr>
 					</table>

@@ -21,8 +21,8 @@ PUBLIC "-//ibatis.apache.org//DTD SQL Map Config 2.0//EN"
 	<transactionManager type="JDBC">
 		<dataSource type="SIMPLE">
 			<property name="JDBC.Driver" value="oracle.jdbc.driver.OracleDriver" />
-			<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@192.168.10.9:1521:orcl" ></property>
-			<property name="JDBC.Username" value="DB_PRIME" />
+			<property name="JDBC.ConnectionURL" value="jdbc:oracle:thin:@192.168.10.7:1522:neworcl" ></property>
+			<property name="JDBC.Username" value="PRIME" />
 			<property name="JDBC.Password" value="prime" />
 		</dataSource>
 		<!-- <dataSource type="JNDI"> <property name="context.java.naming.factory.initial" 

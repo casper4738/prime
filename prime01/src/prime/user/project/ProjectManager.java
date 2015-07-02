@@ -1,7 +1,10 @@
 package prime.user.project;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
+
+import prime.user.task.TaskBean;
 
 public interface ProjectManager {
 	
@@ -21,11 +24,15 @@ public interface ProjectManager {
 	 
 	public void updateProjectReceiver(Integer projectId, Integer projectReceiver) throws SQLException;
 	
+	public Integer getCountListMember (Integer projectId) throws SQLException;
+	
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 	
 	public Integer getCountListByColAsHead(String columnSearch, String value, Integer employeeId) 	throws SQLException;
 	
 	public Integer getCountListByColAsMember(String columnSearch, String value, Integer employeeId) 	throws SQLException;
+	
+	public Integer getCountListTaskMember (Integer taskReceiver, Integer projectId) throws SQLException;
 	
 	public Integer getNewId() throws SQLException;
 	
@@ -75,5 +82,8 @@ public interface ProjectManager {
 
 	
 	public List<RoleOption> getRoleByProjectMember(Integer employeeId, Integer projectId) throws SQLException;
+	
+	public List<Integer>  getListEmployeeIDInProject(Integer projectId) throws SQLException;
+//	public List<TaskBean> getProjectTaskListPerMember(Integer projectId, Integer employeeId, Date startDate, Date endDate) throws SQLException;
 	
 }

@@ -237,6 +237,8 @@ public interface Constants {
 					put("DESCRIPTION", "Project Description");
 					put("PM", "Project Manager");
 					put("PROPOSED", "Proposed By");
+					put("STARTDATE", "Project Start Date");
+					put("ESTIMATEDATE", "Project Estimate Date");
 				}
 			});
 	}
