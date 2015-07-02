@@ -41,31 +41,32 @@ public class TaskHeadAction extends Action {
 		int employeeId = LoginData.getUserData().getEmployeeId();
 		request.setAttribute("employeeIdActive", employeeId);
 		
-		
-		System.out.println("cekk employee : "+employeeId);
-		
 		TaskHeadForm pForm = (TaskHeadForm) form;
 		TaskManager manager = new TaskManagerImpl();
 		EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
 		ActivityManager tmpActivityManager = new ActivityManagerImpl();
 		HolidayManager tmpHolidayManager  = new HolidayManagerImpl();
 		
+		
 		if(Constants.Task.DOVALIDATE1.equals(pForm.getTask())){
 				response.setContentType("text/text;charset=utf-8");
 				response.setHeader("cache-control", "no-cache");
 				PrintWriter tmpOut = response.getWriter();
-				String tmpResponse = "";
-
-				Calendar cal = Calendar.getInstance();
-				List<HolidayBean> listHoliday = tmpHolidayManager.getListByYear(cal.get(Calendar.YEAR));
-				List<EmployeeBean> listWeekend = tmpEmployeeManager.getListWeekendByEmployeeId(pForm.getTaskBean().getTaskReceiver());
-				Integer sumOFHoliday = getSumHoliday(listHoliday, pForm.getTaskBean().getTaskStartDate(), pForm.getTaskBean().getTaskEstimateDate());
-				Integer sumOFWeekend = getSumWeekEnd(listWeekend, pForm.getTaskBean().getTaskStartDate(), pForm.getTaskBean().getTaskEstimateDate());
-				Integer mainDays = PrimeUtil.getDayBetweenDate(pForm.getTaskBean().getTaskStartDate(), pForm.getTaskBean().getTaskEstimateDate()) - sumOFHoliday - sumOFWeekend;				
-				tmpResponse  = "Sum Of Holiday : "+sumOFHoliday+"<br>"
-								+"Sum Of Weekend : "+sumOFWeekend+"<br>"
-								+"Main Days : "+mainDays;
 				
+				String tmpResponse = "";
+				if(PrimeUtil.getCompareTo(pForm.getTaskBean().getTaskStartDate().getTime(), pForm.getTaskBean().getTaskEstimateDate().getTime()) > 0) {
+					tmpResponse  = "Estimate Date must be greater than Start Date";
+				} else {
+					Calendar cal = Calendar.getInstance();
+					List<HolidayBean> listHoliday = tmpHolidayManager.getListByYear(cal.get(Calendar.YEAR));
+					List<EmployeeBean> listWeekend = tmpEmployeeManager.getListWeekendByEmployeeId(pForm.getTaskBean().getTaskReceiver());
+					Integer sumOFHoliday = getSumHoliday(listHoliday, pForm.getTaskBean().getTaskStartDate(), pForm.getTaskBean().getTaskEstimateDate());
+					Integer sumOFWeekend = getSumWeekEnd(listWeekend, pForm.getTaskBean().getTaskStartDate(), pForm.getTaskBean().getTaskEstimateDate());
+					Integer mainDays = PrimeUtil.getDayBetweenDate(pForm.getTaskBean().getTaskStartDate(), pForm.getTaskBean().getTaskEstimateDate()) - sumOFHoliday - sumOFWeekend;				
+					tmpResponse  = "Sum Of Holiday : "+sumOFHoliday+"<br>"
+									+"Sum Of Weekend : "+sumOFWeekend+"<br>"
+									+"Main Days : "+mainDays;
+				}
 				tmpOut.print(tmpResponse);
 				tmpOut.flush();
 				return null;

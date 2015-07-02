@@ -55,7 +55,7 @@
 			var estimateDate = checkNull($('#estimateDate'), $('#err-estimateDate'), "Project Estimate Date");
 			var checkDate = checkForDate($('#startDate'), $('#estimateDate'), $('#err-startDate'), $('#err-estimateDate'), "Project Start Date", "Project Estimate Date");
 			
-			if(taskName || taskAssigner || taskReceiver || startDate || estimateDate) {
+			if(taskName || taskAssigner || taskReceiver || startDate || estimateDate || checkDate) {
 				//alert("error lho");
 			} else {
 				dosubmit();
@@ -82,10 +82,10 @@
                 	<html:form action="/TaskHeadUser">
                 		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
                 		<html:hidden name="TaskHeadUserForm" property="taskBean.taskAssigner" />
-                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskReceiver" styleId="taskReceiver" />
+                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskReceiver" />
                 		<table class="form-input" align="center" style="width:60%">
                 			<tr>
-                				<td width="150px">Task Name</td>
+                				<td width="150px">Task Name ${TaskHeadUserForm.taskBean.taskAssigner} | ${TaskHeadUserForm.taskBean.taskReceiver}</td>
                 				<td>:</td>
                 				<td><html:text name="TaskHeadUserForm" property="taskBean.taskName" styleClass="form-control" styleId="taskName"/></td>
                 			</tr>

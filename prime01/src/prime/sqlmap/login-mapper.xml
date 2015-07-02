@@ -5,14 +5,14 @@
 		SELECT 
 			COUNT(0)
 		FROM USERS  
-		WHERE LOWER(USERNAME)=LOWER(#userName#)
+		WHERE UPPER(USERNAME) = UPPER(#userName#)
 	</select>
 	
 	<select id="isUserValidated" resultClass="java.lang.Integer" parameterClass="java.util.HashMap">
 		SELECT 
 			COUNT(0)
 		FROM USERS  
-		WHERE LOWER(USERNAME)=LOWER(#userName#) AND
+		WHERE UPPER(USERNAME) = UPPER(#userName#) AND
 			  PASSWORD=dbms_crypto.hash(to_clob(#password#), 2)
 	</select>
 	
@@ -26,7 +26,7 @@
 				SYSTEM_LEVEL	as systemLevel,
 				ACTION_DATE		as actionDate
 		FROM USERS  
-		WHERE LOWER(USERNAME)=LOWER(#name#)
+		WHERE UPPER(USERNAME)=UPPER(#name#)
 	</select>
 	
 	<update id="setLoginSession" parameterClass="java.lang.String">
@@ -34,11 +34,11 @@
 		SET 
 			LOGIN_SESSION = dbms_crypto.hash(to_clob(SYSDATE), 2),
 			LAST_ACTIVE   = SYSDATE 
-		WHERE LOWER(USERNAME)=LOWER(#username#)
+		WHERE UPPER(USERNAME)=UPPER(#username#)
 	</update>
 	
 	<select id="getLoginSession" resultClass="java.lang.String"  parameterClass="java.lang.String">
-		SELECT LOGIN_SESSION FROM USERS WHERE LOWER(USERNAME)=LOWER(#username#)
+		SELECT LOGIN_SESSION FROM USERS WHERE UPPER(USERNAME)=UPPER(#username#)
 	</select>
 	
 </sqlMap>

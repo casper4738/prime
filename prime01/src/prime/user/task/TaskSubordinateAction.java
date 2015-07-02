@@ -29,8 +29,7 @@ public class TaskSubordinateAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		
-//		int employeeId = LoginData.getUserData().getEmployeeId();
-		int employeeId = 200;
+		int employeeId = LoginData.getUserData().getEmployeeId();
 		request.setAttribute("employeeIdActive", employeeId);
 		
 		TaskSubordinateForm pForm = (TaskSubordinateForm) form;
