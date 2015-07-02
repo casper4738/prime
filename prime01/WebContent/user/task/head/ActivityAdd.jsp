@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html>
 <head> 
-
+	<script src="resources/prime.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		function doback() {
 			var tmpForm = document.forms[0];
@@ -22,9 +22,6 @@
 		
 		function validateForm() {
 			var activityName = checkNull($('#activityName'), $('#err-activityName'), "Activity Name");
-			
-			
-			
 			if(activityName) {
 				//alert("error lho");
 			} else {
@@ -40,7 +37,7 @@
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li><html:link href="#" onclick="flyToBack('home')">Tasks & Activities</html:link></li>
-		  	<li><html:link href="#" onclick="flyToBack('<%=Constants.Task.GOTOVIEW%>')">Tasks & Activities</html:link></li>
+		  	<li><html:link href="#" onclick="flyToBack('<%=Constants.Task.GOTOVIEW%>')">Tasks Detail</html:link></li>
 		  	<li class="active">Add Activity</li>
 		</ol>
 	</section>
@@ -73,9 +70,8 @@
                 			</tr>
                 			<tr>
                 				<td colspan="6" align="center">
-                					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()" />
-                					<html:button property="" value="Batal" styleClass="btn btn-default" onclick="doback()"/>
-                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="docancel()"/>
+                					<input type="button" value="Save" class="btn btn-primary" onclick="validateForm()" />
+                					<input type="button" value="Cancel" class="btn btn-default" onclick="flyToBack('<%=Constants.Task.GOTOVIEW%>')"/>
                 				</td>
                 			</tr>
                 		</table>

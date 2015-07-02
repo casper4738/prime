@@ -40,7 +40,7 @@
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li><html:link href="#" onclick="flyToBack('home')">Tasks & Activities</html:link></li>
-		  	<li><html:link href="#" onclick="flyToBack('<%=Constants.Task.GOTOVIEW%>')">Tasks & Activities</html:link></li>
+		  	<li><html:link href="#" onclick="flyToBack('<%=Constants.Task.GOTOVIEW%>')">Tasks Detail</html:link></li>
 		  	<li class="active">Activity Status</li>
 		</ol>
 	</section>
