@@ -47,8 +47,6 @@
 			$('#validatorStartDate').html("");
 			$('#validatorEndDate').html("");
 			
-			
-			
 			if(descDayOff == null || descDayOff == "") {
 				 $('#validatorDescDayOff').html("Description must be filled out");
 				 tmpValidated = false;
@@ -99,8 +97,9 @@
 							          contentType : false,
 							          processData : false,
 							          success : function(){
-											menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>', "message=Insert Day Off Successful");
-							          }
+							        	 /*  menuLoadHandler(tmpForm.action, "task=t10&message=Insert Day Off Successful"); */
+										menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>', 'task=<%=Constants.Task.GOTOVIEW%>&message=Insert Day Off Successful&tmpId='+$('#tmpId').val());  
+									 }
 							 	});							 	
 							 } else {			   //Failed
 								 $('#employee-validating').html(param[1]);
@@ -154,7 +153,8 @@
 				<div class="box-body">
                  	<html:form action="/EmployeeAdmin">
                  		<html:hidden name="EmployeeAdminForm" property="task" value="<%=Constants.Task.DODAYOFF%>"/>
-                 		<html:hidden name="EmployeeAdminForm" property="tmpId"/>
+                 		<html:hidden name="EmployeeAdminForm" property="tmpId" styleId="tmpId"/>
+                 		<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId"/>
                  		<table class="form-input" align="center" style="width: 500px;">
                  			<tr>
                  				<td>Employee Id</td>

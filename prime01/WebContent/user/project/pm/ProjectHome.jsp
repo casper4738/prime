@@ -14,9 +14,11 @@
 	<!-- CSS -->
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 	<!-- End CSS -->
 	
 	<!-- JS -->
+	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script src="resources/prime.js"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
@@ -122,7 +124,6 @@
 					<html:hidden name="ProjectUserForm" property="employeeIdReceiver"/>
 					<html:hidden name="ProjectUserForm" property="goToPage"/>
 					<html:hidden name="ProjectUserForm" property="showInPage"/>
-					<html:hidden name="ProjectUserForm" property="isShowAll"/>
 					<table>
 						<tr>
 							<td style="padding-left:5px"><html:select name="ProjectUserForm" property="columnSearch" styleClass="form-control columnSearch">
@@ -146,8 +147,8 @@
       				  				</div>
       				  			</td>
 							<td style="padding-left:5px">
-								<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ProjectUserForm" property="task" />', 'false')" value='Search'/>
-								<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ProjectUserForm" property="task" />', 'true')" value='Show All'/>					
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
 							</td>
 						</tr>
 					</table>

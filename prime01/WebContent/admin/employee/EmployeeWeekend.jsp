@@ -90,21 +90,72 @@
 	}
 	
 	function doSetWeekEnd(){
-		var weekEnds="";
-		for(var i=0; i < document.forms[0].weekEnd.length; i++)
-		{
-			if(document.forms[0].weekEnd[i].checked)
-			{
-				weekEnds+=document.forms[0].weekEnd[i].value+","
-			}
+		var tmpValidated 	= true;
+		var monthYear = $('#monthYear').val();
+		
+		$('#validatorStartFrom').html("");
+
+		if(monthYear == null || monthYear == "") {
+			 $('#validatorStartFrom').html("Start Weekend must be select");
+			 tmpValidated = false;
 		}
 		
-		weekEnds = weekEnds.substring(0, weekEnds.length - 1);
-		document.forms[0].weekEnds.value=weekEnds;
-		document.forms[0].listMondayDate.value=document.forms[0].mondayDate.value;
-		
-		var tmpForm = document.forms[0];
-		menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		var weekEnds="";
+  		for(var i=0; i < document.forms[0].weekEnd.length; i++)
+  		{
+  			if(document.forms[0].weekEnd[i].checked)
+  			{
+  				weekEnds+=document.forms[0].weekEnd[i].value+","
+  			}
+  		}
+  		
+  		weekEnds = weekEnds.substring(0, weekEnds.length - 1);
+  		
+  		if(weekEnds == null || weekEnds == ""){
+  			 $('#validatorWeekend').html("Start Weekend must be select");
+			 tmpValidated = false;
+  		}else{
+	  		document.forms[0].weekEnds.value=weekEnds;
+	  		document.forms[0].listMondayDate.value=document.forms[0].mondayDate.value;
+		}
+	
+		if(tmpValidated){
+			  $('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Validating employee data");
+			  $('#btn-save').hide();
+			  $('#btn-cancel').hide();
+			  $.ajax({ 
+		          type	  : "POST",
+		          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',  
+		          data	  : 'task=<%=Constants.Task.DOVALIDATEWEEKEND%>&employeeBean.startMondayDate=' + $('#mondayDate').val() +'&employeeBean.employeeId='+$('#employeeId').val(),
+		          success : function(msg){
+						 param = msg.split('#');
+						 if(param[0] == "0"){ //Success
+							$('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Uploading employee data");
+							var formData = new FormData(document.forms[0]);
+						 	$.ajax({ 
+						          type	  	  : "POST",
+						          url	  	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',  
+						          data	  	  : formData,
+						          contentType : false,
+						          processData : false,
+						          success : function(){
+						        	  	/* menuLoadHandler(tmpForm.action, serialize(tmpForm)); */
+										menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>', 'task=<%=Constants.Task.GOTOVIEW%>&message=Insert Weekend Successful&tmpId='+$('#tmpId').val());  
+									}
+						 	});							 	
+						 } else {			   //Failed
+							 $('#employee-validating').html(param[1]);
+						 	 $('#btn-save').show();
+							 $('#btn-cancel').show();
+						 }
+		          },
+		          
+		          error: function(){
+						alert("ERROR");
+		        	  	//TO DO :: Add Error Handling
+		          }
+		     }); 
+		}
 	}
 </script>
 <!-- End Of JS -->
@@ -139,14 +190,15 @@
 								property="weekEnds" />
 							<html:hidden name="EmployeeAdminForm"
 								property="listMondayDate" />
-							<html:hidden name="EmployeeAdminForm" property="tmpId"/>
+							<html:hidden name="EmployeeAdminForm" property="tmpId" styleId="tmpId"/>
+							<html:hidden name="EmployeeAdminForm" property="employeeBean.employeeId"/>
 							<table class="form-input" align="center" style="width: 500px;">
 								<tr>
 									<td>Employee ID</td>
 									<td>:</td>
 									<td><html:text name="EmployeeAdminForm"
 											property="employeeBean.employeeId" styleClass="form-control"
-											disabled="true" /></td>
+											disabled="true" styleId="employeeId"/></td>
 								</tr>
 								<tr>
 									<td width="150px">Name</td>
@@ -181,6 +233,13 @@
 									</td>
 								</tr>
 								<tr>
+	                				<td></td>
+	                				<td></td>
+	                				<td>
+	                					<i><span id="validatorStartFrom" style="color: red;font-size: 8"></span></i>
+	                				</td>
+	                			</tr>
+								<tr>
 									<td>Set Weekend</td>
 									<td>:</td>
 									<td>
@@ -194,6 +253,13 @@
 									</td>
 								</tr>
 								<tr>
+	                				<td></td>
+	                				<td></td>
+	                				<td>
+	                					<i><span id="validatorWeekend" style="color: red;font-size: 8"></span></i>
+	                				</td>
+	                			</tr>
+								<tr>
 									<td>Description</td>
 									<td>:</td>
 									<td>
@@ -204,9 +270,14 @@
 									<td colspan="3">&nbsp;</td>
 								</tr>
 								<tr>
+	                  				<td></td>
+									<td></td>
+	                  				<td><div id="employee-validating"></div></td>
+	                  			</tr>
+								<tr>
                  				<td colspan="3" align="center">
-                 					<html:button property="" value="Save" styleClass="btn btn-default" onclick="doSetWeekEnd()"/>
-                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('t10')"/>
+                 					<html:button property="" value="Save" styleClass="btn btn-default" onclick="doSetWeekEnd()" styleId="btn-save"/>
+                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('t10')" styleId="btn-cancel"/>
                  				</td>
                  			</tr>
 							</table>

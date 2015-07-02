@@ -350,4 +350,16 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		map.put("empId", empId);
 		return (Integer) mapper.queryForObject("employee.getValidateDayOff", map);
 	}
+
+	@Override
+	public Integer getValidateWeekEnd(String startFrom, Integer empId)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		System.out.println("empId"+empId+"empId");
+		System.out.println("startFrom"+startFrom+"startFrom");
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("startFrom", startFrom);
+		map.put("empId", empId);
+		return (Integer) mapper.queryForObject("employee.getValidateWeekEnd", map);
+	}
 }

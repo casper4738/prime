@@ -102,7 +102,7 @@
 			            
 			            <!-- Paging -->
 						<jsp:include page="/content/Pagination.jsp">
-				   			<jsp:param name="formName" value="DivisionAdminForm" />
+				   			<jsp:param name="formName" value="NotifTemplateForm" />
 				   		</jsp:include>
 						<!-- End of Paging -->
 		        	</div>

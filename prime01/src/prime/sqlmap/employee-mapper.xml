@@ -166,6 +166,11 @@
         WHERE WH.EMPLOYEE_ID=#id#
 	</select>
 	
+	<select id="getValidateWeekEnd"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(0) FROM WEEKEND_HOLIDAYS
+		WHERE START_FROM >= TO_DATE(#startFrom#,'dd/mm/yyyy') AND EMPLOYEE_ID=#empId#
+	</select>
+	
 	<select id="getEmployeeWeekendByIdAndStartFrom"  resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
 		SELECT 
 	        START_FROM AS startFrom,
@@ -189,10 +194,10 @@
 	
 	<select id="getValidateDayOff"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
 		SELECT COUNT(0) FROM DAY_OFFS WHERE 
-		(DAYOFF_START_DATE <![CDATA[ >= ]]> #startDate# AND DAYOFF_END_DATE <![CDATA[ >=]]> #endDate#) OR 
+		((DAYOFF_START_DATE <![CDATA[ >= ]]> #startDate# AND DAYOFF_END_DATE <![CDATA[ <=]]> #endDate#) OR 
 		(DAYOFF_START_DATE <![CDATA[ >= ]]> #startDate# AND DAYOFF_START_DATE <![CDATA[ <= ]]> #endDate#) OR
 		(DAYOFF_END_DATE <![CDATA[ >= ]]> #startDate# AND DAYOFF_END_DATE <![CDATA[ <= ]]> #endDate#) OR
-		(DAYOFF_START_DATE <![CDATA[ <= ]]> #startDate# AND DAYOFF_END_DATE <![CDATA[ >= ]]>#endDate#)
+		(DAYOFF_START_DATE <![CDATA[ <= ]]> #startDate# AND DAYOFF_END_DATE <![CDATA[ >= ]]>#endDate#))
 		AND EMPLOYEE_ID=#empId#
 	</select>
 	
@@ -459,7 +464,8 @@
 		    FROM EMPLOYEES X
 		    WHERE X.EMPLOYEE_ID = #employeeId#
 		) EMPX ON EMPX.EMPLOYEE_ID != EMP.EMPLOYEE_ID
-		WHERE EMP.TREE_ID LIKE  EMPX.TREE_ID||'%'
+		WHERE EMP.EMPLOYEE_ID NOT IN (SELECT EMPLOYEE_ID FROM RESIGN_EMPLOYEES)
+		AND EMP.TREE_ID LIKE  EMPX.TREE_ID||'%'
 		ORDER BY EMP.EMPLOYEE_ID ASC) page 
 	    WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
     </select>
@@ -480,6 +486,7 @@
 		    WHERE X.EMPLOYEE_ID = #employeeId#
 		) EMPX ON EMPX.EMPLOYEE_ID != EMP.EMPLOYEE_ID
 		WHERE EMP.TREE_ID LIKE  EMPX.TREE_ID||'%'
+		AND EMP.EMPLOYEE_ID NOT IN (SELECT EMPLOYEE_ID FROM RESIGN_EMPLOYEES)
 	</select>
 	<!-- end of select employee by tree -->
 	
