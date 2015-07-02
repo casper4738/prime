@@ -74,8 +74,8 @@ public class ProjectAction extends Action {
 			tmpProjectManager.insertMember(pForm.getProjectBean());
 
 			
-			int countRows  = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-			List<ProjectBean> list = tmpProjectManager.getListByColumnAsMember(pForm.getColumnSearch(), pForm.getSearch(),
+			int countRows  = tmpProjectManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());
+			List<ProjectBean> list = tmpProjectManager.getListByColumnAsMember(pForm.getColumnSearchReal(), pForm.getSearch(),
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),tmpEmployeeId);
 			request.setAttribute("listProject", list);
@@ -86,10 +86,13 @@ public class ProjectAction extends Action {
 		} else if (Constants.Task.PROJECT.GOTOPROJECTDETAIL.equals(pForm.getTask())){
 			//##.View Detail Project
 			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
-			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+			//int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());
+			System.out.println("PID detail "+pForm.getProjectId());
+			int countRows = tmpProjectManager.getCountListMember(pForm.getProjectId());
+			
 			System.out.println("PM :" + tmpProjectManager.getRoleIdbyEmployeeLoginAndProjectId(tmpEmployeeId, pForm.getProjectId()));
 			pForm.getProjectBean().setIsPM(tmpProjectManager.getRoleIdbyEmployeeLoginAndProjectId(tmpEmployeeId, pForm.getProjectId()));	
-			List<ProjectBean> list = tmpProjectManager.getListProjectMember(pForm.getColumnSearch(), pForm.getSearch(), 
+			List<ProjectBean> list = tmpProjectManager.getListProjectMember(pForm.getColumnSearchReal(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getProjectId());
@@ -110,8 +113,8 @@ public class ProjectAction extends Action {
 			System.out.println("masuk detail head");
 			//##.View Detail Project
 			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
-			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-			List<ProjectBean> list = tmpProjectManager.getListProjectMember(pForm.getColumnSearch(), pForm.getSearch(), 
+			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());
+			List<ProjectBean> list = tmpProjectManager.getListProjectMember(pForm.getColumnSearchReal(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getProjectId());
@@ -144,8 +147,9 @@ public class ProjectAction extends Action {
 			pForm.getProjectBean().setEmployeeName(pForm.getEmployeeBean().getEmployeeName());
 			System.out.println("PID "+pForm.getProjectId());
 			
-			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearch(), pForm.getSearch(), 
+//			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());
+			int countRows = tmpProjectManager.getCountListTaskMember(pForm.getEmployeeId(), pForm.getProjectId());
+			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearchReal(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getEmployeeId(), pForm.getProjectId());
@@ -182,8 +186,8 @@ public class ProjectAction extends Action {
 		} else if(Constants.Task.TASK.GOTODETAIL.equals(pForm.getTask())){
 			//##.View Detail Task
 			pForm.setTaskBean(tmpTaskManager.getTaskById(pForm.getTaskId()));
-			int countRows = tmpActivityManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch(), pForm.getTaskId());
-			List<ActivityBean> list = tmpActivityManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(), 
+			int countRows = tmpActivityManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), pForm.getTaskId());
+			List<ActivityBean> list = tmpActivityManager.getListByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getTaskId());
@@ -205,8 +209,8 @@ public class ProjectAction extends Action {
 			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeBean().getEmployeeId());
 			pForm.getProjectBean().setEmployeeName(pForm.getEmployeeBean().getEmployeeName());
 			
-			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
-			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearch(), pForm.getSearch(), 
+			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());
+			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearchReal(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getEmployeeId(), pForm.getProjectId());
@@ -242,7 +246,7 @@ public class ProjectAction extends Action {
 
 			pForm.setEmployeeId(pForm.getProjectBean().getEmployeeId());
 			pForm.setProjectId(pForm.getProjectBean().getProjectId());
-			
+			pForm.getProjectBean().setProjectMemberStatus(1);
 			for(int i=0;i<rolesSplit.length;i++){
 				//System.out.println(rolesSplit[i]);
 				pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
@@ -386,21 +390,19 @@ public class ProjectAction extends Action {
 		}
 		
 		String search = "";
-		if("STARTDATE".equals(pForm.getColumnSearch()) || "ESTIMATEDATE".equals(pForm.getColumnSearch())) {
+		if("STARTDATE".equals(pForm.getColumnSearchReal()) || "ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
 			search = pForm.getStartDate()+";"+pForm.getUntilDate();
 		} else {
 			search = pForm.getSearch();
 		}
-		System.out.println("colom "+pForm.getColumnSearch());
-		int countRows  = tmpProjectManager.getCountListByColAsMember(pForm.getColumnSearch(), search, tmpEmployeeId);
+		System.out.println("colom "+pForm.getColumnSearchReal());
+		int countRows  = tmpProjectManager.getCountListByColAsMember(pForm.getColumnSearchReal(), search, tmpEmployeeId);
 		//pForm.getProjectBean().setIsAssigner(0);
-		List<ProjectBean> list = tmpProjectManager.getListByColumnAsMember(pForm.getColumnSearch(), search,
+		List<ProjectBean> list = tmpProjectManager.getListByColumnAsMember(pForm.getColumnSearchReal(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), tmpEmployeeId);
 		
 		
-		
-		 
 		
 		request.setAttribute("listProject", list);
 		request.setAttribute("listSearchColumn", Constants.Search.PROJECT_SEARCHCOLUMNS);

@@ -27,9 +27,9 @@
 			var estimateDate = checkNull($('#estimate-date'), $('#err-estimateDate'), "Task Estimate Date");
 			
 			if(taskName || startDate || estimateDate) {
-				alert("error lho");
+			//	alert("error lho");
 			} else {
-				alert("masuk")
+				//alert("masuk")
 				dosubmit();
 			}
 			

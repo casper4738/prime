@@ -120,6 +120,7 @@
 					<html:hidden name="ProjectUserFormAsHead" property="employeeIdReceiver"/>
 					<html:hidden name="ProjectUserFormAsHead" property="goToPage"/>
 					<html:hidden name="ProjectUserFormAsHead" property="showInPage"/>
+					<html:hidden name="ProjectUserFormAsHead" property="isShowAll"/>
 					<table>
 						<tr>
 							<td style="padding-left:5px"><html:select name="ProjectUserFormAsHead" property="columnSearch" styleClass="form-control columnSearch">

@@ -98,17 +98,22 @@
 			<div class="box-header"><h3 class="box-title-center">Data Project Member</h3></div>
 			<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
 			<tr><td>Project Name : ${ProjectUserForm.projectBean.projectId} <bean:write name="ProjectUserForm" property="projectBean.projectName"/></td>
-				<td>Project Assigner : <bean:write name="ProjectUserForm" property="projectBean.projectAssignerName" /> </td>
+				<td>Project Assigner : <bean:write name="ProjectUserForm" property="projectBean.projectAssigner" /> - <bean:write name="ProjectUserForm" property="projectBean.projectAssignerName" /> </td>
 			</tr>
 			<tr><td>Start Date : <bean:write name="ProjectUserForm" property="projectBean.projectStartDate" format="dd MMMM yyyy"/> </td>
-				<td>Project Receiver : <bean:write name="ProjectUserForm" property="projectBean.projectReceiverName"/> </td>
+				<td>Project Receiver : <bean:write name="ProjectUserForm" property="projectBean.projectReceiver"/> - <bean:write name="ProjectUserForm" property="projectBean.projectReceiverName"/> </td>
 			</tr><tr><td>Estimated Date : <bean:write name="ProjectUserForm" property="projectBean.projectEstimateDate" format="dd MMMM yyyy" />
 				</td><td>Status :  
 					<jsp:include page="/content/Status.jsp">
        	    			<jsp:param name="status" value="${ProjectUserForm.projectBean.projectLastStatus}" />
        	    		</jsp:include>
 				</td>
-				
+			</tr>
+			<tr><td>Actual Start Date: <bean:write name="ProjectUserForm" property="projectBean.actualStart" format="dd MMMM yyyy" /></td>
+				<td>Actual Start End : <bean:write name="ProjectUserForm" property="projectBean.actualEnd" format="dd MMMM yyyy"/></td>
+			</tr>
+			<tr><td>Main Days : <bean:write name="ProjectUserForm" property="projectBean.mainDays" /></td>
+				<td>Progress Percentage : <bean:write name="ProjectUserForm" property="projectBean.percentage"/></td>
 			</tr>
 			<tr><td colspan="2">Description : <bean:write name="ProjectUserForm" property="projectBean.projectDescription" /> </td>
 			</tr></table>
@@ -157,6 +162,7 @@
 			<div class="box-body">
 				<table id="table-1" class="table table-bordered table-striped table-hover">
 				<thead><tr>
+					<th>Employee Id</th>
 					<th>Employee Name</th>
 					<th>Role</th>
 					<th>Division</th>
@@ -171,6 +177,7 @@
                 <logic:notEmpty name="listProjectMember">
 					<logic:iterate id="iter" name="listProjectMember">
 	                	<tr>
+	                		<td width="40px"><bean:write name="iter" property="employeeId"/></td>
 	                		<td width="250px"><bean:write name="iter" property="employeeName"/></td>
 	                		<td>
 	                		

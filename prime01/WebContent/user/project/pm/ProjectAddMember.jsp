@@ -50,7 +50,7 @@
 			var employeeName = checkNull($('#employeeName'), $('#err-employeeName'), "Employee Name");
 			
 			if(employeeName) {
-				alert("error lho");
+			//	alert("error lho");
 			} else {
 				doSetRole();
 			}

@@ -28,12 +28,29 @@ public class ProjectFormAsHead extends ActionForm {
 	private Integer divisionId;
 	private Integer positionId;
 	private Integer employeeIdReceiver;
+	private Boolean isShowAll = true;
 	private java.sql.Date startDate;
 	private java.sql.Date untilDate;
-	
+
 	public ProjectFormAsHead() {
 		setStartDate(new java.sql.Date(new java.util.Date().getTime()));
 		setUntilDate(new java.sql.Date(new java.util.Date().getTime()));
+	}
+
+	public Boolean getIsShowAll() {
+		return isShowAll;
+	}
+
+	public void setIsShowAll(Boolean isShowAll) {
+		this.isShowAll = isShowAll;
+	}
+
+	public String getColumnSearchReal() {
+		if (isShowAll) {
+			return "SHOW ALL";
+		} else {
+			return columnSearch;
+		}
 	}
 
 	public ProjectBean getProjectBean() {

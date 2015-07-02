@@ -60,7 +60,7 @@
 			<div class="col-xs-12"><div class="box">
 				<div class="box-header"><h3 class="box-title-center">Data Project Member</h3></div>
 				<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-				<tr><td>Member Name : <bean:write name="ProjectUserForm" property="employeeBean.employeeName"/> </td>
+				<tr><td>Member Name : <bean:write name="ProjectUserForm" property="employeeBean.employeeId"/> - <bean:write name="ProjectUserForm" property="employeeBean.employeeName"/> </td>
 					<td>Position : <bean:write name="ProjectUserForm" property="employeeBean.positionName" /> </td>
 				</tr>
 				<tr><td>Phone Number : <bean:write name="ProjectUserForm" property="employeeBean.contactNumber"/> </td>

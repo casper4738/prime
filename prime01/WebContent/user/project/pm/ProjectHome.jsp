@@ -122,6 +122,7 @@
 					<html:hidden name="ProjectUserForm" property="employeeIdReceiver"/>
 					<html:hidden name="ProjectUserForm" property="goToPage"/>
 					<html:hidden name="ProjectUserForm" property="showInPage"/>
+					<html:hidden name="ProjectUserForm" property="isShowAll"/>
 					<table>
 						<tr>
 							<td style="padding-left:5px"><html:select name="ProjectUserForm" property="columnSearch" styleClass="form-control columnSearch">
@@ -145,8 +146,8 @@
       				  				</div>
       				  			</td>
 							<td style="padding-left:5px">
-								<input type="button" class="btn bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
-								<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
+								<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ProjectUserForm" property="task" />', 'false')" value='Search'/>
+								<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ProjectUserForm" property="task" />', 'true')" value='Show All'/>					
 							</td>
 						</tr>
 					</table>
