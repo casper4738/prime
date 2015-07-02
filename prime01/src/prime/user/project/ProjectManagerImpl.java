@@ -38,7 +38,7 @@ public class ProjectManagerImpl implements ProjectManager {
 			map.put("actualEnd", actualEnd);
 			
 			mapper.startTransaction();
-			mapper.update("project.updateActualEnds", map);
+			mapper.update("project.updateActualEnd", map);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();

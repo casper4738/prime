@@ -74,7 +74,7 @@ public class TaskManagerImpl implements TaskManager {
 			map.put("actualEnd", actualEnd);
 			
 			mapper.startTransaction();
-			mapper.update("task.updateActualEnds", map);
+			mapper.update("task.updateActualEnd", map);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();

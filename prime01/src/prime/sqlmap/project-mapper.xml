@@ -203,16 +203,16 @@
 			PROJECT_DESCRIPTION 		AS projectDescription,
 			EMP_ASSIGN.EMPLOYEE_NAME 	AS projectAssignerName,
 			EMP_RECEIVE.EMPLOYEE_NAME 	AS projectReceiverName,
-			ACTUAL_START				AS actualStart,
-			ACTUAL_END					AS actualEnd,
-			MAIN_DAYS					AS mainDays,
+			PRO.ACTUAL_START			AS actualStart,
+			PRO.ACTUAL_END				AS actualEnd,
+			PRO.MAIN_DAYS				AS mainDays,
 			EMP_RECEIVE.EMPLOYEE_ID     AS employeeIdReceiver
 		FROM PROJECTS PRO
 		JOIN EMPLOYEES EMP_ASSIGN  ON PRO.PROJECT_ASSIGNER = EMP_ASSIGN.EMPLOYEE_ID
 		JOIN EMPLOYEES EMP_RECEIVE ON PRO.PROJECT_RECEIVER = EMP_RECEIVE.EMPLOYEE_ID
         JOIN PROJECT_MEMBERS PRO_MBR ON PRO_MBR.PROJECT_ID = PRO.PROJECT_ID
         JOIN TASKS TASK ON PRO_MBR.PROJECT_MEMBER_ID = TASK.PROJECT_MEMBER_ID
-        WHERE TASK.TASK_ID = 1;
+        WHERE TASK.TASK_ID = #taskId#
 	</select>
 	
 	<select id="getListProjectMember" resultClass ="prime.user.project.ProjectBean" parameterClass="java.util.Map">

@@ -18,6 +18,7 @@ import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.userrole.UserRoleManager;
 import prime.admin.userrole.UserRoleManagerImpl;
 import prime.constants.Constants;
+import prime.login.LoginData;
 import prime.login.LoginManager;
 import prime.login.LoginManagerImpl;
 import prime.utility.ActiveDirectoryManager;
@@ -50,8 +51,8 @@ public class UserAction extends Action {
 			return mapping.findForward("edit");
 		} else if (Constants.Task.DOADD.equals(userForm.getTask())) {
 			userForm.getUserBean().setEmployeeId(userForm.getEmployeeId());
-			userForm.getUserBean().setUpdateBy("dedy");
 			userForm.getUserBean().setSysLevel(userForm.getUserRoleId());
+			userForm.getUserBean().setUpdateBy(LoginData.getUserData().getUserName());
 
 			if (userForm.getUserBean().getPassword().length() <= 0) {
 				userForm.getUserBean().setIsActiveDirectory(true);
@@ -93,6 +94,7 @@ public class UserAction extends Action {
 			return mapping.findForward("forward");
 		} else if (Constants.Task.DOEDIT.equals(userForm.getTask())) {
 			// ##.Update Data and Go to Forward
+			userForm.getUserBean().setUpdateBy(LoginData.getUserData().getUserName());
 			tmpManager.update(userForm.getUserBean());
 			return mapping.findForward("forward");
 		} else if (Constants.Task.DOVALIDATE1.equals(userForm.getTask())) {
