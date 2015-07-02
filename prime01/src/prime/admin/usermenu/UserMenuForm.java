@@ -9,7 +9,7 @@ public class UserMenuForm extends ActionForm {
 	private String columnSearch;
 	private String message;
 	private Integer goToPage = 1;
-	private Integer showInPage = 100;
+	private Integer showInPage = 10;
 	private Integer tmpId;
 	private Boolean isShowAll = true;
 

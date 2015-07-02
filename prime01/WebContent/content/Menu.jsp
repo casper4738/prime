@@ -8,8 +8,7 @@
 <head>
 <meta charset="UTF-8">
 <meta
-	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no'
-	name='viewport'>
+	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 <title>PRIMEprogram</title>
 
 <!-- CSS -->
@@ -57,7 +56,8 @@
 					</div>
 				</div>
 				<ul class="sidebar-menu">
-					<li class="header">Menu</li>
+					<li class="header">Main Navigation</li>
+					
 					<logic:iterate id="pageAction" name="listPages" indexId="count"
 						scope="request">
 						<li><a href="#"

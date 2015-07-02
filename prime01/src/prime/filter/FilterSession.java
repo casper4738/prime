@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
-import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -15,6 +14,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import prime.admin.employee.EmployeeBean;
+import prime.admin.employee.EmployeeManager;
+import prime.admin.employee.EmployeeManagerImpl;
+import prime.admin.user.UserBean;
+import prime.admin.user.UserManager;
+import prime.admin.user.UserManagerImpl;
 import prime.constants.Constants;
 import prime.login.LoginData;
 import prime.login.LoginManager;
@@ -54,10 +59,11 @@ public class FilterSession implements Filter {
 		    if(tmpSession.getAttribute(Constants.Session.ID) != null) {
 		    	//##b.Check From DB, Session Value
 		    	LoginManager tmpLoginManager = new LoginManagerImpl();
+		    	String tmpUsername = (String)tmpSession.getAttribute(Constants.Session.Username);
 		    	
 		    	String tmpDBSession = "";
 				try {
-					tmpDBSession = tmpLoginManager.getLoginSession((String)tmpSession.getAttribute(Constants.Session.Username));
+					tmpDBSession = tmpLoginManager.getLoginSession(tmpUsername);
 				} catch (SQLException e) {
 					//Nothing need to be done at here
 					e.printStackTrace();
@@ -65,10 +71,32 @@ public class FilterSession implements Filter {
 				
 		    	if(tmpDBSession.equals((String)tmpSession.getAttribute(Constants.Session.ID))){
 		    		tmpIsRedirectNeed = false;
+		    		
+		    		if(!LoginData.isDataExists()){
+						try {
+			    			UserManager tmpUserData = new UserManagerImpl();
+							UserBean tmpUserBean = tmpUserData.getUserByUsername(tmpUsername);
+							LoginData.setUserBean(tmpUserBean);
+							
+							EmployeeManager tmpEmployeeData = new EmployeeManagerImpl();
+							EmployeeBean tmpEmployeeBean = tmpEmployeeData.getEmployeeById(tmpUserBean.getEmployeeId());
+							LoginData.setEmployeeBean(tmpEmployeeBean);
+						} catch (SQLException e) {
+							e.printStackTrace();
+							
+							 //Immediate Return If Something Not Wanted Happening
+						     PrintWriter out = response.getWriter();
+						     out.println("<script type=\"text/javascript\">");
+						     out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.LOGIN] + "';");
+						     out.println("</script>");
+						     return;
+						}
+		    		} 
+		    		
 		    	} else {
 		    		LoginData.clear();
 		    		tmpSession.invalidate();
-		    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONKICKED);
+		    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONEXPIRED);
 		    	}
 		    } else {
 		    	if(LoginData.isDataExists()){
@@ -87,7 +115,6 @@ public class FilterSession implements Filter {
 				     out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.LOGIN] + "';");
 				     out.println("</script>");
 			    } else {  
-					
 			    	tmpServletResponse.sendRedirect(Constants.PAGES_LIST[Constants.Page.LOGIN]);
 			    }
 		    }		
