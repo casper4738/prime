@@ -5,6 +5,7 @@ import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -101,7 +102,9 @@ public class LoginAction extends Action {
 					LoginData.setEmployeeBean(tmpEmployeeBean);
 					
 					//If Success, Prepare Session
-					request.getSession(true).setAttribute(Constants.Session.ID, tmpUserBean.getloginSession());
+					HttpSession tmpSession = request.getSession(true);
+					tmpSession.setAttribute(Constants.Session.ID		, tmpUserBean.getloginSession());
+					tmpSession.setAttribute(Constants.Session.Username	, tmpUserBean.getUserName());
 					break;
 				case 3 :
 					tmpLoginResponse = "0#" + Constants.Response.FAILLOGIN_USERLOCKED;

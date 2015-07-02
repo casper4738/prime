@@ -334,6 +334,7 @@ public interface Constants {
 	}
 	static interface Session{
 		static String ID				= "t1";
+		static String Username			= "t2";
 	}
 	
 	//##G.Active Directory
@@ -450,4 +451,7 @@ public interface Constants {
 		static int PROJECT_ASSIGNEDASROLE  = 8;
 		static int PROJECT_REMOVEDFROMROLE = 9;
 	}
+	
+	//##M.Misc
+	public static String PATH_USERNOIMAGE = "resources/image/user-photo.jpg";
 }
