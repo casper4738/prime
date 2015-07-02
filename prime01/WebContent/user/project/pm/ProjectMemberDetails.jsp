@@ -89,12 +89,14 @@
 					<html:form action="/ProjectUser" >
 						<html:hidden name="ProjectUserForm" property="task"/>
 						<html:hidden name="ProjectUserForm" property="taskId"/>
+						<html:hidden name="ProjectUserForm" property="taskBean.taskId"/>
 						<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
 						<html:hidden name="ProjectUserForm" property="projectBean.employeeId"/>
 						<html:hidden name="ProjectUserForm" property="projectBean.employeeName"/>
 						<html:hidden name="ProjectUserForm" property="goToPage"/>
 						<html:hidden name="ProjectUserForm" property="showInPage"/>
 						<html:hidden name="ProjectUserForm" property="projectId"/>
+						<html:hidden name="ProjectUserForm" property="employeeBean.employeeId"/>
 						<html:select name="ProjectUserForm" property="columnSearch" styleClass="columnSearch">
 							<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 						</html:select>

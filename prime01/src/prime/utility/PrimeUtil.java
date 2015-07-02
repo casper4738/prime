@@ -56,13 +56,18 @@ public class PrimeUtil {
 		return new java.sql.Date(c.getTimeInMillis());
 	}
 
-	private static SimpleDateFormat DATEFORMAT_TIME = new SimpleDateFormat("HH:mm");
-	private static SimpleDateFormat DATEFORMAT_DATE = new SimpleDateFormat("dd/MM/yyyy HH:mm");
-    public static String setDateToTimeString(Date date){
+	private static SimpleDateFormat DATEFORMAT_TIME 		= new SimpleDateFormat("HH:mm");
+	private static SimpleDateFormat DATEFORMAT_DATE 		= new SimpleDateFormat("dd/MM/yyyy HH:mm");
+	private static SimpleDateFormat DATEFORMAT_DATEONLY		= new SimpleDateFormat("dd/MM/yyyy");
+    
+	public static String setDateToTimeString(Date date){
     	return DATEFORMAT_TIME.format(date);
     }
     public static String setDateToDateString(Date date){
     	return DATEFORMAT_DATE.format(date);
+    }
+    public static String setDateToDateOnlyString(Date date){
+    	return DATEFORMAT_DATEONLY.format(date);
     }
 
 	public static Date parseDateStringToTime(String date) {
@@ -80,6 +85,14 @@ public class PrimeUtil {
 	        return new Date(0);
 	    }
 	}
+	
+	public static Date parseDateStringToDateOnly(String date) {
+	    try {
+	        return DATEFORMAT_DATEONLY.parse(date);
+	    } catch (java.text.ParseException e) {
+	        return new Date(0);
+	    }
+	}	
 
 	public static Integer getCompareTo(long time1, long time2) {
 		java.util.Date date1 = new java.util.Date(time1);
@@ -123,8 +136,10 @@ public class PrimeUtil {
 
 		List<String> list = new ArrayList<String>();
 		
+		SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+		
 		while (!start.after(end)) {
-			list.add(new java.sql.Date(start.getTimeInMillis()) + "");
+			list.add(format.format(new java.sql.Date(start.getTimeInMillis())) + "");
 			start.add(Calendar.DATE, 1);
 		}
 		

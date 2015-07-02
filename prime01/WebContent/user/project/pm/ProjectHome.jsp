@@ -158,6 +158,7 @@
 			<!-- Table List -->
 			<div class="box-body"><table id="table-1" class="table table-bordered table-striped table-hover">
 				<thead><tr>
+					<th width="30px">Project ID</th>
 					<th width="100px">Project Name</th>
 					<th>Description</th>
 					<th width="100px">Project Manager</th>
@@ -172,6 +173,7 @@
 					<logic:iterate id="iter" name="listProject">
 						
 	                	<tr>
+	                		<td><bean:write name="iter" property="projectId"/></td>
 	                	    <td><bean:write name="iter" property="projectName"/></td>
 	                	    <td><bean:write name="iter" property="projectDescription"/></td>
 	                	    <td><bean:write name="iter" property="projectReceiverName"/></td>

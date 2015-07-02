@@ -82,7 +82,7 @@
 			          UPPER(EMP.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 				<isEqual property="columnSearch" compareValue="GENDER">
-			          UPPER(GENDER) LIKE UPPER(#value#)
+			          UPPER(GENDER) = UPPER(#value#)
 				</isEqual> 
 				<isEqual property="columnSearch" compareValue="EMAIL">
 			          UPPER(EMAIL) LIKE UPPER('%'||#value#||'%')
@@ -96,6 +96,12 @@
 				<isEqual property="columnSearch" compareValue="MANAGER">
 			          UPPER(MANAGER.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
+				<isEqual property="columnSearch" compareValue="STATUS">
+		           (CASE 
+			            WHEN NVL(TO_CHAR(RE.RESIGN_DATE, 'yyyy-mm-dd'), '0') = '0' THEN 0
+			            ELSE 1
+			        END) = #value#
+				</isEqual> 
 	        </isNotNull>
 	    </dynamic>
 	</select>
@@ -133,7 +139,7 @@
         WHERE EMP.EMPLOYEE_ID=#id#
 	</select>
 	
-	<select id="getListByColumnSubordinate" resultClass="prime.user.task.TaskBean" parameterClass="java.util.Map">
+	<select id="getListEmployeeTaskReport" resultClass="prime.user.task.TaskBean" parameterClass="java.util.Map">
 		SELECT * FROM (SELECT page.*, ROWNUM rnum FROM
 		(SELECT TASK.TASK_ID AS taskId,
 			TASK_NAME AS taskName,
@@ -159,7 +165,7 @@
 		    SELECT TD.TASK_ID, MAX(TD.TASK_CHANGE_DATE) AS TASK_CHANGE_DATE FROM TASK_DETAILS TD
 		    GROUP BY TD.TASK_ID
 		) TASK_DET ON TASK_DET.TASK_ID=TASK.TASK_ID
-		WHERE TASK_RECEIVER=#taskReceiver#
+		WHERE TASK_RECEIVER=#empId# OR TASK_ASSIGNER=#empId#
 		<dynamic prepend="AND">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
@@ -186,5 +192,79 @@
 		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
 	
-
+	<select id="getCountListEmployeeTaskReport" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1)
+		FROM TASKS TASK
+		JOIN EMPLOYEES EMP_ASSIGN ON TASK.TASK_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
+		JOIN EMPLOYEES EMP_RECEIVE ON TASK.TASK_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
+		JOIN (
+		    SELECT TD.TASK_ID, MAX(TD.TASK_CHANGE_DATE) AS TASK_CHANGE_DATE FROM TASK_DETAILS TD
+		    GROUP BY TD.TASK_ID
+		) TASK_DET ON TASK_DET.TASK_ID=TASK.TASK_ID
+		WHERE TASK_ASSIGNER=#empId# OR TASK_RECEIVER=#empId#
+		<dynamic prepend="AND">
+			<isNotNull property="columnSearch">
+				<isEqual property="columnSearch" compareValue="NAME">
+					UPPER(TASK_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="DESCRIPTION">
+					UPPER(TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="ASSIGNER">
+					UPPER(EMP_ASSIGN.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="RECEIVER">
+					UPPER(EMP_RECEIVE.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="STARTDATE">
+					TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+					TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+				</isEqual>
+			</isNotNull>
+		</dynamic>
+		OR TASK.TASK_ID  IN (
+		    SELECT X.TASK_ID FROM TASKS X
+		    JOIN EMPLOYEES Y ON Y.EMPLOYEE_ID= X.TASK_ASSIGNER AND Y.EMPLOYEE_ID = X.TASK_RECEIVER
+		    WHERE Y.HEAD_ID = #empId#
+		    <dynamic prepend="AND">
+				<isNotNull property="columnSearch">
+					<isEqual property="columnSearch" compareValue="NAME">
+						UPPER(X.TASK_NAME) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="DESCRIPTION">
+						UPPER(X.TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="STARTDATE">
+						X.TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+						X.TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+				</isNotNull>
+			</dynamic>
+		) OR TASK.TASK_ID IN (
+			SELECT X.TASK_ID FROM TASKS X
+			JOIN PROJECT_MEMBERS Y ON X.PROJECT_MEMBER_ID = Y.PROJECT_MEMBER_ID
+			JOIN EMPLOYEES Z ON Z.EMPLOYEE_ID=X.TASK_RECEIVER
+            WHERE Z.HEAD_ID = #empId#
+            <dynamic prepend="AND">
+				<isNotNull property="columnSearch">
+					<isEqual property="columnSearch" compareValue="NAME">
+						UPPER(X.TASK_NAME) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="DESCRIPTION">
+						UPPER(X.TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="STARTDATE">
+						X.TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+						X.TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+				</isNotNull>
+			</dynamic>
+        )
+	</select>
 </sqlMap>

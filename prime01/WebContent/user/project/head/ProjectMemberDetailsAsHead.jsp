@@ -104,7 +104,7 @@
 					<table class="table table-bordered table-striped table-hover">
 					<thead><tr>
 						<th>Task Name</th>
-						<th>Task Assigenr</th>
+						<th>Proposed By</th>
 						<th>Start Date </th>
 						<th>Estimate Date</th>
 						<th>Status</th>

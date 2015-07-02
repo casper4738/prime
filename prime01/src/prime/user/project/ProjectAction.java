@@ -1,6 +1,11 @@
 package prime.user.project;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,7 +79,14 @@ public class ProjectAction extends Action {
 			tmpProjectManager.insertMember(pForm.getProjectBean());
 
 			
-			int countRows  = tmpProjectManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());
+			String search = "";
+			if("STARTDATE".equals(pForm.getColumnSearchReal()) || "ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
+				search = pForm.getStartDate()+";"+pForm.getUntilDate();
+			} else {
+				search = pForm.getSearch();
+			}
+			System.out.println("colom "+pForm.getColumnSearchReal());
+			int countRows  = tmpProjectManager.getCountListByColAsMember(pForm.getColumnSearchReal(), search, tmpEmployeeId);
 			List<ProjectBean> list = tmpProjectManager.getListByColumnAsMember(pForm.getColumnSearchReal(), pForm.getSearch(),
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),tmpEmployeeId);
@@ -82,7 +94,7 @@ public class ProjectAction extends Action {
 			request.setAttribute("listSearchColumn", Constants.Search.PROJECT_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 			setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
-			return mapping.findForward("success");
+			return mapping.findForward("forward");
 		} else if (Constants.Task.PROJECT.GOTOPROJECTDETAIL.equals(pForm.getTask())){
 			//##.View Detail Project
 			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
@@ -143,8 +155,10 @@ public class ProjectAction extends Action {
 			//##. Get Data
 			pForm.setEmployeeBean(tmpEmployeeManager.getEmployeeById(pForm.getEmployeeId()));
 			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
-			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeBean().getEmployeeId());
-			pForm.getProjectBean().setEmployeeName(pForm.getEmployeeBean().getEmployeeName());
+			//if(pForm.getEmployeeBean().getEmployeeId()==)
+			System.out.println("empid "+pForm.getEmployeeId());
+			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeId());
+			//pForm.getProjectBean().setEmployeeName(pForm.getEmployeeBean().getEmployeeName());
 			System.out.println("PID "+pForm.getProjectId());
 			
 //			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());
@@ -185,6 +199,8 @@ public class ProjectAction extends Action {
 			return mapping.findForward("forward");
 		} else if(Constants.Task.TASK.GOTODETAIL.equals(pForm.getTask())){
 			//##.View Detail Task
+			System.out.println("masuk detail "+pForm.getTaskId());
+			
 			pForm.setTaskBean(tmpTaskManager.getTaskById(pForm.getTaskId()));
 			int countRows = tmpActivityManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), pForm.getTaskId());
 			List<ActivityBean> list = tmpActivityManager.getListByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), 
@@ -195,6 +211,11 @@ public class ProjectAction extends Action {
 			request.setAttribute("listActivity", list);
 			request.setAttribute("listSearchColumn", Constants.Search.ACTIVITY_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+			
+			//---.For Calendar
+			SimpleDateFormat tmpConvert = new SimpleDateFormat("dd/MM/yyyy");
+			request.setAttribute("progressStartDate", tmpConvert.format(pForm.getProjectBean().getProjectStartDate()));
+			request.setAttribute("progressEndDate", tmpConvert.format(pForm.getProjectBean().getProjectEstimateDate()));
 			
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());	
 			
@@ -387,6 +408,9 @@ public class ProjectAction extends Action {
 			
 			
 			return mapping.findForward("forward");
+		} else if(("refreshProjectProgress").equals(pForm.getTask())){
+			refreshProjectProgressList(request, response, pForm, tmpProjectManager);
+			return null;
 		}
 		
 		String search = "";
@@ -429,9 +453,146 @@ public class ProjectAction extends Action {
 		pForm.setGoToPage(pageUtil.getPage());
 	}
 	
-//	private void setPaging(HttpServletRequest request, ProjectForm pForm) {
-//		request.setAttribute("employeeActive", 100);
-//		
-//	}
+	private void refreshProjectProgressList(HttpServletRequest request, HttpServletResponse response, ProjectForm pForm, ProjectManager manager) throws SQLException, IOException {
+		//##0.Temp Variable
+		int tmpI, tmpJ, tmpK;
+		List tmpCurnMember, tmpPerMemberProgressedTask;
+		ArrayList<ArrayList<Object>> tmpData;
+		Date tmpActualStartDate, tmpActualEndDate;
+		Date tmpFilterStartDate, tmpFilterEndDate;
+		Date tmpCurnDate;
+		boolean tmpLastStatus, tmpAnyProgress;
+		ArrayList<Object> tmpTaskProgress;
+		String tmpLastName = "";
+		
+		System.out.println("LLALALAA");
+		System.out.println("Date = " + pForm.getProgressStartDate());
+		tmpFilterStartDate = PrimeUtil.parseDateStringToDateOnly(pForm.getProgressStartDate());
+		tmpFilterEndDate   = PrimeUtil.parseDateStringToDateOnly(pForm.getProgressEndDate());
+		List tmpCalendarList = PrimeUtil.getListStringDate(tmpFilterStartDate, tmpFilterEndDate);
+		
+		//---.Project Progress on Ranged Date
+		//---a.Do Looping
+		//   I'm not considering any perfomance turnover, with this code
+		tmpData = new ArrayList<ArrayList<Object>>();
+		
+		tmpCurnMember = manager.getListEmployeeIDInProject(pForm.getProjectId());
+		System.out.println("Member = " + tmpCurnMember.size() + " _ "  + pForm.getProjectId());
+		for(tmpI = 0 ; tmpI < tmpCurnMember.size() ; tmpI++){
+			tmpPerMemberProgressedTask = manager.getProjectTaskListPerMember(pForm.getProjectId(), (Integer)tmpCurnMember.get(tmpI));	
+			
+
+			System.out.println("Member Task = " + tmpPerMemberProgressedTask.size());
+			for(tmpJ = 0 ; tmpJ < tmpPerMemberProgressedTask.size() ; tmpJ++){
+				tmpActualStartDate = ((TaskBean)tmpPerMemberProgressedTask.get(tmpJ)).getActualStart();
+				tmpActualEndDate   = ((TaskBean)tmpPerMemberProgressedTask.get(tmpJ)).getActualEnd();
+				
+				tmpTaskProgress = new ArrayList<>();
+				if(tmpActualStartDate != null){
+					tmpAnyProgress = false;
+					if(tmpLastName.equals(((TaskBean)tmpPerMemberProgressedTask.get(tmpJ)).getTaskReceiverName())){
+						tmpTaskProgress.add("");
+					} else {
+						tmpLastName = ((TaskBean)tmpPerMemberProgressedTask.get(tmpJ)).getTaskReceiverName();
+						tmpTaskProgress.add(((TaskBean)tmpPerMemberProgressedTask.get(tmpJ)).getTaskReceiver() + " - " +
+											tmpLastName);
+					}
+					tmpTaskProgress.add(((TaskBean)tmpPerMemberProgressedTask.get(tmpJ)).getTaskId() + " - " +
+										((TaskBean)tmpPerMemberProgressedTask.get(tmpJ)).getTaskName());
+					tmpTaskProgress.add(((TaskBean)tmpPerMemberProgressedTask.get(tmpJ)).getTaskLastStatus());
+					tmpK = 3;
+					tmpAnyProgress = false;
+					do {
+						tmpCurnDate = PrimeUtil.parseDateStringToDateOnly((String)tmpCalendarList.get(tmpK - 3));
+						tmpLastStatus = (tmpActualStartDate.before(tmpCurnDate) && tmpActualEndDate.after(tmpCurnDate)); 
+						if(!tmpLastStatus){
+							if(PrimeUtil.getCompareTo(tmpActualEndDate.getTime(), tmpCurnDate.getTime()) == 0){
+								tmpLastStatus = true;
+							}
+						}
+						tmpAnyProgress = (tmpLastStatus) ? true : tmpAnyProgress;
+						tmpTaskProgress.add(tmpLastStatus);
+						tmpK++;
+					} while(tmpCurnDate.before(tmpFilterEndDate) && (tmpK - 3 < tmpCalendarList.size()));
+					
+					//There's some changing, insert to data
+					if(tmpAnyProgress){
+						tmpData.add(tmpTaskProgress);
+					}
+				}
+				
+			}
+		}
+		
+		//---b.Get Activities
+		response.setContentType("text/text;charset=utf-8");
+		response.setHeader("cache-control", "no-cache");
+		PrintWriter tmpOut = response.getWriter();
+		String tmpTimeString = "";
+		
+		for(tmpI = 0 ; tmpI < tmpCalendarList.size() ; tmpI++){
+			tmpTimeString += "<th>";
+			tmpTimeString += tmpCalendarList.get(tmpI);
+			tmpTimeString += "</th>";
+		}
+		String tmpValueString = "";
+		for(tmpJ = 0 ; tmpJ < tmpData.size() ; tmpJ++){
+			tmpValueString += "<tr>"; 
+			tmpValueString += "<td width=\"5px\" >" + (tmpJ + 1) + "</td>";
+			tmpValueString += "<td>";
+			tmpValueString += tmpData.get(tmpJ).get(0); 
+			tmpValueString += "</td>";
+			tmpValueString += "<td>";
+			tmpValueString += tmpData.get(tmpJ).get(1); 
+			tmpValueString += "</td>";
+			tmpValueString += "<td>";
+			switch((int)tmpData.get(tmpJ).get(2)){
+				case Constants.Status.CREATE:
+					tmpValueString += "<span class=\"label label-warning\">Receive</span>";
+					break;
+				case Constants.Status.PROGRESS :
+					tmpValueString += "<span class=\"label label-success\">Progress</span>";
+					break;
+				case Constants.Status.PAUSE  :
+					tmpValueString += "<span class=\"label label-warning\">Pause</span>";
+					break;
+				case Constants.Status.FINISH :
+					tmpValueString += "<span class=\"label label-info\">Finish</span>";
+					break;
+				case Constants.Status.ABORT  :
+					tmpValueString += "<span class=\"label label-danger\">Abort</span>";
+					break;
+			}
+			tmpValueString += "</td>";
+			
+			for(tmpK = 3 ; tmpK < tmpData.get(tmpJ).size() ; tmpK++){
+				if((boolean)tmpData.get(tmpJ).get(tmpK)){	
+					tmpValueString += "<td bgcolor='#339900'>";
+				} else {
+					tmpValueString += "<td>";
+				}
+				tmpValueString += "</td>";
+			}
+			tmpValueString += "</tr>";
+		}
+
+		if(tmpData.size() <= 0){
+			tmpOut.print("<center><b>No progress in this day range.</center></b>");
+		} else {
+			tmpOut.print("<table id=\"table-2\" class=\"display cell-border compact\" cellspacing=\"0\" width=\"100%\">" + 
+						 "<thead>" +
+								"<th>#</th>"   +
+								"<th>Name</th>"   + 
+								"<th>Task</th>"   + 
+								"<th>Status</th>"   + 
+						 		tmpTimeString +
+						 "</thead>" +
+						 "<tbody>"  +
+						 		tmpValueString +  
+						 "</tbody>" +
+					 	 "</table>");
+		}
+		tmpOut.flush();
+	}
 	
 }

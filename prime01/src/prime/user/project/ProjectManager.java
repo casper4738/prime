@@ -1,7 +1,6 @@
 package prime.user.project;
 
 import java.sql.SQLException;
-import java.util.Date;
 import java.util.List;
 
 import prime.user.task.TaskBean;
@@ -84,6 +83,5 @@ public interface ProjectManager {
 	public List<RoleOption> getRoleByProjectMember(Integer employeeId, Integer projectId) throws SQLException;
 	
 	public List<Integer>  getListEmployeeIDInProject(Integer projectId) throws SQLException;
-//	public List<TaskBean> getProjectTaskListPerMember(Integer projectId, Integer employeeId, Date startDate, Date endDate) throws SQLException;
-	
+	public List<TaskBean> getProjectTaskListPerMember(Integer projectId, Integer employeeId) throws SQLException;
 }

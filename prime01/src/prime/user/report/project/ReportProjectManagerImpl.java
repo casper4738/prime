@@ -32,7 +32,13 @@ public class ReportProjectManagerImpl implements ReportProjectManager {
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch + "");
-		map.put("value", value + "");
+		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
+			String[] string = value.split(";");
+			map.put("startDate", string[0]);
+			map.put("untilDate", string[1]);
+		} else {
+			map.put("value", value);
+		}
 		return (Integer) mapper.queryForObject(
 				"reportproject.getCountListByCol", map);
 	}

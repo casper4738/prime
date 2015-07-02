@@ -153,6 +153,12 @@
 				<isEqual property="columnSearch" compareValue="DESCRIPTION">
 					UPPER(PROJ.PROJECT_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
+				<isEqual property="columnSearch" compareValue="PM">
+					UPPER(EMP_RECEIVE.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="PROPOSED">
+					UPPER(EMP_ASSIGN.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
 				<isEqual property="columnSearch" compareValue="STARTDATE">
 			      	PROJ.PROJECT_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
 				</isEqual> 
@@ -514,7 +520,29 @@
 	</select>
 	
 	<select id="getProjectTaskListPerMember" parameterClass="java.util.Map" resultClass="prime.user.task.TaskBean">
-		SELECT DISTINCT(EMPLOYEE_ID) 
-		FROM PROJECT_MEMBERS WHERE PROJECT_ID=#projectId#
+		SELECT 
+            TSK.TASK_ID                     AS taskId,
+            TASK_NAME                     AS taskName,
+            TASK_RECEIVER                 AS taskReceiver,
+            TASK_ASSIGNER                 AS taskAssigner,
+            TASK_START_DATE             AS taskStartDate,
+            TASK_ESTIMATE_DATE             AS taskEstimateDate,
+            TASK_DESCRIPTION             AS taskDescription,
+            TASK_LAST_STATUS             AS taskLastStatus,
+            PM.PROJECT_MEMBER_ID             AS projectMemberId,
+            EMPLOYEE_NAME                 AS taskAssignerName,
+            EMPLOYEE_NAME                AS taskReceiverName,
+            TSK.ACTUAL_START                AS actualStart,
+            TSK.ACTUAL_END                    AS actualEnd,
+            TSK.MAIN_DAYS                    AS mainDays,
+            PM.PROJECT_MEMBER_ID            AS projectMemberId
+		FROM TASKS TSK
+		JOIN PROJECT_MEMBERS PM 
+		    ON TSK.PROJECT_MEMBER_ID = PM.PROJECT_MEMBER_ID
+		JOIN PROJECTS PRO
+		    ON PRO.PROJECT_ID = PM.PROJECT_ID 
+        JOIN EMPLOYEES EMP
+            ON PM.EMPLOYEE_ID = EMP.EMPLOYEE_ID
+		WHERE PRO.PROJECT_ID =#projectId# AND PM.EMPLOYEE_ID=#employeeId# 
 	</select>
 </sqlMap> 

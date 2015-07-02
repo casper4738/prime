@@ -1,6 +1,7 @@
 package prime.user.project;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -102,6 +103,7 @@ public class ProjectManagerImpl implements ProjectManager {
 			String value, Integer startRow, Integer endRow, Integer employeeId)
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		map.put("columnSearch", columnSearch);
 		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
 			String[] string = value.split(";");
@@ -388,5 +390,15 @@ public class ProjectManagerImpl implements ProjectManager {
 	@Override
 	public List<Integer> getListEmployeeIDInProject(Integer projectId) throws SQLException {
 		return (List<Integer>) mapper.queryForList("project.getListEmployeeIDInProject", projectId);
+	}
+
+	@Override
+	public List<TaskBean> getProjectTaskListPerMember(Integer projectId, Integer employeeId) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("projectId"	, projectId);
+		map.put("employeeId", employeeId);
+		
+		return (List<TaskBean>) mapper.queryForList("project.getProjectTaskListPerMember", map);
 	}
 }

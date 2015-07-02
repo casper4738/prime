@@ -44,5 +44,5 @@ public interface TaskManager {
 			Integer taskReceiver) throws SQLException;
 
 	public Integer getCountByColumnSubordinate(String columnSearch, String value, Integer taskReceiver) throws SQLException;
-	/*End Task Subordinate*/
+	/*End Task Subordinate*/	
 }

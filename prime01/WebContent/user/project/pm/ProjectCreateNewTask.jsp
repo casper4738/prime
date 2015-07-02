@@ -34,15 +34,27 @@
 			}
 			
 		}
+		
+		function flyToTaskDetail(back, value) {
+			alert(value)
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = back;
+			tmpForm.employeeId.value = value;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+		
 	</script>
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Project<small>management project</small>
-		</h1>
+		<h1>Project User</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active">Project</li>
+			<li><i class="fa fa-dashboard"></i> Home</li>
+			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
+			<li><a href="javascript:flyToBack(
+	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
+	                        		'<bean:write name="ProjectUserForm" property="projectId"/>')">Project Detail</a></li>
+			<li class="active">Project Member Detail</li>
 		</ol>
 	</section>
 
@@ -53,6 +65,10 @@
 			<div class="box-body">
                 	<html:form action="/ProjectUser">
                 		<html:hidden name="ProjectUserForm" property="task" value="<%=Constants.Task.PROJECT.DOCREATETASK%>"/>
+                		<html:hidden name="ProjectUserForm" property="back"/>
+						<html:hidden name="ProjectUserForm" property="taskId"/>
+						<html:hidden name="ProjectUserForm" property="employeeId"/>
+						<html:hidden name="ProjectUserForm" property="taskBean.taskId"/>
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.employeeId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.taskBean.taskStatus" value='<%=Constants.Status.CREATE+""%>'/>
@@ -115,7 +131,9 @@
                 			<tr>
                 				<td colspan="3" align="center">
                 					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()"/>
-                					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+                					<input type="button" class=""btn btn-default"" value='Cancel' onclick="flyToTaskDetail(
+                     	        				'<%=Constants.Task.PROJECT.GOTOTASKMEMBER%>', 
+                     	        				'<bean:write name="ProjectUserForm" property="employeeBean.employeeId"/>')">
                 				</td>
                 			</tr>
                 		</table>
