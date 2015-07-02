@@ -48,6 +48,8 @@ public interface Constants {
 		
 		static final String DOCOUNTDAYOFF       = "t41";
 		static final String DOCHANGEPIC       	= "t42";
+		static final String DOVALIDATEDAYOFF    = "t43";
+		static final String DOVALIDATEWEEKEND   = "t44";
 		
 		interface PROJECT {
 			final String GOTOPROJECTDETAIL	= "p01";

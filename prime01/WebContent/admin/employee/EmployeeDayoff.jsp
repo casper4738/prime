@@ -33,6 +33,90 @@
             });
         });
 		
+		function validateForm(){
+			var descDayOff = $('#descDayOff').val();
+			var startDate 		= $('#datepicker_startdate').val();
+			var startDateFormat = new Date(startDate);
+			var endDate 		= $('#datepicker_enddate').val();
+			var endDateFormat = new Date(endDate);
+			
+			var today = new Date();
+			var tmpValidated 	= true;
+			
+			$('#validatorDescDayOff').html("");
+			$('#validatorStartDate').html("");
+			$('#validatorEndDate').html("");
+			
+			
+			
+			if(descDayOff == null || descDayOff == "") {
+				 $('#validatorDescDayOff').html("Description must be filled out");
+				 tmpValidated = false;
+			}
+			
+			if(startDate == null || startDate == "") {
+				 $('#validatorStartDate').html("Start Date must be filled out");
+				 tmpValidated = false;
+			}
+			
+		    if (startDateFormat < today){
+		    	$('#validatorStartDate').html("Start Date is not allowed lower than today");
+		    	tmpValidated = false;
+		    }
+		    
+		    if(endDate == null || endDate == "") {
+				 $('#validatorEndDate').html("End Date must be filled out");
+				 tmpValidated = false;
+			}
+			
+		    if (endDateFormat < today){
+		    	$('#validatorEndDate').html("End Date is not allowed lower than today");
+		    	tmpValidated = false;
+		    }else if (endDateFormat < startDateFormat){
+		    	$('#validatorEndDate').html("End Date is not allowed lower than Start Date");
+		    	tmpValidated = false;
+		    }
+			 
+			if(tmpValidated){
+				 //Do Database Checking, if Success Fly To
+				  $('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Validating employee data");
+				  $('#btn-save').hide();
+				  $('#btn-cancel').hide();
+				  $.ajax({ 
+			          type	  : "POST",
+			          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',  
+			          data	  : 'task=<%=Constants.Task.DOVALIDATEDAYOFF%>&employeeBean.startDate=' + $('#datepicker_startdate').val() + '&employeeBean.endDate=' + $('#datepicker_enddate').val(),
+			          success : function(msg){
+							 param = msg.split('#');
+							 
+							 if(param[0] == "0"){ //Success
+								$('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Uploading employee data");
+							 	var formData = new FormData(document.forms[0]);
+							 	$.ajax({ 
+							          type	  	  : "POST",
+							          url	  	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',  
+							          data	  	  : formData,
+							          contentType : false,
+							          processData : false,
+							          success : function(){
+											menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>', "message=Insert Day Off Successful");
+							          }
+							 	});							 	
+							 } else {			   //Failed
+								 $('#employee-validating').html(param[1]);
+							 	 $('#btn-save').show();
+								 $('#btn-cancel').show();
+							 }
+			          },
+			          
+			          error: function(){
+							alert("ERROR");
+			        	  	//TO DO :: Add Error Handling
+			          }
+			     });
+			}
+		}
+		
 		function checkDays(){
 		 	$('#totalDay').html("<i class=\"fa fa-refresh fa-spin\"></i> Checking ");
 		  	$('#totalDay').show();
@@ -49,6 +133,7 @@
 		          }
 		       });
 		}
+		
     </script>
     <!-- End Of JS -->
 </head>
@@ -93,6 +178,11 @@
 								</td>
                  			</tr>
                  			<tr>
+                				<td></td>
+                				<td></td>
+                				<td><span id="validatorStartDate" style="color: blue;font-size: 8;font-style: normal;"></span></td>
+                			</tr>
+                 			<tr>
                  				<td>End Date</td>
                  				<td>:</td>
                  				<td>
@@ -106,17 +196,32 @@
                 				<td></td>
                 				<td><span id="totalDay" style="color: blue;font-size: 8;font-style: normal;"></span></td>
                 			</tr>
+                			<tr>
+                				<td></td>
+                				<td></td>
+                				<td><span id="validatorEndDate" style="color: blue;font-size: 8;font-style: normal;"></span></td>
+                			</tr>
                  			<tr>
                  				<td>Description</td>
                  				<td>:</td>
                  				<td>
-                 					<html:textarea name="EmployeeAdminForm" property="employeeBean.descriptionDayOff" styleClass="form-control"/>
+                 					<html:textarea name="EmployeeAdminForm" property="employeeBean.descriptionDayOff" styleClass="form-control" styleId="descDayOff"/>
 								</td>
                  			</tr>
                  			<tr>
+                				<td></td>
+                				<td></td>
+                				<td><span id="validatorDescDayOff" style="color: blue;font-size: 8;font-style: normal;"></span></td>
+                			</tr>
+                			<tr>
+                  				<td></td>
+								<td></td>
+                  				<td><div id="employee-validating"></div></td>
+                  			</tr>
+                 			<tr>
                  				<td colspan="3" align="center">
-                 					<html:button property="" value="Save" styleClass="btn btn-default" onclick="dosubmit()"/>
-                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('t10')"/>
+                 					<html:button property="" value="Save" styleClass="btn btn-default" onclick="validateForm()" id="btn-save"/>
+                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('t10')" id="btn-cancel"/>
                  				</td>
                  			</tr>
 					</table>

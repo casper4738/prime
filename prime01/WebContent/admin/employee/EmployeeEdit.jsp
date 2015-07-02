@@ -32,6 +32,91 @@
                 format: "yyyy-mm-dd"
             });
         });
+		
+		function validateForm(){
+			var specialChars 	= "/*!@#$%^&*()\"{}[]|\\?/<>,";
+			var numexp = /^[0-9]+$/;
+			var employeeName 	= $('#employeeName').val();
+			var employeeAddress = $('#employeeAddress').val();
+			var birthDate 		= $('#datepicker_birthdate').val();
+			var contactNumber 	= $('#contactNumber').val();
+			var email 		= $('#email').val();
+			var hireDate 	= $('#datepicker_hiredate').val();
+			var birthDateFormat = new Date(birthDate);
+			var hireDateFormat = new Date(hireDate);
+			
+			var today = new Date();
+			var tmpValidated 	= true;
+			
+			$('#validatorName').html("");
+			$('#validatorAddress').html("");
+			$('#validatorBirthDate').html("");
+			$('#validatorContactNumber').html("");
+			$('#validatorEmail').html("");
+			$('#validatorGender').html("");
+			$('#validatorPosition').html("");
+			$('#validatorHead').html("");
+			$('#validatorDivision').html("");
+			$('#validatorHireDate').html("");
+			
+			if(employeeName == null || employeeName == "") {
+				$('#validatorName').html("Employee must be filled out");
+				tmpValidated = false;
+			}
+			
+			if(employeeAddress == null || employeeAddress == "") {
+				 $('#validatorAddress').html("Address must be filled out");
+				 tmpValidated = false;
+			}
+			
+			if(birthDate == null || birthDate == "") {
+				 $('#validatorBirthDate').html("Birth Date must be filled out");
+				 tmpValidated = false;
+			}
+			
+		    if (birthDateFormat > today){
+		    	$('#validatorBirthDate').html("Birth Date is not greater than today");
+		    	tmpValidated = false;
+		    }
+		    
+			if(contactNumber == null || contactNumber == "") {
+				 $('#validatorContactNumber').html("Contact Number must be filled out");
+				 tmpValidated = false;
+			}
+			
+			if(contactNumber != null || contactNumber != ""){
+			 	if(!contactNumber.match(numexp)){
+			 		$("#validatorContactNumber").html("Alphabet are not allowed"); 
+		        	tmpValidated = false;
+		       	}
+			}
+			
+			if(email == null || email == "") {
+				 $('#validatorEmail').html("Email must be filled out");
+				 tmpValidated = false;
+			}else {
+				 var filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+
+			    if (!filter.test(email)) {
+		  		  $('#validatorEmail').html("Email is not valid");
+		  		  tmpValidated = false;
+			    }
+			}
+			
+			if(hireDate == null || hireDate == "") {
+				 $('#validatorHireDate').html("Hire Date must be filled out");
+				 tmpValidated = false;
+			}
+			
+			 if (hireDateFormat > today){
+				$('#validatorHireDate').html("Hire Date is not greater than today");
+		    	tmpValidated = false;
+		    }
+			 
+			if(tmpValidated){
+				 dosubmit();
+			}
+		}
     </script>
     <!-- End Of JS -->
 </head>
@@ -64,18 +149,32 @@
                  				<html:text name="EmployeeAdminForm" property="employeeBean.employeeId" styleClass="form-control" disabled="true"/>
 							</td>
                  			</tr>
-               			<tr>
+               				<tr>
                  				<td width="150px">Name</td>
                  				<td>:</td>
-                 				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control"/></td>
+                 				<td><html:text name="EmployeeAdminForm" property="employeeBean.employeeName" styleClass="form-control" styleId="employeeName"/></td>
                  			</tr>
+                 			<tr>
+                				<td></td>
+                				<td></td>
+                				<td>	    
+                					<i><span id="validatorName" style="color: red;font-size: 8"></span></i>
+                				</td>
+                			</tr>
                  			<tr>
                  				<td>Address</td>
                  				<td>:</td>
                  				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.address" styleClass="form-control"/>
-							</td>
+	                 				<html:text name="EmployeeAdminForm" property="employeeBean.address" styleClass="form-control" styleId="employeeAddress"/>
+								</td>
                  			</tr>
+                 			<tr>
+                				<td></td>
+                				<td></td>
+                				<td>	    
+                					<i><span id="validatorAddress" style="color: red;font-size: 8"></span></i>
+                				</td>
+                			</tr>
                  			<tr>
                  				<td>Birth Date</td>
                  				<td>:</td>
@@ -86,19 +185,40 @@
 								</td>
                  			</tr>
                  			<tr>
+                				<td></td>
+                				<td></td>
+                				<td>	    
+                					<i><span id="validatorBirthDate" style="color: red;font-size: 8"></span></i>
+                				</td>
+                			</tr>
+                 			<tr>
                  				<td>Contact Number</td>
                  				<td>:</td>
                  				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.contactNumber" styleClass="form-control"/>
-							</td>
+	                 				<html:text name="EmployeeAdminForm" property="employeeBean.contactNumber" styleClass="form-control" styleId="contactNumber"/>
+								</td>
                  			</tr>
+                 			<tr>
+                				<td></td>
+                				<td></td>
+                				<td>	    
+                					<i><span id="validatorContactNumber" style="color: red;font-size: 8"></span></i>
+                				</td>
+                			</tr>
                  			<tr>
                  				<td>Email</td>
                  				<td>:</td>
                  				<td>
-                 				<html:text name="EmployeeAdminForm" property="employeeBean.email" styleClass="form-control"/>
-							</td>
+	                 				<html:text name="EmployeeAdminForm" property="employeeBean.email" styleClass="form-control" styleId="email"/>
+								</td>
                  			</tr>
+                 			<tr>
+                				<td></td>
+                				<td></td>
+                				<td>	    
+                					<i><span id="validatorEmail" style="color: red;font-size: 8"></span></i>
+                				</td>
+                			</tr>	
                  			<tr>
                  				<td>Gender</td>
                  				<td>:</td>
@@ -117,6 +237,13 @@
 	                 				<html:text name="EmployeeAdminForm" property="employeeBean.positionName" styleClass="form-control" disabled="true"/>
 								</td>
                  			</tr>
+                 			<tr>
+                				<td></td>
+                				<td></td>
+                				<td>	    
+                					<i><span id="validatorPosition" style="color: red;font-size: 8"></span></i>
+                				</td>
+                			</tr>
                  			<tr>
                  				<td>Head</td>
                  				<td>:</td>
@@ -138,11 +265,18 @@
                  					<div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
                  				  		<html:text name="EmployeeAdminForm" property="employeeBean.hireDate" styleClass="form-control pull-right" styleId="datepicker_hiredate"/>
                  				  	</div>
-							</td>
+								</td>
                  			</tr>
                  			<tr>
+                				<td></td>
+                				<td></td>
+                				<td>	    
+                					<i><span id="validatorHireDate" style="color: red;font-size: 8"></span></i>
+                				</td>
+                			</tr>
+                 			<tr>
                  				<td colspan="3" align="center">
-                 					<html:button value="Save" styleClass="btn btn-primary" onclick="dosubmit()" property=""/>
+                 					<html:button value="Save" styleClass="btn btn-primary" onclick="validateForm()" property=""/>
                  					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                  				</td>
                  			</tr>

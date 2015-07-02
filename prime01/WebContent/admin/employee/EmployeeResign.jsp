@@ -41,6 +41,76 @@
 			//##1.Accessing Prime Method For Modal Showing
 			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeResign&param4="+tmpParam+"&param5="+tmpDiv , $('#result'));
 		}
+		
+		function validateForm(){
+			var resignNote = $('#resignNote').val();
+			var resignDate 		= $('#datepicker_resigndate').val();
+			var resignDateFormat = new Date(resignDate);
+			
+			var today = new Date();
+			var tmpValidated 	= true;
+			
+			$('#validatorResignNote').html("");
+			$('#validatorBirthDate').html("");
+			
+			
+			
+			if(resignNote == null || resignNote == "") {
+				 $('#validatorResignNote').html("Resign Note must be filled out");
+				 tmpValidated = false;
+			}
+			
+			if(resignDate == null || resignDate == "") {
+				 $('#validatorResignDate').html("Resign Date must be filled out");
+				 tmpValidated = false;
+			}
+			
+		    if (resignDateFormat > today){
+		    	$('#validatorResignDate').html("Resign Date is not allowed greater than today");
+		    	tmpValidated = false;
+		    }
+		    
+			
+			 
+			if(tmpValidated){
+				 //Do Database Checking, if Success Fly To
+				  $('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Validating employee data");
+				  $('#btn-save').hide();
+				  $('#btn-cancel').hide();
+				  $.ajax({ 
+			          type	  : "POST",
+			          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',  
+			          data	  : 'task=<%=Constants.Task.DOVALIDATE1%>&managerId=' + $('#managerId').val(),
+			          success : function(msg){
+							 param = msg.split('#');
+							 
+							 if(param[0] == "0"){ //Success
+								$('#employee-validating').html("<i class=\"fa fa-refresh fa-spin\"></i> Uploading employee data");
+							 	var formData = new FormData(document.forms[0]);
+							 	$.ajax({ 
+							          type	  	  : "POST",
+							          url	  	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',  
+							          data	  	  : formData,
+							          contentType : false,
+							          processData : false,
+							          success : function(){
+											menuLoadHandler('<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>', "message=Resign Successful");
+							          }
+							 	});							 	
+							 } else {			   //Failed
+								 $('#employee-validating').html(param[1]);
+							 	 $('#btn-save').show();
+								 $('#btn-cancel').show();
+							 }
+			          },
+			          
+			          error: function(){
+							alert("ERROR");
+			        	  	//TO DO :: Add Error Handling
+			          }
+			     });
+			}
+		}
     </script>
     <!-- End Of JS -->
 </head>
@@ -92,12 +162,26 @@
 								</td>
                  			</tr>
                  			<tr>
+                				<td></td>
+                				<td></td>
+                				<td>	    
+                					<i><span id="validatorResignDate" style="color: red;font-size: 8"></span></i>
+                				</td>
+                			</tr>
+                 			<tr>
                  				<td>Resign Note</td>
                  				<td>:</td>
                  				<td>
-	                 				<html:textarea name="EmployeeAdminForm" property="employeeBean.resignNote" styleClass="form-control"/>
+	                 				<html:textarea name="EmployeeAdminForm" property="employeeBean.resignNote" styleClass="form-control" styleId="resignNote"/>
 								</td>
                  			</tr>
+                 			<tr>
+                				<td></td>
+                				<td></td>
+                				<td>	    
+                					<i><span id="validatorResignNote" style="color: red;font-size: 8"></span></i>
+                				</td>
+                			</tr>
                  			<tr>
                  				<td>Choose Subtitute Head</td>
                  				<td>:</td>
@@ -109,9 +193,14 @@
 								</td>
                  			</tr>
                  			<tr>
+                  				<td></td>
+								<td></td>
+                  				<td><div id="employee-validating"></div></td>
+                  			</tr>
+                 			<tr>
                  				<td colspan="3" align="center">
-                 					<html:button value="Save" styleClass="btn btn-primary" onclick="dosubmit()" property=""/>
-                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
+                 					<html:button value="Save" styleClass="btn btn-primary" onclick="validateForm()" property="" id="btn-save"/>
+                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')" id="btn-cancel"/>
                  				</td>
                  			</tr>
 					</table>
