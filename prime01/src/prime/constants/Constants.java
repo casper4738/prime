@@ -137,8 +137,8 @@ public interface Constants {
 		
 		final Map<String, String> HOLIDAY_SEARCHCOLUMNS = Collections.unmodifiableMap(
 			new LinkedHashMap<String, String>() {{
-				put("DATE", "Holiday Date");
 				put("DESCRIPTION", "Holiday Description");
+				put("DATE", "Holiday Date");
 			}
 		});
 		

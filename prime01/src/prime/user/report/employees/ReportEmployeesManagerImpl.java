@@ -41,16 +41,30 @@ public class ReportEmployeesManagerImpl implements ReportEmployeesManager{
 		return (ReportEmployeesBean) mapper.queryForObject("reportemployees.get", id);
 	}
 	
-	public List<TaskBean> getListByColumnSubordinate(String columnSearch, String value, Integer startRow, Integer endRow, 
-			Integer taskReceiver) throws SQLException {
+	@Override
+	public List<TaskBean> getListEmployeeTaskReport(String columnSearch,
+			String value, Integer startRow, Integer endRow, Integer empId)
+			throws SQLException {
+		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
-		map.put("taskReceiver", taskReceiver);
+		map.put("empId", empId);
 		map.put("finish", Constants.Status.FINISH);
 		map.put("abort", Constants.Status.ABORT);
-		return mapper.queryForList("reportemployees.getListByColumnSubordinate", map);
+		return mapper.queryForList("reportemployees.getListEmployeeTaskReport", map);
+	}
+
+	@Override
+	public Integer getCountListEmployeeTaskReport(String columnSearch,
+			String value, Integer empId) throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);
+		map.put("empId", empId);
+		return (Integer) mapper.queryForObject("reportemployees.getCountListEmployeeTaskReport", map);
 	}
 }

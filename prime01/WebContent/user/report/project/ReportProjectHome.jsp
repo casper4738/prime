@@ -59,7 +59,7 @@
 				<!-- Search Handler Tag -->
 				<div class="show-in-page">
 					Show per page
-					<html:select property="showInPage" name="ReportUserProjectForm" onchange="change(this.value)" styleClass="columnSearch">
+					<html:select property="showInPage" name="ReportUserProjectForm" onchange="change(this.value)">
 						<html:optionsCollection name="listMaxDataPerPage" label="value" value="key"/>
 					</html:select>
 				</div>
@@ -70,13 +70,42 @@
 					<html:hidden name="ReportUserProjectForm" property="goToPage"/>
 					<html:hidden name="ReportUserProjectForm" property="showInPage"/>
 					<html:hidden name="ReportUserProjectForm" property="projectId"/>
-				
-					<html:select name="ReportUserProjectForm" property="columnSearch">
+					<html:hidden name="ReportUserProjectForm" property="isShowAll"/>
+				<table>
+					<tr>
+					<td style="padding-left:5px">				
+						<html:select name="ReportUserProjectForm" property="columnSearch" styleClass="form-control columnSearch">
+
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
+					</td>
+					<td style="padding-left:5px"><html:text name="ReportUserProjectForm" property="search" styleClass="form-control textSearch" styleId="textSearch"/></td>
+					<td style="padding-left:5px">
+								<div id="date_start">
+								<div class="input-group" style="width:140px"><div class="input-group-addon"><i class="fa fa-calendar" ></i></div>
+	     				  					<html:text name="ReportUserProjectForm" property="startDate" styleClass="form-control pull-right" styleId="start"/>
+	     				  		</div>
+	     				  		</div>
+	     			</td>
+							<td style="padding-left:5px"><div id="date_line">-</div></td>
+							<td style="padding-left:5px">
+								<div id="date_until">
+								<div class="input-group" style="width:140px"><div class="input-group-addon"><i class="fa fa-calendar" ></i></div>
+	     				  					<html:text name="ReportUserProjectForm" property="untilDate" styleClass="form-control pull-right" styleId="until" />
+	     				  		</div>
+	     				  		</div>
+   				  			</td>
+   				  			<td style="padding-left:5px">
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ReportUserProjectForm" property="task" />', 'false')" value='Search'/>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ReportUserProjectForm" property="task" />', 'true')" value='Show All'/>
+   				  			</td>
+   				  	</tr>
+   				 </table>
+=======
 					<html:text name="ReportUserProjectForm" property="search"/>
 					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
 					<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 				</html:form>
 				</div>
 				<!-- End Of Search Handler -->

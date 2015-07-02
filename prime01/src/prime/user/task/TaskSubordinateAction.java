@@ -156,8 +156,14 @@ public class TaskSubordinateAction extends Action {
 			return mapping.findForward("forward");
 		} 
 		
-		int countRows  = manager.getCountByColumnSubordinate(pForm.getColumnSearchReal(), pForm.getSearch(), employeeId);
-		List<TaskBean> list = manager.getListByColumnSubordinate(pForm.getColumnSearchReal(), pForm.getSearch(),
+		String search = "";
+		if("STARTDATE".equals(pForm.getColumnSearch()) || "ESTIMATEDATE".equals(pForm.getColumnSearch())) {
+			search = pForm.getStartDate()+";"+pForm.getUntilDate();
+		} else {
+			search = pForm.getSearch();
+		}
+		int countRows  = manager.getCountByColumnSubordinate(pForm.getColumnSearchReal(), search, employeeId);
+		List<TaskBean> list = manager.getListByColumnSubordinate(pForm.getColumnSearchReal(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), 
 				employeeId);

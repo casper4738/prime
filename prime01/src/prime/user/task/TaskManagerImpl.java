@@ -185,7 +185,6 @@ public class TaskManagerImpl implements TaskManager {
 	public Integer getCountByColumnHead(String columnSearch, String value, Integer taskAssigner) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
-		map.put("columnSearch", columnSearch);
 		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
 			String[] string = value.split(";");
 			map.put("startDate", string[0]);
@@ -204,12 +203,19 @@ public class TaskManagerImpl implements TaskManager {
 			Integer taskReceiver) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
-		map.put("value", value);
+		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
+			String[] string = value.split(";");
+			map.put("startDate", string[0]);
+			map.put("untilDate", string[1]);
+		} else {
+			map.put("value", value);
+		}
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		map.put("taskReceiver", taskReceiver);
 		map.put("finish", Constants.Status.FINISH);
 		map.put("abort", Constants.Status.ABORT);
+		
 		return mapper.queryForList("task.getListByColumnSubordinate", map);
 	}
 
@@ -217,7 +223,13 @@ public class TaskManagerImpl implements TaskManager {
 	public Integer getCountByColumnSubordinate(String columnSearch, String value, Integer taskReceiver) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
-		map.put("value", value);
+		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
+			String[] string = value.split(";");
+			map.put("startDate", string[0]);
+			map.put("untilDate", string[1]);
+		} else {
+			map.put("value", value);
+		}
 		map.put("taskReceiver", taskReceiver);
 		return (Integer) mapper.queryForObject("task.getCountByColumnSubordinate", map);
 	}

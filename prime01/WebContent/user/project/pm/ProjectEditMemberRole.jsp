@@ -30,7 +30,7 @@
 				}
 			}
 			tempRoleId = tempRoleId.substring(0, tempRoleId.length - 1);
-			alert(tempRoleId);
+			//alert(tempRoleId);
 			tmpForm.tempRoleId.value = tempRoleId; 
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}

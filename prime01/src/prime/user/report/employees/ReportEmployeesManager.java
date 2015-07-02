@@ -10,9 +10,14 @@ public interface ReportEmployeesManager {
 	
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 	
-	public ReportEmployeesBean getEmployeeById(Integer id) throws SQLException;
+	public ReportEmployeesBean getEmployeeById(Integer id) throws SQLException;	
 	
-	public List<TaskBean> getListByColumnSubordinate(String columnSearch, String value, Integer startRow, Integer endRow,
-			Integer taskReceiver) throws SQLException;
+
+	/*Task View Report*/
+	public List<TaskBean> getListEmployeeTaskReport(String columnSearch, String value, Integer startRow, Integer endRow,
+			Integer empId) throws SQLException;
+
+	public Integer getCountListEmployeeTaskReport(String columnSearch, String value, Integer empId) throws SQLException;
+	/*End Task View Report*/
 }
 
