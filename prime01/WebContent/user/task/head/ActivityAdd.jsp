@@ -6,7 +6,6 @@
 <!DOCTYPE html>
 <html>
 <head> 
-
 	<script src="resources/prime.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		function doback() {

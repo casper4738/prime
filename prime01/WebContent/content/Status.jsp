@@ -34,6 +34,6 @@
 </logic:equal>
 
 <logic:equal name="status" value='<%=Constants.Status.APPROVAL+""%>'>
-	<span class="label label-success">Approval</span>
+	<span class="label label-success">Approvad</span>
 </logic:equal>
 		    
