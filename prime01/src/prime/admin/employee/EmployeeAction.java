@@ -36,19 +36,10 @@ import java.io.ByteArrayOutputStream;
 import javax.imageio.ImageIO;*/
 
 public class EmployeeAction extends Action {
-	/*public byte[] convertImageToByte(BufferedImage image) {
-	  try {
-	   ByteArrayOutputStream baos = new ByteArrayOutputStream();
-	   ImageIO.write(image, "JPG", baos);
-	   baos.flush();
-	   return baos.toByteArray();
-	  } catch (Exception ex) {
-	  }
-	  return null;
-    }*/
+	
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
-			HttpServletResponse response) throws Exception {
+		HttpServletResponse response) throws Exception {
 		EmployeeForm pForm = (EmployeeForm) form;
 		EmployeeManager manager = new EmployeeManagerImpl();
 		DivisionManager tmpDivisionManager = new DivisionManagerImpl();
@@ -66,10 +57,7 @@ public class EmployeeAction extends Action {
 			if(tmpEmployee.getManagerId() != null) {
 				EmployeeBean tmpManager = manager.getEmployeeById(tmpEmployee.getManagerId());
 			}
-			System.out.println("Masuk Edit2");
 			pForm.setEmployeeBean(tmpEmployee);
-			System.out.println("Masuk Edit");
-			//request.setAttribute("listPosition", tmpPositionManager.getListAll());
 			return mapping.findForward("edit");
 		} else if(Constants.Task.GOTORESIGN.equals(pForm.getTask())) {
 			EmployeeBean tmpEmployee = manager.getEmployeeById(pForm.getTmpId());
@@ -80,6 +68,7 @@ public class EmployeeAction extends Action {
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
 			return mapping.findForward("resign");
 		} else if(Constants.Task.GOTOVIEW.equals(pForm.getTask())) {
+			System.out.println(pForm.getTmpId()+" TmpID");
 			pForm.setEmployeeBean(manager.getEmployeeById(pForm.getTmpId()));
 			List<EmployeeBean> listWeekendByEmployeeId = manager.getListWeekendByEmployeeId(pForm.getTmpId());
 			List<EmployeeBean> listDayoffByEmployeeId = manager.getListDayoffByEmployeeId(pForm.getTmpId());
@@ -102,7 +91,6 @@ public class EmployeeAction extends Action {
 		    String yearInString = String.valueOf(year);
 		    for (int i = 0; i < months.length-1; i++) {
 		      String month = months[i];
-		      System.out.println("month = " + month + yearInString);
 		      String str = months[i]+" "+yearInString;
 		      monthsList .put(i, str);
 		    }
@@ -121,19 +109,6 @@ public class EmployeeAction extends Action {
 			pForm.getEmployeeBean().setTreeId(manager.getTreeIdByEmployeeId(pForm.getManagerId())+pForm.getEmployeeBean().getEmployeeId());
 			pForm.getEmployeeBean().setFilePic(pForm.getProfpic().getFileData());
 			manager.insert(pForm.getEmployeeBean());
-			
-			System.out.println("MASUK SINI " + pForm.getProfpic() + "AA");	
-			System.out.println("Profpic = " + pForm.getProfpic().getFileName());
-			System.out.println(" _ " + pForm.getProfpic().getFileSize());
-			System.out.println(" _ " + pForm.getProfpic().getFileData());
-			System.out.println(" _ " + pForm.getProfpic().getContentType());
-	
-			//manager.insert(pForm.getEmployeeBean());
-			
-			//manager.insertToBlob(pForm.getProfpic().getFileData());
-			//System.out.println("LALA = " + manager.selectBlob());
-			//request.setAttribute("picpic", manager.selectBlob());
-			
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DORESIGN.equals(pForm.getTask())) {
 			manager.insertResign(pForm.getEmployeeBean());
@@ -165,12 +140,12 @@ public class EmployeeAction extends Action {
 
 		    pForm.getEmployeeBean().setStartFrom(startDate);
 			manager.insertWeekend(pForm.getEmployeeBean());
+			//return null;
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DODAYOFF.equals(pForm.getTask())) {
-			System.out.println("MASUK SINI");
-			System.out.println(pForm.getEmployeeBean().getEmployeeId()+"--");
 			manager.insertDayoff(pForm.getEmployeeBean());
-			return mapping.findForward("forward");
+			return null;
+			//return mapping.findForward("forward");
 		} else if(Constants.Task.GOTOEDITWEEKEND.equals(pForm.getTask())) {
 			EmployeeBean tmpEmployee = manager.getEmployeeWeekendByIdAndStartFrom(pForm.getTmpId(),pForm.getTmpString());
 			pForm.setEmployeeBean(tmpEmployee);
@@ -231,21 +206,29 @@ public class EmployeeAction extends Action {
 			String tmpResponse = "";
 			
 			int tmpResponseCode;
+			
+
+			System.out.println(pForm.getEmployeeBean().getEmployeeId()+"--EMID");
+			System.out.println(pForm.getEmployeeBean().getSubstituteHead()+"--SUBSHEAD");
+			System.out.println(manager.getCountListByTree(null, null, pForm.getEmployeeBean().getEmployeeId())+"--COUNT");
 			//0 : Exists Database ; 1 : Empty Database
 			if(manager.getEmployeeResignDate(pForm.getManagerId()) != null){
 				tmpResponseCode = 1;	//Employee Already Resign
-			} else {
+			} else if(manager.getCountListByTree(null, null, pForm.getEmployeeBean().getEmployeeId())> 0 && pForm.getEmployeeBean().getSubstituteHead() == ""){
+				tmpResponseCode = 2;	//HAS SUBORDINATE
+			}  else {
 				tmpResponseCode = 0;	//Success
 			}
 
 			System.out.println(tmpResponseCode + " tmpResponseCode");
 			if(tmpResponseCode == 1){
 				tmpResponse = "1#<div id=\"message\" style=\"color:red;font-size:8\">Employee already resign, please select other.</div>";
+			} else if(tmpResponseCode == 2){
+				tmpResponse = "2#<div id=\"message\" style=\"color:red;font-size:8\">Please Choose Subtitute Head.</div>";
 			} else {
 				tmpResponse = "0#";
 			}
 			
-			System.out.println(tmpResponse + " tmpResponse");
 			tmpOut.print(tmpResponse);
 			tmpOut.flush();
 			return null;
@@ -297,7 +280,34 @@ public class EmployeeAction extends Action {
 			tmpOut.print(tmpResponse);
 			tmpOut.flush();
 			return null;
-		}
+		} else if(Constants.Task.DOVALIDATEWEEKEND.equals(pForm.getTask())){
+			response.setContentType("text/text;charset=utf-8");
+			response.setHeader("cache-control", "no-cache");
+			PrintWriter tmpOut = response.getWriter();
+			String tmpResponse = "";
+			
+			int tmpResponseCode;
+			
+			//0 : Exists Database ; 1 : Empty Database
+			if(manager.getValidateWeekEnd(pForm.getEmployeeBean().getStartMondayDate(),pForm.getEmployeeBean().getEmployeeId()) > 0){
+				tmpResponseCode = 1;	//Day WeekEnd Already Setting
+			} else {
+				tmpResponseCode = 0;	//Success
+			}
+
+
+			System.out.println(tmpResponseCode + " tmpResponseCode");
+			if(tmpResponseCode == 1){
+				tmpResponse = "1#<div id=\"message\" style=\"color:red;font-size:8\">Start From Weekend already setting, please setting other.</div>";
+			} else {
+				tmpResponse = "0#";
+			}
+			
+			System.out.println(tmpResponse + " tmpResponse");
+			tmpOut.print(tmpResponse);
+			tmpOut.flush();
+			return null;
+		} 
 		
 		String search = "";
 		if("GENDER".equals(pForm.getColumnSearchReal())) {
