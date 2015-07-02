@@ -6,13 +6,19 @@ import org.apache.struts.action.ActionForm;
 public class NotificationForm extends ActionForm {
 	private NotificationBean notificationBean = new NotificationBean();
 	private String task;
+	
 	private String search;
 	private String columnSearch;
 	private String message;
+	
 	private Integer goToPage = 1;
 	private Integer showInPage = 10;
 	private Integer tmpId;
-	private String notifParam = "";
+	
+	private Integer notifReceiverID = 0;
+	private Integer notifSenderID = 1;
+	private String  notifEmailParam = "";
+	private String  notifLinkParam = "";
 	private Integer notifType = 0;
 	
 	public NotificationBean getNotificationBean() {
@@ -63,17 +69,35 @@ public class NotificationForm extends ActionForm {
 	public void setTmpId(Integer tmpId) {
 		this.tmpId = tmpId;
 	}
-	public String getNotifParam() {
-		return notifParam;
-	}
-	public void setNotifParam(String notifParam) {
-		this.notifParam = notifParam;
-	}
 	public Integer getNotifType() {
 		return notifType;
 	}
 	public void setNotifType(Integer notifType) {
 		this.notifType = notifType;
+	}
+	public Integer getNotifReceiverID() {
+		return notifReceiverID;
+	}
+	public void setNotifReceiverID(Integer notifReceiverID) {
+		this.notifReceiverID = notifReceiverID;
+	}
+	public Integer getNotifSenderID() {
+		return notifSenderID;
+	}
+	public void setNotifSenderID(Integer notifSenderID) {
+		this.notifSenderID = notifSenderID;
+	}
+	public String getNotifEmailParam() {
+		return notifEmailParam;
+	}
+	public void setNotifEmailParam(String notifEmailParam) {
+		this.notifEmailParam = notifEmailParam;
+	}
+	public String getNotifLinkParam() {
+		return notifLinkParam;
+	}
+	public void setNotifLinkParam(String notifLinkParam) {
+		this.notifLinkParam = notifLinkParam;
 	}
 	
 	

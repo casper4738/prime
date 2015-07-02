@@ -137,8 +137,8 @@ public interface Constants {
 		
 		final Map<String, String> HOLIDAY_SEARCHCOLUMNS = Collections.unmodifiableMap(
 			new LinkedHashMap<String, String>() {{
-				put("DATE", "Holiday Date");
 				put("DESCRIPTION", "Holiday Description");
+				put("DATE", "Holiday Date");
 			}
 		});
 		
@@ -451,15 +451,19 @@ public interface Constants {
 	
 	//##L.Notification Type [Follow DB Identified Code]
 	static interface NotificationType{
-		static int TASK_SUBMITAPPROVAL 	   = 1;
-		static int TASK_SELFASSIGNAPPROVAL = 2;
-		static int TASK_ABORTBYHEAD		   = 3;
-		static int PROJECT_CREATEAPPROVAL  = 4;
-		static int PROJECT_SUBMITAPPROVAL  = 5;
-		static int PROJECT_ABORT		   = 6;
-		static int PROJECT_NEWPMDELEGATED  = 7;
-		static int PROJECT_ASSIGNEDASROLE  = 8;
-		static int PROJECT_REMOVEDFROMROLE = 9;
+		static int TASK_SUBMITAPPROVAL 	   			= 1;
+		static int TASK_SUBMITAPPROVALRETURN		= 2;
+		static int TASK_SELFASSIGNAPPROVAL 			= 3;
+		static int TASK_SELFASSIGNAPPROVALRETURN	= 4;
+		static int TASK_ABORTBYHEAD		   			= 5;
+		static int PROJECT_CREATEAPPROVAL  			= 6;
+		static int PROJECT_CREATEAPPROVALRETURN  	= 7;
+		static int PROJECT_SUBMITAPPROVAL  			= 8;
+		static int PROJECT_SUBMITAPPROVALRETURN  	= 9;
+		static int PROJECT_ABORT		   			= 10;
+		static int PROJECT_NEWPMDELEGATED  			= 11;
+		static int PROJECT_ASSIGNEDASROLE  			= 12;
+		static int PROJECT_REMOVEDFROMROLE 			= 13;
 	}
 	
 	//##M.Misc

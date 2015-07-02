@@ -105,6 +105,7 @@ public class TaskHeadAction extends Action {
 			return mapping.findForward("submit");
 		} else if (Constants.Task.GOTOVIEW.equals(pForm.getTask())) {
 			//##.View Detail Task
+			System.out.println("1. : "+pForm.getTaskId());
 			pForm.setTaskBean(manager.getTaskById(pForm.getTaskId()));
 			int countRows = tmpActivityManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), pForm.getTaskId());
 			List<ActivityBean> list = tmpActivityManager.getListByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), 
@@ -186,8 +187,8 @@ public class TaskHeadAction extends Action {
 			return mapping.findForward("forward");
 		} else if (Constants.Task.ACTIVITY.DOCHANGESTATUS.equals(pForm.getTask())) {
 			//##.Insert Task Data Detail
+			System.out.println("2. : "+pForm.getTaskId());
 			if(!manager.isCheckStatusDetail(pForm.getTaskId(), Constants.Status.PROGRESS)) {
-				System.out.println("2. ");
 				TaskBean bean = new TaskBean();
 				bean.setTaskId(pForm.getTaskId());
 				bean.setTaskStatus(Constants.Status.PROGRESS);
@@ -195,9 +196,14 @@ public class TaskHeadAction extends Action {
 				manager.insertDetail(bean);
 				manager.updateActualStart(pForm.getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
 				
-				ProjectManager tmpProjectManager = new ProjectManagerImpl();
-				ProjectBean e = tmpProjectManager.getProjectByTaskId(pForm.getTaskId());
-				tmpProjectManager.updateActualStart(e.getProjectId(), new java.sql.Date(new java.util.Date().getTime()));
+				try {
+					ProjectManager tmpProjectManager = new ProjectManagerImpl();
+					ProjectBean e = tmpProjectManager.getProjectByTaskId(pForm.getTaskId());
+					tmpProjectManager.updateActualStart(e.getProjectId(), new java.sql.Date(new java.util.Date().getTime()));
+				} catch(Exception e) {
+					System.out.println("Actual Start - Task Id . "+pForm.getTaskId());
+					System.out.println("Terjadi kesalahan : "+e.getMessage());					
+				}
 			}
 			//##.Insert Activity Data Detail
 			pForm.getActivityBean().setActivityStatus(pForm.getActivityStatus());
@@ -208,11 +214,16 @@ public class TaskHeadAction extends Action {
 			pForm.getTaskBean().setTaskStatus(Constants.Status.APPROVAL);
 			pForm.getTaskBean().setTaskChangeNote("");
 			manager.insertDetail(pForm.getTaskBean());
-			
-			manager.updateActualEnd(pForm.getTaskBean().getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
-			TaskBean e = manager.getTaskById(pForm.getTaskBean().getTaskId());
-			int mainDays = PrimeUtil.getDayBetweenDate(e.getActualStart(), e.getActualEnd());
-			manager.updateMainDays(pForm.getTaskBean().getTaskId(), mainDays);
+			System.out.println("2. : "+pForm.getTaskId()+" - "+pForm.getTaskBean().getTaskId());
+			try {
+				manager.updateActualEnd(pForm.getTaskBean().getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
+				TaskBean e = manager.getTaskById(pForm.getTaskBean().getTaskId());
+				int mainDays = PrimeUtil.getDayBetweenDate(e.getActualStart(), e.getActualEnd());
+				manager.updateMainDays(pForm.getTaskBean().getTaskId(), mainDays);
+			} catch(Exception e) {
+				System.out.println("Actual End - Task Id . "+pForm.getTaskId());
+				System.out.println("Terjadi kesalahan : "+e.getMessage());					
+			}
 			
 			return mapping.findForward("forward");
 		} else if (Constants.Task.TASK.DOREJECT.equals(pForm.getTask())) {
@@ -233,10 +244,15 @@ public class TaskHeadAction extends Action {
 			activityBean.setTaskStatus(Constants.Status.ABORT);
 			activityBean.setTaskId(pForm.getTaskBean().getTaskId());
 
-			manager.updateActualEnd(pForm.getTaskBean().getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
-			TaskBean e = manager.getTaskById(pForm.getTaskBean().getTaskId());
-			int mainDays = PrimeUtil.getDayBetweenDate(e.getActualStart(), e.getActualEnd());
-			manager.updateMainDays(pForm.getTaskBean().getTaskId(), mainDays);
+			try {
+				manager.updateActualEnd(pForm.getTaskBean().getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
+				TaskBean e = manager.getTaskById(pForm.getTaskBean().getTaskId());
+				int mainDays = PrimeUtil.getDayBetweenDate(e.getActualStart(), e.getActualEnd());
+				manager.updateMainDays(pForm.getTaskBean().getTaskId(), mainDays);
+			} catch(Exception e) {
+				System.out.println("Actual End - Task Id . "+pForm.getTaskId());
+				System.out.println("Terjadi kesalahan : "+e.getMessage());					
+			}
 			
 			tmpActivityManager.insertDetailBySelectTask(activityBean);
 			manager.insertDetail(pForm.getTaskBean());

@@ -1,10 +1,12 @@
 package prime.user.project;
 
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import prime.user.task.TaskBean;
 import prime.utility.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -38,7 +40,7 @@ public class ProjectManagerImpl implements ProjectManager {
 			map.put("actualEnd", actualEnd);
 			
 			mapper.startTransaction();
-			mapper.update("project.updateActualEnds", map);
+			mapper.update("project.updateActualEnd", map);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();
@@ -101,6 +103,7 @@ public class ProjectManagerImpl implements ProjectManager {
 			String value, Integer startRow, Integer endRow, Integer employeeId)
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
+		
 		map.put("columnSearch", columnSearch);
 		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
 			String[] string = value.split(";");
@@ -189,7 +192,12 @@ public class ProjectManagerImpl implements ProjectManager {
 		return (Integer) mapper.queryForObject("project.getCountListByColAsHead", map);
 	}
 	
-	
+
+	@Override
+	public Integer getCountListMember(Integer projectId) throws SQLException {
+		System.out.println("isi pid "+projectId);
+		return (Integer) mapper.queryForObject("project.getCountListMember", projectId);
+	}
 
 	@Override
 	public Integer getCountListByColAsMember(String columnSearch, String value, Integer employeeId) throws SQLException {
@@ -198,6 +206,14 @@ public class ProjectManagerImpl implements ProjectManager {
 		map.put("value", value);
 		map.put("employeeId", employeeId);
 		return (Integer) mapper.queryForObject("project.getCountListByColAsMember", map);
+	}
+
+	@Override
+	public Integer getCountListTaskMember(Integer taskReceiver, Integer projectId) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("taskReceiver", taskReceiver);
+		map.put("projectId", projectId);
+		return (Integer) mapper.queryForObject("project.getCountListTaskMember", map);
 	}
 
 	@Override
@@ -371,6 +387,18 @@ public class ProjectManagerImpl implements ProjectManager {
 		return (Integer) mapper.queryForObject("project.getProjectMemberIDbyRole", map);
 	}
 
-	
+	@Override
+	public List<Integer> getListEmployeeIDInProject(Integer projectId) throws SQLException {
+		return (List<Integer>) mapper.queryForList("project.getListEmployeeIDInProject", projectId);
+	}
 
+	@Override
+	public List<TaskBean> getProjectTaskListPerMember(Integer projectId, Integer employeeId) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("projectId"	, projectId);
+		map.put("employeeId", employeeId);
+		
+		return (List<TaskBean>) mapper.queryForList("project.getProjectTaskListPerMember", map);
+	}
 }

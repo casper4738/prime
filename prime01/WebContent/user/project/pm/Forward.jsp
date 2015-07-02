@@ -31,7 +31,9 @@
 	<script>flyToForward('<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL%>', '<bean:message key="label.message.insert"/>')</script>
 </logic:equal>
 
-
+<logic:equal name="ProjectUserForm" property="task" value="<%=Constants.Task.DOADD%>">
+	<script>flyToForward('<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>', '<bean:message key="label.message.insert"/>')</script>
+</logic:equal>
 
 </body>
 </html>

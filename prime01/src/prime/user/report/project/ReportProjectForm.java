@@ -15,6 +15,7 @@ public class ReportProjectForm extends ActionForm {
 	private Integer showInPage = 10;
 	private Integer tmpId;
 	private Integer projectId;
+	private Integer employeeId;
 	private Boolean isShowAll = true;
 	private java.sql.Date startDate;
 	private java.sql.Date untilDate;
@@ -134,6 +135,14 @@ public class ReportProjectForm extends ActionForm {
 
 	public void setProjectId(Integer projectId) {
 		this.projectId = projectId;
+	}
+
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
 	}
 
 }

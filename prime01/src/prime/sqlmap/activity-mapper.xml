@@ -144,12 +144,29 @@
 	</select>
 	
 	<select id="isAllFinished" resultClass="java.lang.Boolean" parameterClass="java.util.Map">
-		SELECT 
+		<!-- SELECT 
 		    CASE WHEN COUNT(1) > 0 THEN 0
 		         ELSE 1
 		    END    
 		FROM ACTIVITIES WHERE TASK_ID= #taskId# AND NVL(ACTIVITY_LAST_STATUS, 0) != #finish#
-		AND NVL(ACTIVITY_LAST_STATUS, 0) != #abort#
+		AND NVL(ACTIVITY_LAST_STATUS, 0) != #abort# -->
+		SELECT 
+		CASE WHEN (SELECT COUNT(1) FROM ACTIVITIES WHERE TASK_ID=#taskId#) = 0 THEN 0
+		     WHEN (SELECT 
+		                CASE WHEN  COUNT(1) > 0 THEN 0
+		                     ELSE 1
+		                END    
+		           FROM ACTIVITIES WHERE TASK_ID=#taskId# AND NVL(ACTIVITY_LAST_STATUS, 0) != #finish#
+		           AND NVL(ACTIVITY_LAST_STATUS, 0) != #abort#) = 0 THEN 0
+		    WHEN (SELECT 
+		                CASE WHEN  COUNT(1) > 0 THEN 0
+		                     ELSE 1
+		                END    
+		           FROM ACTIVITIES WHERE TASK_ID=#taskId# AND NVL(ACTIVITY_LAST_STATUS, 0) != #finish#
+		           AND NVL(ACTIVITY_LAST_STATUS, 0) != #abort#) = 1 THEN 1
+		     ELSE 0
+		END
+		FROM DUAL
 	</select>
 	
 	<!-- show in select activity form (dashboard) -->

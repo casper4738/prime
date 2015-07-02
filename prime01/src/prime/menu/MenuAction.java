@@ -48,58 +48,20 @@ public class MenuAction extends Action {
 				tmpObject.put(Constants.PAGES_LIST[e.getUserMenuId()], tmpMenu[e.getUserMenuId()]);
 			}
 		}
-		
-		//##1.Preparing Menu
-		//---Hard Code Menu [Will think for better implementation later]
-		//switch(tmpUserData.getSystemLevel()){
-		//	case Constants.SystemLevel.ADMIN :
-				/*tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_DASHBOARD]			, "Dashboard");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_USER]				, "Manage User");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]			, "Manage Employee");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_DIVISION]			, "Manage Division");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_HOLIDAY]			, "Manage Holiday");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_POSITION]			, "Manage Position");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_ROLE]				, "Manage Role");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_LOG]				, "View Log");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_SETTING]			, "General Settings");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_NOTIFTEMPLATE]		, "Manage Notif Template");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_USERMENU]			, "View User Menu");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.ADMIN_USERROLE]			, "Manage User Role");
-		//		break;
-		//	case Constants.SystemLevel.OPERATOR:
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]			, "Dashboard");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]			, "Manage Task As Head");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK_SUBORDINATE]	, "Manage Task As Subordinate");
-				//checkingEmployeeAsPM
-				System.out.println("jumlah "+tmpProjectManager.getCountProjectMember(LoginData.getEmployeeData().getEmployeeId()));
-				System.out.println("jumlah Assigener "+tmpProjectManager.getCountProjectAssigner(LoginData.getEmployeeData().getEmployeeId()));
-				System.out.println("jumlah Receiver"+tmpProjectManager.getCountProjectReceiver(LoginData.getEmployeeData().getEmployeeId()));
-				if(tmpProjectManager.getCountProjectReceiver(LoginData.getEmployeeData().getEmployeeId())>0 ||
-						tmpProjectManager.getCountProjectMember(LoginData.getEmployeeData().getEmployeeId())>0)
-				{
-					System.out.println("masuk");
-					tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_PROJECT]				, "Manage Project");
-				}
-				//checkingEmployeeAsHead
-				if(tmpProjectManager.getCountProjectAssigner(LoginData.getEmployeeData().getEmployeeId())>0)
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_PROJECT_HEAD]		, "Manage Project As Head");
-				
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_REPORT_EMPLOYEES]	, "View Report Employees");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_REPORT_PROJECT]		, "View Report Project");
-				tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_VIEWNOTIF]			, "View Notification");*/
-		//		break;
-		//	case Constants.SystemLevel.OPERATOR_MONITOR :
-		//		tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]			, "Dashboard");
-		//		tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]			, "Manage Task As Head");
-		//		tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_TASK_SUBORDINATE]	, "Manage Task As Subordinate");
-		//		tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_PROJECT]				, "Manage Project");
-		//		tmpObject.put(Constants.PAGES_LIST[Constants.Page.USER_REPORT]				, "View Report");
-		//		break;
-			
-		//}
+
 		
 		//##3.Prepare Request Attribute For JSP Readings
 		request.setAttribute("listPages", tmpObject);
+		
+		MenuForm tmpMenuForm = (MenuForm)form;
+		if(("redirect").equals(tmpMenuForm.getTask())){
+			request.setAttribute("needRedirect" , true);
+			request.setAttribute("redirectPage" , tmpMenuForm.getParam1());
+			System.out.println(tmpMenuForm.getParam1());
+			request.setAttribute("redirectParam", "task=" 		+ tmpMenuForm.getParam2() + "&" +
+												  "taskId=" 	+ tmpMenuForm.getParam3() + "&" + 
+												  "employeeId=" + tmpMenuForm.getParam4());
+		}
 		
 		return mapping.findForward("success");
 	}

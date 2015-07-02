@@ -28,7 +28,7 @@ public class MailUtil {
 		 properties.put("mail.smtp.host", host);
 		 properties.put("mail.smtp.user", from);
 		 properties.put("mail.smtp.password", pass);
-		 properties.put("mail.smtp.port", "2525");
+		 properties.put("mail.smtp.port", "25");
 		 properties.put("mail.smtp.auth", "true");
 		 
 		//##1.Get the default Session object.

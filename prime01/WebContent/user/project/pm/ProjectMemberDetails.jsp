@@ -12,12 +12,9 @@
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
     <link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
     <link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
-		<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 	<!-- End CSS -->
 	
-	
 	<!-- JS -->
-	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
@@ -92,12 +89,14 @@
 					<html:form action="/ProjectUser" >
 						<html:hidden name="ProjectUserForm" property="task"/>
 						<html:hidden name="ProjectUserForm" property="taskId"/>
+						<html:hidden name="ProjectUserForm" property="taskBean.taskId"/>
 						<html:hidden name="ProjectUserForm" property="projectBean.projectId"/>
 						<html:hidden name="ProjectUserForm" property="projectBean.employeeId"/>
 						<html:hidden name="ProjectUserForm" property="projectBean.employeeName"/>
 						<html:hidden name="ProjectUserForm" property="goToPage"/>
 						<html:hidden name="ProjectUserForm" property="showInPage"/>
 						<html:hidden name="ProjectUserForm" property="projectId"/>
+						<html:hidden name="ProjectUserForm" property="employeeBean.employeeId"/>
 						<html:select name="ProjectUserForm" property="columnSearch" styleClass="columnSearch">
 							<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 						</html:select>

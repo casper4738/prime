@@ -31,6 +31,9 @@ public class ProjectFormAsHead extends ActionForm {
 	private Boolean isShowAll = true;
 	private java.sql.Date startDate;
 	private java.sql.Date untilDate;
+	
+	private String progressStartDate;
+	private String progressEndDate;
 
 	public ProjectFormAsHead() {
 		setStartDate(new java.sql.Date(new java.util.Date().getTime()));
@@ -235,6 +238,22 @@ public class ProjectFormAsHead extends ActionForm {
 
 	public void setUntilDate(java.sql.Date untilDate) {
 		this.untilDate = untilDate;
+	}
+
+	public String getProgressStartDate() {
+		return progressStartDate;
+	}
+
+	public void setProgressStartDate(String progressStartDate) {
+		this.progressStartDate = progressStartDate;
+	}
+
+	public String getProgressEndDate() {
+		return progressEndDate;
+	}
+
+	public void setProgressEndDate(String progressEndDate) {
+		this.progressEndDate = progressEndDate;
 	}
 
 }

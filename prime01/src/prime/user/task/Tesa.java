@@ -11,23 +11,30 @@ import prime.admin.employee.EmployeeBean;
 import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.holiday.HolidayBean;
+import prime.user.project.ProjectManager;
+import prime.user.project.ProjectManagerImpl;
 
 public class Tesa {
 
 	public static void main(String[] args) throws SQLException {
-		Calendar c1 = Calendar.getInstance();
-		c1.set(2015, 05, 01);
+//		Calendar c1 = Calendar.getInstance();
+//		c1.set(2015, 05, 01);
+//
+//		Calendar c2 = Calendar.getInstance();
+//		c2.set(2015, 05, 15);
+//
+//		java.sql.Date date1 = new java.sql.Date(c1.getTimeInMillis());
+//		java.sql.Date date2 = new java.sql.Date(c2.getTimeInMillis());
+//
+//		System.out.println(selisihDateTime(date1, date2));
+//
+//		getWeekEnd(date1, date2);
 
-		Calendar c2 = Calendar.getInstance();
-		c2.set(2015, 05, 15);
-
-		java.sql.Date date1 = new java.sql.Date(c1.getTimeInMillis());
-		java.sql.Date date2 = new java.sql.Date(c2.getTimeInMillis());
-
-		System.out.println(selisihDateTime(date1, date2));
-
-		getWeekEnd(date1, date2);
-
+		ProjectManager tmpProjectManager = new ProjectManagerImpl();
+		//tmpProjectManager.updateActualStart(1, new java.sql.Date(new java.util.Date().getTime()));
+		TaskManager manager = new TaskManagerImpl();
+		
+		manager.updateActualEnd(1, new java.sql.Date(new java.util.Date().getTime()));
 	}
 
 	// Method menghitung selisih dua waktu

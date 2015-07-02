@@ -12,7 +12,7 @@
 
 <center>${employeeIdActive} |${taskAssigner}  | ${taskReceiver} | ${taskId} 
 <br/>
-${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject}
+${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 </center>
 
 <logic:notEqual name="projectMemberId" value="">
@@ -31,11 +31,9 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject}
 			<logic:notEqual name="isAlreadySubmit" value="true">
 				<!-- finish == true -->
 				<logic:equal name="isAllFinished" value="true">
-					<!-- receiver == id -->
-	     			<logic:equal name="taskReceiver" value="${employeeIdActive}">
 						<!-- approve != true -->
 						<logic:notEqual name="isAlreadyApprove" value="true">
-			     			<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
+			     			a | <input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
 							<%
 							EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
 							EmployeeBean e = tmpEmployeeManager.getEmployeeById(Integer.parseInt(request.getAttribute("employeeIdActive").toString()));
@@ -47,8 +45,6 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject}
 			     			<% } %>
 						</logic:notEqual>
 						<!-- end approve != true -->
-					</logic:equal>
-					<!-- end receiver == id -->
 	    		</logic:equal>
 				<!-- end finish == true -->
 	    		

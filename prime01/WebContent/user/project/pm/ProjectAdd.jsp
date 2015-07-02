@@ -25,13 +25,13 @@
         });
 		
 		function openModalHandler(){
-			//##0.Preparing Parameter For Modal Showing
-			var tmpDataPosition=document.forms[0].positionId.value;
+			alert("MASUK");
+			 //##0.Preparing Parameter For Modal Showing
 			var tmpTask ="modalTable";
-			var tmpTable ="employeeList";
-			var tmpDiv =document.forms[0].divisionId.value;
+			var tmpTable ="employeeTree";
+			
 			//##1.Accessing Prime Method For Modal Showing
-			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=projectAssigner"+"&param5="+tmpDiv, $('#result'));
+			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable, $('#result')); 
 		}
 		
 		function validateForm() {
@@ -75,8 +75,6 @@
                 		<html:hidden name="ProjectUserForm" property="employeeId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver" />
-                		<html:hidden name="ProjectUserForm" property="divisionId" />
-                		<html:hidden name="ProjectUserForm" property="positionId"/>
                 		
                 		<table class="form-input" align="center" style="width: 500px;">
                 			<tr><td width="150px">Project Name</td>

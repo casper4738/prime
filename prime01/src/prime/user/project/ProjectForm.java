@@ -11,6 +11,7 @@ public class ProjectForm extends ActionForm {
 	private EmployeeBean employeeBean = new EmployeeBean();
 	private TaskBean taskBean = new TaskBean();
 	private String task;
+	private String back;
 	private String search;
 	private String columnSearch;
 	private String message;
@@ -31,6 +32,9 @@ public class ProjectForm extends ActionForm {
 	private Boolean isShowAll = true;
 	private java.sql.Date startDate;
 	private java.sql.Date untilDate;
+	
+	private String progressStartDate;
+	private String progressEndDate;
 
 	public Boolean getIsShowAll() {
 		return isShowAll;
@@ -43,6 +47,14 @@ public class ProjectForm extends ActionForm {
 	public ProjectForm() {
 		setStartDate(new java.sql.Date(new java.util.Date().getTime()));
 		setUntilDate(new java.sql.Date(new java.util.Date().getTime()));
+	}
+
+	public String getColumnSearchReal() {
+		if (isShowAll) {
+			return "SHOW ALL";
+		} else {
+			return columnSearch;
+		}
 	}
 
 	public ProjectBean getProjectBean() {
@@ -229,4 +241,27 @@ public class ProjectForm extends ActionForm {
 		this.untilDate = untilDate;
 	}
 
+	public String getBack() {
+		return back;
+	}
+
+	public void setBack(String back) {
+		this.back = back;
+	}
+
+	public String getProgressStartDate() {
+		return progressStartDate;
+	}
+
+	public void setProgressStartDate(String progressStartDate) {
+		this.progressStartDate = progressStartDate;
+	}
+
+	public String getProgressEndDate() {
+		return progressEndDate;
+	}
+
+	public void setProgressEndDate(String progressEndDate) {
+		this.progressEndDate = progressEndDate;
+	}
 }

@@ -13,7 +13,7 @@
 
 <body>
 	
-	<%!private final String reportName = "EMPLOYEElist.rpt";%>
+	<%!private final String reportName = "employee_list.rpt";%>
 	<%
 		try {
 			ReportClientDocument clientDoc = getClientDocument(reportName);

@@ -49,7 +49,6 @@
 		}
 		
 		function doTaskAct(taskId, task) {
-			alert("cek dulu "+taskId+"|"+task);
 			modalLoadHandler("task=taskNote&param2=" + taskId+"&param3="+task);
 		}
 	</script>

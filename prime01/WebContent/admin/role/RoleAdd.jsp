@@ -9,7 +9,6 @@
 	<meta charset="UTF-8">
 	<title>Prime</title>
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-	
 	<!-- JS -->
 	<script type="text/javascript">
 		function validateForm() {

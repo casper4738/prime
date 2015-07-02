@@ -9,19 +9,9 @@
 	<meta charset="UTF-8">
 	<title>Prime</title>
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-	<!-- CSS -->
-	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
-	<!-- End CSS -->
 	
 	<!-- JS -->
-	
 	<script type="text/javascript">
-	
 	function dosubmit() {
 		var tmpForm = document.forms[0];
 		var tmpVal = "";
@@ -69,16 +59,14 @@
 			               <logic:notEmpty name="listUserMenu">
 							<logic:iterate id="iter" name="listUserMenu">
 			                	<tr>
-			                        <td>
-			                        ${iter.userMenuId} | 
-			                        <bean:write name="iter" property="userMenuName"/></td>
-			                        <td>
-			                        <logic:equal name="iter" property="isCheck" value="true">
-			                        	<input type="checkbox" name="menu" value="${iter.userMenuId}"  checked="checked">
-			                        </logic:equal>
-			                        <logic:equal name="iter" property="isCheck" value="false">
-			                        	<input type="checkbox" name="menu" value="${iter.userMenuId}" > 
-			                        </logic:equal>
+			                        <td><bean:write name="iter" property="userMenuName"/></td>
+									<td>
+				                        <logic:equal name="iter" property="isCheck" value="true">
+				                        	<input type="checkbox" name="menu" value="${iter.userMenuId}"  checked="checked">
+				                        </logic:equal>
+				                        <logic:equal name="iter" property="isCheck" value="false">
+				                        	<input type="checkbox" name="menu" value="${iter.userMenuId}" > 
+				                        </logic:equal>
 			                        </td>
 			                    </tr> 
 			                   </logic:iterate>

@@ -25,9 +25,7 @@
 	    });
 		
 		function dosubmit(value) {
-			alert("1."+value);
 			document.forms[0].activityStatus.value = value;
-			alert("2."+value);
 			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
 		}
 		
@@ -75,7 +73,7 @@
   	    		</jsp:include>
 				
 				<div class="search-table">
-					<html:form action="/TaskHeadUser" >
+					<html:form action="/TaskHeadUser">
 						<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.ACTIVITY.DOCHANGESTATUS%>"/>
 						<html:hidden name="TaskHeadUserForm" property="taskBean.taskId"/>
 						<html:hidden name="TaskHeadUserForm" property="taskId"/>
