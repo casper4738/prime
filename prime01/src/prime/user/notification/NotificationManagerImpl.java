@@ -66,4 +66,11 @@ public class NotificationManagerImpl implements NotificationManager{
 	public Integer getNewId() throws SQLException {
 		return (Integer) mapper.queryForObject("notification.getNewId", null);
 	}
+
+	@Override
+	public void markAsRead(Integer notifId) throws SQLException {
+		mapper.startTransaction();
+		mapper.update("notification.markAsRead", notifId);
+		mapper.commitTransaction();	
+	}
 }

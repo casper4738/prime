@@ -17,4 +17,6 @@ public interface NotificationManager {
 	public void insert(int notifId, int notifType, String notifValue, int senderId, int receiverId) throws SQLException;
 	
 	public Integer getNewId() throws SQLException;
+	
+	public void markAsRead(Integer notifId) throws SQLException;
 }

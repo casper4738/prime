@@ -14,10 +14,10 @@ import org.apache.struts.action.ActionMapping;
 import prime.admin.usermenu.UserMenuBean;
 import prime.admin.usermenu.UserMenuManager;
 import prime.admin.usermenu.UserMenuManagerImpl;
-import prime.admin.userrole.UserRoleManager;
-import prime.admin.userrole.UserRoleManagerImpl;
 import prime.constants.Constants;
 import prime.login.LoginData;
+import prime.user.notification.NotificationManager;
+import prime.user.notification.NotificationManagerImpl;
 import prime.user.project.ProjectManager;
 import prime.user.project.ProjectManagerImpl;
 
@@ -52,15 +52,19 @@ public class MenuAction extends Action {
 		
 		//##3.Prepare Request Attribute For JSP Readings
 		request.setAttribute("listPages", tmpObject);
-		
 		MenuForm tmpMenuForm = (MenuForm)form;
 		if(("redirect").equals(tmpMenuForm.getTask())){
-			request.setAttribute("needRedirect" , true);
-			request.setAttribute("redirectPage" , tmpMenuForm.getParam1());
-			System.out.println(tmpMenuForm.getParam1());
-			request.setAttribute("redirectParam", "task=" 		+ tmpMenuForm.getParam2() + "&" +
-												  "taskId=" 	+ tmpMenuForm.getParam3() + "&" + 
-												  "employeeId=" + tmpMenuForm.getParam4());
+			//Do Redirect if the ID is same :)
+			if(tmpMenuForm.getParam4().equals(LoginData.getEmployeeData().getEmployeeId().toString())){
+				request.setAttribute("needRedirect" , true);
+				request.setAttribute("redirectPage" , tmpMenuForm.getParam1());
+				request.setAttribute("redirectParam", "task=" 		+ tmpMenuForm.getParam2() + "&" +
+													  "taskId=" 	+ tmpMenuForm.getParam3() + "&" + 
+													  "employeeId=" + tmpMenuForm.getParam4());
+				//Mark as read
+				NotificationManager tmpNotificationManager = new NotificationManagerImpl();
+				tmpNotificationManager.markAsRead(Integer.parseInt(tmpMenuForm.getParam5()));
+			}
 		}
 		
 		return mapping.findForward("success");

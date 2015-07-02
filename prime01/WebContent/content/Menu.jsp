@@ -41,6 +41,7 @@
 	<div class="wrapper">
 		<!-- Header -->
 		<jsp:include page="Header.jsp"></jsp:include>
+		
 
 		<!-- Side Bar Menu -->
 		<aside class="main-sidebar">
@@ -104,6 +105,10 @@
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script  type="text/javascript">
 	   	$(document).ready(function(){
+	   		$.ajaxSetup({ cache: false });
+	   		
+	   		setInterval(refreshNotification, 300000); //5 Menit
+	   		
 	   		//##0.Prepare Profile Picture
 	   		var tmpImage = '<%=LoginData.getEmployeeData().getConvertedFilePic()%>';
 	  	  	if(tmpImage == "null"){
@@ -121,12 +126,24 @@
 	   		if(tmpIsRedirectPage != null){
 	   			menuLoadHandler('<%=request.getAttribute("redirectPage")%>', '<%=request.getAttribute("redirectParam")%>');
 	   		} else {
-<%-- 	   			sendNotification(<%=Constants.NotificationType.PROJECT_CREATEAPPROVAL%>, "from=siapa;to=siapa;link=https://google.com",  --%>
-<%-- 					 "<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>;<%=Constants.Task.GOTOVIEW%>;5;100"); --%>
-	
 				menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>");
 	   		}
 		});
+	   	
+	   	function refreshNotification(){
+	   		$.ajax({
+		   	      type	  : "POST",
+		   	      url	  : "Notification.do", //Hardcoded No Other Way :(  
+		   	      data	  : "task=reloadNotification",
+		   	      success : function(msg){
+						$('#notif-wrapper').html(msg);
+		   	      },
+		   	      
+		   	      error: function(){
+		   	    	  alert("Something Wrong is Happening when Reload Notification !");
+		   	      }
+	   		})
+	   	}
 	</script>
 <!-- End JS -->
 </html>

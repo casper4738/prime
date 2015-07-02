@@ -31,7 +31,7 @@ function doViewAllNotif(){
 		%>
 		<div class="navbar-custom-menu">
 			<ul class="nav navbar-nav">
-				<li class="dropdown notifications-menu"><a href="#"
+				<li class="dropdown notifications-menu" id="notif-wrapper"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown"> <i
 						class="fa fa-bell-o"></i> <span class="label label-warning"><%=countNotif%></span>
 				</a>
@@ -43,7 +43,7 @@ function doViewAllNotif(){
 								<%
 									for(int i=0;i<tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).size();i++){
 								%>
-										<li><a href="#"> <i class="fa fa-warning text-yellow"></i>
+										<li><a href="#">
 											<%=tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).get(i).getNotificationNote()%>
 										</a></li>
 								<%		

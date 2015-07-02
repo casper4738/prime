@@ -99,9 +99,9 @@
 								<logic:iterate id="iter" name="listNotification">
 				                	<tr>
 				                		<td><bean:write name="iter" property="notificationId"/> </td>
-				                		<td> <a href="#"><bean:write name="iter" property="notificationNote"/></a></td>
+				                		<td> <a href="#"><bean:write name="iter" property="notificationNote" filter="false"/></a></td>
 				                		<td><bean:write name="iter" property="notificationSendDate" format="dd-MM-yyyy"/> </td>
-				                		<td><bean:write name="iter" property="notificationNameType"/> </td>
+				                		<td><bean:write name="iter" property="notificationNameType" filter="false"/> </td>
 				                		<td align="center">
 				                			<logic:equal  name="iter" property="notificationStatus" value='<%=Constants.NotificationStatus.READ+""%>'>
 												<span class="label label-info">READ</span>

@@ -33,7 +33,7 @@
 	</select>
 	
 	<select id="getCountListByColAsHead" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT  COUNT (DISTINCT PROJ.PROJECT_ID)
+		SELECT  COUNT (0)
         FROM PROJECTS PROJ
         JOIN EMPLOYEES EMP_ASSIGN ON PROJ.PROJECT_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
         JOIN EMPLOYEES EMP_RECEIVE ON PROJ.PROJECT_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
@@ -48,12 +48,18 @@
 				<isEqual property="columnSearch" compareValue="DESCRIPTION">
 					UPPER(PROJ.PROJECT_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
+				<isEqual property="columnSearch" compareValue="PM">
+					UPPER(EMP_RECEIVE.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+				<isEqual property="columnSearch" compareValue="PROPOSED">
+					UPPER(EMP_ASSIGN.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
 				<isEqual property="columnSearch" compareValue="STARTDATE">
 			      	PROJ.PROJECT_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
 				</isEqual> 
 				<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
 			      	PROJ.PROJECT_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
-				</isEqual> 
+				</isEqual>  
 			</isNotNull>
 		</dynamic>
 	</select>

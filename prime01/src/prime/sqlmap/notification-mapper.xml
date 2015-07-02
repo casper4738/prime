@@ -1,6 +1,32 @@
 <!DOCTYPE sqlMap PUBLIC "-//ibatis.apache.org//DTD SQL MAP 2.0//EN"
 "http://ibatis.apache.org/dtd/sql-map-2.dtd">
 <sqlMap namespace="notification">
+	<insert id="insert" parameterClass="java.util.Map">
+		INSERT INTO NOTIFICATIONS(
+			NOTIFICATION_ID,
+			SENDER,
+			RECEIVER,
+			NOTIFICATION_STATUS,
+			NOTIFICATION_TYPE,
+			NOTIFICATION_SEND_DATE,
+			NOTIFICATION_NOTE,
+			NOTIFICATION_TEMPLATE_ID 
+		) VALUES (
+			#notifId#, 
+			#senderId#,
+			#receiverId#,
+			1,
+			1,
+			SYSDATE,
+			#notifValue#,
+			#notifType#
+		)
+	</insert>
+	
+	<select id="getNewId" resultClass="java.lang.Integer">
+		SELECT NVL(MAX(NOTIFICATION_ID)+1, 1) FROM NOTIFICATIONS
+	</select>
+
 	<select id="getListByCol" resultClass="prime.user.notification.NotificationBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT NOTIF.NOTIFICATION_ID AS notificationId,
@@ -69,4 +95,13 @@
         JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = NOTIF.RECEIVER
         WHERE NOTIFICATION_STATUS = '1' AND RECEIVER = #employeeId# 
 	</select>
+	
+	
+	
+	<update id="markAsRead" parameterClass="java.lang.Integer">
+		UPDATE NOTIFICATIONS 
+		SET 
+			NOTIFICATION_STATUS = 2
+		WHERE NOTIFICATION_ID=#notifId#
+	</update>
 </sqlMap>

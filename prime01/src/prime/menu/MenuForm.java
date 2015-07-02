@@ -9,6 +9,7 @@ public class MenuForm extends ActionForm {
 	private String param2;
 	private String param3;
 	private String param4;
+	private String param5;
 	
 	//##1.Public Method
 	public String getTask() {
@@ -40,6 +41,12 @@ public class MenuForm extends ActionForm {
 	}
 	public void setParam4(String param4) {
 		this.param4 = param4;
+	}
+	public String getParam5() {
+		return param5;
+	}
+	public void setParam5(String param5) {
+		this.param5 = param5;
 	}
 	
 }

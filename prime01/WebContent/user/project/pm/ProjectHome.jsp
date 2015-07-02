@@ -158,7 +158,7 @@
 			<!-- Table List -->
 			<div class="box-body"><table id="table-1" class="table table-bordered table-striped table-hover">
 				<thead><tr>
-					<th width="30px">Project ID</th>
+					<th width="30px">Project ID </th>
 					<th width="100px">Project Name</th>
 					<th>Description</th>
 					<th width="100px">Project Manager</th>

@@ -182,12 +182,15 @@ public class ProjectManagerImpl implements ProjectManager {
 
 	@Override
 	public Integer getCountListByColAsHead(String columnSearch, String value, Integer employeeId) 	throws SQLException {
-		 
-		System.out.println("masuk "+columnSearch+" value:"+value+" employeeId:"+employeeId);
-		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
-		map.put("value", value);
+		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
+			String[] string = value.split(";");
+			map.put("startDate", string[0]);
+			map.put("untilDate", string[1]);
+		} else {
+			map.put("value", value);
+		}
 		map.put("employeeId", employeeId);
 		return (Integer) mapper.queryForObject("project.getCountListByColAsHead", map);
 	}

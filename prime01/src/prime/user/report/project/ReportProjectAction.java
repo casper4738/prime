@@ -33,7 +33,7 @@ public class ReportProjectAction extends Action {
 		TaskManager tmpTaskManager = new TaskManagerImpl();
 
 		ReportProjectForm pForm = (ReportProjectForm) form;
-		// ReportProjectManager tmpManager = new ReportProjectManagerImpl();
+		//ReportProjectManager tmpManager = new ReportProjectManagerImpl();
 
 		ProjectManager tmpManager = new ProjectManagerImpl();
 		System.out.println(pForm.getTask());
@@ -95,12 +95,11 @@ public class ReportProjectAction extends Action {
 			} else if ("STARTDATE".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute(
 						"searchQuery",
-						" WHERE PROJ.PROJECT_START_DATE BETWEEN TO_DATE("+ pForm.getSearch() +", 'yyyy-mm-dd') AND TO_DATE("+pForm.getSearch()+", 'yyyy-mm-dd')");
+						" WHERE PRO.PROJECT_START_DATE BETWEEN TO_DATE('"+ pForm.getStartDate() +"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
 			} else if ("ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute(
 						"searchQuery",
-						" WHERE LOWER (EMPRPRO.EMPLOYEE_NAME) LIKE LOWER ('%"
-								+ pForm.getSearch() + "%')");
+						" WHERE PRO.PROJECT_ESTIMATE_DATE BETWEEN TO_DATE('"+pForm.getStartDate()+"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
 			}
 			return mapping.findForward("showReportProject");
 		} else if (Constants.Task.REPORT.GENERATEREPORTPROJECTTASK.equals(pForm

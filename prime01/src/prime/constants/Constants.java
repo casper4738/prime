@@ -468,4 +468,11 @@ public interface Constants {
 	
 	//##M.Misc
 	public static String PATH_USERNOIMAGE = "resources/image/user-photo.jpg";
+	
+	//##N.Mail Template
+	static interface MailTemplate {
+		static String FROM 	= "from";
+		static String TO	= "to";
+		static String LINK	= "link";
+	}
 }

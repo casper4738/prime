@@ -16,9 +16,7 @@ public class NotificationForm extends ActionForm {
 	private Integer tmpId;
 	
 	private Integer notifReceiverID = 0;
-	private Integer notifSenderID = 1;
-	private String  notifEmailParam = "";
-	private String  notifLinkParam = "";
+	private String  notifParam = "";
 	private Integer notifType = 0;
 	
 	public NotificationBean getNotificationBean() {
@@ -81,23 +79,11 @@ public class NotificationForm extends ActionForm {
 	public void setNotifReceiverID(Integer notifReceiverID) {
 		this.notifReceiverID = notifReceiverID;
 	}
-	public Integer getNotifSenderID() {
-		return notifSenderID;
+	public String getNotifParam() {
+		return notifParam;
 	}
-	public void setNotifSenderID(Integer notifSenderID) {
-		this.notifSenderID = notifSenderID;
-	}
-	public String getNotifEmailParam() {
-		return notifEmailParam;
-	}
-	public void setNotifEmailParam(String notifEmailParam) {
-		this.notifEmailParam = notifEmailParam;
-	}
-	public String getNotifLinkParam() {
-		return notifLinkParam;
-	}
-	public void setNotifLinkParam(String notifLinkParam) {
-		this.notifLinkParam = notifLinkParam;
+	public void setNotifParam(String notifParam) {
+		this.notifParam = notifParam;
 	}
 	
 	

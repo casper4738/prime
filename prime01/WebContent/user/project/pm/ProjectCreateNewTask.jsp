@@ -131,7 +131,7 @@
                 			<tr>
                 				<td colspan="3" align="center">
                 					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="validateForm()"/>
-                					<input type="button" class=""btn btn-default"" value='Cancel' onclick="flyToTaskDetail(
+                					<input type="button" class="btn btn-default" value='Cancel' onclick="flyToTaskDetail(
                      	        				'<%=Constants.Task.PROJECT.GOTOTASKMEMBER%>', 
                      	        				'<bean:write name="ProjectUserForm" property="employeeBean.employeeId"/>')">
                 				</td>

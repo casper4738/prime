@@ -96,12 +96,12 @@ public class DashboardAction extends Action{
 	}
 	
 	private void refreshToDoList(HttpServletRequest request, DashboardForm pForm, ActivityManager manager) throws SQLException {
-		int countRows  = manager.getCountToDoListById(101);
+		int countRows  = manager.getCountToDoListById(LoginData.getEmployeeData().getEmployeeId());
 		
 		List<ActivityBean> list = manager.getToDoListById(PrimeUtil.getStartRow(
 				 pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 				 PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
-				 countRows),101);
+				 countRows), LoginData.getEmployeeData().getEmployeeId());
 		request.setAttribute("listActivity", list);
 		
 
@@ -134,7 +134,7 @@ public class DashboardAction extends Action{
 		tmpIsToday = tmpDateRequest.compareTo(tmpCal.getTime());
 		
 		tmpData = new ArrayList<ArrayList<Object>>();
-		tmpCurnListActivity = manager.getCurrentListActivity(101, pForm.getCurrentDate());
+		tmpCurnListActivity = manager.getCurrentListActivity(LoginData.getEmployeeData().getEmployeeId(), pForm.getCurrentDate());
 		for(tmpI = 0 ; tmpI < tmpCurnListActivity.size() ; tmpI++){
 			tmpIsProgressed = false;
 			
@@ -270,7 +270,7 @@ public class DashboardAction extends Action{
 	}
 	
 	private void prepareCalendar(HttpServletRequest request, HttpServletResponse response) throws SQLException{
-		int tmpEmployeeId = 101;
+		int tmpEmployeeId = LoginData.getEmployeeData().getEmployeeId();
 		
 		HolidayManager  tmpHolidayManager = new HolidayManagerImpl();
 		EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();

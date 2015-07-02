@@ -260,12 +260,13 @@ function modalSubmitReturnValue(retValue,retForm){
  * Notif Type  = Type of Notif, Hardcoded via Constants, Balanced via DB [Will think other way better]
  * Notif Param = Parameter , Consists of Array List that will inserted to the template [a, b, c]
  */
-function sendNotification(notifType, notifParam){	
+function sendNotification(receiverId, notifType, notifParam){	
 	//##1.Do Sending Email with Asynchronous Process
+	alert(notifParam);
 	$.ajax({ 
       type	  : "POST",
       url	  : "Notification.do", //Hardcoded No Other Way :(  
-      data	  : "task=sendNotification&notifType=" + notifType + "notifParam=" + notifParam,
+      data	  : "task=sendNotification&notifReceiverID=" + receiverId + "&notifType=" + notifType + "&notifParam=" + notifParam,
       success : function(msg){
     	  alert("Notification Sent !");
       },
