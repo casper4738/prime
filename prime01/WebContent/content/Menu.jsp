@@ -9,32 +9,32 @@
 <meta charset="UTF-8">
 <meta
 	content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-<title>PRIMEprogram</title>
+	<title>PRIMEprogram</title>
 
-<!-- CSS -->
-<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
-<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
-<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
-<style type="text/css">
-.info-modal .modal {
-	position: relative;
-	top: auto;
-	bottom: auto;
-	right: auto;
-	left: auto;
-	display: block;
-	z-index: 1;
-}
-
-.info-modal .modal {
-	background: transparent !important;
-}
-</style>
+	<!-- CSS -->
+	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
+	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
+	<style type="text/css">
+	.info-modal .modal {
+		position: relative;
+		top: auto;
+		bottom: auto;
+		right: auto;
+		left: auto;
+		display: block;
+		z-index: 1;
+	}
+	
+	.info-modal .modal {
+		background: transparent !important;
+	}
+	</style>
 <!-- End CSS -->
 </head>
 <body class="skin-blue sidebar-mini">
@@ -91,45 +91,38 @@
 	</div>
 </body>
 
-<!-- Written JS -->
-
 <!-- JS -->
 	<script src="resources/prime.js"></script>
-	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/jQuery/jQuery-2.1.4.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/jQueryUI/jquery-ui-1.10.3.min.js" type="text/javascript"></script>
+	<script src="resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/moment/moment.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/serialize/serialize-0.2.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
-	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
-    <script type="text/javascript">
-   	$(document).ready(function(){
-   		//##0.Disable AJAX Caching
-   		$.ajaxSetup ({
-		    // Disable caching of AJAX responses
-		    cache: false
+	<script  type="text/javascript">
+	   	$(document).ready(function(){
+	   		//##0.Disable AJAX Caching
+	   		$.ajaxSetup ({
+			    // Disable caching of AJAX responses
+			    cache: false
+			});
+	   		
+	   		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>");
+	   		
+	   		var tmpImage = '<%=LoginData.getEmployeeData().getConvertedFilePic()%>';
+	  	  	if(tmpImage == "null"){
+	      		  $("#profpic1").attr("src", "<%=Constants.PATH_USERNOIMAGE%>");
+	      		  $("#profpic2").attr("src", "<%=Constants.PATH_USERNOIMAGE%>");
+	      		  $("#profpic3").attr("src", "<%=Constants.PATH_USERNOIMAGE%>");
+	  	  	} else {
+	  	  		  $("#profpic1").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
+	      		  $("#profpic2").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
+	      		  $("#profpic3").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
+	  	  	}
 		});
-   		
-   		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>");
-   		
-   		var tmpImage = '<%=LoginData.getEmployeeData().getConvertedFilePic()%>';
-  	  	if(tmpImage == "null"){
-      		  $("#profpic1").attr("src", "<%=Constants.PATH_USERNOIMAGE%>");
-      		  $("#profpic2").attr("src", "<%=Constants.PATH_USERNOIMAGE%>");
-      		  $("#profpic3").attr("src", "<%=Constants.PATH_USERNOIMAGE%>");
-  	  	} else {
-  	  		  $("#profpic1").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
-      		  $("#profpic2").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
-      		  $("#profpic3").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
-  	  	}
-	});
-</script>
+	</script>
 <!-- End JS -->
 </html>

@@ -9,17 +9,18 @@
   <head>
     <meta charset="UTF-8">
     <title>Prime | Log in</title>
-    <meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-    <link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-    <link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-    <link href="resources/plugins/iCheck/square/blue.css" rel="stylesheet" type="text/css" />
+	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
   </head>
   <body class="login-page" style="background-color:teal;">
     <div class="login-box">
       <div class="login-box-body">
 	    <div class="login-logo">
-	       <b>Prime</b> v.0.1
+	       <b>Prime</b> v.0.1   <i class="fa fa-refresh fa-spin"></i>	
 	    </div><!-- /.login-logo -->
         <p class="login-box-msg">Sign in to start your session</p>
         <html:form action="/Login" method="post" styleId="form-login">
@@ -40,7 +41,7 @@
             <div class="col-xs-5">
               <input type="button" class="btn btn-primary btn-block btn-flat" id="btn-submit" value="Sign In"/>
               <div class="overlay" id="ajax-validating">
-               		<i class="fa fa-refresh fa-spin"></i> Processing...
+               		<i class="fa fa-circle-o-notch fa-spin"></i> Processing...
               </div>
             </div><!-- /.col -->
           </div>
@@ -48,10 +49,9 @@
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
 	  
-    <script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-    <script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
-    <script src="resources/plugins/iCheck/icheck.min.js" type="text/javascript"></script>
-    <script src="resources/prime.js"></script>
+	<script src="resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
+	<script src="resources/prime.js"></script>
     <script>
       $(document).ready(function(){
     	  	  var tmpIsLoginFail = <%=request.getAttribute(Constants.Request.LOGIN_STATUS)%>;
@@ -61,7 +61,7 @@
     	  		  $('#login-fail').html('<%=request.getAttribute(Constants.Request.LOGIN_STATUS)%>');
     	  	  }
     	      
-		      $('#ajax-validating').hide();
+// 		      $('#ajax-validating').hide();
 		  	  $('#textbox-username').attr("placeholder","Username");
 		  	  $('#textbox-password').attr("placeholder","Password");
 			  $('#btn-submit').click(function(){ 
