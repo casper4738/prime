@@ -61,9 +61,10 @@
     	  		  $('#login-fail').html('<%=request.getAttribute(Constants.Request.LOGIN_STATUS)%>');
     	  	  }
     	      
-// 		      $('#ajax-validating').hide();
+ 		      $('#ajax-validating').hide();
 		  	  $('#textbox-username').attr("placeholder","Username");
 		  	  $('#textbox-password').attr("placeholder","Password");
+		  	  $('#textbox-password').val('');
 			  $('#btn-submit').click(function(){ 
 	    		  $('#btn-submit').hide();
 	    		  $('#ajax-validating').show();  
