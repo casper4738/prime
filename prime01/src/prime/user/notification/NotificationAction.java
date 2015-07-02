@@ -1,7 +1,6 @@
 package prime.user.notification;
 
 import java.sql.SQLException;
-import java.util.HashMap;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -12,11 +11,15 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.employee.EmployeeBean;
+import prime.admin.employee.EmployeeManager;
+import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.notiftemplate.NotifTemplateBean;
 import prime.admin.notiftemplate.NotifTemplateManager;
 import prime.admin.notiftemplate.NotifTemplateManagerImpl;
 import prime.constants.Constants;
 import prime.login.LoginData;
+import prime.utility.MailUtil;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -40,28 +43,51 @@ public class NotificationAction extends Action {
 			NotifTemplateManager tmpNotifTempManager = new NotifTemplateManagerImpl();
 			NotifTemplateBean tmpNotifTempBean = tmpNotifTempManager.getNotifTemplateById(pForm.getNotifType());
 			
+			EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
+			EmployeeBean tmpReceiverBean = tmpEmployeeManager.getEmployeeById(100);
+			
 			//---.Three main variable needed : From [ID | Name], To[ID | Name], Link [Direct Getter Link]
 			//	 . Logic : Convert The Fetched Param to String and Insert it To Map
 			//   .         Replace Notif Template String with the Map
 			int tmpI;
-			HashMap tmpMap  = new HashMap<>();
 			String tmpTemplate  = tmpNotifTempBean.getNotifTemplateValue();
-			String tmpReceived  = pForm.getNotifParam();
+			String tmpReceived  = pForm.getNotifEmailParam();
 			String[] tmpParam1  = tmpReceived.split(";");
 			String[] tmpParam2;
+			String tmpHolder = "";
 			
 			for(tmpI = 0 ; tmpI < tmpParam1.length ; tmpI++){
-				tmpParam2 = tmpParam1[tmpI].split("=");
-				tmpMap.put(tmpParam2[0], tmpParam2[1]);
-				System.out.println(tmpParam2[0] + " _ " + tmpParam2[1]);
-				tmpTemplate.replace("&" + tmpParam2[0] + "&", tmpParam2[1]);
+				tmpParam2 	= tmpParam1[tmpI].split("=");
+				tmpHolder 	= "&" + tmpParam2[0] + "&";
+				tmpTemplate = tmpTemplate.replaceAll(tmpHolder, tmpParam2[1]);
 			}
-			System.out.println(tmpTemplate);
 		
-			//---.Send Email with Mail Util
-			
+			//---.Send Email with Mail Util 
+			System.out.println(tmpReceiverBean.getEmail());
+			System.out.println(tmpNotifTempBean.getNotifTemplateName());
+			System.out.println(tmpTemplate);
+			MailUtil.send(tmpReceiverBean.getEmail(), tmpNotifTempBean.getNotifTemplateName(), tmpTemplate);
 			
 			//---.Send Notification to specified ID with specified Param
+			String[] tmpNotifLinkParam = pForm.getNotifLinkParam().split(";");
+			String tmpNotification = "<a href='Menu.do?" +
+								  	 "task=redirect&" +
+								  	 "param1=" + tmpNotifLinkParam[0] + "&" + 
+								  	 "param2=" + tmpNotifLinkParam[1] + "&" + 	
+								  	 "param3=" + tmpNotifLinkParam[2] + "&" +	
+								  	 "param4=" + tmpNotifLinkParam[3] + "'>" + 	
+								  	 tmpNotifTempBean.getNotifTemplateName() + 
+								  	 "</a>";
+			
+			int tmpId = tmpManager.getNewId();
+			System.out.println("ID Cui = " + tmpId);
+			System.out.println("ID Cui = " + LoginData.getEmployeeData().getEmployeeId());
+			System.out.println("ID Cui = " + pForm.getNotifType());
+			System.out.println("ID Cui = " + tmpNotification);
+			System.out.println("ID Cui = " + 100);
+			tmpManager.insert(tmpId, pForm.getNotifType(),tmpNotification, LoginData.getEmployeeData().getEmployeeId(), 100);
+			
+			return null;
 		} else {
 			//---.Get Count Rows
 			int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),pForm.getSearch(), LoginData.getEmployeeData().getEmployeeId());

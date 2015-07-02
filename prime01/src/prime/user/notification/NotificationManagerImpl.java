@@ -43,4 +43,27 @@ public class NotificationManagerImpl implements NotificationManager{
 	public Integer getCountListNotifNoRead(Integer employeeId) throws SQLException {
 		return  (Integer) mapper.queryForObject("notification.getCountListNotifNoRead", employeeId);
 	}
+
+	public void insert(int notifId, int notifType, String notifValue, int senderId,
+			int receiverId) throws SQLException {
+		try {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("notifId"		, notifId);
+			map.put("notifType"		, notifType);
+			map.put("notifValue"	, notifValue);			
+			map.put("senderId"		, senderId);
+			map.put("receiverId"	, receiverId);
+
+			mapper.startTransaction();
+			mapper.insert("notification.insert", map);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+		
+	}
+	
+	public Integer getNewId() throws SQLException {
+		return (Integer) mapper.queryForObject("notification.getNewId", null);
+	}
 }

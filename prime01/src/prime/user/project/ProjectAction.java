@@ -158,7 +158,7 @@ public class ProjectAction extends Action {
 			//if(pForm.getEmployeeBean().getEmployeeId()==)
 			System.out.println("empid "+pForm.getEmployeeId());
 			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeId());
-			//pForm.getProjectBean().setEmployeeName(pForm.getEmployeeBean().getEmployeeName());
+			pForm.getProjectBean().setEmployeeName(pForm.getEmployeeBean().getEmployeeName());
 			System.out.println("PID "+pForm.getProjectId());
 			
 //			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());

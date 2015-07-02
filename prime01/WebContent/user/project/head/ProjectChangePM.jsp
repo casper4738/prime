@@ -15,12 +15,11 @@
 		
 	function openModalHandler(){
 		//##0.Preparing Parameter For Modal Showing
-		var tmpDataPosition=2;
 		var tmpTask ="modalTable";
-		var tmpTable ="employeeList";
+		var tmpTable ="employeeTree";
 		
 		//##1.Accessing Prime Method For Modal Showing
-		modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=projectAssigner", $('#result'));
+		modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable, $('#result')); 
 	}
 	
 		

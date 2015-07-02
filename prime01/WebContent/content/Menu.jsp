@@ -104,14 +104,7 @@
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script  type="text/javascript">
 	   	$(document).ready(function(){
-	   		//##0.Disable AJAX Caching
-	   		$.ajaxSetup ({
-			    // Disable caching of AJAX responses
-			    cache: false
-			});
-	   		
-	   		menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>");
-	   		
+	   		//##0.Prepare Profile Picture
 	   		var tmpImage = '<%=LoginData.getEmployeeData().getConvertedFilePic()%>';
 	  	  	if(tmpImage == "null"){
 	      		  $("#profpic1").attr("src", "<%=Constants.PATH_USERNOIMAGE%>");
@@ -122,6 +115,17 @@
 	      		  $("#profpic2").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
 	      		  $("#profpic3").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
 	  	  	}
+	   		
+	   		//##1.Check Whether this a page redirecting or not
+	   		var tmpIsRedirectPage = <%=request.getAttribute("needRedirect")%>;
+	   		if(tmpIsRedirectPage != null){
+	   			menuLoadHandler('<%=request.getAttribute("redirectPage")%>', '<%=request.getAttribute("redirectParam")%>');
+	   		} else {
+<%-- 	   			sendNotification(<%=Constants.NotificationType.PROJECT_CREATEAPPROVAL%>, "from=siapa;to=siapa;link=https://google.com",  --%>
+<%-- 					 "<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>;<%=Constants.Task.GOTOVIEW%>;5;100"); --%>
+	
+				menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>");
+	   		}
 		});
 	</script>
 <!-- End JS -->

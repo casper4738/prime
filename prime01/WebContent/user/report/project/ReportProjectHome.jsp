@@ -35,6 +35,36 @@
 				document.forms[0].task.value = "<%=Constants.Task.REPORT.GENERATEREPORTPROJECT%>";
 				document.forms[0].submit();
 			 }
+		 
+		 $(document).ready(function () {
+	            $('#start').datepicker({
+	                format: "yyyy-mm-dd"
+	            });  
+	            $('#until').datepicker({
+	                format: "yyyy-mm-dd"
+	            });  
+	            
+	            $('.columnSearch').on('change',function(){
+	            	onselect($(this).val());
+	            });
+	           
+	            onselect($('.columnSearch').val());
+	        });
+			
+			function onselect(value) {
+				
+				if(value == "STARTDATE" || value == "ESTIMATEDATE") {
+	            	$('#textSearch').css('display', 'none') ;
+	            	$('#date_start').css('display', 'block') ;
+	            	$('#date_line').css('display', 'block') ;
+	            	$('#date_until').css('display', 'block') ;
+	            } else {
+	            	$('#textSearch').css('display', 'block') ;
+	            	$('#date_start').css('display', 'none') ;
+	            	$('#date_line').css('display', 'none') ;
+	            	$('#date_until').css('display', 'none') ;
+	            }
+			}
 	</script>
 	<!-- End JS -->
 </head>
@@ -74,8 +104,7 @@
 				<table>
 					<tr>
 					<td style="padding-left:5px">				
-						<html:select name="ReportUserProjectForm" property="columnSearch" styleClass="form-control columnSearch">
-
+					<html:select name="ReportUserProjectForm" property="columnSearch" styleClass="form-control columnSearch">
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
 					</td>
@@ -101,11 +130,6 @@
    				  			</td>
    				  	</tr>
    				 </table>
-=======
-					<html:text name="ReportUserProjectForm" property="search"/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="javascript:flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 				</html:form>
 				</div>
 				<!-- End Of Search Handler -->
