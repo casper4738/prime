@@ -347,7 +347,7 @@ public class ProjectActionAsHead extends Action {
 		}
 		
 		List<ProjectBean> list = new ArrayList<ProjectBean>();
-		int countRows  = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), search);
+		int countRows  = tmpProjectManager.getCountListByColAsHead(pForm.getColumnSearch(), search, tmpEmployeeId);
 		pForm.getProjectBean().setIsAssigner(tmpProjectManager.getCountProjectAssigner(tmpEmployeeId));
 		list = tmpProjectManager.getListByColumnAsHead(pForm.getColumnSearch(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  

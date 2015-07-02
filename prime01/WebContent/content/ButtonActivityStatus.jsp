@@ -16,7 +16,6 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject}
 
 <div class="form-action"><table align="center" class="btn-status-activity">
    <tr>	
-   
    	<logic:equal name="taskReceiver" value="${employeeIdActive}">
 		<logic:equal name="status" value='<%=Constants.Status.CREATE+""%>'>
 			<td><input type="button" value="Start" class="btn btn-sm btn-primary" onclick="dosubmit('<%=Constants.Status.PROGRESS%>')"/></td>

@@ -17,6 +17,8 @@ public interface ProjectManager {
 	
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 	
+	public Integer getCountListByColAsHead(String columnSearch, String value, Integer employeeId) 	throws SQLException;
+	
 	public Integer getNewId() throws SQLException;
 	
 	public Integer getNewMemberId() throws SQLException;

@@ -54,11 +54,10 @@
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage Tasks</h1>
+		<h1>Manage Tasks<small> As Head</small></h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li><html:link href="#" onclick="flyToBack('home')">Tasks & Activities</html:link></li>
-			<li>As Head</li>
 			<li class="active">Task Detail</li>
 		</ol>
 	</section>
@@ -94,6 +93,7 @@
     			<jsp:param name="taskId" value="${TaskHeadUserForm.taskId}" />
     			<jsp:param name="taskAssigner" value="${TaskHeadUserForm.taskBean.taskAssigner}" />
     			<jsp:param name="taskReceiver" value="${TaskHeadUserForm.taskBean.taskReceiver}" />
+    			<jsp:param name="projectMemberId" value="${TaskHeadUserForm.taskBean.projectMemberId}" />
     		</jsp:include>
 			
 			<div class="show-in-page">

@@ -7,17 +7,25 @@
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 
 <bean:define id="taskId" value="${param.taskId}" toScope="request" />
-<bean:define id="taskAssigner" value="${param.taskAssigner}" toScope="request" />
 <bean:define id="taskReceiver" value="${param.taskReceiver}" toScope="request" />
+<bean:define id="projectMemberId" value="${param.projectMemberId}" toScope="request" />
 
 <center>${employeeIdActive} |${taskAssigner}  | ${taskReceiver} | ${taskId} 
 <br/>
 ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject}
 </center>
 
+<logic:notEqual name="projectMemberId" value="">
+	<bean:define id="taskAssigner" value="${param.projectMemberId}" toScope="request" />
+</logic:notEqual>
+<logic:equal name="projectMemberId" value="">
+	<bean:define id="taskAssigner" value="${param.taskAssigner}" toScope="request" />
+</logic:equal>
+
+
+
 <div class="form-action"><table align="center">
    <tr> <td style="padding:5px;">
-		
 		<logic:equal name="taskReceiver" value="${employeeIdActive}">
 			<!-- submit != true -->
 			<logic:notEqual name="isAlreadySubmit" value="true">

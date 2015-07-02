@@ -59,7 +59,7 @@
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
-		<h1>Manage Tasks</h1>
+		<h1>Manage Tasks<small> As Head</small></h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
 			<li class="active">Task & Activities</li>
@@ -129,10 +129,10 @@
 					<th>Task Name</th>
 					<th width="15px"></th>
 					<th>Task Description</th>
-					<th width="100px">Task Assigner</th>
 					<th width="100px">Task Receiver</th>
 					<th width="80px">Start Date</th>
 					<th width="85px">Estimate Date</th>
+					<th>From Project</th>
 					<th width="50px">Status</th>
                     <th width="40px">Actions</th>
                 </tr></thead>
@@ -160,10 +160,10 @@
 		                		</logic:lessEqual>
 	                	    </td>
 	                	    <td><bean:write name="iter" property="taskDescription"/></td>
-	                	    <td><bean:write name="iter" property="taskAssignerName"/></td>
 	                	    <td><bean:write name="iter" property="taskReceiverName"/></td>
 	                	    <td align="center"><bean:write name="iter" property="taskStartDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center"><bean:write name="iter" property="taskEstimateDate" format="dd MMMM yyyy"/></td>
+	                	    <td><bean:write name="iter" property="projectName"/></td>
 	                	    <td align="center">
 		                		<jsp:include page="/content/Status.jsp">
                 	    			<jsp:param name="status" value="${iter.taskLastStatus}" />

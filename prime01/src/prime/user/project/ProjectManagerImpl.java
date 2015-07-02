@@ -134,6 +134,16 @@ public class ProjectManagerImpl implements ProjectManager {
 		return (Integer) mapper.queryForObject("project.getCountListByCol", map);
 	}
 
+	@Override
+	public Integer getCountListByColAsHead(String columnSearch, String value, Integer employeeId) 	throws SQLException {
+		 
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);
+		map.put("employeeId", employeeId);
+		return (Integer) mapper.queryForObject("project.getCountListByColAsHead", map);
+	}
+	
 
 	@Override
 	public Integer getCountByColumnEmployeeAll(String columnSearch, String value) throws SQLException {

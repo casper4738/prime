@@ -72,6 +72,7 @@
 			ACTUAL_START				AS actualStart,
 			ACTUAL_END					AS actualEnd,
 			MAIN_DAYS					AS mainDays,
+			PROJECT_MEMBER_ID			AS projectMemberId,
 			NVL(((SELECT COUNT(ACTIVITY_ID) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS=#finish#) /
 			  (SELECT NULLIF(COUNT(ACTIVITY_ID),0) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS!=#abort#)
 			) * 100, 0) 				AS percentage
@@ -116,6 +117,8 @@
 			ACTUAL_START				AS actualStart,
 			ACTUAL_END					AS actualEnd,
 			MAIN_DAYS					AS mainDays,
+			(SELECT Y.PROJECT_NAME FROM PROJECT_MEMBERS X JOIN PROJECTS Y ON X.PROJECT_ID=Y.PROJECT_ID 
+			  WHERE X.PROJECT_MEMBER_ID=TASK.PROJECT_MEMBER_ID) AS projectName,
 			NVL(((SELECT COUNT(ACTIVITY_ID) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS=#finish#) /
 			  (SELECT NULLIF(COUNT(ACTIVITY_ID),0) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS!=#abort#)
 			) * 100, 0) 				AS percentage
@@ -169,7 +172,28 @@
 					</isEqual>
 				</isNotNull>
 			</dynamic>
-		) 
+		) OR TASK.TASK_ID IN (
+			SELECT X.TASK_ID FROM TASKS X
+			JOIN PROJECT_MEMBERS Y ON X.PROJECT_MEMBER_ID = Y.PROJECT_MEMBER_ID
+			JOIN EMPLOYEES Z ON Z.EMPLOYEE_ID=X.TASK_RECEIVER
+            WHERE Z.HEAD_ID = #taskAssigner#
+            <dynamic prepend="AND">
+				<isNotNull property="columnSearch">
+					<isEqual property="columnSearch" compareValue="NAME">
+						UPPER(X.TASK_NAME) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="DESCRIPTION">
+						UPPER(X.TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="STARTDATE">
+						X.TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+						X.TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+				</isNotNull>
+			</dynamic>
+        )
 		ORDER BY TASK_NAME ASC) page 
 		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>
@@ -206,6 +230,48 @@
 				</isEqual>
 			</isNotNull>
 		</dynamic>
+		OR TASK.TASK_ID  IN (
+		    SELECT X.TASK_ID FROM TASKS X
+		    JOIN EMPLOYEES Y ON Y.EMPLOYEE_ID= X.TASK_ASSIGNER AND Y.EMPLOYEE_ID = X.TASK_RECEIVER
+		    WHERE Y.HEAD_ID = #taskAssigner#
+		    <dynamic prepend="AND">
+				<isNotNull property="columnSearch">
+					<isEqual property="columnSearch" compareValue="NAME">
+						UPPER(X.TASK_NAME) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="DESCRIPTION">
+						UPPER(X.TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="STARTDATE">
+						X.TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+						X.TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+				</isNotNull>
+			</dynamic>
+		) OR TASK.TASK_ID IN (
+			SELECT X.TASK_ID FROM TASKS X
+			JOIN PROJECT_MEMBERS Y ON X.PROJECT_MEMBER_ID = Y.PROJECT_MEMBER_ID
+			JOIN EMPLOYEES Z ON Z.EMPLOYEE_ID=X.TASK_RECEIVER
+            WHERE Z.HEAD_ID = #taskAssigner#
+            <dynamic prepend="AND">
+				<isNotNull property="columnSearch">
+					<isEqual property="columnSearch" compareValue="NAME">
+						UPPER(X.TASK_NAME) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="DESCRIPTION">
+						UPPER(X.TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="STARTDATE">
+						X.TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+						X.TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+				</isNotNull>
+			</dynamic>
+        )
 	</select>
 	<!-- END TASK HEAD -->
 
@@ -226,6 +292,8 @@
 			ACTUAL_START				AS actualStart,
 			ACTUAL_END					AS actualEnd,
 			MAIN_DAYS					AS mainDays,
+			(SELECT Y.PROJECT_NAME FROM PROJECT_MEMBERS X JOIN PROJECTS Y ON X.PROJECT_ID=Y.PROJECT_ID 
+			  WHERE X.PROJECT_MEMBER_ID=TASK.PROJECT_MEMBER_ID) AS projectName,
 			NVL(((SELECT COUNT(ACTIVITY_ID) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS=#finish#) /
 			  (SELECT NULLIF(COUNT(ACTIVITY_ID),0) FROM ACTIVITIES X WHERE X.TASK_ID=TASK.TASK_ID AND ACTIVITY_LAST_STATUS!=#abort#)
 			) * 100, 0) AS percentage

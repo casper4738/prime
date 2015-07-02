@@ -38,6 +38,9 @@ public class TaskHeadAction extends Action {
 		int employeeId = LoginData.getUserData().getEmployeeId();
 		request.setAttribute("employeeIdActive", employeeId);
 		
+		
+		System.out.println("cekk employee : "+employeeId);
+		
 		TaskHeadForm pForm = (TaskHeadForm) form;
 		TaskManager manager = new TaskManagerImpl();
 		EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();

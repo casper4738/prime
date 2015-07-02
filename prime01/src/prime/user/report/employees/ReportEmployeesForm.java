@@ -23,6 +23,7 @@ public class ReportEmployeesForm extends ActionForm {
 	private Integer employeeId;
 	private String statusSearch;
 	private String genderSearch;
+	private String tempTask;
 
 	private Boolean isShowAll = true;
 
@@ -160,6 +161,14 @@ public class ReportEmployeesForm extends ActionForm {
 
 	public void setEmployeeBean(EmployeeBean employeeBean) {
 		this.employeeBean = employeeBean;
+	}
+
+	public String getTempTask() {
+		return tempTask;
+	}
+
+	public void setTempTask(String tempTask) {
+		this.tempTask = tempTask;
 	}
 
 }

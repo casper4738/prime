@@ -22,12 +22,21 @@ public class TaskBean {
 	private String taskAssignerName;
 	private String taskReceiverName;
 	private String taskChangeNote;
+	private String projectName;
 
 	public TaskBean() {
 		setTaskStartDate(new java.sql.Date(new java.util.Date().getTime()));
 		setTaskEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
 		setActualStart(new java.sql.Date(new java.util.Date().getTime()));
 		setTaskEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
+	}
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
 	}
 
 	public Integer getMainDays() {

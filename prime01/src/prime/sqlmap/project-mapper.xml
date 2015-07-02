@@ -14,6 +14,19 @@
 		</dynamic>
 	</select>
 	
+	<select id="getCountListByColAsHead" resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(1)
+		FROM PROJECTS
+		WHERE PROJECT_ASSIGNER=#employeeId#
+		<dynamic prepend="WHERE">
+			<isNotNull property="columnSearch">
+				<isEqual property="columnSearch" compareValue="NAME">
+					UPPER(PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
+				</isEqual>
+			</isNotNull>
+		</dynamic>
+	</select>
+	
 	
 	
 	<select id="getListByColumnAsMember" resultClass="prime.user.project.ProjectBean" parameterClass="java.util.Map">

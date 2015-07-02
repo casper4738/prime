@@ -50,7 +50,6 @@ public class ReportEmployeesAction extends Action {
 		}
 		
 		else if(Constants.Task.REPORT.GENERATEREPORTEMPLOYEE.equals(pForm.getTask())){
-			
 			if("ID".equals(pForm.getColumnSearch())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.EMPLOYEE_ID LIKE ('%" + pForm.getSearch()+ "%')");				
 			} else if ("NAME".equals(pForm.getColumnSearch())) {
@@ -60,11 +59,11 @@ public class ReportEmployeesAction extends Action {
 			} else if ("EMAIL".equals(pForm.getColumnSearch())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER(EMP.EMAIL) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
 			} else if ("DIVISION".equals(pForm.getColumnSearch())) {
-				request.getSession(true).setAttribute("searchQuery", " WHERE DIVISION_NAME LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER (DIV.DIVISION_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
 			} else if ("POSITION".equals(pForm.getColumnSearch())) {
-				request.getSession(true).setAttribute("searchQuery", " WHERE POSITION_NAME LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER (POS.POSITION_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
 			} else if ("MANAGER".equals(pForm.getColumnSearch())) {
-				request.getSession(true).setAttribute("searchQuery", " WHERE EMPLOYEE_NAME LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER (EMPMGR.EMPLOYEE_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
 			} else if ("STATUS".equals(pForm.getColumnSearch())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE RESIGN_DATE LIKE ('%" + pForm.getSearch()+ "%')");
 			}
@@ -88,7 +87,7 @@ public class ReportEmployeesAction extends Action {
 		request.setAttribute("listReportEmployees", list);
 		request.setAttribute("listSearchColumnEmployeeTask", Constants.Search.TASK_SEARCHCOLUMNS);
 		request.setAttribute("listSearchColumn",
-				Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
+				Constants.Search.REPORTEMPLOYEE_SEARCHCOLUMNS);
 		request.setAttribute("listShowEntries", Constants.PAGINGROWPAGE);
 		setPaging(request, pForm, countRows, pForm.getGoToPage(),
 				pForm.getShowInPage());

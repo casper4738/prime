@@ -143,8 +143,8 @@
       				  				</div>
       				  			</td>
 							<td style="padding-left:5px">
-								<input type="button" class="btn bg-olive" style="height:32px" onclick="flyToPage('<%=Constants.Task.DOSEARCH%>')" value='Search'/>
-								<input type="button" class="btn bg-olive" style="height:32px" onclick="searchAll('<%=Constants.Task.DOSEARCH%>')" value='Show All'/>
+								<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ProjectUserFormAsHead" property="task" />', 'false')" value='Search'/>
+								<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="ProjectUserFormAsHead" property="task" />', 'true')" value='Show All'/>					
 							</td>
 						</tr>
 					</table>

@@ -72,9 +72,7 @@
 				<p><span class="message"><bean:write name="ProjectUserFormAsHead" property="message" /></span></p>
 				<logic:notEqual name="isAddTaskActive" value="0">
 					<div class="form-action"><table align="center">
-	                  <tr><td style="padding:5px;">
-	                  		<input type="button" value="Add New Task" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.PROJECT.GOTOCREATETASK%>')"/>
-	               	  </td></tr>
+	                  
 					</table></div>
 				</logic:notEqual>
 				
