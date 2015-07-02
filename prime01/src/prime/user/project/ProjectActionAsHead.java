@@ -1,11 +1,17 @@
 package prime.user.project;
 
+<<<<<<< HEAD
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+=======
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 import java.util.ArrayList;
+<<<<<<< HEAD
 import java.util.Date;
+=======
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -68,8 +74,8 @@ public class ProjectActionAsHead extends Action {
 			System.out.println("masuk detail head action");
 			//##.View Detail Project
 			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
-			int countRows = tmpProjectManager.getCountListMember(pForm.getProjectId());
-			List<ProjectBean> list = tmpProjectManager.getListProjectMember(pForm.getColumnSearchReal(), pForm.getSearch(), 
+			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+			List<ProjectBean> list = tmpProjectManager.getListProjectMember(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getProjectId());
@@ -117,8 +123,8 @@ public class ProjectActionAsHead extends Action {
 			pForm.getProjectBean().setEmployeeName(pForm.getEmployeeBean().getEmployeeName());
 			System.out.println("PID "+pForm.getProjectId());
 			
-			int countRows = tmpProjectManager.getCountListTaskMember(pForm.getEmployeeId(), pForm.getProjectId());
-			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearchReal(), pForm.getSearch(), 
+			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getEmployeeId(), pForm.getProjectId());
@@ -155,8 +161,8 @@ public class ProjectActionAsHead extends Action {
 		} else if(Constants.Task.TASK.GOTODETAIL.equals(pForm.getTask())){
 			//##.View Detail Task
 			pForm.setTaskBean(tmpTaskManager.getTaskById(pForm.getTaskId()));
-			int countRows = tmpActivityManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), pForm.getTaskId());
-			List<ActivityBean> list = tmpActivityManager.getListByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), 
+			int countRows = tmpActivityManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch(), pForm.getTaskId());
+			List<ActivityBean> list = tmpActivityManager.getListByColumn(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getTaskId());
@@ -179,8 +185,8 @@ public class ProjectActionAsHead extends Action {
 			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeBean().getEmployeeId());
 			pForm.getProjectBean().setEmployeeName(pForm.getEmployeeBean().getEmployeeName());
 			
-			int countRows = tmpProjectManager.getCountListTaskMember(pForm.getEmployeeId(), pForm.getProjectId());
-			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearchReal(), pForm.getSearch(), 
+			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), pForm.getSearch());
+			List<ProjectBean> list =tmpProjectManager.getListProjectMemberDetails(pForm.getColumnSearch(), pForm.getSearch(), 
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 					PrimeUtil.getEndRow(pForm.getGoToPage(),pForm.getShowInPage(), countRows),
 					pForm.getEmployeeId(), pForm.getProjectId());
@@ -360,13 +366,16 @@ public class ProjectActionAsHead extends Action {
 			
 			
 			return mapping.findForward("forward");
+<<<<<<< HEAD
 		} else if(("refreshProjectProgress").equals(pForm.getTask())){
 			refreshProjectProgressList(request, response, pForm, tmpProjectManager);
 			return null;
+=======
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 		}
 		
 		String search = null;
-		if("STARTDATE".equals(pForm.getColumnSearchReal()) || "ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
+		if("STARTDATE".equals(pForm.getColumnSearch()) || "ESTIMATEDATE".equals(pForm.getColumnSearch())) {
 			search = pForm.getStartDate()+";"+pForm.getUntilDate();
 		} else {
 			System.out.println("masuk search");
@@ -375,9 +384,9 @@ public class ProjectActionAsHead extends Action {
 		pForm.getProjectBean().setIsAssigner(tmpProjectManager.getCountProjectAssigner(tmpEmployeeId));
 		
 		List<ProjectBean> list = new ArrayList<ProjectBean>();
-		System.out.println("colom "+pForm.getColumnSearchReal());
-		int countRows  = tmpProjectManager.getCountListByColAsHead(pForm.getColumnSearchReal(), search, tmpEmployeeId);
-		list = tmpProjectManager.getListByColumnAsHead(pForm.getColumnSearchReal(), search,
+		System.out.println("colom "+pForm.getColumnSearch());
+		int countRows  = tmpProjectManager.getCountListByColAsHead(pForm.getColumnSearch(), search, tmpEmployeeId);
+		list = tmpProjectManager.getListByColumnAsHead(pForm.getColumnSearch(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows), tmpEmployeeId);
 		
@@ -406,6 +415,7 @@ public class ProjectActionAsHead extends Action {
 		pForm.setGoToPage(pageUtil.getPage());
 	}
 	
+<<<<<<< HEAD
 	private void refreshProjectProgressList(HttpServletRequest request, HttpServletResponse response, ProjectFormAsHead pForm, ProjectManager manager) throws SQLException, IOException {
 		//##0.Temp Variable
 		int tmpI, tmpJ, tmpK;
@@ -417,7 +427,12 @@ public class ProjectActionAsHead extends Action {
 		boolean tmpLastStatus, tmpAnyProgress;
 		ArrayList<Object> tmpTaskProgress;
 		String tmpLastName = "";
+=======
+	private void setPaging(HttpServletRequest request, ProjectForm pForm) {
+		request.setAttribute("employeeActive", 100);
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 		
+<<<<<<< HEAD
 		System.out.println("LLALALAA");
 		System.out.println("Date = " + pForm.getProgressStartDate());
 		tmpFilterStartDate = PrimeUtil.parseDateStringToDateOnly(pForm.getProgressStartDate());
@@ -542,5 +557,8 @@ public class ProjectActionAsHead extends Action {
 					 	 "</table>");
 		}
 		tmpOut.flush();
+=======
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 	}
+	
 }

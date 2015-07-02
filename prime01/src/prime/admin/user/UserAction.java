@@ -45,6 +45,7 @@ public class UserAction extends Action {
 			return mapping.findForward("add");
 		} else if (Constants.Task.GOTOEDIT.equals(userForm.getTask())) {
 			// ##. Edit Data
+			request.setAttribute("listUserRole", tmpRoleManager.getListAll());
 			userForm.setUserBean(tmpManager.getUserByUsername(userForm.getTmpValue()));
 			return mapping.findForward("edit");
 		} else if (Constants.Task.DOADD.equals(userForm.getTask())) {

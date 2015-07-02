@@ -33,14 +33,15 @@
 	</select>
 	
 	<select id="getCountListByColAsHead" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT  COUNT (DISTINCT PROJ.PROJECT_ID)
+		SELECT  COUNT(DISTINCT (PROJ.PROJECT_ID))
         FROM PROJECTS PROJ
+        JOIN PROJECT_DETAILS PD ON PROJ.PROJECT_ID = PD.PROJECT_ID
         JOIN EMPLOYEES EMP_ASSIGN ON PROJ.PROJECT_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
         JOIN EMPLOYEES EMP_RECEIVE ON PROJ.PROJECT_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
         JOIN PROJECT_MEMBERS PM ON PROJ.PROJECT_ID = PM.PROJECT_ID
         JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = PM.EMPLOYEE_ID
         WHERE PROJ.PROJECT_ASSIGNER=#employeeId#
-		<dynamic prepend="AND">
+		<dynamic prepend="WHERE">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
 					UPPER(PROJ.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
@@ -67,7 +68,7 @@
         JOIN PROJECT_MEMBERS PM ON PROJ.PROJECT_ID = PM.PROJECT_ID
         JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = PM.EMPLOYEE_ID
          WHERE PM.EMPLOYEE_ID=#employeeId# AND PM.PROJECT_MEMBER_STATUS=1
-		<dynamic prepend="AND">
+		<dynamic prepend="WHERE">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
 					UPPER(PROJ.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
@@ -100,12 +101,13 @@
             EMP_RECEIVE.EMPLOYEE_NAME   AS projectReceiverName,
 			EMP_RECEIVE.EMPLOYEE_ID     AS employeeIdReceiver
         FROM PROJECTS PROJ
+        JOIN PROJECT_DETAILS PD ON PROJ.PROJECT_ID = PD.PROJECT_ID
         JOIN EMPLOYEES EMP_ASSIGN ON PROJ.PROJECT_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
         JOIN EMPLOYEES EMP_RECEIVE ON PROJ.PROJECT_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
         JOIN PROJECT_MEMBERS PM ON PROJ.PROJECT_ID = PM.PROJECT_ID
         JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = PM.EMPLOYEE_ID
         WHERE PM.EMPLOYEE_ID=#employeeId# AND PM.PROJECT_MEMBER_STATUS=1
-		<dynamic prepend="AND">
+		<dynamic prepend="WHERE">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
 					UPPER(PROJ.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
@@ -140,12 +142,13 @@
             EMP_RECEIVE.EMPLOYEE_NAME   AS projectReceiverName,
 			EMP_RECEIVE.EMPLOYEE_ID     AS employeeIdReceiver
         FROM PROJECTS PROJ
+        JOIN PROJECT_DETAILS PD ON PROJ.PROJECT_ID = PD.PROJECT_ID
         JOIN EMPLOYEES EMP_ASSIGN ON PROJ.PROJECT_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
         JOIN EMPLOYEES EMP_RECEIVE ON PROJ.PROJECT_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
         JOIN PROJECT_MEMBERS PM ON PROJ.PROJECT_ID = PM.PROJECT_ID
         JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = PM.EMPLOYEE_ID
         WHERE PROJ.PROJECT_ASSIGNER=#employeeId#
-		<dynamic prepend="AND">
+		<dynamic prepend="WHERE">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
 					UPPER(PROJ.PROJECT_NAME) LIKE UPPER('%'||#value#||'%')
@@ -193,17 +196,6 @@
 		WHERE 
 			PROJECT_ID=#id#
 	</select>
-	
-	<select id="getCountListMember" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
-		SELECT COUNT (DISTINCT E.EMPLOYEE_ID) 
-        FROM EMPLOYEES E
-        LEFT JOIN DIVISIONS D ON D.DIVISION_ID = E.DIVISION_ID
-        JOIN PROJECT_MEMBERS PM ON E.EMPLOYEE_ID = PM.EMPLOYEE_ID
-        JOIN PROJECTS P ON P.PROJECT_ID = PM.PROJECT_ID
-        JOIN ROLES R ON PM.ROLE_ID = R.ROLE_ID
-        WHERE P.PROJECT_ID = #projectId#
-	</select>
-	
 	
 	<select id="getByTaskId" resultClass="prime.user.project.ProjectBean" parameterClass="java.lang.Integer">
 		SELECT 
@@ -383,28 +375,17 @@
 		 WHERE PM.PROJECT_MEMBER_ID = #id#
 	</select>
 	
-	<select id="getCountListTaskMember" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT COUNT (TASK.TASK_ID)
-        FROM TASKS TASK
-        JOIN EMPLOYEES EMP_ASSIGN ON TASK.TASK_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
-        JOIN EMPLOYEES EMP_RECEIVE ON TASK.TASK_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
-        JOIN (
-            SELECT TD.TASK_ID, MAX(TD.TASK_CHANGE_DATE) AS TASK_CHANGE_DATE FROM TASK_DETAILS TD
-            GROUP BY TD.TASK_ID
-        ) TASK_DET ON TASK_DET.TASK_ID=TASK.TASK_ID
-        JOIN PROJECT_MEMBERS PROJ_MBR ON PROJ_MBR.PROJECT_MEMBER_ID = TASK.PROJECT_MEMBER_ID
-        JOIN ROLES ROLE ON PROJ_MBR.ROLE_ID = ROLE.ROLE_ID
-        JOIN PROJECTS PRO ON PRO.PROJECT_ID=PROJ_MBR.PROJECT_ID
-        WHERE TASK.TASK_RECEIVER = #taskReceiver#
-        AND PRO.PROJECT_ID=#projectId#
-	</select>
-	
 	<select id="getProjectMemberIdByAll" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT  PROJECT_MEMBER_ID
-		FROM 	PROJECT_MEMBERS
-		WHERE	PROJECT_ID = #projectId#
-		AND 	ROLE_ID = #roleId# 
-		AND 	EMPLOYEE_ID = #employeeId#
+		SELECT 
+			PROJECT_MEMBER_ID
+		FROM 
+			PROJECT_MEMBERS
+		WHERE 
+			PROJECT_ID = #projectId#
+		AND 
+			ROLE_ID = #roleId# 
+		AND 
+			EMPLOYEE_ID = #employeeId#
 	</select>
 	
 	<insert id="insertMember" parameterClass="prime.user.project.ProjectBean">
@@ -512,6 +493,7 @@
         WHERE PM.EMPLOYEE_ID=#employeeId#
         AND PRO.PROJECT_ID=#projectId#
         AND PM.ROLE_ID=1
+<<<<<<< HEAD
 	</select>
 	
 	<select id="getListEmployeeIDInProject" parameterClass="java.lang.Integer" resultClass="java.lang.Integer">
@@ -544,5 +526,7 @@
         JOIN EMPLOYEES EMP
             ON PM.EMPLOYEE_ID = EMP.EMPLOYEE_ID
 		WHERE PRO.PROJECT_ID =#projectId# AND PM.EMPLOYEE_ID=#employeeId# 
+=======
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 	</select>
 </sqlMap> 

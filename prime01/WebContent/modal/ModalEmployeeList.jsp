@@ -37,11 +37,9 @@
 	    } );
 		
 		//Method Specified For Modal Handling
-		function modalFlyToPage(pColumnSearch) {
+		function modalFlyToPage(isBool) {
 			var tmpForm = document.getElementById("idForm");
-			if(pColumnSearch=="All"){
-				tmpForm.columnSearch.value = pColumnSearch;
-			}
+			tmpForm.isShowAll.value = isBool;
 			modalLoadHandler(serialize(tmpForm));
 		}
 		
@@ -112,6 +110,7 @@
 				    <html:hidden name="ModalForm" property="param3"/>
 				    <html:hidden name="ModalForm" property="param4"/>
 				    <html:hidden name="ModalForm" property="param5"/>
+				    <html:hidden name="ModalForm" property="isShowAll"/>
 				    <html:hidden name="ModalForm" property="showInPage"/>
 					<table>
 						<tr>
@@ -134,8 +133,8 @@
 								</html:select>
 							</td>
 							<td style="padding-left:5px">
-								<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage()" value='Search'/>
-								<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('All')" value='Show All'/>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('false')" value='Search'/>
+								<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('true')" value='Show All'/>
 							</td>
 						</tr>
 					</table>
@@ -173,9 +172,27 @@
 			    <!-- End Of Table List -->
 			            
 	            <!-- Paging Number Handler Tag -->
-				<jsp:include page="/content/Pagination.jsp">
-		   			<jsp:param name="formName" value="ModalForm" />
-		   		</jsp:include>
+				<ul class="pagination">
+					<li tabindex="0"><html:link styleClass="paging" href="#" onclick="modalPage(${pageFirst})">First</html:link></li>
+					<li tabindex="1"><html:link styleClass="paging" href="#" onclick="modalPage(${pagePrev})"><<</html:link> </li>
+					
+					<logic:iterate id="p" name="listPage">
+						<logic:equal name="p" value="${pageNow}">
+							<li><html:link styleClass="active" href="#">${p}</html:link> </li>
+						</logic:equal>
+						<logic:notEqual name="p" value="${pageNow}">
+							<li><html:link styleClass="paging" href="#" onclick="modalPage(${p})">${p}</html:link> </li>
+						</logic:notEqual>
+					</logic:iterate>
+					<li><html:link styleClass="paging" href="#" onclick="modalPage(${pageNext})" >>></html:link> </li>
+					<li><html:link styleClass="paging" href="#" onclick="modalPage(${pageLast})" >Last</html:link></li>
+					
+					<html:text name="ModalForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
+					<html:button property="" onclick="modalPage(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
+				</ul>
+				<div class="paginate-2">
+					Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
+				</div>
 				<!-- End Of Paging Number Handler Tag -->
 				</html:form>
         	</div>

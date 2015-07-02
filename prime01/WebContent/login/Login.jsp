@@ -20,7 +20,7 @@
     <div class="login-box">
       <div class="login-box-body">
 	    <div class="login-logo">
-	       <b>Prime</b> v.0.1   <i class="fa fa-refresh fa-spin"></i>	
+	       <b>Prime</b> v.0.1
 	    </div><!-- /.login-logo -->
         <p class="login-box-msg">Sign in to start your session</p>
         <html:form action="/Login" method="post" styleId="form-login">
@@ -61,9 +61,10 @@
     	  		  $('#login-fail').html('<%=request.getAttribute(Constants.Request.LOGIN_STATUS)%>');
     	  	  }
     	      
-// 		      $('#ajax-validating').hide();
+ 		      $('#ajax-validating').hide();
 		  	  $('#textbox-username').attr("placeholder","Username");
 		  	  $('#textbox-password').attr("placeholder","Password");
+		  	  $('#textbox-password').val('');
 			  $('#btn-submit').click(function(){ 
 	    		  $('#btn-submit').hide();
 	    		  $('#ajax-validating').show();  

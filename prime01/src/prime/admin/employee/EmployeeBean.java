@@ -40,6 +40,7 @@ public class EmployeeBean {//extends HolidayBean
 	private String substituteHead;
 	private String treeId;
 	private String filePicConverted;
+	private String startMondayDate;
 		
 	public EmployeeBean() {
 		setHireDate(new java.sql.Date(new java.util.Date().getTime()));
@@ -254,5 +255,13 @@ public class EmployeeBean {//extends HolidayBean
 	
 	public String getConvertedFilePic(){
 		return this.filePicConverted;
+	}
+
+	public String getStartMondayDate() {
+		return startMondayDate;
+	}
+
+	public void setStartMondayDate(String startMondayDate) {
+		this.startMondayDate = startMondayDate;
 	}
 }

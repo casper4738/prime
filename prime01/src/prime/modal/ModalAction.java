@@ -105,11 +105,20 @@ public class ModalAction extends Action {
             		case "employeeList"  :
                 		tmpTarget = "employeeList";
                 		
+                		String search = "";
+                		if("GENDER".equals(pForm.getColumnSearchReal())) {
+                			search = pForm.getGenderSearch();
+                		} else if("STATUS".equals(pForm.getColumnSearchReal())) {
+                			search = pForm.getStatusSearch();
+                		} else {
+                			search = pForm.getSearch();			
+                		}
+                		
                     	//##1.Fetch Data From DB
-                		countRows  = manager.getCountByColumnEmployeeActive(pForm.getColumnSearch(), pForm.getSearch());
+                		countRows  = manager.getCountByColumnEmployeeActive(pForm.getColumnSearchReal(), search);
                 		
                 		//---.Depend On The Object
-                		list = manager.getListByColumnEmployeeActive(pForm.getColumnSearch(), pForm.getSearch(),
+                		list = manager.getListByColumnEmployeeActive(pForm.getColumnSearchReal(), search,
                 									   				 PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
                 									   				 PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows));
 
@@ -144,6 +153,7 @@ public class ModalAction extends Action {
             			break;
             		case "employeeHead":  
                 		tmpTarget = "employeeHead";
+<<<<<<< HEAD
                     	//##1.Fetch Data From DB
                 		countRows  = manager.getCountByColumnEmployeeHead(pForm.getColumnSearch(), pForm.getSearch(), listPosition.getPositionLevel(), pForm.getParam3(), pForm.getParam4(), pForm.getParam5());
                 		
@@ -152,6 +162,35 @@ public class ModalAction extends Action {
                 										   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
                 										   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows), pForm.getParam3(), pForm.getParam4(), pForm.getParam5());
                 		
+=======
+
+                		if(pForm.getParam3().equals("projectAssigner")){
+                			int employeeId=100;
+                			list = manager.getListByTree(pForm.getColumnSearch(), pForm.getSearch(),
+                					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
+                					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),
+                					employeeId
+                					);
+                		}else{
+                			
+                			search = "";
+                    		if("GENDER".equals(pForm.getColumnSearchReal())) {
+                    			search = pForm.getGenderSearch();
+                    		} else if("STATUS".equals(pForm.getColumnSearchReal())) {
+                    			search = pForm.getStatusSearch();
+                    		} else {
+                    			search = pForm.getSearch();			
+                    		}
+                			
+	                    	//##1.Fetch Data From DB
+	                		countRows  = manager.getCountByColumnEmployeeHead(pForm.getColumnSearchReal(), search, listPosition.getPositionLevel(), pForm.getParam3(), pForm.getParam4(), pForm.getParam5());
+	                		
+	                		//---.Depend On The Object
+	                		list = manager.getListEmployeeHead(pForm.getColumnSearchReal(),search, listPosition.getPositionLevel(),
+	                										   PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
+	                										   PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows), pForm.getParam3(), pForm.getParam4(), pForm.getParam5());
+                		}
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
                 		//##2.Prepare Data for Modal-Table Show
                 		//---a.Modal Title
                 		request.setAttribute("modalListName", "Employees List");
