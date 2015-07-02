@@ -85,7 +85,7 @@
 				  $.ajax({ 
 			          type	  : "POST",
 			          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',  
-			          data	  : 'task=<%=Constants.Task.DOVALIDATEDAYOFF%>&employeeBean.startDate=' + $('#datepicker_startdate').val() + '&employeeBean.endDate=' + $('#datepicker_enddate').val(),
+			          data	  : 'task=<%=Constants.Task.DOVALIDATEDAYOFF%>&employeeBean.startDate=' + $('#datepicker_startdate').val() + '&employeeBean.endDate=' + $('#datepicker_enddate').val() + '&employeeBean.employeeId='+$('#employeeId').val(),
 			          success : function(msg){
 							 param = msg.split('#');
 							 
@@ -180,7 +180,9 @@
                  			<tr>
                 				<td></td>
                 				<td></td>
-                				<td><span id="validatorStartDate" style="color: blue;font-size: 8;font-style: normal;"></span></td>
+                				<td>
+                					<i><span id="validatorStartDate" style="color: red;font-size: 8"></span></i>
+                				</td>
                 			</tr>
                  			<tr>
                  				<td>End Date</td>
@@ -199,7 +201,9 @@
                 			<tr>
                 				<td></td>
                 				<td></td>
-                				<td><span id="validatorEndDate" style="color: blue;font-size: 8;font-style: normal;"></span></td>
+                				<td>
+                					<i><span id="validatorEndDate" style="color: red;font-size: 8"></span></i>
+                				</td>
                 			</tr>
                  			<tr>
                  				<td>Description</td>
@@ -211,7 +215,9 @@
                  			<tr>
                 				<td></td>
                 				<td></td>
-                				<td><span id="validatorDescDayOff" style="color: blue;font-size: 8;font-style: normal;"></span></td>
+                				<td>
+                					<i><span id="validatorDescDayOff" style="color: red;font-size: 8"></span></i>
+                				</td>
                 			</tr>
                 			<tr>
                   				<td></td>
@@ -220,8 +226,8 @@
                   			</tr>
                  			<tr>
                  				<td colspan="3" align="center">
-                 					<html:button property="" value="Save" styleClass="btn btn-default" onclick="validateForm()" id="btn-save"/>
-                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('t10')" id="btn-cancel"/>
+                 					<html:button property="" value="Save" styleClass="btn btn-default" onclick="validateForm()" styleId="btn-save"/>
+                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('t10')" styleId="btn-cancel"/>
                  				</td>
                  			</tr>
 					</table>

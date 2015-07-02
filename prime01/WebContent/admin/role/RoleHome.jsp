@@ -58,12 +58,22 @@
 						<html:hidden name="RoleAdminForm" property="goToPage"/>
 						<html:hidden name="RoleAdminForm" property="showInPage"/>
 						<html:hidden name="RoleAdminForm" property="isShowAll"/>
-						<html:select name="RoleAdminForm" property="columnSearch" styleClass="columnSearch">
-							<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
-						</html:select>
-						<html:text name="RoleAdminForm" property="search" styleClass="textSearch"/>
-						<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="RoleAdminForm" property="task" />', 'false')" value='Search'/>
-						<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="RoleAdminForm" property="task" />', 'true')" value='Show All'/>					
+						<table>
+							<tr>
+								<td style="padding-left:5px">
+									<html:select name="RoleAdminForm" property="columnSearch" styleClass="form-control columnSearch">
+										<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
+									</html:select>
+								</td>
+								<td style="padding-left:5px">
+									<html:text name="RoleAdminForm" property="search" styleClass="form-control textSearch"/>
+								</td>
+								<td style="padding-left:5px">
+									<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="RoleAdminForm" property="task" />', 'false')" value='Search'/>
+									<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="searchBy('<bean:write name="RoleAdminForm" property="task" />', 'true')" value='Show All'/>					
+								</td>
+							</tr>
+						</table>
 					</html:form>
 				</div>
 				<!-- End Of Search Handler -->

@@ -84,11 +84,11 @@
 			<table>
 				<tr>
 					<td style="padding-left:5px">
-						<html:select name="EmployeeAdminForm" property="columnSearch" styleClass="columnSearch">
+						<html:select name="EmployeeAdminForm" property="columnSearch" styleClass="form-control columnSearch">
 							<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 						</html:select>
 					</td>
-					<td style="padding-left:5px"><html:text name="EmployeeAdminForm" property="search" styleId="textSearch"/></td>
+					<td style="padding-left:5px"><html:text name="EmployeeAdminForm" property="search" styleId="textSearch" styleClass="form-control textSearch"/></td>
 					<td style="padding-left:5px">
 						<html:select name="EmployeeAdminForm" property="genderSearch" styleId="genderSearch" style="width:150px">
 							<html:option value="0">Male</html:option>

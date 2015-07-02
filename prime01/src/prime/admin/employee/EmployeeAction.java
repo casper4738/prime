@@ -167,6 +167,8 @@ public class EmployeeAction extends Action {
 			manager.insertWeekend(pForm.getEmployeeBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DODAYOFF.equals(pForm.getTask())) {
+			System.out.println("MASUK SINI");
+			System.out.println(pForm.getEmployeeBean().getEmployeeId()+"--");
 			manager.insertDayoff(pForm.getEmployeeBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.GOTOEDITWEEKEND.equals(pForm.getTask())) {
@@ -269,6 +271,31 @@ public class EmployeeAction extends Action {
 		} else if(Constants.Task.DOCHANGEPIC.equals(pForm.getTask())){
 			pForm.getEmployeeBean().setFilePic(pForm.getProfpic().getFileData());
 			manager.updateChangePic(pForm.getEmployeeBean().getEmployeeId(),pForm.getEmployeeBean().getFilePic());
+			return null;
+		} else if(Constants.Task.DOVALIDATEDAYOFF.equals(pForm.getTask())){
+			response.setContentType("text/text;charset=utf-8");
+			response.setHeader("cache-control", "no-cache");
+			PrintWriter tmpOut = response.getWriter();
+			String tmpResponse = "";
+			
+			int tmpResponseCode;
+			//0 : Exists Database ; 1 : Empty Database
+			if(manager.getValidateDayOff(pForm.getEmployeeBean().getStartDate(),pForm.getEmployeeBean().getEndDate(),pForm.getEmployeeBean().getEmployeeId()) > 0){
+				tmpResponseCode = 1;	//DAY OFF Already Setting
+			} else {
+				tmpResponseCode = 0;	//Success
+			}
+
+			System.out.println(tmpResponseCode + " tmpResponseCode");
+			if(tmpResponseCode == 1){
+				tmpResponse = "1#<div id=\"message\" style=\"color:red;font-size:8\">Range Day Off already setting, please setting other.</div>";
+			} else {
+				tmpResponse = "0#";
+			}
+			
+			System.out.println(tmpResponse + " tmpResponse");
+			tmpOut.print(tmpResponse);
+			tmpOut.flush();
 			return null;
 		}
 		

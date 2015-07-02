@@ -187,6 +187,15 @@
         WHERE DO.EMPLOYEE_ID=#id#
 	</select>
 	
+	<select id="getValidateDayOff"  resultClass="java.lang.Integer" parameterClass="java.util.Map">
+		SELECT COUNT(0) FROM DAY_OFFS WHERE 
+		(DAYOFF_START_DATE <![CDATA[ >= ]]> #startDate# AND DAYOFF_END_DATE <![CDATA[ >=]]> #endDate#) OR 
+		(DAYOFF_START_DATE <![CDATA[ >= ]]> #startDate# AND DAYOFF_START_DATE <![CDATA[ <= ]]> #endDate#) OR
+		(DAYOFF_END_DATE <![CDATA[ >= ]]> #startDate# AND DAYOFF_END_DATE <![CDATA[ <= ]]> #endDate#) OR
+		(DAYOFF_START_DATE <![CDATA[ <= ]]> #startDate# AND DAYOFF_END_DATE <![CDATA[ >= ]]>#endDate#)
+		AND EMPLOYEE_ID=#empId#
+	</select>
+	
 	<select id="getListByColumn" resultClass="prime.admin.employee.EmployeeBean" parameterClass="java.util.Map">
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT 

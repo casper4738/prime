@@ -339,4 +339,15 @@ public class EmployeeManagerImpl implements EmployeeManager {
 			mapper.endTransaction();
 		}	
 	}
+
+	@Override
+	public Integer getValidateDayOff(Date startDate, Date endDate, Integer empId)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("startDate", startDate);
+		map.put("endDate", endDate);			
+		map.put("empId", empId);
+		return (Integer) mapper.queryForObject("employee.getValidateDayOff", map);
+	}
 }

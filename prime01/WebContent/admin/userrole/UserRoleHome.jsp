@@ -59,13 +59,22 @@
 				<html:hidden name="UserRoleForm" property="goToPage"/>
 				<html:hidden name="UserRoleForm" property="showInPage"/>
 				<html:hidden name="UserRoleForm" property="isShowAll"/>
-				<html:select name="UserRoleForm" property="columnSearch" styleClass="columnSearch">
-					<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
-				</html:select>
-				
-				<html:text name="UserRoleForm" property="search" styleClass="textSearch"/>
-				<input type="button" class="btn bg-olive" style="height:32px" onclick="searchBy('<%=Constants.Task.DOSEARCH%>', 'false')" value='Search'/>
-				<input type="button" class="btn bg-olive" style="height:32px" onclick="searchBy('<%=Constants.Task.DOSEARCH%>', 'true')" value='Show All'/>
+				<table>
+					<tr>
+						<td style="padding-left:5px">
+							<html:select name="UserRoleForm" property="columnSearch" styleClass="form-control columnSearch">
+								<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
+							</html:select>
+						</td>
+						<td style="padding-left:5px">
+							<html:text name="UserRoleForm" property="search" styleClass="form-control textSearch"/>
+						</td>
+						<td style="padding-left:5px">
+							<input type="button" class="btn bg-olive" style="height:32px" onclick="searchBy('<%=Constants.Task.DOSEARCH%>', 'false')" value='Search'/>
+							<input type="button" class="btn bg-olive" style="height:32px" onclick="searchBy('<%=Constants.Task.DOSEARCH%>', 'true')" value='Show All'/>
+						</td>
+					</tr>
+				</table>
 			</html:form>
 		</div>
 		<!-- End Of Search Handler -->
