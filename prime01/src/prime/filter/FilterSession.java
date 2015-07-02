@@ -49,42 +49,29 @@ public class FilterSession implements Filter {
 	    HttpSession tmpSession = tmpServletRequest.getSession(true);
 	    boolean tmpIsRedirectNeed = true;
 	    
-	    System.out.println(Constants.PAGES_LIST[Constants.Page.LOGIN]);
-	    System.out.println(tmpServletRequest.getServletPath());
 		if(!tmpServletRequest.getServletPath().equals("/" + Constants.PAGES_LIST[Constants.Page.LOGIN])){
 			//##a.Check Session State
 		    if(tmpSession.getAttribute(Constants.Session.ID) != null) {
 		    	//##b.Check From DB, Session Value
 		    	LoginManager tmpLoginManager = new LoginManagerImpl();
 		    	
-		    	if(LoginData.isDataExists()){
-			    	String tmpDBSession = "";
-					try {
-						tmpDBSession = tmpLoginManager.getLoginSession(LoginData.getUserData().getUserName());
-					} catch (SQLException e) {
-						//Nothing need to be done at here
-						e.printStackTrace();
-					}
-			    	String tmpCurnSession = LoginData.getUserData().getloginSession() ;
-			    	if(tmpDBSession.equals(tmpCurnSession)){
-
-					
-			    		tmpIsRedirectNeed = false;
-			    	} else {
-						
-			    		LoginData.clear();
-			    		tmpSession.invalidate();
-			    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONKICKED);
-			    	}
+		    	String tmpDBSession = "";
+				try {
+					tmpDBSession = tmpLoginManager.getLoginSession(LoginData.getUserData().getUserName());
+				} catch (SQLException e) {
+					//Nothing need to be done at here
+					e.printStackTrace();
+				}
+				
+		    	if(tmpDBSession.equals((String)tmpSession.getAttribute(Constants.Session.ID))){
+		    		tmpIsRedirectNeed = false;
 		    	} else {
-					
 		    		LoginData.clear();
 		    		tmpSession.invalidate();
 		    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONKICKED);
 		    	}
 		    } else {
 		    	if(LoginData.isDataExists()){
-					
 		    		LoginData.clear();
 		    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONEXPIRED);
 		    	}
@@ -92,11 +79,9 @@ public class FilterSession implements Filter {
 
 		    //##.For Page-Changing Handler
 		    if(!tmpIsRedirectNeed){
-	
 		    	chain.doFilter(request, response);
 		    } else {
 		    	if("XMLHttpRequest".equals(tmpServletRequest.getHeader("X-Requested-With"))) {
-			
 				     PrintWriter out = response.getWriter();
 				     out.println("<script type=\"text/javascript\">");
 				     out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.LOGIN] + "';");
@@ -107,7 +92,6 @@ public class FilterSession implements Filter {
 			    }
 		    }		
 		} else {
-		
     		LoginData.clear();
     		tmpSession.invalidate();
 	    	chain.doFilter(request, response);
