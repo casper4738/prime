@@ -391,8 +391,8 @@ public class ProjectAction extends Action {
 		} else {
 			search = pForm.getSearch();
 		}
-		
-		int countRows  = tmpProjectManager.getCountByColumn(pForm.getColumnSearch(), search);
+		System.out.println("colom "+pForm.getColumnSearch());
+		int countRows  = tmpProjectManager.getCountListByColAsMember(pForm.getColumnSearch(), search, tmpEmployeeId);
 		//pForm.getProjectBean().setIsAssigner(0);
 		List<ProjectBean> list = tmpProjectManager.getListByColumnAsMember(pForm.getColumnSearch(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
@@ -427,9 +427,9 @@ public class ProjectAction extends Action {
 		pForm.setGoToPage(pageUtil.getPage());
 	}
 	
-	private void setPaging(HttpServletRequest request, ProjectForm pForm) {
-		request.setAttribute("employeeActive", 100);
-		
-	}
+//	private void setPaging(HttpServletRequest request, ProjectForm pForm) {
+//		request.setAttribute("employeeActive", 100);
+//		
+//	}
 	
 }

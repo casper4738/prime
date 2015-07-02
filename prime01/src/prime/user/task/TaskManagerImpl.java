@@ -124,7 +124,42 @@ public class TaskManagerImpl implements TaskManager {
 		map.put("status", status);
 		return (Boolean) mapper.queryForObject("task.isCheckStatusDetail",map);
 	}
+	
+	@Override
+	public List<TaskBean> getListByProjectId(String columnSearch, String value, Integer startRow, Integer endRow, 
+			Integer projectId) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
+			String[] string = value.split(";");
+			map.put("startDate", string[0]);
+			map.put("untilDate", string[1]);
+		} else {
+			map.put("value", value);
+		}
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("projectId", projectId);
+		map.put("finish", Constants.Status.FINISH);
+		map.put("abort", Constants.Status.ABORT);
+		return mapper.queryForList("task.getListByProjectId", map);
+	}
 
+	@Override
+	public Integer getCountListByProjectId(String columnSearch, String value, Integer projectId) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
+			String[] string = value.split(";");
+			map.put("startDate", string[0]);
+			map.put("untilDate", string[1]);
+		} else {
+			map.put("value", value);
+		}
+		map.put("projectId", projectId);
+		return (Integer) mapper.queryForObject("task.getCountListByProjectId", map);
+	}
+	
 	/*Task Head*/
 	@Override
 	public List<TaskBean> getListByColumnHead(String columnSearch, String value, Integer startRow, Integer endRow, 
@@ -150,7 +185,14 @@ public class TaskManagerImpl implements TaskManager {
 	public Integer getCountByColumnHead(String columnSearch, String value, Integer taskAssigner) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
-		map.put("value", value);
+		map.put("columnSearch", columnSearch);
+		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
+			String[] string = value.split(";");
+			map.put("startDate", string[0]);
+			map.put("untilDate", string[1]);
+		} else {
+			map.put("value", value);
+		}
 		map.put("taskAssigner", taskAssigner);
 		return (Integer) mapper.queryForObject("task.getCountByColumnHead", map);
 	}

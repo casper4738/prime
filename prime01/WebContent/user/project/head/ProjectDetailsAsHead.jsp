@@ -80,6 +80,12 @@
        	    		</jsp:include>
 				</td>
 			</tr>
+			<tr><td>Actual Start Date: <bean:write name="ProjectUserFormAsHead" property="projectBean.actualStart" format="dd MMMM yyyy" /></td>
+				<td>Actual Start End : <bean:write name="ProjectUserFormAsHead" property="projectBean.actualEnd" format="dd MMMM yyyy"/></td>
+			</tr>
+			<tr><td>Main Days : <bean:write name="ProjectUserFormAsHead" property="projectBean.mainDays" /></td>
+				<td>Progress Percentage : <bean:write name="ProjectUserFormAsHead" property="projectBean.percentage"/></td>
+			</tr>
 			<tr><td colspan="2">Description : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectDescription" /> </td>
 			</tr></table>
 			
@@ -90,8 +96,10 @@
 				<logic:equal name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="3">
 					<td style="padding:5px;"><input type="button" value="Approve"	class="btn btn-sm btn-primary" onclick="flyToPage('approve')"/></td>
 					<td style="padding:5px;"><input type="button" value="Reject" 	class="btn btn-sm  btn-primary" onclick="flyToPage('reject', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
-					<td style="padding:5px;"><input type="button" value="Abort" 	class="btn btn-sm  btn-primary" onclick="flyToPage('abort', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
 				</logic:equal>	
+				<logic:notEqual name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="5">
+					<td style="padding:5px;"><input type="button" value="Abort" 	class="btn btn-sm  btn-primary" onclick="flyToPage('abort', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
+				</logic:notEqual>
 					<td style="padding:5px;"><input type="button" value="Change PM" class="btn btn-sm  btn-primary" onclick="flyToPage('changePM', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
 				</tr></table>
             </div>
