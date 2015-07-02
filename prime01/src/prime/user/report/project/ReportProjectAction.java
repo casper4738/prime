@@ -48,8 +48,8 @@ public class ReportProjectAction extends Action {
 				search = pForm.getSearch();
 			}
 
-			// pForm.setReportProjectBean(tmpManager.getProjectById(pForm.getProjectId()));
-			pForm.setProjectBean(tmpManager.getProjectById(pForm.getProjectId()));
+			//pForm.setReportProjectBean(tmpManager.getProjectById(pForm.getProjectId()));
+			//pForm.setProjectBean(tmpManager.getProjectById(pForm.getProjectId()));
 			int countRows = tmpTaskManager.getCountListByProjectId(
 					pForm.getColumnSearchReal(), search, pForm.getProjectId());
 			List<TaskBean> list = tmpTaskManager.getListByProjectId(
@@ -108,7 +108,7 @@ public class ReportProjectAction extends Action {
 			search = pForm.getSearch();
 		}		
 	
-		pForm.getProjectBean().setIsAssigner(tmpManager.getCountProjectAssigner(tmpEmployeeId));
+		//pForm.getProjectBean().setIsAssigner(tmpManager.getCountProjectAssigner(tmpEmployeeId));
 		
 		List<ProjectBean> list = new ArrayList<ProjectBean>();
 		System.out.println("colom "+pForm.getColumnSearchReal());

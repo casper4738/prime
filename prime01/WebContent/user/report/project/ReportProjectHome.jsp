@@ -70,19 +70,14 @@
 					<html:hidden name="ReportUserProjectForm" property="goToPage"/>
 					<html:hidden name="ReportUserProjectForm" property="showInPage"/>
 					<html:hidden name="ReportUserProjectForm" property="projectId"/>
-<<<<<<< HEAD
 					<html:hidden name="ReportUserProjectForm" property="isShowAll"/>
 				<table>
 					<tr>
 					<td style="padding-left:5px">				
-					<html:select name="ReportUserProjectForm" property="columnSearch" styleClass="form-control columnSearch">
-=======
-				
-					<html:select name="ReportUserProjectForm" property="columnSearch">
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
+						<html:select name="ReportUserProjectForm" property="columnSearch" styleClass="form-control columnSearch">
+
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
-<<<<<<< HEAD
 					</td>
 					<td style="padding-left:5px"><html:text name="ReportUserProjectForm" property="search" styleClass="form-control textSearch" styleId="textSearch"/></td>
 					<td style="padding-left:5px">

@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import prime.user.task.TaskBean;
 import prime.utility.IbatisHelper;
 
 import com.ibatis.sqlmap.client.SqlMapClient;
@@ -191,7 +192,12 @@ public class ProjectManagerImpl implements ProjectManager {
 		return (Integer) mapper.queryForObject("project.getCountListByColAsHead", map);
 	}
 	
-	
+
+	@Override
+	public Integer getCountListMember(Integer projectId) throws SQLException {
+		System.out.println("isi pid "+projectId);
+		return (Integer) mapper.queryForObject("project.getCountListMember", projectId);
+	}
 
 	@Override
 	public Integer getCountListByColAsMember(String columnSearch, String value, Integer employeeId) throws SQLException {
@@ -200,6 +206,14 @@ public class ProjectManagerImpl implements ProjectManager {
 		map.put("value", value);
 		map.put("employeeId", employeeId);
 		return (Integer) mapper.queryForObject("project.getCountListByColAsMember", map);
+	}
+
+	@Override
+	public Integer getCountListTaskMember(Integer taskReceiver, Integer projectId) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("taskReceiver", taskReceiver);
+		map.put("projectId", projectId);
+		return (Integer) mapper.queryForObject("project.getCountListTaskMember", map);
 	}
 
 	@Override
@@ -373,7 +387,6 @@ public class ProjectManagerImpl implements ProjectManager {
 		return (Integer) mapper.queryForObject("project.getProjectMemberIDbyRole", map);
 	}
 
-<<<<<<< HEAD
 	@Override
 	public List<Integer> getListEmployeeIDInProject(Integer projectId) throws SQLException {
 		return (List<Integer>) mapper.queryForList("project.getListEmployeeIDInProject", projectId);
@@ -388,8 +401,4 @@ public class ProjectManagerImpl implements ProjectManager {
 		
 		return (List<TaskBean>) mapper.queryForList("project.getProjectTaskListPerMember", map);
 	}
-=======
-	
-
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 }

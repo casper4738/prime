@@ -28,7 +28,7 @@
 			//##0.Preparing Parameter For Modal Showing
 			var tmpDataPosition=document.forms[0].positionId.value;
 			var tmpTask ="modalTable";
-			var tmpTable ="employeeTree";
+			var tmpTable ="employeeList";
 			var tmpDiv =document.forms[0].divisionId.value;
 			//##1.Accessing Prime Method For Modal Showing
 			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=projectAssigner"+"&param5="+tmpDiv, $('#result'));

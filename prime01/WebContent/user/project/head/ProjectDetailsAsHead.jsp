@@ -10,7 +10,6 @@
 	<meta charset="UTF-8">
 	<title>Prime</title>
 	<!-- CSS -->
-<<<<<<< HEAD
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
@@ -21,20 +20,11 @@
 	<link href="resources/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/datatables/extensions/FixedColumns/css/dataTables.fixedColumns.min.css" rel="stylesheet" type="text/css" />
 	<!-- End of CSS -->
-=======
-	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-    <link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
-	<!-- End CSS -->
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 	
 	<!-- JS -->
-<<<<<<< HEAD
     <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <script src='resources/plugins/fastclick/fastclick.min.js'></script>
     <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
-=======
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
@@ -48,7 +38,6 @@
 		    	"emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>" 
 		    }
 	    });
-<<<<<<< HEAD
 		
 		$(document).ready(function(){
             $('#projectChartStartDate').datepicker({
@@ -111,8 +100,6 @@
 	  		});
 		}
 		
-=======
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 		
 		function flyToTaskDetail(task, valueMember) {
 			var tmpForm = document.forms[0]; 
@@ -166,10 +153,10 @@
 			<div class="box-header"><h3 class="box-title-center">Data Project Member</h3></div>
 			<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
 			<tr><td>Project Name : ${ProjectUserFormAsHead.projectBean.projectId} <bean:write name="ProjectUserFormAsHead" property="projectBean.projectName"/></td>
-				<td>Project Assigner : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectAssignerName" /> </td>
+				<td>Project Assigner : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectAssigner" /> - <bean:write name="ProjectUserFormAsHead" property="projectBean.projectAssignerName" /> </td>
 			</tr>
 			<tr><td>Start Date : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectStartDate" format="dd MMMM yyyy"/> </td>
-				<td>Project Receiver : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectReceiverName"/> </td>
+				<td>Project Receiver : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectReceiver"/> - <bean:write name="ProjectUserFormAsHead" property="projectBean.projectReceiverName"/> </td>
 			</tr><tr><td>Estimated Date : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectEstimateDate" format="dd MMMM yyyy" />
 				</td><td>Status :  
 					<jsp:include page="/content/Status.jsp">
@@ -235,6 +222,7 @@
 			<div class="box-body">
 				<table id="table-1" class="table table-bordered table-striped table-hover">
 				<thead><tr>
+					<th>Employee Id</th>
 					<th>Employee Name</th>
 					<th>Role</th>
 					<th>Division</th>
@@ -246,14 +234,9 @@
                 <logic:notEmpty name="listProjectMember">
 					<logic:iterate id="iter" name="listProjectMember">
 	                	<tr>
-<<<<<<< HEAD
 	                		<td width="40px"><bean:write name="iter" property="employeeId"/></td>
 	                		<td width="200px"><bean:write name="iter" property="employeeName"/></td>
 	                		<td width="350px">
-=======
-	                		<td width="250px"><bean:write name="iter" property="employeeName"/></td>
-	                		<td>
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 	                		
 	                		<logic:notEqual name="iter" property="roleName" value="">
 	                			<bean:write name="iter" property="roleName"/>
@@ -288,7 +271,6 @@
 			
         </div>
         </div></div>
-<<<<<<< HEAD
         
         
        	 <!-- Project Progress -->
@@ -323,8 +305,6 @@
             </div>
            </div>
         <!-- End of Project Progress -->
-=======
->>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 	</section>
 	<!-- /.content-wrapper -->
 	
