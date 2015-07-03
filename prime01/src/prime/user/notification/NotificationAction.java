@@ -29,8 +29,6 @@ public class NotificationAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form,
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
-		
-		
 		NotificationForm pForm = (NotificationForm) form;
 		NotificationManager tmpManager = new NotificationManagerImpl();
 		
@@ -90,6 +88,7 @@ public class NotificationAction extends Action {
 				e.printStackTrace();
 			}
 			
+			System.out.println(tmpBackLink);
 			tmpManager.insert(tmpId, pForm.getNotifType(), tmpNotifButton, LoginData.getEmployeeData().getEmployeeId(), tmpReceiverBean.getEmployeeId(), tmpBackLink);
 			
 			return null;

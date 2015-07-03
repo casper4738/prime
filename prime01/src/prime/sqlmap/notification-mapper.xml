@@ -84,7 +84,8 @@
 	
 	<select id="getListNotifNoRead" resultClass="prime.user.notification.NotificationBean" parameterClass="java.lang.Integer">
 		SELECT NOTIF.NOTIFICATION_NOTE AS notificationNote,
-			   NT.NOTIFICATION_NAME AS notificationNameType
+			   NT.NOTIFICATION_NAME AS notificationNameType,
+			   NOTIF.NOTIFICATION_LINK AS notificationLink
 	    FROM NOTIFICATIONS NOTIF
         JOIN EMPLOYEES E ON E.EMPLOYEE_ID = NOTIF.SENDER
         JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = NOTIF.RECEIVER

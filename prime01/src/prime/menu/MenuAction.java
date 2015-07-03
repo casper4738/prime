@@ -95,8 +95,8 @@ public class MenuAction extends Action {
 				case Constants.NotificationType.TASK_SUBMITAPPROVAL :
 				case Constants.NotificationType.TASK_SUBMITAPPROVALRETURN :
 					tmpSession.setAttribute(Constants.Session.redirectParam	, "task=" 		+ tmpMenuForm.getParam2() + "&" +
-		  	 				  												  "taskId=" 		+ tmpMenuForm.getParam3() + "&" + 
-		  	 				  												  "employeeId=" 	+ tmpMenuForm.getParam4());
+		  	 				  												  "taskId=" 	+ tmpMenuForm.getParam3() + "&" + 
+		  	 				  												  "employeeId=" + tmpMenuForm.getParam4());
 					break;	
 					
 				}
