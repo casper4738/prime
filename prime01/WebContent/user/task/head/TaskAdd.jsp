@@ -58,6 +58,13 @@
 			if(taskName || taskAssigner || taskReceiver || startDate || estimateDate || checkDate) {
 				//alert("error lho");
 			} else {
+				if($('#taskAssignerId').val() != $('#taskReceiverId').val()) {
+					var employeeReceiver = $('#taskReceiverId').val();
+					var taskId = $('#taskId').val();
+					sendNotification(employeeReceiver, 
+							 <%=Constants.NotificationType.TASK_CREATED%>,  
+		         			"<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_SUBORDINATE]%>;<%=Constants.Task.GOTOVIEW%>;"+taskId+";"+employeeReceiver);
+				} 
 				dosubmit();
 			}
 			
@@ -81,8 +88,9 @@
 			<div class="box-body">
                 	<html:form action="/TaskHeadUser">
                 		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
-                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskAssigner" />
-                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskReceiver" />
+                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskAssigner" styleId="taskAssignerId"/>
+                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskReceiver" styleId="taskReceiverId"/>
+                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskId" styleId="taskId"/>
                 		<table class="form-input" align="center" style="width:60%">
                 			<tr>
                 				<td width="150px">Task Name ${TaskHeadUserForm.taskBean.taskAssigner} | ${TaskHeadUserForm.taskBean.taskReceiver}</td>

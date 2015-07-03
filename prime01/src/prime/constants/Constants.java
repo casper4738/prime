@@ -492,6 +492,9 @@ public interface Constants {
 		static int PROJECT_NEWPMDELEGATED  			= 11;
 		static int PROJECT_ASSIGNEDASROLE  			= 12;
 		static int PROJECT_REMOVEDFROMROLE 			= 13;
+		static int TASK_CREATED 					= 14;
+		static int PROJECT_ASSIGNED_TO_PM 			= 15;
+		static int TASK_CREATED_BY_SELF				= 16;
 	}
 	
 	//##M.Misc

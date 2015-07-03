@@ -29,7 +29,9 @@ public class TaskSubordinateAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//---.[Dedy] Hardcoded a little bit for Notification Jump
-		request.getSession().setAttribute(Constants.Session.needRedirect, false);
+		request.getSession().setAttribute(Constants.Session.needRedirect , false);
+		request.getSession().setAttribute(Constants.Session.redirectPage , Constants.PAGES_LIST[Constants.Page.USER_TASK_SUBORDINATE]);
+		request.getSession().setAttribute(Constants.Session.redirectParam, "");
 				
 		int employeeId = LoginData.getUserData().getEmployeeId();
 		request.setAttribute("employeeIdActive", employeeId);
@@ -40,8 +42,6 @@ public class TaskSubordinateAction extends Action {
 		ActivityManager tmpActivityManager = new ActivityManagerImpl();
 		
 		
-		System.out.println("task:"+pForm.getTask());
-
 		if (Constants.Task.TASK.GOTOSUBMIT.equals(pForm.getTask())) {
 			//##.Submit Data
 			pForm.setTaskBean(manager.getTaskById(pForm.getTaskId()));
@@ -57,7 +57,6 @@ public class TaskSubordinateAction extends Action {
 			request.setAttribute("listActivity", list);
 			request.setAttribute("listSearchColumn", Constants.Search.ACTIVITY_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
-			System.out.println("cek:"+pForm.getTaskId()+" - "+ tmpActivityManager.isAllFinished(pForm.getTaskId()));
 			request.setAttribute("isAllFinished", tmpActivityManager.isAllFinished(pForm.getTaskId()));
 			request.setAttribute("isAlreadySubmit", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.SUBMIT));
 			request.setAttribute("isAlreadyReject", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.REJECT));
@@ -76,10 +75,6 @@ public class TaskSubordinateAction extends Action {
 			return mapping.findForward("editActivity");
 		} else if (Constants.Task.ACTIVITY.GOTOCHANGESTATUS.equals(pForm.getTask())) {
 			//##.Change Data
-			
-			System.out.println("1. "+pForm.getActivityId());
-			System.out.println("2. "+pForm.getActivityChangeDate());
-			
 			pForm.setActivityBean(tmpActivityManager.getActivityDetailById(pForm.getActivityId(), pForm.getActivityChangeDate()));
 			pForm.getActivityBean().setActivityChangeNote("");
 			
@@ -112,8 +107,6 @@ public class TaskSubordinateAction extends Action {
 		} else if (Constants.Task.ACTIVITY.DOCHANGESTATUS.equals(pForm.getTask())) {
 			//##.Insert Task Data Detail
 			if(!manager.isCheckStatusDetail(pForm.getTaskId(), Constants.Status.PROGRESS)) {
-				System.out.println("1. ");
-				System.out.println("2. ");
 				TaskBean bean = new TaskBean();
 				bean.setTaskId(pForm.getTaskId());
 				bean.setTaskStatus(Constants.Status.PROGRESS);

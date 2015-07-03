@@ -14,7 +14,7 @@ public interface NotificationManager {
 	
 	public Integer getCountListNotifNoRead(Integer employeeId) throws SQLException;
 	
-	public void insert(int notifId, int notifType, String notifValue, int senderId, int receiverId) throws SQLException;
+	public void insert(int notifId, int notifType, String notifValue, int senderId, int receiverId, String notifLink) throws SQLException;
 	
 	public Integer getNewId() throws SQLException;
 	

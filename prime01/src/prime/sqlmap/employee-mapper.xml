@@ -3,10 +3,10 @@
 <sqlMap namespace="employee">
 	<insert id="insert" parameterClass="prime.admin.employee.EmployeeBean">
 		INSERT INTO EMPLOYEES
-		(PROFILE_PICTURE, EMPLOYEE_ID , EMPLOYEE_NAME, ADDRESS, CONTACT_NUMBER, EMAIL,
+		(UPDATED_BY, PROFILE_PICTURE, EMPLOYEE_ID , EMPLOYEE_NAME, ADDRESS, CONTACT_NUMBER, EMAIL,
 		 BIRTHDATE, GENDER, HIRE_DATE, DIVISION_ID, POSITION_ID,
 		 HEAD_ID,TREE_ID) VALUES 
-		(#filePic#, #employeeId#, #employeeName#, #address#, #contactNumber#, #email#, #birthdate#, 
+		(#updateBy#, #filePic#, #employeeId#, #employeeName#, #address#, #contactNumber#, #email#, #birthdate#, 
 		 #gender#, #hireDate#, 
 		<isEqual property="divisionId" compareValue="0">
 			null
@@ -30,33 +30,23 @@
 		 )
 	</insert>
 	
-	<insert id="insertBlob" parameterClass="java.lang.Object">
-		INSERT INTO EMPLOYEES (PROFILE_PICTURE)
-		VALUES (#param#)
-	</insert>
-	
 	<insert id="insertResign" parameterClass="prime.admin.employee.EmployeeBean">
 		INSERT INTO RESIGN_EMPLOYEES
-		(EMPLOYEE_ID , RESIGN_DATE, RESIGN_NOTE) VALUES 
-		(#employeeId#, #resignDate#, #resignNote#)
+		(EMPLOYEE_ID , RESIGN_DATE, RESIGN_NOTE, UPDATED_BY) VALUES 
+		(#employeeId#, #resignDate#, #resignNote#, #updateBy#)
 	</insert>
-	
-	<update id="updateStatusUser" parameterClass="java.lang.Integer">
-		UPDATE USERS SET
-		STATUS_USER = 0
-		WHERE EMPLOYEE_ID=$employeeId$ 
-	</update>
 	
 	<insert id="insertWeekend" parameterClass="prime.admin.employee.EmployeeBean">
 		INSERT INTO WEEKEND_HOLIDAYS
-		(EMPLOYEE_ID , START_FROM, WEEKEND, WEEKEND_NOTE) VALUES 
-		(#employeeId#, #startFrom#, #weekEnd#,#descriptionWeekEnd#)
+		(EMPLOYEE_ID , START_FROM, WEEKEND, WEEKEND_NOTE, UPDATED_BY) VALUES 
+		(#employeeId#, #startFrom#, #weekEnd#,#descriptionWeekEnd#, #updateBy#)
 	</insert>
 	
 	<update id="updateWeekend" parameterClass="prime.admin.employee.EmployeeBean">
 		UPDATE WEEKEND_HOLIDAYS SET
-		WEEKEND=#weekEnd#,
-		WEEKEND_NOTE=#descriptionWeekEnd#
+			WEEKEND=#weekEnd#,
+			WEEKEND_NOTE=#descriptionWeekEnd#,
+			UPDATED_BY = #updateBy#
 		WHERE EMPLOYEE_ID=#employeeId# AND START_FROM = #startFrom#
 	</update>
 	
@@ -67,8 +57,8 @@
 	
 	<insert id="insertDayoff" parameterClass="prime.admin.employee.EmployeeBean">
 		INSERT INTO DAY_OFFS
-		(EMPLOYEE_ID , DAYOFF_START_DATE, DAYOFF_END_DATE, DAYOFF_NOTE) VALUES 
-		(#employeeId#, #startDate#, #endDate#,#descriptionDayOff#)
+		(EMPLOYEE_ID , DAYOFF_START_DATE, DAYOFF_END_DATE, DAYOFF_NOTE, UPDATED_BY) VALUES 
+		(#employeeId#, #startDate#, #endDate#,#descriptionDayOff#, #updateBy#)
 	</insert>
 	
 	<delete id="deleteDayOff" parameterClass="java.util.Map">
@@ -84,13 +74,15 @@
 		EMAIL=#email#,
 		BIRTHDATE=#birthdate#,
 		GENDER=#gender#,
-		HIRE_DATE=#hireDate#
+		HIRE_DATE=#hireDate#,
+		UPDATED_BY = #updateBy#
 		WHERE EMPLOYEE_ID=#employeeId#
 	</update>
 	
 	<update id="updateChangePic" parameterClass="java.util.Map">
 		UPDATE EMPLOYEES SET
-		PROFILE_PICTURE=#filePic#
+		PROFILE_PICTURE=#filePic#,
+		UPDATED_BY = #updateBy#
 		WHERE EMPLOYEE_ID=#id#
 	</update>
 	
@@ -109,13 +101,15 @@
 		<isEqual property="managerId"  compareValue="0">
 			HEAD_ID=null,
 		</isEqual>
-		TREE_ID=#treeId#
+		TREE_ID=#treeId#,
+		UPDATED_BY = #updateBy#
 		WHERE EMPLOYEE_ID=#employeeId#
 	</update>
 	
 	<update id="updateHead" parameterClass="java.util.Map">
 		UPDATE EMPLOYEES SET
-		HEAD_ID=#newHead#
+		HEAD_ID=#newHead#,
+		UPDATED_BY = #updateBy#
 		WHERE HEAD_ID=#forCondition#
 	</update>
 	

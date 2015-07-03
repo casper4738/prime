@@ -274,7 +274,7 @@ function sendNotification(receiverId, notifType, notifParam){
       },
       
       error: function(){
-    	  alert("Something Wrong is Happening when Sending Notification !");
+//    	  alert("Something Wrong is Happening when Sending Notification !");
       }
    });
 }

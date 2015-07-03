@@ -162,7 +162,7 @@
         LEFT JOIN PROJECTS PRO ON PRO.PROJECT_ID = PROM.PROJECT_ID
    		JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = TSK.TASK_ASSIGNER
     	JOIN EMPLOYEES EMP2 ON EMP2.EMPLOYEE_ID = TSK.TASK_RECEIVER
-		WHERE TASK_RECEIVER=#empId# OR TASK_ASSIGNER=#empId#
+		WHERE (TASK_RECEIVER=#empId# OR TASK_ASSIGNER=#empId#)
 		<dynamic prepend="AND">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
@@ -185,48 +185,6 @@
 				</isEqual>
 			</isNotNull>
 		</dynamic>
-		OR TSK.TASK_ID  IN (
-		    SELECT X.TASK_ID FROM TASKS X
-		    JOIN EMPLOYEES Y ON Y.EMPLOYEE_ID= X.TASK_ASSIGNER AND Y.EMPLOYEE_ID = X.TASK_RECEIVER
-		    WHERE Y.HEAD_ID = #empId#
-		    <dynamic prepend="AND">
-				<isNotNull property="columnSearch">
-					<isEqual property="columnSearch" compareValue="NAME">
-						UPPER(X.TASK_NAME) LIKE UPPER('%'||#value#||'%')
-					</isEqual>
-					<isEqual property="columnSearch" compareValue="DESCRIPTION">
-						UPPER(X.TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
-					</isEqual>
-					<isEqual property="columnSearch" compareValue="STARTDATE">
-						X.TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
-					</isEqual>
-					<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
-						X.TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
-					</isEqual>
-				</isNotNull>
-			</dynamic>
-		) OR TSK.TASK_ID IN (
-			SELECT X.TASK_ID FROM TASKS X
-			JOIN PROJECT_MEMBERS Y ON X.PROJECT_MEMBER_ID = Y.PROJECT_MEMBER_ID
-			JOIN EMPLOYEES Z ON Z.EMPLOYEE_ID=X.TASK_RECEIVER
-            WHERE Z.HEAD_ID = #empId#
-            <dynamic prepend="AND">
-				<isNotNull property="columnSearch">
-					<isEqual property="columnSearch" compareValue="NAME">
-						UPPER(X.TASK_NAME) LIKE UPPER('%'||#value#||'%')
-					</isEqual>
-					<isEqual property="columnSearch" compareValue="DESCRIPTION">
-						UPPER(X.TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
-					</isEqual>
-					<isEqual property="columnSearch" compareValue="STARTDATE">
-						X.TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
-					</isEqual>
-					<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
-						X.TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
-					</isEqual>
-				</isNotNull>
-			</dynamic>
-        )
 		ORDER BY TASK_NAME ASC) page 
 		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>

@@ -10,12 +10,13 @@
 <bean:define id="taskAssigner" value="${param.taskAssigner}" toScope="request" />
 <bean:define id="taskReceiver" value="${param.taskReceiver}" toScope="request" />
 <bean:define id="projectMemberId" value="${param.projectMemberId}" toScope="request" />
-
+<%-- 
 <center>${employeeIdActive} |${taskAssigner}  | ${taskReceiver} | ${taskId} | ${projectMemberId } - 
 <br/>
 ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove} 
 </center>
 <br/>
+ --%>
 <div class="form-action"><table align="center">
    <tr> <td style="padding:5px;">
 		<logic:equal name="taskReceiver" value="${employeeIdActive}">
@@ -72,7 +73,7 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 
 				<!-- reject != true -->
 	    		<logic:equal name="isAlreadyReject" value="true">
-	     			<input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doTaskAct('${taskId}', , '<%=Constants.Task.TASK.DOABORT%>', '${employeeIdActive}', '${taskReceiver}')"/>
+	     			<input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOABORT%>', '${employeeIdActive}', '${taskReceiver}')"/>
 	    		</logic:equal>
 				<!-- end reject != true -->
 			</logic:notEqual>

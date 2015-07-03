@@ -10,7 +10,8 @@
 			NOTIFICATION_TYPE,
 			NOTIFICATION_SEND_DATE,
 			NOTIFICATION_NOTE,
-			NOTIFICATION_TEMPLATE_ID 
+			NOTIFICATION_TEMPLATE_ID,
+			NOTIFICATION_LINK
 		) VALUES (
 			#notifId#, 
 			#senderId#,
@@ -19,7 +20,8 @@
 			1,
 			SYSDATE,
 			#notifValue#,
-			#notifType#
+			#notifType#,
+			#notifLink#
 		)
 	</insert>
 	
@@ -82,7 +84,8 @@
 	
 	<select id="getListNotifNoRead" resultClass="prime.user.notification.NotificationBean" parameterClass="java.lang.Integer">
 		SELECT NOTIF.NOTIFICATION_NOTE AS notificationNote,
-			   NT.NOTIFICATION_NAME AS notificationNameType
+			   NT.NOTIFICATION_NAME AS notificationNameType,
+			   NOTIF.NOTIFICATION_LINK AS notificationLink
 	    FROM NOTIFICATIONS NOTIF
         JOIN EMPLOYEES E ON E.EMPLOYEE_ID = NOTIF.SENDER
         JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = NOTIF.RECEIVER
@@ -99,7 +102,8 @@
 	</select>
 	
 	<select id="getNotifByID" resultClass="prime.user.notification.NotificationBean" parameterClass="java.lang.Integer">
-		SELECT NOTIFICATION_TYPE as notificationType 
+		SELECT NOTIFICATION_TYPE as notificationType, 
+			   NOTIFICATION_LINK as notificationLink
 		FROM NOTIFICATIONS 
 		WHERE NOTIFICATION_ID = #notifId#
 	</select>

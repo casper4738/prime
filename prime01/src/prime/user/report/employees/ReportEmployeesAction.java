@@ -29,6 +29,7 @@ public class ReportEmployeesAction extends Action {
 		ReportEmployeesManager tmpManager = new ReportEmployeesManagerImpl();
 		
 		if(Constants.Task.REPORT.GOTODETAILEMPLOYEE.equals(pForm.getTask())){
+			System.out.println("GOTODETAILEMPLOYEE");
 			//##. Get Data
 			String search = "";
 			if("STARTDATE".equals(pForm.getColumnSearchReal()) || "ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
@@ -52,6 +53,7 @@ public class ReportEmployeesAction extends Action {
 			return mapping.findForward("detailEmployee");
 		}
 		else if(Constants.Task.REPORT.GENERATEREPORTEMPLOYEE.equals(pForm.getTask())){
+			System.out.println("GENERATEREPORTEMPLOYEE");
 			if("ID".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.EMPLOYEE_ID LIKE ('%" + pForm.getSearch()+ "%')");				
 			} else if ("NAME".equals(pForm.getColumnSearchReal())) {
@@ -73,10 +75,10 @@ public class ReportEmployeesAction extends Action {
 			
 			return mapping.findForward("showReportEmployee");
 		} else if (Constants.Task.REPORT.GENERATEREPORTEMPLOYEETASK.equals(pForm.getTask())) {
+			System.out.println("GENERATEREPORTEMPLOYEETASK");
 			if("SHOW ALL".equals(pForm.getColumnSearchReal())){
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER='"+pForm.getEmployeeId()+"' OR TASK_RECEIVER='"+pForm.getEmployeeId()+"')");
 			}else if("NAME".equals(pForm.getColumnSearchReal())) {
-				System.out.println("TEST");
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER="+pForm.getEmployeeId()+" OR TASK_RECEIVER="+pForm.getEmployeeId()+") AND  TASK_NAME LIKE ('%" + pForm.getSearch()+ "%')");				
 			} else if ("DESCRIPTION".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER="+pForm.getEmployeeId()+" OR TASK_RECEIVER="+pForm.getEmployeeId()+") AND LOWER(TASK_DESCRIPTION) LIKE LOWER ('%" + pForm.getSearch()+ "%')");	
@@ -89,13 +91,13 @@ public class ReportEmployeesAction extends Action {
 			} else if ("ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER="+pForm.getEmployeeId()+" OR TASK_RECEIVER="+pForm.getEmployeeId()+") AND TASK_ESTIMATE_DATE BETWEEN TO_DATE('"+pForm.getStartDate()+"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
 			} 
-			request.getSession(true).setAttribute("searchQuery1", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			/*request.getSession(true).setAttribute("searchQuery1", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
 			request.getSession(true).setAttribute("searchQuery2", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
 			request.getSession(true).setAttribute("searchQuery3", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
 			request.getSession(true).setAttribute("searchQuery4", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
 			request.getSession(true).setAttribute("searchQuery5", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
 			request.getSession(true).setAttribute("searchQuery6", " WHERE EMP.EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery7", " WHERE EMPLOYEE_ID '= "+pForm.getEmployeeId()+"'");			
+			request.getSession(true).setAttribute("searchQuery7", " WHERE EMPLOYEE_ID '= "+pForm.getEmployeeId()+"'");		*/	
 			
 			return mapping.findForward("showReportEmployeeTask");
 		}

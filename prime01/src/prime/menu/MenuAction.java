@@ -42,11 +42,6 @@ public class MenuAction extends Action {
 		List<UserMenuBean> listUserMenu = tmpUserMenuManager.getListUserMenuByUserRoleId(LoginData.getUserData().getSysLevel());
 		
 		for (UserMenuBean e : listUserMenu) {
-			System.out.println(e.getUserMenuId()+ " - "+e.getUserMenuName()+"-"+e.getUserMenuAction()+"-"+e.getIsCheck());
-		}
-
-		
-		for (UserMenuBean e : listUserMenu) {
 			if(e.getIsCheck()){
 				if(request.getSession().getAttribute(Constants.Session.lastPage) == null){
 					request.getSession().setAttribute(Constants.Session.lastPage, Constants.PAGES_LIST[e.getUserMenuId()]);
@@ -58,8 +53,8 @@ public class MenuAction extends Action {
 		
 		//##3.Prepare Request Attribute For JSP Readings
 		request.setAttribute("listPages", tmpObject);
+		
 		MenuForm tmpMenuForm = (MenuForm)form;
-
 		if(("redirect").equals(tmpMenuForm.getTask())){
 			HttpSession tmpSession = request.getSession();
 			
@@ -69,11 +64,8 @@ public class MenuAction extends Action {
 				NotificationBean tmpNotifBean;
 				
 				//Get Notif Type and Mark as Read
-				System.out.println("ID = " + Integer.parseInt(tmpMenuForm.getParam5()));
 				tmpNotifBean = tmpNotificationManager.getNotifByID(Integer.parseInt(tmpMenuForm.getParam5()));
 				tmpNotificationManager.markAsRead(Integer.parseInt(tmpMenuForm.getParam5()));
-				System.out.println("Notif Bean = " + tmpNotifBean);
-				System.out.println("Notif Type = " + tmpNotifBean.getNotificationType());
 				
 				//Set Attribute
 				tmpSession.setAttribute(Constants.Session.needRedirect 	, true);
@@ -83,23 +75,26 @@ public class MenuAction extends Action {
 				case Constants.NotificationType.PROJECT_ABORT :
 				case Constants.NotificationType.PROJECT_SUBMITAPPROVALRETURN :
 				case Constants.NotificationType.PROJECT_SUBMITAPPROVAL :
-				case Constants.NotificationType.PROJECT_REMOVEDFROMROLE :
 				case Constants.NotificationType.PROJECT_NEWPMDELEGATED :
 				case Constants.NotificationType.PROJECT_CREATEAPPROVALRETURN :
 				case Constants.NotificationType.PROJECT_CREATEAPPROVAL :
+				case Constants.NotificationType.PROJECT_REMOVEDFROMROLE :
+				case Constants.NotificationType.PROJECT_ASSIGNED_TO_PM :
 				case Constants.NotificationType.PROJECT_ASSIGNEDASROLE :
 					tmpSession.setAttribute(Constants.Session.redirectParam	, "task=" 			+ tmpMenuForm.getParam2() + "&" +
 																			  "projectId=" 		+ tmpMenuForm.getParam3() + "&" + 
 								  											  "employeeId=" 	+ tmpMenuForm.getParam4());
 					break;
+				case Constants.NotificationType.TASK_CREATED :
+				case Constants.NotificationType.TASK_CREATED_BY_SELF :
 				case Constants.NotificationType.TASK_ABORTBYHEAD :
 				case Constants.NotificationType.TASK_SELFASSIGNAPPROVAL :
 				case Constants.NotificationType.TASK_SELFASSIGNAPPROVALRETURN :
 				case Constants.NotificationType.TASK_SUBMITAPPROVAL :
 				case Constants.NotificationType.TASK_SUBMITAPPROVALRETURN :
 					tmpSession.setAttribute(Constants.Session.redirectParam	, "task=" 		+ tmpMenuForm.getParam2() + "&" +
-		  	 				  												  "taskId=" 		+ tmpMenuForm.getParam3() + "&" + 
-		  	 				  												  "employeeId=" 	+ tmpMenuForm.getParam4());
+		  	 				  												  "taskId=" 	+ tmpMenuForm.getParam3() + "&" + 
+		  	 				  												  "employeeId=" + tmpMenuForm.getParam4());
 					break;	
 					
 				}

@@ -45,7 +45,7 @@ public class NotificationManagerImpl implements NotificationManager{
 	}
 
 	public void insert(int notifId, int notifType, String notifValue, int senderId,
-			int receiverId) throws SQLException {
+			int receiverId, String notifLink) throws SQLException {
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("notifId"		, notifId);
@@ -53,6 +53,7 @@ public class NotificationManagerImpl implements NotificationManager{
 			map.put("notifValue"	, notifValue);			
 			map.put("senderId"		, senderId);
 			map.put("receiverId"	, receiverId);
+			map.put("notifLink"		, notifLink);
 
 			mapper.startTransaction();
 			mapper.insert("notification.insert", map);
