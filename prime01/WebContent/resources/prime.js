@@ -52,7 +52,7 @@ function checkForDate(var1, var2, err_var1, err_var2, title1, title2) {
 		
 function flyToBack(task) {
 	var tmpForm = document.forms[0];
-	alert(task+". 1");
+	tmpForm.task.value = task;
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));
 }
 
