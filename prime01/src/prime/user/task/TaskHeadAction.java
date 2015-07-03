@@ -118,7 +118,6 @@ public class TaskHeadAction extends Action {
 			return mapping.findForward("submit");
 		} else if (Constants.Task.GOTOVIEW.equals(pForm.getTask())) {
 			//##.View Detail Task
-			System.out.println("1. : "+pForm.getTaskId());
 			pForm.setTaskBean(manager.getTaskById(pForm.getTaskId()));
 			int countRows = tmpActivityManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), pForm.getTaskId());
 			List<ActivityBean> list = tmpActivityManager.getListByColumn(pForm.getColumnSearchReal(), pForm.getSearch(), 
@@ -128,7 +127,6 @@ public class TaskHeadAction extends Action {
 			request.setAttribute("listActivity", list);
 			request.setAttribute("listSearchColumn", Constants.Search.ACTIVITY_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
-			System.out.println("cek:"+pForm.getTaskId()+" - "+ tmpActivityManager.isAllFinished(pForm.getTaskId()));
 			request.setAttribute("isAllFinished", tmpActivityManager.isAllFinished(pForm.getTaskId()));
 			request.setAttribute("isAlreadySubmit", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.SUBMIT));
 			request.setAttribute("isAlreadyReject", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.REJECT));
@@ -188,16 +186,10 @@ public class TaskHeadAction extends Action {
 			return mapping.findForward("forward");
 		} else if (Constants.Task.ACTIVITY.DOEDIT.equals(pForm.getTask())) {
 			//##.Update Data Activity
-			System.out.println("id-----------------");
-			System.out.println("id:"+pForm.getActivityBean().getActivityId());
-			System.out.println("id:"+pForm.getActivityBean().getActivityName());
-			System.out.println("id:"+pForm.getActivityBean().getActivityDescription());
-			System.out.println("id:"+pForm.getActivityBean().getTaskId());
 			tmpActivityManager.update(pForm.getActivityBean());
 			return mapping.findForward("forward");
 		} else if (Constants.Task.ACTIVITY.DOCHANGESTATUS.equals(pForm.getTask())) {
 			//##.Insert Task Data Detail
-			System.out.println("2. : "+pForm.getTaskId());
 			if(!manager.isCheckStatusDetail(pForm.getTaskId(), Constants.Status.PROGRESS)) {
 				TaskBean bean = new TaskBean();
 				bean.setTaskId(pForm.getTaskId());
@@ -224,7 +216,6 @@ public class TaskHeadAction extends Action {
 			pForm.getTaskBean().setTaskStatus(Constants.Status.APPROVAL);
 			pForm.getTaskBean().setTaskChangeNote("");
 			manager.insertDetail(pForm.getTaskBean());
-			System.out.println("2. : "+pForm.getTaskId()+" - "+pForm.getTaskBean().getTaskId());
 			try {
 				manager.updateActualEnd(pForm.getTaskBean().getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
 				TaskBean e = manager.getTaskById(pForm.getTaskBean().getTaskId());
@@ -240,11 +231,6 @@ public class TaskHeadAction extends Action {
 			//##.Reject Task
 			pForm.getTaskBean().setTaskStatus(Constants.Status.REJECT);
 			pForm.getTaskBean().setTaskChangeNote("");
-			
-			System.out.println("1."+pForm.getTaskBean().getTaskId());
-			System.out.println("2."+pForm.getTaskBean().getTaskChangeDate());
-			System.out.println("3."+pForm.getTaskBean().getTaskStatus());
-			
 			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");
 		} else if (Constants.Task.TASK.DOABORT.equals(pForm.getTask())) {

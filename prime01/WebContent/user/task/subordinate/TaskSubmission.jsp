@@ -11,7 +11,6 @@ function dosubmitx() {
 	var taskAssigner = $('#taskAssigner').val();
 	var taskReceiver = $('#taskReceiver').val();
 	
-	
 	if(taskReceiver == taskAssigner) {
 		var employeeReceiver = taskAssigner;
 		var taskId = $('#taskId').val();
