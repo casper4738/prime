@@ -20,20 +20,22 @@ public class ReportEmployeesManagerImpl implements ReportEmployeesManager{
 		mapper = IbatisHelper.getSqlMapInstance();
 	}
 	
-	public List<ReportEmployeesBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow) 
+	public List<ReportEmployeesBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow, Integer empId) 
 			throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch);
 		map.put("value", value);			
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
+		map.put("empId", empId);
 		return mapper.queryForList("reportemployees.getListByColumn", map);
 	}
 	
-	public Integer getCountByColumn(String columnSearch, String value) throws SQLException {
+	public Integer getCountByColumn(String columnSearch, String value, Integer empId) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("columnSearch", columnSearch+"");
 		map.put("value", value+"");
+		map.put("empId", empId);
 		return  (Integer) mapper.queryForObject("reportemployees.getCountByColumn", map);
 	}
 	
@@ -53,7 +55,7 @@ public class ReportEmployeesManagerImpl implements ReportEmployeesManager{
 			map.put("startDate", string[0]);
 			map.put("untilDate", string[1]);
 		} else {
-			map.put("value", value);
+			map.put("nameValue", value);
 		}
 		System.out.println(empId+"empId");
 		System.out.println(endRow+"endRow");

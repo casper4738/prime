@@ -551,4 +551,11 @@
             ON PM.EMPLOYEE_ID = EMP.EMPLOYEE_ID
 		WHERE PRO.PROJECT_ID =#projectId# AND PM.EMPLOYEE_ID=#employeeId# 
 	</select>
+	
+	<select id="getIdProjectAssigner" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT PROJECT_ASSIGNER 
+		FROM PROJECTS
+		WHERE PROJECT_RECEIVER=#employeeId#
+		AND PROJECT_ID = #projectId#
+	</select>
 </sqlMap> 

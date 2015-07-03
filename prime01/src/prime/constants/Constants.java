@@ -90,6 +90,7 @@ public interface Constants {
 			final String GENERATEREPORTEMPLOYEETASK	= "r4";
 			final String GENERATEREPORTPROJECT		= "r5";
 			final String GENERATEREPORTPROJECTTASK	= "r6";
+			final String GENERATEREPORTPROJECTMEMBER	= "r7";
 		}
 	}
 
@@ -244,6 +245,7 @@ public interface Constants {
 		        new LinkedHashMap<String, String>() {{
 		        	put("ID", "EMPLOYEE ID");	        	
 		        	put("NAME", "EMPLOYEE NAME");
+		        	put("GENDER", "GENDER");
 		        	put("EMAIL", "EMAIL");
 		        	put("DIVISION", "DIVISION");
 		        	put("POSITION", "POSITION");

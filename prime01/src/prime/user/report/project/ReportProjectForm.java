@@ -2,6 +2,7 @@ package prime.user.report.project;
 
 import org.apache.struts.action.ActionForm;
 
+import prime.user.project.ProjectBean;
 import prime.user.task.TaskBean;
 
 public class ReportProjectForm extends ActionForm {
@@ -61,8 +62,8 @@ public class ReportProjectForm extends ActionForm {
 		return reportProjectBean;
 	}
 
-	public void setReportProjectBean(ReportProjectBean reportProjectBean) {
-		this.reportProjectBean = reportProjectBean;
+	public void setReportProjectBean(ReportProjectBean projectBean) {
+		this.reportProjectBean =  projectBean;
 	}
 
 	public TaskBean getTaskBean() {

@@ -257,6 +257,16 @@ public class ProjectAction extends Action {
 			//belum diisi
 			//pForm.getProjectBean().getRoleBean().setRoleId(pForm.getRoleId());
 			//pForm.getProjectBean().setEmployeeId(pFor);
+			System.out.println("masuk add");
+			int idAssigner =0 ;
+			System.out.println(tmpEmployeeId+"--");
+			System.out.println("PID :"+pForm.getProjectId());
+			idAssigner = tmpProjectManager.getIdProjectAssigner(tmpEmployeeId, pForm.getProjectId());
+			pForm.setIdAssigner(idAssigner);
+			System.out.println("ID Assigner "+ idAssigner);
+			
+			//pForm.getProjectBean().setEmployeeId(pForm.getEmployeeId());
+			
 			request.setAttribute("listAllRoles", tmpRoleManager.getListAllRole());
 			return mapping.findForward("addMember");
 		}
@@ -268,8 +278,9 @@ public class ProjectAction extends Action {
 			String []rolesSplit=roles.split(",");
 			System.out.println("size "+rolesSplit.length);
 			
+			
+			
 			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeId());
-
 			pForm.setEmployeeId(pForm.getProjectBean().getEmployeeId());
 			pForm.setProjectId(pForm.getProjectBean().getProjectId());
 			pForm.getProjectBean().setProjectMemberStatus(1);
