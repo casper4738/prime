@@ -60,6 +60,7 @@
     	  	  if(tmpIsLoginFail == null){
   	  		  	  $('#login-fail').hide();
     	  	  } else {
+    	  		  $('#login-fail').show();
     	  		  $('#login-fail').html('<%=request.getAttribute(Constants.Request.LOGIN_STATUS)%>');
     	  	  }
     	  	  
