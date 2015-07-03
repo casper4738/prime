@@ -36,7 +36,7 @@
             
             var tmpImage = '<%=((EmployeeBean)request.getAttribute("empBean")).getConvertedFilePic()%>';
       	  	if(tmpImage == "null"){
-          		$("#profpic").attr("src","resources/image/user-photo.png");
+          		$("#profpic").attr("src","<%=Constants.PATH_USERNOIMAGE%>");
 	      	} else {
 	         	$("#profpic").attr("src","data:image/;base64," + tmpImage);  
 	      	} 

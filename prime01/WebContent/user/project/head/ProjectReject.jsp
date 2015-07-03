@@ -34,6 +34,12 @@
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
+		function sendNotifandDoSubmit(){
+			sendNotification($('#projectReceiverId').val(),
+		            		 <%=Constants.NotificationType.PROJECT_SUBMITAPPROVALRETURN%>,  
+		         			"<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>;;" + $('#projectId').val() + ";" + $('#projectReceiverId').val());
+			dosubmit();
+		}
 	</script>
 	
 	<!-- End JS -->
@@ -61,8 +67,8 @@
                 	<html:form action="/ProjectUserAsHead">
                 		<html:hidden name="ProjectUserFormAsHead" property="task" value="doReject"/>
                 	
-             			<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectId" />
-             			<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectReceiver"/>
+             			<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectId" styleId="projectId"/>
+             			<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectReceiver" styleId="projectReceiverId"/>
 						<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectAssigner"/>
              			<html:hidden name="ProjectUserFormAsHead" property="projectId"/>
                 		<table class="form-input" align="center">
@@ -83,7 +89,7 @@
                 			
                 			<tr>
                 				<td colspan="3" align="center">
-                					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="dosubmit()"/>
+                					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="sendNotifandDoSubmit()"/>
                 					<input type="button" property="" value="Cancel" class="btn btn-default" onclick="flyToBack('detailsAsHead','<bean:write name="ProjectUserFormAsHead" property="projectId"/>')"/>
                 				</td>
                 			</tr>

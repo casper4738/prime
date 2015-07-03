@@ -18,13 +18,10 @@
 		}
 		
 		function sendNotifandDoSubmit(){
-			alert($('#projectAssignerId').val());
-			alert($('#projectId').val());
-			
 			sendNotification($('#projectAssignerId').val(),
-		            		 <%=Constants.NotificationType.PROJECT_CREATEAPPROVAL%>,  
+		            		 <%=Constants.NotificationType.PROJECT_SUBMITAPPROVAL%>,  
 		         			"<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT_HEAD]%>;;" + $('#projectId').val() + ";" + $('#projectAssignerId').val());
-			//dosubmit();
+			dosubmit();
 		}
 	</script>
 	

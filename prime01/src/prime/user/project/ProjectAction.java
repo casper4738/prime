@@ -353,7 +353,6 @@ public class ProjectAction extends Action {
 			tmpProjectManager.updateProjectReceiver(pForm.getProjectBean().getProjectId(),pForm.getEmployeeId() );
 			pForm.getProjectBean().setProjectStatus(pForm.getProjectBean().getProjectLastStatus());
 			tmpProjectManager.insertDetail(pForm.getProjectBean());
-			
 		}
 		
 		else if(Constants.Task.PROJECT.GOTOEDITMEMBER.equals(pForm.getTask())){

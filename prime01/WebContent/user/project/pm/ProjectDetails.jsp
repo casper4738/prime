@@ -195,22 +195,20 @@
             <div class="form-action">
 				<table align="center"><tr>
 					<td style="padding:5px;">
-					<logic:equal name="ProjectUserForm" property="projectBean.isPM" value="1">	
-						<logic:notEqual name="ProjectUserForm" property="projectBean.projectLastStatus" value="5">
-							<input type="button" value="Add New Project Member" class="btn btn-sm btn-primary" onclick="flyToPage('addmember')"/></td>
-						</logic:notEqual>
-					</logic:equal>
-					<logic:equal name="ProjectUserForm" property="projectBean.percentStatus" value="100">
-						<logic:notEqual name="ProjectUserForm" property="projectBean.projectLastStatus" value="3">
-               				<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToSubmit('<%=Constants.Task.TASK.GOTOSUBMIT%>', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
-               			</logic:notEqual>
-               		</logic:equal>
+						<logic:equal name="ProjectUserForm" property="projectBean.isPM" value="1">	
+							<logic:notEqual name="ProjectUserForm" property="projectBean.projectLastStatus" value="5">
+								<input type="button" value="Add New Project Member" class="btn btn-sm btn-primary" onclick="flyToPage('addmember')"/></td>
+								<logic:equal name="ProjectUserForm" property="projectBean.percentStatus" value="100">
+			               			<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToSubmit('<%=Constants.Task.TASK.GOTOSUBMIT%>', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
+			               		</logic:equal>
+		               		</logic:notEqual>
+	               		</logic:equal>
 					
 				</tr></table>
             </div>
 			
 			<div class="show-in-page">
-				Show per page
+				Show per page  <bean:write name="ProjectUserForm" property="projectBean.projectLastStatus"  />
 				<html:select name="ProjectUserForm" property="showInPage" onchange="change(this.value)" >
 					<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 				</html:select>
