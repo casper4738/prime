@@ -17,10 +17,11 @@
 		function openModalHandler(){
 			//##0.Preparing Parameter For Modal Showing
 			var tmpTask ="modalTable";
-			var tmpTable ="employeeTree";
+			var tmpTable ="employeeProjectMember";
+			var idAssigner=document.getElementById('idAssigner').value
 			
 			//##1.Accessing Prime Method For Modal Showing
-			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable, $('#result')); 
+			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + idAssigner , $('#result')); 
 		}
 		
 		function doSetRole(){
@@ -83,6 +84,8 @@
                 	    <html:hidden name="ProjectUserForm" property="employeeId" />
                 	    <html:hidden name="ProjectUserForm" property="tempRoleId" />
                 	    <html:hidden name="ProjectUserForm" property="projectId" />
+                	    <html:hidden name="ProjectUserForm" property="idAssigner" styleId="idAssigner"/>
+                	   
                 		<table class="form-input" align="center" style="width:60%" >
                 			<tr><td width="200px">Employee Name</td>
                 				<td>:</td>

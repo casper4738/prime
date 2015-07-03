@@ -8,21 +8,22 @@
 <!DOCTYPE html> 
 <html>
 <head> 
-	<!-- CSS -->
+<!-- CSS -->
+	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-    <link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
+   	<link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
-	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
+    <link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+    <link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
-	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/datatables/extensions/FixedColumns/css/dataTables.fixedColumns.min.css" rel="stylesheet" type="text/css" />
-	<!-- End of CSS -->
-	
-	<!-- JS -->
+    
+    <!-- JS -->
     <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
     <script src='resources/plugins/fastclick/fastclick.min.js'></script>
+    <script src="resources/dist/js/app.min.js" type="text/javascript"></script>
+    <script src="resources/plugins/moment/moment.min.js" type="text/javascript"></script>
     <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -43,7 +44,7 @@
   		   loadActivityProgress(true);
   		   
   		   //Reload Chart Every 5 Minutes
-	   		setInterval(loadActivityToDoList, 300000); //5 Menit
+	   		setInterval(loadActivityProgress, 3000); //5 Menit
   		   
 		});
     	
@@ -71,6 +72,7 @@
 		function loadActivityProgress(isToday){
 			//Set Current Date
 			var tmpDate;
+			
 			switch(isToday){
 				case false :
 				  	tmpDate = $('#datepicker_activitydate').datepicker('getDate');

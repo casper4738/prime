@@ -45,7 +45,7 @@ function doViewAllNotif(){
 							id="profpic2" class="img-circle"
 							alt="User Image" />
 							<p>
-								<%=LoginData.getEmployeeData().getEmployeeName()%><small><%=LoginData.getUserData().getSysLevel()%></small>
+								<%=LoginData.getEmployeeData().getEmployeeName()%><small><%=LoginData.getUserData().getSysName()%></small>
 							</p></li>
 						<li class="user-footer">
 							<div class="pull-left">

@@ -6,6 +6,7 @@ import prime.admin.employee.EmployeeBean;
 public class UserBean extends EmployeeBean {
 	private Boolean isActiveDirectory;
 	private Integer sysLevel;
+	private String	sysName;
 	private String 	password;
 	private String 	userName;
 	private Date 	changeDate;
@@ -111,5 +112,13 @@ public class UserBean extends EmployeeBean {
 
 	public void setUpdateBy(String updateBy) {
 		this.updateBy = updateBy;
+	}
+
+	public String getSysName() {
+		return sysName;
+	}
+
+	public void setSysName(String sysName) {
+		this.sysName = sysName;
 	}
 }

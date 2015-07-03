@@ -271,7 +271,7 @@
 		INSERT INTO PROJECTS(PROJECT_ID, PROJECT_NAME, PROJECT_ASSIGNER, PROJECT_RECEIVER, PROJECT_START_DATE, 
 		PROJECT_ESTIMATE_DATE, PROJECT_DESCRIPTION,PROJECT_LAST_STATUS,UPDATED_BY)
 		VALUES
-		(#projectId#,#projectName#,#projectAssigner#,#projectReceiver#,#projectStartDate#,#projectEstimateDate#,#projectDescription#,#projectLastStatus#,#employeeId#)
+		(#projectId#,#projectName#,#projectAssigner#,#projectReceiver#,#projectStartDate#,#projectEstimateDate#,#projectDescription#,#projectLastStatus#,#updatedBy#)
 	</insert>
 	
 	<select id="getNewId" resultClass="java.lang.Integer">
@@ -550,5 +550,12 @@
         JOIN EMPLOYEES EMP
             ON PM.EMPLOYEE_ID = EMP.EMPLOYEE_ID
 		WHERE PRO.PROJECT_ID =#projectId# AND PM.EMPLOYEE_ID=#employeeId# 
+	</select>
+	
+	<select id="getIdProjectAssigner" parameterClass="java.util.Map" resultClass="java.lang.Integer">
+		SELECT PROJECT_ASSIGNER 
+		FROM PROJECTS
+		WHERE PROJECT_RECEIVER=#employeeId#
+		AND PROJECT_ID = #projectId#
 	</select>
 </sqlMap> 

@@ -25,6 +25,7 @@ import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
+import prime.user.project.ProjectForm;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -37,7 +38,7 @@ public class ModalAction extends Action {
 		//---.Normally Used Temp Variable
 		int tmpI, tmpJ;
 		String tmpTarget = "";
-		Integer tmpEmployeeID=101;
+		Integer tmpEmployeeID=LoginData.getEmployeeData().getEmployeeId();
 		//---.Depend on the object
 		ModalForm pForm = (ModalForm) form;
 
@@ -245,6 +246,51 @@ public class ModalAction extends Action {
                 			tmpData.get(tmpI).add(list.get(tmpI).getManagerName());
                 		}
             			break;	
+            			
+            		case "employeeProjectMember"  :
+                		tmpTarget = "employeeProjectMember";
+                		ProjectForm project = new ProjectForm();
+                		System.out.println("modal id assigner "+project.getIdAssigner());
+                		
+                		System.out.println("id login modal "+ LoginData.getEmployeeData().getEmployeeId());
+                    	//##1.Fetch Data From DB
+                		countRows = manager.getCountListByTree(pForm.getColumnSearch(), pForm.getSearch(), pForm.getParam2());
+                		//---.Depend On The Object
+                		System.out.println("count rows modal "+countRows);
+                		list = manager.getListByTree(pForm.getColumnSearch(), pForm.getSearch(),
+				   				 PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
+				   				 PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows),pForm.getParam2());
+                		//##2.Prepare Data for Modal-Table Show
+                		//---a.Modal Title
+                		request.setAttribute("modalListName", "Employees List");
+                		request.setAttribute("listSearchColumn", Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
+                		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+            			request.setAttribute("modalForm", "employeeUser");
+                		
+                		//---b.Column Head
+                		//[P.S] : Just Hardcode Here, because it only 1 form
+                		tmpColHead.add("Employee ID");
+                		tmpColHead.add("Name");
+                		tmpColHead.add("Gender");
+                		tmpColHead.add("Email");
+                		tmpColHead.add("Division");
+                		tmpColHead.add("Position");
+                		tmpColHead.add("Manager");
+                		request.setAttribute("listColumnHead", tmpColHead);
+                		
+                		for(tmpI = 0 ; tmpI < list.size() ; tmpI++){
+                			System.out.println("masuk list");
+                			tmpData.add(new ArrayList<String>());
+                			tmpData.get(tmpI).add(list.get(tmpI).getEmployeeId().toString());
+                			tmpData.get(tmpI).add(list.get(tmpI).getEmployeeName());
+                			tmpData.get(tmpI).add((list.get(tmpI).getGender() == 0) ? "Man" : "Woman");
+                			tmpData.get(tmpI).add(list.get(tmpI).getEmail());
+                			tmpData.get(tmpI).add(list.get(tmpI).getDivisionName());
+                			tmpData.get(tmpI).add(list.get(tmpI).getPositionName());
+                			tmpData.get(tmpI).add(list.get(tmpI).getManagerName());
+                		}
+            			break;	
+            			
             		case "activityList":  
                 		tmpTarget = "activityList";
                 		List<ActivityBean> listActivity;	
