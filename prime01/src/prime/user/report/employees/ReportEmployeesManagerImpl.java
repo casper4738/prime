@@ -55,15 +55,9 @@ public class ReportEmployeesManagerImpl implements ReportEmployeesManager{
 			map.put("startDate", string[0]);
 			map.put("untilDate", string[1]);
 		} else {
-			map.put("nameValue", value);
+			map.put("value", value);
 		}
-		System.out.println(empId+"empId");
-		System.out.println(endRow+"endRow");
-		System.out.println(startRow+"startRow");
-		System.out.println(value+"value");
-		System.out.println(columnSearch+"columnSearch");
-		System.out.println("finish "+Constants.Status.FINISH);
-		System.out.println("abort "+Constants.Status.ABORT);
+		
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		map.put("empId", empId);

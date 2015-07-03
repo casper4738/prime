@@ -10,12 +10,13 @@
 <bean:define id="taskAssigner" value="${param.taskAssigner}" toScope="request" />
 <bean:define id="taskReceiver" value="${param.taskReceiver}" toScope="request" />
 <bean:define id="projectMemberId" value="${param.projectMemberId}" toScope="request" />
-
+<%-- 
 <center>${employeeIdActive} |${taskAssigner}  | ${taskReceiver} | ${taskId} | ${projectMemberId } - 
 <br/>
 ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove} 
 </center>
 <br/>
+ --%>
 <div class="form-action"><table align="center">
    <tr> <td style="padding:5px;">
 		<logic:equal name="taskReceiver" value="${employeeIdActive}">

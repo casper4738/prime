@@ -79,7 +79,6 @@ public class ReportEmployeesAction extends Action {
 			if("SHOW ALL".equals(pForm.getColumnSearchReal())){
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER='"+pForm.getEmployeeId()+"' OR TASK_RECEIVER='"+pForm.getEmployeeId()+"')");
 			}else if("NAME".equals(pForm.getColumnSearchReal())) {
-				System.out.println("TEST");
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER="+pForm.getEmployeeId()+" OR TASK_RECEIVER="+pForm.getEmployeeId()+") AND  TASK_NAME LIKE ('%" + pForm.getSearch()+ "%')");				
 			} else if ("DESCRIPTION".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER="+pForm.getEmployeeId()+" OR TASK_RECEIVER="+pForm.getEmployeeId()+") AND LOWER(TASK_DESCRIPTION) LIKE LOWER ('%" + pForm.getSearch()+ "%')");	

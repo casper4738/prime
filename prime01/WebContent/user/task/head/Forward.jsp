@@ -14,7 +14,9 @@
 <html:form action="/TaskHeadUser">
 	<html:hidden name="TaskHeadUserForm" property="task"/>
 	<html:hidden name="TaskHeadUserForm" property="message"/>
-	<html:hidden name="TaskHeadUserForm" property="taskId"/>
+	<html:hidden name="TaskHeadUserForm" property="taskId" styleId="taskId"/>
+	<html:hidden name="TaskHeadUserForm" property="taskBean.taskAssigner" styleId="taskAssignerId"/>
+    <html:hidden name="TaskHeadUserForm" property="taskBean.taskReceiver" styleId="taskReceiverId"/>
 </html:form>
 
 <logic:equal name="TaskHeadUserForm" property="task" value="<%=Constants.Task.DOADD%>">
