@@ -302,7 +302,6 @@
 		WHERE EMPLOYEE_ID = #receiverId# and ACTIVITY_ID = #activityId#
 	</delete>
 	
-	
 	<!-- Insert Activity Detail when Start, Pause, Finish -->
 	<insert id="insertActivityDetail" parameterClass="java.util.Map">
 		INSERT INTO ACTIVITY_DETAILS

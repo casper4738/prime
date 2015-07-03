@@ -43,7 +43,7 @@
   		   loadActivityProgress(true);
   		   
   		   //Reload Chart Every 5 Minutes
-	   		setInterval(loadActivityToDoList, 300000); //5 Menit
+	   		setInterval(loadActivityProgress, 3000); //5 Menit
   		   
 		});
     	
@@ -71,6 +71,7 @@
 		function loadActivityProgress(isToday){
 			//Set Current Date
 			var tmpDate;
+			
 			switch(isToday){
 				case false :
 				  	tmpDate = $('#datepicker_activitydate').datepicker('getDate');
