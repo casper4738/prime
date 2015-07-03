@@ -63,7 +63,7 @@
        		</table>
        		
        		<center>
-	           <input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="submitHandler()"/>
+	           <input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="submitHandler()"/>
        		</center>
         </html:form>  	
 	</section>

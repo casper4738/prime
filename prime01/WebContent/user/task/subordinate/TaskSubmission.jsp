@@ -6,6 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head> 
+<script>
+</script>
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
