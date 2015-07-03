@@ -522,10 +522,14 @@ public class ProjectAction extends Action {
 					tmpAnyProgress = false;
 					do {
 						tmpCurnDate = PrimeUtil.parseDateStringToDateOnly((String)tmpCalendarList.get(tmpK - 3));
-						tmpLastStatus = (tmpActualStartDate.before(tmpCurnDate) && tmpActualEndDate.after(tmpCurnDate)); 
-						if(!tmpLastStatus){
-							if(PrimeUtil.getCompareTo(tmpActualEndDate.getTime(), tmpCurnDate.getTime()) == 0){
-								tmpLastStatus = true;
+						tmpLastStatus = (tmpActualStartDate.before(tmpCurnDate)); 
+						
+						if(tmpActualEndDate != null){
+							tmpLastStatus = (tmpLastStatus && tmpActualEndDate.after(tmpCurnDate));
+							if(!tmpLastStatus){
+								if(PrimeUtil.getCompareTo(tmpActualEndDate.getTime(), tmpCurnDate.getTime()) == 0){
+									tmpLastStatus = true;
+								}
 							}
 						}
 						tmpAnyProgress = (tmpLastStatus) ? true : tmpAnyProgress;
