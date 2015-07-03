@@ -33,9 +33,9 @@ public class MenuAction extends Action {
 		LinkedHashMap<String, String> tmpObject = new LinkedHashMap<String, String>();
 		ProjectManager tmpProjectManager=new ProjectManagerImpl();
 		UserMenuManager tmpUserMenuManager = new UserMenuManagerImpl();
-		String[] tmpMenu = {"Menu","Dashboard","Manage User","Manage Employee","Manage Division","Manage Position",
+		String[] tmpMenu = {"Menu","Dashboard Admin","Manage User","Manage Employee","Manage Division","Manage Position",
 							"Manage Role","Manage Holiday","View User Menu","Manage User Role","Manage Notif Template",
-							"View Log","General Settings","Dashboard","Manage Task as Head","Manage Task as Subordinate",
+							"View Log","General Settings","Dashboard User","Manage Task as Head","Manage Task as Subordinate",
 							"Manage Project As Head","Manage Project","View Report Employees","View Report Project",
 							"View Notification"};
 		

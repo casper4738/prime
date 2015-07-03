@@ -51,7 +51,7 @@ public class FilterSession implements Filter {
 			ServletException {
 		HttpServletRequest tmpServletRequest = (HttpServletRequest) request;
 	    HttpServletResponse tmpServletResponse = (HttpServletResponse) response;
-	    HttpSession tmpSession = tmpServletRequest.getSession(true);
+	    HttpSession tmpSession = tmpServletRequest.getSession();
 	    boolean tmpIsRedirectNeed = true;
 	    
 		if(!tmpServletRequest.getServletPath().equals("/" + Constants.PAGES_LIST[Constants.Page.LOGIN])){
@@ -68,8 +68,6 @@ public class FilterSession implements Filter {
 					//Nothing need to be done at here
 					e.printStackTrace();
 				}
-				
-				System.out.println(tmpDBSession + " _ " + tmpSession.getAttribute(Constants.Session.ID));
 				
 		    	if(tmpDBSession.equals((String)tmpSession.getAttribute(Constants.Session.ID))){
 		    		tmpIsRedirectNeed = false;
@@ -93,15 +91,15 @@ public class FilterSession implements Filter {
 						     out.println("</script>");
 						     return;
 						}
+						
 		    		} 
 		    		
 		    	} else {
 		    		LoginData.clear();
 		    		tmpSession.invalidate();
-		    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONEXPIRED);
 		    	}
 		    } else {
-	    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONEXPIRED);
+				tmpServletRequest.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONEXPIRED);
 		    	if(LoginData.isDataExists()){
 		    		LoginData.clear();
 		    	}
