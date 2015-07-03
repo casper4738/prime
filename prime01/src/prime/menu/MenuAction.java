@@ -75,15 +75,18 @@ public class MenuAction extends Action {
 				case Constants.NotificationType.PROJECT_ABORT :
 				case Constants.NotificationType.PROJECT_SUBMITAPPROVALRETURN :
 				case Constants.NotificationType.PROJECT_SUBMITAPPROVAL :
-				case Constants.NotificationType.PROJECT_REMOVEDFROMROLE :
 				case Constants.NotificationType.PROJECT_NEWPMDELEGATED :
 				case Constants.NotificationType.PROJECT_CREATEAPPROVALRETURN :
 				case Constants.NotificationType.PROJECT_CREATEAPPROVAL :
+				case Constants.NotificationType.PROJECT_REMOVEDFROMROLE :
+				case Constants.NotificationType.PROJECT_ASSIGNED_TO_PM :
 				case Constants.NotificationType.PROJECT_ASSIGNEDASROLE :
 					tmpSession.setAttribute(Constants.Session.redirectParam	, "task=" 			+ tmpMenuForm.getParam2() + "&" +
 																			  "projectId=" 		+ tmpMenuForm.getParam3() + "&" + 
 								  											  "employeeId=" 	+ tmpMenuForm.getParam4());
 					break;
+				case Constants.NotificationType.TASK_CREATED :
+				case Constants.NotificationType.TASK_CREATED_BY_SELF :
 				case Constants.NotificationType.TASK_ABORTBYHEAD :
 				case Constants.NotificationType.TASK_SELFASSIGNAPPROVAL :
 				case Constants.NotificationType.TASK_SELFASSIGNAPPROVALRETURN :
