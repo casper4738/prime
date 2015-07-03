@@ -159,7 +159,7 @@
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
-			<li><a href="" >Manage Project</a></li>
+			<li><a href="javascript:flyToSubmit('success')" >Manage Project</a></li>
 			<li class="active">Project Detail</li>
 		</ol>
 	</section>

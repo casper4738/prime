@@ -271,7 +271,7 @@
 		INSERT INTO PROJECTS(PROJECT_ID, PROJECT_NAME, PROJECT_ASSIGNER, PROJECT_RECEIVER, PROJECT_START_DATE, 
 		PROJECT_ESTIMATE_DATE, PROJECT_DESCRIPTION,PROJECT_LAST_STATUS,UPDATED_BY)
 		VALUES
-		(#projectId#,#projectName#,#projectAssigner#,#projectReceiver#,#projectStartDate#,#projectEstimateDate#,#projectDescription#,#projectLastStatus#,#employeeId#)
+		(#projectId#,#projectName#,#projectAssigner#,#projectReceiver#,#projectStartDate#,#projectEstimateDate#,#projectDescription#,#projectLastStatus#,#updatedBy#)
 	</insert>
 	
 	<select id="getNewId" resultClass="java.lang.Integer">

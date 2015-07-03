@@ -37,7 +37,7 @@ public class ModalAction extends Action {
 		//---.Normally Used Temp Variable
 		int tmpI, tmpJ;
 		String tmpTarget = "";
-		Integer tmpEmployeeID=101;
+		Integer tmpEmployeeID=LoginData.getEmployeeData().getEmployeeId();
 		//---.Depend on the object
 		ModalForm pForm = (ModalForm) form;
 

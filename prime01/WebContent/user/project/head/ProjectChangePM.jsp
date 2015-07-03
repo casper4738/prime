@@ -55,12 +55,10 @@
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</li>
-			<li><a href="" >Manage Project</a></li>
+			<li><a href="javascript:flyToSubmit('success')" >Manage Project</a></li>
 			<li class="active">Project Detail</li>
 		</ol>
 	</section>
-
-	<section class="content">
 	<div class="row">
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Change Project Manager</h3></div>
