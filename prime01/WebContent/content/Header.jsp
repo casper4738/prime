@@ -49,7 +49,9 @@ function doViewAllNotif(){
 							</p></li>
 						<li class="user-footer">
 							<div class="pull-left">
-								<input type="button" class="btn btn-block btn-default"  onclick="openModalHandler('changePwd')" value="Change Password"/>
+						        <% if(!LoginData.getUserData().getIsActiveDirectory()){%>
+						         <input type="button" class="btn btn-block btn-default"  onclick="openModalHandler('changePwd')" value="Change Password"/>
+						        <% } %>
 							</div>
 							<div class="pull-right">
 								<input type="button" class="btn btn-block btn-default"  onclick="doSignOut()" value="Sign Out"/>

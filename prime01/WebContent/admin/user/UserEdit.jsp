@@ -56,7 +56,9 @@
 	               				<td colspan="3" align="center">
 	               					<html:button property="" value="Save" styleClass="btn btn-primary" onclick="dosubmit()" />
 	               					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
-	               					<html:button property="" value="Reset Password" styleClass="btn btn-default" onclick="flyToEdit()" />
+	               					<logic:equal value="false" name="UserAdminForm" property="userBean.isActiveDirectory">
+				                      	<html:button property="" value="Reset Password" styleClass="btn btn-default" onclick="flyToEdit()" />
+				                    </logic:equal>
 	               				</td>
 	               			</tr>
 	               		</table>

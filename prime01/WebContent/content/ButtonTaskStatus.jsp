@@ -15,8 +15,8 @@
 <br/>
 ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove} 
 </center>
-<br/>
- --%>
+<br/> --%>
+
 <div class="form-action"><table align="center">
    <tr> <td style="padding:5px;">
 		<logic:equal name="taskReceiver" value="${employeeIdActive}">
@@ -54,8 +54,8 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
     		<logic:equal name="isAlreadyReject" value="true">
 				<!-- assigner != true -->
     			<logic:notEqual name="taskAssigner" value="${employeeIdActive}">
-	     			<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
-	     			<input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/>
+	     			<%-- <input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
+	     			<input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/> --%>
 	    		</logic:notEqual>
 				<!-- end assigner != true -->
     		</logic:equal>

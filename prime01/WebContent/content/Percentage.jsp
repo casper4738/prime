@@ -20,7 +20,14 @@
 <logic:notEqual name="status" value='<%=Constants.Status.SUBMIT+""%>'>
 	<logic:notEqual name="status" value='<%=Constants.Status.REJECT+""%>'>
 		<logic:notEqual name="status" value='<%=Constants.Status.ABORT+""%>'>
-			${param.percentage}
+			<bean:define id="percentage" value="${param.percentage}" toScope="request" />
+			<logic:equal name="percentage" value="0">
+				${percentage}
+			</logic:equal>
+			<logic:notEqual name="percentage" value="0">
+				${percentage - 1}
+			</logic:notEqual>
+			
 		</logic:notEqual>
 	</logic:notEqual>
 </logic:notEqual>

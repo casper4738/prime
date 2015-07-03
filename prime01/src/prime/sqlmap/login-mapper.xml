@@ -18,15 +18,15 @@
 	
 	<select id="getUserDetails" resultClass="prime.login.LoginBean" parameterClass="java.lang.String">
 		SELECT 
-				USERNAME 		as userName,
-				IS_ACTIVE_DIR 	as isActiveDirectory,
+				USERNAME 		as username,
+				IS_ACTIVE_DIR 	as activeDirectory,
 				STATUS_USER		as statusUser,
 				LOGIN_SESSION	as loginSession,
 				EMPLOYEE_ID		as employeeId,
 				SYSTEM_LEVEL	as systemLevel,
 				ACTION_DATE		as actionDate
 		FROM USERS  
-		WHERE UPPER(USERNAME)=UPPER(#name#)
+		WHERE UPPER(USERNAME)=UPPER(#username#)
 	</select>
 	
 	<update id="setLoginSession" parameterClass="java.lang.String">

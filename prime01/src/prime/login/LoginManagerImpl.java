@@ -43,9 +43,8 @@ public class LoginManagerImpl implements LoginManager {
 		LoginBean tmpBean = null;
 		
 		//##1.Ibatis Proccess
-		tmpBean = (LoginBean)mapper.queryForObject("login.getUserDetails", username);
 
-		return tmpBean;
+		return (LoginBean)mapper.queryForObject("login.getUserDetails", username);
 	}
 	
 	public void setLoginSession(String username) throws SQLException{

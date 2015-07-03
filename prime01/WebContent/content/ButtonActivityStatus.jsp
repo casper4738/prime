@@ -9,10 +9,10 @@
 <bean:define id="taskAssigner" value="${param.taskAssigner}" toScope="request" />
 <bean:define id="taskReceiver" value="${param.taskReceiver}" toScope="request" />
 
-<center>${employeeIdActive} |${taskAssigner}  | ${taskReceiver} | ${taskId} 
+<%-- <center>${employeeIdActive} |${taskAssigner}  | ${taskReceiver} | ${taskId} 
 <br/>
 ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject}
-</center>
+</center> --%>
 
 <div class="form-action"><table align="center" class="btn-status-activity">
    <tr>	

@@ -162,7 +162,7 @@
 		                		</logic:lessEqual>
 	                	    </td>
 	                	    <td><bean:write name="iter" property="taskDescription"/></td>
-	                	    <td><bean:write name="iter" property="taskAssignerName"/> | <bean:write name="iter" property="taskReceiverName"/></td>
+	                	    <td><bean:write name="iter" property="taskReceiverName"/></td>
 	                	    <td align="center"><bean:write name="iter" property="taskStartDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center"><bean:write name="iter" property="taskEstimateDate" format="dd MMMM yyyy"/></td>
 	                	    <td><bean:write name="iter" property="projectName"/></td>

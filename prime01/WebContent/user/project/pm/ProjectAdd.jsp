@@ -43,6 +43,11 @@
 			
 			var checkDate = checkForDate($('#startDate'), $('#estimateDate'), $('#err-startDate'), $('#err-estimateDate'), "Project Start Date", "Project Estimate Date");
 			
+			
+			sendNotification($('#projectReceiverId').val(),
+	                 		<%=Constants.NotificationType.PROJECT_CREATEAPPROVAL%>,  
+	               			"<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>;;;" + $('#projectReceiverId').val());
+			
 			if(projectName || startDate || estimateDate || projectDescription) {
 			} else {
 				dosubmit();
@@ -74,7 +79,7 @@
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectName" />
                 		<html:hidden name="ProjectUserForm" property="employeeId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectAssigner" />
-                		<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver" />
+                		<html:hidden name="ProjectUserForm" property="projectBean.projectReceiver" styleId="projectReceiverId"/>
                 		
                 		<table class="form-input" align="center" style="width: 500px;">
                 			<tr><td width="150px">Project Name</td>

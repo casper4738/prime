@@ -40,12 +40,14 @@ public class LoginAction extends Action {
 			String tmpPassword = tmpForm.getPassword();
 			
 			//---.User Validation Process
-			LoginBean tmpUserDetails = null;
+			LoginBean tmpUserDetails = new LoginBean();
 			if(tmpManager.isUserExists(tmpUsername)){
 				//---Fetch User Details [Differ between AD and Normal DB]
 				tmpUserDetails = tmpManager.getUserDetails(tmpUsername);
-				
-				if(tmpUserDetails.isActiveDirectory()){
+				System.out.println("DWE = " + tmpUserDetails.getUsername());
+				System.out.println("ASD = " + tmpUserDetails.getActiveDirectory());
+				if(tmpUserDetails.getActiveDirectory() == 1){
+					System.out.println("A");
 					ActiveDirectoryManager tmpADManager = new ActiveDirectoryManager();
 					if(!tmpADManager.checkValidUser(tmpUsername, 
 													Constants.ActiveDirectory.ADMIN_USERNAME, 
@@ -55,10 +57,15 @@ public class LoginAction extends Action {
 						if(tmpUserDetails.getStatusUser() == Constants.UserStatus.LOCKED){
 							tmpLoginResultCode = 3; //Fail Login, because locked
 						} else {
-							tmpLoginResultCode = 2; //Success Login
+							if(tmpADManager.isAuthenticated(tmpUsername, tmpPassword)){
+								tmpLoginResultCode = 2; //Success Login	
+							} else {
+								tmpLoginResultCode = 1;
+							}
 						}
 					}
 				} else {
+					System.out.println("B");
 					if(!tmpManager.isUserValidated(tmpUsername, tmpPassword)){
 						tmpLoginResultCode = 1; //Fail Login, fail identification
 					} else {

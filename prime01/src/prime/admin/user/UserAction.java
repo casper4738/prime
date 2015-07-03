@@ -54,7 +54,9 @@ public class UserAction extends Action {
 			userForm.getUserBean().setSysLevel(userForm.getUserRoleId());
 			userForm.getUserBean().setUpdateBy(LoginData.getUserData().getUserName());
 
-			if (userForm.getUserBean().getPassword().length() <= 0) {
+			ActiveDirectoryManager tmpADManager = new ActiveDirectoryManager();
+			
+			if (tmpADManager.checkValidUser(userForm.getUserBean().getUserName(), "dedy.suwandi", "Ace2015")) {
 				userForm.getUserBean().setIsActiveDirectory(true);
 				userForm.getUserBean().setPassword("empty");
 			} else {
