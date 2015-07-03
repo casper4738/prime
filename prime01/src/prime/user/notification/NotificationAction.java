@@ -90,7 +90,7 @@ public class NotificationAction extends Action {
 				e.printStackTrace();
 			}
 			
-			tmpManager.insert(tmpId, pForm.getNotifType(), tmpNotifButton, LoginData.getEmployeeData().getEmployeeId(), tmpReceiverBean.getEmployeeId());
+			tmpManager.insert(tmpId, pForm.getNotifType(), tmpNotifButton, LoginData.getEmployeeData().getEmployeeId(), tmpReceiverBean.getEmployeeId(), tmpBackLink);
 			
 			return null;
 		} else if(("reloadNotification").equals(pForm.getTask())){ 
@@ -102,6 +102,7 @@ public class NotificationAction extends Action {
 			PrintWriter tmpOut = response.getWriter();
 			
 			String tmpPrint = "";
+			NotificationBean tmpNotifBean;
 			tmpPrint += "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">";
 			tmpPrint += "<i class=\"fa fa-bell-o\"></i>";
 			tmpPrint += "<span class=\"label label-warning\">" + countNotif + "</span>";
@@ -111,10 +112,11 @@ public class NotificationAction extends Action {
             tmpPrint += "<li>";
             tmpPrint += "<ul class=\"menu\">";
             for(int i=0;i<tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).size();i++){
+            	tmpNotifBean = tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).get(i);
             	tmpPrint += "<li>";
-            	tmpPrint += "<a href=\"#\">";
+            	tmpPrint += "<a href=\"" + tmpNotifBean.getNotificationLink() + "\">";
             	tmpPrint += "<i class=\"fa fa-warning text-yellow\"></i>";
-            	tmpPrint += tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).get(i).getNotificationNameType();
+            	tmpPrint += tmpNotifBean.getNotificationNameType();
             	tmpPrint += "</a>";
             	tmpPrint += "</li>";
 			}
