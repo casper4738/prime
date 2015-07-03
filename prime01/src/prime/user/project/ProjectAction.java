@@ -36,7 +36,9 @@ public class ProjectAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//---.[Dedy] Hardcoded a little bit for Notification Jump
-		request.getSession().setAttribute(Constants.Session.needRedirect, false);		
+		request.getSession().setAttribute(Constants.Session.needRedirect , false);
+		request.getSession().setAttribute(Constants.Session.redirectPage , Constants.PAGES_LIST[Constants.Page.USER_PROJECT]);
+		request.getSession().setAttribute(Constants.Session.redirectParam, "");		
 		
 		Integer tmpEmployeeId = Integer.valueOf(LoginData.getEmployeeData().getEmployeeId());
 		
@@ -195,7 +197,7 @@ public class ProjectAction extends Action {
 			pForm.getProjectBean().getTaskBean().setTaskAssigner(tmpEmployeeId);
 			pForm.getProjectBean().getTaskBean().setTaskReceiver(pForm.getProjectBean().getEmployeeId());
 			pForm.getProjectBean().getTaskBean().setProjectMemberId(tmpProjectManager.getProjectMemberIdByAll(pForm.getProjectBean()));
-			
+			pForm.getProjectBean().getTaskBean().setUpdateBy(LoginData.getUserData().getUserName());
 			tmpTaskManager.insert(pForm.getProjectBean().getTaskBean());
 			tmpTaskManager.insertDetail(pForm.getProjectBean().getTaskBean());
 
@@ -520,10 +522,14 @@ public class ProjectAction extends Action {
 					tmpAnyProgress = false;
 					do {
 						tmpCurnDate = PrimeUtil.parseDateStringToDateOnly((String)tmpCalendarList.get(tmpK - 3));
-						tmpLastStatus = (tmpActualStartDate.before(tmpCurnDate) && tmpActualEndDate.after(tmpCurnDate)); 
-						if(!tmpLastStatus){
-							if(PrimeUtil.getCompareTo(tmpActualEndDate.getTime(), tmpCurnDate.getTime()) == 0){
-								tmpLastStatus = true;
+						tmpLastStatus = (tmpActualStartDate.before(tmpCurnDate)); 
+						
+						if(tmpActualEndDate != null){
+							tmpLastStatus = (tmpLastStatus && tmpActualEndDate.after(tmpCurnDate));
+							if(!tmpLastStatus){
+								if(PrimeUtil.getCompareTo(tmpActualEndDate.getTime(), tmpCurnDate.getTime()) == 0){
+									tmpLastStatus = true;
+								}
 							}
 						}
 						tmpAnyProgress = (tmpLastStatus) ? true : tmpAnyProgress;

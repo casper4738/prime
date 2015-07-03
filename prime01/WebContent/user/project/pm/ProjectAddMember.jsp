@@ -45,8 +45,9 @@
 		function nullCheked(err_var1, title) {
 			if(isNullCheckedRool()) { 
 				err_var1.html(title+" must be checked minimal one");
+				return true;
 			}
-			
+			return false;
 		}
 		
 		function flyToBack(task, value) {
