@@ -85,44 +85,49 @@ public class NotificationAction extends Action {
 			System.out.println(tmpReceiverBean.getEmail());
 			System.out.println(tmpNotifTempBean.getNotifTemplateName());
 			System.out.println(tmpTemplate);
-			MailUtil.send(tmpReceiverBean.getEmail(), tmpNotifTempBean.getNotifTemplateName(), tmpTemplate);
-		
 			
-			System.out.println("ID Cui = " + tmpId);
-			System.out.println("ID Cui = " + LoginData.getEmployeeData().getEmployeeId());
-			System.out.println("ID Cui = " + pForm.getNotifType());
-			System.out.println("ID Cui = " + tmpNotifButton);
-			System.out.println("ID Cui = " + 100);
+			//---.Mail Send Error Handling
+			try {
+				MailUtil.send(tmpReceiverBean.getEmail(), tmpNotifTempBean.getNotifTemplateName(), tmpTemplate);
+			} catch (Exception e){
+				e.printStackTrace();
+			}
+			
 			tmpManager.insert(tmpId, pForm.getNotifType(), tmpNotifButton, LoginData.getEmployeeData().getEmployeeId(), tmpReceiverBean.getEmployeeId());
 			
 			return null;
 		} else if(("reloadNotification").equals(pForm.getTask())){ 
 			int countNotif = tmpManager.getCountListNotifNoRead(LoginData.getEmployeeData().getEmployeeId());
-			String tmpListString = "";
-			for(int i=0;i<tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).size();i++){
-				tmpListString += ("<li><a href=\"#\">" + tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).get(i).getNotificationNote() + "</a></li>"); 
-			}
+			
 					
 			response.setContentType("text/html;charset=utf-8");
 			response.setHeader("cache-control", "no-cache");
 			PrintWriter tmpOut = response.getWriter();
-			tmpOut.print(
-							"<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">" +
-								"<i class=\"fa fa-bell-o\"></i>" +
-								"<span class=\"label label-warning\">" +
-									countNotif +
-								"</span>" + 
-							"</a>" + 
-							"<ul class=\"dropdown-menu\">" + 
-								"<li class=\"header\">You have " +  countNotif + " notifications</li>" + 
-								"<li>" + 
-									"<ul class=\"menu\">" + 
-										tmpListString + 
-									"</ul>" +
-								"</li>" +
-								"<li class=\"footer\"><a style=\"paging\" href=\"#\" onclick=\"doViewAllNotif()\">View all</a></li>" + 
-							"</ul>" 
-						);
+			
+			String tmpPrint = "";
+			tmpPrint += "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">";
+			tmpPrint += "<i class=\"fa fa-bell-o\"></i>";
+			tmpPrint += "<span class=\"label label-warning\">" + countNotif + "</span>";
+			tmpPrint += "</a>";
+			tmpPrint += "<ul class=\"dropdown-menu\">";
+			tmpPrint += "<li class=\"header\">You have " + countNotif + " notifications</li>";
+            tmpPrint += "<li>";
+            tmpPrint += "<ul class=\"menu\">";
+            for(int i=0;i<tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).size();i++){
+            	tmpPrint += "<li>";
+            	tmpPrint += "<a href=\"#\">";
+            	tmpPrint += "<i class=\"fa fa-warning text-yellow\"></i>";
+            	tmpPrint += tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).get(i).getNotificationNameType();
+            	tmpPrint += "</a>";
+            	tmpPrint += "</li>";
+			}
+			tmpPrint += "</ul>";
+			tmpPrint += "</li>";
+			tmpPrint += "<li class=\"footer\"><a style=\"paging\" href=\"#\" onclick=\"doViewAllNotif()\">View all</a></li>";
+			tmpPrint += "</ul>";
+			
+			
+			tmpOut.print(tmpPrint);
 			tmpOut.flush();
 			return null;
 		} else {

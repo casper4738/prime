@@ -3,14 +3,15 @@
 <sqlMap namespace="position">
 	<insert id="insert" parameterClass="prime.admin.position.PositionBean">
 		INSERT INTO POSITIONS
-		(POSITION_ID , POSITION_NAME, POSITION_LEVEL) VALUES 
-		(#positionId#, #positionName#, #positionLevel#)
+		(POSITION_ID , POSITION_NAME, POSITION_LEVEL, UPDATED_BY) VALUES 
+		(#positionId#, #positionName#, #positionLevel#, #updateBy#)
 	</insert>
 	
 	<update id="update" parameterClass="prime.admin.position.PositionBean">
 		UPDATE POSITIONS SET
-		POSITION_NAME=#positionName#,
-		POSITION_LEVEL=#positionLevel#  
+			POSITION_NAME	= #positionName#,
+			POSITION_LEVEL	= #positionLevel#,
+			UPDATED_BY 		= #updateBy#
 		WHERE POSITION_ID=#positionId#
 	</update>
 	

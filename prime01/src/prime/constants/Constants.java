@@ -299,6 +299,7 @@ public interface Constants {
 		final int TASKS 				= 11;
 		final int PROJECTS 				= 12;
 		final int NOTIFICATIONS 		= 13;
+		final int GENERAL_SETTINGS		= 14;
 		
 	}
 	static interface LogAction{
@@ -345,6 +346,10 @@ public interface Constants {
 	static interface Session{
 		static String ID				= "t1";
 		static String Username			= "t2";
+		
+		static String redirectPage		= "t3";
+		static String redirectParam		= "t4";
+		static String needRedirect	 	= "t5";
 	}
 	
 	//##G.Active Directory

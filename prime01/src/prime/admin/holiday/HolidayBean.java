@@ -2,12 +2,20 @@ package prime.admin.holiday;
 
 import java.sql.Date;
 
-
 public class HolidayBean {
 
 	private java.sql.Date holidayDate;
 	private String holidayDescription;
-	
+	private String updateBy;
+
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
+
 	public HolidayBean() {
 		setHolidayDate(new Date(new java.util.Date().getTime()));
 	}

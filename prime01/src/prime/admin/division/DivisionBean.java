@@ -4,6 +4,15 @@ public class DivisionBean {
 
 	private Integer divisionId;
 	private String divisionName;
+	private String updateBy;
+
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
 
 	public Integer getDivisionId() {
 		return divisionId;

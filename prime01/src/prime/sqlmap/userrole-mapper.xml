@@ -3,17 +3,18 @@
 <sqlMap namespace="userrole">
 	<insert id="insert" parameterClass="prime.admin.userrole.UserRoleBean">
 		INSERT INTO USER_ROLES
-		(USER_ROLE_ID, USER_ROLE_NAME, USER_ROLE_DESCRIPTION) VALUES 
-		(#userRoleId#, #userRoleName#,#userRoleDescription#)
+		(USER_ROLE_ID, USER_ROLE_NAME, USER_ROLE_DESCRIPTION, UPDATED_BY) VALUES 
+		(#userRoleId#, #userRoleName#,#userRoleDescription#, #updateBy#)
 	</insert>
 	
 	<update id="update" parameterClass="prime.admin.userrole.UserRoleBean">
 		UPDATE USER_ROLES 
 		SET
 			USER_ROLE_NAME		  = #userRoleName#,
-			USER_ROLE_DESCRIPTION = #userRoleDescription#
+			USER_ROLE_DESCRIPTION = #userRoleDescription#,
+			UPDATED_BY 			  = #updateBy#
 		WHERE 
-			USER_ROLE_ID=#userRoleId# 
+			USER_ROLE_ID = #userRoleId# 
 	</update>
 	
 	<insert id="insertUserRoleMenu" parameterClass="prime.admin.userrole.UserRoleBean">
@@ -26,7 +27,7 @@
 		DELETE 
 			FROM USER_ROLE_MENUS 
 		WHERE 
-			USER_ROLE_ID=#userRoleId# 
+			USER_ROLE_ID = #userRoleId# 
 	</delete>
 	
 	<select id="getNewId" resultClass="java.lang.Integer">

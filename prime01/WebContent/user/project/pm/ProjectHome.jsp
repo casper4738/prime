@@ -101,9 +101,7 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title">Projects Member</h3></div>
 			
-			<p><span class="button-add btn btn-app bg-olive btnCancel" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
-	               <i class="fa fa-edit"></i>Add
-           		</span>
+			
            	<p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
             
 			<!-- Search Handler Tag -->
@@ -162,7 +160,7 @@
 					<th width="100px">Project Name</th>
 					<th>Description</th>
 					<th width="100px">Project Manager</th>
-					<th width="100px">Proposed By</th>
+					<th width="100px">Assigned By</th>
 					<th width="65px">Start Date</th>
 					<th width="65px">Estimate Date</th>	
 					<th width="30px">Status</th>				

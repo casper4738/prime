@@ -603,4 +603,17 @@
 		  )RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
 		  WHERE EMP.EMPLOYEE_ID=#employeeId#
 	 </select>
+	 
+	 <select id="getCountUnderLevel" resultClass="java.lang.Integer" parameterClass="java.lang.Integer" >
+		SELECT COUNT(1) 
+		FROM EMPLOYEES E 
+		JOIN POSITIONS POS ON E.POSITION_ID=POS.POSITION_ID
+		WHERE TREE_ID LIKE #employeeId#||'%'
+		AND POSITION_LEVEL >= (
+		    SELECT POSITION_LEVEL 
+		    FROM EMPLOYEES EMP
+		    JOIN POSITIONS P ON EMP.POSITION_ID = P.POSITION_ID
+		    WHERE EMPLOYEE_ID= #employeeId#
+		)+1
+	 </select>
 </sqlMap>

@@ -19,4 +19,6 @@ public interface NotificationManager {
 	public Integer getNewId() throws SQLException;
 	
 	public void markAsRead(Integer notifId) throws SQLException;
+	
+	public NotificationBean getNotifByID(Integer notifId) throws SQLException;
 }

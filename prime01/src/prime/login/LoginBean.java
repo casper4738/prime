@@ -2,8 +2,6 @@ package prime.login;
 
 import java.util.Date;
 
-import org.apache.tomcat.util.codec.binary.Base64;
-
 public class LoginBean {
 	private String  username;
 	private boolean isActiveDirectory;

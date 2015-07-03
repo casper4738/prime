@@ -14,6 +14,7 @@ import org.apache.struts.action.ActionMapping;
 import prime.admin.setting.GeneralSettingManager;
 import prime.admin.setting.GeneralSettingManagerImpl;
 import prime.constants.Constants;
+import prime.login.LoginData;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -27,7 +28,6 @@ public class PositionAction extends Action {
 		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
-			pForm.getPositionBean().setPositionId(tmpManager.getNewId());
 			request.setAttribute("listPositionLevel", PrimeUtil.getListPositionLevel(tmpSettingManager.getGeneralSetting().getGeneralSettingLevel()));
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
@@ -37,10 +37,13 @@ public class PositionAction extends Action {
 			return mapping.findForward("edit");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			//##.Insert Data and Go to Forward
+			pForm.getPositionBean().setPositionId(tmpManager.getNewId());
+			pForm.getPositionBean().setUpdateBy(LoginData.getUserData().getUserName());
 			tmpManager.insert(pForm.getPositionBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
 			//##.Update Data and Go to Forward
+			pForm.getPositionBean().setUpdateBy(LoginData.getUserData().getUserName());
 			tmpManager.update(pForm.getPositionBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DODELETE.equals(pForm.getTask())) {

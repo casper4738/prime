@@ -30,8 +30,8 @@ public class ReportEmployeesAction extends Action {
 		if(Constants.Task.REPORT.GOTODETAILEMPLOYEE.equals(pForm.getTask())){
 			//##. Get Data
 			String search = "";
-			System.out.println(pForm.getColumnSearch()+"--pForm.getColumnSearch()");
-			if("STARTDATE".equals(pForm.getColumnSearch()) || "ESTIMATEDATE".equals(pForm.getColumnSearch())) {
+			System.out.println(pForm.getColumnSearchReal()+"--pForm.getColumnSearchReal()");
+			if("STARTDATE".equals(pForm.getColumnSearchReal()) || "ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
 				search = pForm.getStartDate()+";"+pForm.getUntilDate();
 			} else {
 				search = pForm.getSearch();
@@ -78,6 +78,21 @@ public class ReportEmployeesAction extends Action {
 			
 			return mapping.findForward("showReportEmployee");
 		} else if (Constants.Task.REPORT.GENERATEREPORTEMPLOYEETASK.equals(pForm.getTask())) {
+			System.out.println("MASUK EMP TASK");
+			
+			if("NAME".equals(pForm.getColumnSearchReal())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE TASK_NAME LIKE ('%" + pForm.getSearch()+ "%')");				
+			} else if ("DESCRIPTION".equals(pForm.getColumnSearchReal())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER(TASK_DESCRIPTION) LIKE LOWER ('%" + pForm.getSearch()+ "%')");	
+			} else if ("ASSIGNER".equals(pForm.getColumnSearchReal())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER(TASK_ASSIGNER) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+			} else if ("RECEIVER".equals(pForm.getColumnSearchReal())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER(TASK_RECEIVER) LIKE LOWER ('%" +pForm.getSearch()+ "%')");
+			} else if ("STARTDATE".equals(pForm.getColumnSearchReal())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE TASK_START_DATE BETWEEN TO_DATE('"+pForm.getStartDate()+"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
+			} else if ("ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
+				request.getSession(true).setAttribute("searchQuery", " WHERE TASK_ESTIMATE_DATE BETWEEN TO_DATE('"+pForm.getStartDate()+"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
+			} 
 			
 			return mapping.findForward("showReportEmployeeTask");
 		}

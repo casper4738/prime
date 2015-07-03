@@ -9,6 +9,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import prime.constants.Constants;
+import prime.login.LoginData;
 
 public class SettingAction extends Action {
 
@@ -23,14 +24,12 @@ public class SettingAction extends Action {
 			return mapping.findForward("edit");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
 			//##. Update Data
-			System.out.println("cek 1");
 			if("".equals(pForm.getSmtpPassword())) {
 			} else {
 				pForm.getSettingBean().setSmtpPassword(pForm.getSmtpPassword());
 			}
-			System.out.println("cek 2"+pForm.getSettingBean().getSmtpPassword());
+			pForm.getSettingBean().setUpdateBy(LoginData.getUserData().getUserName());
 			tmpManager.save(pForm.getSettingBean());				
-			System.out.println("cek 3");
 			return mapping.findForward("forward");
 		}
 

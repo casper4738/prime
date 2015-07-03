@@ -157,6 +157,7 @@
 		
 		<action path="/ProjectUserAsHead" name="ProjectUserFormAsHead" type="prime.user.project.ProjectActionAsHead" scope="request">
 			<forward name="success" 		path="/user/project/head/ProjectHomeAsHead.jsp"></forward>
+			<forward name="add" 			path="/user/project/head/ProjectAddAsHead.jsp"></forward>
 			<forward name="detailsAsHead"	path="/user/project/head/ProjectDetailsAsHead.jsp"></forward>
 			<forward name="detailMemberAsHead" 	path="/user/project/head/ProjectMemberDetailsAsHead.jsp"></forward>
 			<forward name="changePM" 		path="/user/project/head/ProjectChangePM.jsp"></forward>

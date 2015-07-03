@@ -18,6 +18,7 @@ import prime.admin.usermenu.UserMenuBean;
 import prime.admin.usermenu.UserMenuManager;
 import prime.admin.usermenu.UserMenuManagerImpl;
 import prime.constants.Constants;
+import prime.login.LoginData;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -42,10 +43,12 @@ public class UserRoleAction extends Action{
 			return mapping.findForward("edit");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			//##.Insert Data and Go to Forward
+			pForm.getUserRoleBean().setUpdateBy(LoginData.getUserData().getUserName());
 			tmpManager.insert(pForm.getUserRoleBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
 			//##.Update Data and Go to Forward
+			pForm.getUserRoleBean().setUpdateBy(LoginData.getUserData().getUserName());
 			tmpManager.update(pForm.getUserRoleBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOCHECK.equals(pForm.getTask())) {
@@ -63,8 +66,7 @@ public class UserRoleAction extends Action{
 				bean.setUserRoleId(pForm.getUserRoleBean().getUserRoleId());
 				bean.setUserMenuAction(pForm.getUserRoleBean().getUserMenuAction());
 				bean.setUserMenuId(pForm.getUserRoleBean().getUserMenuId());
-				
-				//System.out.println(bean.getUserMenuId()+"-"+bean.getUserMenuAction());
+				bean.setUpdateBy(LoginData.getUserData().getUserName());
 				tmpManager.insertUserRoleMenu(bean);				
 			}
 			return mapping.findForward("forward");

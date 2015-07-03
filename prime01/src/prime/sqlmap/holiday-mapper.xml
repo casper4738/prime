@@ -3,16 +3,17 @@
 <sqlMap namespace="holiday">
 	<insert id="insert" parameterClass="prime.admin.holiday.HolidayBean">
 		INSERT INTO  NATIONAL_HOLIDAYS
-			(HOLIDAY_DATE , NATIONAL_DESCRIPTION) 
+			(HOLIDAY_DATE , NATIONAL_DESCRIPTION, UPDATED_BY) 
 		VALUES 
-			(#holidayDate#, #holidayDescription#)
+			(#holidayDate#, #holidayDescription#, #updateBy#)
 	</insert>
 	
 	<update id="update" parameterClass="prime.admin.holiday.HolidayBean">
 		UPDATE 
 			NATIONAL_HOLIDAYS 
 		SET
-			NATIONAL_DESCRIPTION=#holidayDescription#
+			NATIONAL_DESCRIPTION = #holidayDescription#,
+			UPDATED_BY 			 = #updateBy#
 		WHERE 
 			HOLIDAY_DATE=#holidayDate#
 	</update>

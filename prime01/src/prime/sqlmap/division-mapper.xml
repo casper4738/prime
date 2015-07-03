@@ -3,13 +3,15 @@
 <sqlMap namespace="division">
 	<insert id="insert" parameterClass="prime.admin.division.DivisionBean">
 		INSERT INTO DIVISIONS
-		(DIVISION_ID , DIVISION_NAME) VALUES 
-		(#divisionId#, #divisionName#)
+		(DIVISION_ID , DIVISION_NAME, UPDATED_BY) VALUES 
+		(#divisionId#, #divisionName#, #updateBy#)
 	</insert>
 	
 	<update id="update" parameterClass="prime.admin.division.DivisionBean">
-		UPDATE DIVISIONS SET
-		DIVISION_NAME=#divisionName#
+		UPDATE DIVISIONS 
+		SET
+			DIVISION_NAME	= #divisionName#,
+			UPDATED_BY 		= #updateBy#
 		WHERE DIVISION_ID=#divisionId# 
 	</update>
 	
@@ -23,8 +25,9 @@
 	</select>
 	
 	<select id="get" resultClass="prime.admin.division.DivisionBean" parameterClass="java.lang.Integer">
-		SELECT DIVISION_ID AS divisionId, 
-		DIVISION_NAME AS divisionName
+		SELECT 
+			DIVISION_ID 	AS divisionId, 
+			DIVISION_NAME 	AS divisionName
 		FROM DIVISIONS
 		WHERE DIVISION_ID=#id#
 	</select>

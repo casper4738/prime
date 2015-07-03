@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import prime.constants.Constants;
+import prime.login.LoginData;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -32,10 +33,12 @@ public class HolidayAction extends Action {
 			return mapping.findForward("edit");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			//##.Insert Data and Go to Forward
+			pForm.getHolidayBean().setUpdateBy(LoginData.getUserData().getUserName());
 			tmpManager.insert(pForm.getHolidayBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
 			//##.Update Data and Go to Forward
+			pForm.getHolidayBean().setUpdateBy(LoginData.getUserData().getUserName());
 			tmpManager.update(pForm.getHolidayBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DODELETE.equals(pForm.getTask())) {

@@ -13,6 +13,7 @@ import org.apache.struts.action.ActionMapping;
 
 import prime.admin.division.DivisionBean;
 import prime.constants.Constants;
+import prime.login.LoginData;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -24,7 +25,6 @@ public class RoleAction extends Action {
 		RoleManager tmpManager = new RoleManagerImpl();
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
-			pForm.getRoleBean().setRoleId(tmpManager.getNewId());
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
 			//##. Edit Data
@@ -32,14 +32,18 @@ public class RoleAction extends Action {
 			return mapping.findForward("edit");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			//##.Insert Data and Go to Forward
+			pForm.getRoleBean().setRoleId(tmpManager.getNewId());
+			pForm.getRoleBean().setUpdateBy(LoginData.getUserData().getUserName());
 			tmpManager.insert(pForm.getRoleBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
 			//##.Update Data and Go to Forward
+			pForm.getRoleBean().setUpdateBy(LoginData.getUserData().getUserName());
 			tmpManager.update(pForm.getRoleBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DODELETE.equals(pForm.getTask())) {
 			//##.Delete Data and Back Main
+			pForm.getRoleBean().setUpdateBy(LoginData.getUserData().getUserName());
 			tmpManager.delete(pForm.getTmpId());
 			return mapping.findForward("forward");
 		}

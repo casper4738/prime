@@ -101,6 +101,11 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title">Projects Head</h3></div>
 			
+			<logic:notEqual name="ProjectUserFormAsHead" property="countUnderLevel" value="0">
+				<p><span class="button-add btn btn-app bg-olive btnCancel" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
+	               <i class="fa fa-edit"></i>Add
+           		</span>
+			</logic:notEqual>
 			
            	<p><span class="message"><bean:write name="ProjectUserFormAsHead" property="message" /></span></p>
             
@@ -112,12 +117,12 @@
 				</html:select> 
 			</div>
 			<div class="search-table">
-				<html:form action="<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT_HEAD]%>" method="post">
+				<html:form action="/ProjectUserAsHead" method="post">
 					<html:hidden property="task" styleId="hdTask"/>
 					<html:hidden name="ProjectUserFormAsHead" property="projectId"/>
 					<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectLastStatus"/>
 					<html:hidden name="ProjectUserFormAsHead" property="projectBean.projectReceiver"/>
-					<html:hidden name="ProjectUserFormAsHead" property="employeeIdReceiver"/>
+					<html:hidden name="ProjectUserFormAsHead" property="projectBean.employeeIdReceiver"/>
 					<html:hidden name="ProjectUserFormAsHead" property="goToPage"/>
 					<html:hidden name="ProjectUserFormAsHead" property="showInPage"/>
 					<html:hidden name="ProjectUserFormAsHead" property="isShowAll"/>
@@ -159,7 +164,7 @@
 					<th width="100px">Project Name</th>
 					<th>Description</th>
 					<th width="100px">Project Manager</th>
-					<th width="100px">Proposed By</th>
+					<th width="100px">Assigned By</th>
 					<th width="65px">Start Date</th>
 					<th width="65px">Estimate Date</th>	
 					<th width="30px">Status</th>				

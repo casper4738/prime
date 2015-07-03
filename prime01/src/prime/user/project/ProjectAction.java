@@ -64,6 +64,7 @@ public class ProjectAction extends Action {
 			return mapping.findForward("add");
 		} else if (Constants.Task.DOADD.equals(pForm.getTask())){
 			//##.Insert Data Task
+			System.out.println("do add member");
 			pForm.getProjectBean().setProjectId(tmpProjectManager.getNewId());
 			pForm.getProjectBean().setProjectReceiver(tmpEmployeeId);
 			pForm.getProjectBean().setProjectLastStatus(1);

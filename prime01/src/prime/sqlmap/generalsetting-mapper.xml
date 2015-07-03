@@ -5,16 +5,15 @@
 	<update id="save" parameterClass="prime.admin.setting.GeneralSettingBean">
 		UPDATE GENERAL_SETTINGS SET
 			GENERAL_SETTING_LEVEL 	= #generalSettingLevel#, 
-			GENERAL_SETTING_TIMEOUT	= #generalSettingTimeOut#, 
 			MINIMUM_LEVEL_APPROVAL	= #minLevelApproval#,
 			SMTP_USERNAME			= #smtpUsername#,
-			SMTP_PASSWORD			= #smtpPassword#
+			SMTP_PASSWORD			= #smtpPassword#,
+			UPDATED_BY 				= #updateBy#
 	</update>
 
 	<select id="get" resultClass="prime.admin.setting.GeneralSettingBean">
 		SELECT
 			GENERAL_SETTING_LEVEL 	AS generalSettingLevel, 
-			GENERAL_SETTING_TIMEOUT	AS generalSettingTimeOut, 
 			MINIMUM_LEVEL_APPROVAL	AS minLevelApproval,
 			SMTP_USERNAME			AS smtpUsername, 
 			SMTP_PASSWORD			AS smtpPassword

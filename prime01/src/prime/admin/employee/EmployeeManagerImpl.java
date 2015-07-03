@@ -190,9 +190,17 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	}
 	/* end of select employee by tree */
 	
+	//get count under level
+	
+	@Override
+	public Integer getCountUnderLevel(Integer employeeId) throws SQLException {
+		return (Integer) mapper.queryForObject("employee.getCountUnderLevel", employeeId);
+	}
+	
 	public Integer getNewId() throws SQLException {
 		return (Integer) mapper.queryForObject("employee.getNewId", null);
 	}
+
 
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException {
 		Map<String, Object> map = new HashMap<String, Object>();

@@ -41,11 +41,6 @@
                 				<td><html:text name="SettingAdminForm" property="settingBean.generalSettingLevel" styleClass="form-control" style="text-align:center" disabled="true"/></td>
                 			</tr>
                 			<tr>
-                				<td>Time Out (minutes)</td>
-                				<td align="center">:</td>
-                				<td><html:text  name="SettingAdminForm" property="settingBean.generalSettingTimeOut" styleClass="form-control" style="text-align:center" disabled="true"/></td>
-                			</tr>
-                			<tr>
                 				<td>Minimum Level Approval</td>
                 				<td align="center">:</td>
                 				<td><html:text  name="SettingAdminForm" property="settingBean.minLevelApproval" styleClass="form-control" style="text-align:center" disabled="true"/></td>

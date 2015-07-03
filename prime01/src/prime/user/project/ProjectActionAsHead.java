@@ -57,13 +57,51 @@ public class ProjectActionAsHead extends Action {
 			//pForm.getProjectBean().setProjectAssigner(101);
 			//pForm.getProjectBean().setProjectAssigner(tmpTaskAssign.getEmployeeId());
 			//pForm.getProjectBean().setProjectReceiver(tmpTaskAssign.getEmployeeId());
+			System.out.println("add as head");
 			
+			//pForm.setCountUnderLevel(countUnderLevel);
 			pForm.setEmployeeBean(tmpEmployeeManager.getEmployeeById(tmpEmployeeId));
 			System.out.println("div "+pForm.getEmployeeBean().getDivisionId());
 			pForm.setDivisionId(pForm.getEmployeeBean().getDivisionId());
 			pForm.setPositionId(pForm.getEmployeeBean().getPositionId());
 			return mapping.findForward("add");
 		}  
+		else if (Constants.Task.DOADD.equals(pForm.getTask())){
+			//##.Insert Data Task
+			System.out.println("create as head");
+			pForm.getProjectBean().setProjectId(tmpProjectManager.getNewId());
+			pForm.getProjectBean().setProjectAssigner(tmpEmployeeId);
+			pForm.getProjectBean().setProjectLastStatus(1);
+			pForm.getProjectBean().setProjectStatus(0);
+			pForm.getProjectBean().setProjectReceiver(pForm.getEmployeeId());
+			pForm.getProjectBean().setProjectChangeNote("First Time");
+			pForm.getProjectBean().setUpdatedBy(tmpEmployeeId);
+			tmpProjectManager.insert(pForm.getProjectBean());
+			tmpProjectManager.insertDetail(pForm.getProjectBean());
+			pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
+			pForm.getProjectBean().getRoleBean().setRoleId(1);
+			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeId());
+			pForm.getProjectBean().setProjectMemberStatus(1);
+			tmpProjectManager.insertMember(pForm.getProjectBean());
+
+			
+			String search = "";
+			if("STARTDATE".equals(pForm.getColumnSearchReal()) || "ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
+				search = pForm.getStartDate()+";"+pForm.getUntilDate();
+			} else {
+				search = pForm.getSearch();
+			}
+			System.out.println("colom "+pForm.getColumnSearchReal());
+			int countRows  = tmpProjectManager.getCountListByColAsMember(pForm.getColumnSearchReal(), search, tmpEmployeeId);
+			List<ProjectBean> list = tmpProjectManager.getListByColumnAsMember(pForm.getColumnSearchReal(), pForm.getSearch(),
+					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
+					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),tmpEmployeeId);
+			request.setAttribute("listProject", list);
+			request.setAttribute("listSearchColumn", Constants.Search.PROJECT_SEARCHCOLUMNS);
+			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+			setPaging(request, pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());
+			return mapping.findForward("forward");
+		} 
 		else if ("detailsAsHead".equals(pForm.getTask())){
 			System.out.println("masuk detail head action");
 			//##.View Detail Project
@@ -96,7 +134,7 @@ public class ProjectActionAsHead extends Action {
 			return mapping.findForward("reject");
 		}
 		else if ("changePM".equals(pForm.getTask())){
-			System.out.println("changePM "+pForm.getEmployeeIdReceiver());
+			System.out.println("changePM "+pForm.getProjectBean().getEmployeeIdReceiver());
 			
 			return mapping.findForward("changePM");
 		}
@@ -374,6 +412,9 @@ public class ProjectActionAsHead extends Action {
 		}
 		pForm.getProjectBean().setIsAssigner(tmpProjectManager.getCountProjectAssigner(tmpEmployeeId));
 		
+		int countLevel = tmpEmployeeManager.getCountUnderLevel(tmpEmployeeId);
+		System.out.println("jumlah level "+countLevel );
+		pForm.setCountUnderLevel(Integer.valueOf(countLevel));
 		List<ProjectBean> list = new ArrayList<ProjectBean>();
 		System.out.println("colom "+pForm.getColumnSearchReal());
 		int countRows  = tmpProjectManager.getCountListByColAsHead(pForm.getColumnSearchReal(), search, tmpEmployeeId);

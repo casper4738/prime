@@ -81,10 +81,12 @@
 	</select>
 	
 	<select id="getListNotifNoRead" resultClass="prime.user.notification.NotificationBean" parameterClass="java.lang.Integer">
-		SELECT NOTIFICATION_NOTE AS notificationNote
+		SELECT NOTIF.NOTIFICATION_NOTE AS notificationNote,
+			   NT.NOTIFICATION_NAME AS notificationNameType
 	    FROM NOTIFICATIONS NOTIF
         JOIN EMPLOYEES E ON E.EMPLOYEE_ID = NOTIF.SENDER
         JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = NOTIF.RECEIVER
+        JOIN NOTIFICATION_TEMPLATES NT ON NT.NOTIFICATION_TEMPLATE_ID = NOTIF.NOTIFICATION_TEMPLATE_ID
         WHERE NOTIFICATION_STATUS = '1' AND RECEIVER = #employeeId# AND ROWNUM <![CDATA[ <= ]]> 5
 	</select>
 	
@@ -95,7 +97,6 @@
         JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = NOTIF.RECEIVER
         WHERE NOTIFICATION_STATUS = '1' AND RECEIVER = #employeeId# 
 	</select>
-	
 	
 	
 	<update id="markAsRead" parameterClass="java.lang.Integer">

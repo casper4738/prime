@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
@@ -16,6 +17,7 @@ import prime.admin.usermenu.UserMenuManager;
 import prime.admin.usermenu.UserMenuManagerImpl;
 import prime.constants.Constants;
 import prime.login.LoginData;
+import prime.user.notification.NotificationBean;
 import prime.user.notification.NotificationManager;
 import prime.user.notification.NotificationManagerImpl;
 import prime.user.project.ProjectManager;
@@ -56,14 +58,22 @@ public class MenuAction extends Action {
 		if(("redirect").equals(tmpMenuForm.getTask())){
 			//Do Redirect if the ID is same :)
 			if(tmpMenuForm.getParam4().equals(LoginData.getEmployeeData().getEmployeeId().toString())){
-				request.setAttribute("needRedirect" , true);
-				request.setAttribute("redirectPage" , tmpMenuForm.getParam1());
-				request.setAttribute("redirectParam", "task=" 		+ tmpMenuForm.getParam2() + "&" +
-													  "taskId=" 	+ tmpMenuForm.getParam3() + "&" + 
-													  "employeeId=" + tmpMenuForm.getParam4());
-				//Mark as read
 				NotificationManager tmpNotificationManager = new NotificationManagerImpl();
+				HttpSession tmpSession = request.getSession();
+				NotificationBean tmpNotifBean;
+				
+				//Get Notif Type and Mark as Read
+				tmpNotifBean = tmpNotificationManager.getNotifByID(Integer.parseInt(tmpMenuForm.getParam5()));
 				tmpNotificationManager.markAsRead(Integer.parseInt(tmpMenuForm.getParam5()));
+				
+				//Set Attribute
+				tmpSession.setAttribute("needRedirect" , true);
+				tmpSession.setAttribute("redirectPage" , tmpMenuForm.getParam1());
+				tmpSession.setAttribute("redirectParam", "task=" 		+ tmpMenuForm.getParam2() + "&" +
+													  	 "taskId=" 	+ tmpMenuForm.getParam3() + "&" + 
+													  	 "employeeId=" + tmpMenuForm.getParam4());
+				
+				//Redirect to Avoid Multiple Link
 			}
 		}
 		

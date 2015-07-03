@@ -31,28 +31,9 @@ function doViewAllNotif(){
 		%>
 		<div class="navbar-custom-menu">
 			<ul class="nav navbar-nav">
-				<li class="dropdown notifications-menu" id="notif-wrapper"><a href="#"
-					class="dropdown-toggle" data-toggle="dropdown"> <i
-						class="fa fa-bell-o"></i> <span class="label label-warning"><%=countNotif%></span>
-				</a>
-					<ul class="dropdown-menu">
-						<li class="header">You have <%=countNotif%> notifications</li>
-						<li>
-							<!-- inner menu: contains the actual data -->
-							<ul class="menu">
-								<%
-									for(int i=0;i<tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).size();i++){
-								%>
-										<li><a href="#">
-											<%=tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).get(i).getNotificationNote()%>
-										</a></li>
-								<%		
-									}
-								%>
-							</ul>
-						</li>
-						<li class="footer"><html:link styleClass="paging" href="#" onclick="doViewAllNotif()">View all</html:link></li>
-					</ul></li>
+				<li class="dropdown notifications-menu" id="notif-wrapper">
+					
+				</li>
 
 				<li class="dropdown user user-menu"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown"> <img

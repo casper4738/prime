@@ -27,6 +27,7 @@ public class ProjectFormAsHead extends ActionForm {
 	private Integer taskId;
 	private Integer divisionId;
 	private Integer positionId;
+	private Integer countUnderLevel;
 	private Integer employeeIdReceiver;
 	private Boolean isShowAll = true;
 	private java.sql.Date startDate;
@@ -254,6 +255,14 @@ public class ProjectFormAsHead extends ActionForm {
 
 	public void setProgressEndDate(String progressEndDate) {
 		this.progressEndDate = progressEndDate;
+	}
+
+	public Integer getCountUnderLevel() {
+		return countUnderLevel;
+	}
+
+	public void setCountUnderLevel(Integer countUnderLevel) {
+		this.countUnderLevel = countUnderLevel;
 	}
 
 }

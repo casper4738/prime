@@ -3,13 +3,14 @@
 <sqlMap namespace="role">
 	<insert id="insert" parameterClass="prime.admin.role.RoleBean">
 		INSERT INTO ROLES
-		(ROLE_ID, ROLE_NAME) VALUES 
-		(#roleId#, #roleName#)
+		(ROLE_ID, ROLE_NAME, UPDATED_BY) VALUES 
+		(#roleId#, #roleName#, #updateBy#)
 	</insert>
 	
 	<update id="update" parameterClass="prime.admin.role.RoleBean">
 		UPDATE ROLES SET
-		ROLE_NAME=#roleName#
+			ROLE_NAME	= #roleName#,
+			UPDATED_BY 	= #updateBy#
 		WHERE ROLE_ID=#roleId#
 	</update>
 	

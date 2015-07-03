@@ -3,10 +3,18 @@ package prime.admin.setting;
 public class GeneralSettingBean {
 
 	private Integer generalSettingLevel = 0;
-	private Integer generalSettingTimeOut = 0;
 	private Integer minLevelApproval = 0;
 	private String smtpUsername;
 	private String smtpPassword;
+	private String updateBy;
+
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
 
 	public String getSmtpUsername() {
 		return smtpUsername;
@@ -30,14 +38,6 @@ public class GeneralSettingBean {
 
 	public void setGeneralSettingLevel(Integer generalSettingLevel) {
 		this.generalSettingLevel = generalSettingLevel;
-	}
-
-	public Integer getGeneralSettingTimeOut() {
-		return generalSettingTimeOut;
-	}
-
-	public void setGeneralSettingTimeOut(Integer generalSettingTimeOut) {
-		this.generalSettingTimeOut = generalSettingTimeOut;
 	}
 
 	public Integer getMinLevelApproval() {

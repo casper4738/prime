@@ -76,4 +76,7 @@ public interface EmployeeManager {
 	public void insertToBlob(byte[] param) throws SQLException;
 	
 	public Object selectBlob() throws SQLException;
+	
+	//Count Under Level
+	public Integer getCountUnderLevel(Integer employeeId) throws SQLException;
 }  

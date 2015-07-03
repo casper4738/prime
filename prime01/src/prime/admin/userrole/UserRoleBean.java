@@ -3,9 +3,19 @@ package prime.admin.userrole;
 import prime.admin.usermenu.UserMenuBean;
 
 public class UserRoleBean extends UserMenuBean {
+
+	private Integer userRoleId;
 	private String userRoleName;
 	private String userRoleDescription;
-	private Integer userRoleId;
+	private String updateBy;
+
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
 
 	public String getUserRoleName() {
 		return userRoleName;

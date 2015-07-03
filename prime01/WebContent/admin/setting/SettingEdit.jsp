@@ -9,12 +9,6 @@
 	<meta charset="UTF-8">
 	<title>Prime</title>
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
-	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
@@ -44,11 +38,6 @@
                 				<td width="150px">Level</td>
                 				<td align="center">:</td>
                 				<td><html:text name="SettingAdminForm" property="settingBean.generalSettingLevel" styleClass="form-control" style="text-align:center"/></td>
-                			</tr>
-                			<tr>
-                				<td>Time Out (minutes)</td>
-                				<td align="center">:</td>
-                				<td><html:text  name="SettingAdminForm" property="settingBean.generalSettingTimeOut" styleClass="form-control" style="text-align:center"/></td>
                 			</tr>
                 			<tr>
                 				<td>Minimum Level Approval</td>

@@ -23,6 +23,7 @@ public class TaskBean {
 	private String taskReceiverName;
 	private String taskChangeNote;
 	private String projectName;
+	private String updateBy;
 
 	public TaskBean() {
 		setTaskStartDate(new java.sql.Date(new java.util.Date().getTime()));
@@ -30,6 +31,14 @@ public class TaskBean {
 		setActualStart(new java.sql.Date(new java.util.Date().getTime()));
 		setActualEnd(new java.sql.Date(new java.util.Date().getTime()));
 		setTaskEstimateDate(new java.sql.Date(new java.util.Date().getTime()));
+	}
+	
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
 	}
 
 	public String getProjectName() {

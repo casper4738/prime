@@ -93,21 +93,25 @@
 </body>
 
 <!-- JS -->
-	<script src="resources/prime.js"></script>
 	<script src="resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
+	<script src="resources/plugins/jQueryUI/jquery-ui-1.10.3.min.js"></script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
+	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
+	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/serialize/serialize-0.2.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
-	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
+	<script src="resources/prime.js"></script>
 	<script  type="text/javascript">
 	   	$(document).ready(function(){
 	   		$.ajaxSetup({ cache: false });
 	   		
-	   		setInterval(refreshNotification, 300000); //5 Menit
+	   		refreshNotification();
+	   		setInterval(refreshNotification, 30000); //5 Menit
+
+	   		sendNotification(100,  <%=Constants.NotificationType.PROJECT_CREATEAPPROVAL%>,  "<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>;<%=Constants.Task.GOTOVIEW%>;5;100");
 	   		
 	   		//##0.Prepare Profile Picture
 	   		var tmpImage = '<%=LoginData.getEmployeeData().getConvertedFilePic()%>';
@@ -126,16 +130,18 @@
 	   		if(tmpIsRedirectPage != null){
 	   			menuLoadHandler('<%=request.getAttribute("redirectPage")%>', '<%=request.getAttribute("redirectParam")%>');
 	   		} else {
-				menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>");
+<%-- 				menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>"); --%>
 	   		}
 		});
 	   	
 	   	function refreshNotification(){
+			alert("REFRESH");
 	   		$.ajax({
 		   	      type	  : "POST",
 		   	      url	  : "Notification.do", //Hardcoded No Other Way :(  
 		   	      data	  : "task=reloadNotification",
 		   	      success : function(msg){
+						alert("asd");
 						$('#notif-wrapper').html(msg);
 		   	      },
 		   	      

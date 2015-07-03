@@ -5,6 +5,15 @@ public class PositionBean {
 	private Integer positionId;
 	private Integer positionLevel = 0;
 	private String positionName;
+	private String updateBy;
+
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
+	}
 
 	public Integer getPositionId() {
 		return positionId;

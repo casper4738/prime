@@ -19,5 +19,6 @@ public interface ReportEmployeesManager {
 
 	public Integer getCountListEmployeeTaskReport(String columnSearch, String value, Integer empId) throws SQLException;
 	/*End Task View Report*/
+	
 }
 

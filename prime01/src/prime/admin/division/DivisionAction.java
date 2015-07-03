@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import prime.constants.Constants;
+import prime.login.LoginData;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -23,7 +24,6 @@ public class DivisionAction extends Action {
 		DivisionManager tmpManager = new DivisionManagerImpl();
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
-			pForm.getDivisionBean().setDivisionId(tmpManager.getNewId());
 			return mapping.findForward("add");
 		} else if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
 			//##. Edit Data
@@ -31,10 +31,13 @@ public class DivisionAction extends Action {
 			return mapping.findForward("edit");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			//##.Insert Data and Go to Forward
+			pForm.getDivisionBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getDivisionBean().setDivisionId(tmpManager.getNewId());
 			tmpManager.insert(pForm.getDivisionBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
 			//##.Update Data and Go to Forward
+			pForm.getDivisionBean().setUpdateBy(LoginData.getUserData().getUserName());
 			tmpManager.update(pForm.getDivisionBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DODELETE.equals(pForm.getTask())) {
@@ -42,6 +45,7 @@ public class DivisionAction extends Action {
 			tmpManager.delete(pForm.getTmpId());
 			return mapping.findForward("forward");
 		} 
+		
 		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());
 		List<DivisionBean> list = tmpManager.getListByColumn(pForm.getColumnSearchReal(), pForm.getSearch(),
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
