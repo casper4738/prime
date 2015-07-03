@@ -67,6 +67,14 @@ public interface EmployeeManager {
 	public Integer getCountListByTree(String columnSearch, String value, Integer employeeId)  throws SQLException;
 	/* end of select employee by tree */
 	
+	
+	//select employee tree member
+	
+	public List<EmployeeBean> getListTreeforMember(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId, Integer projectId) throws SQLException;
+	
+	public Integer getCountListByTreeforMember (String columnSearch, String value, Integer employeeId, Integer projectId)  throws SQLException;
+	//end employee tree member
+	
 	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
 
 	public Integer getNewId() throws SQLException;

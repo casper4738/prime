@@ -190,13 +190,38 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	}
 	/* end of select employee by tree */
 	
-	//get count under level
 	
+	//get member tree
+	@Override
+	public List<EmployeeBean> getListTreeforMember(String columnSearch, String value, Integer startRow, Integer endRow,
+			Integer employeeId, Integer projectId) throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);			
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		map.put("employeeId", employeeId);
+		map.put("projectId", projectId);
+		return mapper.queryForList("employee.getListTreeforMember", map);
+	}
+	
+	public Integer getCountListByTreeforMember(String columnSearch, String value, Integer employeeId, Integer projectId)  throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);			
+		map.put("employeeId", employeeId);
+		map.put("projectId", projectId);
+		return (Integer) mapper.queryForObject("employee.getCountListByTree", map);
+	}
+	
+	
+	//get count under level
 	@Override
 	public Integer getCountUnderLevel(Integer employeeId) throws SQLException {
 		return (Integer) mapper.queryForObject("employee.getCountUnderLevel", employeeId);
 	}
 	
+
 	public Integer getNewId() throws SQLException {
 		return (Integer) mapper.queryForObject("employee.getNewId", null);
 	}

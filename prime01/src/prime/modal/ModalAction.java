@@ -254,12 +254,12 @@ public class ModalAction extends Action {
                 		
                 		System.out.println("id login modal "+ LoginData.getEmployeeData().getEmployeeId());
                     	//##1.Fetch Data From DB
-                		countRows = manager.getCountListByTree(pForm.getColumnSearch(), pForm.getSearch(), pForm.getParam2());
+                		countRows = manager.getCountListByTreeforMember(pForm.getColumnSearch(), pForm.getSearch(), pForm.getParam2(), pForm.getParam4());
                 		//---.Depend On The Object
                 		System.out.println("count rows modal "+countRows);
-                		list = manager.getListByTree(pForm.getColumnSearch(), pForm.getSearch(),
+                		list = manager.getListTreeforMember(pForm.getColumnSearch(), pForm.getSearch(),
 				   				 PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
-				   				 PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows),pForm.getParam2());
+				   				 PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows),pForm.getParam2(), pForm.getParam4());
                 		//##2.Prepare Data for Modal-Table Show
                 		//---a.Modal Title
                 		request.setAttribute("modalListName", "Employees List");
