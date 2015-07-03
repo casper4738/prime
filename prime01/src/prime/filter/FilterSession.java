@@ -99,7 +99,6 @@ public class FilterSession implements Filter {
 		    		tmpSession.invalidate();
 		    	}
 		    } else {
-				tmpServletRequest.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONEXPIRED);
 		    	if(LoginData.isDataExists()){
 		    		LoginData.clear();
 		    	}
