@@ -109,9 +109,9 @@
 	   		$.ajaxSetup({ cache: false });
 	   		
 	   		refreshNotification();
-	   		setInterval(refreshNotification, 30000); //5 Menit
+	   		setInterval(refreshNotification, 300000); //5 Menit
 
-	   		sendNotification(100,  <%=Constants.NotificationType.PROJECT_CREATEAPPROVAL%>,  "<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>;<%=Constants.Task.GOTOVIEW%>;5;100");
+<%-- 	   		sendNotification(100,  <%=Constants.NotificationType.PROJECT_CREATEAPPROVAL%>,  "<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>;<%=Constants.Task.GOTOVIEW%>;5;100"); --%>
 	   		
 	   		//##0.Prepare Profile Picture
 	   		var tmpImage = '<%=LoginData.getEmployeeData().getConvertedFilePic()%>';
@@ -141,7 +141,6 @@
 		   	      url	  : "Notification.do", //Hardcoded No Other Way :(  
 		   	      data	  : "task=reloadNotification",
 		   	      success : function(msg){
-						alert("asd");
 						$('#notif-wrapper').html(msg);
 		   	      },
 		   	      

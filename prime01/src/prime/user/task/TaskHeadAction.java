@@ -153,17 +153,13 @@ public class TaskHeadAction extends Action {
 			pForm.getTaskBean().setTaskStatus(Constants.Status.CREATE);
 			pForm.getTaskBean().setTaskChangeNote("");
 			pForm.getTaskBean().setProjectMemberId(0);
+			pForm.getTaskBean().setUpdateBy(LoginData.getUserData().getUserName());
 			
 			manager.insert(pForm.getTaskBean());
 			manager.insertDetail(pForm.getTaskBean());
 			
 			return mapping.findForward("forward");
 		} else if (Constants.Task.TASK.DOSUBMIT.equals(pForm.getTask())) {
-			
-			System.out.println("1."+pForm.getTaskBean().getTaskId());
-			System.out.println("2."+pForm.getTaskBean().getTaskStatus());
-			System.out.println("3."+pForm.getTaskBean().getTaskChangeNote());
-			
 			//##.Submit Task
 			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");
