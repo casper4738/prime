@@ -126,14 +126,12 @@
 	  	  	}
 	   		
 	   		//##1.Check Whether this a page redirecting or not
-	   		alert("Before = " + tmpIsRedirectPage);
-	   		var tmpIsRedirectPage = <%=request.getSession().getAttribute("needRedirect")%>;
-	   		alert("After = " + tmpIsRedirectPage);
+	   		var tmpIsRedirectPage = <%=request.getSession().getAttribute(Constants.Session.needRedirect)%>;
 	   		if(tmpIsRedirectPage){
 	   			alert("SINI");
-	   			menuLoadHandler('<%= request.getSession().getAttribute("redirectPage")%>', '<%= request.getSession().getAttribute("redirectParam")%>');
+	   			menuLoadHandler('<%= request.getSession().getAttribute(Constants.Session.redirectPage)%>', '<%= request.getSession().getAttribute(Constants.Session.redirectParam)%>');
 	   		} else {
-<%-- 				menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>"); --%>
+<%-- 				menuLoadHandler("<%=request.getSession().getAttribute(Constants.Session.lastPage)%>"); --%>
 	   		}
 		});
 	   	
