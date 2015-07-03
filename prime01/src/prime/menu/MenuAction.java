@@ -58,8 +58,8 @@ public class MenuAction extends Action {
 		
 		//##3.Prepare Request Attribute For JSP Readings
 		request.setAttribute("listPages", tmpObject);
+		
 		MenuForm tmpMenuForm = (MenuForm)form;
-
 		if(("redirect").equals(tmpMenuForm.getTask())){
 			HttpSession tmpSession = request.getSession();
 			
@@ -69,11 +69,8 @@ public class MenuAction extends Action {
 				NotificationBean tmpNotifBean;
 				
 				//Get Notif Type and Mark as Read
-				System.out.println("ID = " + Integer.parseInt(tmpMenuForm.getParam5()));
 				tmpNotifBean = tmpNotificationManager.getNotifByID(Integer.parseInt(tmpMenuForm.getParam5()));
 				tmpNotificationManager.markAsRead(Integer.parseInt(tmpMenuForm.getParam5()));
-				System.out.println("Notif Bean = " + tmpNotifBean);
-				System.out.println("Notif Type = " + tmpNotifBean.getNotificationType());
 				
 				//Set Attribute
 				tmpSession.setAttribute(Constants.Session.needRedirect 	, true);
