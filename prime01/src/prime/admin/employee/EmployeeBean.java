@@ -42,6 +42,7 @@ public class EmployeeBean {//extends HolidayBean
 	private String treeId;
 	private String filePicConverted;
 	private String startMondayDate;
+	private String genderName;
 		
 	public EmployeeBean() {
 		setHireDate(new java.sql.Date(new java.util.Date().getTime()));
@@ -272,5 +273,13 @@ public class EmployeeBean {//extends HolidayBean
 
 	public void setPositionLevel(Integer positionLevel) {
 		this.positionLevel = positionLevel;
+	}
+
+	public String getGenderName() {
+		return genderName;
+	}
+
+	public void setGenderName(String genderName) {
+		this.genderName = genderName;
 	}
 }

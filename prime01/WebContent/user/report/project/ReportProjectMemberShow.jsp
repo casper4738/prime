@@ -13,12 +13,13 @@
 
 <body>
 	
-	<%!private final String reportName = "project_task.rpt";%>
+	<%!private final String reportName = "project_member.rpt";%>
 	<%
 		try {
 			ReportClientDocument clientDoc = getClientDocument(reportName);
 			try {
 				setDocParameter(0, (String)session.getAttribute("searchQuery"), clientDoc);
+				System.out.println(session.getAttribute("searchQuery"));
 				viewReport(clientDoc, request, response, session);
 			} finally {
 				clientDoc.close();

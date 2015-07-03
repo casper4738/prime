@@ -19,12 +19,17 @@
 		    }
 	    });
 
-		 function generateReport(){
+		function generateReport(){
 				document.forms[0].target = "_blank";
 				document.forms[0].task.value = "<%=Constants.Task.REPORT.GENERATEREPORTPROJECTTASK%>";
 				document.forms[0].submit();
 		}
 
+		function generateReportMember(){
+			document.forms[0].target = "_blank";
+			document.forms[0].task.value = "<%=Constants.Task.REPORT.GENERATEREPORTPROJECTMEMBER%>";
+			document.forms[0].submit();
+		}
 		 
 		 $(document).ready(function () {
 	            $('#start').datepicker({
@@ -84,11 +89,16 @@
 				</td>
 			</tr>
 			<tr><td colspan="2">Description : <bean:write name="ReportUserProjectForm" property="reportProjectBean.projectDescription" /> </td>
-			</tr></table>
-			 <p><span class="button-add btn btn-app bg-olive btnCancel" onclick="generateReport()">
-	               <i class="fa fa-save"></i>Export
-	              </span>
-	              </p>
+			</tr>
+			</table>
+			<p>
+			 	<span class="button-add btn btn-app bg-olive btnCancel" onclick="generateReport()">
+	               <i class="fa fa-save"></i>Export Task
+	            </span>
+	            <span class="button-add btn btn-app bg-olive btnCancel" onclick="generateReportMember()">
+	               <i class="fa fa-save"></i>Export Member
+	            </span>
+	        </p>
             <!-- Search Handler Tag -->
 			<div class="show-in-page">
 				Show per page

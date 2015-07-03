@@ -6,9 +6,9 @@ import java.util.List;
 import prime.user.task.TaskBean;
 
 public interface ReportEmployeesManager {
-	public List<ReportEmployeesBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow) throws SQLException;
+	public List<ReportEmployeesBean> getListByColumn(String columnSearch, String value, Integer startRow, Integer endRow, Integer empId) throws SQLException;
 	
-	public Integer getCountByColumn(String columnSearch, String value) throws SQLException;
+	public Integer getCountByColumn(String columnSearch, String value, Integer empId) throws SQLException;
 	
 	public ReportEmployeesBean getEmployeeById(Integer id) throws SQLException;	
 	

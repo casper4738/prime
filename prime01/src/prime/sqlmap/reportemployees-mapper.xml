@@ -27,7 +27,8 @@
 		LEFT JOIN (
 		    SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
 		)RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
-	    <dynamic prepend="WHERE">
+		WHERE TREE_ID LIKE #empId#||'%'
+	    <dynamic prepend="AND">
 	        <isNotNull property="columnSearch">
 	        	<isEqual property="columnSearch" compareValue="ID">
 			          UPPER(EMP.EMPLOYEE_ID) LIKE UPPER(#value#)
@@ -73,7 +74,8 @@
 		LEFT JOIN (	
 		    SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
 		)RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
-	    <dynamic prepend="WHERE">
+		WHERE TREE_ID LIKE #empId#||'%'
+	    <dynamic prepend="AND">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="ID">
 			          UPPER(EMP.EMPLOYEE_ID) LIKE UPPER(#value#)
@@ -111,6 +113,11 @@
 	        EMP.EMPLOYEE_ID AS employeeId, 
 	        EMP.EMPLOYEE_NAME AS employeeName,
 	        GENDER AS gender,
+	        (
+	        	CASE WHEN GENDER = 0 THEN 'Male'
+	        	WHEN GENDER = 1 THEN 'Female'
+	        	END
+	        ) AS genderName,
 	        ADDRESS AS address,
 	        BIRTHDATE AS birthdate,
 	        HIRE_DATE AS hireDate,
@@ -139,7 +146,7 @@
         WHERE EMP.EMPLOYEE_ID=#id#
 	</select>
 	
-	<select id="getListEmployeeTaskReport" resultClass="prime.user.task.TaskBean" parameterClass="java.util.Map">
+	<select id="getListEmployeeTaskReport" resultClass="prime.user.report.employees.ReportEmployeesTaskBean" parameterClass="java.util.Map">
 		SELECT * FROM (SELECT page.*, ROWNUM rnum FROM
 		(SELECT TASK_ID AS taskId,
 		 TASK_NAME AS taskName,
@@ -152,7 +159,7 @@
         EMP2.EMPLOYEE_NAME AS taskReceiverName
         FROM TASKS TSK 
         JOIN PROJECT_MEMBERS PROM ON TSK.PROJECT_MEMBER_ID = PROM.PROJECT_MEMBER_ID
-        JOIN PROJECTS PRO ON PRO.PROJECT_ID = PROM.PROJECT_ID
+        LEFT JOIN PROJECTS PRO ON PRO.PROJECT_ID = PROM.PROJECT_ID
    		JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = TSK.TASK_ASSIGNER
     	JOIN EMPLOYEES EMP2 ON EMP2.EMPLOYEE_ID = TSK.TASK_RECEIVER
 		WHERE TASK_RECEIVER=#empId# OR TASK_ASSIGNER=#empId#
@@ -165,10 +172,10 @@
 					UPPER(TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 				<isEqual property="columnSearch" compareValue="ASSIGNER">
-					UPPER(TASK_ASSIGNER) LIKE UPPER('%'||#value#||'%')
+					UPPER(EMP_ASSIGN.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 				<isEqual property="columnSearch" compareValue="RECEIVER">
-					UPPER(TASK_RECEIVER) LIKE UPPER('%'||#value#||'%')
+					UPPER(EMP_RECEIVE.EMPLOYEE_NAME) LIKE UPPER('%'||#value#||'%')
 				</isEqual>
 				<isEqual property="columnSearch" compareValue="STARTDATE">
 					TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
@@ -178,6 +185,48 @@
 				</isEqual>
 			</isNotNull>
 		</dynamic>
+		OR TSK.TASK_ID  IN (
+		    SELECT X.TASK_ID FROM TASKS X
+		    JOIN EMPLOYEES Y ON Y.EMPLOYEE_ID= X.TASK_ASSIGNER AND Y.EMPLOYEE_ID = X.TASK_RECEIVER
+		    WHERE Y.HEAD_ID = #empId#
+		    <dynamic prepend="AND">
+				<isNotNull property="columnSearch">
+					<isEqual property="columnSearch" compareValue="NAME">
+						UPPER(X.TASK_NAME) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="DESCRIPTION">
+						UPPER(X.TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="STARTDATE">
+						X.TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+						X.TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+				</isNotNull>
+			</dynamic>
+		) OR TSK.TASK_ID IN (
+			SELECT X.TASK_ID FROM TASKS X
+			JOIN PROJECT_MEMBERS Y ON X.PROJECT_MEMBER_ID = Y.PROJECT_MEMBER_ID
+			JOIN EMPLOYEES Z ON Z.EMPLOYEE_ID=X.TASK_RECEIVER
+            WHERE Z.HEAD_ID = #empId#
+            <dynamic prepend="AND">
+				<isNotNull property="columnSearch">
+					<isEqual property="columnSearch" compareValue="NAME">
+						UPPER(X.TASK_NAME) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="DESCRIPTION">
+						UPPER(X.TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="STARTDATE">
+						X.TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+						X.TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+				</isNotNull>
+			</dynamic>
+        )
 		ORDER BY TASK_NAME ASC) page 
 		WHERE ROWNUM <![CDATA[ <= ]]> #endRow#) WHERE rnum <![CDATA[ >= ]]> #startRow#
 	</select>

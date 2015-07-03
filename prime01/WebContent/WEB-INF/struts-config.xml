@@ -180,6 +180,7 @@
 			<forward name="success" 				path="/user/report/project/ReportProjectHome.jsp"></forward>
 			<forward name="detailProject" 			path="/user/report/project/ReportProjectDetail.jsp"></forward>
 			<forward name="showReportProject" 		path="/user/report/project/ReportProjectShow.jsp"></forward>
+			<forward name="showReportProjectMember" path="/user/report/project/ReportProjectMemberShow.jsp"></forward>
 			<forward name="showReportProjectTask" 	path="/user/report/project/ReportProjectTaskShow.jsp"></forward>
 		</action>
 		

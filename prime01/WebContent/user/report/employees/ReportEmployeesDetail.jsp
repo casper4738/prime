@@ -57,6 +57,8 @@
             	$('#date_until').css('display', 'none') ;
             }
 		}
+		
+		
 	</script>
 </head>
 <body class="skin-blue sidebar-mini">
@@ -76,7 +78,7 @@
 			<tr><td width="50%">Employee Id : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.employeeId"/></td>
 				<td>Employee Name : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.employeeName" /> </td>
 			</tr>
-			<tr><td>Gender : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.gender"/> </td>
+			<tr><td>Gender : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.genderName"/> </td>
 				<td>Email : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.email"/> </td>
 			</tr><tr><td>Division : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.divisionName"/>
 				</td><td>Position : <bean:write name="ReportUserEmployeesForm" property="reportEmployeesBean.positionName" /> 
@@ -144,11 +146,12 @@
 					<th width="15px"></th>
 					<th>Task Description</th>
 					<th width="100px">Task Assigner</th>
+					<th width="100px">Task Receiver</th>
 					<th width="80px">Start Date</th>
 					<th width="85px">Estimate Date</th>
 					<th>From Project</th>
 					<th width="50px">Status</th>
-                    <th width="40px">Actions</th>
+                    <!-- <th width="40px">Actions</th> -->
                 </tr></thead>
                 <tbody>
                 <logic:notEmpty name="listTask">
@@ -175,6 +178,7 @@
 	                	    </td>
 	                	    <td><bean:write name="iter" property="taskDescription"/></td>
 	                	    <td><bean:write name="iter" property="taskAssignerName"/></td>
+	                	    <td><bean:write name="iter" property="taskReceiverName"/></td>
 	                	    <td align="center"><bean:write name="iter" property="taskStartDate" format="dd MMMM yyyy"/></td>
 	                	    <td align="center"><bean:write name="iter" property="taskEstimateDate" format="dd MMMM yyyy"/></td>
 	                	    <td><bean:write name="iter" property="projectName"/></td>
@@ -183,9 +187,11 @@
                 	    			<jsp:param name="status" value="${iter.taskLastStatus}" />
                 	    		</jsp:include>
 	                		</td>
+	                		<!-- 
 	                        <td align="center">
-	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%=Constants.Task.GOTOVIEW %>', '<bean:write name="iter" property="taskId"/>')">
+	                        	<input type="submit" class="btn btn-primary btn-xs" value='Details' onclick="flyToTaskDetail('<%//=Constants.Task.REPORT.GOTODETAILTASK%>', '<bean:write name="iter" property="taskId"/>')">
 	                        </td>
+	                         -->
 	                    </tr>
                     </logic:iterate>
 					</logic:notEmpty>

@@ -35,7 +35,7 @@ public class ReportProjectAction extends Action {
 		ReportProjectForm pForm = (ReportProjectForm) form;
 		//ReportProjectManager tmpManager = new ReportProjectManagerImpl();
 
-		ProjectManager tmpManager = new ProjectManagerImpl();
+		ReportProjectManager tmpManager = new ReportProjectManagerImpl();
 		System.out.println(pForm.getTask());
 
 		if (Constants.Task.REPORT.GOTODETAILPROJECT.equals(pForm.getTask())) {
@@ -47,9 +47,11 @@ public class ReportProjectAction extends Action {
 			} else {
 				search = pForm.getSearch();
 			}
-
-			//pForm.setReportProjectBean(tmpManager.getProjectById(pForm.getProjectId()));
-			//pForm.setProjectBean(tmpManager.getProjectById(pForm.getProjectId()));
+			
+			System.out.println(pForm.getProjectId()+"--");
+		
+			pForm.setReportProjectBean(tmpManager.getProjectById(pForm.getProjectId()));
+			
 			int countRows = tmpTaskManager.getCountListByProjectId(
 					pForm.getColumnSearchReal(), search, pForm.getProjectId());
 			List<TaskBean> list = tmpTaskManager.getListByProjectId(
@@ -102,9 +104,47 @@ public class ReportProjectAction extends Action {
 						" WHERE PRO.PROJECT_ESTIMATE_DATE BETWEEN TO_DATE('"+pForm.getStartDate()+"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
 			}
 			return mapping.findForward("showReportProject");
+		} else if (Constants.Task.REPORT.GENERATEREPORTPROJECTMEMBER.equals(pForm
+				.getTask())) {
+			System.out.println("MASUK PROJECT MEMBER");
+			request.getSession(true).setAttribute(
+					"searchQuery",
+					" WHERE PRO.PROJECT_ID = '" + pForm.getProjectId() + "'");
+			
+			return mapping.findForward("showReportProjectMember");
 		} else if (Constants.Task.REPORT.GENERATEREPORTPROJECTTASK.equals(pForm
 				.getTask())) {
-
+			System.out.println(pForm.getColumnSearchReal()+"GENERATEREPORTPROJECTTASK");
+			if ("NAME".equals(pForm.getColumnSearchReal())) {
+				System.out.println("NAME--"+pForm.getSearch()+"--");
+				request.getSession(true).setAttribute(
+						"searchQuery",
+						" WHERE LOWER (TASK_NAME) LIKE LOWER ('%"
+								+ pForm.getSearch() + "%')");
+			} else if ("DESCRIPTION".equals(pForm.getColumnSearchReal())) {
+				request.getSession(true).setAttribute(
+						"searchQuery",
+						" WHERE LOWER (TASK_DESCRIPTION) LIKE LOWER ('%"
+								+ pForm.getSearch() + "%')");
+			} else if ("ASSIGNER".equals(pForm.getColumnSearchReal())) {
+				request.getSession(true).setAttribute(
+						"searchQuery",
+						" WHERE LOWER (TASK_ASSIGNER) LIKE LOWER ('%"
+								+ pForm.getSearch() + "%')");
+			} else if ("RECEIVER".equals(pForm.getColumnSearchReal())) {
+				request.getSession(true).setAttribute(
+						"searchQuery",
+						" WHERE LOWER (TASK_RECEIVER) LIKE LOWER ('%"
+								+ pForm.getSearch() + "%')");
+			} else if ("STARTDATE".equals(pForm.getColumnSearchReal())) {
+				request.getSession(true).setAttribute(
+						"searchQuery",
+						" WHERE TASK_START_DATE BETWEEN TO_DATE('"+ pForm.getStartDate() +"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
+			} else if ("ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
+				request.getSession(true).setAttribute(
+						"searchQuery",
+						" WHERE TASK_ESTIMATE_DATE BETWEEN TO_DATE('"+pForm.getStartDate()+"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
+			}
 			return mapping.findForward("showReportProjectTask");
 		}
 
@@ -116,8 +156,6 @@ public class ReportProjectAction extends Action {
 			search = pForm.getSearch();
 		}		
 	
-		//pForm.getProjectBean().setIsAssigner(tmpManager.getCountProjectAssigner(tmpEmployeeId));
-		
 		List<ProjectBean> list = new ArrayList<ProjectBean>();
 		System.out.println("colom "+pForm.getColumnSearchReal());
 		System.out.println("search "+search);
