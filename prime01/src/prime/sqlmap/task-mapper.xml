@@ -5,7 +5,7 @@
 	<insert id="insert" parameterClass="prime.user.task.TaskBean">
 		INSERT INTO TASKS 
 			(TASK_ID, TASK_NAME, TASK_RECEIVER, TASK_ASSIGNER, TASK_START_DATE, 
-			TASK_ESTIMATE_DATE, TASK_DESCRIPTION, PROJECT_MEMBER_ID)
+			TASK_ESTIMATE_DATE, TASK_DESCRIPTION, PROJECT_MEMBER_ID, UPDATED_BY)
 		VALUES
 			(#taskId#, #taskName#, #taskReceiver#, #taskAssigner#, #taskStartDate#, 
 			#taskEstimateDate#,#taskDescription#,
@@ -15,6 +15,7 @@
 			<isNotEqual property="projectMemberId" compareValue="0">
 				#projectMemberId#
 			</isNotEqual>
+			, #updateBy#
 			)
 	</insert>
 

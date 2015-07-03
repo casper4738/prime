@@ -137,6 +137,7 @@
 	        DIV.DIVISION_ID AS divisionId,
 	        DIV.DIVISION_NAME AS divisionName,
 	        POS.POSITION_ID AS positionId,
+	        POS.POSITION_LEVEL AS positionLevel,
 	        POS.POSITION_NAME AS positionName,
 	        MANAGER.EMPLOYEE_ID AS managerId,
 	        MANAGER.EMPLOYEE_NAME AS managerName,
@@ -608,7 +609,7 @@
 		SELECT COUNT(1) 
 		FROM EMPLOYEES E 
 		JOIN POSITIONS POS ON E.POSITION_ID=POS.POSITION_ID
-		WHERE TREE_ID LIKE #employeeId#||'%'
+		WHERE TREE_ID LIKE '%'|| #employeeId#||'%'
 		AND POSITION_LEVEL >= (
 		    SELECT POSITION_LEVEL 
 		    FROM EMPLOYEES EMP

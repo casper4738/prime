@@ -33,7 +33,7 @@ public class ProjectBean extends EmployeeBean {
 	private Integer employeeIdReceiver;
 	private Integer isPM;
 	private Integer isAssigner;
-	private Integer updatedBy;
+	private String updatedBy;
 
 	public ProjectBean() {
 		roleBean = new RoleBean();
@@ -246,12 +246,14 @@ public class ProjectBean extends EmployeeBean {
 		this.isAssigner = isAssigner;
 	}
 
-	public Integer getUpdatedBy() {
+	public String getUpdatedBy() {
 		return updatedBy;
 	}
 
-	public void setUpdatedBy(Integer updatedBy) {
+	public void setUpdatedBy(String updatedBy) {
 		this.updatedBy = updatedBy;
 	}
+
+	
 
 }

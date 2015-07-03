@@ -21,7 +21,7 @@
 			LAST_ACTIVE AS lastActive
 		FROM USERS US
 		JOIN EMPLOYEES EMP ON US.EMPLOYEE_ID = EMP.EMPLOYEE_ID
-		WHERE US.USERNAME=#username#
+		WHERE LOWER(US.USERNAME)=LOWER(#username#)
 	</select>
 	
 	<select id="isUserValidated" resultClass="java.lang.Integer" parameterClass="java.util.HashMap">
@@ -35,7 +35,7 @@
 	<update id="changePassword" parameterClass="java.util.HashMap">
 		 UPDATE USERS SET
 		 PASSWORD = dbms_crypto.hash(to_clob(#newPassword#), 2)
-		 WHERE USERNAME = #username#
+		 WHERE LOWER(USERNAME) = LOWER(#username#)
 	</update>
 	
 	<select id = "getNewId" resultClass = "java.lang.Integer">
@@ -45,31 +45,31 @@
 	<update id="update"  parameterClass="prime.admin.user.UserBean">
 		UPDATE USERS SET
 		SYSTEM_LEVEL=#sysLevel# 
-		WHERE USERNAME=#userName#
+		WHERE LOWER(USERNAME)=LOWER(#userName#)
 	</update>
 	
 	<update id="reset" parameterClass="prime.admin.user.UserBean">
 		 UPDATE USERS SET
 		 PASSWORD = dbms_crypto.hash(to_clob('12345'), 2)
-		 WHERE USERNAME = #userName#
+		 WHERE LOWER(USERNAME) = LOWER(#userName#)
 	</update>
 	
 	<update id="lock" parameterClass="prime.admin.user.UserBean">
 		 UPDATE USERS SET
 		 STATUS_USER = '0'
-		 WHERE USERNAME = #userName#
+		 WHERE LOWER(USERNAME) = LOWER(#userName#)
 	</update>
 	
 	<update id="unlock" parameterClass="prime.admin.user.UserBean">
 		 UPDATE USERS SET
 		 STATUS_USER = '1'
-		 WHERE USERNAME = #userName#
+		 WHERE LOWER(USERNAME) = LOWER(#userName#)
 	</update>
 	
 	<update id="changeActionDate" parameterClass="prime.admin.user.UserBean">
 		UPDATE USERS SET
 		ACTION_DATE = (SYSDATE + (1/(24 * 60)))
-		WHERE USERNAME = #userName#
+		WHERE LOWER(USERNAME) = LOWER(#userName#)
 	</update>
 	
 	<select id="getListByColumn" resultClass="prime.admin.user.UserBean" parameterClass="java.util.Map">
