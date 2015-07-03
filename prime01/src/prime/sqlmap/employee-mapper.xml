@@ -137,6 +137,7 @@
 	        DIV.DIVISION_ID AS divisionId,
 	        DIV.DIVISION_NAME AS divisionName,
 	        POS.POSITION_ID AS positionId,
+	        POS.POSITION_LEVEL AS positionLevel,
 	        POS.POSITION_NAME AS positionName,
 	        MANAGER.EMPLOYEE_ID AS managerId,
 	        MANAGER.EMPLOYEE_NAME AS managerName,

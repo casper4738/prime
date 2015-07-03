@@ -37,7 +37,9 @@ public class TaskHeadAction extends Action {
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-
+		//---.[Dedy] Hardcoded a little bit for Notification Jump
+		request.getSession().setAttribute(Constants.Session.needRedirect, false);
+		
 		int employeeId = LoginData.getUserData().getEmployeeId();
 		request.setAttribute("employeeIdActive", employeeId);
 		
@@ -165,6 +167,7 @@ public class TaskHeadAction extends Action {
 			return mapping.findForward("forward");
 		} else if (Constants.Task.ACTIVITY.DOADD.equals(pForm.getTask())) {
 			//##.Insert Data Activity
+			pForm.getActivityBean().setUpdateBy(LoginData.getUserData().getUserName());
 			pForm.getActivityBean().setActivityId(tmpActivityManager.getNewId());
 			
 			tmpActivityManager.insert(pForm.getActivityBean());

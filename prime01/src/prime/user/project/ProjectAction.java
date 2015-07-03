@@ -35,6 +35,9 @@ import prime.utility.PrimeUtil;
 public class ProjectAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
+		//---.[Dedy] Hardcoded a little bit for Notification Jump
+		request.getSession().setAttribute(Constants.Session.needRedirect, false);		
+		
 		Integer tmpEmployeeId = Integer.valueOf(LoginData.getEmployeeData().getEmployeeId());
 		
 		ProjectForm 	pForm 				= (ProjectForm) form;
@@ -71,6 +74,7 @@ public class ProjectAction extends Action {
 			pForm.getProjectBean().setProjectStatus(0);
 			pForm.getProjectBean().setProjectAssigner(pForm.getEmployeeId());
 			pForm.getProjectBean().setProjectChangeNote("First Time");
+			pForm.getProjectBean().setUpdatedBy(LoginData.getUserData().getUserName());
 			tmpProjectManager.insert(pForm.getProjectBean());
 			tmpProjectManager.insertDetail(pForm.getProjectBean());
 			pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());

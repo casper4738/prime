@@ -13,10 +13,19 @@ public class ActivityBean extends TaskBean {
 	private String activityName;
 	private String activityDescription;
 	private String activityChangeNote;
+	private String updateBy;
 	private Date activityChangeDate;
 
 	public ActivityBean() {
 		setActivityChangeDate(new Date());
+	}
+
+	public String getUpdateBy() {
+		return updateBy;
+	}
+
+	public void setUpdateBy(String updateBy) {
+		this.updateBy = updateBy;
 	}
 
 	public Integer getActivityId() {

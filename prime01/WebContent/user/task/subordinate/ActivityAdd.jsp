@@ -23,7 +23,6 @@
 		function validateForm() {
 			var activityName = checkNull($('#activityName'), $('#err-activityName'), "Activity Name");
 			if(activityName) {
-				//alert("error lho");
 			} else {
 				dosubmit();
 			}

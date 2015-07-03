@@ -56,7 +56,7 @@ public class FilterSession implements Filter {
 	    
 		if(!tmpServletRequest.getServletPath().equals("/" + Constants.PAGES_LIST[Constants.Page.LOGIN])){
 			//##a.Check Session State
-		    if(tmpSession.getAttribute(Constants.Session.ID) != null) {
+		    if(tmpSession.getAttribute(Constants.Session.ID) != null && tmpSession.getAttribute(Constants.Session.Username) != null) {
 		    	//##b.Check From DB, Session Value
 		    	LoginManager tmpLoginManager = new LoginManagerImpl();
 		    	String tmpUsername = (String)tmpSession.getAttribute(Constants.Session.Username);
@@ -82,7 +82,7 @@ public class FilterSession implements Filter {
 							EmployeeBean tmpEmployeeBean = tmpEmployeeData.getEmployeeById(tmpUserBean.getEmployeeId());
 							LoginData.setEmployeeBean(tmpEmployeeBean);
 						} catch (SQLException e) {
-							e.printStackTrace();
+							 e.printStackTrace();
 							
 							 //Immediate Return If Something Not Wanted Happening
 						     PrintWriter out = response.getWriter();

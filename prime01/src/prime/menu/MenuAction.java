@@ -1,5 +1,6 @@
 package prime.menu;
 
+import java.io.PrintWriter;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -55,25 +56,35 @@ public class MenuAction extends Action {
 		//##3.Prepare Request Attribute For JSP Readings
 		request.setAttribute("listPages", tmpObject);
 		MenuForm tmpMenuForm = (MenuForm)form;
+
 		if(("redirect").equals(tmpMenuForm.getTask())){
+			HttpSession tmpSession = request.getSession();
+			
 			//Do Redirect if the ID is same :)
 			if(tmpMenuForm.getParam4().equals(LoginData.getEmployeeData().getEmployeeId().toString())){
 				NotificationManager tmpNotificationManager = new NotificationManagerImpl();
-				HttpSession tmpSession = request.getSession();
 				NotificationBean tmpNotifBean;
 				
 				//Get Notif Type and Mark as Read
+				System.out.println("ID = " + Integer.parseInt(tmpMenuForm.getParam5()));
 				tmpNotifBean = tmpNotificationManager.getNotifByID(Integer.parseInt(tmpMenuForm.getParam5()));
 				tmpNotificationManager.markAsRead(Integer.parseInt(tmpMenuForm.getParam5()));
+				System.out.println("Notif Bean = " + tmpNotifBean);
+				System.out.println("Notif Type = " + tmpNotifBean.getNotificationType());
 				
 				//Set Attribute
 				tmpSession.setAttribute("needRedirect" , true);
 				tmpSession.setAttribute("redirectPage" , tmpMenuForm.getParam1());
 				tmpSession.setAttribute("redirectParam", "task=" 		+ tmpMenuForm.getParam2() + "&" +
-													  	 "taskId=" 	+ tmpMenuForm.getParam3() + "&" + 
-													  	 "employeeId=" + tmpMenuForm.getParam4());
+													  	 "taskId=" 		+ tmpMenuForm.getParam3() + "&" + 
+													  	 "employeeId=" 	+ tmpMenuForm.getParam4());
 				
 				//Redirect to Avoid Multiple Link
+				PrintWriter out = response.getWriter();
+			    out.println("<script type=\"text/javascript\">");
+			    out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.MENU] + "';");
+			    out.println("</script>");
+				return null;
 			}
 		}
 		

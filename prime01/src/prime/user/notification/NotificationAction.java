@@ -34,9 +34,6 @@ public class NotificationAction extends Action {
 		NotificationForm pForm = (NotificationForm) form;
 		NotificationManager tmpManager = new NotificationManagerImpl();
 		
-
-		System.out.println(pForm.getTask());
-		
 		//##0.Only two tipe of Notification Action Task
 		//----a.Show Notification Page [Usually Null or Forward or Success]
 		//----b.Send Notification to Other User Silently ["sendNotification"] --> Not Using Constants ? Will think about it later :)
@@ -51,7 +48,7 @@ public class NotificationAction extends Action {
 			NotifTemplateBean tmpNotifTempBean = tmpNotifTempManager.getNotifTemplateById(pForm.getNotifType());
 			
 			EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
-			EmployeeBean tmpReceiverBean = tmpEmployeeManager.getEmployeeById(100);
+			EmployeeBean tmpReceiverBean = tmpEmployeeManager.getEmployeeById(pForm.getNotifReceiverID());
 			
 			//---.Send Notification to specified ID with specified Param
 			String[] tmpNotifLinkParam = pForm.getNotifParam().split(";");
@@ -138,7 +135,7 @@ public class NotificationAction extends Action {
 			List<NotificationBean> list = tmpManager.getListByColumn(
 					pForm.getColumnSearch(), pForm.getSearch(), PrimeUtil.getStartRow(pForm.getGoToPage(),
 							pForm.getShowInPage(), countRows), PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
-							countRows),100);
+							countRows), LoginData.getEmployeeData().getEmployeeId());
 			
 			//---.Attribute for Table Show
 			request.setAttribute("listNotification", list);

@@ -4,9 +4,9 @@
 
 	<insert id="insert" parameterClass="prime.user.activity.ActivityBean">
 		INSERT INTO ACTIVITIES 
-			(ACTIVITY_ID, TASK_ID, ACTIVITY_NAME, ACTIVITY_DESCRIPTION)	
+			(ACTIVITY_ID, TASK_ID, ACTIVITY_NAME, ACTIVITY_DESCRIPTION, UPDATED_BY)	
 		VALUES 
-			(#activityId#,#taskId#,#activityName#,#activityDescription#)
+			(#activityId#,#taskId#,#activityName#,#activityDescription#, #updateBy#)
 	</insert>
 	
 	<insert id="insertDetail" parameterClass="prime.user.activity.ActivityBean">

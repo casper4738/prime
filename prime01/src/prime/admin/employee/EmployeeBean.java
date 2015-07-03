@@ -13,6 +13,7 @@ public class EmployeeBean {//extends HolidayBean
 	private Integer divisionId = 0;
 	private Integer managerDivisionId = 0;
 	private Integer positionId = 0;
+	private Integer positionLevel = 0;
 	private Integer managerId = 0;
 	private Integer totalDay = 1;
 	private String contactNumber;
@@ -263,5 +264,13 @@ public class EmployeeBean {//extends HolidayBean
 
 	public void setStartMondayDate(String startMondayDate) {
 		this.startMondayDate = startMondayDate;
+	}
+
+	public Integer getPositionLevel() {
+		return positionLevel;
+	}
+
+	public void setPositionLevel(Integer positionLevel) {
+		this.positionLevel = positionLevel;
 	}
 }

@@ -98,6 +98,11 @@
         WHERE NOTIFICATION_STATUS = '1' AND RECEIVER = #employeeId# 
 	</select>
 	
+	<select id="getNotifByID" resultClass="prime.user.notification.NotificationBean" parameterClass="java.lang.Integer">
+		SELECT NOTIFICATION_TYPE as notificationType 
+		FROM NOTIFICATIONS 
+		WHERE NOTIFICATION_ID = #notifId#
+	</select>
 	
 	<update id="markAsRead" parameterClass="java.lang.Integer">
 		UPDATE NOTIFICATIONS 

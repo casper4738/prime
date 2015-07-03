@@ -23,7 +23,6 @@
 		function validateForm() {
 			var activityName = checkNull($('#activityName'), $('#err-activityName'), "Activity Name");
 			if(activityName) {
-				//alert("error lho");
 			} else {
 				dosubmit();
 			}
@@ -58,14 +57,15 @@
                 			<tr>
                 				<td width="150px">Activity Name</td>
                 				<td>: </td>
-                				<td>
                 				<td><html:text name="TaskHeadUserForm" property="activityBean.activityName" styleClass="form-control" styleId="activityName"/></td>
                 			</tr>
-                			
+                			<tr><td></td>
+                				<td></td>
+                				<td><span id="err-activityName" class="error-validator"></span></td>
+                			</tr>
                 			<tr>
                 				<td>Description</td>
                 				<td>:</td>
-                				<td>
                 				<td><html:textarea name="TaskHeadUserForm" property="activityBean.activityDescription" styleClass="form-control" rows="5"/></td>
                 			</tr>
                 			<tr>

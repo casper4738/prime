@@ -28,7 +28,9 @@ public class TaskSubordinateAction extends Action {
 
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
-		
+		//---.[Dedy] Hardcoded a little bit for Notification Jump
+		request.getSession().setAttribute(Constants.Session.needRedirect, false);
+				
 		int employeeId = LoginData.getUserData().getEmployeeId();
 		request.setAttribute("employeeIdActive", employeeId);
 		

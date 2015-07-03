@@ -126,16 +126,18 @@
 	  	  	}
 	   		
 	   		//##1.Check Whether this a page redirecting or not
-	   		var tmpIsRedirectPage = <%=request.getAttribute("needRedirect")%>;
-	   		if(tmpIsRedirectPage != null){
-	   			menuLoadHandler('<%=request.getAttribute("redirectPage")%>', '<%=request.getAttribute("redirectParam")%>');
+	   		alert("Before = " + tmpIsRedirectPage);
+	   		var tmpIsRedirectPage = <%=request.getSession().getAttribute("needRedirect")%>;
+	   		alert("After = " + tmpIsRedirectPage);
+	   		if(tmpIsRedirectPage){
+	   			alert("SINI");
+	   			menuLoadHandler('<%= request.getSession().getAttribute("redirectPage")%>', '<%= request.getSession().getAttribute("redirectParam")%>');
 	   		} else {
 <%-- 				menuLoadHandler("<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>"); --%>
 	   		}
 		});
 	   	
 	   	function refreshNotification(){
-			alert("REFRESH");
 	   		$.ajax({
 		   	      type	  : "POST",
 		   	      url	  : "Notification.do", //Hardcoded No Other Way :(  
@@ -145,7 +147,7 @@
 		   	      },
 		   	      
 		   	      error: function(){
-		   	    	  alert("Something Wrong is Happening when Reload Notification !");
+		   	    	  alert("Something Wrong is Happening when reload notification, please inform developer !");
 		   	      }
 	   		})
 	   	}
