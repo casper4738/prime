@@ -12,6 +12,7 @@ import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
 import prime.constants.Constants;
+import prime.login.LoginData;
 import prime.user.task.TaskBean;
 import prime.user.task.TaskManager;
 import prime.user.task.TaskManagerImpl;
@@ -30,14 +31,12 @@ public class ReportEmployeesAction extends Action {
 		if(Constants.Task.REPORT.GOTODETAILEMPLOYEE.equals(pForm.getTask())){
 			//##. Get Data
 			String search = "";
-			System.out.println(pForm.getColumnSearchReal()+"--pForm.getColumnSearchReal()");
 			if("STARTDATE".equals(pForm.getColumnSearchReal()) || "ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
 				search = pForm.getStartDate()+";"+pForm.getUntilDate();
 			} else {
 				search = pForm.getSearch();
 			}
 			
-			System.out.println(search+"--search");
 			pForm.setReportEmployeesBean(tmpManager.getEmployeeById(pForm.getEmployeeId()));
 			int countRows  = tmpManager.getCountListEmployeeTaskReport(pForm.getColumnSearchReal(), search, pForm.getEmployeeId());
 			
@@ -52,7 +51,6 @@ public class ReportEmployeesAction extends Action {
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());			
 			return mapping.findForward("detailEmployee");
 		}
-		
 		else if(Constants.Task.REPORT.GENERATEREPORTEMPLOYEE.equals(pForm.getTask())){
 			if("ID".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.EMPLOYEE_ID LIKE ('%" + pForm.getSearch()+ "%')");				
@@ -79,15 +77,15 @@ public class ReportEmployeesAction extends Action {
 			System.out.println("MASUK EMP TASK");
 			System.out.println(pForm.getColumnSearchReal()+"ADA");
 			System.out.println(pForm.getEmployeeId()+"ASD");
-			request.getSession(true).setAttribute("searchQuery2", " WHERE EMPLOYEE_ID = "+pForm.getEmployeeId());
-			request.getSession(true).setAttribute("searchQuery3", " WHERE EMPLOYEE_ID = "+pForm.getEmployeeId());
-			request.getSession(true).setAttribute("searchQuery4", " WHERE EMPLOYEE_ID = "+pForm.getEmployeeId());
-			request.getSession(true).setAttribute("searchQuery5", " WHERE EMPLOYEE_ID = "+pForm.getEmployeeId());
-			request.getSession(true).setAttribute("searchQuery6", " WHERE EMP.EMPLOYEE_ID = "+pForm.getEmployeeId());
-			request.getSession(true).setAttribute("searchQuery7", " WHERE EMPLOYEE_ID = "+pForm.getEmployeeId());			
+			request.getSession(true).setAttribute("searchQuery2", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery3", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery4", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery5", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery6", " WHERE EMP.EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery7", " WHERE EMPLOYEE_ID '= "+pForm.getEmployeeId()+"'");			
 			
 			if("SHOW ALL".equals(pForm.getColumnSearchReal())){
-				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER="+pForm.getEmployeeId()+" OR TASK_RECEIVER="+pForm.getEmployeeId());
+				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER='"+pForm.getEmployeeId()+"' OR TASK_RECEIVER='"+pForm.getEmployeeId()+"'");
 			}else if("NAME".equals(pForm.getColumnSearchReal())) {
 				System.out.println("TEST");
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER="+pForm.getEmployeeId()+" OR TASK_RECEIVER="+pForm.getEmployeeId()+") AND  TASK_NAME LIKE ('%" + pForm.getSearch()+ "%')");				
@@ -116,19 +114,19 @@ public class ReportEmployeesAction extends Action {
 		}
 		
 		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearchReal(),
-				search);
+				search,LoginData.getUserData().getEmployeeId());
 		List<ReportEmployeesBean> list = tmpManager.getListByColumn(
 				pForm.getColumnSearchReal(), search, PrimeUtil
 						.getStartRow(pForm.getGoToPage(),
 								pForm.getShowInPage(), countRows), PrimeUtil
 						.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
-								countRows));
+								countRows),LoginData.getUserData().getEmployeeId());
 		
 		// ##1.Attribute for Table Show
 		request.setAttribute("listReportEmployees", list);
 		request.setAttribute("listSearchColumnEmployeeTask", Constants.Search.TASK_SEARCHCOLUMNS);
 		request.setAttribute("listSearchColumn",
-				Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
+				Constants.Search.REPORTEMPLOYEE_SEARCHCOLUMNS);
 		request.setAttribute("listShowEntries", Constants.PAGINGROWPAGE);
 		setPaging(request, pForm, countRows, pForm.getGoToPage(),
 				pForm.getShowInPage());

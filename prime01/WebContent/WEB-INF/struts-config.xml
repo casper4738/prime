@@ -180,6 +180,7 @@
 			<forward name="success" 				path="/user/report/project/ReportProjectHome.jsp"></forward>
 			<forward name="detailProject" 			path="/user/report/project/ReportProjectDetail.jsp"></forward>
 			<forward name="showReportProject" 		path="/user/report/project/ReportProjectShow.jsp"></forward>
+			<forward name="showReportProjectMember" path="/user/report/project/ReportProjectMemberShow.jsp"></forward>
 			<forward name="showReportProjectTask" 	path="/user/report/project/ReportProjectTaskShow.jsp"></forward>
 		</action>
 		
@@ -198,6 +199,7 @@
 			<forward name="employeeHead" 	path="/modal/ModalEmployeeHead.jsp">						</forward>
 			<forward name="employeeList" 	path="/modal/ModalEmployeeList.jsp">						</forward>
 			<forward name="employeeTree" 	path="/modal/ModalEmployeeTree.jsp">						</forward>
+			<forward name="employeeProjectMember" 	path="/modal/ModalEmployeeProjectMember.jsp">		</forward>
 			<forward name="activityNote" 	path="/modal/ModalActivityNote.jsp">						</forward>
 			<forward name="taskNote" 		path="/modal/ModalTaskNote.jsp">							</forward>
 			<forward name="changePwd" 	    path="/modal/ModalChangePassword.jsp">						</forward>

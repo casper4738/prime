@@ -35,6 +35,8 @@ public class ProjectForm extends ActionForm {
 	
 	private String progressStartDate;
 	private String progressEndDate;
+	
+	private Integer idAssigner;
 
 	public Boolean getIsShowAll() {
 		return isShowAll;
@@ -263,5 +265,13 @@ public class ProjectForm extends ActionForm {
 
 	public void setProgressEndDate(String progressEndDate) {
 		this.progressEndDate = progressEndDate;
+	}
+
+	public Integer getIdAssigner() {
+		return idAssigner;
+	}
+
+	public void setIdAssigner(Integer idAssigner) {
+		this.idAssigner = idAssigner;
 	}
 }

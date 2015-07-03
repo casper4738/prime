@@ -9,6 +9,7 @@ import prime.user.task.TaskBean;
 
 public class ReportEmployeesForm extends ActionForm {
 	private ReportEmployeesBean reportEmployeesBean = new ReportEmployeesBean();
+	private ReportEmployeesTaskBean reportEmployeesTaskBean = new ReportEmployeesTaskBean();
 	private TaskBean taskBean = new TaskBean();
 	private EmployeeBean employeeBean = new EmployeeBean();
 	private DivisionBean divisionBean = new DivisionBean();
@@ -24,6 +25,7 @@ public class ReportEmployeesForm extends ActionForm {
 	private String statusSearch;
 	private String genderSearch;
 	private String tempTask;
+	private Integer taskId;
 	private java.sql.Date startDate;
 	private java.sql.Date untilDate;
 	
@@ -194,6 +196,22 @@ public class ReportEmployeesForm extends ActionForm {
 
 	public void setTempTask(String tempTask) {
 		this.tempTask = tempTask;
+	}
+
+	public Integer getTaskId() {
+		return taskId;
+	}
+
+	public void setTaskId(Integer taskId) {
+		this.taskId = taskId;
+	}
+
+	public ReportEmployeesTaskBean getReportEmployeesTaskBean() {
+		return reportEmployeesTaskBean;
+	}
+
+	public void setReportEmployeesTaskBean(ReportEmployeesTaskBean reportEmployeesTaskBean) {
+		this.reportEmployeesTaskBean = reportEmployeesTaskBean;
 	}
 
 }

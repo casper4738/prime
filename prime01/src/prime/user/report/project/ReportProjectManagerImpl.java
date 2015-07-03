@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import prime.user.project.ProjectBean;
 import prime.user.report.employees.ReportEmployeesBean;
 import prime.utility.IbatisHelper;
 
@@ -46,5 +47,39 @@ public class ReportProjectManagerImpl implements ReportProjectManager {
 	public ReportProjectBean getProjectById(Integer id) throws SQLException {
 		return (ReportProjectBean) mapper.queryForObject("reportproject.get",
 				id);
+	}
+	
+	
+	public Integer getCountListByColAsHead(String columnSearch, String value, Integer employeeId) 	throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
+			String[] string = value.split(";");
+			map.put("startDate", string[0]);
+			map.put("untilDate", string[1]);
+		} else {
+			map.put("value", value);
+		}
+		map.put("employeeId", employeeId);
+		return (Integer) mapper.queryForObject("project.getCountListByColAsHead", map);
+	}
+	
+	public List<ProjectBean> getListByColumnAsHead(String columnSearch,
+			String value, Integer startRow, Integer endRow, Integer employeeId)
+			throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		
+		map.put("columnSearch", columnSearch);
+		if("STARTDATE".equals(columnSearch) || "ESTIMATEDATE".equals(columnSearch)) {
+			String[] string = value.split(";");
+			map.put("startDate", string[0]);
+			map.put("untilDate", string[1]);
+		} else {
+			map.put("value", value);
+		}
+		map.put("employeeId", employeeId);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		return mapper.queryForList("project.getListByColumnAsHead", map);
 	}
 }
