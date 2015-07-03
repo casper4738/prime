@@ -73,7 +73,7 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 
 				<!-- reject != true -->
 	    		<logic:equal name="isAlreadyReject" value="true">
-	     			<input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doTaskAct('${taskId}', , '<%=Constants.Task.TASK.DOABORT%>', '${employeeIdActive}', '${taskReceiver}')"/>
+	     			<input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOABORT%>', '${employeeIdActive}', '${taskReceiver}')"/>
 	    		</logic:equal>
 				<!-- end reject != true -->
 			</logic:notEqual>
