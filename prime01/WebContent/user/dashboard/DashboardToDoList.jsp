@@ -46,8 +46,8 @@
 	   	          url	  : "<%=Constants.PAGES_LIST[Constants.Page.USER_DASHBOARD]%>",  // Send the login info to this page
 	   	          data	  : str,
 	   	          success : function(msg){
-	   	        	  //alert("Success");
 	   	        	  loadActivityToDoList();
+	   	  		   	  loadActivityProgress(true);
 	   	          },
 	   	          
 	   	          error: function(){

@@ -64,6 +64,7 @@ public class DashboardAction extends Action{
 			//tmpAction = mapping.findForward("success");
 		}else if("finishActivity".equals(pForm.getTask())){
 			tmpManager.insertActivityDetail(tmpEmployeeID,pForm.getTmpId(), pForm.getTmpValue(), "FINISH");
+			tmpManager.deleteToDoList(LoginData.getEmployeeData().getEmployeeId(), pForm.getTmpId());
 			tmpAction = null;
 			//tmpAction = mapping.findForward("success");
 		}else if("refreshActivityProgress".equals(pForm.getTask())){
