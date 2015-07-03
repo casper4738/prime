@@ -22,8 +22,8 @@ public class ProjectBean extends EmployeeBean {
 	private String projectChangeNote;
 	private String projectAssignerName;
 	private String projectReceiverName;
-	private Date projectStartDate;
-	private Date projectEstimateDate;
+	private Date projectStartDate = new Date(new java.util.Date().getTime());
+	private Date projectEstimateDate = new Date(new java.util.Date().getTime());
 	private Date actualStart;
 	private Date actualEnd;
 	private TaskBean taskBean;

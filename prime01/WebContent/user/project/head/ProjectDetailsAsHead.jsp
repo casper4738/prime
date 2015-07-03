@@ -177,15 +177,16 @@
                  
             <div class="form-action">
 				<table align="center"><tr>
-				<logic:equal name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="3">
-					<td style="padding:5px;"><input type="button" value="Approve"	class="btn btn-sm btn-success" onclick="flyToPage('approve')"/></td>
-					<td style="padding:5px;"><input type="button" value="Reject" 	class="btn btn-sm  btn-warning" onclick="flyToPage('reject', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
-				</logic:equal>	
-				<logic:notEqual name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="5">
-					<td style="padding:5px;"><input type="button" value="Abort" 	class="btn btn-sm  btn-danger" onclick="flyToAbort('abort', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
-					<td style="padding:5px;"><input type="button" value="Change PM" class="btn btn-sm  btn-primary" onclick="flyToPage('changePM', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
+				<logic:notEqual name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="6">
+						<logic:equal name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="3">
+							<td style="padding:5px;"><input type="button" value="Approve"	class="btn btn-sm btn-success" onclick="flyToPage('approve')"/></td>
+							<td style="padding:5px;"><input type="button" value="Reject" 	class="btn btn-sm  btn-warning" onclick="flyToPage('reject', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
+						</logic:equal>	
+						<logic:notEqual name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="5">
+							<td style="padding:5px;"><input type="button" value="Abort" 	class="btn btn-sm  btn-danger" onclick="flyToAbort('abort', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
+							<td style="padding:5px;"><input type="button" value="Change PM" class="btn btn-sm  btn-primary" onclick="flyToPage('changePM', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
+						</logic:notEqual>
 				</logic:notEqual>
-				
 				</tr></table>
             </div>
 			

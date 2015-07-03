@@ -265,7 +265,6 @@ function modalSubmitReturnValue(retValue,retForm){
  */
 function sendNotification(receiverId, notifType, notifParam){	
 	//##1.Do Sending Email with Asynchronous Process
-	alert(notifParam);
 	$.ajax({ 
       type	  : "POST",
       url	  : "Notification.do", //Hardcoded No Other Way :(  
