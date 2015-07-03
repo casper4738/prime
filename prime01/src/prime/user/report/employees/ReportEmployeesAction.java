@@ -68,24 +68,13 @@ public class ReportEmployeesAction extends Action {
 			} else if ("GENDER".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE GENDER = '"+pForm.getGenderSearch()+"'");
 			} else if ("STATUS".equals(pForm.getColumnSearch())) {
-				System.out.println("ADA1"+pForm.getStatusSearch());
 				request.getSession(true).setAttribute("searchQuery", " WHERE (CASE WHEN NVL(TO_CHAR(RE.RESIGN_DATE, 'yyyy-mm-dd'), '0') = '0' THEN 0 ELSE 1 END) = '"+pForm.getStatusSearch()+"'");
 			} 
 			
 			return mapping.findForward("showReportEmployee");
 		} else if (Constants.Task.REPORT.GENERATEREPORTEMPLOYEETASK.equals(pForm.getTask())) {
-			System.out.println("MASUK EMP TASK");
-			System.out.println(pForm.getColumnSearchReal()+"ADA");
-			System.out.println(pForm.getEmployeeId()+"ASD");
-			request.getSession(true).setAttribute("searchQuery2", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery3", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery4", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery5", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery6", " WHERE EMP.EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery7", " WHERE EMPLOYEE_ID '= "+pForm.getEmployeeId()+"'");			
-			
 			if("SHOW ALL".equals(pForm.getColumnSearchReal())){
-				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER='"+pForm.getEmployeeId()+"' OR TASK_RECEIVER='"+pForm.getEmployeeId()+"'");
+				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER='"+pForm.getEmployeeId()+"' OR TASK_RECEIVER='"+pForm.getEmployeeId()+"')");
 			}else if("NAME".equals(pForm.getColumnSearchReal())) {
 				System.out.println("TEST");
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER="+pForm.getEmployeeId()+" OR TASK_RECEIVER="+pForm.getEmployeeId()+") AND  TASK_NAME LIKE ('%" + pForm.getSearch()+ "%')");				
@@ -100,6 +89,13 @@ public class ReportEmployeesAction extends Action {
 			} else if ("ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER="+pForm.getEmployeeId()+" OR TASK_RECEIVER="+pForm.getEmployeeId()+") AND TASK_ESTIMATE_DATE BETWEEN TO_DATE('"+pForm.getStartDate()+"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
 			} 
+			request.getSession(true).setAttribute("searchQuery1", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery2", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery3", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery4", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery5", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery6", " WHERE EMP.EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery7", " WHERE EMPLOYEE_ID '= "+pForm.getEmployeeId()+"'");			
 			
 			return mapping.findForward("showReportEmployeeTask");
 		}
@@ -113,6 +109,7 @@ public class ReportEmployeesAction extends Action {
 			search = pForm.getSearch();			
 		}
 		
+		System.out.println("MASUK SINI");
 		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearchReal(),
 				search,LoginData.getUserData().getEmployeeId());
 		List<ReportEmployeesBean> list = tmpManager.getListByColumn(

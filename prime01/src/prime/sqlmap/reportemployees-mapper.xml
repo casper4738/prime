@@ -27,7 +27,7 @@
 		LEFT JOIN (
 		    SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
 		)RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
-		WHERE TREE_ID LIKE #empId#||'%'
+		WHERE TREE_ID LIKE (SELECT TREE_ID FROM EMPLOYEES WHERE EMPLOYEE_ID= #empId#)||'%'
 	    <dynamic prepend="AND">
 	        <isNotNull property="columnSearch">
 	        	<isEqual property="columnSearch" compareValue="ID">
@@ -74,7 +74,7 @@
 		LEFT JOIN (	
 		    SELECT EMPLOYEE_ID, RESIGN_DATE FROM RESIGN_EMPLOYEES
 		)RE ON RE.EMPLOYEE_ID = EMP.EMPLOYEE_ID
-		WHERE TREE_ID LIKE #empId#||'%'
+		WHERE TREE_ID LIKE (SELECT TREE_ID FROM EMPLOYEES WHERE EMPLOYEE_ID= #empId#)||'%'
 	    <dynamic prepend="AND">
 	        <isNotNull property="columnSearch">
 		       	<isEqual property="columnSearch" compareValue="ID">
