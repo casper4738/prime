@@ -250,7 +250,23 @@
             SELECT X.TASK_ID FROM TASKS X
             JOIN EMPLOYEES Y ON Y.EMPLOYEE_ID = X.TASK_RECEIVER
             WHERE Y.HEAD_ID = (SELECT RT.HEAD_ID FROM EMPLOYEES RT WHERE RT.EMPLOYEE_ID = EMP_RECEIVE.EMPLOYEE_ID)
-            AND X.TASK_ASSIGNER = TASK.TASK_ASSIGNER
+            AND X.TASK_ASSIGNER = #taskAssigner#
+            <dynamic prepend="AND">
+				<isNotNull property="columnSearch">
+					<isEqual property="columnSearch" compareValue="NAME">
+						UPPER(X.TASK_NAME) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="DESCRIPTION">
+						UPPER(X.TASK_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="STARTDATE">
+						X.TASK_START_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+					<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
+						X.TASK_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
+					</isEqual>
+				</isNotNull>
+			</dynamic>
         )
 		OR TASK.TASK_ID  IN (
 		    SELECT X.TASK_ID FROM TASKS X
