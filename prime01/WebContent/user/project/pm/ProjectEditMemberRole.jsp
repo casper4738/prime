@@ -90,7 +90,7 @@
                 					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="dosubmit()"/>
                 					<input type="button" class="btn btn-default" value='Cancel' onclick="flyToBack(
 	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
-	                        		'<bean:write name="ProjectUserForm" property="projectBean.projectId"/>')">
+	                        		'<bean:write name="ProjectUserForm" property="projectId"/>')">
                 				</td>
                 			</tr>
                 		</table>
