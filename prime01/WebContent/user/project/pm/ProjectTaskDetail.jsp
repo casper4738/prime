@@ -78,36 +78,6 @@
 			<tr><td colspan="2">Description : <bean:write name="ProjectUserForm" property="taskBean.taskDescription" /> </td></tr>
 			</table>
 			
-			
-			<p><span class="message"><bean:write name="ProjectUserForm" property="message" /></span></p>
-			<br/><br/>
-			<div class="form-action"><table align="center">
-               <tr>	<td style="padding:5px;">
-	               		<logic:notEqual name="isAllFinished" value="true">
-	               			<logic:equal name="ProjectUserForm" property="taskBean.taskAssigner" value="${ProjectUserForm.taskBean.taskReceiver}" >
-		               			<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
-	               			</logic:equal>
-	               		</logic:notEqual>
-               			<logic:equal name="isAllFinished" value="true">
-	               			<logic:equal name="ProjectUserForm" property="taskBean.taskAssigner" value="${ProjectUserForm.taskBean.taskReceiver}">
-		               			<input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/>
-	               			</logic:equal>
-	               		</logic:equal>
-              			<logic:equal name="isAlreadySubmit" value="true">
-	               			<logic:notEqual name="ProjectUserForm" property="taskBean.taskAssigner" value="${ProjectUserForm.taskBean.taskReceiver}">
-		               			<input type="button" value="Approval" class="btn btn-sm  btn-success" onclick="flyToPage('<%=Constants.Task.TASK.DOAPPROVAL%>')"/>
-		               			<input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="doTaskAct('<%=Constants.Task.TASK.DOREJECT%>')"/>
-	               			</logic:notEqual>
-	               		</logic:equal>
-	               		<logic:equal name="isAlreadyReject" value="true">
-	               			<logic:notEqual name="ProjectUserForm" property="taskBean.taskAssigner" value="${ProjectUserForm.taskBean.taskReceiver}">
-		               			<input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doTaskAct('<%=Constants.Task.TASK.DOABORT%>')"/>
-	               			</logic:notEqual>
-	               		</logic:equal>
-	               	</td>
-               </tr>
-            </table></div>
-			
 			<div class="show-in-page">
 				Show per page
 				<html:select name="ProjectUserForm" property="showInPage" onchange="change(this.value)" >

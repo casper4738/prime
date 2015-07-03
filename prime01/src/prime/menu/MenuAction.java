@@ -42,11 +42,6 @@ public class MenuAction extends Action {
 		List<UserMenuBean> listUserMenu = tmpUserMenuManager.getListUserMenuByUserRoleId(LoginData.getUserData().getSysLevel());
 		
 		for (UserMenuBean e : listUserMenu) {
-			System.out.println(e.getUserMenuId()+ " - "+e.getUserMenuName()+"-"+e.getUserMenuAction()+"-"+e.getIsCheck());
-		}
-
-		
-		for (UserMenuBean e : listUserMenu) {
 			if(e.getIsCheck()){
 				if(request.getSession().getAttribute(Constants.Session.lastPage) == null){
 					request.getSession().setAttribute(Constants.Session.lastPage, Constants.PAGES_LIST[e.getUserMenuId()]);

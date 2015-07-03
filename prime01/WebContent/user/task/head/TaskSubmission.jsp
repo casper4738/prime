@@ -7,6 +7,25 @@
 <html>
 <head> 
 <script>
+function dosubmitx() {
+	var taskAssigner = $('#taskAssigner').val();
+	var taskReceiver = $('#taskReceiver').val();
+	
+	if(taskReceiver == taskAssigner) {
+		var employeeReceiver = taskAssigner;
+		var taskId = $('#taskId').val();
+		sendNotification(employeeReceiver, 
+				 <%=Constants.NotificationType.TASK_SUBMITAPPROVALRETURN%>,
+	 			"<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>;<%=Constants.Task.GOTOVIEW%>;"+taskId+";"+employeeReceiver);	
+	} else {
+		var employeeReceiver = taskAssigner;
+		var taskId = $('#taskId').val();
+		sendNotification(employeeReceiver, 
+				 <%=Constants.NotificationType.TASK_SUBMITAPPROVAL%>,
+	 			"<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>;<%=Constants.Task.GOTOVIEW%>;"+taskId+";"+employeeReceiver);	
+	}
+	dosubmit();
+}
 </script>
 </head>
 <body class="skin-blue sidebar-mini">
@@ -27,8 +46,10 @@
 			<div class="box-body">
                 	<html:form action="/TaskHeadUser">
                 		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.TASK.DOSUBMIT%>"/>
-                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskId" />
-                		<html:hidden name="TaskHeadUserForm" property="taskId" />
+                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskId"/>
+                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskAssigner" styleId="taskAssigner" />
+                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskReceiver" styleId="taskReceiver" />
+                		<html:hidden name="TaskHeadUserForm" property="taskId"  styleId="taskId"/>
                 		<html:hidden name="TaskHeadUserForm" property="taskBean.taskStatus" value='<%=Constants.Status.SUBMIT+""%>'/>
                 		<table class="form-input" align="center">
                 			<tr>
@@ -43,7 +64,7 @@
                 			</tr>
                 			<tr>
                 				<td colspan="3" align="center">
-                					<html:button property="" value="Submit" styleClass="btn btn-primary" onclick="dosubmit()" />
+                					<html:button property="" value="Submit" styleClass="btn btn-primary" onclick="dosubmitx()" />
                 					<html:button property="" value="Cancel" styleClass="btn btn-default" onclick="flyToPage('success')"/>
                 				</td>
                 			</tr>

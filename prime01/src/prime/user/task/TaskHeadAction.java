@@ -38,14 +38,12 @@ public class TaskHeadAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//---.[Dedy] Hardcoded a little bit for Notification Jump
-		request.getSession().setAttribute(Constants.Session.needRedirect, false);
+		request.getSession().setAttribute(Constants.Session.needRedirect , false);
+		request.getSession().setAttribute(Constants.Session.redirectPage , Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]);
+		request.getSession().setAttribute(Constants.Session.redirectParam, "");
 		
 		int employeeId = LoginData.getUserData().getEmployeeId();
 		request.setAttribute("employeeIdActive", employeeId);
-		
-		
-		System.out.println("1. ID :  "+LoginData.getEmployeeData().getEmployeeId());
-		System.out.println("2. Pos Level :  "+LoginData.getEmployeeData().getPositionLevel());
 		
 		TaskHeadForm pForm = (TaskHeadForm) form;
 		TaskManager manager = new TaskManagerImpl();
@@ -100,6 +98,7 @@ public class TaskHeadAction extends Action {
 			EmployeeBean tmpTaskReceive = tmpEmployeeManager.getEmployeeById(pForm.getTaskReceiver());
 
 			//##.Add Data
+			pForm.getTaskBean().setTaskId(manager.getNewId());
 			pForm.getTaskBean().setTaskAssigner(tmpTaskAssign.getEmployeeId());
 			pForm.getTaskBean().setTaskReceiver(tmpTaskReceive.getEmployeeId());
 			pForm.getTaskBean().setTaskAssignerName(tmpTaskAssign.getEmployeeName());
@@ -108,7 +107,14 @@ public class TaskHeadAction extends Action {
 			return mapping.findForward("add");
 		} else if (Constants.Task.TASK.GOTOSUBMIT.equals(pForm.getTask())) {
 			//##.Add Data
-			pForm.setTaskBean(manager.getTaskById(pForm.getTaskId()));
+			TaskBean tmpTaskBean = manager.getTaskById(pForm.getTaskId());
+			try {
+				if(tmpTaskBean.getProjectMemberId() == 0) {
+					EmployeeBean bean = tmpEmployeeManager.getEmployeeById(tmpTaskBean.getTaskReceiver());
+					tmpTaskBean.setTaskAssigner(bean.getManagerId());
+				}
+			} catch (Exception e) { }
+			pForm.setTaskBean(tmpTaskBean);
 			return mapping.findForward("submit");
 		} else if (Constants.Task.GOTOVIEW.equals(pForm.getTask())) {
 			//##.View Detail Task
