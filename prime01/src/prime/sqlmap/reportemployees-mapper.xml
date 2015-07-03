@@ -162,7 +162,7 @@
         LEFT JOIN PROJECTS PRO ON PRO.PROJECT_ID = PROM.PROJECT_ID
    		JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = TSK.TASK_ASSIGNER
     	JOIN EMPLOYEES EMP2 ON EMP2.EMPLOYEE_ID = TSK.TASK_RECEIVER
-		WHERE TASK_RECEIVER=#empId# OR TASK_ASSIGNER=#empId#
+		WHERE (TASK_RECEIVER=#empId# OR TASK_ASSIGNER=#empId#)
 		<dynamic prepend="AND">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">

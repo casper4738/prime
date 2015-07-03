@@ -123,10 +123,8 @@
 				 $('#validatorHireDate').html("Hire Date must be filled out");
 				 tmpValidated = false;
 			}
-			
-			alert (hireDateFormat)
-			alert(today)
-			 if (hireDateFormat > today){
+
+			if (hireDateFormat > today){
 				$('#validatorHireDate').html("Hire Date is not greater than today");
 		    	tmpValidated = false;
 		    }
