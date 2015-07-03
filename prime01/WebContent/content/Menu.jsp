@@ -125,13 +125,11 @@
 	   		
 	   		//##1.Check Whether this a page redirecting or not
 	   		var tmpIsRedirectPage = <%=request.getSession().getAttribute(Constants.Session.needRedirect)%>;
-	   		alert("????");
 	   		if(tmpIsRedirectPage){
-	   			alert("?????");
 	   			alert('<%= request.getSession().getAttribute(Constants.Session.redirectPage)%>');
 	   			menuLoadHandler('<%= request.getSession().getAttribute(Constants.Session.redirectPage)%>', '<%= request.getSession().getAttribute(Constants.Session.redirectParam)%>');
 	   		} else {
-	   			alert("SINI");
+	   			//alert("SINI");
 				menuLoadHandler('<%=(String)request.getSession().getAttribute(Constants.Session.lastPage)%>');
 	   		}
 		});

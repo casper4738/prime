@@ -201,7 +201,9 @@
 						</logic:notEqual>
 					</logic:equal>
 					<logic:equal name="ProjectUserForm" property="projectBean.percentStatus" value="100">
-               			<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToSubmit('<%=Constants.Task.TASK.GOTOSUBMIT%>', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
+						<logic:notEqual name="ProjectUserForm" property="projectBean.projectLastStatus" value="3">
+               				<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToSubmit('<%=Constants.Task.TASK.GOTOSUBMIT%>', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
+               			</logic:notEqual>
                		</logic:equal>
 					
 				</tr></table>
