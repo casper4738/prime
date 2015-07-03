@@ -77,15 +77,9 @@ public class ReportEmployeesAction extends Action {
 			System.out.println("MASUK EMP TASK");
 			System.out.println(pForm.getColumnSearchReal()+"ADA");
 			System.out.println(pForm.getEmployeeId()+"ASD");
-			request.getSession(true).setAttribute("searchQuery2", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery3", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery4", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery5", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery6", " WHERE EMP.EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery7", " WHERE EMPLOYEE_ID '= "+pForm.getEmployeeId()+"'");			
 			
 			if("SHOW ALL".equals(pForm.getColumnSearchReal())){
-				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER='"+pForm.getEmployeeId()+"' OR TASK_RECEIVER='"+pForm.getEmployeeId()+"'");
+				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER='"+pForm.getEmployeeId()+"' OR TASK_RECEIVER='"+pForm.getEmployeeId()+"')");
 			}else if("NAME".equals(pForm.getColumnSearchReal())) {
 				System.out.println("TEST");
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER="+pForm.getEmployeeId()+" OR TASK_RECEIVER="+pForm.getEmployeeId()+") AND  TASK_NAME LIKE ('%" + pForm.getSearch()+ "%')");				
@@ -100,6 +94,13 @@ public class ReportEmployeesAction extends Action {
 			} else if ("ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER="+pForm.getEmployeeId()+" OR TASK_RECEIVER="+pForm.getEmployeeId()+") AND TASK_ESTIMATE_DATE BETWEEN TO_DATE('"+pForm.getStartDate()+"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
 			} 
+			request.getSession(true).setAttribute("searchQuery1", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery2", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery3", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery4", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery5", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery6", " WHERE EMP.EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
+			request.getSession(true).setAttribute("searchQuery7", " WHERE EMPLOYEE_ID '= "+pForm.getEmployeeId()+"'");			
 			
 			return mapping.findForward("showReportEmployeeTask");
 		}
