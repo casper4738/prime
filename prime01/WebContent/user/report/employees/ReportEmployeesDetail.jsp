@@ -66,7 +66,7 @@
 		<h1>Employee Tasks</h1>
 		<ol class="breadcrumb">
 			<li><i class="fa fa-dashboard"></i> Home</a></li>
-			<li class="active"><a href="#" onlick="flyToBack('home')">Employee Report</a></li>
+			<li class="active"><a href="#" onlick="">Employee Report</a></li>
 			<li class="active">Employee Task</li>
 		</ol>
 	</section>
