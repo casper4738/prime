@@ -68,16 +68,11 @@ public class ReportEmployeesAction extends Action {
 			} else if ("GENDER".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE GENDER = '"+pForm.getGenderSearch()+"'");
 			} else if ("STATUS".equals(pForm.getColumnSearch())) {
-				System.out.println("ADA1"+pForm.getStatusSearch());
 				request.getSession(true).setAttribute("searchQuery", " WHERE (CASE WHEN NVL(TO_CHAR(RE.RESIGN_DATE, 'yyyy-mm-dd'), '0') = '0' THEN 0 ELSE 1 END) = '"+pForm.getStatusSearch()+"'");
 			} 
 			
 			return mapping.findForward("showReportEmployee");
 		} else if (Constants.Task.REPORT.GENERATEREPORTEMPLOYEETASK.equals(pForm.getTask())) {
-			System.out.println("MASUK EMP TASK");
-			System.out.println(pForm.getColumnSearchReal()+"ADA");
-			System.out.println(pForm.getEmployeeId()+"ASD");
-			
 			if("SHOW ALL".equals(pForm.getColumnSearchReal())){
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER='"+pForm.getEmployeeId()+"' OR TASK_RECEIVER='"+pForm.getEmployeeId()+"')");
 			}else if("NAME".equals(pForm.getColumnSearchReal())) {
@@ -114,6 +109,7 @@ public class ReportEmployeesAction extends Action {
 			search = pForm.getSearch();			
 		}
 		
+		System.out.println("MASUK SINI");
 		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearchReal(),
 				search,LoginData.getUserData().getEmployeeId());
 		List<ReportEmployeesBean> list = tmpManager.getListByColumn(
