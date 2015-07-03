@@ -46,9 +46,34 @@
 			menuLoadHandler(tmpForm.action, serialize(tmpForm));
 		}
 		
-		function doTaskAct(taskId) {
-			modalLoadHandler("task=taskNote&param2=" + taskId);
+		function doTaskAct(taskId, task, employeeSender, employeeReceiver) {
+			if(task == "<%=Constants.Task.TASK.DOABORT%>") {
+				sendNotification(employeeReceiver, 
+						 <%=Constants.NotificationType.TASK_ABORTBYHEAD%>,  
+	         			"<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_SUBORDINATE]%>;<%=Constants.Task.GOTOVIEW%>;"+taskId+";"+employeeReceiver);
+			}
+			modalLoadHandler("task=taskNote&param2=" + taskId+"&param3="+task);
 		}
+
+		function doTaskApp(task, taskId, employeeSender, employeeReceiver, self) {
+			var tmpForm = document.forms[0];
+			
+			if(task == "<%=Constants.Task.TASK.DOAPPROVAL%>") {
+				if(self == null) {
+					sendNotification(employeeReceiver, 
+							 <%=Constants.NotificationType.TASK_SELFASSIGNAPPROVALRETURN%>,  
+		         			"<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>;<%=Constants.Task.GOTOVIEW%>;"+taskId+";"+employeeReceiver);
+				} else {
+					sendNotification(employeeReceiver, 
+							 <%=Constants.NotificationType.TASK_SELFASSIGNAPPROVAL%>,  
+		         			"<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_SUBORDINATE]%>;<%=Constants.Task.GOTOVIEW%>;"+taskId+";"+employeeReceiver);
+				}
+			}
+			
+			tmpForm.task.value = task;
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+
 	</script>
 </head>
 <body class="skin-blue sidebar-mini">

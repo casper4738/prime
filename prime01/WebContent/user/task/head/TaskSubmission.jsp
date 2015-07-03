@@ -6,6 +6,8 @@
 <!DOCTYPE html>
 <html>
 <head> 
+<script>
+</script>
 </head>
 <body class="skin-blue sidebar-mini">
 	<section class="content-header">
@@ -26,6 +28,7 @@
                 	<html:form action="/TaskHeadUser">
                 		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.TASK.DOSUBMIT%>"/>
                 		<html:hidden name="TaskHeadUserForm" property="taskBean.taskId" />
+                		<html:hidden name="TaskHeadUserForm" property="taskId" />
                 		<html:hidden name="TaskHeadUserForm" property="taskBean.taskStatus" value='<%=Constants.Status.SUBMIT+""%>'/>
                 		<table class="form-input" align="center">
                 			<tr>

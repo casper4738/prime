@@ -33,13 +33,13 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 				<logic:equal name="isAllFinished" value="true">
 						<!-- approve != true -->
 						<logic:notEqual name="isAlreadyApprove" value="true">
-			     			a | <input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
+			     			<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
 							<%
 							EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
 							EmployeeBean e = tmpEmployeeManager.getEmployeeById(Integer.parseInt(request.getAttribute("employeeIdActive").toString()));
 							if(e.getManagerId() == null || e.getManagerId() == 0) {
 							%>
-								<input type="button" value="Finish" class="btn btn-sm  btn-success" onclick="flyToPage('<%=Constants.Task.TASK.DOAPPROVAL%>')"/>
+								<input type="button" value="Finish" class="btn btn-sm  btn-success" onclick="doTaskApp('<%=Constants.Task.TASK.DOAPPROVAL%>', '${taskId}', '${employeeIdActive}', '${taskReceiver}', 'self')"/>
 			     			<% } else { %>
 				     			<input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/>
 			     			<% } %>
@@ -70,19 +70,20 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 		</logic:equal>
 		
 		<logic:equal name="taskAssigner" value="${employeeIdActive}">
+			
 			<logic:notEqual name="taskReceiver" value="${employeeIdActive}">
 				<!-- submit != true -->
 				<logic:equal name="isAlreadySubmit" value="true">
-	     			<input type="button" value="Approval" class="btn btn-sm  btn-success" onclick="flyToPage('<%=Constants.Task.TASK.DOAPPROVAL%>')"/>
+	     			<input type="button" value="Approval" class="btn btn-sm  btn-success" onclick="doTaskApp('<%=Constants.Task.TASK.DOAPPROVAL%>', '${taskId}', '${employeeIdActive}', '${taskReceiver}')"/>
 	    			<logic:notEqual name="taskAssigner" value="${employeeIdActive}">
-		     			<input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOREJECT%>')"/>
+		     			<input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOREJECT%>', '${employeeIdActive}', '${taskReceiver}')"/>
 		    		</logic:notEqual>
 	    		</logic:equal>
 				<!-- end submit != true -->
 
 				<!-- reject != true -->
 	    		<logic:equal name="isAlreadyReject" value="true">
-	     			<input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doTaskAct('${taskId}', , '<%=Constants.Task.TASK.DOABORT%>')"/>
+	     			<input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doTaskAct('${taskId}', , '<%=Constants.Task.TASK.DOABORT%>', '${employeeIdActive}', '${taskReceiver}')"/>
 	    		</logic:equal>
 				<!-- end reject != true -->
 			</logic:notEqual>
@@ -92,16 +93,16 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 			<logic:notEqual name="taskAssigner" value="${employeeIdActive}">
 				<!-- submit != true -->
 				<logic:equal name="isAlreadySubmit" value="true">
-	     			<input type="button" value="Approval" class="btn btn-sm  btn-success" onclick="flyToPage('<%=Constants.Task.TASK.DOAPPROVAL%>')"/>
+	     			a a<input type="button" value="Approval" class="btn btn-sm  btn-success" onclick="doTaskApp('<%=Constants.Task.TASK.DOAPPROVAL%>', '${taskId}', '${employeeIdActive}', '${taskReceiver}')"/>
 	    			<logic:notEqual name="taskAssigner" value="${employeeIdActive}">
-		     			<input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOREJECT%>')"/>
+		     			<input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOREJECT%>', '${employeeIdActive}', '${taskReceiver}')"/>
 		    		</logic:notEqual>
 	    		</logic:equal>
 				<!-- end submit != true -->
 				
 				<!-- reject != true -->
 	    		<logic:equal name="isAlreadyReject" value="true">
-	     			<input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doTaskAct('${taskId}', , '<%=Constants.Task.TASK.DOABORT%>')"/>
+	     			<input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOABORT%>', '${employeeIdActive}', '${taskReceiver}')"/>
 	    		</logic:equal>
 				<!-- end reject != true -->
 			</logic:notEqual>
