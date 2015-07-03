@@ -61,7 +61,7 @@ public class ReportProjectManagerImpl implements ReportProjectManager {
 			map.put("value", value);
 		}
 		map.put("employeeId", employeeId);
-		return (Integer) mapper.queryForObject("project.getCountListByColAsHead", map);
+		return (Integer) mapper.queryForObject("reportproject.getCountListByColAsHead", map);
 	}
 	
 	public List<ProjectBean> getListByColumnAsHead(String columnSearch,
@@ -80,6 +80,6 @@ public class ReportProjectManagerImpl implements ReportProjectManager {
 		map.put("employeeId", employeeId);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
-		return mapper.queryForList("project.getListByColumnAsHead", map);
+		return mapper.queryForList("reportproject.getListByColumnAsHead", map);
 	}
 }
