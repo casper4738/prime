@@ -5,19 +5,7 @@
 
 <!DOCTYPE html>
 <html>
-<head> 
-	<meta charset="UTF-8">
-	<title>PRIMEprogram</title>
-	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-	
-	<!-- CSS -->
-	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
-	<!-- End of CSS -->
-	
-	<!-- JS -->
-	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
-	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
+<head>
 	<script type="text/javascript">
 		$('#table-1').dataTable( {
 			   paging    : false,

@@ -111,8 +111,6 @@
 	   		refreshNotification();
 	   		setInterval(refreshNotification, 300000); //5 Menit
 
-<%-- 	   		sendNotification(100,  <%=Constants.NotificationType.PROJECT_CREATEAPPROVAL%>,  "<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>;<%=Constants.Task.GOTOVIEW%>;5;100"); --%>
-	   		
 	   		//##0.Prepare Profile Picture
 	   		var tmpImage = '<%=LoginData.getEmployeeData().getConvertedFilePic()%>';
 	  	  	if(tmpImage == "null"){
@@ -148,6 +146,27 @@
 		   	      }
 	   		})
 	   	}
+	   	
+	   	
+	   	//Back Handling for Ajax Back Problem [Minimum Requirement IE 10] :)
+	   	window.addEventListener("popstate", function(e) {
+	   		//##Doubling Process with Prime.js [MenuLoadHandler, will think about better solution later]
+	   		//##0. Show Loading [Hard Code the HTML Tag until Found Better Solution]
+	   		$('#content-main').html(PAGE_LOADING);
+	   		
+	   		//##1.Start AJAX-Load
+	   		$('#content-main').load(e.state.menu, e.state.data, function( response, status, xhr ) {
+	   			//---.Show Some Respect For Error Status
+	   			if(status == "error"){
+	   				$('#content-main').html(PAGE_LOAD_ERROR);
+	   			} else {
+	   				$('#content-main').css("z-index", -1);
+	   			}
+	   		});
+	   		
+	   		return false;
+	   	});
+	   	
 	</script>
 <!-- End JS -->
 </html>

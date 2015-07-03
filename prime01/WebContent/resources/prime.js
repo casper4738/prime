@@ -151,6 +151,9 @@ var PAGE_LOADING  = "<div class=\"info-modal\">" +
 var modalTargettedObject;
 
 function menuLoadHandler(targettedMenu, targettedData){
+	//---.History Handler
+	window.history.pushState({data : targettedData, menu : targettedMenu}, "", "");
+	
 	//##0. Show Loading [Hard Code the HTML Tag until Found Better Solution]
 	$('#content-main').html(PAGE_LOADING);
 	

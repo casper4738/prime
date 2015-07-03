@@ -69,6 +69,8 @@ public class FilterSession implements Filter {
 					e.printStackTrace();
 				}
 				
+				System.out.println(tmpDBSession + " _ " + tmpSession.getAttribute(Constants.Session.ID));
+				
 		    	if(tmpDBSession.equals((String)tmpSession.getAttribute(Constants.Session.ID))){
 		    		tmpIsRedirectNeed = false;
 		    		
@@ -99,9 +101,9 @@ public class FilterSession implements Filter {
 		    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONEXPIRED);
 		    	}
 		    } else {
+	    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONEXPIRED);
 		    	if(LoginData.isDataExists()){
 		    		LoginData.clear();
-		    		request.setAttribute(Constants.Request.LOGIN_STATUS, Constants.Response.FAILLOGIN_SESSIONEXPIRED);
 		    	}
 		    }	
 

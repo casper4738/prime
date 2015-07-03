@@ -20,7 +20,7 @@
     <div class="login-box">
       <div class="login-box-body">
 	    <div class="login-logo">
-	       <b>Prime</b> v.0.1
+	       <b>Prime</b> v.1.0
 	    </div><!-- /.login-logo -->
         <p class="login-box-msg">Sign in to start your session</p>
         <html:form action="/Login" method="post" styleId="form-login">
@@ -39,7 +39,7 @@
           </div>    
           <div class="row">
             <div class="col-xs-5">
-              <input type="button" class="btn btn-primary btn-block btn-flat" id="btn-submit" value="Sign In"/>
+              <input type="submit" class="btn btn-primary btn-block btn-flat" id="btn-submit" value="Sign In"/>
               <div class="overlay" id="ajax-validating">
                		<i class="fa fa-circle-o-notch fa-spin"></i> Processing...
               </div>
@@ -54,19 +54,22 @@
 	<script src="resources/prime.js"></script>
     <script>
       $(document).ready(function(){
+    	 	 $.ajaxSetup({ cache: false });
+    	  
     	  	  var tmpIsLoginFail = <%=request.getAttribute(Constants.Request.LOGIN_STATUS)%>;
     	  	  if(tmpIsLoginFail == null){
   	  		  	  $('#login-fail').hide();
     	  	  } else {
     	  		  $('#login-fail').html('<%=request.getAttribute(Constants.Request.LOGIN_STATUS)%>');
     	  	  }
-    	      
+    	  	  
  		      $('#ajax-validating').hide();
 		  	  $('#textbox-username').attr("placeholder","Username");
 		  	  $('#textbox-password').attr("placeholder","Password");
+		  	  $('#textbox-username').val('');
 		  	  $('#textbox-password').val('');
-			  $('#btn-submit').click(function(){ 
-	    		  $('#btn-submit').hide();
+			  $('#btn-submit').click(function(event){ 
+				  $('#btn-submit').hide();
 	    		  $('#ajax-validating').show();  
 	    		  //Do Login Data checking
 				  document.forms[0].task.value = "<%=Constants.Task.DOLOGIN%>";
@@ -97,6 +100,8 @@
 							//TO DO :: Do Some Error Handling at Here
 	    	          }
 	    	       });
+    	          
+    	          event.preventDefault();
 		      }); 
       });
     </script>
