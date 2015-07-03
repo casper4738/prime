@@ -48,6 +48,9 @@ public class MenuAction extends Action {
 		
 		for (UserMenuBean e : listUserMenu) {
 			if(e.getIsCheck()){
+				if(request.getSession().getAttribute(Constants.Session.lastPage) == null){
+					request.getSession().setAttribute(Constants.Session.lastPage, Constants.PAGES_LIST[e.getUserMenuId()]);
+				}
 				tmpObject.put(Constants.PAGES_LIST[e.getUserMenuId()], tmpMenu[e.getUserMenuId()]);
 			}
 		}
@@ -73,11 +76,33 @@ public class MenuAction extends Action {
 				System.out.println("Notif Type = " + tmpNotifBean.getNotificationType());
 				
 				//Set Attribute
-				tmpSession.setAttribute("needRedirect" , true);
-				tmpSession.setAttribute("redirectPage" , tmpMenuForm.getParam1());
-				tmpSession.setAttribute("redirectParam", "task=" 		+ tmpMenuForm.getParam2() + "&" +
-													  	 "taskId=" 		+ tmpMenuForm.getParam3() + "&" + 
-													  	 "employeeId=" 	+ tmpMenuForm.getParam4());
+				tmpSession.setAttribute(Constants.Session.needRedirect 	, true);
+				tmpSession.setAttribute(Constants.Session.redirectPage 	, tmpMenuForm.getParam1());
+				
+				switch(tmpNotifBean.getNotificationType()){
+				case Constants.NotificationType.PROJECT_ABORT :
+				case Constants.NotificationType.PROJECT_SUBMITAPPROVALRETURN :
+				case Constants.NotificationType.PROJECT_SUBMITAPPROVAL :
+				case Constants.NotificationType.PROJECT_REMOVEDFROMROLE :
+				case Constants.NotificationType.PROJECT_NEWPMDELEGATED :
+				case Constants.NotificationType.PROJECT_CREATEAPPROVALRETURN :
+				case Constants.NotificationType.PROJECT_CREATEAPPROVAL :
+				case Constants.NotificationType.PROJECT_ASSIGNEDASROLE :
+					tmpSession.setAttribute(Constants.Session.redirectParam	, "task=" 			+ tmpMenuForm.getParam2() + "&" +
+																			  "projectId=" 		+ tmpMenuForm.getParam3() + "&" + 
+								  											  "employeeId=" 	+ tmpMenuForm.getParam4());
+					break;
+				case Constants.NotificationType.TASK_ABORTBYHEAD :
+				case Constants.NotificationType.TASK_SELFASSIGNAPPROVAL :
+				case Constants.NotificationType.TASK_SELFASSIGNAPPROVALRETURN :
+				case Constants.NotificationType.TASK_SUBMITAPPROVAL :
+				case Constants.NotificationType.TASK_SUBMITAPPROVALRETURN :
+					tmpSession.setAttribute(Constants.Session.redirectParam	, "task=" 		+ tmpMenuForm.getParam2() + "&" +
+		  	 				  												  "taskId=" 		+ tmpMenuForm.getParam3() + "&" + 
+		  	 				  												  "employeeId=" 	+ tmpMenuForm.getParam4());
+					break;	
+					
+				}
 				
 				//Redirect to Avoid Multiple Link
 				PrintWriter out = response.getWriter();

@@ -350,6 +350,8 @@ public interface Constants {
 		static String redirectPage		= "t3";
 		static String redirectParam		= "t4";
 		static String needRedirect	 	= "t5";
+		
+		static String lastPage	 		= "t6";
 	}
 	
 	//##G.Active Directory
