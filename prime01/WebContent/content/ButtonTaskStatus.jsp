@@ -7,23 +7,15 @@
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 
 <bean:define id="taskId" value="${param.taskId}" toScope="request" />
+<bean:define id="taskAssigner" value="${param.taskAssigner}" toScope="request" />
 <bean:define id="taskReceiver" value="${param.taskReceiver}" toScope="request" />
 <bean:define id="projectMemberId" value="${param.projectMemberId}" toScope="request" />
 
-<center>${employeeIdActive} |${taskAssigner}  | ${taskReceiver} | ${taskId} 
+<center>${employeeIdActive} |${taskAssigner}  | ${taskReceiver} | ${taskId} | ${projectMemberId } - 
 <br/>
-${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
+${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove} 
 </center>
-
-<logic:notEqual name="projectMemberId" value="">
-	<bean:define id="taskAssigner" value="${param.projectMemberId}" toScope="request" />
-</logic:notEqual>
-<logic:equal name="projectMemberId" value="">
-	<bean:define id="taskAssigner" value="${param.taskAssigner}" toScope="request" />
-</logic:equal>
-
-
-
+<br/>
 <div class="form-action"><table align="center">
    <tr> <td style="padding:5px;">
 		<logic:equal name="taskReceiver" value="${employeeIdActive}">
@@ -70,14 +62,11 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 		</logic:equal>
 		
 		<logic:equal name="taskAssigner" value="${employeeIdActive}">
-			
 			<logic:notEqual name="taskReceiver" value="${employeeIdActive}">
 				<!-- submit != true -->
 				<logic:equal name="isAlreadySubmit" value="true">
-	     			<input type="button" value="Approval" class="btn btn-sm  btn-success" onclick="doTaskApp('<%=Constants.Task.TASK.DOAPPROVAL%>', '${taskId}', '${employeeIdActive}', '${taskReceiver}')"/>
-	    			<logic:notEqual name="taskAssigner" value="${employeeIdActive}">
-		     			<input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOREJECT%>', '${employeeIdActive}', '${taskReceiver}')"/>
-		    		</logic:notEqual>
+	     			<input type="button" value="Approve" class="btn btn-sm  btn-success" onclick="doTaskApp('<%=Constants.Task.TASK.DOAPPROVAL%>', '${taskId}', '${employeeIdActive}', '${taskReceiver}')"/>
+	    			<input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOREJECT%>', '${employeeIdActive}', '${taskReceiver}')"/>
 	    		</logic:equal>
 				<!-- end submit != true -->
 
@@ -93,10 +82,16 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 			<logic:notEqual name="taskAssigner" value="${employeeIdActive}">
 				<!-- submit != true -->
 				<logic:equal name="isAlreadySubmit" value="true">
-	     			a a<input type="button" value="Approval" class="btn btn-sm  btn-success" onclick="doTaskApp('<%=Constants.Task.TASK.DOAPPROVAL%>', '${taskId}', '${employeeIdActive}', '${taskReceiver}')"/>
-	    			<logic:notEqual name="taskAssigner" value="${employeeIdActive}">
-		     			<input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOREJECT%>', '${employeeIdActive}', '${taskReceiver}')"/>
-		    		</logic:notEqual>
+					
+					<!-- projectMemberId != null -->
+					<logic:empty name="projectMemberId">
+						<input type="button" value="Approve" class="btn btn-sm  btn-success" onclick="doTaskApp('<%=Constants.Task.TASK.DOAPPROVAL%>', '${taskId}', '${employeeIdActive}', '${taskReceiver}')"/>
+			     		<input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOREJECT%>', '${employeeIdActive}', '${taskReceiver}')"/>
+					</logic:empty>
+					<!-- end projectMemberId != null -->
+				
+	     			<%-- <input type="button" value="Approve" class="btn btn-sm  btn-success" onclick="doTaskApp('<%=Constants.Task.TASK.DOAPPROVAL%>', '${taskId}', '${employeeIdActive}', '${taskReceiver}')"/>
+		     		<input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOREJECT%>', '${employeeIdActive}', '${taskReceiver}')"/> --%>
 	    		</logic:equal>
 				<!-- end submit != true -->
 				

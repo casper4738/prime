@@ -277,7 +277,7 @@ public class TaskHeadAction extends Action {
 				employeeId);
 		
 		request.setAttribute("listTask", list);
-		request.setAttribute("listSearchColumn", Constants.Search.TASK_SEARCHCOLUMNS);
+		request.setAttribute("listSearchColumn", Constants.Search.TASK_HEADSEARCHCOLUMNS);
 		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 		setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		return mapping.findForward("success");

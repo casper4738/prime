@@ -153,6 +153,26 @@ public interface Constants {
 			}
 		});
 		
+		final Map<String, String> TASK_HEADSEARCHCOLUMNS = Collections.unmodifiableMap(
+			new LinkedHashMap<String, String>() {{
+				put("NAME", "Task Name");
+				put("DESCRIPTION", "Task Description");
+				put("RECEIVER", "Task Receiver");
+				put("STARTDATE", "Start Date");
+				put("ESTIMATEDATE", "Estimate Date");
+			}
+		});
+
+		final Map<String, String> TASK_SUBORDINATESEARCHCOLUMNS = Collections.unmodifiableMap(
+				new LinkedHashMap<String, String>() {{
+					put("NAME", "Task Name");
+					put("DESCRIPTION", "Task Description");
+					put("ASSIGNER", "Task Assigner");
+					put("STARTDATE", "Start Date");
+					put("ESTIMATEDATE", "Estimate Date");
+				}
+				});
+		
 		final Map<String, String> ACTIVITY_SEARCHCOLUMNS = Collections.unmodifiableMap(
 			new LinkedHashMap<String, String>() {{
 				put("NAME", "Activity Name");
