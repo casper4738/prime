@@ -25,18 +25,28 @@
 			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + idAssigner + "&param4=" + projectId , $('#result')); 
 		}
 		
-		function doSetRole(){
+		function isNullCheckedRool(){
+			var tmpForm = document.forms[0];
+			
 			var tempRoleId=""; 
-			for(var i=0; i < document.forms[0].roleId.length; i++) {
-				if(document.forms[0].roleId[i].checked) {
-					tempRoleId+=document.forms[0].roleId[i].value+",";
+			var bool = true;
+			for(var i=0; i < tmpForm.roleId.length; i++) {
+				if(tmpForm.roleId[i].checked) {
+					tempRoleId+=tmpForm.roleId[i].value+",";
+					bool = false;
 			  	}
 			}
 		  	tempRoleId = tempRoleId.substring(0, tempRoleId.length - 1);
-		  	document.forms[0].tempRoleId.value=tempRoleId;
-		  
-		  	var tmpForm = document.forms[0];
-		  	menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		  	tmpForm.tempRoleId.value=tempRoleId;
+		  	
+		  	return bool;
+		}
+		
+		function nullCheked(err_var1, title) {
+			if(isNullCheckedRool()) { 
+				err_var1.html(title+" must be checked minimal one");
+			}
+			
 		}
 		
 		function flyToBack(task, value) {
@@ -49,11 +59,11 @@
 		
 		function validateForm() {
 			var employeeName = checkNull($('#employeeName'), $('#err-employeeName'), "Employee Name");
+			var checkedRole =  nullCheked($('#err-checkedRole'), "Role"); 
 			
-			if(employeeName) {
-			//	alert("error lho");
+			if(employeeName || checkedRole) {
 			} else {
-				doSetRole();
+				dosubmit();
 			}
 			
 		}
@@ -108,6 +118,10 @@
 		                  		  		</logic:iterate>
 		                  		  	</logic:notEmpty>
                 				</td>
+                			</tr>
+                			<tr><td></td>
+                				<td></td>
+                				<td><span id="err-checkedRole" class="error-validator"></span></td>
                 			</tr>
                 			<tr><td colspan="3" align="center">
                 					<html:button property=""  value="Save" styleClass="btn btn-primary" onclick="validateForm()"/>
