@@ -39,7 +39,7 @@ public class ProjectActionAsHead extends Action {
 		request.getSession().setAttribute(Constants.Session.needRedirect, false);
 				
 		
-		Integer tmpEmployeeId = Integer.valueOf(LoginData.getEmployeeData().getEmployeeId());
+		Integer tmpEmployeeId = LoginData.getEmployeeData().getEmployeeId();
 		
 		ProjectFormAsHead 	pForm 				= (ProjectFormAsHead) form;
 		ProjectManager 	tmpProjectManager 	= new ProjectManagerImpl();
@@ -61,7 +61,8 @@ public class ProjectActionAsHead extends Action {
 			//pForm.getProjectBean().setProjectAssigner(101);
 			//pForm.getProjectBean().setProjectAssigner(tmpTaskAssign.getEmployeeId());
 			//pForm.getProjectBean().setProjectReceiver(tmpTaskAssign.getEmployeeId());
-			System.out.println("add as head");
+			System.out.println(LoginData.getEmployeeData().getEmployeeId());
+			System.out.println("add as head = " + tmpEmployeeId);
 			
 			//pForm.setCountUnderLevel(countUnderLevel);
 			pForm.setEmployeeBean(tmpEmployeeManager.getEmployeeById(tmpEmployeeId));

@@ -33,6 +33,8 @@ public interface ProjectManager {
 	
 	public Integer getCountListTaskMember (Integer taskReceiver, Integer projectId) throws SQLException;
 	
+	public Integer getIdProjectAssigner (Integer employeeId, Integer projectId) throws SQLException;
+	
 	public Integer getNewId() throws SQLException;
 	
 	public Integer getNewMemberId() throws SQLException;

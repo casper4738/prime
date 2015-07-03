@@ -231,6 +231,16 @@ public class ProjectManagerImpl implements ProjectManager {
 	
 	
 	@Override
+	public Integer getIdProjectAssigner(Integer employeeId, Integer projectId) throws SQLException {
+		// TODO Auto-generated method stub
+		System.out.println("assigner "+employeeId);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("employeeId", employeeId);
+		map.put("projectId", projectId);
+		return (Integer) mapper.queryForObject("project.getIdProjectAssigner", map);
+	}
+
+	@Override
 	public Double getPercentStatusProject(Integer projectId)
 			throws SQLException {
 		 

@@ -198,6 +198,7 @@
 			<forward name="employeeHead" 	path="/modal/ModalEmployeeHead.jsp">						</forward>
 			<forward name="employeeList" 	path="/modal/ModalEmployeeList.jsp">						</forward>
 			<forward name="employeeTree" 	path="/modal/ModalEmployeeTree.jsp">						</forward>
+			<forward name="employeeProjectMember" 	path="/modal/ModalEmployeeProjectMember.jsp">		</forward>
 			<forward name="activityNote" 	path="/modal/ModalActivityNote.jsp">						</forward>
 			<forward name="taskNote" 		path="/modal/ModalTaskNote.jsp">							</forward>
 			<forward name="changePwd" 	    path="/modal/ModalChangePassword.jsp">						</forward>
