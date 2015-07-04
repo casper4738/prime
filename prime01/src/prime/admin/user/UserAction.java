@@ -56,7 +56,7 @@ public class UserAction extends Action {
 
 			ActiveDirectoryManager tmpADManager = new ActiveDirectoryManager();
 			
-			if (tmpADManager.checkValidUser(userForm.getUserBean().getUserName(), "dedy.suwandi", "Ace2015")) {
+			if (tmpADManager.checkValidUser(userForm.getUserBean().getUserName(), Constants.ActiveDirectory.ADMIN_USERNAME, Constants.ActiveDirectory.ADMIN_PASSWORD)) {
 				userForm.getUserBean().setIsActiveDirectory(true);
 				userForm.getUserBean().setPassword("empty");
 			} else {

@@ -47,7 +47,7 @@
 	               				<td>Sys Level</td>
 	               				<td>:</td>
 	               				<td>
-	               					<html:select name="UserAdminForm" property="userRoleId" styleClass="form-control" styleId="userRoleId">
+	               					<html:select name="UserAdminForm" property="userBean.sysLevel" styleClass="form-control" styleId="userRoleId">
 		              					<html:options collection="listUserRole" property="userRoleId" labelProperty="userRoleName" />
 		              				</html:select>  	
 		               	</td>
