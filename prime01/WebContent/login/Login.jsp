@@ -70,6 +70,8 @@
 		  	  $('#textbox-username').val('');
 		  	  $('#textbox-password').val('');
 			  $('#btn-submit').click(function(event){ 
+				  $('#textbox-username').attr("readonly", true);
+				  $('#textbox-password').attr("readonly", true);
 				  $('#btn-submit').hide();
 	    		  $('#ajax-validating').show();  
 	    		  //Do Login Data checking
@@ -83,6 +85,8 @@
 	    	        	  var param = msg.split('#');
 	    	        	  if(param[0] == "0"){ //0 == False
 	    	        		  //Set Fail Login Warning
+				 			  $('#textbox-username').attr("readonly", false);
+				  			  $('#textbox-password').attr("readonly", false);
 	    	        		  $('#login-fail').html(param[1]);
 	    	        		  $('#login-fail').show();
 	    	        		  $('#btn-submit').show();
