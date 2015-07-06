@@ -130,6 +130,7 @@
 		
 		<action path="/TaskSubordinateUser" name="TaskSubordinateUserForm" type="prime.user.task.TaskSubordinateAction" scope="request">
 			<!-- Task -->
+			<forward name="add" 			path="/user/task/subordinate/TaskAdd.jsp"></forward>
 			<forward name="success"			path="/user/task/subordinate/TaskHome.jsp"></forward>
 			<forward name="submit" 			path="/user/task/subordinate/TaskSubmission.jsp"></forward>
 			<forward name="taskDetail" 		path="/user/task/subordinate/TaskDetail.jsp"></forward>

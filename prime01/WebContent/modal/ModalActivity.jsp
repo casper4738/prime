@@ -5,8 +5,6 @@
 <html>
 <head> 
 	<!-- CSS -->
-	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
-	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
@@ -16,15 +14,10 @@
 	<!-- End CSS -->
 	
 	<!-- JS -->
-	<!-- <script src="resources/prime.js"></script> -->
-	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
     <script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
-	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
-	<script src="resources/dist/js/demo.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$('#table-1').dataTable( {
 			paging    : false,
@@ -148,19 +141,19 @@
 			            
 	            <!-- Paging Number Handler Tag -->
 				<ul class="pagination">
-					<li tabindex="0"><html:link styleClass="paging" href="#" onclick="modalPage(${pageFirst})">First</html:link></li>
-					<li tabindex="1"><html:link styleClass="paging" href="#" onclick="modalPage(${pagePrev})"><<</html:link> </li>
+					<li tabindex="0"><html:link styleClass="paging" href="javascript: void(0)" onclick="modalPage(${pageFirst})">First</html:link></li>
+					<li tabindex="1"><html:link styleClass="paging" href="javascript: void(0)" onclick="modalPage(${pagePrev})"><<</html:link> </li>
 					
 					<logic:iterate id="p" name="listPage">
 						<logic:equal name="p" value="${pageNow}">
-							<li><html:link styleClass="active" href="#">${p}</html:link> </li>
+							<li><html:link styleClass="active" href="javascript: void(0)">${p}</html:link> </li>
 						</logic:equal>
 						<logic:notEqual name="p" value="${pageNow}">
-							<li><html:link styleClass="paging" href="#" onclick="modalPage(${p})">${p}</html:link> </li>
+							<li><html:link styleClass="paging" href="javascript: void(0)" onclick="modalPage(${p})">${p}</html:link> </li>
 						</logic:notEqual>
 					</logic:iterate>
-					<li><html:link styleClass="paging" href="#" onclick="modalPage(${pageNext})" >>></html:link> </li>
-					<li><html:link styleClass="paging" href="#" onclick="modalPage(${pageLast})" >Last</html:link></li>
+					<li><html:link styleClass="paging" href="javascript: void(0)" onclick="modalPage(${pageNext})" >>></html:link> </li>
+					<li><html:link styleClass="paging" href="javascript: void(0)" onclick="modalPage(${pageLast})" >Last</html:link></li>
 					
 					<html:text name="ModalForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
 					<html:button property="" onclick="modalPage(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>

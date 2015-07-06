@@ -75,7 +75,13 @@
 	<div class="row">
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title">Data Manage Tasks</h3></div>
-			<br/><br/>
+			
+			<p><span class="button-add btn btn-app bg-olive" onclick="flyToPage('<%=Constants.Task.GOTOADD%>')">
+                   <i class="fa fa-edit"></i>Add
+                  </span>
+                  <span class="message"><bean:write name="TaskSubordinateUserForm" property="message" /></span>
+            </p>
+            
             <!-- Search Handler Tag -->
 			<div class="show-in-page">
 				Show per page

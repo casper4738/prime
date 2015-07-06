@@ -20,6 +20,8 @@ import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.holiday.HolidayBean;
 import prime.admin.holiday.HolidayManager;
 import prime.admin.holiday.HolidayManagerImpl;
+import prime.admin.setting.GeneralSettingManager;
+import prime.admin.setting.GeneralSettingManagerImpl;
 import prime.constants.Constants;
 import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
@@ -42,8 +44,17 @@ public class TaskHeadAction extends Action {
 		request.getSession().setAttribute(Constants.Session.redirectPage , Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]);
 		request.getSession().setAttribute(Constants.Session.redirectParam, "");
 		
-		int employeeId = LoginData.getUserData().getEmployeeId();
+		GeneralSettingManager tmpManager = new GeneralSettingManagerImpl();
+		
+		
+		int employeeId    = LoginData.getUserData().getEmployeeId();
+		int positionLevel = LoginData.getUserData().getPositionLevel();
 		request.setAttribute("employeeIdActive", employeeId);
+		request.setAttribute("isNeedApproval", (positionLevel <= tmpManager.getGeneralSetting().getMinLevelApproval()) );
+		
+		
+		System.out.println("1. "+positionLevel);
+		System.out.println("2. "+tmpManager.getGeneralSetting().getMinLevelApproval());
 		
 		TaskHeadForm pForm = (TaskHeadForm) form;
 		TaskManager manager = new TaskManagerImpl();
@@ -131,6 +142,7 @@ public class TaskHeadAction extends Action {
 			request.setAttribute("isAlreadySubmit", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.SUBMIT));
 			request.setAttribute("isAlreadyReject", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.REJECT));
 			request.setAttribute("isAlreadyApprove", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.APPROVAL));
+			request.setAttribute("isAlreadyAgree", manager.isCheckStatusDetail(pForm.getTaskId(), Constants.Status.AGGREE));
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("taskDetail");
 		} else if (Constants.Task.ACTIVITY.GOTOADD.equals(pForm.getTask())) {
@@ -251,6 +263,12 @@ public class TaskHeadAction extends Action {
 			}
 			
 			tmpActivityManager.insertDetailBySelectTask(activityBean);
+			manager.insertDetail(pForm.getTaskBean());
+			return mapping.findForward("forward");
+		} else if (Constants.Task.TASK.DOAGREE.equals(pForm.getTask())) {
+			//##.Reject Task
+			pForm.getTaskBean().setTaskStatus(Constants.Status.AGGREE);
+			pForm.getTaskBean().setTaskChangeNote("");
 			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");
 		} 

@@ -17,17 +17,28 @@
 	${param.percentage}
 </logic:equal>
 
+<logic:equal name="status" value='<%=Constants.Status.APPROVAL+""%>'>
+	${param.percentage}
+</logic:equal>
+
 <logic:notEqual name="status" value='<%=Constants.Status.SUBMIT+""%>'>
 	<logic:notEqual name="status" value='<%=Constants.Status.REJECT+""%>'>
 		<logic:notEqual name="status" value='<%=Constants.Status.ABORT+""%>'>
-			<bean:define id="percentage" value="${param.percentage}" toScope="request" />
-			<logic:equal name="percentage" value="0">
-				${percentage}
-			</logic:equal>
-			<logic:notEqual name="percentage" value="0">
-				${percentage - 1}
+			<logic:notEqual name="status" value='<%=Constants.Status.APPROVAL+""%>'>
+
+				<bean:define id="percentage" value="${param.percentage}" toScope="request" />
+				<logic:equal name="percentage" value="0">
+					${percentage}
+				</logic:equal>
+				<logic:notEqual name="percentage" value="0">
+					<logic:equal name="percentage" value="100">
+						${percentage - 1}
+					</logic:equal>
+					<logic:notEqual name="percentage" value="100">
+						${percentage}
+					</logic:notEqual>
+				</logic:notEqual>
 			</logic:notEqual>
-			
 		</logic:notEqual>
 	</logic:notEqual>
 </logic:notEqual>

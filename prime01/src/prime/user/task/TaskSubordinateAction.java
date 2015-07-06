@@ -11,6 +11,7 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.employee.EmployeeBean;
 import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
 import prime.constants.Constants;
@@ -42,7 +43,22 @@ public class TaskSubordinateAction extends Action {
 		ActivityManager tmpActivityManager = new ActivityManagerImpl();
 		
 		
-		if (Constants.Task.TASK.GOTOSUBMIT.equals(pForm.getTask())) {
+		if (Constants.Task.GOTOADD.equals(pForm.getTask())) {
+			//##.Get Data
+			EmployeeBean tmpTaskAssign 	= tmpEmployeeManager.getEmployeeById(employeeId);
+			EmployeeBean tmpTaskReceive = tmpEmployeeManager.getEmployeeById(employeeId);
+
+			System.out.println("cekk : "+employeeId+"|| "+tmpTaskAssign.getEmployeeId());
+
+			//##.Add Data
+			pForm.getTaskBean().setTaskId(manager.getNewId());
+			pForm.getTaskBean().setTaskAssigner(tmpTaskAssign.getEmployeeId());
+			pForm.getTaskBean().setTaskReceiver(tmpTaskReceive.getEmployeeId());
+			pForm.getTaskBean().setTaskAssignerName(tmpTaskAssign.getEmployeeName());
+			pForm.getTaskBean().setTaskReceiverName(tmpTaskReceive.getEmployeeName());
+			
+			return mapping.findForward("add");
+		} if (Constants.Task.TASK.GOTOSUBMIT.equals(pForm.getTask())) {
 			//##.Submit Data
 			pForm.setTaskBean(manager.getTaskById(pForm.getTaskId()));
 			return mapping.findForward("submit");
@@ -61,6 +77,7 @@ public class TaskSubordinateAction extends Action {
 			request.setAttribute("isAlreadySubmit", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.SUBMIT));
 			request.setAttribute("isAlreadyReject", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.REJECT));
 			request.setAttribute("isAlreadyApprove", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.APPROVAL));
+			request.setAttribute("isAlreadyAgree", manager.isCheckStatusDetail(pForm.getTaskId(), Constants.Status.AGGREE));
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("taskDetail");
 		} else if (Constants.Task.ACTIVITY.GOTOADD.equals(pForm.getTask())) {
@@ -88,6 +105,18 @@ public class TaskSubordinateAction extends Action {
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("changeStatusActivity");
+		} else if (Constants.Task.DOADD.equals(pForm.getTask())) {
+			//##. Insert Data
+			pForm.getTaskBean().setTaskId(manager.getNewId());
+			pForm.getTaskBean().setTaskStatus(Constants.Status.CREATE);
+			pForm.getTaskBean().setTaskChangeNote("");
+			pForm.getTaskBean().setProjectMemberId(0);
+			pForm.getTaskBean().setUpdateBy(LoginData.getUserData().getUserName());
+			
+			manager.insert(pForm.getTaskBean());
+			manager.insertDetail(pForm.getTaskBean());
+			
+			return mapping.findForward("forward");
 		} else if (Constants.Task.TASK.DOSUBMIT.equals(pForm.getTask())) {
 			//##.Submit Task
 			pForm.getTaskBean().setTaskStatus(Constants.Status.SUBMIT);

@@ -42,7 +42,7 @@ function dosubmitx() {
 	<section class="content">
 	<div class="row">
 		<div class="col-xs-12"><div class="box">
-			<div class="box-header"><h3 class="box-title-center">Task Submission Form x</h3></div>
+			<div class="box-header"><h3 class="box-title-center">Task Submission Form</h3></div>
 			<div class="box-body">
                 	<html:form action="/TaskHeadUser">
                 		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.TASK.DOSUBMIT%>"/>

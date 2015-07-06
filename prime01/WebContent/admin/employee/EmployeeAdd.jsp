@@ -224,6 +224,7 @@
 			var tmpTable ="employeeHead";
 			
 			//##1.Accessing Prime Method For Modal Showing
+			alert("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeAdd&param4=0");
 			modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + tmpDataPosition+ "&param3=employeeAdd&param4=0", $('#result'));
 		}
     </script>

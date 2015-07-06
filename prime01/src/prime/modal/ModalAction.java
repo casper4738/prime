@@ -145,7 +145,7 @@ public class ModalAction extends Action {
                 			tmpData.add(new ArrayList<String>());
                 			tmpData.get(tmpI).add(list.get(tmpI).getEmployeeId().toString());
                 			tmpData.get(tmpI).add(list.get(tmpI).getEmployeeName());
-                			tmpData.get(tmpI).add((list.get(tmpI).getGender() == 0) ? "Man" : "Woman");
+                			tmpData.get(tmpI).add((list.get(tmpI).getGender() == 0) ? "Male" : "Female");
                 			tmpData.get(tmpI).add(list.get(tmpI).getEmail());
                 			tmpData.get(tmpI).add(list.get(tmpI).getDivisionName());
                 			tmpData.get(tmpI).add(list.get(tmpI).getPositionName());

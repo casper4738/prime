@@ -220,14 +220,15 @@ function modalSubmitRefreshPageWithoutReturn(retValue, retForm, refreshedValue, 
 
 function modalSubmitReturnValue(retValue,retForm){
 	//##0.Set Return Value to Targetted Object
+	var res = [];
 	if(modalTargettedObject != null){
 		modalTargettedObject.val(retValue);
 		if(retForm=='employeeHead'){
-			var res = retValue.split(',');
+			res = retValue.split(',');
 			document.getElementById('headName').value=res[1];
 			document.forms[0].managerId.value=res[0].replace('[','');
 			document.getElementById('divisionName').value=res[4];
-		
+				
 			var temp = document.getElementById('divisionName').value;
 			temp = temp.trim();
 			if(temp == "null"){
@@ -239,21 +240,22 @@ function modalSubmitReturnValue(retValue,retForm){
 				document.getElementById('chooseDivision').style.display="none";
 			}
 		} else if(retForm=='employeeResign'){
-			var res = retValue.split(',');
+			res = retValue.split(',');
 			document.getElementById('substituteHead').value=res[1];
 			document.forms[0].substituteHeadId.value=res[0].replace('[','');
 		} else if(retForm=='employeeUser'){
-			var res = retValue.split(',');
+			res = retValue.split(',');
 			document.getElementById('employeeName').value=res[0].replace('[','') + " -" + res[1];
 			document.forms[0].employeeId.value=res[0].replace('[','');
 		} else if(retForm=='project'){
-			var res = retValue.split(',');
+			res = retValue.split(',');
 			document.getElementById('employeeName').value=res[1];
 			document.forms[0].employeeId.value=res[0].replace('[','');
 		}
 	}
 	
 	//##1.Hide Modal
+	alert("TRALALLAA");
     $("[data-dismiss=modal]").trigger({ type: "click" });
 }
 

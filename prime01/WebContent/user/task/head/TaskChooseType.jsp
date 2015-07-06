@@ -125,7 +125,7 @@
 				                		<logic:equal name="iter" property="gender" value="1">
 				                			Female
 				                		</logic:equal>
-			                		<bean:write name="iter" property="gender"/> </td>
+			                		</td>
 			                		<td><bean:write name="iter" property="address"/> </td>
 			                		<td><bean:write name="iter" property="email"/> </td>
 			                		<td><bean:write name="iter" property="divisionName"/> </td>

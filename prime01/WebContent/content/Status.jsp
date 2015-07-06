@@ -18,7 +18,7 @@
 </logic:equal>
 
 <logic:equal name="status" value='<%=Constants.Status.SUBMIT+""%>'>
-	<span class="label label-info">Submit</span>
+	<span class="label label-info">Submit Approval</span>
 </logic:equal>
 
 <logic:equal name="status" value='<%=Constants.Status.FINISH+""%>'>
@@ -36,4 +36,9 @@
 <logic:equal name="status" value='<%=Constants.Status.APPROVAL+""%>'>
 	<span class="label label-success">Approved</span>
 </logic:equal>
+
+<logic:equal name="status" value='<%=Constants.Status.AGGREE+""%>'>
+	<span class="label label-success">Start Approval</span>
+</logic:equal>
+		    
 		    

@@ -17,6 +17,11 @@
 	<html:hidden name="TaskSubordinateUserForm" property="taskId"/>
 </html:form>
 
+
+<logic:equal name="TaskSubordinateUserForm" property="task" value="<%=Constants.Task.DOADD%>">
+	<script>flyToForward('success', '<bean:message key="label.message.insert"/>')</script>
+</logic:equal>
+
 <logic:equal name="TaskSubordinateUserForm" property="task" value="<%=Constants.Task.TASK.DOSUBMIT%>">
 	<script>flyToForward('success', '<bean:message key="label.message.update"/>')</script>
 </logic:equal>

@@ -14,7 +14,6 @@
 	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 
 	<!-- JS -->
-	<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script type="text/javascript">
 		$(document).ready(function () {

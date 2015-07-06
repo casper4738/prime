@@ -86,16 +86,16 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Add New Task</h3></div>
 			<div class="box-body">
-                	<html:form action="/TaskHeadUser">
-                		<html:hidden name="TaskHeadUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
-                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskAssigner" styleId="taskAssignerId"/>
-                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskReceiver" styleId="taskReceiverId"/>
-                		<html:hidden name="TaskHeadUserForm" property="taskBean.taskId" styleId="taskId"/>
+                	<html:form action="/TaskSubordinateUser">
+                		<html:hidden name="TaskSubordinateUserForm" property="task" value="<%=Constants.Task.DOADD%>"/>
+                		<html:hidden name="TaskSubordinateUserForm" property="taskBean.taskAssigner" styleId="taskAssignerId"/>
+                		<html:hidden name="TaskSubordinateUserForm" property="taskBean.taskReceiver" styleId="taskReceiverId"/>
+                		<html:hidden name="TaskSubordinateUserForm" property="taskBean.taskId" styleId="taskId"/>
                 		<table class="form-input" align="center" style="width:60%">
                 			<tr>
                 				<td width="150px">Task Name</td>
                 				<td>:</td>
-                				<td><html:text name="TaskHeadUserForm" property="taskBean.taskName" styleClass="form-control" styleId="taskName"/></td>
+                				<td><html:text name="TaskSubordinateUserForm" property="taskBean.taskName" styleClass="form-control" styleId="taskName"/></td>
                 			</tr>
                 			<tr><td></td>
                 				<td></td>
@@ -104,7 +104,7 @@
                 			<tr>
                 				<td>Task Assigner</td>
                 				<td>:</td>
-                				<td><html:text name="TaskHeadUserForm"  property="taskBean.taskAssignerName" styleClass="form-control" styleId="taskAssigner" disabled="true"/></td>
+                				<td><html:text name="TaskSubordinateUserForm"  property="taskBean.taskAssignerName" styleClass="form-control" styleId="taskAssigner" disabled="true"/></td>
                 			</tr>
                 			<tr><td></td>
                 				<td></td>
@@ -113,7 +113,7 @@
                				<tr>
                 				<td>Task Receiver</td>
                 				<td>:</td>
-                				<td><html:text name="TaskHeadUserForm" property="taskBean.taskReceiverName" styleClass="form-control" styleId="taskReceiver" disabled="true" /></td>
+                				<td><html:text name="TaskSubordinateUserForm" property="taskBean.taskReceiverName" styleClass="form-control" styleId="taskReceiver" disabled="true" /></td>
                 			</tr>
                 			<tr><td></td>
                 				<td></td>
@@ -123,7 +123,7 @@
                 				<td>Start Date</td>
                 				<td>:</td>
                 				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                				  	<html:text name="TaskHeadUserForm" property="taskBean.taskStartDate" styleClass="form-control pull-right" styleId="startDate" onchange="checkDays()"/>
+                				  	<html:text name="TaskSubordinateUserForm" property="taskBean.taskStartDate" styleClass="form-control pull-right" styleId="startDate" onchange="checkDays()"/>
                 				  	</div>
                 				</td>
                 			</tr>
@@ -135,7 +135,7 @@
                 				<td>Estimate Date</td>
                 				<td>:</td>
                 				<td><div class="input-group"><div class="input-group-addon"><i class="fa fa-calendar"></i></div>
-                				  	<html:text name="TaskHeadUserForm" property="taskBean.taskEstimateDate" styleClass="form-control pull-right" styleId="estimateDate" onchange="checkDays()"/>
+                				  	<html:text name="TaskSubordinateUserForm" property="taskBean.taskEstimateDate" styleClass="form-control pull-right" styleId="estimateDate" onchange="checkDays()"/>
                 				  	</div>
                 				</td>
                 			</tr>
@@ -151,7 +151,7 @@
                 			<tr>
                 				<td>Description</td>
                 				<td>:</td>
-                				<td><html:textarea name="TaskHeadUserForm" property="taskBean.taskDescription" styleClass="form-control" rows="5"/></td>
+                				<td><html:textarea name="TaskSubordinateUserForm" property="taskBean.taskDescription" styleClass="form-control" rows="5"/></td>
                 			</tr>
                 			<tr>
                 				<td colspan="3" align="center">

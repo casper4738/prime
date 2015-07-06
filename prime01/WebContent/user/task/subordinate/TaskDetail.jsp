@@ -107,7 +107,24 @@
 				<td>Actual Start End : <bean:write name="TaskSubordinateUserForm" property="taskBean.actualEnd" format="dd MMMM yyyy"/></td>
 			</tr>
 			<tr><td>Main Days : <bean:write name="TaskSubordinateUserForm" property="taskBean.mainDays" /></td>
-				<td>Progress Percentage : <bean:write name="TaskSubordinateUserForm" property="taskBean.percentage"/></td>
+				<td>Progress Percentage : 
+				<logic:greaterThan name="TaskSubordinateUserForm" property="taskBean.percentage" value="50">
+          	    		<span class="badge bg-green">
+           	    		<jsp:include page="/content/Percentage.jsp">
+           	    			<jsp:param name="status" value="${TaskSubordinateUserForm.taskBean.taskLastStatus}" />
+           	    			<jsp:param name="percentage" value="${TaskSubordinateUserForm.taskBean.percentage}" />
+           	    		</jsp:include>
+          	    		</span>
+           		</logic:greaterThan>
+           		<logic:lessEqual name="TaskSubordinateUserForm" property="taskBean.percentage" value="50">
+          	    		<span class="badge bg-red" style="font-size: 8pt">
+           	    		<jsp:include page="/content/Percentage.jsp">
+           	    			<jsp:param name="status" value="${TaskSubordinateUserForm.taskBean.taskLastStatus}" />
+           	    			<jsp:param name="percentage" value="${TaskSubordinateUserForm.taskBean.percentage}" />
+           	    		</jsp:include>
+          	    		</span>
+           		</logic:lessEqual>
+				</td>
 			</tr>
 			<tr><td colspan="2">Description : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskDescription" /> </td></tr>
 			</table>

@@ -70,6 +70,7 @@ public interface Constants {
 			final String DOAPPROVAL		= "t105";
 			final String DOREJECT		= "t106";
 			final String DOABORT		= "t107";
+			final String DOAGREE		= "t108";
 		}
 		
 		interface ACTIVITY {
@@ -287,6 +288,7 @@ public interface Constants {
 		final int ABORT    = 5;
 		final int REJECT   = 6;
 		final int APPROVAL = 7;
+		final int AGGREE   = 8;
 	}
 	
 	//---2.Standard Day Conversion
