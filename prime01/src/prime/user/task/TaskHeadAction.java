@@ -48,13 +48,17 @@ public class TaskHeadAction extends Action {
 		
 		
 		int employeeId    = LoginData.getUserData().getEmployeeId();
-		int positionLevel = LoginData.getUserData().getPositionLevel();
+		int positionLevel = LoginData.getEmployeeData().getPositionLevel();
+		
+		boolean bool = (positionLevel <= tmpManager.getGeneralSetting().getMinLevelApproval()) ? false : true;
+		
 		request.setAttribute("employeeIdActive", employeeId);
-		request.setAttribute("isNeedApproval", (positionLevel <= tmpManager.getGeneralSetting().getMinLevelApproval()) );
+		request.setAttribute("isNeedApproval",  bool);
 		
 		
 		System.out.println("1. "+positionLevel);
 		System.out.println("2. "+tmpManager.getGeneralSetting().getMinLevelApproval());
+		System.out.println("3. "+ bool );
 		
 		TaskHeadForm pForm = (TaskHeadForm) form;
 		TaskManager manager = new TaskManagerImpl();

@@ -91,7 +91,7 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Data Task</h3></div>
 			<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-			<tr><td>Task Name : ${TaskSubordinateUserForm.taskBean.taskId} <bean:write name="TaskSubordinateUserForm" property="taskBean.taskName"/> </td>
+			<tr><td>Task Name : ${TaskSubordinateUserForm.taskBean.taskId} -  <bean:write name="TaskSubordinateUserForm" property="taskBean.taskName"/> </td>
 				<td>Task Assigner : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskAssignerName" /> </td>
 			</tr>
 			<tr><td>Start Date : <bean:write name="TaskSubordinateUserForm" property="taskBean.taskStartDate" format="dd MMMM yyyy"/> </td>

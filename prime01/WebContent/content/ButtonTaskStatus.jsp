@@ -11,11 +11,11 @@
 <bean:define id="taskReceiver" value="${param.taskReceiver}" toScope="request" />
 <bean:define id="projectMemberId" value="${param.projectMemberId}" toScope="request" />
 
-<center>${employeeIdActive} |${taskAssigner}  | ${taskReceiver} | ${taskId} | ${projectMemberId } - 
+<%-- <center>${employeeIdActive} |${taskAssigner}  | ${taskReceiver} | ${taskId} | ${projectMemberId } - 
 <br/>
 ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove} | ${isAlreadyAgree} |  ${isNeedApproval} | ${isAlreadyAbort }
 </center>
-<br/>
+<br/> --%>
 
 <div class="form-action"><table align="center">
    <tr> <td style="padding:5px;">
@@ -160,7 +160,6 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 							request.setAttribute("headId", e.getManagerId());	
 						%>
 						
-						|${headId }|
 						<logic:equal name="headId" value="${employeeIdActive}">
 							
 							<!-- submit == true -->
