@@ -1,3 +1,5 @@
+<%@page import="prime.admin.setting.GeneralSettingManagerImpl"%>
+<%@page import="prime.admin.setting.GeneralSettingManager"%>
 <%@page import="prime.admin.employee.EmployeeBean"%>
 <%@page import="prime.admin.employee.EmployeeManagerImpl"%>
 <%@page import="prime.admin.employee.EmployeeManager"%>
@@ -81,6 +83,10 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 							    	</logic:equal>
 							    	<!-- end of aggree == true -->
 								</logic:equal>
+								<logic:notEqual name="isNeedApproval" value="true">
+									<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
+				    				<input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOABORT%>', '${employeeIdActive}', '${taskReceiver}')"/>
+								</logic:notEqual>
 								<logic:equal name="taskAssigner" value="${employeeIdActive}">
 									<!-- aggree == true -->
 									<logic:equal name="isAlreadyAgree" value="true">
@@ -89,7 +95,7 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 										</logic:notEqual>
 							    	</logic:equal>
 									<!-- end of aggree == true -->
-									
+									<%-- 
 									<%
 									EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
 									EmployeeBean e = tmpEmployeeManager.getEmployeeById(Integer.parseInt(request.getAttribute("employeeIdActive").toString()));
@@ -99,7 +105,7 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 										<input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOABORT%>', '${employeeIdActive}', '${taskReceiver}')"/>
 					     			<% } else { %>
 					     			<% } %>
-									
+									 --%>
 									
 								</logic:equal>
 								
@@ -158,6 +164,10 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 							EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();
 							EmployeeBean e = tmpEmployeeManager.getEmployeeById(Integer.parseInt(request.getAttribute("taskReceiver").toString()));
 							request.setAttribute("headId", e.getManagerId());	
+							
+							GeneralSettingManager tmpManager = new GeneralSettingManagerImpl();
+							boolean bool = (e.getPositionLevel() <= tmpManager.getGeneralSetting().getMinLevelApproval()) ? false : true;
+							request.setAttribute("isNeedApprovalx",bool);	
 						%>
 						
 						<logic:equal name="headId" value="${employeeIdActive}">
@@ -170,11 +180,14 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 				    		</logic:equal>
 							<!-- end submit == true -->
 					
-		   					<!-- aggree != true -->
-							<logic:notEqual name="isAlreadyAgree" value="true">
-								<input type="button" value="Aggree" class="btn btn-sm  btn-success" onclick="flyToPage('<%=Constants.Task.TASK.DOAGREE%>')"/>
-							</logic:notEqual>
-							<!-- end of aggree != true -->
+							<logic:equal name="isNeedApprovalx" value="true">
+			   					<!-- aggree != true -->
+								<logic:notEqual name="isAlreadyAgree" value="true">
+									<input type="button" value="Aggree" class="btn btn-sm  btn-success" onclick="flyToPage('<%=Constants.Task.TASK.DOAGREE%>')"/>
+								</logic:notEqual>
+								<!-- end of aggree != true -->
+							</logic:equal>
+							
 						</logic:equal>
 					</logic:equal>
 					
