@@ -41,8 +41,10 @@ public class TaskSubordinateAction extends Action {
 		
 		int employeeId = LoginData.getUserData().getEmployeeId();
 		int positionLevel = LoginData.getUserData().getPositionLevel();
+		boolean bool = (positionLevel <= tmpManager.getGeneralSetting().getMinLevelApproval()) ? false : true;
+		
 		request.setAttribute("employeeIdActive", employeeId);
-		request.setAttribute("isNeedApproval", (positionLevel <= tmpManager.getGeneralSetting().getMinLevelApproval()) );
+		request.setAttribute("isNeedApproval", bool );
 		
 		TaskSubordinateForm pForm = (TaskSubordinateForm) form;
 		TaskManager manager = new TaskManagerImpl();
