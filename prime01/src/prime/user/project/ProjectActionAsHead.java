@@ -466,20 +466,20 @@ public class ProjectActionAsHead extends Action {
 		ArrayList<Object> tmpTaskProgress;
 		String tmpLastName = "";
 		
-		System.out.println("LLALALAA");
-		System.out.println("Date = " + pForm.getProgressStartDate());
 		tmpFilterStartDate = PrimeUtil.parseDateStringToDateOnly(pForm.getProgressStartDate());
 		tmpFilterEndDate   = PrimeUtil.parseDateStringToDateOnly(pForm.getProgressEndDate());
 		List tmpCalendarList = PrimeUtil.getListStringDate(tmpFilterStartDate, tmpFilterEndDate);
 		
 		//---.Project Progress on Ranged Date
 		//---a.Do Looping
-		//   I'm not considering any perfomance turnover, with this code
+		//     Not considering any perfomance turnover, with this code [Will think over about it later]
 		tmpData = new ArrayList<ArrayList<Object>>();
 		
 		tmpCurnMember = manager.getListEmployeeIDInProject(pForm.getProjectId());
 		for(tmpI = 0 ; tmpI < tmpCurnMember.size() ; tmpI++){
 			tmpPerMemberProgressedTask = manager.getProjectTaskListPerMember(pForm.getProjectId(), (Integer)tmpCurnMember.get(tmpI));	
+			tmpLastName = "";
+			
 			for(tmpJ = 0 ; tmpJ < tmpPerMemberProgressedTask.size() ; tmpJ++){
 				tmpActualStartDate = ((TaskBean)tmpPerMemberProgressedTask.get(tmpJ)).getActualStart();
 				tmpActualEndDate   = ((TaskBean)tmpPerMemberProgressedTask.get(tmpJ)).getActualEnd();
@@ -501,10 +501,14 @@ public class ProjectActionAsHead extends Action {
 					tmpAnyProgress = false;
 					do {
 						tmpCurnDate = PrimeUtil.parseDateStringToDateOnly((String)tmpCalendarList.get(tmpK - 3));
-						tmpLastStatus = (tmpActualStartDate.before(tmpCurnDate) && tmpActualEndDate.after(tmpCurnDate)); 
-						if(!tmpLastStatus){
-							if(PrimeUtil.getCompareTo(tmpActualEndDate.getTime(), tmpCurnDate.getTime()) == 0){
-								tmpLastStatus = true;
+						tmpLastStatus = (tmpActualStartDate.before(tmpCurnDate)); 
+						
+						if(tmpActualEndDate != null){
+							tmpLastStatus = (tmpLastStatus && tmpActualEndDate.after(tmpCurnDate));
+							if(!tmpLastStatus){
+								if(PrimeUtil.getCompareTo(tmpActualEndDate.getTime(), tmpCurnDate.getTime()) == 0){
+									tmpLastStatus = true;
+								}
 							}
 						}
 						tmpAnyProgress = (tmpLastStatus) ? true : tmpAnyProgress;

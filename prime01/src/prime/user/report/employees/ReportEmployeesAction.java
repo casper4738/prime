@@ -123,7 +123,7 @@ public class ReportEmployeesAction extends Action {
 		
 		// ##1.Attribute for Table Show
 		request.setAttribute("listReportEmployees", list);
-		request.setAttribute("listSearchColumnEmployeeTask", Constants.Search.TASK_SEARCHCOLUMNS);
+		//request.setAttribute("listSearchColumnEmployeeTask", Constants.Search.TASK_SEARCHCOLUMNS);
 		request.setAttribute("listSearchColumn",
 				Constants.Search.REPORTEMPLOYEE_SEARCHCOLUMNS);
 		request.setAttribute("listShowEntries", Constants.PAGINGROWPAGE);

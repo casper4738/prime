@@ -1,4 +1,6 @@
 package prime.login;
+import java.util.ArrayList;
+
 import prime.admin.employee.EmployeeBean;
 import prime.admin.user.UserBean;
 
@@ -11,6 +13,7 @@ public class LoginData {
 	 */
 	private static UserBean dataUser = null;
 	private static EmployeeBean dataEmployee = null;
+	private static ArrayList<Integer> dataMenuLists = null;
 	
 	/**
 	 * Setter Method
@@ -20,6 +23,9 @@ public class LoginData {
 	}
 	public static void setEmployeeBean(EmployeeBean bean){
 		dataEmployee = bean;
+	}
+	public static void setMenuLists(ArrayList<Integer> bean){
+		dataMenuLists = bean;
 	}
 	
 	/**
@@ -35,10 +41,14 @@ public class LoginData {
 	public static EmployeeBean getEmployeeData(){
 		return dataEmployee;
 	}
+	public static ArrayList<Integer> getMenuLists(){
+		return dataMenuLists;
+	}
 	
 	public static void clear(){
 		dataUser = null;
 		dataEmployee = null;
+		dataMenuLists = null;
 	}
 	
 }

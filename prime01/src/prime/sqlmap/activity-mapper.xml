@@ -237,7 +237,7 @@
 		ON AC.ACTIVITY_ID = AD.ACTIVITY_ID 
 		WHERE TASK_RECEIVER=#receiverId# AND AC.ACTIVITY_ID NOT IN (SELECT ACTIVITY_ID FROM EMPLOYEE_TO_DO_LISTS)
         AND ACTIVITY_STATUS != '4' AND ACTIVITY_STATUS != '5' <!-- 4 adalah status Finish ATAU 5 ABORT -->
-	    <dynamic prepend="WHERE">
+	    <dynamic prepend="AND">
 	        <isNotNull property="columnSearch">
 		      	<isEqual property="columnSearch" compareValue="NAME">
 			          UPPER(ACTIVITY_NAME) LIKE UPPER('%'||#value#||'%')

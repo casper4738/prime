@@ -28,28 +28,20 @@ public class MenuAction extends Action {
 	@Override
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//##0.Temp Variable
-		//HttpSession tmpSession = request.getSession();
-		//LoginBean tmpUserData = (LoginBean)tmpSession.getAttribute(Constants.Session.USERDATA);
 		LinkedHashMap<String, String> tmpObject = new LinkedHashMap<String, String>();
-		ProjectManager tmpProjectManager=new ProjectManagerImpl();
-		UserMenuManager tmpUserMenuManager = new UserMenuManagerImpl();
 		String[] tmpMenu = {"Menu","Dashboard Admin","Manage User","Manage Employee","Manage Division","Manage Position",
 							"Manage Role","Manage Holiday","View User Menu","Manage User Role","Manage Notif Template",
 							"View Log","General Settings","Dashboard User","Manage Task as Head","Manage Task as Subordinate",
-							"Manage Project As Head","Manage Project","View Report Employees","View Report Project",
+							"Manage Project As Head","Manage Project As Member","View Report Employees","View Report Project",
 							"View Notification"};
 		
-		List<UserMenuBean> listUserMenu = tmpUserMenuManager.getListUserMenuByUserRoleId(LoginData.getUserData().getSysLevel());
-		
-		for (UserMenuBean e : listUserMenu) {
-			if(e.getIsCheck()){
-				if(request.getSession().getAttribute(Constants.Session.lastPage) == null){
-					request.getSession().setAttribute(Constants.Session.lastPage, Constants.PAGES_LIST[e.getUserMenuId()]);
-				}
-				tmpObject.put(Constants.PAGES_LIST[e.getUserMenuId()], tmpMenu[e.getUserMenuId()]);
-			}
+		for(int tmpI = 0 ; tmpI < LoginData.getMenuLists().size() ; tmpI++){
+			tmpObject.put(Constants.PAGES_LIST[LoginData.getMenuLists().get(tmpI)], tmpMenu[LoginData.getMenuLists().get(tmpI)]);
 		}
 
+		if(request.getSession().getAttribute(Constants.Session.lastPage) == null){
+			request.getSession().setAttribute(Constants.Session.lastPage, Constants.PAGES_LIST[LoginData.getMenuLists().get(0)]);
+		}
 		
 		//##3.Prepare Request Attribute For JSP Readings
 		request.setAttribute("listPages", tmpObject);

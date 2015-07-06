@@ -110,7 +110,7 @@
 		UPDATE EMPLOYEES SET
 		HEAD_ID=#newHead#,
 		UPDATED_BY = #updateBy#
-		WHERE HEAD_ID=#forCondition#
+		WHERE HEAD_ID=#forCondition# AND EMPLOYEE_ID NOT IN (SELECT EMPLOYEE_ID FROM RESIGN_EMPLOYEES)
 	</update>
 	
 	<select id="getNewId" resultClass="java.lang.Integer">
@@ -423,7 +423,7 @@
 	<!-- UPDATE TREE ID WHEN EMPLOYEE RESIGN OR CHANGE DIVISION -->
 	<update id="updateTreeId" parameterClass="java.util.Map">
 		UPDATE EMPLOYEES SET TREE_ID = REPLACE (TREE_ID,SUBSTR (TREE_ID,0,$length$),#newTreeId#)
-		WHERE TREE_ID LIKE #oldTreeId#||'%' AND EMPLOYEE_ID !=$employeeId$ 
+		WHERE TREE_ID LIKE #oldTreeId#||'%' AND EMPLOYEE_ID !=$employeeId$ AND EMPLOYEE_ID NOT IN (SELECT EMPLOYEE_ID FROM RESIGN_EMPLOYEES)
 	</update>
 	
 	<!-- SELECT COUNT NATIONAL HOLIDAY BETWEEN DAY OFF -->

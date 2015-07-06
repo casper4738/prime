@@ -68,6 +68,8 @@
 							   (tmpDate.getMonth() + 1) + "/" + 
 							   tmpDate.getFullYear();
 			
+			
+			
 	  		//Do Login Data checking
 	  		$('#table-wrapper').html(PAGE_LOADING);
 	  		$('#table-wrapper').load("<%=Constants.PAGES_LIST[Constants.Page.USER_PROJECT]%>", 
@@ -89,7 +91,7 @@
 					  										 		 	columnDefs: [
 							  										 		            { width: '1%' , targets: 0 },
 							  										 		            { width: '8%' , targets: 1 },
-							  										 		            { width: '15%', targets: 2 },
+							  										 		            { width: '20%', targets: 2 },
 							  										 		            { width: '3%' , targets: 3 }
 							  										 		        ],
 					  													language  		: {"emptyTable":  "<center><%=Constants.Response.TABLE_HEAD_EMPTY %></center>"}

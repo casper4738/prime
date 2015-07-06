@@ -497,13 +497,12 @@ public class ProjectAction extends Action {
 		System.out.println("Member = " + tmpCurnMember.size() + " _ "  + pForm.getProjectId());
 		for(tmpI = 0 ; tmpI < tmpCurnMember.size() ; tmpI++){
 			tmpPerMemberProgressedTask = manager.getProjectTaskListPerMember(pForm.getProjectId(), (Integer)tmpCurnMember.get(tmpI));	
-			
+			tmpLastName = "";
 
-			System.out.println("Member Task = " + tmpPerMemberProgressedTask.size());
+			System.out.println("Member Task = " + (Integer)tmpCurnMember.get(tmpI) + " _ " + tmpPerMemberProgressedTask.size());
 			for(tmpJ = 0 ; tmpJ < tmpPerMemberProgressedTask.size() ; tmpJ++){
 				tmpActualStartDate = ((TaskBean)tmpPerMemberProgressedTask.get(tmpJ)).getActualStart();
 				tmpActualEndDate   = ((TaskBean)tmpPerMemberProgressedTask.get(tmpJ)).getActualEnd();
-				
 				tmpTaskProgress = new ArrayList<>();
 				if(tmpActualStartDate != null){
 					tmpAnyProgress = false;

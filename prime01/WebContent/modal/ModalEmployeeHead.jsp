@@ -46,7 +46,6 @@
 			} else {
 				tmpForm.goToPage.value = page;			
 			}
-			alert(serialize(tmpForm));
 			modalLoadHandler(serialize(tmpForm));
 		}
 		
