@@ -14,6 +14,8 @@ import org.apache.struts.action.ActionMapping;
 import prime.admin.employee.EmployeeBean;
 import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
+import prime.admin.setting.GeneralSettingManager;
+import prime.admin.setting.GeneralSettingManagerImpl;
 import prime.constants.Constants;
 import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
@@ -34,8 +36,13 @@ public class TaskSubordinateAction extends Action {
 		request.getSession().setAttribute(Constants.Session.redirectPage , Constants.PAGES_LIST[Constants.Page.USER_TASK_SUBORDINATE]);
 		request.getSession().setAttribute(Constants.Session.redirectParam, "");
 				
+
+		GeneralSettingManager tmpManager = new GeneralSettingManagerImpl();
+		
 		int employeeId = LoginData.getUserData().getEmployeeId();
+		int positionLevel = LoginData.getUserData().getPositionLevel();
 		request.setAttribute("employeeIdActive", employeeId);
+		request.setAttribute("isNeedApproval", (positionLevel <= tmpManager.getGeneralSetting().getMinLevelApproval()) );
 		
 		TaskSubordinateForm pForm = (TaskSubordinateForm) form;
 		TaskManager manager = new TaskManagerImpl();
@@ -77,6 +84,7 @@ public class TaskSubordinateAction extends Action {
 			request.setAttribute("isAlreadySubmit", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.SUBMIT));
 			request.setAttribute("isAlreadyReject", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.REJECT));
 			request.setAttribute("isAlreadyApprove", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.APPROVAL));
+			request.setAttribute("isAlreadyAbort", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.ABORT));
 			request.setAttribute("isAlreadyAgree", manager.isCheckStatusDetail(pForm.getTaskId(), Constants.Status.AGGREE));
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("taskDetail");

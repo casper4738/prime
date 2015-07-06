@@ -117,8 +117,11 @@
         	ACT.TASK_ID = #taskId#
         <dynamic prepend="AND">
             <isNotNull property="columnSearch">
-                   <isEqual property="columnSearch" compareValue="NAME">
+                <isEqual property="columnSearch" compareValue="NAME">
                       UPPER(ACTIVITY_NAME) LIKE UPPER('%'||#value#||'%')
+                </isEqual> 
+                <isEqual property="columnSearch" compareValue="DESCRIPTION">
+                      UPPER(ACT.ACTIVITY_DESCRIPTION) LIKE UPPER('%'||#value#||'%')
                 </isEqual> 
             </isNotNull>
         </dynamic>

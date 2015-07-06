@@ -142,6 +142,7 @@ public class TaskHeadAction extends Action {
 			request.setAttribute("isAlreadySubmit", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.SUBMIT));
 			request.setAttribute("isAlreadyReject", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.REJECT));
 			request.setAttribute("isAlreadyApprove", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.APPROVAL));
+			request.setAttribute("isAlreadyAbort", manager.isCheckStatus(pForm.getTaskId(), Constants.Status.ABORT));
 			request.setAttribute("isAlreadyAgree", manager.isCheckStatusDetail(pForm.getTaskId(), Constants.Status.AGGREE));
 			setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 			return mapping.findForward("taskDetail");
@@ -251,6 +252,7 @@ public class TaskHeadAction extends Action {
 			activityBean.setActivityChangeNote("Activity aborted by role in task abort");
 			activityBean.setTaskStatus(Constants.Status.ABORT);
 			activityBean.setTaskId(pForm.getTaskBean().getTaskId());
+			tmpActivityManager.insertDetailBySelectTask(activityBean);
 
 			try {
 				manager.updateActualEnd(pForm.getTaskBean().getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
@@ -261,8 +263,8 @@ public class TaskHeadAction extends Action {
 				System.out.println("Actual End - Task Id . "+pForm.getTaskId());
 				System.out.println("Terjadi kesalahan : "+e.getMessage());					
 			}
-			
-			tmpActivityManager.insertDetailBySelectTask(activityBean);
+			pForm.getTaskBean().setTaskChangeNote("");
+			pForm.getTaskBean().setTaskStatus(Constants.Status.ABORT);
 			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");
 		} else if (Constants.Task.TASK.DOAGREE.equals(pForm.getTask())) {

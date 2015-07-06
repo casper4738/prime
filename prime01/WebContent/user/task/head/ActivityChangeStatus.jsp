@@ -50,7 +50,7 @@
 		<div class="col-xs-12"><div class="box">
 			<div class="box-header"><h3 class="box-title-center">Activity Status</h3></div>
 				<table class="table table-bordered table-striped table-hover" style="width:98%" align="center">
-				<tr><td>Task Name : <bean:write name="TaskHeadUserForm" property="activityBean.taskName"/> </td>
+				<tr><td>Task Name : ${TaskHeadUserForm.task} - <bean:write name="TaskHeadUserForm" property="activityBean.taskName"/> </td>
 					<td>Activity Name : <bean:write name="TaskHeadUserForm" property="activityBean.activityName" /> </td>
 				</tr>
 				<tr><td>Last Status : 

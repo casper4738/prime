@@ -178,7 +178,7 @@ public interface Constants {
 		final Map<String, String> ACTIVITY_SEARCHCOLUMNS = Collections.unmodifiableMap(
 			new LinkedHashMap<String, String>() {{
 				put("NAME", "Activity Name");
-				put("DESCRIPTION", "Task Description");
+				put("DESCRIPTION", "Activity Description");
 			}
 		});
 		

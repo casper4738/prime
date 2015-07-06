@@ -37,7 +37,7 @@
 			var tmpRetData = serialize(tmpForm);
 			var tmpRetAction = tmpForm.action;
 			
-			document.forms[0].task.value = "<%=Constants.Task.GOTOVIEW%>";
+			tmpForm.task.value = "<%=Constants.Task.GOTOVIEW%>";
 			var tmpTargetData = serialize(document.forms[0]);
 			var tmpTargetAction = "<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>";
 		
