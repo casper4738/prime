@@ -188,7 +188,7 @@ public class TaskSubordinateAction extends Action {
 			activityBean.setActivityChangeNote("Activity aborted by role in task abort");
 			activityBean.setTaskStatus(Constants.Status.ABORT);
 			activityBean.setTaskId(pForm.getTaskBean().getTaskId());
-			
+			tmpActivityManager.insertDetailBySelectTask(activityBean);
 			try {
 				manager.updateActualEnd(pForm.getTaskBean().getTaskId(), new java.sql.Date(new java.util.Date().getTime()));
 				TaskBean e = manager.getTaskById(pForm.getTaskBean().getTaskId());
@@ -198,7 +198,8 @@ public class TaskSubordinateAction extends Action {
 				System.out.println("Actual End - Task Id . "+pForm.getTaskId());
 				System.out.println("Terjadi kesalahan : "+e.getMessage());					
 			}
-			
+			pForm.getTaskBean().setTaskChangeNote("");
+			pForm.getTaskBean().setTaskStatus(Constants.Status.ABORT);
 			manager.insertDetail(pForm.getTaskBean());
 			return mapping.findForward("forward");
 		} 
