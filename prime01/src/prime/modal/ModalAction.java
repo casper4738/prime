@@ -296,6 +296,7 @@ public class ModalAction extends Action {
                 		List<ActivityBean> listActivity;	
                 		ActivityManager managerActivity = new ActivityManagerImpl();
                 		
+                		System.out.println(tmpEmployeeID+"--"+pForm.getColumnSearch()+"--"+pForm.getSearch());
 	                    //##1.Fetch Data From DB
                 		countRows = managerActivity.getCountListActivityById(tmpEmployeeID,pForm.getColumnSearch(),pForm.getSearch());
                 		

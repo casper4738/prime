@@ -55,13 +55,6 @@
 		
 		//##.Project Progress
 		function loadProjectProgress(){
-			var checkDate = checkForDate($('#projectChartStartDate'), 
-										 $('#projectChartEndDate'), null, null, "Chart Start Date", "Chart End Date");
-			if(checkDate){
-				
-				return;
-			}
-			
 			var tmpDate;
 			tmpDate = $('#projectChartStartDate').datepicker('getDate');
 			var tmpStartDate =  tmpDate.getDate() + "/" +

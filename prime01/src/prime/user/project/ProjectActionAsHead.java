@@ -466,20 +466,20 @@ public class ProjectActionAsHead extends Action {
 		ArrayList<Object> tmpTaskProgress;
 		String tmpLastName = "";
 		
-		System.out.println("LLALALAA");
-		System.out.println("Date = " + pForm.getProgressStartDate());
 		tmpFilterStartDate = PrimeUtil.parseDateStringToDateOnly(pForm.getProgressStartDate());
 		tmpFilterEndDate   = PrimeUtil.parseDateStringToDateOnly(pForm.getProgressEndDate());
 		List tmpCalendarList = PrimeUtil.getListStringDate(tmpFilterStartDate, tmpFilterEndDate);
 		
 		//---.Project Progress on Ranged Date
 		//---a.Do Looping
-		//   I'm not considering any perfomance turnover, with this code
+		//     Not considering any perfomance turnover, with this code [Will think over about it later]
 		tmpData = new ArrayList<ArrayList<Object>>();
 		
 		tmpCurnMember = manager.getListEmployeeIDInProject(pForm.getProjectId());
 		for(tmpI = 0 ; tmpI < tmpCurnMember.size() ; tmpI++){
 			tmpPerMemberProgressedTask = manager.getProjectTaskListPerMember(pForm.getProjectId(), (Integer)tmpCurnMember.get(tmpI));	
+			tmpLastName = "";
+			
 			for(tmpJ = 0 ; tmpJ < tmpPerMemberProgressedTask.size() ; tmpJ++){
 				tmpActualStartDate = ((TaskBean)tmpPerMemberProgressedTask.get(tmpJ)).getActualStart();
 				tmpActualEndDate   = ((TaskBean)tmpPerMemberProgressedTask.get(tmpJ)).getActualEnd();

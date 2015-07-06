@@ -244,13 +244,13 @@ public interface Constants {
 		
 		final Map<String, String> REPORTEMPLOYEE_SEARCHCOLUMNS = Collections.unmodifiableMap(
 		        new LinkedHashMap<String, String>() {{
-		        	put("ID", "EMPLOYEE ID");	        	
 		        	put("NAME", "EMPLOYEE NAME");
 		        	put("GENDER", "GENDER");
 		        	put("EMAIL", "EMAIL");
 		        	put("DIVISION", "DIVISION");
 		        	put("POSITION", "POSITION");
 		        	put("MANAGER", "MANAGER");
+		        	put("ID", "EMPLOYEE ID");	       
 		        }
 		    });
 		

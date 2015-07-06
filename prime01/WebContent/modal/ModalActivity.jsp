@@ -46,6 +46,7 @@
 			} else {
 				tmpForm.goToPage.value = page;			
 			}
+			alert(serialize(tmpForm));
 			modalLoadHandler(serialize(tmpForm));
 		}
 		
@@ -84,7 +85,7 @@
 					<html:select property="showInPage" name="ModalForm" onchange="modalChange(this.value)">
 						<html:optionsCollection name="listShowEntries" label="value" value="key"/>
 					</html:select>
-					<input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('<%=Constants.Task.DOSEARCH%>')" value='Refresh'/>
+					<%-- <input type="button" class="btn bg-olive" style="height:32px" onclick="modalFlyToPage('<%=Constants.Task.DOSEARCH%>')" value='Refresh'/> --%>
 				</div>
 				<html:form action="/Modal" styleId="idForm">
 				<div class="search-table">

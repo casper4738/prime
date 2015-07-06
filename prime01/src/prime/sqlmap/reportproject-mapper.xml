@@ -104,7 +104,7 @@
         JOIN EMPLOYEES EMP_RECEIVE ON PROJ.PROJECT_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
         JOIN PROJECT_MEMBERS PM ON PROJ.PROJECT_ID = PM.PROJECT_ID
         JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = PM.EMPLOYEE_ID
-        WHERE PROJ.PROJECT_ASSIGNER=#employeeId# OR PROJ.PROJECT_RECEIVER=#employeeId#
+        WHERE (PROJ.PROJECT_ASSIGNER=#employeeId# OR PROJ.PROJECT_RECEIVER=#employeeId#)
 		<dynamic prepend="AND">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
@@ -138,7 +138,7 @@
         JOIN EMPLOYEES EMP_RECEIVE ON PROJ.PROJECT_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
         JOIN PROJECT_MEMBERS PM ON PROJ.PROJECT_ID = PM.PROJECT_ID
         JOIN EMPLOYEES EMP ON EMP.EMPLOYEE_ID = PM.EMPLOYEE_ID
-        WHERE PROJ.PROJECT_ASSIGNER=#employeeId# OR PROJ.PROJECT_RECEIVER=#employeeId#
+        WHERE (PROJ.PROJECT_ASSIGNER=#employeeId# OR PROJ.PROJECT_RECEIVER=#employeeId#)
 		<dynamic prepend="AND">
 			<isNotNull property="columnSearch">
 				<isEqual property="columnSearch" compareValue="NAME">
