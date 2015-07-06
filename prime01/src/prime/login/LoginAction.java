@@ -1,7 +1,10 @@
 package prime.login;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +21,9 @@ import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.user.UserBean;
 import prime.admin.user.UserManager;
 import prime.admin.user.UserManagerImpl;
+import prime.admin.usermenu.UserMenuBean;
+import prime.admin.usermenu.UserMenuManager;
+import prime.admin.usermenu.UserMenuManagerImpl;
 import prime.constants.Constants;
 import prime.utility.ActiveDirectoryManager;
 import prime.utility.MailUtil;
@@ -44,10 +50,7 @@ public class LoginAction extends Action {
 			if(tmpManager.isUserExists(tmpUsername)){
 				//---Fetch User Details [Differ between AD and Normal DB]
 				tmpUserDetails = tmpManager.getUserDetails(tmpUsername);
-				System.out.println("DWE = " + tmpUserDetails.getUsername());
-				System.out.println("ASD = " + tmpUserDetails.getActiveDirectory());
 				if(tmpUserDetails.getActiveDirectory() == 1){
-					System.out.println("A");
 					ActiveDirectoryManager tmpADManager = new ActiveDirectoryManager();
 					if(!tmpADManager.checkValidUser(tmpUsername, 
 													Constants.ActiveDirectory.ADMIN_USERNAME, 
@@ -65,7 +68,6 @@ public class LoginAction extends Action {
 						}
 					}
 				} else {
-					System.out.println("B");
 					if(!tmpManager.isUserValidated(tmpUsername, tmpPassword)){
 						tmpLoginResultCode = 1; //Fail Login, fail identification
 					} else {
@@ -98,15 +100,28 @@ public class LoginAction extends Action {
 					//Set Login Session to DB and Update Last Active Time
 					tmpManager.setLoginSession(tmpUsername);
 					
-					//Refetch Data and Set Session
+					//Refetch Data, Set Session and Menu Lists [Earlier we set it at MenuAction.java, now we move it to here]
 					UserManager tmpUserData = new UserManagerImpl();
 					UserBean tmpUserBean = tmpUserData.getUserByUsername(tmpUsername);
 					
 					EmployeeManager tmpEmployeeData = new EmployeeManagerImpl();
 					EmployeeBean tmpEmployeeBean = tmpEmployeeData.getEmployeeById(tmpUserBean.getEmployeeId());
-
+					
+					//----User and Employee Data
 					LoginData.setUserBean(tmpUserBean);
 					LoginData.setEmployeeBean(tmpEmployeeBean);
+
+					ArrayList<Integer> tmpMenuLists = new ArrayList<Integer>();
+					UserMenuManager tmpUserMenuManager = new UserMenuManagerImpl();
+					List<UserMenuBean> listUserMenu = tmpUserMenuManager.getListUserMenuByUserRoleId(LoginData.getUserData().getSysLevel());
+					for (UserMenuBean e : listUserMenu) {
+						if(e.getIsCheck()){
+							tmpMenuLists.add(e.getUserMenuId());
+						}
+					}
+
+					//----Menu Lists [Will Rethink Later]
+					LoginData.setMenuLists(tmpMenuLists);
 					
 					//If Success, Prepare Session
 					HttpSession tmpSession = request.getSession(true);

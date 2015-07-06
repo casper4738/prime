@@ -77,11 +77,7 @@ public class NotificationAction extends Action {
 			}
 			
 			//---.Send Email with Mail Util 
-			System.out.println(tmpReceiverBean.getEmail());
-			System.out.println(tmpNotifTempBean.getNotifTemplateName());
-			System.out.println(tmpTemplate);
-			
-			//---.Mail Send Error Handling
+			//---.Mail Send Error Handling [Use Fake SMTP]
 			try {
 				MailUtil.send(tmpReceiverBean.getEmail(), tmpNotifTempBean.getNotifTemplateName(), tmpTemplate);
 			} catch (Exception e){
@@ -93,8 +89,10 @@ public class NotificationAction extends Action {
 			
 			return null;
 		} else if(("reloadNotification").equals(pForm.getTask())){ 
-			int countNotif = tmpManager.getCountListNotifNoRead(LoginData.getEmployeeData().getEmployeeId());
+			if(LoginData.getMenuLists().indexOf(Constants.Page.USER_VIEWNOTIF) == -1)
+				return null;
 			
+			int countNotif = tmpManager.getCountListNotifNoRead(LoginData.getEmployeeData().getEmployeeId());
 					
 			response.setContentType("text/html;charset=utf-8");
 			response.setHeader("cache-control", "no-cache");

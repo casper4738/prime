@@ -255,7 +255,6 @@ function modalSubmitReturnValue(retValue,retForm){
 	}
 	
 	//##1.Hide Modal
-	alert("TRALALLAA");
     $("[data-dismiss=modal]").trigger({ type: "click" });
 }
 

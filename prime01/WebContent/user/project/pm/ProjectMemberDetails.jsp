@@ -97,6 +97,7 @@
 						<html:hidden name="ProjectUserForm" property="showInPage"/>
 						<html:hidden name="ProjectUserForm" property="projectId"/>
 						<html:hidden name="ProjectUserForm" property="employeeBean.employeeId"/>
+						<html:hidden name="ProjectUserForm" property="employeeId"/>
 						<html:select name="ProjectUserForm" property="columnSearch" styleClass="columnSearch">
 							<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 						</html:select>
