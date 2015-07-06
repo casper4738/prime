@@ -57,7 +57,7 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 						<logic:equal name="isAlreadySubmit" value="true">
 							<!-- projectMemberId != null -->
 							<logic:notEmpty name="projectMemberId">
-							fff	<input type="button" value="Approve" class="btn btn-sm  btn-success" onclick="doTaskApp('<%=Constants.Task.TASK.DOAPPROVAL%>', '${taskId}', '${employeeIdActive}', '${taskReceiver}')"/>
+							<input type="button" value="Approve" class="btn btn-sm  btn-success" onclick="doTaskApp('<%=Constants.Task.TASK.DOAPPROVAL%>', '${taskId}', '${employeeIdActive}', '${taskReceiver}')"/>
 					     		<input type="button" value="Reject" class="btn btn-sm  btn-primary" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOREJECT%>', '${employeeIdActive}', '${taskReceiver}')"/>
 					     		<input type="button" value="Abort" class="btn btn-sm  btn-danger" onclick="doTaskAct('${taskId}', '<%=Constants.Task.TASK.DOABORT%>', '${employeeIdActive}', '${taskReceiver}')"/>
 							</logic:notEmpty>
