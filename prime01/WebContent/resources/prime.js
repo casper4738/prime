@@ -70,6 +70,7 @@ function dosubmit() {
 function searchBy(task, isShow) {
 	var tmpForm = document.forms[0];
 	tmpForm.isShowAll.value = isShow;
+	if(isShow) tmpForm.showInPage.value = -1;
 	tmpForm.task.value = task;
 	menuLoadHandler(tmpForm.action, serialize(tmpForm));
 }

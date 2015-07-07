@@ -58,6 +58,10 @@ public class HolidayAction extends Action {
 		List<HolidayBean> list = tmpManager.getListByColumn(pForm.getColumnSearchReal(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
+
+		System.out.println("cek:"+pForm.getColumnSearchReal());
+		System.out.println("list:"+list.size());
+		System.out.println("sss:"+pForm.getShowInPage());
 		
 		//##1.Attribute for Table Show
 		request.setAttribute("listHoliday", list);

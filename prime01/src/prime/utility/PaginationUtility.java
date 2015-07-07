@@ -13,9 +13,8 @@ public class PaginationUtility {
 	private int sumOfPage;
 
 	public List<Integer> getListPaging(int page) {
-		view = view <= 0 ? 1 : view;
+		view = view <= 0 ? countRows : view;
 		sumOfPage = (int) Math.ceil(countRows / Double.parseDouble(view + ""));
-		
 		if(page == 0) {
 			if(sumOfPage > 0 ) {
 				page = 1;
