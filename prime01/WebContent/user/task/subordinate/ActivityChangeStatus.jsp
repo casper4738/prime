@@ -24,6 +24,17 @@
 		    }
 	    });
 		
+		function page(page) {
+			var tmpForm = document.forms[0];
+			tmpForm.task.value = "<%=Constants.Task.ACTIVITY.GOTOCHANGESTATUS%>";
+			if(page == -1) {
+				tmpForm.goToPage.value = document.getElementById('page').value;
+			} else {
+				tmpForm.goToPage.value = page;			
+			}
+			menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		}
+
 		function dosubmit(value) {
 			document.forms[0].activityStatus.value = value;
 			menuLoadHandler(document.forms[0].action, serialize(document.forms[0]));
@@ -40,8 +51,8 @@
 		<h1>Manage Tasks<small> As Head</small></h1>
 		<ol class="breadcrumb">
 			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li><html:link href="#" onclick="flyToBack('home')">Tasks & Activities</html:link></li>
-		  	<li><html:link href="#" onclick="flyToBack('<%=Constants.Task.GOTOVIEW%>')">Tasks Detail</html:link></li>
+			<li><a href="#" onclick="flyToBack('home')">Tasks & Activities</a></li>
+		  	<li><a href="#" onclick="flyToBack('<%=Constants.Task.GOTOVIEW%>')">Tasks Detail</a></li>
 		  	<li class="active">Activity Status</li>
 		</ol>
 	</section>
