@@ -74,7 +74,7 @@ public class FilterSession implements Filter {
 		    	if(tmpDBSession.equals(tmpCurrentSession)){
 		    		tmpIsRedirectNeed = false;
 		    	} else {
-		    		tmpSession.invalidate();
+		    		tmpSession.setAttribute(Constants.Session.isSessionExpired, true);
 		    	}
 		    } 
 
@@ -92,7 +92,6 @@ public class FilterSession implements Filter {
 			    }
 		    }		
 		} else {
-    		tmpSession.invalidate();
 	    	chain.doFilter(request, response);
 		}
 	}

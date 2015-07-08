@@ -55,10 +55,17 @@
     <script>
       $(document).ready(function(){
     	 	 $.ajaxSetup({ cache: false });
-    	  
+
+	    	  alert(<%=request.getSession(true).getAttribute(Constants.Session.isSessionExpired)%>);
     	  	  var tmpIsLoginFail = <%=request.getAttribute(Constants.Request.LOGIN_STATUS)%>;
     	  	  if(tmpIsLoginFail == null){
-  	  		  	  $('#login-fail').hide();
+    	  		  if(<%=request.getSession().getAttribute(Constants.Session.isSessionExpired)%>){
+        	  		  $('#login-fail').show();
+        	  		  $('#login-fail').html('<%=Constants.Response.FAILLOGIN_SESSIONEXPIRED%>');
+  		    		  <%request.getSession().setAttribute(Constants.Session.isSessionExpired, false);%>
+    	  		  } else {
+      	  		  	  $('#login-fail').hide();  
+    	  		  }
     	  	  } else {
     	  		  $('#login-fail').show();
     	  		  $('#login-fail').html('<%=request.getAttribute(Constants.Request.LOGIN_STATUS)%>');
