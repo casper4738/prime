@@ -11,8 +11,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.user.UserBean;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -31,13 +31,13 @@ public class DivisionAction extends Action {
 			return mapping.findForward("edit");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			//##.Insert Data and Go to Forward
-			pForm.getDivisionBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getDivisionBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			pForm.getDivisionBean().setDivisionId(tmpManager.getNewId());
 			tmpManager.insert(pForm.getDivisionBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
 			//##.Update Data and Go to Forward
-			pForm.getDivisionBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getDivisionBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			tmpManager.update(pForm.getDivisionBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DODELETE.equals(pForm.getTask())) {

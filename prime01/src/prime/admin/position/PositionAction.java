@@ -13,8 +13,8 @@ import org.apache.struts.action.ActionMapping;
 
 import prime.admin.setting.GeneralSettingManager;
 import prime.admin.setting.GeneralSettingManagerImpl;
+import prime.admin.user.UserBean;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -38,12 +38,12 @@ public class PositionAction extends Action {
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			//##.Insert Data and Go to Forward
 			pForm.getPositionBean().setPositionId(tmpManager.getNewId());
-			pForm.getPositionBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getPositionBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			tmpManager.insert(pForm.getPositionBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
 			//##.Update Data and Go to Forward
-			pForm.getPositionBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getPositionBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			tmpManager.update(pForm.getPositionBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DODELETE.equals(pForm.getTask())) {

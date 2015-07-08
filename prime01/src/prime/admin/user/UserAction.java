@@ -18,7 +18,6 @@ import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.userrole.UserRoleManager;
 import prime.admin.userrole.UserRoleManagerImpl;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.login.LoginManager;
 import prime.login.LoginManagerImpl;
 import prime.utility.ActiveDirectoryManager;
@@ -52,7 +51,7 @@ public class UserAction extends Action {
 		} else if (Constants.Task.DOADD.equals(userForm.getTask())) {
 			userForm.getUserBean().setEmployeeId(userForm.getEmployeeId());
 			userForm.getUserBean().setSysLevel(userForm.getUserRoleId());
-			userForm.getUserBean().setUpdateBy(LoginData.getUserData().getUserName());
+			userForm.getUserBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 
 			ActiveDirectoryManager tmpADManager = new ActiveDirectoryManager();
 			
@@ -96,7 +95,7 @@ public class UserAction extends Action {
 			return mapping.findForward("forward");
 		} else if (Constants.Task.DOEDIT.equals(userForm.getTask())) {
 			// ##.Update Data and Go to Forward
-			userForm.getUserBean().setUpdateBy(LoginData.getUserData().getUserName());
+			userForm.getUserBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			tmpManager.update(userForm.getUserBean());
 			return mapping.findForward("forward");
 		} else if (Constants.Task.DOVALIDATE1.equals(userForm.getTask())) {
