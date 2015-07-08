@@ -7,8 +7,7 @@
 <html>
 <head>
 <!-- CSS -->
-<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet"
-	type="text/css" />
+<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="resources/font-awesome-4.3.0/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css" />
 <link href="resources/ionicons-2.0.1/css/ionicons.min.css"

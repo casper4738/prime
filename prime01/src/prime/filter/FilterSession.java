@@ -56,13 +56,13 @@ public class FilterSession implements Filter {
 	    
 		if(!tmpServletRequest.getServletPath().equals("/" + Constants.PAGES_LIST[Constants.Page.LOGIN])){
 			//--Special Checking Addition, because we're using static data saver
-			if(!LoginData.isDataExists()){
-				PrintWriter out = response.getWriter();
-			    out.println("<script type=\"text/javascript\">");
-			    out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.LOGIN] + "';");
-			    out.println("</script>");
-				return;
-			}
+//			if(!LoginData.isDataExists()){
+//				PrintWriter out = response.getWriter();
+//			    out.println("<script type=\"text/javascript\">");
+//			    out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.LOGIN] + "';");
+//			    out.println("</script>");
+//				return;
+//			}
 			
 			//##a.Check Session State
 		    if(tmpSession.getAttribute(Constants.Session.ID) != null && tmpSession.getAttribute(Constants.Session.Username) != null) {

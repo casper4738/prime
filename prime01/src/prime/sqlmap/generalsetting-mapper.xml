@@ -8,6 +8,9 @@
 			MINIMUM_LEVEL_APPROVAL	= #minLevelApproval#,
 			SMTP_USERNAME			= #smtpUsername#,
 			SMTP_PASSWORD			= #smtpPassword#,
+			USERNAME_AD				= #usernameActiveDirectory#,
+			PASSWORD_AD				= #passwordActiveDirectory#,
+			WEEKEND					= #weekend#,
 			UPDATED_BY 				= #updateBy#
 	</update>
 
@@ -16,7 +19,10 @@
 			GENERAL_SETTING_LEVEL 	AS generalSettingLevel, 
 			MINIMUM_LEVEL_APPROVAL	AS minLevelApproval,
 			SMTP_USERNAME			AS smtpUsername, 
-			SMTP_PASSWORD			AS smtpPassword
+			SMTP_PASSWORD			AS smtpPassword,
+			USERNAME_AD				AS usernameActiveDirectory,
+			PASSWORD_AD				AS passwordActiveDirectory,
+			WEEKEND					AS weekend
 		FROM 
 			GENERAL_SETTINGS
 	</select>

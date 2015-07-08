@@ -7,6 +7,33 @@ public class GeneralSettingBean {
 	private String smtpUsername;
 	private String smtpPassword;
 	private String updateBy;
+	private String usernameActiveDirectory;
+	private String passwordActiveDirectory;
+	private String weekend;
+
+	public String getWeekend() {
+		return weekend;
+	}
+
+	public void setWeekend(String weekend) {
+		this.weekend = weekend;
+	}
+
+	public String getUsernameActiveDirectory() {
+		return usernameActiveDirectory;
+	}
+
+	public void setUsernameActiveDirectory(String usernameActiveDirectory) {
+		this.usernameActiveDirectory = usernameActiveDirectory;
+	}
+
+	public String getPasswordActiveDirectory() {
+		return passwordActiveDirectory;
+	}
+
+	public void setPasswordActiveDirectory(String passwordActiveDirectory) {
+		this.passwordActiveDirectory = passwordActiveDirectory;
+	}
 
 	public String getUpdateBy() {
 		return updateBy;

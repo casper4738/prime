@@ -18,16 +18,14 @@ public class SettingAction extends Action {
 		SettingForm pForm 				 = (SettingForm) form;
 		GeneralSettingManager tmpManager = new GeneralSettingManagerImpl();
 
+		System.out.println("week:"+pForm.getWeekends());
 		if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
 			//##. Edit Data
 			pForm.setSettingBean(tmpManager.getGeneralSetting());
 			return mapping.findForward("edit");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
 			//##. Update Data
-			if("".equals(pForm.getSmtpPassword())) {
-			} else {
-				pForm.getSettingBean().setSmtpPassword(pForm.getSmtpPassword());
-			}
+			pForm.getSettingBean().setWeekend(pForm.getWeekends());
 			pForm.getSettingBean().setUpdateBy(LoginData.getUserData().getUserName());
 			tmpManager.save(pForm.getSettingBean());				
 			return mapping.findForward("forward");
