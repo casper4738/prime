@@ -12,11 +12,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.user.UserBean;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.user.project.ProjectBean;
-import prime.user.project.ProjectManager;
-import prime.user.project.ProjectManagerImpl;
 import prime.user.task.TaskBean;
 import prime.user.task.TaskManager;
 import prime.user.task.TaskManagerImpl;
@@ -29,7 +27,7 @@ public class ReportProjectAction extends Action {
 			HttpServletRequest request, HttpServletResponse response)
 			throws Exception {
 
-		Integer tmpEmployeeId = Integer.valueOf(LoginData.getEmployeeData().getEmployeeId());
+		Integer tmpEmployeeId = Integer.valueOf(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId());
 		TaskManager tmpTaskManager = new TaskManagerImpl();
 
 		ReportProjectForm pForm = (ReportProjectForm) form;

@@ -11,11 +11,9 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.user.UserBean;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.user.task.TaskBean;
-import prime.user.task.TaskManager;
-import prime.user.task.TaskManagerImpl;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -113,13 +111,13 @@ public class ReportEmployeesAction extends Action {
 		
 		System.out.println("MASUK SINI");
 		int countRows = tmpManager.getCountByColumn(pForm.getColumnSearchReal(),
-				search,LoginData.getUserData().getEmployeeId());
+				search,((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId());
 		List<ReportEmployeesBean> list = tmpManager.getListByColumn(
 				pForm.getColumnSearchReal(), search, PrimeUtil
 						.getStartRow(pForm.getGoToPage(),
 								pForm.getShowInPage(), countRows), PrimeUtil
 						.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
-								countRows),LoginData.getUserData().getEmployeeId());
+								countRows),((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId());
 		
 		// ##1.Attribute for Table Show
 		request.setAttribute("listReportEmployees", list);
