@@ -24,7 +24,6 @@ import prime.admin.setting.GeneralSettingManager;
 import prime.admin.setting.GeneralSettingManagerImpl;
 import prime.admin.user.UserBean;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
@@ -33,8 +32,6 @@ import prime.user.project.ProjectManager;
 import prime.user.project.ProjectManagerImpl;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
-
-
 
 public class TaskHeadAction extends Action {
 
@@ -46,9 +43,8 @@ public class TaskHeadAction extends Action {
 		request.getSession().setAttribute(Constants.Session.redirectParam, "");
 		
 		GeneralSettingManager tmpManager = new GeneralSettingManagerImpl();
-		
-		
-		int employeeId    = ((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId();
+
+		int employeeId = ((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId();
 		int positionLevel = ((EmployeeBean)request.getSession().getAttribute(Constants.Session.Employeedata)).getPositionLevel();
 		
 		boolean bool = (positionLevel <= tmpManager.getGeneralSetting().getMinLevelApproval()) ? false : true;
@@ -181,7 +177,7 @@ public class TaskHeadAction extends Action {
 			pForm.getTaskBean().setTaskStatus(Constants.Status.CREATE);
 			pForm.getTaskBean().setTaskChangeNote("");
 			pForm.getTaskBean().setProjectMemberId(0);
-			pForm.getTaskBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getTaskBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			
 			manager.insert(pForm.getTaskBean());
 			manager.insertDetail(pForm.getTaskBean());
@@ -193,7 +189,7 @@ public class TaskHeadAction extends Action {
 			return mapping.findForward("forward");
 		} else if (Constants.Task.ACTIVITY.DOADD.equals(pForm.getTask())) {
 			//##.Insert Data Activity
-			pForm.getActivityBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getActivityBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			pForm.getActivityBean().setActivityId(tmpActivityManager.getNewId());
 			
 			tmpActivityManager.insert(pForm.getActivityBean());

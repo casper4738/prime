@@ -7,14 +7,14 @@ public class SettingForm extends ActionForm {
 	private GeneralSettingBean settingBean = new GeneralSettingBean();
 	private String task;
 	private String message;
-	private String smtpPassword;
+	private String weekends;
 
-	public String getSmtpPassword() {
-		return smtpPassword;
+	public String getWeekends() {
+		return weekends;
 	}
 
-	public void setSmtpPassword(String smtpPassword) {
-		this.smtpPassword = smtpPassword;
+	public void setWeekends(String weekends) {
+		this.weekends = weekends;
 	}
 
 	public GeneralSettingBean getSettingBean() {

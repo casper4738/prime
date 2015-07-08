@@ -16,8 +16,8 @@ import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.setting.GeneralSettingManager;
 import prime.admin.setting.GeneralSettingManagerImpl;
+import prime.admin.user.UserBean;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
@@ -39,8 +39,8 @@ public class TaskSubordinateAction extends Action {
 
 		GeneralSettingManager tmpManager = new GeneralSettingManagerImpl();
 		
-		int employeeId = LoginData.getUserData().getEmployeeId();
-		int positionLevel = LoginData.getUserData().getPositionLevel();
+		int employeeId = ((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId();
+		int positionLevel = ((EmployeeBean)request.getSession().getAttribute(Constants.Session.Employeedata)).getPositionLevel();
 		boolean bool = (positionLevel <= tmpManager.getGeneralSetting().getMinLevelApproval()) ? false : true;
 		
 		request.setAttribute("employeeIdActive", employeeId);
@@ -121,7 +121,7 @@ public class TaskSubordinateAction extends Action {
 			pForm.getTaskBean().setTaskStatus(Constants.Status.CREATE);
 			pForm.getTaskBean().setTaskChangeNote("");
 			pForm.getTaskBean().setProjectMemberId(0);
-			pForm.getTaskBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getTaskBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			
 			manager.insert(pForm.getTaskBean());
 			manager.insertDetail(pForm.getTaskBean());
