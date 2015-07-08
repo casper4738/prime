@@ -9,6 +9,7 @@
   <head>
     <meta charset="UTF-8">
     <title>Prime | Log in</title>
+    <link rel="icon" href="resources/favicon.ico" type="image/x-icon" />
 	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
@@ -16,7 +17,7 @@
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
   </head>
-  <body class="login-page" style="background-color:teal">
+  <body class="login-page" style="background-color:#008080">
     <div class="login-box">
       <div class="login-box-body">
 	    <div class="login-logo">
@@ -44,10 +45,42 @@
                		<i class="fa fa-circle-o-notch fa-spin"></i> Processing...
               </div>
             </div><!-- /.col -->
+            <input type="image" src="resources/image/logo.png" align="right" width="20%" height="20%" id="btn-credits"/>
+          </div>
+          <div class="row">
+            <div class="col-xs-5">
+            </div><!-- /.col -->
           </div>
         </html:form>
       </div><!-- /.login-box-body -->
     </div><!-- /.login-box -->
+    
+	<!-- Modal -->
+	<div id="credits-modal" class="modal fade" role="dialog">
+		<div class="modal-dialog modal-lg">
+			<!-- Modal content-->
+			<div class="modal-content">
+				<div class="modal-body" id="content-modal-body">
+					<center>
+						<b><h2>ACE 21 - 8 July 2015</h2></b>
+						<br>
+						<b>PRIME</b><br>
+						<b>Project Information Management System</b><br><br>
+						Adrian Darma Patria	<br>
+						Dedy Suwandi			<br>
+						Fandy Adam			<br>
+						Felix Fremont			<br>
+						Frans Darmawan		<br>
+						Helmy Almabruri		<br>
+						Melisa Astriyanti		<br>
+					</center>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				</div>
+			</div>
+		</div>
+	</div>
 	  
 	<script src="resources/plugins/jQuery/jQuery-2.1.4.min.js"></script>
 	<script src="resources/bootstrap/js/bootstrap.min.js" type="text/javascript"></script>
@@ -118,10 +151,14 @@
 		    	       });
 				  }
 				  
-				  
-    	          
     	          event.preventDefault();
 		      }); 
+			  
+			  $('#btn-credits').click(function(event){ 
+				    $('#content-modal-body').removeData('bs.modal');
+		    		$('#credits-modal').modal({ show:true, backdrop: false });
+	    	        event.preventDefault();
+			  });
       });
     </script>
   </body>
