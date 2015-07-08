@@ -1,11 +1,16 @@
 <%@page import="prime.constants.Constants"%>
-<%@page import="prime.login.LoginData"%>
 <%@page import="prime.admin.employee.EmployeeBean"%>
 <%@page import="java.util.List"%>
 <%@page import="java.util.ArrayList"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
+<%@ page import="prime.admin.employee.EmployeeBean" %>
+<%@ page import="prime.admin.user.UserBean" %>
+<%
+	UserBean tmpUserData = (UserBean)request.getSession().getAttribute(Constants.Session.Userdata);
+	EmployeeBean tmpEmpData = (EmployeeBean)request.getSession().getAttribute(Constants.Session.Employeedata);
+%>
   
 <!DOCTYPE html>
 <html>
@@ -29,11 +34,11 @@
     <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
     <script type="text/javascript">
       $(document).ready(function(){
-    	  var tmpImage = '<%=LoginData.getEmployeeData().getConvertedFilePic()%>';
+    	  var tmpImage = '<%=tmpEmpData.getConvertedFilePic()%>';
     	  if(tmpImage == "null"){
         	  $("#profpic").attr("src", "<%=Constants.PATH_USERNOIMAGE%>");
     	  } else {
-        	  $("#profpic").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");  
+        	  $("#profpic").attr("src","data:image/;base64,<%=tmpEmpData.getConvertedFilePic()%>");  
     	  } 
       });
     
@@ -167,7 +172,7 @@
 		<section class="col-lg-5">
 		<div class="box box-primary">
 			<div class="box-header">
-                 <h4 class="box-title">Welcome, <%=LoginData.getEmployeeData().getEmployeeName()%></h3>
+                 <h4 class="box-title">Welcome, <%=tmpEmpData.getEmployeeName()%></h3>
                  </div>
                  <div class="box-tools">
 				 <div class="box-body no-padding">

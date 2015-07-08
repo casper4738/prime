@@ -37,7 +37,7 @@ public class MenuAction extends Action {
 							"View Notification"};
 		
 		ArrayList<Integer> tmpLists = (ArrayList<Integer>)(request.getSession().getAttribute(Constants.Session.menuLists));
-		for(int tmpI = 0 ; tmpI < LoginData.getMenuLists().size() ; tmpI++){
+		for(int tmpI = 0 ; tmpI < tmpLists.size() ; tmpI++){
 			tmpObject.put(Constants.PAGES_LIST[tmpLists.get(tmpI)], tmpMenu[tmpLists.get(tmpI)]);
 		}
 

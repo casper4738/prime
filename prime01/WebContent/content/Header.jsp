@@ -4,6 +4,13 @@
 <%@ page import="prime.user.notification.NotificationManagerImpl" %>
 <%@ page import="prime.constants.Constants" %>
 <%@ page import="prime.login.LoginData" %>
+<%@ page import="prime.admin.employee.EmployeeBean" %>
+<%@ page import="prime.admin.user.UserBean" %>
+<%
+	NotificationManagerImpl tmpManager = new NotificationManagerImpl();
+	UserBean tmpUserData = (UserBean)request.getSession().getAttribute(Constants.Session.Userdata);
+	EmployeeBean tmpEmpData = (EmployeeBean)request.getSession().getAttribute(Constants.Session.Employeedata);
+%>
 <script type="text/javascript">
 function openModalHandler(task){
 	//##0.Accessing Prime Method For Modal Showing
@@ -26,8 +33,7 @@ function doViewAllNotif(){
 			<span class="sr-only">Toggle navigation</span>
 		</a>
 		<% 
-			NotificationManagerImpl tmpManager = new NotificationManagerImpl();
-			int countNotif = tmpManager.getCountListNotifNoRead(LoginData.getEmployeeData().getEmployeeId());
+			int countNotif = tmpManager.getCountListNotifNoRead(tmpEmpData.getEmployeeId());
 		%>
 		<div class="navbar-custom-menu">
 			<ul class="nav navbar-nav">
@@ -38,18 +44,18 @@ function doViewAllNotif(){
 				<li class="dropdown user user-menu"><a href="#"
 					class="dropdown-toggle" data-toggle="dropdown"> <img
 						id="profpic1" class="user-image"
-						alt="User Image" /> <span class="hidden-xs"><%=LoginData.getEmployeeData().getEmployeeName()%></span>
+						alt="User Image" /> <span class="hidden-xs"><%=tmpEmpData.getEmployeeName()%></span>
 				</a>
 					<ul class="dropdown-menu">
 						<li class="user-header"><img
 							id="profpic2" class="img-circle"
 							alt="User Image" />
 							<p>
-								<%=LoginData.getEmployeeData().getEmployeeName()%><small><%=LoginData.getUserData().getSysName()%></small>
+								<%=tmpEmpData.getEmployeeName()%><small><%=tmpUserData.getSysName()%></small>
 							</p></li>
 						<li class="user-footer">
 							<div class="pull-left">
-						        <% if(!LoginData.getUserData().getIsActiveDirectory()){%>
+						        <% if(!tmpUserData.getIsActiveDirectory()){%>
 						         <input type="button" class="btn btn-block btn-default"  onclick="openModalHandler('changePwd')" value="Change Password"/>
 						        <% } %>
 							</div>

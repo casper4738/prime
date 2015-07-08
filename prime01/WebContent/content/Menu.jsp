@@ -1,8 +1,13 @@
 <%@page import="prime.constants.Constants"%>
-<%@page import="prime.login.LoginData"%>
 <%@ taglib uri="/WEB-INF/tld/struts-html.tld" prefix="html"%>
 <%@ taglib uri="/WEB-INF/tld/struts-logic.tld" prefix="logic"%>
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
+<%@ page import="prime.admin.employee.EmployeeBean" %>
+<%@ page import="prime.admin.user.UserBean" %>
+<%
+	UserBean tmpUserData = (UserBean)request.getSession().getAttribute(Constants.Session.Userdata);
+	EmployeeBean tmpEmpData = (EmployeeBean)request.getSession().getAttribute(Constants.Session.Employeedata);
+%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -52,7 +57,7 @@
 							alt="User Image" />
 					</div>
 					<div class="pull-left info">
-						<p><%=LoginData.getEmployeeData().getEmployeeName()%></p>
+						<p><%=tmpEmpData.getEmployeeName()%></p>
 						<a href="#"><i class="fa fa-circle text-success"></i> Online</a>
 					</div>
 				</div>
@@ -112,15 +117,15 @@
 	   		setInterval(refreshNotification, 300000); //5 Menit
 
 	   		//##0.Prepare Profile Picture
-	   		var tmpImage = '<%=LoginData.getEmployeeData().getConvertedFilePic()%>';
+	   		var tmpImage = '<%=tmpEmpData.getConvertedFilePic()%>';
 	  	  	if(tmpImage == "null"){
 	      		  $("#profpic1").attr("src", "<%=Constants.PATH_USERNOIMAGE%>");
 	      		  $("#profpic2").attr("src", "<%=Constants.PATH_USERNOIMAGE%>");
 	      		  $("#profpic3").attr("src", "<%=Constants.PATH_USERNOIMAGE%>");
 	  	  	} else {
-	  	  		  $("#profpic1").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
-	      		  $("#profpic2").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
-	      		  $("#profpic3").attr("src","data:image/;base64,<%=LoginData.getEmployeeData().getConvertedFilePic()%>");
+	  	  		  $("#profpic1").attr("src","data:image/;base64,<%=tmpEmpData.getConvertedFilePic()%>");
+	      		  $("#profpic2").attr("src","data:image/;base64,<%=tmpEmpData.getConvertedFilePic()%>");
+	      		  $("#profpic3").attr("src","data:image/;base64,<%=tmpEmpData.getConvertedFilePic()%>");
 	  	  	}
 	   		
 	   		//##1.Check Whether this a page redirecting or not
