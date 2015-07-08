@@ -70,36 +70,40 @@ public class ReportProjectAction extends Action {
 			return mapping.findForward("detailProject");
 		} else if (Constants.Task.REPORT.GENERATEREPORTPROJECT.equals(pForm
 				.getTask())) {
-			System.out.println(pForm.getColumnSearchReal());
+			System.out.println(pForm.getColumnSearchReal()+"--"+tmpEmployeeId);
 			if ("NAME".equals(pForm.getColumnSearchReal())) {
 				System.out.println(pForm.getColumnSearchReal());
 				request.getSession(true).setAttribute(
 						"searchQuery",
-						" WHERE LOWER (PROJECT_NAME) LIKE LOWER ('%"
+						" WHERE (PRO.PROJECT_ASSIGNER="+tmpEmployeeId+" OR PRO.PROJECT_RECEIVER="+tmpEmployeeId+") AND LOWER (PRO.PROJECT_NAME) LIKE LOWER ('%"
 								+ pForm.getSearch() + "%')");
 			} else if ("DESCRIPTION".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute(
 						"searchQuery",
-						" WHERE LOWER (PROJECT_DESCRIPTION) LIKE LOWER ('%"
+						" WHERE (PRO.PROJECT_ASSIGNER="+tmpEmployeeId+" OR PRO.PROJECT_RECEIVER="+tmpEmployeeId+") AND LOWER (PRO.PROJECT_DESCRIPTION) LIKE LOWER ('%"
 								+ pForm.getSearch() + "%')");
 			} else if ("PROPOSED".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute(
 						"searchQuery",
-						" WHERE LOWER (EMPAPRO.EMPLOYEE_NAME) LIKE LOWER ('%"
+						" WHERE (PRO.PROJECT_ASSIGNER="+tmpEmployeeId+" OR PRO.PROJECT_RECEIVER="+tmpEmployeeId+") AND LOWER (EMPAPRO.EMPLOYEE_NAME) LIKE LOWER ('%"
 								+ pForm.getSearch() + "%')");
 			} else if ("PM".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute(
 						"searchQuery",
-						" WHERE LOWER (EMPRPRO.EMPLOYEE_NAME) LIKE LOWER ('%"
+						" WHERE (PRO.PROJECT_ASSIGNER="+tmpEmployeeId+" OR PRO.PROJECT_RECEIVER="+tmpEmployeeId+") AND LOWER (EMPRPRO.EMPLOYEE_NAME) LIKE LOWER ('%"
 								+ pForm.getSearch() + "%')");
 			} else if ("STARTDATE".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute(
 						"searchQuery",
-						" WHERE PRO.PROJECT_START_DATE BETWEEN TO_DATE('"+ pForm.getStartDate() +"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
+						" WHERE (PRO.PROJECT_ASSIGNER="+tmpEmployeeId+" OR PRO.PROJECT_RECEIVER="+tmpEmployeeId+") AND PRO.PROJECT_START_DATE BETWEEN TO_DATE('"+ pForm.getStartDate() +"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
 			} else if ("ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute(
 						"searchQuery",
-						" WHERE PRO.PROJECT_ESTIMATE_DATE BETWEEN TO_DATE('"+pForm.getStartDate()+"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
+						" WHERE (PRO.PROJECT_ASSIGNER="+tmpEmployeeId+" OR PRO.PROJECT_RECEIVER="+tmpEmployeeId+") AND PRO.PROJECT_ESTIMATE_DATE BETWEEN TO_DATE('"+pForm.getStartDate()+"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
+			} else {
+				request.getSession(true).setAttribute(
+						"searchQuery",
+						" WHERE (PRO.PROJECT_ASSIGNER="+tmpEmployeeId+" OR PRO.PROJECT_RECEIVER="+tmpEmployeeId+")");
 			}
 			return mapping.findForward("showReportProject");
 		} else if (Constants.Task.REPORT.GENERATEREPORTPROJECTMEMBER.equals(pForm
