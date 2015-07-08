@@ -28,6 +28,7 @@ public class UserRoleAction extends Action{
 		UserRoleManager tmpManager = new UserRoleManagerImpl();
 		UserMenuManager tmpMenuManager = new UserMenuManagerImpl();
 
+		request.setAttribute("homepage", request.getSession().getAttribute(Constants.Session.lastPage));
 		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
