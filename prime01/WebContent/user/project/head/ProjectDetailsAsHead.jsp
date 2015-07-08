@@ -10,7 +10,6 @@
 	<meta charset="UTF-8">
 	<title>Prime</title>
 	<!-- CSS -->
-	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
@@ -22,8 +21,6 @@
 	<!-- End of CSS -->
 	
 	<!-- JS -->
-    <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
-    <script src='resources/plugins/fastclick/fastclick.min.js'></script>
     <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -141,7 +138,7 @@
 	<section class="content-header">
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
-			<li><i class="fa fa-dashboard"></i> Home</li>
+			<li><a href="javascript:void(0)" onclick="menuLoadHandler('${homepage}')"> <i class="fa fa-dashboard"></i> Home</a></li> 
 			<li><a href="javascript:flyToSubmit('success')" >Manage Project</a></li>
 			<li class="active">Project Detail</li>
 		</ol>

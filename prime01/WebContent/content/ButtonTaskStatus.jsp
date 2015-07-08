@@ -110,13 +110,15 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 									
 								</logic:equal>
 								
-						<%-- 		<logic:notEqual name="taskAssigner" value="${employeeIdActive}">
-									<!-- aggree != true -->
-									<logic:notEqual name="isAlreadyAgree" value="true">
-						    			<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
-							    	</logic:notEqual>
-									<!-- end of aggree != true -->
-								</logic:notEqual> --%>
+								<logic:equal name="isNeedApproval" value="true">
+									<logic:notEqual name="taskAssigner" value="${employeeIdActive}">
+										<!-- aggree != true -->
+										<logic:notEqual name="isAlreadyAgree" value="true">
+							    			<input type="button" value="Create New Activity" class="btn btn-sm btn-primary" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOADD%>')" />
+								    	</logic:notEqual>
+										<!-- end of aggree != true -->
+									</logic:notEqual>
+								</logic:equal>
 								
 							</logic:notEqual>
 							<!-- end approve != true -->

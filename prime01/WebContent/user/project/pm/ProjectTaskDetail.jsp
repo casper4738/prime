@@ -55,7 +55,7 @@
 	<section class="content-header">
 		<h1>Manage Tasks</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li><a href="javascript:void(0)" onclick="menuLoadHandler('${homepage}')"> <i class="fa fa-dashboard"></i> Home</a></li> 
 			<li>Tasks & Activities</li>
 			<li>As Head</li>
 			<li class="active">Task Detail</li>
@@ -124,30 +124,11 @@
 					</logic:notEmpty>
                   </tbody>
             </table></div>
-			<ul class="pagination">
-				<li tabindex="0"><html:link styleClass="paging" href="#" onclick="page(${pageFirst})">First</html:link></li>
-				<li tabindex="1"><html:link styleClass="paging" href="#" onclick="page(${pagePrev})"><<</html:link> </li>
-				
-				<logic:iterate id="p" name="listPage">
-					<logic:equal name="p" value="${pageNow}">
-						<li><html:link styleClass="active" href="#">${p}</html:link> </li>
-					</logic:equal>
-					<logic:notEqual name="p" value="${pageNow}">
-						<li><html:link styleClass="paging" href="#" onclick="page(${p})">${p}</html:link> </li>
-					</logic:notEqual>
-				</logic:iterate>
-				<li><html:link styleClass="paging" href="#" onclick="page(${pageNext})" >>></html:link> </li>
-				<li><html:link styleClass="paging" href="#" onclick="page(${pageLast})" >Last</html:link></li>
-				
-				<div class="paginate-3">
-					<html:text name="ProjectUserForm" property="goToPage" size="5" styleId="page" styleClass="go-to-page"/>
-					<html:button property="" onclick="page(-1)" value="GO" styleClass="btn btn-default btn-sm btn-go-page"/>
-				</div>
-			</ul>
-			
-			<div class="paginate-2">
-				Total Record Data <bean:write name="totalData" />, Page <bean:write name="pageNow" /> of <bean:write name="pageLast" />
-			</div>
+			 <!-- Paging -->
+            <jsp:include page="/content/Pagination.jsp">
+    			<jsp:param name="formName" value="TaskHeadUserForm" />
+    		</jsp:include>
+			<!-- End of Paging -->
         </div></div>
         
         </div>
