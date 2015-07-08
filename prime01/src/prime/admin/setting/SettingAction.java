@@ -8,8 +8,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.user.UserBean;
 import prime.constants.Constants;
-import prime.login.LoginData;
 
 public class SettingAction extends Action {
 
@@ -17,8 +17,6 @@ public class SettingAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		SettingForm pForm 				 = (SettingForm) form;
 		GeneralSettingManager tmpManager = new GeneralSettingManagerImpl();
-
-		System.out.println("week:"+pForm.getWeekends());
 		if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
 			//##. Edit Data
 			pForm.setSettingBean(tmpManager.getGeneralSetting());
@@ -26,7 +24,7 @@ public class SettingAction extends Action {
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
 			//##. Update Data
 			pForm.getSettingBean().setWeekend(pForm.getWeekends());
-			pForm.getSettingBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getSettingBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			tmpManager.save(pForm.getSettingBean());				
 			return mapping.findForward("forward");
 		}

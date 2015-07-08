@@ -139,6 +139,7 @@
 								<th>Table</th>
 								<th>Activity Time</th>
 								<th>Activity Description</th>
+								<th></th>
 			                </tr>
 			            </thead>
 			              <tbody>
@@ -203,6 +204,7 @@
 												DELETE
 											</logic:equal>
 						                 </td>
+						                 <td align="center"><bean:write name="iter" property="auditTrailValue"/> </td>
 						             </tr>
 					             </logic:iterate>
 							 </logic:notEmpty>
