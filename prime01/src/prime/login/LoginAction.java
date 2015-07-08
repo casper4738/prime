@@ -114,10 +114,6 @@ public class LoginAction extends Action {
 					EmployeeBean tmpEmployeeBean = tmpEmployeeData.getEmployeeById(tmpUserBean.getEmployeeId());
 					
 					//----User and Employee Data
-					LoginData.setUserBean(tmpUserBean);
-					LoginData.setEmployeeBean(tmpEmployeeBean);
-					//request.
-
 					ArrayList<Integer> tmpMenuLists = new ArrayList<Integer>();
 					UserMenuManager tmpUserMenuManager = new UserMenuManagerImpl();
 					List<UserMenuBean> listUserMenu = tmpUserMenuManager.getListUserMenuByUserRoleId(LoginData.getUserData().getSysLevel());
@@ -126,14 +122,12 @@ public class LoginAction extends Action {
 							tmpMenuLists.add(e.getUserMenuId());
 						}
 					}
-
-					//----Menu Lists [Will Rethink Later]
-					LoginData.setMenuLists(tmpMenuLists);
 					
 					//If Success, Prepare Session
 					HttpSession tmpSession = request.getSession(true);
-					tmpSession.setAttribute(Constants.Session.ID		, tmpUserBean.getloginSession());
-					tmpSession.setAttribute(Constants.Session.Username	, tmpUserBean.getUserName());
+					tmpSession.setAttribute(Constants.Session.Userdata		, tmpUserBean);
+					tmpSession.setAttribute(Constants.Session.Employeedata	, tmpEmployeeBean);
+					tmpSession.setAttribute(Constants.Session.menuLists 	, tmpMenuLists);
 					break;
 				case Constants.LoginResponse.FAIL_LOCKED :
 					tmpLoginResponse = "0#" + Constants.Response.FAILLOGIN_USERLOCKED;

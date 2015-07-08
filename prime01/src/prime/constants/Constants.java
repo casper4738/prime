@@ -368,14 +368,14 @@ public interface Constants {
 		static String LOGIN_STATUS = "f1";
 	}
 	static interface Session{
-		static String ID				= "t1";
-		static String Username			= "t2";
-		static String Userdata			= "t3";
-		
 		static String redirectPage		= "t3";
 		static String redirectParam		= "t4";
 		static String needRedirect	 	= "t5";
 		static String lastPage			= "t6";
+
+		static String Userdata			= "t7";
+		static String Employeedata		= "t8";
+		static String menuLists			= "t9";
 	}
 	
 	//##G.Active Directory
