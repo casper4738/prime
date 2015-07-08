@@ -14,7 +14,6 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.apache.commons.io.FileUtils;
 import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
@@ -27,8 +26,8 @@ import prime.admin.holiday.HolidayManager;
 import prime.admin.holiday.HolidayManagerImpl;
 import prime.admin.position.PositionManager;
 import prime.admin.position.PositionManagerImpl;
+import prime.admin.user.UserBean;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -98,7 +97,7 @@ public class EmployeeAction extends Action {
 			request.setAttribute("listMonthYear", monthsList);
 			return mapping.findForward("weekend");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
-			pForm.getEmployeeBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getEmployeeBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			pForm.getEmployeeBean().setEmployeeId(manager.getNewId());
 		
 			if(pForm.getManagerId()!=0){
@@ -113,7 +112,7 @@ public class EmployeeAction extends Action {
 			manager.insert(pForm.getEmployeeBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DORESIGN.equals(pForm.getTask())) {
-			pForm.getEmployeeBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getEmployeeBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			manager.insertResign(pForm.getEmployeeBean());
 			
 			// FOR UPDATE HEAD ID WHERE OLD HEAD ID WAS RESIGN 
@@ -131,12 +130,12 @@ public class EmployeeAction extends Action {
 			 */
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
-			pForm.getEmployeeBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getEmployeeBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			EmployeeBean tmpEmployee = pForm.getEmployeeBean();
 			manager.update(tmpEmployee);
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOWEEKEND.equals(pForm.getTask())) {
-			pForm.getEmployeeBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getEmployeeBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			pForm.getEmployeeBean().setWeekEnd(pForm.getWeekEnds());
 			String startDateString= pForm.getListMondayDate();
 			
@@ -148,7 +147,7 @@ public class EmployeeAction extends Action {
 			//return null;
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DODAYOFF.equals(pForm.getTask())) {
-			pForm.getEmployeeBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getEmployeeBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			manager.insertDayoff(pForm.getEmployeeBean());
 			return null;
 			//return mapping.findForward("forward");
@@ -193,7 +192,7 @@ public class EmployeeAction extends Action {
 				tmpEmployee.setDivisionId(pForm.getDivisionId());
 			}	
 			
-			pForm.getEmployeeBean().setUpdateBy(LoginData.getUserData().getUserName());			
+			pForm.getEmployeeBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());			
 			pForm.getEmployeeBean().setManagerId(pForm.getManagerId());
 			manager.updatePositionDivision(tmpEmployee);
 			
@@ -222,7 +221,11 @@ public class EmployeeAction extends Action {
 				tmpResponseCode = 1;	//Employee Already Resign
 			} else if(manager.getCountListByTree(null, null, pForm.getEmployeeBean().getEmployeeId())> 0 && pForm.getEmployeeBean().getSubstituteHead() == ""){
 				tmpResponseCode = 2;	//HAS SUBORDINATE
-			}  else {
+			} else if(manager.getCountListByTree(null, null, pForm.getEmployeeBean().getEmployeeId())== 0 && pForm.getEmployeeBean().getSubstituteHead() != ""){
+				tmpResponseCode = 3;	//NO HAS SUBORDINATE
+			} else if(manager.getCountListProjectActive(pForm.getEmployeeBean().getEmployeeId()) > 0){
+				tmpResponseCode = 4;	//HAS RESPONSIBLE IN PM / Assigner
+			} else {
 				tmpResponseCode = 0;	//Success
 			}
 
@@ -231,6 +234,10 @@ public class EmployeeAction extends Action {
 				tmpResponse = "1#<div id=\"message\" style=\"color:red;font-size:8\">Employee already resign, please select other.</div>";
 			} else if(tmpResponseCode == 2){
 				tmpResponse = "2#<div id=\"message\" style=\"color:red;font-size:8\">Please Choose Subtitute Head.</div>";
+			} else if(tmpResponseCode == 3){
+				tmpResponse = "3#<div id=\"message\" style=\"color:red;font-size:8\">You don't have subordinate. Don't fill Subtitute Head</div>";
+			} else if(tmpResponseCode == 4){
+				tmpResponse = "4#<div id=\"message\" style=\"color:red;font-size:8\">This employee can't resign. Already as PM / Project Assigner</div>";
 			} else {
 				tmpResponse = "0#";
 			}
@@ -258,7 +265,7 @@ public class EmployeeAction extends Action {
 			tmpOut.flush();
 			return null;
 		} else if(Constants.Task.DOCHANGEPIC.equals(pForm.getTask())){
-			pForm.getEmployeeBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getEmployeeBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			pForm.getEmployeeBean().setFilePic(pForm.getProfpic().getFileData());
 			manager.updateChangePic(pForm.getEmployeeBean().getEmployeeId(),pForm.getEmployeeBean().getFilePic());
 			return null;

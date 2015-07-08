@@ -34,7 +34,7 @@
 			var tmpTask ="modalTable";
 			var tmpTable ="employeeHead";
 			var tmpParam =document.forms[0].employeeId.value;
-			var tmpDiv =document.forms[0].divisionId.value;
+			var tmpDiv = document.getElementById('divisionId').value;
 			
 			//##1.Accessing Prime Method For Modal Showing
 			if(pParam=='head'){

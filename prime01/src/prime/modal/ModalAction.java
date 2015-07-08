@@ -46,6 +46,7 @@ public class ModalAction extends Action {
 		int countRows = 0;
 		String task = pForm.getTask();
 		
+		System.out.println("task=" + task + "&param1=" + pForm.getParam1() + "&param2=" + pForm.getParam2()+ "&param3=employeeResign&param4="+pForm.getParam4()+"&param5="+pForm.getParam5());
 		
         switch (task) {
 	        case "insertEmployeeToDoList" :

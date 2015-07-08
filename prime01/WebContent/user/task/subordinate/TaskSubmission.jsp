@@ -24,6 +24,9 @@ function dosubmitx() {
 				 <%=Constants.NotificationType.TASK_SUBMITAPPROVAL%>,
 	 			"<%=Constants.PAGES_LIST[Constants.Page.USER_TASK_HEAD]%>;<%=Constants.Task.GOTOVIEW%>;"+taskId+";"+employeeReceiver);	
 	}
+	
+	alert("???");
+	
 	dosubmit();
 }
 </script>

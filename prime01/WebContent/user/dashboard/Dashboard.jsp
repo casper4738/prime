@@ -44,7 +44,7 @@
   		   loadActivityProgress(true);
   		   
   		   //Reload Chart Every 5 Minutes
-	   		setInterval(loadActivityProgress, 3000); //5 Menit
+	   		setInterval(loadActivityProgress, 300000); //30 Menit
   		   
 		});
     	

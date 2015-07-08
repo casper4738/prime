@@ -40,61 +40,67 @@ public class LoginAction extends Action {
 		//##1.Check Task
 		if(Constants.Task.DOLOGIN.equals(tmpForm.getTask())){
 			//---.Do Checking Process
-			int tmpLoginResultCode = 0;
+			int tmpLoginResultCode = Constants.LoginResponse.FAIL_USERNOTEXISTS;
 			String tmpLoginResponse = "";
 			String tmpUsername = tmpForm.getUsername();
 			String tmpPassword = tmpForm.getPassword();
 			
+			//---.If Username == Null, Just Return [Request From Tommy]
+			if(tmpUsername.length() <= 0)
+				return mapping.findForward("success");
+			
 			//---.User Validation Process
 			LoginBean tmpUserDetails = new LoginBean();
-			if(tmpManager.isUserExists(tmpUsername)){
+			if(tmpManager.isUserExists(tmpUsername)) { //############
 				//---Fetch User Details [Differ between AD and Normal DB]
 				tmpUserDetails = tmpManager.getUserDetails(tmpUsername);
-				if(tmpUserDetails.getActiveDirectory() == 1){
+				if(tmpUserDetails.getActiveDirectory() == 1) {
 					ActiveDirectoryManager tmpADManager = new ActiveDirectoryManager();
 					if(!tmpADManager.checkValidUser(tmpUsername, 
 													Constants.ActiveDirectory.ADMIN_USERNAME, 
 													Constants.ActiveDirectory.ADMIN_PASSWORD)){
-						tmpLoginResultCode = 1; //Fail Login, fail identification
+						tmpLoginResultCode = Constants.LoginResponse.FAIL_IDENTIFICATION; //Fail Login, fail identification
 					} else {
 						if(tmpUserDetails.getStatusUser() == Constants.UserStatus.LOCKED){
-							tmpLoginResultCode = 3; //Fail Login, because locked
+							tmpLoginResultCode = Constants.LoginResponse.FAIL_LOCKED; //Fail Login, because locked
 						} else {
 							if(tmpADManager.isAuthenticated(tmpUsername, tmpPassword)){
-								tmpLoginResultCode = 2; //Success Login	
+								tmpLoginResultCode = Constants.LoginResponse.SUCCESS; //Success Login	
 							} else {
-								tmpLoginResultCode = 1;
+								tmpLoginResultCode = Constants.LoginResponse.FAIL_IDENTIFICATION;
 							}
 						}
 					}
 				} else {
 					if(!tmpManager.isUserValidated(tmpUsername, tmpPassword)){
-						tmpLoginResultCode = 1; //Fail Login, fail identification
+						tmpLoginResultCode = Constants.LoginResponse.FAIL_IDENTIFICATION;//Fail Login, fail identification
 					} else {
 						if(tmpUserDetails.getStatusUser() == Constants.UserStatus.LOCKED){
-							tmpLoginResultCode = 3; //Fail Login, because locked
+							tmpLoginResultCode = Constants.LoginResponse.FAIL_LOCKED; //Fail Login, because locked
 						} else {
-							tmpLoginResultCode = 2; //Success Login
+							tmpLoginResultCode = Constants.LoginResponse.SUCCESS; //Success Login
 						}
 					}
 				}
 				
 				//Check Whether on-waiting for lock status or not
+				/*
 				if(tmpLoginResultCode == 2){
 					if(tmpUserDetails.getActionDate().after(new Date())){
 						tmpLoginResultCode = 3;
 					}
 				}
+				*/
 			}
 			
 			switch(tmpLoginResultCode){
-				case 0 :
+				case Constants.LoginResponse.FAIL_USERNOTEXISTS :
 					tmpLoginResponse = "0#" + Constants.Response.FAILLOGIN_USERNOTEXISTS;
 					break;
-				case 1 :
+				case Constants.LoginResponse.FAIL_IDENTIFICATION :
 					tmpLoginResponse = "0#" + Constants.Response.FAILLOGIN_VALIDATIONFAILED;
 					break;
-				case 2 :
+				case Constants.LoginResponse.SUCCESS :
 					tmpLoginResponse = "1#";
 					
 					//Set Login Session to DB and Update Last Active Time
@@ -108,9 +114,6 @@ public class LoginAction extends Action {
 					EmployeeBean tmpEmployeeBean = tmpEmployeeData.getEmployeeById(tmpUserBean.getEmployeeId());
 					
 					//----User and Employee Data
-					LoginData.setUserBean(tmpUserBean);
-					LoginData.setEmployeeBean(tmpEmployeeBean);
-
 					ArrayList<Integer> tmpMenuLists = new ArrayList<Integer>();
 					UserMenuManager tmpUserMenuManager = new UserMenuManagerImpl();
 					List<UserMenuBean> listUserMenu = tmpUserMenuManager.getListUserMenuByUserRoleId(LoginData.getUserData().getSysLevel());
@@ -119,16 +122,14 @@ public class LoginAction extends Action {
 							tmpMenuLists.add(e.getUserMenuId());
 						}
 					}
-
-					//----Menu Lists [Will Rethink Later]
-					LoginData.setMenuLists(tmpMenuLists);
 					
 					//If Success, Prepare Session
 					HttpSession tmpSession = request.getSession(true);
-					tmpSession.setAttribute(Constants.Session.ID		, tmpUserBean.getloginSession());
-					tmpSession.setAttribute(Constants.Session.Username	, tmpUserBean.getUserName());
+					tmpSession.setAttribute(Constants.Session.Userdata		, tmpUserBean);
+					tmpSession.setAttribute(Constants.Session.Employeedata	, tmpEmployeeBean);
+					tmpSession.setAttribute(Constants.Session.menuLists 	, tmpMenuLists);
 					break;
-				case 3 :
+				case Constants.LoginResponse.FAIL_LOCKED :
 					tmpLoginResponse = "0#" + Constants.Response.FAILLOGIN_USERLOCKED;
 					break;
 				default :
@@ -145,7 +146,6 @@ public class LoginAction extends Action {
 			tmpAction = null;
 		} else if(Constants.Task.DOLOGOUT.equals(tmpForm.getTask())) {
 			request.getSession().invalidate();
-			LoginData.clear();
 
 	    	if("XMLHttpRequest".equals(request.getHeader("X-Requested-With"))) {
 			     PrintWriter out = response.getWriter();

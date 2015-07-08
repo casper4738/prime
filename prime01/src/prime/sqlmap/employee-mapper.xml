@@ -662,4 +662,10 @@
 		WHERE EMP.TREE_ID LIKE  EMPX.TREE_ID||'%' AND EMP.EMPLOYEE_ID NOT IN (SELECT EMPLOYEE_ID FROM PROJECT_MEMBERS WHERE  PROJECT_ID=#projectId#)
 		AND EMP.EMPLOYEE_ID NOT IN (SELECT EMPLOYEE_ID FROM RESIGN_EMPLOYEES)
 	</select>
+	
+	<select id="getCountListProjectActive" resultClass="java.lang.Integer" parameterClass="java.lang.Integer">
+		SELECT COUNT(0) FROM PROJECTS
+		WHERE PROJECT_LAST_STATUS != 5 AND PROJECT_LAST_STATUS != 7 
+		AND (PROJECT_ASSIGNER = #employeeId# OR PROJECT_RECEIVER = #employeeId#)
+	</select>	
 </sqlMap>

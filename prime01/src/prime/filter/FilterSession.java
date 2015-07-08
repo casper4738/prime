@@ -49,6 +49,7 @@ public class FilterSession implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
+		
 		HttpServletRequest tmpServletRequest = (HttpServletRequest) request;
 	    HttpServletResponse tmpServletResponse = (HttpServletResponse) response;
 	    HttpSession tmpSession = tmpServletRequest.getSession();
@@ -81,27 +82,27 @@ public class FilterSession implements Filter {
 		    	if(tmpDBSession.equals((String)tmpSession.getAttribute(Constants.Session.ID))){
 		    		tmpIsRedirectNeed = false;
 		    		
-		    		if(!LoginData.isDataExists()){
-						try {
-			    			UserManager tmpUserData = new UserManagerImpl();
-							UserBean tmpUserBean = tmpUserData.getUserByUsername(tmpUsername);
-							LoginData.setUserBean(tmpUserBean);
-							
-							EmployeeManager tmpEmployeeData = new EmployeeManagerImpl();
-							EmployeeBean tmpEmployeeBean = tmpEmployeeData.getEmployeeById(tmpUserBean.getEmployeeId());
-							LoginData.setEmployeeBean(tmpEmployeeBean);
-						} catch (SQLException e) {
-							 e.printStackTrace();
-							
-							 //Immediate Return If Something Not Wanted Happening
-						     PrintWriter out = response.getWriter();
-						     out.println("<script type=\"text/javascript\">");
-						     out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.LOGIN] + "';");
-						     out.println("</script>");
-						     return;
-						}
-						
-		    		} 
+//		    		if(!LoginData.isDataExists()){
+//						try {
+//			    			UserManager tmpUserData = new UserManagerImpl();
+//							UserBean tmpUserBean = tmpUserData.getUserByUsername(tmpUsername);
+//							LoginData.setUserBean(tmpUserBean);
+//							
+//							EmployeeManager tmpEmployeeData = new EmployeeManagerImpl();
+//							EmployeeBean tmpEmployeeBean = tmpEmployeeData.getEmployeeById(tmpUserBean.getEmployeeId());
+//							LoginData.setEmployeeBean(tmpEmployeeBean);
+//						} catch (SQLException e) {
+//							 e.printStackTrace();
+//							
+//							 //Immediate Return If Something Not Wanted Happening
+//						     PrintWriter out = response.getWriter();
+//						     out.println("<script type=\"text/javascript\">");
+//						     out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.LOGIN] + "';");
+//						     out.println("</script>");
+//						     return;
+//						}
+//						
+//		    		} 
 		    		
 		    	} else {
 		    		LoginData.clear();
