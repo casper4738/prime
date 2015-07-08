@@ -24,5 +24,5 @@ public interface RoleManager {
 	
 	public List<RoleBean> getListAllRole() throws SQLException;
 	
-	
+	public Integer getRoleUsed(Integer roleId) throws SQLException;
 }

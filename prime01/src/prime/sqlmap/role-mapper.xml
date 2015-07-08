@@ -81,4 +81,9 @@
 			
 	</select>
 	
+	<select id="getRoleUsed" resultClass="java.lang.Integer" parameterClass="java.lang.Integer">
+		SELECT COUNT(1) 
+		FROM PROJECT_MEMBERS 
+        WHERE ROLE_ID = #roleId# 
+	</select>
 </sqlMap>

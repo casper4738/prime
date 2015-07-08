@@ -3,7 +3,6 @@
 <%@ taglib uri="/WEB-INF/tld/struts-bean.tld" prefix="bean"%>
 <%@ page import="prime.user.notification.NotificationManagerImpl" %>
 <%@ page import="prime.constants.Constants" %>
-<%@ page import="prime.login.LoginData" %>
 <%@ page import="prime.admin.employee.EmployeeBean" %>
 <%@ page import="prime.admin.user.UserBean" %>
 <%

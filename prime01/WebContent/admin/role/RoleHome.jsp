@@ -15,14 +15,45 @@
 	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
-	$('#table-1').dataTable( {
+		$('#table-1').dataTable( {
 		   paging    : false,
 		   searching : false,
 		   info   : false,
 		   language  : {
 		          "emptyTable":  "<center><%=Constants.Response.TABLE_EMPTY %></center>"
 		      }
-		     } );
+		} );
+		
+		function flyToDelete(task, value, confirmMessage) {
+			$.ajax({ 
+		          type	  : "POST",
+		          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_ROLE]%>',  
+		          data	  : 'task=<%=Constants.Task.DOVALIDATE1%>&tmpId=' + value,
+		          success : function(msg){
+						 param = msg.split('#');
+						 
+						 if(param[0] == "0"){ //Success
+						 	var tmpForm = document.forms[0]; 
+							if(confirmMessage != null){
+								if(!confirm(confirmMessage))	
+									return;
+							}
+							tmpForm.task.value = task;
+							tmpForm.tmpId.value = value;
+							menuLoadHandler(tmpForm.action, serialize(tmpForm));
+						 } else {			   //Failed
+							 alert("This Role can't be deleted")
+						 	 $('#btn-save').show();
+							 $('#btn-cancel').show();
+						 }
+		          },
+		          
+		          error: function(){
+						alert("ERROR");
+		        	  	//TO DO :: Add Error Handling
+		          }
+		     });
+		}
 	</script>
 	<!-- End of JS -->
 </head>
@@ -91,7 +122,7 @@
 		                		<td><bean:write name="iter" property="roleName"/></td>
 		                        <td align="center">
 		                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="roleId"/>')" src="resources/image/edit.png" />
-		                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.DODELETE%>', '<bean:write name="iter" property="roleId"/>', '<%=Constants.Confirmation.DELETE %>')" src="resources/image/remove.png" />
+		                        	<input type="image" onclick="flyToDelete('<%=Constants.Task.DODELETE%>', '<bean:write name="iter" property="roleId"/>', '<%=Constants.Confirmation.DELETE %>')" src="resources/image/remove.png" />
 		                        </td>
 		                    </tr>
 	                    </logic:iterate>
