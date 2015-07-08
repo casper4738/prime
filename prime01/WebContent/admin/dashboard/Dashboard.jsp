@@ -78,7 +78,7 @@
         
 		$('#calendar').fullCalendar({
 	          header: {
-		            left: 'prev,next today',
+		            left: '',
 		            center: 'title',
 		          },
 		          buttonText: {
@@ -171,9 +171,7 @@
 	<div class="row">
 		<section class="col-lg-5">
 		<div class="box box-primary">
-			<div class="box-header">
-                 <h4 class="box-title">Welcome, <%=tmpEmpData.getEmployeeName()%></h3>
-                 </div>
+			<div class="box-header"><h4 class="box-title">Welcome, <%=tmpEmpData.getEmployeeName()%></h4></div>
                  <div class="box-tools">
 				 <div class="box-body no-padding">
 					<center><img class="photo" id="profpic" width="320px" height="320px"/></center>

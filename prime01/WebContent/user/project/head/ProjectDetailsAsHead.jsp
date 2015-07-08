@@ -152,9 +152,9 @@
 			<tr><td>Project Name : ${ProjectUserFormAsHead.projectBean.projectId} <bean:write name="ProjectUserFormAsHead" property="projectBean.projectName"/></td>
 				<td>Project Assigner : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectAssigner" /> - <bean:write name="ProjectUserFormAsHead" property="projectBean.projectAssignerName" /> </td>
 			</tr>
-			<tr><td>Start Date : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectStartDate" format="dd MMMM yyyy"/> </td>
+			<tr><td>Estimated Start Date : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectStartDate" format="dd MMMM yyyy"/> </td>
 				<td>Project Receiver : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectReceiver"/> - <bean:write name="ProjectUserFormAsHead" property="projectBean.projectReceiverName"/> </td>
-			</tr><tr><td>Estimated Date : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectEstimateDate" format="dd MMMM yyyy" />
+			</tr><tr><td>Estimated End Date : <bean:write name="ProjectUserFormAsHead" property="projectBean.projectEstimateDate" format="dd MMMM yyyy" />
 				</td><td>Status :  
 					<jsp:include page="/content/Status.jsp">
        	    			<jsp:param name="status" value="${ProjectUserFormAsHead.projectBean.projectLastStatus}" />
@@ -162,7 +162,7 @@
 				</td>
 			</tr>
 			<tr><td>Actual Start Date: <bean:write name="ProjectUserFormAsHead" property="projectBean.actualStart" format="dd MMMM yyyy" /></td>
-				<td>Actual Start End : <bean:write name="ProjectUserFormAsHead" property="projectBean.actualEnd" format="dd MMMM yyyy"/></td>
+				<td>Actual End Date: <bean:write name="ProjectUserFormAsHead" property="projectBean.actualEnd" format="dd MMMM yyyy"/></td>
 			</tr>
 			<tr><td>Main Days : <bean:write name="ProjectUserFormAsHead" property="projectBean.mainDays" /></td>
 				<td>Progress Percentage : <bean:write name="ProjectUserFormAsHead" property="projectBean.percentage"/></td>
