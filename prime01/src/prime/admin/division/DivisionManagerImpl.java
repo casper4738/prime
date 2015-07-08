@@ -77,4 +77,10 @@ public class DivisionManagerImpl implements DivisionManager {
 		return (Integer) mapper.queryForObject("division.getCountListByCol", map);
 	}
 
+	@Override
+	public Integer getDivisionUsed(Integer divisionId) throws SQLException {
+		// TODO Auto-generated method stub
+		return (Integer) mapper.queryForObject("division.getDivisionUsed", divisionId);
+	}
+
 }

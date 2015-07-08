@@ -65,4 +65,11 @@
 		FROM DIVISIONS
 	    ORDER BY DIVISION_NAME ASC
 	</select>
+	
+	<select id="getDivisionUsed" resultClass="java.lang.Integer" parameterClass="java.lang.Integer">
+		SELECT COUNT(1) 
+		FROM EMPLOYEES EMP
+		WHERE DIVISION_ID = #divisionId# AND 
+		EMP.EMPLOYEE_ID NOT IN (SELECT EMPLOYEE_ID FROM RESIGN_EMPLOYEES)
+	</select>
 </sqlMap>
