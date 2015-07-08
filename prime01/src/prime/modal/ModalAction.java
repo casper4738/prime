@@ -293,7 +293,49 @@ public class ModalAction extends Action {
                 			tmpData.get(tmpI).add(list.get(tmpI).getManagerName());
                 		}
             			break;	
-            			
+            		case "employeeChangePM"  :
+                		tmpTarget = "employeeChangePM";
+                		
+                		System.out.println("id login modalss "+ tmpEmployeeData.getEmployeeId());
+                		System.out.println("datanya "+ pForm.getParam5());
+                    	//##1.Fetch Data From DB
+                		countRows = manager.getCountListByTreeforChangePM(pForm.getColumnSearch(), pForm.getSearch(), tmpEmployeeData.getEmployeeId(), pForm.getParam5());
+                		//---.Depend On The Object
+                		System.out.println("count rows modal "+countRows);
+                		list = manager.getListTreeforChangePM(pForm.getColumnSearch(), pForm.getSearch(),
+				   				 PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
+				   				 PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows),tmpEmployeeData.getEmployeeId(), pForm.getParam5());
+                		System.out.println("jumlah list"+list.size());
+                		//##2.Prepare Data for Modal-Table Show
+                		//---a.Modal Title
+                		request.setAttribute("modalListName", "Employees List");
+                		request.setAttribute("listSearchColumn", Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
+                		request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
+            			request.setAttribute("modalForm", "employeeUser");
+                		
+                		//---b.Column Head
+                		//[P.S] : Just Hardcode Here, because it only 1 form
+                		tmpColHead.add("Employee ID");
+                		tmpColHead.add("Name");
+                		tmpColHead.add("Gender");
+                		tmpColHead.add("Email");
+                		tmpColHead.add("Division");
+                		tmpColHead.add("Position");
+                		tmpColHead.add("Manager");
+                		request.setAttribute("listColumnHead", tmpColHead);
+                		
+                		for(tmpI = 0 ; tmpI < list.size() ; tmpI++){
+                			System.out.println("masuk list");
+                			tmpData.add(new ArrayList<String>());
+                			tmpData.get(tmpI).add(list.get(tmpI).getEmployeeId().toString());
+                			tmpData.get(tmpI).add(list.get(tmpI).getEmployeeName());
+                			tmpData.get(tmpI).add((list.get(tmpI).getGender() == 0) ? "Man" : "Woman");
+                			tmpData.get(tmpI).add(list.get(tmpI).getEmail());
+                			tmpData.get(tmpI).add(list.get(tmpI).getDivisionName());
+                			tmpData.get(tmpI).add(list.get(tmpI).getPositionName());
+                			tmpData.get(tmpI).add(list.get(tmpI).getManagerName());
+                		}
+            			break;		
             		case "activityList":  
                 		tmpTarget = "activityList";
                 		List<ActivityBean> listActivity;	

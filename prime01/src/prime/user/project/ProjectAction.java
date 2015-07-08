@@ -39,7 +39,6 @@ public class ProjectAction extends Action {
 		request.getSession().setAttribute(Constants.Session.needRedirect , false);
 		request.getSession().setAttribute(Constants.Session.redirectPage , Constants.PAGES_LIST[Constants.Page.USER_PROJECT]);
 		request.getSession().setAttribute(Constants.Session.redirectParam, "");		
-		request.setAttribute("homepage", request.getSession().getAttribute(Constants.Session.lastPage));
 		
 		Integer tmpEmployeeId = Integer.valueOf(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId());
 		
@@ -50,7 +49,6 @@ public class ProjectAction extends Action {
 		ActivityManager tmpActivityManager	= new ActivityManagerImpl();
 		RoleManager 	tmpRoleManager 		= new RoleManagerImpl();
 		
-		System.out.println("login id "+((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId());
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##.Get Data
 			//EmployeeBean tmpTaskAssign 	= tmpEmployeeManager.getEmployeeById(100);
@@ -165,8 +163,9 @@ public class ProjectAction extends Action {
 			pForm.setProjectBean(tmpProjectManager.getProjectById(pForm.getProjectId()));
 			//if(pForm.getEmployeeBean().getEmployeeId()==)
 			System.out.println("empid "+pForm.getEmployeeId());
-			pForm.getProjectBean().setEmployeeId(pForm.getEmployeeId());
-			pForm.getProjectBean().setEmployeeName(pForm.getEmployeeBean().getEmployeeName());
+			pForm.getEmployeeBean().setEmployeeId(pForm.getEmployeeId());
+			//pForm.getProjectBean().setEmployeeId(pForm.getEmployeeId());
+		//	pForm.getProjectBean().setEmployeeName(pForm.getEmployeeBean().getEmployeeName());
 			System.out.println("PID "+pForm.getProjectId());
 			
 //			int countRows = tmpProjectManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());
@@ -180,7 +179,7 @@ public class ProjectAction extends Action {
 			request.setAttribute("listProjectMemberDetails", list);
 			request.setAttribute("listSearchColumn", Constants.Search.PROJECT_SEARCHCOLUMNS);
 			request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
-			request.setAttribute("isAddTaskActive" , tmpRoleManager.getRolesByEmployeeIdAndProjectId(pForm.getProjectBean().getEmployeeId(),  pForm.getProjectBean().getProjectId()).size());
+			request.setAttribute("isAddTaskActive" , tmpRoleManager.getRolesByEmployeeIdAndProjectId(pForm.getEmployeeBean().getEmployeeId(),  pForm.getProjectBean().getProjectId()).size());
 			
 			
 			setPaging(request,pForm, countRows, pForm.getGoToPage(), pForm.getShowInPage());			

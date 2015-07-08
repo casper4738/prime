@@ -16,10 +16,13 @@
 	function openModalHandler(){
 		//##0.Preparing Parameter For Modal Showing
 		var tmpTask ="modalTable";
-		var tmpTable ="employeeTree";
+		var tmpTable ="employeeChangePM";
+		var oldPM = document.getElementById('oldPM').value;
+		var idAssigner=document.getElementById('idAssigner').value;
+		var projectId=document.getElementById('projectId').value;
 		
 		//##1.Accessing Prime Method For Modal Showing
-		modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable, $('#result')); 
+		modalLoadHandler("task=" + tmpTask + "&param1=" + tmpTable + "&param2=" + idAssigner + "&param4=" + projectId+ "&param5=" + oldPM , $('#result')); 
 	}
 	
 		
@@ -70,10 +73,10 @@
                 	    <html:hidden name="ProjectUserFormAsHead" property="employeeId" />
                 	    <html:hidden name="ProjectUserFormAsHead" property="projectBean.employeeId" />
                 	    <html:hidden name="ProjectUserFormAsHead" property="tempRoleId" />
-                	    <html:hidden name="ProjectUserFormAsHead" property="projectId" />
-                	    <html:hidden name="ProjectUserFormAsHead" property="projectBean.projectReceiver"/>
-                	    <html:hidden name="ProjectUserFormAsHead" property="projectBean.projectAssigner"/>
-                	    <html:hidden name="ProjectUserFormAsHead" property="projectBean.employeeIdReceiver"/>
+                	    <html:hidden name="ProjectUserFormAsHead" property="projectId" styleId="projectId"/>
+                	    <html:hidden name="ProjectUserFormAsHead" property="projectBean.projectReceiver" />
+                	    <html:hidden name="ProjectUserFormAsHead" property="projectBean.projectAssigner" styleId="idAssigner"/>
+                	    <html:hidden name="ProjectUserFormAsHead" property="projectBean.employeeIdReceiver" styleId="oldPM"/>
                 	    
                 	    <html:hidden name="ProjectUserFormAsHead" property="projectBean.projectLastStatus"/>
                 		<table class="form-input" align="center" style="width: 500px" >

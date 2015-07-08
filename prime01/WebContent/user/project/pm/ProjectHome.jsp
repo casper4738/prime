@@ -91,7 +91,7 @@
 	<section class="content-header">
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
-			<li><a href="javascript:void(0)" onclick="menuLoadHandler('${homepage}')"> <i class="fa fa-dashboard"></i> Home</a></li> 
+			<li><i class="fa fa-dashboard"></i> Home</li>
 			<li class="active">Manage Project</li>
 		</ol>
 	</section>

@@ -10,6 +10,7 @@
 	<meta charset="UTF-8">
 	<title>Prime</title>
 	<!-- CSS -->
+	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
@@ -21,6 +22,8 @@
 	<!-- End of CSS -->
 	
 	<!-- JS -->
+    <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src='resources/plugins/fastclick/fastclick.min.js'></script>
     <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -138,7 +141,7 @@
 	<section class="content-header">
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
-			<li><a href="javascript:void(0)" onclick="menuLoadHandler('${homepage}')"> <i class="fa fa-dashboard"></i> Home</a></li> 
+			<li><i class="fa fa-dashboard"></i> Home</li>
 			<li><a href="javascript:flyToSubmit('success')" >Manage Project</a></li>
 			<li class="active">Project Detail</li>
 		</ol>
@@ -174,24 +177,28 @@
                  
             <div class="form-action">
 				<table align="center"><tr>
-				<logic:notEqual name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="6">
-						<logic:equal name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="3">
-							<td style="padding:5px;"><input type="button" value="Approve"	class="btn btn-sm btn-success" onclick="flyToPage('approve')"/></td>
-							<td style="padding:5px;"><input type="button" value="Reject" 	class="btn btn-sm  btn-warning" onclick="flyToPage('reject', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
-						</logic:equal>	
-						<logic:notEqual name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="5">
-							<td style="padding:5px;"><input type="button" value="Abort" 	class="btn btn-sm  btn-danger" onclick="flyToAbort('abort', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
-							<td style="padding:5px;"><input type="button" value="Change PM" class="btn btn-sm  btn-primary" onclick="flyToPage('changePM', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
-						</logic:notEqual>
+				<logic:notEqual name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="7">
+					<logic:notEqual name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="6">
+							<logic:equal name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="3">
+								<td style="padding:5px;"><input type="button" value="Approve"	class="btn btn-sm btn-success" onclick="flyToPage('approve')"/></td>
+								<td style="padding:5px;"><input type="button" value="Reject" 	class="btn btn-sm  btn-warning" onclick="flyToPage('reject', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
+							</logic:equal>	
+							<logic:notEqual name="ProjectUserFormAsHead" property="projectBean.projectLastStatus" value="5">
+								<td style="padding:5px;"><input type="button" value="Abort" 	class="btn btn-sm  btn-danger" onclick="flyToAbort('abort', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
+								<td style="padding:5px;"><input type="button" value="Change PM" class="btn btn-sm  btn-primary" onclick="flyToPage('changePM', '<bean:write name="ProjectUserFormAsHead" property="projectId" />')"/></td>
+							</logic:notEqual>
+					</logic:notEqual>
 				</logic:notEqual>
+				
+				
 				</tr></table>
             </div>
 			
 			<div class="show-in-page">
 				Show per page
-				<html:select name="ProjectUserFormAsHead" property="showInPage" onchange="change(this.value)" >
-					<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
-				</html:select>
+				<html:select property="showInPage" name="ProjectUserFormAsHead" onchange="change(this.value)">
+					<html:optionsCollection name="listShowEntries" label="value" value="key"/>
+				</html:select> 
 			</div>
 			
 			<div class="search-table">
@@ -213,7 +220,7 @@
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
 					<html:text name="ProjectUserFormAsHead" property="search" styleClass="textSearch"/>
-					<input type="submit" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOEDIT%>')" class="buttonSearch myButton" value='Search'>
+					<input type="submit" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOEDIT%>')" class="btn btn-sm  btn-primary" value='Search'>
 				</html:form>
 				
 			</div>
@@ -291,7 +298,7 @@
        				  				</div>
        				  			</td>
 								<td style="padding-left:5px">
-									<input type="button" class="btn btn-sm bg-olive" style="height:32px" onclick="loadProjectProgress()" value='Search'/>
+									<input type="button" class="btn btn-primary btn-xs" style="height:32px" onclick="loadProjectProgress()" value='Search'/>
 								</td>
 							</tr>
 						</table>

@@ -39,11 +39,9 @@ public class ProjectActionAsHead extends Action {
 		request.getSession().setAttribute(Constants.Session.needRedirect , false);
 		request.getSession().setAttribute(Constants.Session.redirectPage , Constants.PAGES_LIST[Constants.Page.USER_PROJECT]);
 		request.getSession().setAttribute(Constants.Session.redirectParam, "");		
-		request.setAttribute("homepage", request.getSession().getAttribute(Constants.Session.lastPage));
 				
-		EmployeeBean tmpEmployeedata = (EmployeeBean)request.getSession().getAttribute(Constants.Session.Employeedata);
-		UserBean tmpUserdata = (UserBean)request.getSession().getAttribute(Constants.Session.Userdata);
-		Integer tmpEmployeeId = tmpEmployeedata.getEmployeeId();
+		
+		Integer tmpEmployeeId = ((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId();
 		
 		ProjectFormAsHead 	pForm 				= (ProjectFormAsHead) form;
 		ProjectManager 	tmpProjectManager 	= new ProjectManagerImpl();
@@ -52,6 +50,7 @@ public class ProjectActionAsHead extends Action {
 		ActivityManager tmpActivityManager	= new ActivityManagerImpl();
 		RoleManager 	tmpRoleManager 		= new RoleManagerImpl();
 		
+		System.out.println("masuk detail head action asdnsalk");
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##.Get Data
 			//EmployeeBean tmpTaskAssign 	= tmpEmployeeManager.getEmployeeById(100);
@@ -81,7 +80,7 @@ public class ProjectActionAsHead extends Action {
 			pForm.getProjectBean().setProjectStatus(0);
 			pForm.getProjectBean().setProjectReceiver(pForm.getEmployeeId());
 			pForm.getProjectBean().setProjectChangeNote("First Time");
-			pForm.getProjectBean().setUpdatedBy(tmpUserdata.getUserName());
+			pForm.getProjectBean().setUpdatedBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			tmpProjectManager.insert(pForm.getProjectBean());
 			tmpProjectManager.insertDetail(pForm.getProjectBean());
 			pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
@@ -98,7 +97,7 @@ public class ProjectActionAsHead extends Action {
 				search = pForm.getSearch();
 			}
 			System.out.println("colom "+pForm.getColumnSearchReal());
-			int countRows  = tmpProjectManager.getCountListByColAsMember(pForm.getColumnSearchReal(), search, tmpEmployeeId);
+			int countRows  = tmpProjectManager.getCountListByColAsHead(pForm.getColumnSearchReal(), search, tmpEmployeeId);
 			List<ProjectBean> list = tmpProjectManager.getListByColumnAsMember(pForm.getColumnSearchReal(), pForm.getSearch(),
 					PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 					PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),tmpEmployeeId);

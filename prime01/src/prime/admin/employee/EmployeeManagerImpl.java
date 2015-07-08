@@ -226,6 +226,38 @@ public class EmployeeManagerImpl implements EmployeeManager {
 	}
 	
 	
+	
+	
+	@Override
+	public List<EmployeeBean> getListTreeforChangePM(String columnSearch, String value, Integer startRow, Integer endRow, Integer employeeId, Integer idOldPM)  throws SQLException {
+		System.out.println("emp "+employeeId);
+		System.out.println("old "+idOldPM);
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);			
+		map.put("employeeId", employeeId);
+		map.put("idOldPM", idOldPM);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		System.out.println("emp "+employeeId);
+		System.out.println("old "+idOldPM);
+		System.out.println("columnSearch "+columnSearch);
+		System.out.println("value "+value);
+		return mapper.queryForList("employee.getListTreeforChangePM", map);
+	}
+
+	
+	
+	@Override
+	public Integer getCountListByTreeforChangePM(String columnSearch, String value, Integer employeeId, Integer idOldPM)  throws SQLException {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("columnSearch", columnSearch);
+		map.put("value", value);			
+		map.put("employeeId", employeeId);
+		map.put("idOldPM", idOldPM);
+		return (Integer) mapper.queryForObject("employee.getCountListByTreeforChangePM", map);
+	}
+
 	//get count under level
 	@Override
 	public Integer getCountUnderLevel(Integer employeeId) throws SQLException {

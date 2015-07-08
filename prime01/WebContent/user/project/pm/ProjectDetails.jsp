@@ -9,8 +9,11 @@
 	<meta charset="UTF-8">
 	<title>Prime</title>
 	<!-- CSS -->
+	<link href="resources/ionicons-2.0.1/css/ionicons.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.min.css" rel="stylesheet" type="text/css" />
     <link href="resources/plugins/fullcalendar/fullcalendar.print.css" rel="stylesheet" type="text/css" media='print' />
+	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
+	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/datatables/dataTables.bootstrap.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/datatables/jquery.dataTables.min.css" rel="stylesheet" type="text/css" />
@@ -18,6 +21,8 @@
 	<!-- End of CSS -->
 	
 	<!-- JS -->
+    <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
+    <script src='resources/plugins/fastclick/fastclick.min.js'></script>
     <script src="resources/plugins/fullcalendar/fullcalendar.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/datepicker/bootstrap-datepicker.js" type="text/javascript"></script>
 	<script src="resources/plugins/datatables/jquery.dataTables.min.js" type="text/javascript"></script>
@@ -155,7 +160,7 @@
 	<section class="content-header">
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
-			<li><a href="javascript:void(0)" onclick="menuLoadHandler('${homepage}')"> <i class="fa fa-dashboard"></i> Home</a></li> 
+			<li><i class="fa fa-dashboard"></i> Home</li>
 			<li><a href="javascript:flyToSubmit('success')" >Manage Project</a></li>
 			<li class="active">Project Detail</li>
 		</ol>
@@ -194,10 +199,12 @@
 					<td style="padding:5px;">
 						<logic:equal name="ProjectUserForm" property="projectBean.isPM" value="1">	
 							<logic:notEqual name="ProjectUserForm" property="projectBean.projectLastStatus" value="5">
-								<input type="button" value="Add New Project Member" class="btn btn-sm btn-primary" onclick="flyToPage('addmember')"/></td>
-								<logic:equal name="ProjectUserForm" property="projectBean.percentStatus" value="100">
-			               			<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToSubmit('<%=Constants.Task.TASK.GOTOSUBMIT%>', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
-			               		</logic:equal>
+								<logic:notEqual name="ProjectUserForm" property="projectBean.projectLastStatus" value="7">
+										<input type="button" value="Add New Project Member" class="btn btn-sm btn-primary" onclick="flyToPage('addmember')"/></td>
+										<logic:equal name="ProjectUserForm" property="projectBean.percentStatus" value="100">
+					               			<td><input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToSubmit('<%=Constants.Task.TASK.GOTOSUBMIT%>', '<bean:write name="ProjectUserForm" property="projectId" />')"/></td>
+				               		</logic:equal>
+				               	</logic:notEqual>
 		               		</logic:notEqual>
 	               		</logic:equal>
 					
@@ -205,10 +212,10 @@
             </div>
 			
 			<div class="show-in-page">
-				Show per page  <bean:write name="ProjectUserForm" property="projectBean.projectLastStatus"  />
-				<html:select name="ProjectUserForm" property="showInPage" onchange="change(this.value)" >
-					<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
-				</html:select>
+				Show per page
+				<html:select property="showInPage" name="ProjectUserForm" onchange="change(this.value)">
+					<html:optionsCollection name="listShowEntries" label="value" value="key"/>
+				</html:select> 
 			</div>
 			
 			<div class="search-table">
@@ -227,7 +234,7 @@
 						<html:optionsCollection name="listSearchColumn" label="value" value="key"/>
 					</html:select>
 					<html:text name="ProjectUserForm" property="search" styleClass="textSearch"/>
-					<input type="submit" onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOEDIT%>')" class="buttonSearch myButton" value='Search'>
+					<input type="submit"  onclick="flyToPage('<%=Constants.Task.ACTIVITY.GOTOEDIT%>')" class="btn btn-sm  btn-primary" value='Search'>
 				</html:form>
 			</div>
 			<div class="box-body">

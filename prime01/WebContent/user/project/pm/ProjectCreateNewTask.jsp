@@ -36,7 +36,6 @@
 		}
 		
 		function flyToTaskDetail(back, value) {
-			alert(value)
 			var tmpForm = document.forms[0];
 			tmpForm.task.value = back;
 			tmpForm.employeeId.value = value;
@@ -49,7 +48,7 @@
 	<section class="content-header">
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
-			<li><a href="javascript:void(0)" onclick="menuLoadHandler('${homepage}')"> <i class="fa fa-dashboard"></i> Home</a></li> 
+			<li><i class="fa fa-dashboard"></i> Home</li>
 			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
 			<li><a href="javascript:flyToBack(
 	                        		'<%=Constants.Task.PROJECT.GOTOPROJECTDETAIL %>', 
@@ -68,6 +67,7 @@
                 		<html:hidden name="ProjectUserForm" property="back"/>
 						<html:hidden name="ProjectUserForm" property="taskId"/>
 						<html:hidden name="ProjectUserForm" property="employeeId"/>
+						<html:hidden name="ProjectUserForm" property="projectId"/>
 						<html:hidden name="ProjectUserForm" property="taskBean.taskId"/>
                 		<html:hidden name="ProjectUserForm" property="projectBean.projectId" />
                 		<html:hidden name="ProjectUserForm" property="projectBean.employeeId" />
