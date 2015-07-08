@@ -2,6 +2,7 @@ package prime.user.notification;
 
 import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -89,7 +90,8 @@ public class NotificationAction extends Action {
 			
 			return null;
 		} else if(("reloadNotification").equals(pForm.getTask())){ 
-			if(LoginData.getMenuLists().indexOf(Constants.Page.USER_VIEWNOTIF) == -1)
+			ArrayList<Integer> tmpLists = (ArrayList<Integer>)request.getSession().getAttribute(Constants.Session.menuLists);
+			if(tmpLists.indexOf(Constants.Page.USER_VIEWNOTIF) == -1)
 				return null;
 			
 			int countNotif = tmpManager.getCountListNotifNoRead(LoginData.getEmployeeData().getEmployeeId());
