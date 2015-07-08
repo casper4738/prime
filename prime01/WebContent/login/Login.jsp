@@ -16,11 +16,11 @@
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
   </head>
-  <body class="login-page" style="background-color:teal;">
+  <body class="login-page" style="background-color:#3b5998;">
     <div class="login-box">
       <div class="login-box-body">
 	    <div class="login-logo">
-	       <b>Prime</b> v.1.0
+	       <b>Prime</b> v.1.1
 	    </div><!-- /.login-logo -->
         <p class="login-box-msg">Sign in to start your session</p>
         <html:form action="/Login" method="post" styleId="form-login">
@@ -75,43 +75,50 @@
 		  	  $('#textbox-username').val('');
 		  	  $('#textbox-password').val('');
 			  $('#btn-submit').click(function(event){ 
-				  $('#textbox-username').attr("readonly", true);
-				  $('#textbox-password').attr("readonly", true);
-				  $('#btn-submit').hide();
-	    		  $('#ajax-validating').show();  
-	    		  //Do Login Data checking
-				  document.forms[0].task.value = "<%=Constants.Task.DOLOGIN%>";
-	    		  var str = $('#form-login').serialize();
-	    		  $.ajax({ 
-	    	          type	  : "POST",
-	    	          url	  : "<%=Constants.PAGES_LIST[Constants.Page.LOGIN]%>",  // Send the login info to this page
-	    	          data	  : str,
-	    	          success : function(msg){
-	    	        	  var param = msg.split('#');
-	    	        	  if(param[0] == "0"){ //0 == False
+				  if($('#textbox-username').val().length <= 0 || $('#textbox-password').val().length <= 0){
+	    	  		 $('#login-fail').show();
+					 $('#login-fail').html('<%=Constants.Response.FAILLOGIN_EMPTYDATA%>');
+				  } else {
+					  $('#textbox-username').attr("readonly", true);
+					  $('#textbox-password').attr("readonly", true);
+					  $('#btn-submit').hide();
+		    		  $('#ajax-validating').show();  
+		    		  //Do Login Data checking
+					  document.forms[0].task.value = "<%=Constants.Task.DOLOGIN%>";
+		    		  var str = $('#form-login').serialize();
+		    		  $.ajax({ 
+		    	          type	  : "POST",
+		    	          url	  : "<%=Constants.PAGES_LIST[Constants.Page.LOGIN]%>",  // Send the login info to this page
+		    	          data	  : str,
+		    	          success : function(msg){
+		    	        	  var param = msg.split('#');
+		    	        	  if(param[0] == "0"){ //0 == False
+		    	        		  //Set Fail Login Warning
+					 			  $('#textbox-username').attr("readonly", false);
+					  			  $('#textbox-password').attr("readonly", false);
+		    	        		  $('#login-fail').html(param[1]);
+		    	        		  $('#login-fail').show();
+		    	        		  $('#btn-submit').show();
+		    		    		  $('#ajax-validating').hide(); 
+		    	        	  } else {
+		    	        		  window.location.href = "<%=Constants.PAGES_LIST[Constants.Page.MENU]%>";
+		    	        	  }
+		    	          },
+		    	          
+		    	          error: function(){
 	    	        		  //Set Fail Login Warning
+	    	        		  $('#login-fail').html("<%=Constants.Response.FAILLOGIN_ERROR%>");
 				 			  $('#textbox-username').attr("readonly", false);
 				  			  $('#textbox-password').attr("readonly", false);
-	    	        		  $('#login-fail').html(param[1]);
 	    	        		  $('#login-fail').show();
 	    	        		  $('#btn-submit').show();
 	    		    		  $('#ajax-validating').hide(); 
-	    	        	  } else {
-	    	        		  window.location.href = "<%=Constants.PAGES_LIST[Constants.Page.MENU]%>";
-	    	        	  }
-	    	          },
-	    	          
-	    	          error: function(){
-    	        		  //Set Fail Login Warning
-    	        		  $('#login-fail').html("<%=Constants.Response.FAILLOGIN_ERROR%>");
-			 			  $('#textbox-username').attr("readonly", false);
-			  			  $('#textbox-password').attr("readonly", false);
-    	        		  $('#login-fail').show();
-    	        		  $('#btn-submit').show();
-    		    		  $('#ajax-validating').hide(); 
-							//TO DO :: Do Some Error Handling at Here
-	    	          }
-	    	       });
+								//TO DO :: Do Some Error Handling at Here
+		    	          }
+		    	       });
+				  }
+				  
+				  
     	          
     	          event.preventDefault();
 		      }); 

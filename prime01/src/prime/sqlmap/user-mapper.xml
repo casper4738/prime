@@ -70,7 +70,7 @@
 	
 	<update id="resetSession" parameterClass="java.lang.String">
 		 UPDATE USERS SET
-		 LOGIN_SESSION = "empty"
+		 LOGIN_SESSION = 'empty'
 		 WHERE LOWER(USERNAME) = LOWER(#userName#)
 	</update>
 	

@@ -15,6 +15,9 @@ import org.apache.struts.action.ActionMapping;
 
 import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
+import prime.admin.setting.GeneralSettingBean;
+import prime.admin.setting.GeneralSettingManager;
+import prime.admin.setting.GeneralSettingManagerImpl;
 import prime.admin.userrole.UserRoleManager;
 import prime.admin.userrole.UserRoleManagerImpl;
 import prime.constants.Constants;
@@ -57,7 +60,11 @@ public class UserAction extends Action {
 
 			ActiveDirectoryManager tmpADManager = new ActiveDirectoryManager();
 			
-			if (tmpADManager.checkValidUser(userForm.getUserBean().getUserName(), Constants.ActiveDirectory.ADMIN_USERNAME, Constants.ActiveDirectory.ADMIN_PASSWORD)) {
+			//---.Set Active Directory Constants One for All
+			GeneralSettingManager tmpGeneralSettingManager = new GeneralSettingManagerImpl();
+			GeneralSettingBean tmpGeneralSettingBean = tmpGeneralSettingManager.getGeneralSetting();
+			
+			if (tmpADManager.checkValidUser(userForm.getUserBean().getUserName(), tmpGeneralSettingBean.getUsernameActiveDirectory(), tmpGeneralSettingBean.getPasswordActiveDirectory())) {
 				userForm.getUserBean().setIsActiveDirectory(true);
 				userForm.getUserBean().setPassword("empty");
 			} else {

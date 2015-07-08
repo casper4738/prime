@@ -18,6 +18,9 @@ import org.apache.struts.action.ActionMapping;
 import prime.admin.employee.EmployeeBean;
 import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
+import prime.admin.setting.GeneralSettingBean;
+import prime.admin.setting.GeneralSettingManager;
+import prime.admin.setting.GeneralSettingManagerImpl;
 import prime.admin.user.UserBean;
 import prime.admin.user.UserManager;
 import prime.admin.user.UserManagerImpl;
@@ -36,6 +39,10 @@ public class LoginAction extends Action {
 		LoginForm tmpForm = (LoginForm) form;
 		LoginManager tmpManager = new LoginManagerImpl();
 		ActionForward tmpAction = null;
+		
+		//---.Set Active Directory Constants One for All
+		GeneralSettingManager tmpGeneralSettingManager = new GeneralSettingManagerImpl();
+		GeneralSettingBean tmpGeneralSettingBean = tmpGeneralSettingManager.getGeneralSetting();
 		
 		//##1.Check Task
 		if(Constants.Task.DOLOGIN.equals(tmpForm.getTask())){
@@ -57,8 +64,8 @@ public class LoginAction extends Action {
 				if(tmpUserDetails.getActiveDirectory() == 1) {
 					ActiveDirectoryManager tmpADManager = new ActiveDirectoryManager();
 					if(!tmpADManager.checkValidUser(tmpUsername, 
-													Constants.ActiveDirectory.ADMIN_USERNAME, 
-													Constants.ActiveDirectory.ADMIN_PASSWORD)){
+													tmpGeneralSettingBean.getUsernameActiveDirectory(), 
+													tmpGeneralSettingBean.getPasswordActiveDirectory())){
 						tmpLoginResultCode = Constants.LoginResponse.FAIL_IDENTIFICATION; //Fail Login, fail identification
 					} else {
 						if(tmpUserDetails.getStatusUser() == Constants.UserStatus.LOCKED){
