@@ -30,10 +30,9 @@
 </head>
 <body class="skin-blue sidebar-mini">
 			<section class="content-header">
-				<h1>Manage User Role
-				</h1>
+				<h1>Manage User Role</h1>
 				<ol class="breadcrumb">
-					<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="#" onclick="flyToBack('<%= request.getSession().getAttribute(Constants.Session.lastPage)%>')"><i class="fa fa-dashboard"></i> Home</a></li>
 					<li class="active">Manage User Role</li>
 				</ol>
 			</section>

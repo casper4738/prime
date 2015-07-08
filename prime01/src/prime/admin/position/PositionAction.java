@@ -26,6 +26,8 @@ public class PositionAction extends Action {
 		PositionManager tmpManager = new PositionManagerImpl();
 		GeneralSettingManager tmpSettingManager = new GeneralSettingManagerImpl();
 		
+		request.setAttribute("homepage", request.getSession().getAttribute(Constants.Session.lastPage));
+		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
 			request.setAttribute("listPositionLevel", PrimeUtil.getListPositionLevel(tmpSettingManager.getGeneralSetting().getGeneralSettingLevel()));

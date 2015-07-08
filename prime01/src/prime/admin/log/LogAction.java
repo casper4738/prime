@@ -21,6 +21,8 @@ public class LogAction extends Action {
 		LogForm pForm 			 = (LogForm) form;
 		LogManager tmpLogManager = new LogManagerImpl();
 		
+		request.setAttribute("homepage", request.getSession().getAttribute(Constants.Session.lastPage));
+		
 		String search = "";
 		if("DATE".equals(pForm.getColumnSearch())) {
 			search = pForm.getStartHoliday()+";"+pForm.getUntilHoliday();

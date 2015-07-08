@@ -22,7 +22,7 @@
 		<section class="content-header">
 			<h1>Manage Division</h1>
 			<ol class="breadcrumb">
-				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+				<li><a href="javascript:void(0)" onclick="menuLoadHandler('${homepage}')"> <i class="fa fa-dashboard"></i> Home</a></li> 
 				<li class="active">Manage Division</li>
 			</ol>
 		</section>
