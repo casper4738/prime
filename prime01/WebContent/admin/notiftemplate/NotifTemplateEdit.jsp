@@ -15,6 +15,7 @@
 	<link href="resources/dist/css/AdminLTE.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
+	<link href="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css" rel="stylesheet" type="text/css" />
 	<!-- End CSS -->
 	
 	<!-- JS -->
@@ -23,7 +24,14 @@
 	<script src="resources/plugins/slimScroll/jquery.slimscroll.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/fastclick/fastclick.min.js"></script>
 	<script src="resources/dist/js/app.min.js" type="text/javascript"></script>
+	<!-- Bootstrap WYSIHTML5 -->
+    <script src="resources/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js" type="text/javascript"></script>
 	<script type="text/javascript">
+	
+	 $(function () {
+	        //Add text editor
+	        $("#notifTemplateValue").wysihtml5();
+	      });
 
 	function validateForm() {
 		$('#nameValidator').html('');
@@ -107,7 +115,7 @@
                   	<html:form action="/NotifTemplate"	>
                   		<html:hidden name="NotifTemplateForm" property="task" value="<%=Constants.Task.DOEDIT%>"/>
                   		<html:hidden name="NotifTemplateForm" property="notifTemplateBean.notifTemplateId" />
-                  		<table class="form-input" align="center">
+                  		<table class="form-input" align="center" style="width: 80%">
                   			<tr>
                   				<td width="200px">Notif Template Name</td>
                   				<td>:</td>
@@ -121,18 +129,15 @@
                   			<tr>
 	                  			<td width="200px">Notif Template Value</td>
 	                  			<td>:</td>
-                  			<td> <html:textarea name="NotifTemplateForm" property="notifTemplateBean.notifTemplateValue" styleClass="form-control" styleId="notifTemplateValue" rows="5"/> </td>
+                  			<td> 
+                  				<html:textarea name="NotifTemplateForm" property="notifTemplateBean.notifTemplateValue" styleClass="form-control" style="width: 100%" styleId="notifTemplateValue" rows="10"/>
+                  			</td>
                   			</tr>
                   			<tr>
                   				<td></td>
                   				<td></td>
                   				<td><i><span  id="valueValidator" style="color: red"></span></i></td>
                   			</tr>
-                  			<!-- <tr>
-	                  			<td width="200px">Notif Template Preview</td>
-	                  			<td>:</td>
-                  			<td><input type="button" class="btn bg-olive" style="height:32px" onclick="showNotifPreview()" value='Refresh'/><div id="notif-preview"></div></td>
-                  			</tr> -->
                   			<tr>
 	                  			<td width="200px">Notif Template Description</td>
 	                  			<td>:</td>

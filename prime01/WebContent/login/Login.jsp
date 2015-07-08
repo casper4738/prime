@@ -16,7 +16,7 @@
 	<link href="resources/dist/css/skins/_all-skins.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
   </head>
-  <body class="login-page" style="background-color:#3b5998;">
+  <body class="login-page" style="background-color:teal">
     <div class="login-box">
       <div class="login-box-body">
 	    <div class="login-logo">

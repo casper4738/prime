@@ -84,11 +84,14 @@
 		SELECT * FROM  (SELECT page.*, ROWNUM rnum FROM 
 		(SELECT USERNAME AS userName, 
 		SYSTEM_LEVEL AS sysLevel,
+		UR.USER_ROLE_NAME AS sysName,
 		US.EMPLOYEE_ID AS employeeId,
 		EMP.EMPLOYEE_NAME AS employeeName,
 		ACTION_DATE AS changeDate,
-		STATUS_USER AS statusUser
+		STATUS_USER AS statusUser,
+		IS_ACTIVE_DIR AS isActiveDirectory
 		FROM USERS US
+		JOIN USER_ROLES UR ON USER_ROLE_ID = SYSTEM_LEVEL
 		JOIN EMPLOYEES EMP ON US.EMPLOYEE_ID = EMP.EMPLOYEE_ID
 	    <dynamic prepend="WHERE">
 	        <isNotNull property="columnSearch">
