@@ -32,8 +32,7 @@ function dosubmitx() {
 	<section class="content-header">
 		<h1>Manage Tasks<small> As Head</small></h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li><a href="javascript:void(0)" onclick="menuLoadHandler('${homepage}')"> <i class="fa fa-dashboard"></i> Home</a></li> 
 			<li><html:link href="#" onclick="flyToBack('home')">Tasks & Activities</html:link></li>
 			<li class="active">Task Submission</li>
 		</ol>

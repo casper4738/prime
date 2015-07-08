@@ -109,6 +109,7 @@
 	<script src="resources/plugins/datatables/dataTables.bootstrap.min.js" type="text/javascript"></script>
 	<script src="resources/plugins/serialize/serialize-0.2.min.js" type="text/javascript"></script>
 	<script src="resources/prime.js"></script>
+	<script src="resources/blokenter.js"></script>
 	<script  type="text/javascript">
 	   	$(document).ready(function(){
 	   		$.ajaxSetup({ cache: false });

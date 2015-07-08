@@ -32,7 +32,7 @@
 			<section class="content-header">
 				<h1>Manage User Role</h1>
 				<ol class="breadcrumb">
-					<li><a href="#" onclick="flyToBack('<%= request.getSession().getAttribute(Constants.Session.lastPage)%>')"><i class="fa fa-dashboard"></i> Home</a></li>
+					<li><a href="javascript:void(0)" onclick="menuLoadHandler('${homepage}')"> <i class="fa fa-dashboard"></i> Home</a></li> 
 					<li class="active">Manage User Role</li>
 				</ol>
 			</section>
