@@ -65,7 +65,7 @@
 							<logic:iterate id="iter" name="listUserMenu">
 			                	<tr>
 			                        <td><bean:write name="iter" property="userMenuName"/></td>
-									<td>
+									<td align="center">
 				                        <logic:equal name="iter" property="isCheck" value="true">
 				                        	<input type="checkbox" name="menu" value="${iter.userMenuId}"  checked="checked">
 				                        </logic:equal>
