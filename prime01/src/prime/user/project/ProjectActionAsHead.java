@@ -562,6 +562,12 @@ public class ProjectActionAsHead extends Action {
 				case Constants.Status.ABORT  :
 					tmpValueString += "<span class=\"label label-danger\">Abort</span>";
 					break;
+				case Constants.Status.APPROVAL  :
+					tmpValueString += "<span class=\"label label-success\">Approved</span>";
+					break;
+				case Constants.Status.REJECT  :
+					tmpValueString += "<span class=\"label label-danger\">Reject</span>";
+					break;
 			}
 			tmpValueString += "</td>";
 			
