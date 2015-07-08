@@ -49,7 +49,8 @@
                   			</tr>
                  			<tr><td>Position Level</td>
                   				<td>:</td>
-                 				<td><html:select name="PositionAdminForm" property="positionBean.positionLevel" styleClass="form-control" styleId="levelValidator">
+                 				<td>
+                 					<html:select name="PositionAdminForm" property="positionBean.positionLevel" styleClass="form-control" styleId="levelValidator" disabled="true">
 							      		<html:optionsCollection name="listPositionLevel" label="value" value="key"/>
 							     	</html:select>
 						     	</td>

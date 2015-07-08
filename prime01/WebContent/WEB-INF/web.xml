@@ -36,4 +36,8 @@
 		<filter-name>FilterSession</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
+	<context-param>
+	  <param-name>crystal_image_uri</param-name>
+	  <param-value>/prime01/crystalreportviewers</param-value>
+	 </context-param>
 </web-app>
