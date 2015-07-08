@@ -87,4 +87,7 @@ public interface EmployeeManager {
 	
 	//Count Under Level
 	public Integer getCountUnderLevel(Integer employeeId) throws SQLException;
+	
+	//Validate If Resign Employee Has Active as PM or Project Assigner
+	public Integer getCountListProjectActive(Integer employeeId) throws SQLException;
 }  

@@ -154,11 +154,11 @@
 			                        </td>
 			                        <td align="center">
 			                        	<logic:empty name="iter" property="resignDate">
-				                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" />
-				                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDITPOSITION%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/editposdiv.png" width="18"/>
-				                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTORESIGN%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/resign.png" /> 
+				                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/edit.png" title="Edit Profile"/>
+				                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDITPOSITION%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/editposdiv.png" width="18" title="Edit Position Division"/>
+				                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTORESIGN%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/resign.png" title="Resign"/> 
 			                        	</logic:empty>
-			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOVIEW%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/viewmore.png" />
+			                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOVIEW%>', '<bean:write name="iter" property="employeeId"/>')" src="resources/image/viewmore.png" title="View Detail"/>
 			                        </td>
 			                    </tr>
 		                    </logic:iterate>

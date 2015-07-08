@@ -145,6 +145,16 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		map.put("divisionId", divisionId);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
+		
+		System.out.println("columnSearch"+ columnSearch);
+		System.out.println("value"+ value);
+		System.out.println("positionLevel"+ positionLevel);
+		System.out.println("paramCondition"+ paramCondition);
+		System.out.println("employeeId"+ employeeId);
+		System.out.println("divisionId"+ divisionId);
+		System.out.println("startRow"+ startRow);
+		System.out.println("endRow"+ endRow);
+		
 		return mapper.queryForList("employee.getListEmployeeHead", map);
 	}
 
@@ -395,5 +405,11 @@ public class EmployeeManagerImpl implements EmployeeManager {
 		map.put("startFrom", startFrom);
 		map.put("empId", empId);
 		return (Integer) mapper.queryForObject("employee.getValidateWeekEnd", map);
+	}
+	
+	public Integer getCountListProjectActive(Integer employeeId)
+			throws SQLException {
+		// TODO Auto-generated method stub
+		return (Integer) mapper.queryForObject("employee.getCountListProjectActive", employeeId);
 	}
 }

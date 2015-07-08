@@ -222,7 +222,11 @@ public class EmployeeAction extends Action {
 				tmpResponseCode = 1;	//Employee Already Resign
 			} else if(manager.getCountListByTree(null, null, pForm.getEmployeeBean().getEmployeeId())> 0 && pForm.getEmployeeBean().getSubstituteHead() == ""){
 				tmpResponseCode = 2;	//HAS SUBORDINATE
-			}  else {
+			} else if(manager.getCountListByTree(null, null, pForm.getEmployeeBean().getEmployeeId())== 0 && pForm.getEmployeeBean().getSubstituteHead() != ""){
+				tmpResponseCode = 3;	//NO HAS SUBORDINATE
+			} else if(manager.getCountListProjectActive(pForm.getEmployeeBean().getEmployeeId()) > 0){
+				tmpResponseCode = 4;	//HAS RESPONSIBLE IN PM / Assigner
+			} else {
 				tmpResponseCode = 0;	//Success
 			}
 
@@ -231,6 +235,10 @@ public class EmployeeAction extends Action {
 				tmpResponse = "1#<div id=\"message\" style=\"color:red;font-size:8\">Employee already resign, please select other.</div>";
 			} else if(tmpResponseCode == 2){
 				tmpResponse = "2#<div id=\"message\" style=\"color:red;font-size:8\">Please Choose Subtitute Head.</div>";
+			} else if(tmpResponseCode == 3){
+				tmpResponse = "3#<div id=\"message\" style=\"color:red;font-size:8\">You don't have subordinate. Don't fill Subtitute Head</div>";
+			} else if(tmpResponseCode == 4){
+				tmpResponse = "4#<div id=\"message\" style=\"color:red;font-size:8\">This employee can't resign. Already as PM / Project Assigner</div>";
 			} else {
 				tmpResponse = "0#";
 			}
