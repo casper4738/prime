@@ -17,7 +17,7 @@ String path = "E:\\Reports\\PrimeReports\\";
 /*********** TESTING *************/
 // Should be using XML config file: clientSDKOptions.xml.
 String rasHostName = "TEACHERACE0315";
-String dbUser = "DB_PRIME";
+String dbUser = "PRIME";
 String dbPassword = "prime";
 
 

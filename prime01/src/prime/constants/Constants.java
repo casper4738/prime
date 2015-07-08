@@ -370,6 +370,7 @@ public interface Constants {
 	static interface Session{
 		static String ID				= "t1";
 		static String Username			= "t2";
+		static String Userdata			= "t3";
 		
 		static String redirectPage		= "t3";
 		static String redirectParam		= "t4";
@@ -406,7 +407,6 @@ public interface Constants {
 															"NotifTemplate.do",		 //10
 															"LogAdmin.do",			 //11
 															"SettingAdmin.do",		 //12
-															
 
 															"DashboardUser.do",		 //13
 															"TaskHeadUser.do",		 //14
@@ -417,11 +417,10 @@ public interface Constants {
 															"ReportProject.do",		 //19
 															"Notification.do", 	 	 //20
 
-															
 															"Login.do",				 //21
 															"Modal.do"				 //22
-
 												};
+	
 	static interface Page {
 		static int MENU					= 0;
 		
@@ -507,5 +506,13 @@ public interface Constants {
 		static String FROM 	= "from";
 		static String TO	= "to";
 		static String LINK	= "link";
+	}
+	
+	//##O.Login Response
+	static interface LoginResponse {
+		static int FAIL_USERNOTEXISTS = 0;
+		static int FAIL_IDENTIFICATION = 1;
+		static int FAIL_LOCKED = 2;
+		static int SUCCESS = 3;
 	}
 }

@@ -48,9 +48,13 @@ public class LoginManagerImpl implements LoginManager {
 	}
 	
 	public void setLoginSession(String username) throws SQLException{
-		mapper.startTransaction();
-		mapper.update("login.setLoginSession", username);
-		mapper.commitTransaction();	
+		try {
+			mapper.startTransaction();
+			mapper.update("login.setLoginSession", username);
+			mapper.commitTransaction();	
+		} finally {
+			mapper.endTransaction();
+		}
 	}
 	
 	public String getLoginSession(String username) throws SQLException{
