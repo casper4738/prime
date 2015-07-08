@@ -376,6 +376,8 @@ public interface Constants {
 		static String Userdata			= "t7";
 		static String Employeedata		= "t8";
 		static String menuLists			= "t9";
+		
+		static String isSessionExpired	= "t10";
 	}
 	
 	//##G.Active Directory
