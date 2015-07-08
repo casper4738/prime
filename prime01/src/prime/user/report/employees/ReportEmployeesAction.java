@@ -51,7 +51,7 @@ public class ReportEmployeesAction extends Action {
 			return mapping.findForward("detailEmployee");
 		}
 		else if(Constants.Task.REPORT.GENERATEREPORTEMPLOYEE.equals(pForm.getTask())){
-			System.out.println("GENERATEREPORTEMPLOYEE");
+			System.out.println("GENERATEREPORTEMPLOYEE"+"--");
 			if("ID".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.EMPLOYEE_ID LIKE ('%" + pForm.getSearch()+ "%')");				
 			} else if ("NAME".equals(pForm.getColumnSearchReal())) {
