@@ -13,7 +13,11 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
+
 import prime.admin.user.UserBean;
+import prime.admin.usermenu.UserMenuBean;
+import prime.admin.usermenu.UserMenuManager;
+import prime.admin.usermenu.UserMenuManagerImpl;
 import prime.constants.Constants;
 import prime.user.notification.NotificationBean;
 import prime.user.notification.NotificationManager;
@@ -24,15 +28,18 @@ public class MenuAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		//##0.Temp Variable
 		LinkedHashMap<String, String> tmpObject = new LinkedHashMap<String, String>();
-		String[] tmpMenu = {"Menu","Dashboard Admin","Manage User","Manage Employee","Manage Division","Manage Position",
-							"Manage Role","Manage Holiday","View User Menu","Manage User Role","Manage Notif Template",
-							"View Log","General Settings","Dashboard User","Manage Task as Head","Manage Task as Subordinate",
-							"Manage Project As Head","Manage Project As Member","View Report Employees","View Report Project",
-							"View Notification"};
+//		String[] tmpMenu = {"Menu","Dashboard Admin","Manage User","Manage Employee","Manage Division","Manage Position",
+//							"Manage Role","Manage Holiday","View User Menu","Manage User Role","Manage Notif Template",
+//							"View Log","General Settings","Dashboard User","Manage Task as Head","Manage Task as Subordinate",
+//							"Manage Project As Head","Manage Project As Member","View Report Employees","View Report Project",
+//							"View Notification"};
+		
+		UserMenuManager tmpUserMenuManager = new UserMenuManagerImpl();
+		List<UserMenuBean> tmpMenu = tmpUserMenuManager.getListAll();
 		
 		ArrayList<Integer> tmpLists = (ArrayList<Integer>)(request.getSession().getAttribute(Constants.Session.menuLists));
 		for(int tmpI = 0 ; tmpI < tmpLists.size() ; tmpI++){
-			tmpObject.put(Constants.PAGES_LIST[tmpLists.get(tmpI)], tmpMenu[tmpLists.get(tmpI)]);
+			tmpObject.put(Constants.PAGES_LIST[tmpLists.get(tmpI)], tmpMenu.get(tmpLists.get(tmpI) - 1).getUserMenuName());
 		}
 
 		if(request.getSession().getAttribute(Constants.Session.lastPage) == null){
