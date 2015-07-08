@@ -116,7 +116,7 @@ public class LoginAction extends Action {
 					//----User and Employee Data
 					ArrayList<Integer> tmpMenuLists = new ArrayList<Integer>();
 					UserMenuManager tmpUserMenuManager = new UserMenuManagerImpl();
-					List<UserMenuBean> listUserMenu = tmpUserMenuManager.getListUserMenuByUserRoleId(LoginData.getUserData().getSysLevel());
+					List<UserMenuBean> listUserMenu = tmpUserMenuManager.getListUserMenuByUserRoleId(tmpUserBean.getSysLevel());
 					for (UserMenuBean e : listUserMenu) {
 						if(e.getIsCheck()){
 							tmpMenuLists.add(e.getUserMenuId());
