@@ -138,8 +138,10 @@
 			<h1>Manage Employee<small>management system</small>
 			</h1>
 			<ol class="breadcrumb">
-				<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-				<li class="active">Manage Employee</li>
+				<li><a href="javascript:void(0)" onclick="menuLoadHandler('${homepage}')"> <i class="fa fa-dashboard"></i> Home</a></li>
+				<li><html:link href="#" onclick="flyToBack('home')" >Manage Employee</html:link></li>
+				<li><html:link href="#" onclick="flyToBack('<%=Constants.Task.GOTOVIEW%>')" >View Employee</html:link></li>
+				<li class="active">Set Dayoff Employee</li>
 			</ol>
 		</section>
 

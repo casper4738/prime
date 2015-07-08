@@ -22,7 +22,7 @@ public class UserManagerImpl implements UserManager {
 		try {
 			//We use username as salt because username is unique and easier to be added
 			GeneralSettingManager tmpGeneralManager = new GeneralSettingManagerImpl();
-			e.setPassword(e.getPassword() + e.getUserName());
+			e.setPassword(e.getPassword() + e.getUserName().toLowerCase());
 			
 			mapper.startTransaction();
 			mapper.insert("user.insert", e);
@@ -62,7 +62,7 @@ public class UserManagerImpl implements UserManager {
 		boolean tmpUserValidated = false;
 		HashMap<String, String> tmpParam = new HashMap<String, String>();
 		tmpParam.put("userName", username);
-		tmpParam.put("password", password + username);
+		tmpParam.put("password", password + username.toLowerCase());
 		
 		//##1.Ibatis Proccess
 		try {
@@ -80,7 +80,7 @@ public class UserManagerImpl implements UserManager {
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("username", username);
-			map.put("newPassword", newPassword + username);			
+			map.put("newPassword", newPassword + username.toLowerCase());			
 			
 			mapper.startTransaction();
 			mapper.update("user.changePassword", map);
@@ -118,7 +118,7 @@ public class UserManagerImpl implements UserManager {
 		try {
 			//We use username as salt because username is unique and easier to be added
 			GeneralSettingManager tmpGeneralManager = new GeneralSettingManagerImpl();
-			e.setPassword(tmpGeneralManager.getGeneralSetting().getResetPassword() + e.getUserName());
+			e.setPassword(tmpGeneralManager.getGeneralSetting().getResetPassword() + e.getUserName().toLowerCase());
 			
 			mapper.startTransaction();
 			mapper.update("user.reset", e);

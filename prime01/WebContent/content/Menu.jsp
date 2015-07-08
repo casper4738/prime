@@ -17,6 +17,7 @@
 	<title>PRIMEprogram</title>
 
 	<!-- CSS -->
+    <link rel="icon" href="resources/favicon.ico" type="image/x-icon" />
 	<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/font-awesome-4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
 	<link href="resources/plugins/datepicker/datepicker3.css" rel="stylesheet" type="text/css" />

@@ -1,5 +1,6 @@
 package prime.admin.role;
 
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -49,6 +50,31 @@ public class RoleAction extends Action {
 			pForm.getRoleBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			tmpManager.delete(pForm.getTmpId());
 			return mapping.findForward("forward");
+		} else if(Constants.Task.DOVALIDATE1.equals(pForm.getTask())){
+			response.setContentType("text/text;charset=utf-8");
+			response.setHeader("cache-control", "no-cache");
+			PrintWriter tmpOut = response.getWriter();
+			String tmpResponse = "";
+			
+			int tmpResponseCode;
+			
+			//0 : Exists Database ; 1 : Empty Database
+			if(tmpManager.getRoleUsed(pForm.getTmpId()) > 0){
+				tmpResponseCode = 1;	//Role Already Used
+			} else {
+				tmpResponseCode = 0;	//Success
+			}
+
+			System.out.println(tmpResponseCode + " tmpResponseCode");
+			if(tmpResponseCode == 1){
+				tmpResponse = "1#";
+			} else {
+				tmpResponse = "0#";
+			}
+			
+			tmpOut.print(tmpResponse);
+			tmpOut.flush();
+			return null;
 		}
 		
 		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());

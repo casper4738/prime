@@ -51,25 +51,26 @@ public class ReportEmployeesAction extends Action {
 			return mapping.findForward("detailEmployee");
 		}
 		else if(Constants.Task.REPORT.GENERATEREPORTEMPLOYEE.equals(pForm.getTask())){
-			System.out.println("GENERATEREPORTEMPLOYEE");
+			System.out.println("GENERATEREPORTEMPLOYEE"+"--"+pForm.getColumnSearchReal()+"--"+pForm.getSearch()+"--"+pForm.getGenderSearch()+"--"+pForm.getStatusSearch());
 			if("ID".equals(pForm.getColumnSearchReal())) {
-				request.getSession(true).setAttribute("searchQuery", " WHERE EMP.EMPLOYEE_ID LIKE ('%" + pForm.getSearch()+ "%')");				
+				request.getSession(true).setAttribute("searchQuery", " WHERE TREE_ID LIKE (SELECT TREE_ID FROM EMPLOYEES WHERE EMPLOYEE_ID= "+((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId()+")||'%' AND EMP.EMPLOYEE_ID LIKE ('%" + pForm.getSearch()+ "%')");				
 			} else if ("NAME".equals(pForm.getColumnSearchReal())) {
-				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER(EMP.EMPLOYEE_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");	
-				request.getSession(true).setAttribute("searchQuery2", " WHERE LOWER(EMP.EMPLOYEE_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");	
+				request.getSession(true).setAttribute("searchQuery", " WHERE TREE_ID LIKE (SELECT TREE_ID FROM EMPLOYEES WHERE EMPLOYEE_ID= "+((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId()+")||'%' AND LOWER(EMP.EMPLOYEE_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");	
 			} else if ("EMAIL".equals(pForm.getColumnSearchReal())) {
-				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER(EMP.EMAIL) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+				request.getSession(true).setAttribute("searchQuery", " WHERE TREE_ID LIKE (SELECT TREE_ID FROM EMPLOYEES WHERE EMPLOYEE_ID= "+((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId()+")||'%' AND LOWER(EMP.EMAIL) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
 			} else if ("DIVISION".equals(pForm.getColumnSearchReal())) {
-				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER (DIV.DIVISION_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+				request.getSession(true).setAttribute("searchQuery", " WHERE TREE_ID LIKE (SELECT TREE_ID FROM EMPLOYEES WHERE EMPLOYEE_ID= "+((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId()+")||'%' AND LOWER (DIV.DIVISION_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
 			} else if ("POSITION".equals(pForm.getColumnSearchReal())) {
-				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER (POS.POSITION_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+				request.getSession(true).setAttribute("searchQuery", " WHERE TREE_ID LIKE (SELECT TREE_ID FROM EMPLOYEES WHERE EMPLOYEE_ID= "+((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId()+")||'%' AND LOWER (POS.POSITION_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
 			} else if ("MANAGER".equals(pForm.getColumnSearchReal())) {
-				request.getSession(true).setAttribute("searchQuery", " WHERE LOWER (EMPMGR.EMPLOYEE_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
+				request.getSession(true).setAttribute("searchQuery", " WHERE TREE_ID LIKE (SELECT TREE_ID FROM EMPLOYEES WHERE EMPLOYEE_ID= "+((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId()+")||'%' AND LOWER (EMPMGR.EMPLOYEE_NAME) LIKE LOWER ('%" + pForm.getSearch()+ "%')");
 			} else if ("GENDER".equals(pForm.getColumnSearchReal())) {
-				request.getSession(true).setAttribute("searchQuery", " WHERE GENDER = '"+pForm.getGenderSearch()+"'");
+				request.getSession(true).setAttribute("searchQuery", " WHERE TREE_ID LIKE (SELECT TREE_ID FROM EMPLOYEES WHERE EMPLOYEE_ID= "+((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId()+")||'%' AND GENDER = '"+pForm.getGenderSearch()+"'");
 			} else if ("STATUS".equals(pForm.getColumnSearch())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE (CASE WHEN NVL(TO_CHAR(RE.RESIGN_DATE, 'yyyy-mm-dd'), '0') = '0' THEN 0 ELSE 1 END) = '"+pForm.getStatusSearch()+"'");
-			} 
+			} else {
+				request.getSession(true).setAttribute("searchQuery", " WHERE TREE_ID LIKE (SELECT TREE_ID FROM EMPLOYEES WHERE EMPLOYEE_ID= "+((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId()+")||'%'");
+			}
 			
 			return mapping.findForward("showReportEmployee");
 		} else if (Constants.Task.REPORT.GENERATEREPORTEMPLOYEETASK.equals(pForm.getTask())) {
@@ -88,14 +89,9 @@ public class ReportEmployeesAction extends Action {
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER="+pForm.getEmployeeId()+" OR TASK_RECEIVER="+pForm.getEmployeeId()+") AND TASK_START_DATE BETWEEN TO_DATE('"+pForm.getStartDate()+"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
 			} else if ("ESTIMATEDATE".equals(pForm.getColumnSearchReal())) {
 				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER="+pForm.getEmployeeId()+" OR TASK_RECEIVER="+pForm.getEmployeeId()+") AND TASK_ESTIMATE_DATE BETWEEN TO_DATE('"+pForm.getStartDate()+"', 'yyyy-mm-dd') AND TO_DATE('"+pForm.getUntilDate()+"', 'yyyy-mm-dd')");
-			} 
-			/*request.getSession(true).setAttribute("searchQuery1", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery2", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery3", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery4", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery5", " WHERE EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery6", " WHERE EMP.EMPLOYEE_ID = '"+pForm.getEmployeeId()+"'");
-			request.getSession(true).setAttribute("searchQuery7", " WHERE EMPLOYEE_ID '= "+pForm.getEmployeeId()+"'");		*/	
+			}  else {
+				request.getSession(true).setAttribute("searchQuery", " WHERE (TASK_ASSIGNER="+pForm.getEmployeeId()+" OR TASK_RECEIVER="+pForm.getEmployeeId()+")");
+			}
 			
 			return mapping.findForward("showReportEmployeeTask");
 		}

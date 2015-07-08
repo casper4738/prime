@@ -43,7 +43,7 @@
 	<section class="content-header">
 		<h1>Manage User</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li><a href="javascript:void(0)" onclick="menuLoadHandler('${homepage}')"> <i class="fa fa-dashboard"></i> Home</a></li>
 			<li class="active">Manage Users</li>
 		</ol>
 	</section>
@@ -92,9 +92,10 @@
 			<div class="box-body"><table class="table table-bordered table-striped table-hover" id = "table-1">
 				<thead><tr>
 					<th width="180px">Username</th>
-					<th width="50px">Sys Level</th>
-					<th width="80px">Employee Id</th>
 					<th>Employee Name</th>
+					<th width="80px">Employee Id</th>
+					<th>System Level</th>
+                    <th width="30px">Active Dir.</th>
                     <th width="30px">Status</th>
                     <th width="50px">Actions</th>
                 </tr></thead>
@@ -103,9 +104,17 @@
 					<logic:iterate id="iter" name="listUser">
 	                	<tr>
 	                		<td><bean:write name="iter" property="userName"/> </td>
-	                		<td align="center"><bean:write name="iter" property="sysLevel"/> </td>
-	                		<td align="center"><bean:write name="iter" property="employeeId"/> </td>
 	                		<td><bean:write name="iter" property="employeeName"/> </td>
+	                		<td align="center"><bean:write name="iter" property="employeeId"/> </td>
+	                		<td align="left"><bean:write name="iter" property="sysName"/> </td>
+	                        <td align="center">
+	                        	<logic:equal name="iter" property="isActiveDirectory" value="false">
+	                        	<span class="label label-danger">No</span>
+	                        	</logic:equal>
+	                        	<logic:equal name="iter" property="isActiveDirectory" value="true">
+	                        	<span class="label label-success">Yes</span>
+	                        	</logic:equal>
+	                        </td>
 	                        <td align="center">
 	                        <logic:equal name="iter" property="statusUser" value="0">
 	                        	<span class="label label-danger">Locked</span>
@@ -122,14 +131,14 @@
 	                        </td>
 	                        <td align="center">
 	                         <logic:equal name="iter" property="statusUser" value="1">
-	                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="userName"/>')" src="resources/image/edit.png" />
-	                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.LOCK %>')" src="resources/image/locked.png" />
+	                        	<input type="image" title="Edit User" onclick="flyToEdit('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="userName"/>')" src="resources/image/edit.png" />
+	                        	<input type="image" title="Lock User" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.LOCK %>')" src="resources/image/locked.png" />
 	                        </logic:equal>
 	                           <logic:equal name="iter" property="statusUser" value="2">
-	                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.UNLOCK %>')" src="resources/image/unlocked.png" />
+	                        	<input type="image" title="Lock User" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.UNLOCK %>')" src="resources/image/unlocked.png" />
 	                        </logic:equal>
 	                           <logic:equal name="iter" property="statusUser" value="3">
-	                        	<input type="image" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.UNLOCK %>')" src="resources/image/unlocked.png" />
+	                        	<input type="image" title="Lock User" onclick="flyToEdit('<%=Constants.Task.DOLOCK%>', '<bean:write name="iter" property="userName"/>', '<%=Constants.Confirmation.UNLOCK %>')" src="resources/image/unlocked.png" />
 	                        </logic:equal>
 	                    	</td>
 	                    </tr>

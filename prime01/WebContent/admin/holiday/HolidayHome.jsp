@@ -57,6 +57,23 @@
             }
 		}
 		
+		function flyToDelete(task, value, confirmMessage) {
+			var today = new Date();
+			var holidayDate = new Date(value);
+			
+			if ( holidayDate <= today){
+		    	alert("This Holiday can't be deleted. Already pass")
+		    }else{
+		    	var tmpForm = document.forms[0]; 
+				if(confirmMessage != null){
+					if(!confirm(confirmMessage))	
+						return;
+				}
+				tmpForm.task.value = task;
+				tmpForm.tmpId.value = value;
+				menuLoadHandler(tmpForm.action, serialize(tmpForm));
+		    }
+		}
 	</script>
 	<!-- End of JS -->
 </head>
@@ -139,7 +156,7 @@
 		                	    <td><bean:write name="iter" property="holidayDescription"/></td>
 		                        <td align="center">
 		                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.GOTOEDIT%>', '<bean:write name="iter" property="holidayDate"/>')" src="resources/image/edit.png"/>
-		                        	<input type="image" onclick="flyToEditDelete('<%=Constants.Task.DODELETE%>', '<bean:write name="iter" property="holidayDate"/>', '<%=Constants.Confirmation.DELETE %>')" src="resources/image/remove.png" />
+		                        	<input type="image" onclick="flyToDelete('<%=Constants.Task.DODELETE%>', '<bean:write name="iter" property="holidayDate"/>', '<%=Constants.Confirmation.DELETE %>')" src="resources/image/remove.png" />
 		                        </td>
 		                    </tr>
 	                    </logic:iterate>

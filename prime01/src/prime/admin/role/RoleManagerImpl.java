@@ -84,5 +84,11 @@ public class RoleManagerImpl implements RoleManager {
 	public List<RoleBean> getListAllRole() throws SQLException {
 		return mapper.queryForList("role.selectAll", null);
 	}
+
+	@Override
+	public Integer getRoleUsed(Integer roleId) throws SQLException {
+		// TODO Auto-generated method stub
+		return (Integer) mapper.queryForObject("role.getRoleUsed", roleId);
+	}
 	
 }
