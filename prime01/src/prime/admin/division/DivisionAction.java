@@ -25,7 +25,8 @@ public class DivisionAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		DivisionForm pForm = (DivisionForm) form;
 		DivisionManager tmpManager = new DivisionManagerImpl();
-		
+		request.setAttribute("homepage", request.getSession().getAttribute(Constants.Session.lastPage));
+
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
 			return mapping.findForward("add");

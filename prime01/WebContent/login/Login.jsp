@@ -55,8 +55,6 @@
     <script>
       $(document).ready(function(){
     	 	 $.ajaxSetup({ cache: false });
-
-	    	  alert(<%=request.getSession(true).getAttribute(Constants.Session.isSessionExpired)%>);
     	  	  var tmpIsLoginFail = <%=request.getAttribute(Constants.Request.LOGIN_STATUS)%>;
     	  	  if(tmpIsLoginFail == null){
     	  		  if(<%=request.getSession().getAttribute(Constants.Session.isSessionExpired)%>){
@@ -106,6 +104,8 @@
 	    	          error: function(){
     	        		  //Set Fail Login Warning
     	        		  $('#login-fail').html("<%=Constants.Response.FAILLOGIN_ERROR%>");
+			 			  $('#textbox-username').attr("readonly", false);
+			  			  $('#textbox-password').attr("readonly", false);
     	        		  $('#login-fail').show();
     	        		  $('#btn-submit').show();
     		    		  $('#ajax-validating').hide(); 

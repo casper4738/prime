@@ -22,7 +22,7 @@ public class HolidayAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		HolidayForm pForm = (HolidayForm) form;
 		HolidayManager tmpManager = new HolidayManagerImpl();
-		
+		request.setAttribute("homepage", request.getSession().getAttribute(Constants.Session.lastPage));
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
 			pForm.getHolidayBean().setHolidayDate(new java.sql.Date(new java.util.Date().getTime()));

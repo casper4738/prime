@@ -23,6 +23,9 @@ public class RoleAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request, HttpServletResponse response) throws Exception {
 		RoleForm pForm = (RoleForm) form;
 		RoleManager tmpManager = new RoleManagerImpl();
+		
+		request.setAttribute("homepage", request.getSession().getAttribute(Constants.Session.lastPage));
+		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
 			return mapping.findForward("add");

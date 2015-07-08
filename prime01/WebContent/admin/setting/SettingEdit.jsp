@@ -54,7 +54,7 @@
 	<section class="content-header">
 		<h1>Manage General Setting</h1>
 		<ol class="breadcrumb">
-			<li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
+			<li><a href="javascript:void(0)" onclick="menuLoadHandler('${homepage}')"> <i class="fa fa-dashboard"></i> Home</a></li>
 			<li class="active">Manage General Setting</li>
 		</ol>
 	</section>
@@ -108,11 +108,11 @@
 	              				<td>Default Weekend</td>
 	              				<td align="center">:</td>
 	              				<td>
-              						<input type="checkbox" id="weekend" value="Monday"> Monday <br>
-									<input type="checkbox" id="weekend" value="Tuesday"> Tuesday <br> 
-									<input type="checkbox" id="weekend" value="Wednesday"> Wednesday<br>
-									<input type="checkbox" id="weekend" value="Thursday"> Thursday<br> 
-									<input type="checkbox" id="weekend" value="Friday"> Friday<br>
+              						<input type="checkbox" id="weekend" value="Monday">Monday<br>
+									<input type="checkbox" id="weekend" value="Tuesday"> Tuesday<br> 
+									<input type="checkbox" id="weekend" value="Wednesday"> Wednesday <br>
+									<input type="checkbox" id="weekend" value="Thursday"> Thursday <br> 
+									<input type="checkbox" id="weekend" value="Friday"> Friday <br>
 									<input type="checkbox" id="weekend" value="Saturday"> Saturday<br>
 									<input type="checkbox" id="weekend" value="Sunday"> Sunday				
 	              				</td>

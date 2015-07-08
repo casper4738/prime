@@ -5,11 +5,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.ibatis.sqlmap.client.SqlMapClient;
-
-import prime.admin.user.UserBean;
-import prime.admin.user.UserManager;
+import prime.admin.setting.GeneralSettingManager;
+import prime.admin.setting.GeneralSettingManagerImpl;
 import prime.utility.IbatisHelper;
+
+import com.ibatis.sqlmap.client.SqlMapClient;
 
 public class UserManagerImpl implements UserManager {
 	private SqlMapClient mapper;
@@ -20,6 +20,10 @@ public class UserManagerImpl implements UserManager {
 
 	public void insert(UserBean e) throws SQLException {
 		try {
+			//We use username as salt because username is unique and easier to be added
+			GeneralSettingManager tmpGeneralManager = new GeneralSettingManagerImpl();
+			e.setPassword(e.getPassword() + e.getUserName());
+			
 			mapper.startTransaction();
 			mapper.insert("user.insert", e);
 			mapper.commitTransaction();
@@ -112,6 +116,10 @@ public class UserManagerImpl implements UserManager {
 
 	public void resetPassword(UserBean e) throws SQLException {
 		try {
+			//We use username as salt because username is unique and easier to be added
+			GeneralSettingManager tmpGeneralManager = new GeneralSettingManagerImpl();
+			e.setPassword(tmpGeneralManager.getGeneralSetting().getResetPassword() + e.getUserName());
+			
 			mapper.startTransaction();
 			mapper.update("user.reset", e);
 			mapper.commitTransaction();

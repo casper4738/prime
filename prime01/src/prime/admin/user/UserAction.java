@@ -38,6 +38,8 @@ public class UserAction extends Action {
 		Date compTime;
 		curnTime = new Date();
 		curnTime = PrimeUtil.parseDateStringToDate(PrimeUtil.setDateToDateString(curnTime));
+		
+		request.setAttribute("homepage", request.getSession().getAttribute(Constants.Session.lastPage));
 
 		if (Constants.Task.GOTOADD.equals(userForm.getTask())) {
 			userForm.getUserBean().setEmployeeId(tmpManager.getNewId());

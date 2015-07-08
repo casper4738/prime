@@ -84,13 +84,11 @@ public class LoginAction extends Action {
 				}
 				
 				//Check Whether on-waiting for lock status or not
-				/*
-				if(tmpLoginResultCode == 2){
+				if(tmpLoginResultCode == Constants.LoginResponse.SUCCESS){
 					if(tmpUserDetails.getActionDate().after(new Date())){
 						tmpLoginResultCode = 3;
 					}
 				}
-				*/
 			}
 			
 			switch(tmpLoginResultCode){
