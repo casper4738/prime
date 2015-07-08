@@ -19,6 +19,7 @@ public class SettingAction extends Action {
 		GeneralSettingManager tmpManager = new GeneralSettingManagerImpl();
 		if(Constants.Task.GOTOEDIT.equals(pForm.getTask())) {
 			//##. Edit Data
+			pForm.setWeekends(pForm.getSettingBean().getWeekend());
 			pForm.setSettingBean(tmpManager.getGeneralSetting());
 			return mapping.findForward("edit");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {

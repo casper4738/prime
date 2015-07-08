@@ -21,7 +21,6 @@ ${isAllFinished} | ${isAlreadySubmit} | ${isAlreadyReject} | ${isAlreadyApprove}
 
 <div class="form-action"><table align="center">
    <tr> <td style="padding:5px;">
-   <input type="button" value="Submit" class="btn btn-sm  btn-primary" onclick="flyToPage('<%=Constants.Task.TASK.GOTOSUBMIT%>')"/> | 
    		<logic:notEqual name="isAlreadyAbort" value="true">
    		<logic:notEqual name="isAlreadyApprove" value="true">
    			<logic:equal name="taskReceiver" value="${employeeIdActive}">

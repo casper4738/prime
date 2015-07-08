@@ -135,10 +135,10 @@
 						<thead>
 							<tr>
 								<th>Log ID</th>
-								<th>Username</th>
-								<th>Table</th>
+								<th width="150px">Username</th>
+								<th width="100px">Table</th>
 								<th>Activity Time</th>
-								<th>Activity Description</th>
+								<th width="80px">Activity Description</th>
 								<th></th>
 			                </tr>
 			            </thead>
@@ -204,7 +204,7 @@
 												DELETE
 											</logic:equal>
 						                 </td>
-						                 <td align="center"><bean:write name="iter" property="auditTrailValue"/> </td>
+						                 <td><bean:write name="iter" property="auditTrailValue"/> </td>
 						             </tr>
 					             </logic:iterate>
 							 </logic:notEmpty>

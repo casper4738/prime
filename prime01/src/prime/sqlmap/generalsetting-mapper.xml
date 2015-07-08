@@ -11,6 +11,7 @@
 			USERNAME_AD				= #usernameActiveDirectory#,
 			PASSWORD_AD				= #passwordActiveDirectory#,
 			WEEKEND					= #weekend#,
+			DEFAULT_RESET_PASSWORD	= #resetPassword#,
 			UPDATED_BY 				= #updateBy#
 	</update>
 
@@ -22,6 +23,7 @@
 			SMTP_PASSWORD			AS smtpPassword,
 			USERNAME_AD				AS usernameActiveDirectory,
 			PASSWORD_AD				AS passwordActiveDirectory,
+			DEFAULT_RESET_PASSWORD	AS resetPassword,
 			WEEKEND					AS weekend
 		FROM 
 			GENERAL_SETTINGS

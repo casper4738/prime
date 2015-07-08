@@ -16,6 +16,7 @@
 			tmpForm.smtpPassword.value = "prime";
 			tmpForm.usernameActiveDirectory.value = "dedy.suwandi";
 			tmpForm.passwordActiveDirectory.value = "Ace2015";
+			tmpForm.resetPassword.value = "12345";
 			for(var i=0; i < tmpForm.weekend.length; i++) {
 				if(tmpForm.weekend[i].value == "Saturday" || tmpForm.weekend[i].value == "Sunday") {
 					tmpForm.weekend[i].checked = true;
@@ -33,9 +34,20 @@
 			}
 			strweekend = strweekend.substring(0, strweekend.length - 1);
 			tmpForm.weekends.value = strweekend;
-			alert(strweekend);
 			dosubmit();
 		}
+		
+		$(document).ready(function () {
+			var tmpForm = document.forms[0];
+			var strweekend = tmpForm.weekends.value.split(",");
+			for(var i=0; i < tmpForm.weekend.length; i++) {
+				for(var j=0; j < strweekend.length; j++) {
+					if(tmpForm.weekend[i].value == strweekend[j]) {
+						tmpForm.weekend[i].checked = true;
+					}
+				}
+			}
+        });
 	</script>
 </head>
 <body class="skin-blue sidebar-mini">
@@ -76,6 +88,11 @@
 	              				<td>SMTP Password</td>
 	              				<td align="center">:</td>
 	              				<td><html:text  name="SettingAdminForm" property="settingBean.smtpPassword" styleId="smtpPassword" styleClass="form-control" style="text-align:center"/></td>
+	              			</tr>
+	              			<tr>
+	              				<td>Default Reset Password</td>
+	              				<td align="center">:</td>
+	              				<td><html:text  name="SettingAdminForm" property="settingBean.resetPassword" styleId="resetPassword" styleClass="form-control" style="text-align:center"/></td>
 	              			</tr>
 	              			<tr>
 	              				<td>Default Username Active Directory</td>

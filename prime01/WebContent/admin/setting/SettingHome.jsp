@@ -8,21 +8,10 @@
 <head> 
 	<meta content='width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no' name='viewport'>
 	<script>
-		function dodefault() {
-			var tmpForm = document.forms[0];
-			tmpForm.generalSettingLevel.value = 8;
-			tmpForm.minLevelApproval.value = 2;
-			tmpForm.smtpUsername.value = "primebot@gmail.com";
-			tmpForm.smtpPassword.value = "prime";
-			tmpForm.usernameActiveDirectory.value = "dedy.suwandi";
-			tmpForm.passwordActiveDirectory.value = "Ace2015";
-			tmpForm.weekend.value = "Saturday,Sunday";
-		}
 		
 		$(document).ready(function () {
 			var tmpForm = document.forms[0];
 			var strweekend = tmpForm.weekends.value.split(",");
-					alert(strweekend[0]);
 			for(var i=0; i < tmpForm.weekend.length; i++) {
 				for(var j=0; j < strweekend.length; j++) {
 					if(tmpForm.weekend[i].value == strweekend[j]) {
@@ -74,6 +63,11 @@
 	              				<td><html:text  name="SettingAdminForm" property="settingBean.smtpPassword" styleId="smtpPassword" styleClass="form-control" style="text-align:center" disabled="true"/></td>
 	              			</tr>
 	              			<tr>
+	              				<td>Default Reset Password</td>
+	              				<td align="center">:</td>
+	              				<td><html:text  name="SettingAdminForm" property="settingBean.resetPassword" styleId="resetPassword" styleClass="form-control" style="text-align:center" disabled="true"/></td>
+	              			</tr>
+	              			<tr>
 	              				<td>Default Username Active Directory</td>
 	              				<td align="center">:</td>
 	              				<td><html:text  name="SettingAdminForm" property="settingBean.usernameActiveDirectory" styleId="usernameActiveDirectory" styleClass="form-control" style="text-align:center" disabled="true"/></td>
@@ -101,7 +95,7 @@
 	              				<td></td>
 	                			<td align="center"> 
 	                				<html:button property="" value="Edit" styleClass="btn btn-primary" style="width:30%"  onclick="dosubmit()" />
-	                				<html:button property="" value="Default" styleClass="btn btn-primary" style="width:30%" onclick="dodefault()" />
+	                				<html:button property="" value="Default" styleClass="btn btn-primary" style="width:30%" disabled="true" />
 								</td>
 							</tr>
                 		</table>
