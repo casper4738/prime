@@ -24,6 +24,12 @@
 		menuLoadHandler(tmpForm.action, serialize(tmpForm));
 	}
 
+	function docheck() {
+		var tmpForm = document.forms[0];
+		for(var i=0; i < tmpForm.menu.length; i++) {
+			tmpForm.menu[i].checked =  true;
+		}
+	}
 	</script>
 	
 	<!-- End JS -->
@@ -51,7 +57,7 @@
                   			 <thead>
 								<tr>
 									<th>User Menu Name</th>
-		  							<th>Action</th>
+		  							<th>Action / <a href="javascript:void(0)" onclick="docheck()"> Check All </a></th>
 				                </tr>
 				           </thead>
 			               <tbody>

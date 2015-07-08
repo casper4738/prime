@@ -15,6 +15,9 @@ import org.apache.struts.action.ActionMapping;
 
 import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
+import prime.admin.setting.GeneralSettingBean;
+import prime.admin.setting.GeneralSettingManager;
+import prime.admin.setting.GeneralSettingManagerImpl;
 import prime.admin.userrole.UserRoleManager;
 import prime.admin.userrole.UserRoleManagerImpl;
 import prime.constants.Constants;
@@ -30,6 +33,10 @@ public class UserAction extends Action {
 	public ActionForward execute(ActionMapping mapping, ActionForm form, HttpServletRequest request,
 			HttpServletResponse response) throws Exception {
 
+		//---.Set Active Directory Constants One for All
+		GeneralSettingManager tmpGeneralSettingManager = new GeneralSettingManagerImpl();
+		GeneralSettingBean tmpGeneralSettingBean = tmpGeneralSettingManager.getGeneralSetting();
+		
 		UserManager tmpManager = new UserManagerImpl();
 		UserForm userForm = (UserForm) form;
 		UserRoleManager tmpRoleManager = new UserRoleManagerImpl();
@@ -57,7 +64,7 @@ public class UserAction extends Action {
 
 			ActiveDirectoryManager tmpADManager = new ActiveDirectoryManager();
 			
-			if (tmpADManager.checkValidUser(userForm.getUserBean().getUserName(), Constants.ActiveDirectory.ADMIN_USERNAME, Constants.ActiveDirectory.ADMIN_PASSWORD)) {
+			if (tmpADManager.checkValidUser(userForm.getUserBean().getUserName(), tmpGeneralSettingBean.getUsernameActiveDirectory(), tmpGeneralSettingBean.getPasswordActiveDirectory())) {
 				userForm.getUserBean().setIsActiveDirectory(true);
 				userForm.getUserBean().setPassword("empty");
 			} else {
@@ -127,7 +134,7 @@ public class UserAction extends Action {
 			if (!tmpLoginManager.isUserExists(userForm.getUserBean().getUserName())) {
 				ActiveDirectoryManager tmpADManager = new ActiveDirectoryManager();
 				if (tmpADManager.checkValidUser(userForm.getUserBean().getUserName(),
-						Constants.ActiveDirectory.ADMIN_USERNAME, Constants.ActiveDirectory.ADMIN_PASSWORD)) {
+						tmpGeneralSettingBean.getUsernameActiveDirectory(), tmpGeneralSettingBean.getPasswordActiveDirectory())) {
 					tmpResponseCode = 2; // Username Exists in Active Directory
 				} else {
 					tmpResponseCode = 1; // User Doesn't Exists in Active

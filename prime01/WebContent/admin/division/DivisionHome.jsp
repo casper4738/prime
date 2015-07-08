@@ -19,7 +19,7 @@
 		function flyToDelete(task, value, confirmMessage) {
 			$.ajax({ 
 		          type	  : "POST",
-		          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_EMPLOYEE]%>',  
+		          url	  : '<%=Constants.PAGES_LIST[Constants.Page.ADMIN_DIVISION]%>',  
 		          data	  : 'task=<%=Constants.Task.DOVALIDATE1%>&tmpId=' + value,
 		          success : function(msg){
 						 param = msg.split('#');

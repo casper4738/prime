@@ -36,9 +36,16 @@
 		<filter-name>FilterSession</filter-name>
 		<url-pattern>*.do</url-pattern>
 	</filter-mapping>
-	
 	<error-page>
 		<error-code>404</error-code>
-		<location>/404/404.jsp</location>
+		<location>/error/404.jsp</location>
 	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/error/500.jsp</location>
+	</error-page>
+	<context-param>
+	  <param-name>crystal_image_uri</param-name>
+	  <param-value>/prime01/crystalreportviewers</param-value>
+	 </context-param>
 </web-app>

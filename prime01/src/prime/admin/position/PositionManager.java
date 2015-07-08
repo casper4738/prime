@@ -22,4 +22,5 @@ public interface PositionManager {
 	
 	public Integer getNewId() throws SQLException;
 	
+	public Integer getPositionUsed(Integer positionId) throws SQLException;
 }

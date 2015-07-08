@@ -74,4 +74,11 @@
 		FROM POSITIONS
 	    ORDER BY POSITION_NAME ASC
 	</select>
+	
+	<select id="getPositionUsed" resultClass="java.lang.Integer" parameterClass="java.lang.Integer">
+		SELECT COUNT(1) 
+		FROM EMPLOYEES EMP
+		WHERE POSITION_ID = #positionId# AND 
+		EMP.EMPLOYEE_ID NOT IN (SELECT EMPLOYEE_ID FROM RESIGN_EMPLOYEES)
+	</select>
 </sqlMap>
