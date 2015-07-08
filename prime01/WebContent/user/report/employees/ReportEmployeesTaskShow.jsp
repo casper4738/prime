@@ -18,7 +18,8 @@
 		try {
 			ReportClientDocument clientDoc = getClientDocument(reportName);
 			try {
-				/* out.print((String)session.getAttribute("searchQuery")+"--ASD");
+				out.print((String)session.getAttribute("searchQuery")+"--ASD");
+				/*
 				out.print((String)session.getAttribute("searchQuery1")+"--A1");
 				out.print((String)session.getAttribute("searchQuery2")+"--A2");
 				out.print((String)session.getAttribute("searchQuery3")+"--A3");
