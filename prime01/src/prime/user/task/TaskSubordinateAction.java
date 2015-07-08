@@ -18,7 +18,6 @@ import prime.admin.setting.GeneralSettingManager;
 import prime.admin.setting.GeneralSettingManagerImpl;
 import prime.admin.user.UserBean;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
@@ -122,7 +121,7 @@ public class TaskSubordinateAction extends Action {
 			pForm.getTaskBean().setTaskStatus(Constants.Status.CREATE);
 			pForm.getTaskBean().setTaskChangeNote("");
 			pForm.getTaskBean().setProjectMemberId(0);
-			pForm.getTaskBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getTaskBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			
 			manager.insert(pForm.getTaskBean());
 			manager.insertDetail(pForm.getTaskBean());

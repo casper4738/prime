@@ -10,15 +10,11 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import prime.admin.division.DivisionForm;
-import prime.admin.employee.EmployeeBean;
-import prime.admin.role.RoleBean;
+import prime.admin.user.UserBean;
 import prime.admin.usermenu.UserMenuBean;
 import prime.admin.usermenu.UserMenuManager;
 import prime.admin.usermenu.UserMenuManagerImpl;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
 
@@ -43,12 +39,12 @@ public class UserRoleAction extends Action{
 			return mapping.findForward("edit");
 		} else if(Constants.Task.DOADD.equals(pForm.getTask())) {
 			//##.Insert Data and Go to Forward
-			pForm.getUserRoleBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getUserRoleBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			tmpManager.insert(pForm.getUserRoleBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOEDIT.equals(pForm.getTask())) {
 			//##.Update Data and Go to Forward
-			pForm.getUserRoleBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getUserRoleBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			tmpManager.update(pForm.getUserRoleBean());
 			return mapping.findForward("forward");
 		} else if(Constants.Task.DOCHECK.equals(pForm.getTask())) {
@@ -66,7 +62,7 @@ public class UserRoleAction extends Action{
 				bean.setUserRoleId(pForm.getUserRoleBean().getUserRoleId());
 				bean.setUserMenuAction(pForm.getUserRoleBean().getUserMenuAction());
 				bean.setUserMenuId(pForm.getUserRoleBean().getUserMenuId());
-				bean.setUpdateBy(LoginData.getUserData().getUserName());
+				bean.setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 				tmpManager.insertUserRoleMenu(bean);				
 			}
 			return mapping.findForward("forward");

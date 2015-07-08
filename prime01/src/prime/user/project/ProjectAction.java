@@ -21,8 +21,8 @@ import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.role.RoleManager;
 import prime.admin.role.RoleManagerImpl;
+import prime.admin.user.UserBean;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
@@ -40,7 +40,7 @@ public class ProjectAction extends Action {
 		request.getSession().setAttribute(Constants.Session.redirectPage , Constants.PAGES_LIST[Constants.Page.USER_PROJECT]);
 		request.getSession().setAttribute(Constants.Session.redirectParam, "");		
 		
-		Integer tmpEmployeeId = Integer.valueOf(LoginData.getEmployeeData().getEmployeeId());
+		Integer tmpEmployeeId = Integer.valueOf(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId());
 		
 		ProjectForm 	pForm 				= (ProjectForm) form;
 		ProjectManager 	tmpProjectManager 	= new ProjectManagerImpl();
@@ -49,7 +49,7 @@ public class ProjectAction extends Action {
 		ActivityManager tmpActivityManager	= new ActivityManagerImpl();
 		RoleManager 	tmpRoleManager 		= new RoleManagerImpl();
 		
-		System.out.println("login id "+LoginData.getEmployeeData().getEmployeeId());
+		System.out.println("login id "+((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId());
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##.Get Data
 			//EmployeeBean tmpTaskAssign 	= tmpEmployeeManager.getEmployeeById(100);
@@ -76,7 +76,7 @@ public class ProjectAction extends Action {
 			pForm.getProjectBean().setProjectStatus(0);
 			pForm.getProjectBean().setProjectAssigner(pForm.getEmployeeId());
 			pForm.getProjectBean().setProjectChangeNote("First Time");
-			pForm.getProjectBean().setUpdatedBy(LoginData.getUserData().getUserName());
+			pForm.getProjectBean().setUpdatedBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			tmpProjectManager.insert(pForm.getProjectBean());
 			tmpProjectManager.insertDetail(pForm.getProjectBean());
 			pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());
@@ -197,7 +197,7 @@ public class ProjectAction extends Action {
 			pForm.getProjectBean().getTaskBean().setTaskAssigner(tmpEmployeeId);
 			pForm.getProjectBean().getTaskBean().setTaskReceiver(pForm.getProjectBean().getEmployeeId());
 			pForm.getProjectBean().getTaskBean().setProjectMemberId(tmpProjectManager.getProjectMemberIdByAll(pForm.getProjectBean()));
-			pForm.getProjectBean().getTaskBean().setUpdateBy(LoginData.getUserData().getUserName());
+			pForm.getProjectBean().getTaskBean().setUpdateBy(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getUserName());
 			tmpTaskManager.insert(pForm.getProjectBean().getTaskBean());
 			tmpTaskManager.insertDetail(pForm.getProjectBean().getTaskBean());
 

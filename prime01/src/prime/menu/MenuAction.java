@@ -13,17 +13,11 @@ import org.apache.struts.action.Action;
 import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
-
-import prime.admin.usermenu.UserMenuBean;
-import prime.admin.usermenu.UserMenuManager;
-import prime.admin.usermenu.UserMenuManagerImpl;
+import prime.admin.user.UserBean;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.user.notification.NotificationBean;
 import prime.user.notification.NotificationManager;
 import prime.user.notification.NotificationManagerImpl;
-import prime.user.project.ProjectManager;
-import prime.user.project.ProjectManagerImpl;
 
 public class MenuAction extends Action {
 	@Override
@@ -53,7 +47,7 @@ public class MenuAction extends Action {
 			HttpSession tmpSession = request.getSession();
 			
 			//Do Redirect if the ID is same :)
-			if(tmpMenuForm.getParam4().equals(LoginData.getEmployeeData().getEmployeeId().toString())){
+			if(tmpMenuForm.getParam4().equals(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId().toString())){
 				NotificationManager tmpNotificationManager = new NotificationManagerImpl();
 				NotificationBean tmpNotifBean;
 				

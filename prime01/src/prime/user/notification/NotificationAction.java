@@ -19,8 +19,8 @@ import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.notiftemplate.NotifTemplateBean;
 import prime.admin.notiftemplate.NotifTemplateManager;
 import prime.admin.notiftemplate.NotifTemplateManagerImpl;
+import prime.admin.user.UserBean;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.utility.MailUtil;
 import prime.utility.PaginationUtility;
 import prime.utility.PrimeUtil;
@@ -67,7 +67,7 @@ public class NotificationAction extends Action {
 													Constants.MailTemplate.LINK};
 			String[] tmpParamInsert = new String[] {
 														tmpReceiverBean.getEmployeeId() + " - " + tmpReceiverBean.getEmployeeName(),
-														LoginData.getEmployeeData().getEmployeeId() + " - " + LoginData.getEmployeeData().getEmployeeName(),
+														((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId() + " - " + ((EmployeeBean)request.getSession().getAttribute(Constants.Session.Employeedata)).getEmployeeName(),
 														PrimeUtil.getURLWithContextPath(request) + tmpBackLink
 												   };
 			String tmpHolder = "";
@@ -86,7 +86,7 @@ public class NotificationAction extends Action {
 			}
 			
 			System.out.println(tmpBackLink);
-			tmpManager.insert(tmpId, pForm.getNotifType(), tmpNotifButton, LoginData.getEmployeeData().getEmployeeId(), tmpReceiverBean.getEmployeeId(), tmpBackLink);
+			tmpManager.insert(tmpId, pForm.getNotifType(), tmpNotifButton, ((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId(), tmpReceiverBean.getEmployeeId(), tmpBackLink);
 			
 			return null;
 		} else if(("reloadNotification").equals(pForm.getTask())){ 
@@ -94,7 +94,7 @@ public class NotificationAction extends Action {
 			if(tmpLists.indexOf(Constants.Page.USER_VIEWNOTIF) == -1)
 				return null;
 			
-			int countNotif = tmpManager.getCountListNotifNoRead(LoginData.getEmployeeData().getEmployeeId());
+			int countNotif = tmpManager.getCountListNotifNoRead(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId());
 					
 			response.setContentType("text/html;charset=utf-8");
 			response.setHeader("cache-control", "no-cache");
@@ -110,8 +110,8 @@ public class NotificationAction extends Action {
 			tmpPrint += "<li class=\"header\">You have " + countNotif + " notifications</li>";
             tmpPrint += "<li>";
             tmpPrint += "<ul class=\"menu\">";
-            for(int i=0;i<tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).size();i++){
-            	NotificationBean tmpNotifBean = tmpManager.getListNotifNoRead(LoginData.getEmployeeData().getEmployeeId()).get(i);
+            for(int i=0;i<tmpManager.getListNotifNoRead(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId()).size();i++){
+            	NotificationBean tmpNotifBean = tmpManager.getListNotifNoRead(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId()).get(i);
             	tmpPrint += "<li>";
             	tmpPrint += "<a href=\"" + tmpNotifBean.getNotificationLink() + "\">";
             	tmpPrint += "<i class=\"fa fa-warning text-yellow\"></i>";
@@ -130,13 +130,13 @@ public class NotificationAction extends Action {
 			return null;
 		} else {
 			//---.Get Count Rows
-			int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),pForm.getSearch(), LoginData.getEmployeeData().getEmployeeId());
+			int countRows = tmpManager.getCountByColumn(pForm.getColumnSearch(),pForm.getSearch(), ((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId());
 
 			//---.Set Paging
 			List<NotificationBean> list = tmpManager.getListByColumn(
 					pForm.getColumnSearch(), pForm.getSearch(), PrimeUtil.getStartRow(pForm.getGoToPage(),
 							pForm.getShowInPage(), countRows), PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
-							countRows), LoginData.getEmployeeData().getEmployeeId());
+							countRows), ((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId());
 			
 			//---.Attribute for Table Show
 			request.setAttribute("listNotification", list);
