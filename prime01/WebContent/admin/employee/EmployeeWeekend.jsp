@@ -7,7 +7,6 @@
 <html>
 <head>
 <!-- CSS -->
-<link href="resources/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
 <link href="resources/font-awesome-4.3.0/css/font-awesome.min.css"
 	rel="stylesheet" type="text/css" />
 <link href="resources/ionicons-2.0.1/css/ionicons.min.css"
@@ -21,9 +20,6 @@
 <link href="resources/css/styles.css" rel="stylesheet" type="text/css" />
 <!-- End Of CSS -->
 <!-- JS -->
-<script src="resources/plugins/jQuery/jQuery-2.1.3.min.js"></script>
-<script src="resources/bootstrap/js/bootstrap.min.js"
-	type="text/javascript"></script>
 <script src="resources/plugins/datepicker/bootstrap-datepicker.js"
 	type="text/javascript"></script>
 <script src="resources/plugins/slimScroll/jquery.slimscroll.min.js"
