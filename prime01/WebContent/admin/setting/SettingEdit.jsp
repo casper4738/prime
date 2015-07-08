@@ -108,11 +108,11 @@
 	              				<td>Default Weekend</td>
 	              				<td align="center">:</td>
 	              				<td>
-              						<input type="checkbox" id="weekend" value="Monday"> Monday <br>
-									<input type="checkbox" id="weekend" value="Tuesday"> Tuesday <br> 
-									<input type="checkbox" id="weekend" value="Wednesday"> Wednesday<br>
-									<input type="checkbox" id="weekend" value="Thursday"> Thursday<br> 
-									<input type="checkbox" id="weekend" value="Friday"> Friday<br>
+              						<input type="checkbox" id="weekend" value="Monday">Monday<br>
+									<input type="checkbox" id="weekend" value="Tuesday"> Tuesday<br> 
+									<input type="checkbox" id="weekend" value="Wednesday"> Wednesday <br>
+									<input type="checkbox" id="weekend" value="Thursday"> Thursday <br> 
+									<input type="checkbox" id="weekend" value="Friday"> Friday <br>
 									<input type="checkbox" id="weekend" value="Saturday"> Saturday<br>
 									<input type="checkbox" id="weekend" value="Sunday"> Sunday				
 	              				</td>

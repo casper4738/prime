@@ -1,5 +1,6 @@
 package prime.admin.division;
 
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -11,6 +12,8 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
+import prime.admin.employee.EmployeeManager;
+import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.user.UserBean;
 import prime.constants.Constants;
 import prime.utility.PaginationUtility;
@@ -23,6 +26,7 @@ public class DivisionAction extends Action {
 		DivisionForm pForm = (DivisionForm) form;
 		DivisionManager tmpManager = new DivisionManagerImpl();
 		request.setAttribute("homepage", request.getSession().getAttribute(Constants.Session.lastPage));
+
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##. Add Data
 			return mapping.findForward("add");
@@ -45,7 +49,32 @@ public class DivisionAction extends Action {
 			//##.Delete Data and Back Main
 			tmpManager.delete(pForm.getTmpId());
 			return mapping.findForward("forward");
-		} 
+		} else if(Constants.Task.DOVALIDATE1.equals(pForm.getTask())){
+			response.setContentType("text/text;charset=utf-8");
+			response.setHeader("cache-control", "no-cache");
+			PrintWriter tmpOut = response.getWriter();
+			String tmpResponse = "";
+			
+			int tmpResponseCode;
+			
+			//0 : Exists Database ; 1 : Empty Database
+			if(tmpManager.getDivisionUsed(pForm.getTmpId()) > 0){
+				tmpResponseCode = 1;	//Division Already Used
+			} else {
+				tmpResponseCode = 0;	//Success
+			}
+
+			System.out.println(tmpResponseCode + " tmpResponseCode");
+			if(tmpResponseCode == 1){
+				tmpResponse = "1#";
+			} else {
+				tmpResponse = "0#";
+			}
+			
+			tmpOut.print(tmpResponse);
+			tmpOut.flush();
+			return null;
+		}
 		
 		int countRows  = tmpManager.getCountByColumn(pForm.getColumnSearchReal(), pForm.getSearch());
 		List<DivisionBean> list = tmpManager.getListByColumn(pForm.getColumnSearchReal(), pForm.getSearch(),

@@ -22,4 +22,5 @@ public interface DivisionManager {
 	
 	public Integer getNewId() throws SQLException;
 	
+	public Integer getDivisionUsed(Integer divisionId) throws SQLException;
 }

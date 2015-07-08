@@ -50,7 +50,7 @@
 	<section class="content-header">
 		<h1>Project User</h1>
 		<ol class="breadcrumb">
-			<li><i class="fa fa-dashboard"></i> Home</li>
+			<li><a href="javascript:void(0)" onclick="menuLoadHandler('${homepage}')"> <i class="fa fa-dashboard"></i> Home</a></li> 
 			<li><a href="javascript:flyToPage()" >Manage Project</a></li>
 			<li class="active"><a href="javascript:flyToBack(
 	                        		'detailsAsHead', 
@@ -99,25 +99,6 @@
         	</div>
 	</section>
 	<!-- /.content-wrapper -->
-		
-	<!-- Modal -->
-	<div class="modal fade" id="search-modal" tabindex="-1" role="dialog">
-	  <div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      <div class="modal-header">
-	        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	        <h4 class="modal-title">Search Assigner</h4>
-	      </div>
-	      <div class="modal-body" id="search-modal-body">
-	      
-	      </div>
-	      <div class="modal-footer">
-	      </div>
-	    </div>
-	  </div>
-	</div>
-	<!--/. Modal  -->
-		
 		
 	
 </body>

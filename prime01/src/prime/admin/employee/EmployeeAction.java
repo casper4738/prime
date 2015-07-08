@@ -46,7 +46,7 @@ public class EmployeeAction extends Action {
 		PositionManager tmpPositionManager = new PositionManagerImpl();
 		HolidayManager tmpHolidayManager  = new HolidayManagerImpl();
 		
-		System.out.println("Task = " + pForm.getTask());
+		request.setAttribute("homepage", request.getSession().getAttribute(Constants.Session.lastPage));
 		
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			request.setAttribute("listPosition", tmpPositionManager.getListAll());
@@ -331,17 +331,16 @@ public class EmployeeAction extends Action {
 		} else {
 			search = pForm.getSearch();			
 		}
+
 		
 		int countRows  = manager.getCountByColumn(pForm.getColumnSearchReal(), search);
-		
 		List<EmployeeBean> list = manager.getListByColumn(pForm.getColumnSearchReal(), search,
 				PrimeUtil.getStartRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows),  
 				PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(), countRows));
-
+		
 		//##1.Attribute For Table Paging
 		request.setAttribute("listEmployee", list);
 		request.setAttribute("listSearchColumn", Constants.Search.EMPLOYEE_SEARCHCOLUMNS);
-		//request.setAttribute("listShowEntries" , Constants.PAGINGROWPAGE);
 		setPaging(request, countRows, pForm.getGoToPage(), pForm.getShowInPage());
 		
 		return mapping.findForward("success");
@@ -356,7 +355,7 @@ public class EmployeeAction extends Action {
 
 		request.setAttribute("totalData", countRows);
 		request.setAttribute("listPage", pageUtil.getListPaging(page));
-		request.setAttribute("pageNow", page);
+		request.setAttribute("pageNow", pageUtil.getPage());
 		request.setAttribute("pageFirst", 1);
 		request.setAttribute("pageLast", pageUtil.getSumOfPage());
 		request.setAttribute("pagePrev", pageUtil.getPagePrev());

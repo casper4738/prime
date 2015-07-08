@@ -39,6 +39,7 @@ public class ProjectAction extends Action {
 		request.getSession().setAttribute(Constants.Session.needRedirect , false);
 		request.getSession().setAttribute(Constants.Session.redirectPage , Constants.PAGES_LIST[Constants.Page.USER_PROJECT]);
 		request.getSession().setAttribute(Constants.Session.redirectParam, "");		
+		request.setAttribute("homepage", request.getSession().getAttribute(Constants.Session.lastPage));
 		
 		Integer tmpEmployeeId = Integer.valueOf(((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId());
 		

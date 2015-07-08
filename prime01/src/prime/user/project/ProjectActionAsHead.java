@@ -39,10 +39,16 @@ public class ProjectActionAsHead extends Action {
 		request.getSession().setAttribute(Constants.Session.needRedirect , false);
 		request.getSession().setAttribute(Constants.Session.redirectPage , Constants.PAGES_LIST[Constants.Page.USER_PROJECT]);
 		request.getSession().setAttribute(Constants.Session.redirectParam, "");		
+<<<<<<< HEAD
 				
 		EmployeeBean tmpEmployeedata = (EmployeeBean)request.getSession().getAttribute(Constants.Session.Employeedata);
 		UserBean tmpUserdata = (UserBean)request.getSession().getAttribute(Constants.Session.Userdata);
 		Integer tmpEmployeeId = tmpEmployeedata.getEmployeeId();
+=======
+		request.setAttribute("homepage", request.getSession().getAttribute(Constants.Session.lastPage));
+		
+		Integer tmpEmployeeId = LoginData.getEmployeeData().getEmployeeId();
+>>>>>>> branch 'master' of https://github.com/casper4738/prime.git
 		
 		ProjectFormAsHead 	pForm 				= (ProjectFormAsHead) form;
 		ProjectManager 	tmpProjectManager 	= new ProjectManagerImpl();
