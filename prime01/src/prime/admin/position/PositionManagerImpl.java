@@ -76,4 +76,10 @@ public class PositionManagerImpl implements PositionManager {
 		map.put("value", value);
 		return (Integer) mapper.queryForObject("position.getCountListByCol", map);
 	}
+
+	@Override
+	public Integer getPositionUsed(Integer positionId) throws SQLException {
+		// TODO Auto-generated method stub
+		return (Integer) mapper.queryForObject("position.getPositionUsed", positionId);
+	}
 }

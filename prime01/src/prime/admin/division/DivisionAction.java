@@ -12,8 +12,6 @@ import org.apache.struts.action.ActionForm;
 import org.apache.struts.action.ActionForward;
 import org.apache.struts.action.ActionMapping;
 
-import prime.admin.employee.EmployeeManager;
-import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.user.UserBean;
 import prime.constants.Constants;
 import prime.utility.PaginationUtility;
