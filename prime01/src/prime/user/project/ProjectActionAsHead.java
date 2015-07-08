@@ -21,8 +21,8 @@ import prime.admin.employee.EmployeeManager;
 import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.role.RoleManager;
 import prime.admin.role.RoleManagerImpl;
+import prime.admin.user.UserBean;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
@@ -40,8 +40,9 @@ public class ProjectActionAsHead extends Action {
 		request.getSession().setAttribute(Constants.Session.redirectPage , Constants.PAGES_LIST[Constants.Page.USER_PROJECT]);
 		request.getSession().setAttribute(Constants.Session.redirectParam, "");		
 				
-		
-		Integer tmpEmployeeId = LoginData.getEmployeeData().getEmployeeId();
+		EmployeeBean tmpEmployeedata = (EmployeeBean)request.getSession().getAttribute(Constants.Session.Employeedata);
+		UserBean tmpUserdata = (UserBean)request.getSession().getAttribute(Constants.Session.Userdata);
+		Integer tmpEmployeeId = tmpEmployeedata.getEmployeeId();
 		
 		ProjectFormAsHead 	pForm 				= (ProjectFormAsHead) form;
 		ProjectManager 	tmpProjectManager 	= new ProjectManagerImpl();
@@ -50,8 +51,6 @@ public class ProjectActionAsHead extends Action {
 		ActivityManager tmpActivityManager	= new ActivityManagerImpl();
 		RoleManager 	tmpRoleManager 		= new RoleManagerImpl();
 		
-		System.out.println("login id "+LoginData.getEmployeeData().getEmployeeId());
-		System.out.println("masuk detail head action asdnsalk");
 		if(Constants.Task.GOTOADD.equals(pForm.getTask())) {
 			//##.Get Data
 			//EmployeeBean tmpTaskAssign 	= tmpEmployeeManager.getEmployeeById(100);
@@ -63,7 +62,6 @@ public class ProjectActionAsHead extends Action {
 			//pForm.getProjectBean().setProjectAssigner(101);
 			//pForm.getProjectBean().setProjectAssigner(tmpTaskAssign.getEmployeeId());
 			//pForm.getProjectBean().setProjectReceiver(tmpTaskAssign.getEmployeeId());
-			System.out.println(LoginData.getEmployeeData().getEmployeeId());
 			System.out.println("add as head = " + tmpEmployeeId);
 			
 			//pForm.setCountUnderLevel(countUnderLevel);
@@ -82,7 +80,7 @@ public class ProjectActionAsHead extends Action {
 			pForm.getProjectBean().setProjectStatus(0);
 			pForm.getProjectBean().setProjectReceiver(pForm.getEmployeeId());
 			pForm.getProjectBean().setProjectChangeNote("First Time");
-			pForm.getProjectBean().setUpdatedBy(LoginData.getUserData().getUserName());
+			pForm.getProjectBean().setUpdatedBy(tmpUserdata.getUserName());
 			tmpProjectManager.insert(pForm.getProjectBean());
 			tmpProjectManager.insertDetail(pForm.getProjectBean());
 			pForm.getProjectBean().setProjectMemberId(tmpProjectManager.getNewMemberId());

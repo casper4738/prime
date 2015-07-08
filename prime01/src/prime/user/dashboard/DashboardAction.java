@@ -22,8 +22,8 @@ import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.holiday.HolidayBean;
 import prime.admin.holiday.HolidayManager;
 import prime.admin.holiday.HolidayManagerImpl;
+import prime.admin.user.UserBean;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
@@ -41,7 +41,9 @@ public class DashboardAction extends Action{
 		DashboardForm pForm = (DashboardForm) form;
 		ActivityManager tmpManager = new ActivityManagerImpl();
 		ActionForward tmpAction = mapping.findForward("success");
-		Integer tmpEmployeeID = LoginData.getEmployeeData().getEmployeeId();
+		EmployeeBean tmpEmployeedata = (EmployeeBean) request.getSession().getAttribute(Constants.Session.Employeedata);
+		UserBean tmpUserdata = (UserBean) request.getSession().getAttribute(Constants.Session.Userdata);
+		Integer tmpEmployeeID = tmpEmployeedata.getEmployeeId();
 		
 		//##1.Start Task Selection
 		if("addToDoList".equals(pForm.getTask())){
@@ -64,7 +66,7 @@ public class DashboardAction extends Action{
 			//tmpAction = mapping.findForward("success");
 		}else if("finishActivity".equals(pForm.getTask())){
 			tmpManager.insertActivityDetail(tmpEmployeeID,pForm.getTmpId(), pForm.getTmpValue(), "FINISH");
-			tmpManager.deleteToDoList(LoginData.getEmployeeData().getEmployeeId(), pForm.getTmpId());
+			tmpManager.deleteToDoList(tmpEmployeeID, pForm.getTmpId());
 			tmpAction = null;
 			//tmpAction = mapping.findForward("success");
 		}else if("refreshActivityProgress".equals(pForm.getTask())){
@@ -97,12 +99,14 @@ public class DashboardAction extends Action{
 	}
 	
 	private void refreshToDoList(HttpServletRequest request, DashboardForm pForm, ActivityManager manager) throws SQLException {
-		int countRows  = manager.getCountToDoListById(LoginData.getEmployeeData().getEmployeeId());
+		EmployeeBean tmpEmployeedata = (EmployeeBean) request.getSession().getAttribute(Constants.Session.Employeedata);
+		
+		int countRows  = manager.getCountToDoListById(tmpEmployeedata.getEmployeeId());
 		
 		List<ActivityBean> list = manager.getToDoListById(PrimeUtil.getStartRow(
 				 pForm.getGoToPage(), pForm.getShowInPage(), countRows),
 				 PrimeUtil.getEndRow(pForm.getGoToPage(), pForm.getShowInPage(),
-				 countRows), LoginData.getEmployeeData().getEmployeeId());
+				 countRows), tmpEmployeedata.getEmployeeId());
 		request.setAttribute("listActivity", list);
 		
 
@@ -110,6 +114,8 @@ public class DashboardAction extends Action{
 	}
 	
 	private void refreshActivityProgressList(HttpServletRequest request, HttpServletResponse response, DashboardForm pForm, ActivityManager manager) throws SQLException, IOException {
+		EmployeeBean tmpEmployeedata = (EmployeeBean) request.getSession().getAttribute(Constants.Session.Employeedata);
+		
 		//##0.Temp Variable
 		int tmpI, tmpJ, tmpK;
 		Date curnTime, compTime;
@@ -135,7 +141,7 @@ public class DashboardAction extends Action{
 		tmpIsToday = tmpDateRequest.compareTo(tmpCal.getTime());
 		
 		tmpData = new ArrayList<ArrayList<Object>>();
-		tmpCurnListActivity = manager.getCurrentListActivity(LoginData.getEmployeeData().getEmployeeId(), pForm.getCurrentDate());
+		tmpCurnListActivity = manager.getCurrentListActivity(tmpEmployeedata.getEmployeeId(), pForm.getCurrentDate());
 		for(tmpI = 0 ; tmpI < tmpCurnListActivity.size() ; tmpI++){
 			tmpIsProgressed = false;
 			
@@ -271,7 +277,8 @@ public class DashboardAction extends Action{
 	}
 	
 	private void prepareCalendar(HttpServletRequest request, HttpServletResponse response) throws SQLException{
-		int tmpEmployeeId = LoginData.getEmployeeData().getEmployeeId();
+		EmployeeBean tmpEmployeedata = (EmployeeBean) request.getSession().getAttribute(Constants.Session.Employeedata);
+		int tmpEmployeeId = tmpEmployeedata.getEmployeeId();
 		
 		HolidayManager  tmpHolidayManager = new HolidayManagerImpl();
 		EmployeeManager tmpEmployeeManager = new EmployeeManagerImpl();

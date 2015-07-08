@@ -62,7 +62,7 @@ public class UserManagerImpl implements UserManager {
 		boolean tmpUserValidated = false;
 		HashMap<String, String> tmpParam = new HashMap<String, String>();
 		tmpParam.put("userName", username);
-		tmpParam.put("password", password);
+		tmpParam.put("password", password + username);
 		
 		//##1.Ibatis Proccess
 		try {
@@ -80,7 +80,7 @@ public class UserManagerImpl implements UserManager {
 		try {
 			Map<String, Object> map = new HashMap<String, Object>();
 			map.put("username", username);
-			map.put("newPassword", newPassword);			
+			map.put("newPassword", newPassword + username);			
 			
 			mapper.startTransaction();
 			mapper.update("user.changePassword", map);
@@ -153,6 +153,16 @@ public class UserManagerImpl implements UserManager {
 		try {
 			mapper.startTransaction();
 			mapper.update("user.changeActionDate", e);
+			mapper.commitTransaction();
+		} finally {
+			mapper.endTransaction();
+		}
+	}
+	
+	public void resetSession(String username) throws SQLException {
+		try {
+			mapper.startTransaction();
+			mapper.update("user.resetSession", username);
 			mapper.commitTransaction();
 		} finally {
 			mapper.endTransaction();

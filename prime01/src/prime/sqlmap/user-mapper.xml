@@ -68,6 +68,12 @@
 		 WHERE LOWER(USERNAME) = LOWER(#userName#)
 	</update>
 	
+	<update id="resetSession" parameterClass="java.lang.String">
+		 UPDATE USERS SET
+		 LOGIN_SESSION = null
+		 WHERE LOWER(USERNAME) = LOWER(#userName#)
+	</update>
+	
 	<update id="changeActionDate" parameterClass="prime.admin.user.UserBean">
 		UPDATE USERS SET
 		ACTION_DATE = (SYSDATE + (1/(24 * 60)))

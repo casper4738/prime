@@ -75,15 +75,24 @@ public class UserAction extends Action {
 				if (compTime.after(curnTime)) {
 					// Change Status to Wait Locked
 					tmpManager.lockUser(userForm.getUserBean());
+					
+					// ##.Reset Session In DB
+					tmpManager.resetSession(userForm.getUserBean().getUserName());
 				} else {
 					// Change Status to Locked
 					tmpManager.changeActionDate(userForm.getUserBean());
 					tmpManager.lockUser(userForm.getUserBean());
+					
+					// ##.Reset Session In DB
+					tmpManager.resetSession(userForm.getUserBean().getUserName());
 				}
 			} else if (userForm.getUserBean().getStatusUser() == Constants.UserStatus.LOCKED) {
 				if (compTime.after(curnTime)) {
 					// Change Status to Wait Abort
 					tmpManager.unlockUser(userForm.getUserBean());
+					
+					// ##.Reset Session In DB
+					tmpManager.resetSession(userForm.getUserBean().getUserName());
 				} else {
 					// Change Status to Unlocked
 					tmpManager.changeActionDate(userForm.getUserBean());
@@ -94,6 +103,10 @@ public class UserAction extends Action {
 		} else if (Constants.Task.DORESET.equals(userForm.getTask())) {
 			// ##. Reset Password and Go to Forward
 			tmpManager.resetPassword(userForm.getUserBean());
+			
+			// ##.Reset Session In DB
+			tmpManager.resetSession(userForm.getUserBean().getUserName());
+			
 			return mapping.findForward("forward");
 		} else if (Constants.Task.DOEDIT.equals(userForm.getTask())) {
 			// ##.Update Data and Go to Forward

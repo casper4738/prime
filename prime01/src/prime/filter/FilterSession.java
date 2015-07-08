@@ -21,7 +21,6 @@ import prime.admin.user.UserBean;
 import prime.admin.user.UserManager;
 import prime.admin.user.UserManagerImpl;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.login.LoginManager;
 import prime.login.LoginManagerImpl;
 

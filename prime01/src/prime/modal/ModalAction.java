@@ -18,10 +18,10 @@ import prime.admin.employee.EmployeeManagerImpl;
 import prime.admin.position.PositionBean;
 import prime.admin.position.PositionManager;
 import prime.admin.position.PositionManagerImpl;
+import prime.admin.user.UserBean;
 import prime.admin.user.UserManager;
 import prime.admin.user.UserManagerImpl;
 import prime.constants.Constants;
-import prime.login.LoginData;
 import prime.user.activity.ActivityBean;
 import prime.user.activity.ActivityManager;
 import prime.user.activity.ActivityManagerImpl;
@@ -38,7 +38,10 @@ public class ModalAction extends Action {
 		//---.Normally Used Temp Variable
 		int tmpI, tmpJ;
 		String tmpTarget = "";
-		Integer tmpEmployeeID=LoginData.getEmployeeData().getEmployeeId();
+		EmployeeBean tmpEmployeeData = (EmployeeBean)request.getSession().getAttribute(Constants.Session.Employeedata);
+		UserBean tmpUserData = (UserBean)request.getSession().getAttribute(Constants.Session.Userdata);
+		Integer tmpEmployeeID = tmpEmployeeData.getEmployeeId();
+		
 		//---.Depend on the object
 		ModalForm pForm = (ModalForm) form;
 
@@ -59,16 +62,17 @@ public class ModalAction extends Action {
      			response.setHeader("cache-control", "no-cache");
      			PrintWriter tmpOut = response.getWriter();
      			String tmpResponse = "";
-			 
-     			System.out.println("Param 1 = " + pForm.getParam1());
      			
         		 if("doChangePwd".equals(pForm.getParam1())) {
             		 //---.Validate User
-        			 System.out.println(pForm.getParam3());
-            		 if(tmpManager.isUserValidated("ded", pForm.getParam3())){
-     					tmpManager.changePassword("ded", pForm.getParam6());
+            		 if(tmpManager.isUserValidated(tmpUserData.getUserName(), pForm.getParam3())){
+     					tmpManager.changePassword(tmpUserData.getUserName(), pForm.getParam6());
              			tmpResponse = "1#<center><div id=\"message\" style=\"color:green;font-size:12px\">Password changed successfuly</div></center>";
-        			 } 
+             			
+             			//Invalidate Session
+                   		request.getSession().invalidate();
+             			request.getSession(true).setAttribute(Constants.Session.isSessionExpired, true);
+            		 } 
             		 //---.Fail Just Return and Inform
             		 else {
             			tmpResponse = "0#<center><div id=\"message\" style=\"color:red;font-size:12px\"><i>Password doesn't match</div><center>";
@@ -209,14 +213,12 @@ public class ModalAction extends Action {
                 		break;
             		case "employeeTree"  :
                 		tmpTarget = "employeeTree";
-                		System.out.println("id login modal "+ LoginData.getEmployeeData().getEmployeeId());
                     	//##1.Fetch Data From DB
-                		countRows = manager.getCountListByTree(pForm.getColumnSearch(), pForm.getSearch(), LoginData.getEmployeeData().getEmployeeId());
+                		countRows = manager.getCountListByTree(pForm.getColumnSearch(), pForm.getSearch(), tmpEmployeeData.getEmployeeId());
                 		//---.Depend On The Object
-                		System.out.println("count rows modal "+countRows);
                 		list = manager.getListByTree(pForm.getColumnSearch(), pForm.getSearch(),
 				   				 PrimeUtil.getStartRow(pForm.getGoToPage() , pForm.getShowInPage(), countRows),  
-				   				 PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows),LoginData.getEmployeeData().getEmployeeId());
+				   				 PrimeUtil.getEndRow(pForm.getGoToPage()   , pForm.getShowInPage(), countRows), tmpEmployeeData.getEmployeeId());
                 		//##2.Prepare Data for Modal-Table Show
                 		//---a.Modal Title
                 		request.setAttribute("modalListName", "Employees List");
@@ -253,7 +255,7 @@ public class ModalAction extends Action {
                 		ProjectForm project = new ProjectForm();
                 		System.out.println("modal id assigner "+project.getIdAssigner());
                 		
-                		System.out.println("id login modal "+ LoginData.getEmployeeData().getEmployeeId());
+                		System.out.println("id login modal "+ tmpEmployeeData.getEmployeeId());
                     	//##1.Fetch Data From DB
                 		countRows = manager.getCountListByTreeforMember(pForm.getColumnSearch(), pForm.getSearch(), pForm.getParam2(), pForm.getParam4());
                 		//---.Depend On The Object

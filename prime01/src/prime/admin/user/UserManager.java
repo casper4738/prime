@@ -33,4 +33,6 @@ public interface UserManager {
 	public void unlockUser(UserBean e) throws SQLException;
 	
 	public void changeActionDate(UserBean e) throws SQLException;
+	
+	public void resetSession(String username) throws SQLException;
 }

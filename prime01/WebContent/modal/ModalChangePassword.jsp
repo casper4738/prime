@@ -95,7 +95,7 @@
   	        			tmpPwd.attr("disabled", false);
   	      				tmpNewPwd.attr("disabled", false);
   	      				tmpConfirmPwd.attr("disabled", false);
-  	        	  }
+  	        	  } 
 				  $('#message').html(param[1]);
   				  $('#password-validating').hide();
   	          },
