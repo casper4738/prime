@@ -30,7 +30,7 @@ public class LoginManagerImpl implements LoginManager {
 		boolean tmpUserValidated = false;
 		HashMap<String, String> tmpParam = new HashMap<String, String>();
 		tmpParam.put("userName", username);
-		tmpParam.put("password", password);
+		tmpParam.put("password", password + username);
 		
 		//##1.Ibatis Proccess
 		tmpUserValidated = ((Integer)mapper.queryForObject("login.isUserValidated", tmpParam) <= 0) ? false : true;	

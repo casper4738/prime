@@ -52,7 +52,7 @@
 	
 	<update id="reset" parameterClass="prime.admin.user.UserBean">
 		 UPDATE USERS SET
-		 PASSWORD = dbms_crypto.hash(to_clob('12345'), 2)
+		 PASSWORD = dbms_crypto.hash(to_clob(#password#), 2)
 		 WHERE LOWER(USERNAME) = LOWER(#userName#)
 	</update>
 	
