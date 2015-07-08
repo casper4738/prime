@@ -232,7 +232,7 @@ public class TaskSubordinateAction extends Action {
 
 		request.setAttribute("totalData", countRows);
 		request.setAttribute("listPage", pageUtil.getListPaging(page));
-		request.setAttribute("pageNow", page);
+		request.setAttribute("pageNow", pageUtil.getPage());
 		request.setAttribute("pageFirst", 1);
 		request.setAttribute("pageLast", pageUtil.getSumOfPage());
 		request.setAttribute("pagePrev", pageUtil.getPagePrev());

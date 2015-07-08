@@ -96,9 +96,9 @@
 			<tr><td width="50%">Task Name : ${TaskHeadUserForm.taskBean.taskId} -  <bean:write name="TaskHeadUserForm" property="taskBean.taskName"/></td>
 				<td>Task Assigner : <bean:write name="TaskHeadUserForm" property="taskBean.taskAssignerName" /> </td>
 			</tr>
-			<tr><td>Start Date : <bean:write name="TaskHeadUserForm" property="taskBean.taskStartDate" format="dd MMMM yyyy"/> </td>
+			<tr><td>Estimated Start Date : <bean:write name="TaskHeadUserForm" property="taskBean.taskStartDate" format="dd MMMM yyyy"/> </td>
 				<td>Task Receiver : <bean:write name="TaskHeadUserForm" property="taskBean.taskReceiverName"/> </td>
-			</tr><tr><td>Estimated Date : <bean:write name="TaskHeadUserForm" property="taskBean.taskEstimateDate" format="dd MMMM yyyy" />
+			</tr><tr><td>Estimated End Date : <bean:write name="TaskHeadUserForm" property="taskBean.taskEstimateDate" format="dd MMMM yyyy" />
 				</td><td>Status : 
 					<jsp:include page="/content/Status.jsp">
 	  	    			<jsp:param name="status" value="${TaskHeadUserForm.taskBean.taskLastStatus}" />
@@ -106,7 +106,7 @@
 				</td>
 			</tr>
 			<tr><td>Actual Start Date: <bean:write name="TaskHeadUserForm" property="taskBean.actualStart" format="dd MMMM yyyy" /></td>
-				<td>Actual Start End : <bean:write name="TaskHeadUserForm" property="taskBean.actualEnd" format="dd MMMM yyyy"/></td>
+				<td>Actual End Date: <bean:write name="TaskHeadUserForm" property="taskBean.actualEnd" format="dd MMMM yyyy"/></td>
 			</tr>
 			<tr><td>Main Days : <bean:write name="TaskHeadUserForm" property="taskBean.mainDays" /></td>
 				<td>Progress Percentage : 
