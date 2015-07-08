@@ -380,12 +380,6 @@ public interface Constants {
 		static String isSessionExpired	= "t10";
 	}
 	
-	//##G.Active Directory
-	static interface ActiveDirectory {
-		static String ADMIN_USERNAME	 = "dedy.suwandi";
-		static String ADMIN_PASSWORD	 = "Ace2015";
-	}
-	
 	//##H.System Level
 	static interface SystemLevel {
 		static int ADMIN			= 0;

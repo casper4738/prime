@@ -73,7 +73,7 @@ public class NotificationAction extends Action {
 			String tmpHolder = "";
 	
 			for(tmpI = 0 ; tmpI < tmpParamFlag.length ; tmpI++){
-				tmpHolder 	= "&" + tmpParamFlag[tmpI] + "&";
+				tmpHolder 	= "#" + tmpParamFlag[tmpI] + "#";
 				tmpTemplate = tmpTemplate.replaceAll(tmpHolder, tmpParamInsert[tmpI]);
 			}
 			
@@ -85,7 +85,6 @@ public class NotificationAction extends Action {
 				e.printStackTrace();
 			}
 			
-			System.out.println(tmpBackLink);
 			tmpManager.insert(tmpId, pForm.getNotifType(), tmpNotifButton, ((UserBean)request.getSession().getAttribute(Constants.Session.Userdata)).getEmployeeId(), tmpReceiverBean.getEmployeeId(), tmpBackLink);
 			
 			return null;
@@ -102,7 +101,7 @@ public class NotificationAction extends Action {
 			
 			String tmpPrint = "";
 			
-			tmpPrint += "<a href=\"#\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">";
+			tmpPrint += "<a href=\"javascript:void(0)\" class=\"dropdown-toggle\" data-toggle=\"dropdown\">";
 			tmpPrint += "<i class=\"fa fa-bell-o\"></i>";
 			tmpPrint += "<span class=\"label label-warning\">" + countNotif + "</span>";
 			tmpPrint += "</a>";

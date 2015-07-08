@@ -132,7 +132,7 @@
 	</select>
 	
 	<select id="getCountListByColAsHead" resultClass="java.lang.Integer" parameterClass="java.util.Map">
-		SELECT  COUNT (0)
+		SELECT COUNT (DISTINCT ( PROJ.PROJECT_ID))
         FROM PROJECTS PROJ
         JOIN EMPLOYEES EMP_ASSIGN ON PROJ.PROJECT_ASSIGNER=EMP_ASSIGN.EMPLOYEE_ID
         JOIN EMPLOYEES EMP_RECEIVE ON PROJ.PROJECT_RECEIVER=EMP_RECEIVE.EMPLOYEE_ID
@@ -158,7 +158,7 @@
 				</isEqual> 
 				<isEqual property="columnSearch" compareValue="ESTIMATEDATE">
 			      	PROJ.PROJECT_ESTIMATE_DATE BETWEEN TO_DATE(#startDate#, 'yyyy-mm-dd') AND TO_DATE(#untilDate#, 'yyyy-mm-dd')
-				</isEqual>  
+				</isEqual> 
 			</isNotNull>
 		</dynamic>
 	</select>
