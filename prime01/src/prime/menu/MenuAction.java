@@ -1,6 +1,7 @@
 package prime.menu;
 
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 
@@ -35,12 +36,13 @@ public class MenuAction extends Action {
 							"Manage Project As Head","Manage Project As Member","View Report Employees","View Report Project",
 							"View Notification"};
 		
+		ArrayList<Integer> tmpLists = (ArrayList<Integer>)(request.getSession().getAttribute(Constants.Session.menuLists));
 		for(int tmpI = 0 ; tmpI < LoginData.getMenuLists().size() ; tmpI++){
-			tmpObject.put(Constants.PAGES_LIST[LoginData.getMenuLists().get(tmpI)], tmpMenu[LoginData.getMenuLists().get(tmpI)]);
+			tmpObject.put(Constants.PAGES_LIST[tmpLists.get(tmpI)], tmpMenu[tmpLists.get(tmpI)]);
 		}
 
 		if(request.getSession().getAttribute(Constants.Session.lastPage) == null){
-			request.getSession().setAttribute(Constants.Session.lastPage, Constants.PAGES_LIST[LoginData.getMenuLists().get(0)]);
+			request.getSession().setAttribute(Constants.Session.lastPage, Constants.PAGES_LIST[tmpLists.get(0)]);
 		}
 		
 		//##3.Prepare Request Attribute For JSP Readings

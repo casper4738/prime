@@ -49,28 +49,19 @@ public class FilterSession implements Filter {
 	 */
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException,
 			ServletException {
-		
 		HttpServletRequest tmpServletRequest = (HttpServletRequest) request;
 	    HttpServletResponse tmpServletResponse = (HttpServletResponse) response;
 	    HttpSession tmpSession = tmpServletRequest.getSession();
 	    boolean tmpIsRedirectNeed = true;
 	    
 		if(!tmpServletRequest.getServletPath().equals("/" + Constants.PAGES_LIST[Constants.Page.LOGIN])){
-			//--Special Checking Addition, because we're using static data saver
-//			if(!LoginData.isDataExists()){
-//				PrintWriter out = response.getWriter();
-//			    out.println("<script type=\"text/javascript\">");
-//			    out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.LOGIN] + "';");
-//			    out.println("</script>");
-//				return;
-//			}
-			
 			//##a.Check Session State
-		    if(tmpSession.getAttribute(Constants.Session.ID) != null && tmpSession.getAttribute(Constants.Session.Username) != null) {
+		    if(tmpSession.getAttribute(Constants.Session.Userdata) != null && 
+		       tmpSession.getAttribute(Constants.Session.Employeedata) != null &&
+		       tmpSession.getAttribute(Constants.Session.menuLists) != null) {
 		    	//##b.Check From DB, Session Value
 		    	LoginManager tmpLoginManager = new LoginManagerImpl();
-		    	String tmpUsername = (String)tmpSession.getAttribute(Constants.Session.Username);
-		    	
+		    	String tmpUsername = ((UserBean)tmpSession.getAttribute(Constants.Session.Userdata)).getUserName();
 		    	String tmpDBSession = "";
 				try {
 					tmpDBSession = tmpLoginManager.getLoginSession(tmpUsername);
@@ -79,40 +70,13 @@ public class FilterSession implements Filter {
 					e.printStackTrace();
 				}
 				
-		    	if(tmpDBSession.equals((String)tmpSession.getAttribute(Constants.Session.ID))){
+				String tmpCurrentSession = ((UserBean)tmpSession.getAttribute(Constants.Session.Userdata)).getloginSession();
+		    	if(tmpDBSession.equals(tmpCurrentSession)){
 		    		tmpIsRedirectNeed = false;
-		    		
-//		    		if(!LoginData.isDataExists()){
-//						try {
-//			    			UserManager tmpUserData = new UserManagerImpl();
-//							UserBean tmpUserBean = tmpUserData.getUserByUsername(tmpUsername);
-//							LoginData.setUserBean(tmpUserBean);
-//							
-//							EmployeeManager tmpEmployeeData = new EmployeeManagerImpl();
-//							EmployeeBean tmpEmployeeBean = tmpEmployeeData.getEmployeeById(tmpUserBean.getEmployeeId());
-//							LoginData.setEmployeeBean(tmpEmployeeBean);
-//						} catch (SQLException e) {
-//							 e.printStackTrace();
-//							
-//							 //Immediate Return If Something Not Wanted Happening
-//						     PrintWriter out = response.getWriter();
-//						     out.println("<script type=\"text/javascript\">");
-//						     out.println("window.location.href = '" + Constants.PAGES_LIST[Constants.Page.LOGIN] + "';");
-//						     out.println("</script>");
-//						     return;
-//						}
-//						
-//		    		} 
-		    		
 		    	} else {
-		    		LoginData.clear();
 		    		tmpSession.invalidate();
 		    	}
-		    } else {
-		    	if(LoginData.isDataExists()){
-		    		LoginData.clear();
-		    	}
-		    }	
+		    } 
 
 		    //##.For Page-Changing Handler
 		    if(!tmpIsRedirectNeed){
@@ -128,7 +92,6 @@ public class FilterSession implements Filter {
 			    }
 		    }		
 		} else {
-    		LoginData.clear();
     		tmpSession.invalidate();
 	    	chain.doFilter(request, response);
 		}
